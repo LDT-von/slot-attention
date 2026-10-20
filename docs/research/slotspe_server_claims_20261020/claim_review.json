@@ -1,0 +1,155 @@
+{
+  "schema": "slotspe_server_claim_review_v1",
+  "recorded_at": "2026-10-20T17:49:42+08:00",
+  "task_id": "SPE-08",
+  "server_report_commit": "1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
+  "server_repository": "https://github.com/LDT-von/DCT-Reg",
+  "server_commit_verified": true,
+  "server_commit_modified_files": [
+    "AGENTS.md",
+    ".gitignore"
+  ],
+  "server_script_and_raw_diagnostic_received": false,
+  "server_execution": "reported_completed_not_independently_verified",
+  "new_training_runs": 0,
+  "new_forward_or_backward_passes": 0,
+  "new_synthetic_experiments": 0,
+  "historical_raw_byte_verification": [
+    {
+      "issue": "P2",
+      "receipt": "local_evidence/original_tree/.review/slotspe_p2_20261020/seed3_native_v1/receipt.json",
+      "files_verified": 73,
+      "method": "byte_SHA256_only_no_array_statistics_recomputed"
+    },
+    {
+      "issue": "P3",
+      "receipt": "local_evidence/original_tree/.review/slotspe_p3_20261020/seed3_native_v1/receipt.json",
+      "files_verified": 9,
+      "method": "byte_SHA256_only_no_array_statistics_recomputed"
+    }
+  ],
+  "historical_statistics_recomputed_this_review": false,
+  "issues": {
+    "P1": {
+      "confirmed": "默认槽数量固定：每模态8候选、Top-2；cross仍读全部候选槽。",
+      "server_report": {
+        "n": [
+          64,
+          96,
+          128,
+          192,
+          256
+        ],
+        "val_cindex": [
+          0.7224,
+          0.7216,
+          0.7201,
+          0.7177,
+          0.7137
+        ]
+      },
+      "review": "n含义缺脚本；服务器后续方案写patches，不能将patch数量敏感性直接当成槽数量/自适应容量实验。0.0087小于任意0.01不等于效应不存在；也不是小于0.0035的一倍标准差。",
+      "patient_harm": "not_established"
+    },
+    "P2": {
+      "confirmed": "历史训练后槽向量及读取分布高度相似已经观察到。",
+      "historical_local": {
+        "patients": 71,
+        "wsi_off_diagonal_cosine": {
+          "observations": 1988,
+          "min": 0.9635306803079029,
+          "p25": 0.9920885842598327,
+          "median": 0.9949487103395265,
+          "p75": 0.9968408195217472,
+          "max": 0.999542034810263
+        }
+      },
+      "server_report": {
+        "patients_with_at_least_one_off_diagonal_cosine_gt_0_95": 77,
+        "patients": 77,
+        "max_off_diagonal_cosine": 0.9999
+      },
+      "review": "每名患者至少一对相似不等于全部28对相同，更不等于8槽完全复制。0.9999被显示为1.0不能变成精确相等证据；cos=1也不确定范数相等。P4的均值置换不变不能证明坍缩。",
+      "patient_harm": "not_established",
+      "all_eight_slots_identical": "not_established"
+    },
+    "P3": {
+      "confirmed": "固定权重、同一输入的原版eval预测随随机数变化；历史真实输入对照支持两处抽样均有影响。",
+      "historical_local": {
+        "patients": 71,
+        "max_risk_range": 0.01368856430053711,
+        "fix_both_draws_max_risk_range": 0.0
+      },
+      "server_report": {
+        "eval_repeats": 20,
+        "cindex_std": 0.0035,
+        "cindex_min": 0.7132,
+        "cindex_max": 0.7298
+      },
+      "review": "有限次C-index标准差不是随机噪声数学上界；不能跨指标、模型、患者或批次当通用阈值。服务器文档另有单患者risk极差0.136与0.0301两种表述，须回到原始文件定义核对。",
+      "patient_harm": "benchmark_repeatability_issue_confirmed_prediction_accuracy_degradation_not_established"
+    },
+    "P4": {
+      "confirmed": "槽编号没有固定组织语义保证；置换一致性是集合表示应有性质。",
+      "server_report": {
+        "mean_of_eight_slot_permutation_error_approx": 1e-06
+      },
+      "review": "报告仅描述mean(slots)置换sanity check，任意槽集合都具有该性质。它不证明8槽相同、真实语义漂移或患者损害；完整模型置换需同时变换相应keep。",
+      "patient_harm": "not_established"
+    },
+    "P5": {
+      "confirmed": "原版有补零分支且Slot Attention不消费padding mask；既有同RNG合成反例确认人工零行可改变输出。",
+      "server_report": {
+        "max_logit_difference": 0.011,
+        "source_record": "AGENTS.md native_model_audit.json summary, not a risk or C-index value"
+      },
+      "review": "人工零行敏感性不等于真实无关组织占槽；0.011 logit不能与C-index标准差或risk差共用门槛。已发布native audit实现会对原始/补零输入配对重置RNG；实际执行仍须核验源码及原始输出。",
+      "patient_harm": "not_established"
+    },
+    "P6": {
+      "confirmed": "原版缺少显式坐标/倍率接口；这项能力边界已确认。",
+      "server_report": {
+        "permutation_repeats": 5,
+        "mean_max_abs_risk_diff": 0.0235,
+        "max_abs_risk_diff": 0.085
+      },
+      "existing_control": {
+        "max_logit_difference": 1.1920928955078125e-07,
+        "coordinates_supplied": false,
+        "note": "Same feature multiset and RNG. No explicit spatial-layout interface; not evidence that local patch features lack morphology or that multiscale would improve prognosis."
+      },
+      "review": "新增patch重排敏感性应单列为候选现象，不能替代空间/尺度损害论证。未回传脚本及两处RNG状态，无法排除eval随机性、输入多重集/批次变化或数值/选择边界效应。risk变化与C-index标准差不能直接相除。旧同RNG合成不变性不直接推翻训练后新结果，须匹配条件解释。",
+      "order_sensitivity_causally_identified": false,
+      "patient_harm": "not_established"
+    },
+    "P7": {
+      "confirmed": "最终融合主损失到pred_keep_slot的直接梯度路线被bool切断；辅助单模态生存监督仍连通。",
+      "server_report": {
+        "main_selector_gradient_None": 8,
+        "selector_parameter_tensors": 8,
+        "auxiliary_gradients_reported_nonzero": true
+      },
+      "review": "不能外推selector完全不训练或整个Slot Attention没有hazard监督。现有autograd.grad检查是一阶梯度连通检查，不是二阶导。B/C同前向的患者增益归因尚未验收。",
+      "patient_harm": "not_established",
+      "correction_efficacy": "not_established"
+    },
+    "P8": {
+      "confirmed": "原版没有后续跨模态OT阶段，双阶段OT冲突不适用。",
+      "patient_harm": "not_applicable"
+    }
+  },
+  "risk_direction": {
+    "reported_spearman_rho": 0.41,
+    "reported_p": 0.00023,
+    "direction_flip_proved": false,
+    "review": "观察时间包含删失时间，普通Spearman不按生存可比较对处理删失。先验证risk公式、事件定义、患者对齐，再在同一队列重算C(risk)和C(-risk)。相关p值不能证明模型风险定义或方向错误。",
+    "actual_risk_formula_in_patient_py": "-sum(cumprod(1-sigmoid(logits)))",
+    "metrics_reference": "https://scikit-survival.readthedocs.io/en/stable/api/generated/sksurv.metrics.concordance_index_censored.html",
+    "spearman_reference": "https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.spearmanr.html"
+  },
+  "unified_0_01_noise_floor_validated": false,
+  "six_patient_harms_established": false,
+  "paper_evidence_closed": false,
+  "additional_inconsistency": "服务器称8个gate均0.99..1与Top-2归一化门控不一致。gate_sum近1不等于8个gate逐个近1；需核对所画变量。",
+  "conclusion": "已有明确可复现问题，尤其P3评估随机性与P7直接梯度路线；P2高相似和P5人工补零敏感有证据层次。新服务器P2/P6患者损害及risk翻转结论尚不能接受。"
+}

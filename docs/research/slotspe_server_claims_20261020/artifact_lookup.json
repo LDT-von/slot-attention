@@ -1,0 +1,26 @@
+{
+  "queried_at": "2026-10-20T17:49:42+08:00",
+  "repository": "LDT-von/DCT-Reg",
+  "ref": "1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
+  "lookups": {
+    "diagnostic_json": {
+      "endpoint": "repos/LDT-von/DCT-Reg/contents/results/slotspe_proof/p1246_diagnostic_blca_fold0_20261020/diagnostic.json?ref=1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
+      "returncode": 1,
+      "stderr": "gh: Not Found (HTTP 404)\n",
+      "body": "{\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#get-repository-content\",\"status\":\"404\"}"
+    },
+    "diagnostic_script": {
+      "endpoint": "repos/LDT-von/DCT-Reg/contents/_p1246_diag.py?ref=1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
+      "returncode": 1,
+      "stderr": "gh: Not Found (HTTP 404)\n",
+      "body": "{\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#get-repository-content\",\"status\":\"404\"}"
+    },
+    "risk_viz_script": {
+      "endpoint": "repos/LDT-von/DCT-Reg/contents/_spe09_viz.py?ref=1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
+      "returncode": 1,
+      "stderr": "gh: Not Found (HTTP 404)\n",
+      "body": "{\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#get-repository-content\",\"status\":\"404\"}"
+    }
+  },
+  "interpretation": "Files not returned from this commit. This does not prove the server job did not run."
+}

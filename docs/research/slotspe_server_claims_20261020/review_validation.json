@@ -1,0 +1,26 @@
+{
+  "recorded_at": "2026-10-20T17:49:42+08:00",
+  "method": "source_metadata_and_hash_review_no_model_execution",
+  "server_commit_files_verified": 2,
+  "raw_artifact_queries": 3,
+  "all_three_unavailable_at_commit": true,
+  "historical_raw_hash_checks": [
+    {
+      "issue": "P2",
+      "receipt": "local_evidence/original_tree/.review/slotspe_p2_20261020/seed3_native_v1/receipt.json",
+      "files_verified": 73,
+      "method": "byte_SHA256_only_no_array_statistics_recomputed"
+    },
+    {
+      "issue": "P3",
+      "receipt": "local_evidence/original_tree/.review/slotspe_p3_20261020/seed3_native_v1/receipt.json",
+      "files_verified": 9,
+      "method": "byte_SHA256_only_no_array_statistics_recomputed"
+    }
+  ],
+  "new_forward_backward_training_runs": 0,
+  "original_model_or_training_code_changed": false,
+  "public_reports_have_no_per_patient_arrays": true,
+  "repository_README_original_terms_checked": ["冗余", "抽样", "梯度断开"],
+  "conclusion": "confirmed phenomena stated clearly; server harm overclaims marked pending/rejected inference"
+}

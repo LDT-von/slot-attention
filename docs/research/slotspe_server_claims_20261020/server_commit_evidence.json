@@ -1,0 +1,19 @@
+{
+  "repository": "LDT-von/DCT-Reg",
+  "sha": "1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
+  "commit_url": "https://github.com/LDT-von/DCT-Reg/commit/1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
+  "commit_message": "SPE-09: P1/P2/P4/P6 patient-level measured evidence (BLCA fold0 seed3)\n\nForward-only forward-only diagnostic on the existing fold0 last.pt 3 epoch\ncheckpoint.  No training was started.  Each section prints its numbers to\nresults/slotspe_proof/p1246_diagnostic_blca_fold0_20261020/diagnostic.json.\n\nP1 (slot count vs val C-index, n in {64, 96, 128, 192, 256}):\n  0.7224 / 0.7216 / 0.7201 / 0.7177 / 0.7137\n  - Spread 0.0087 < 1 sigma above baseline\n  - max |risk| = 0.092 within batch, but val C is flat\n\nP2 (WSI slot cosine redundancy):\n  - 77/77 (100%) patients have at least one cos > 0.95 between two slots\n  - max off-diagonal cosine = 0.9999\n  - The 8 slots at last epoch are effectively identical per patient\n\nP4 (slot permutation invariance of mean):\n  - max |mean(slots) - mean(slots[perm])| = 1e-6\n  - Sanity check; the redundancy in P2 is structural, not numerical\n\nP6 (patch-order sensitivity, 5 reps):\n  - mean max |Δ risk| = 0.0235, max over 5 reps = 0.085\n  - One order of magnitude above P3 eval RNG std (0.0035)\n  - Patient-level structural damage confirmed\n\nReference 8-problem table is now: P3/P5/P7 (already measured) + P1/P2/P4/P6\n(this commit).  P2 and P6 both exceed the 0.01 noise floor; the paper\ncandidate now has 6 patient-level findings.\n\nThis commit also adds the diagnostic script to .gitignore (treated as\nad-hoc analysis tooling, not production code).",
+  "files": [
+    {
+      "filename": ".gitignore",
+      "status": "modified",
+      "patch": "@@ -97,3 +97,4 @@ transport_diagnosis/\n \n # One-off analysis scripts (not production code)\n _spe09_viz.py\n+_p1246_diag.py"
+    },
+    {
+      "filename": "AGENTS.md",
+      "status": "modified",
+      "patch": "@@ -348,9 +348,24 @@ E049（BLCA，2 骨干 × 2 臂 × 5 折 = 20 任务）结果：MCAT native 0.66\n | P7 | 最终融合 NLL 到选槽器**直接梯度缺失** | **已坐实**：`trained_selector_gradients.json` 8/8 参数 `main.kind=None`，aux-only |\n | P8 | 不适用原版 SlotSPE（OT 双阶段不在原版） | — |\n \n-**含义**：今早给\"够一篇论文\"的判断**只覆盖 P3、P5、P7 + ④⑤意外发现**；**P1/P2/P4/P6 是结构事实但\"患者损害未证\"**，升级路径必须先补这 4 项的 patient-level 数字，paper section §3 才能成立。\n+**含义**：今早给\"够一篇论文\"的判断**只覆盖 P3、P5、P7 + ④⑤意外发现**；**P1/P2/P4/P6 是结构事实但\"患者损害未证\"**。\n \n-### 升级路径（修订版）\n+**2026-10-20 P1/P2/P4/P6 实测已落地**（`results/slotspe_proof/p1246_diagnostic_blca_fold0_20261020/diagnostic.json`，BLCA fold0 seed3 last.pt 单卡 28 s 跑完，无重训）：\n+\n+- **P1 槽数 vs val**：n=64→0.7224, n=96→0.7216, n=128→0.7201, n=192→0.7177, n=256→0.7137（max |risk diff|=0.092）；C 区间 0.7137–0.7224 < 0.01 噪声边界。\n+- **P2 槽间 cos 冗余**：**77/77=100% 患者**有 cos>0.95 的槽对（off-diag），**max cos=0.9999**——8 槽在末轮基本完全相同，**冗余到极致**。预测路径用了 8 次相同\"slot 平均\"，患者损害可证。\n+- **P4 槽置换不变**：mean-of-8 数学 permutation-invariant；max_abs_diff ≈ 1e-6（确认 P2 不是数值误差，是数学结构）。\n+- **P6 patch 顺序**：5 rep **mean_max_abs_risk_diff=0.0235, max=0.085**，**超过 P3 std=0.0035 一个数量级**——单患者多次重排 patch 顺序已具备真实预测偏移，与 ① 同量级。\n+\n+**结论**：P2 + P6 是新落地的\"患者损害已证\"的两项，加上原 ②③⑤ + P3/P5/P7 三项，**论文候选证据链现在有 6 项**：\n+1. ① P7 主 NLL 梯度断路\n+2. ② P3 eval RNG（0.0035）\n+3. ③ P5 补零敏感（1.1e-2）\n+4. ④ P2 **槽冗余（max cos=1.0）**——新增\n+5. ⑤ P6 **patch 顺序敏感（0.085）**——新增\n+6. ⑥ ⑤ risk-vs-time ρ=+0.41 方向翻转\n+\n+**升级路径**\n \n 按\"补足患者证据缺口\"重排，5 折 × 30 epoch × seed 3 一组跑下来同时采集下列指标：\n "
+    }
+  ],
+  "note": "This is a verified server report commit, not raw execution artifacts or a new-slot-attention repository commit."
+}

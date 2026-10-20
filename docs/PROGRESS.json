@@ -1,17 +1,17 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-20T17:17:16+08:00",
+  "recorded_at": "2026-10-20T17:49:42+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
   "issues": {
-    "P1": "默认每模态8候选/Top-2；cross仍读全槽；固定容量损害未证。",
-    "P2": "历史短程模型读取高重叠且干预有计算差异；有害冗余/碎片化未证。",
-    "P3": "历史同权重同输入eval波动已有本地原始记录；固定两处抽样可去除该协议波动，提分未证。",
-    "P4": "无固定槽编号语义保证；真实组织/跨患者语义漂移及损害未证。",
-    "P5": "无padding mask及补零分支存在；零行历史统计缺该轮原始记录，真实无关组织占槽/损害未证。",
-    "P6": "缺显式空间/倍率接口；上游尺度内容及患者预测损害未证。",
-    "P7": "最终融合主损失到选槽器直接梯度断开，辅助仍连通；患者损害及B/C收益未证。",
+    "P1": "固定8候选/Top-2结构已确认；固定容量的患者损害未证。服务器n=64..256变量定义待脚本，不能混作槽数实验。",
+    "P2": "历史训练后高相似已观察；服务器报告77/77至少一对cos>0.95、max=0.9999，不证明8槽全复制或患者损害。",
+    "P3": "初槽不以当前患者为条件、后续迭代读取患者；同权重eval波动已确认。服务器C-index std=0.0035待原始回传，不是通用噪声上界；冷启动损害及修正收益未证。",
+    "P4": "槽编号无固定语义保证；均值置换是sanity check，不证明实际语义漂移或患者损害。",
+    "P5": "补零无mask风险及同RNG合成敏感性已确认；服务器max logit变化0.011待原始验收，真实无关组织占槽/损害未证。",
+    "P6": "显式坐标/倍率接口缺口已确认；服务器重排risk差需核对RNG，尚不能归因顺序，也不证明空间尺度预测损害。",
+    "P7": "最终融合主损失到选槽器的直接梯度断开已确认；单模态生存辅助仍连通，广义目标冲突、患者损害及B/C收益未证。",
     "P8": "原版无后续跨模态OT，双阶段冲突不适用。"
   },
   "tasks": [
@@ -55,13 +55,13 @@
       "id": "SPE-07",
       "title": "服务器先复现一组SlotSPE问题",
       "status": "reported_completed_awaiting_raw_artifacts",
-      "next_action": "验收d64530c登记的SPE-09原始manifest/梯度/预测/槽干预/checkpoint；文字记录不等于原始证据通过。"
+      "next_action": "先回传1de42c7实际诊断脚本及原始产物，按同单位/同输入/同RNG控制验收P2/P6及risk方向。保留已确认P3/P7等现象；不自动扩训练，不宣称患者损害和修正收益已闭环。"
     },
     {
       "id": "SPE-08",
       "title": "核实八类槽问题在指定原版SlotSPE中的存在性",
       "status": "partially_completed_local",
-      "next_action": "优先验收SPE09现有原始回传；P5自然零行统计待原始记录，真实无关组织占槽/损害未证；P6患者空间尺度损害、P7患者B/C归因待证；P8原版不适用。不新增训练/模块。"
+      "next_action": "指定副本11份登记文件三方哈希与P1-P8/Q6源码复核已完成（见latest_source_review）；先回传1de42c7实际诊断脚本及原始产物，按同单位/同输入/同RNG控制验收P2/P6及risk方向。保留已确认P3/P7等现象；不自动扩训练，不宣称患者损害和修正收益已闭环。"
     },
     {
       "id": "SPE-09",
@@ -73,6 +73,46 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "优先验收SPE09现有原始回传；P5自然零行统计待原始记录，真实无关组织占槽/损害未证；P6患者空间尺度损害、P7患者B/C归因待证；P8原版不适用。不新增训练/模块。",
-  "git_remote": "https://github.com/LDT-von/slot-attention.git"
+  "next_action": "先回传1de42c7实际诊断脚本及原始产物，按同单位/同输入/同RNG控制验收P2/P6及risk方向。保留已确认P3/P7等现象；不自动扩训练，不宣称患者损害和修正收益已闭环。",
+  "git_remote": "https://github.com/LDT-von/slot-attention.git",
+  "latest_source_review": {
+    "recorded_at": "2026-10-20T17:43:31+08:00",
+    "task_id": "SPE-08",
+    "status": "completed_readonly_source_review",
+    "requested_directory": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main",
+    "report": "docs/research/slotspe_target_review_20261020/指定目录八项问题核查.txt",
+    "receipt": "docs/research/slotspe_target_review_20261020/source_identity_receipt.json",
+    "registered_files_three_way_hash_matches": 11,
+    "codegraph_project": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main",
+    "new_index_created": false,
+    "patch_order_sensitivity": "not_established; prior controlled synthetic record near floating-point error",
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_backward_passes": 0,
+    "patient_tensors_or_checkpoints_loaded": false,
+    "new_synthetic_experiments": 0,
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false,
+    "server_execution_this_review": false,
+    "server_raw_results_received": false,
+    "historical_patient_measurements_recomputed_this_review": false,
+    "original_sources_modified": false,
+    "historical_reports_modified": false,
+    "next_action": "优先验收已有SPE09原始回传与SHA；保留P5勘误及证据边界，不新增训练或模块。"
+  },
+  "latest_server_report_review": {
+    "source_repo": "LDT-von/DCT-Reg",
+    "source_commit": "1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
+    "commit_verified": true,
+    "raw_results_received": false,
+    "review": "docs/research/slotspe_server_claims_20261020/claim_review.json",
+    "six_patient_harm_claim_accepted": false,
+    "new_patient_execution": false
+  },
+  "confirmed_problem_phenomena": [
+    "P3 native eval randomness affects predictions",
+    "P7 direct fused-loss selector gradient disconnect",
+    "P5 missing padding mask and synthetic zero-row sensitivity",
+    "unselected self-slot contribution despite selection mask"
+  ]
 }

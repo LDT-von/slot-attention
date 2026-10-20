@@ -1,0 +1,261 @@
+{
+  "schema": "slotspe_requested_directory_readonly_review_v1",
+  "recorded_at": "2026-10-20T17:43:31+08:00",
+  "route_task": "SlotSPE issue discovery / SPE-08",
+  "base_commit": "d3b4874069b1f03cc30996acbbb3e90d3adaeadd",
+  "scope": "current source, documented provenance, existing report/JSON review and hashes only",
+  "report": "C:\\Users\\栋栋\\Desktop\\slot attention\\docs\\research\\slotspe_target_review_20261020\\指定目录八项问题核查.txt",
+  "report_sha256": "c1e4baf252082600c98b417411038950c6d09af1a3a31982f2181574ee7d4fe8",
+  "publication_manifest_sha256": "29239a3ad5e2576eeb58ac6dc1921ccdc6ed50445b4f40a0fc89843a5b026808",
+  "progress_sha256_before": "192486a27173cbbd32a59f303594c0148bea55cce63153426e4b8c7ce46b02b2",
+  "progress_sha256_after": "247551d95ffcbdf3ba9024a65f3d0d28c20e23e3ad35d53f025e9b8769741ce7",
+  "identity_matches": [
+    {
+      "relative_file": "README.md",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\README.md",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\README.md",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\README.md",
+      "target_bytes": 8812,
+      "target_sha256": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82",
+      "snapshot_sha256": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82",
+      "manifest_sha256": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "dataset/dataset_survival.py",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\dataset\\dataset_survival.py",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\dataset\\dataset_survival.py",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\dataset\\dataset_survival.py",
+      "target_bytes": 14691,
+      "target_sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+      "snapshot_sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+      "manifest_sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "models/SlotSPE.py",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\models\\SlotSPE.py",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\models\\SlotSPE.py",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+      "target_bytes": 14109,
+      "target_sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "snapshot_sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "manifest_sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "models/omics_encoder.py",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\models\\omics_encoder.py",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\models\\omics_encoder.py",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\omics_encoder.py",
+      "target_bytes": 648,
+      "target_sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+      "snapshot_sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+      "manifest_sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "models/slot_attention.py",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\models\\slot_attention.py",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\models\\slot_attention.py",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\slot_attention.py",
+      "target_bytes": 4975,
+      "target_sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "snapshot_sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "manifest_sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "models/transformer.py",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\models\\transformer.py",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\models\\transformer.py",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\transformer.py",
+      "target_bytes": 10848,
+      "target_sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "snapshot_sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "manifest_sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "requirements.txt",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\requirements.txt",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\requirements.txt",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\requirements.txt",
+      "target_bytes": 57,
+      "target_sha256": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+      "snapshot_sha256": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+      "manifest_sha256": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "scripts/SlotSPE.sh",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\scripts\\SlotSPE.sh",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\scripts\\SlotSPE.sh",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\scripts\\SlotSPE.sh",
+      "target_bytes": 1745,
+      "target_sha256": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+      "snapshot_sha256": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+      "manifest_sha256": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "utils/core_utils.py",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\utils\\core_utils.py",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\utils\\core_utils.py",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\core_utils.py",
+      "target_bytes": 19403,
+      "target_sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+      "snapshot_sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+      "manifest_sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "utils/loss_func.py",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\utils\\loss_func.py",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\utils\\loss_func.py",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\loss_func.py",
+      "target_bytes": 16600,
+      "target_sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+      "snapshot_sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+      "manifest_sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+      "three_way_match": true
+    },
+    {
+      "relative_file": "utils/process_args.py",
+      "target_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main\\utils\\process_args.py",
+      "snapshot_path": "C:\\Users\\栋栋\\Desktop\\slot attention\\third_party\\SlotSPE\\utils\\process_args.py",
+      "historical_source_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\process_args.py",
+      "target_bytes": 5407,
+      "target_sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+      "snapshot_sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+      "manifest_sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+      "three_way_match": true
+    }
+  ],
+  "source_identity_scope": "11 registered core, README, requirements and launcher files only; not certification of the entire local directory",
+  "existing_evidence_read": [
+    {
+      "path": "README.md",
+      "sha256": "741279fac7f854b32ffdd47ee82a6874bec5541bea9812b0e2eddc9e37a815b0"
+    },
+    {
+      "path": "NOTICE.md",
+      "sha256": "0b93b0360df270d7b900059ca8772b0453436c4b88d7bee7858ad606ade582c7"
+    },
+    {
+      "path": "SlotSPE-main/README.md",
+      "sha256": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82"
+    },
+    {
+      "path": "SlotSPE-main/docs/slot_attention_issues.md",
+      "sha256": "120c6c108052583d27a3d5f1d1a4f31c29b64c1d6c619c1aa5ae15e5001dadda"
+    },
+    {
+      "path": "docs/research/slotspe_p1_20261020/P1_真实患者只读检查.txt",
+      "sha256": "b6499009d422ab122a77c4ad2b588991a44147811c3a8bcf8bb20eafb532b59b"
+    },
+    {
+      "path": "docs/research/slotspe_p2_20261020/P2_真实患者槽干预核查.txt",
+      "sha256": "6948c4f760c2c038974cdc7eef9d785342fa5fc5a87f1b96ed35c0f3c1fc9729"
+    },
+    {
+      "path": "docs/research/slotspe_p3_20261020/P3_真实患者初始化与随机性核查.txt",
+      "sha256": "f3cc82f6ab01785c0cdf7b574a10049f47797c4dfceef17a069c316dad6eceec"
+    },
+    {
+      "path": "docs/research/slotspe_p4_20261020/P4_真实患者槽编号与语义核查.txt",
+      "sha256": "3e6d568908a0dd8b4b373be07ebd115ebcbf4d8329e4d0d5cad6dbcdf7b1a3a6"
+    },
+    {
+      "path": "docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt",
+      "sha256": "6a5e331ed683405937578948dd981af6598772fdc25b4ea99ac6a24ca32eeb8a"
+    },
+    {
+      "path": "docs/research/slotspe_p6_20261020/source_review.json",
+      "sha256": "3172e523cb81053628f3a9fa3a1b4168eb814ad1688665228b2f553d35ac5307"
+    },
+    {
+      "path": "docs/research/slotspe_p7_20261020/source_review.json",
+      "sha256": "70e36757ef5fe31bb52d25f47e1765635332c68abdb58fe825eb57509f3d3afb"
+    },
+    {
+      "path": "docs/research/slotspe_p8_20261020/P8_只读核验报告.txt",
+      "sha256": "7bb542e08fe9edc6bcbf0f5527c0764159f859bd9ec2b50940a03c450197b33b"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/synthetic_checks.json",
+      "sha256": "07747247f199cf82fa5ed937b2e6ba71ac48f45a8366e22e163c7617e377dc79"
+    }
+  ],
+  "issue_classifications": {
+    "P1": {
+      "source": "fixed_candidate_and_selected_cardinality",
+      "harm": "not_established"
+    },
+    "P2": {
+      "source": "no_explicit_redundancy_or_fragmentation_control",
+      "historical_observation": "high_slot_similarity_and_readout_overlap",
+      "harm": "not_established",
+      "semantic_fragmentation": "not_established"
+    },
+    "P3": {
+      "source": "initial_sampling_not_conditioned_on_current_input_and_eval_keeps_gaussian_and_gumbel_draws",
+      "historical_observation": "same_checkpoint_eval_variation",
+      "initialization_quality_harm": "not_established",
+      "conditional_initialization_efficacy": "not_established"
+    },
+    "P4": {
+      "source": "no_fixed_index_semantic_anchor",
+      "biological_semantic_drift": "not_established",
+      "harm": "not_established"
+    },
+    "P5": {
+      "source": "loader_zero_fallback_and_padding_without_slot_input_mask",
+      "natural_zero_prevalence": "old_statistics_not_independently_recomputed",
+      "irrelevant_tissue_occupation": "not_established",
+      "harm": "not_established"
+    },
+    "P6": {
+      "source": "no_explicit_multi_scale_multi_layer_or_coordinates_interface",
+      "upstream_feature_content": "not_established",
+      "harm": "not_established"
+    },
+    "P7": {
+      "source": "final_fusion_main_loss_direct_selector_gradient_disconnected_by_bool_mask",
+      "auxiliary_unimodal_survival_gradient": "connected_in_historical_records",
+      "harm": "not_established",
+      "abc_patient_efficacy": "not_established"
+    },
+    "P8": {
+      "source": "no_second_stage_cross_modal_OT",
+      "status": "not_applicable"
+    },
+    "Q6_patch_order": {
+      "source": "set_aggregation_without_explicit_patch_index_positions",
+      "historical_synthetic_max_logit_difference": 1.1920928955078125e-07,
+      "violation": "not_observed_in_historical_controlled_synthetic_record",
+      "patient_checkpoint_verification_this_review": false
+    }
+  },
+  "checks": {
+    "all_11_registered_files_match": true,
+    "json_roundtrip": true,
+    "report_exists": true,
+    "historical_reports_rewritten": false,
+    "original_model_modified": false,
+    "codegraph_used_existing_nested_index": true
+  },
+  "execution": {
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_backward_passes": 0,
+    "new_synthetic_runs": 0,
+    "patient_tensor_or_checkpoint_loads": 0,
+    "server_execution": false,
+    "server_raw_results_received": false,
+    "historical_per_patient_arrays_recomputed": false
+  },
+  "gaps": "Historical local measurements were read from reports and receipts, not remeasured; patient harm, ABC efficacy and new server artifacts remain unestablished.",
+  "next_action_user_input": "Audit existing SPE09 raw package and SHA when supplied; no new execution arranged.",
+  "git_delivery": "No commit, staging or push performed by this review."
+}

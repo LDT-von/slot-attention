@@ -1,11 +1,29 @@
 {
-  "schema": "slotspe_standalone_publication_v1",
+  "schema": "slotspe_standalone_publication_v2",
   "created_at": "2026-10-20T17:17:16+08:00",
   "source_dct_HEAD": "fd3ac2230ff3e3814090859ea75ff1d4d5322d0f",
   "source_worktree_includes_uncommitted_changes": true,
   "source_history_not_rewritten": true,
   "remote": "https://github.com/LDT-von/slot-attention.git",
   "visibility_observed": "public",
+  "contains_patient_cache_or_checkpoints": false,
+  "local_evidence_files_planned": 2798,
+  "local_evidence_bytes_planned": 5242680220,
+  "excluded_other_line_directories": [
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_repository_export_20261020",
+      "reason": "transport_line_or_current_export_workspace"
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_transport_push_20261019",
+      "reason": "transport_line_or_current_export_workspace"
+    }
+  ],
+  "root_original_literature_files": 15,
+  "last_review_at": "2026-10-20T17:54:51+08:00",
+  "previous_manifest_commit": "d3b4874069b1f03cc30996acbbb3e90d3adaeadd",
+  "last_update": "source/documentation audit of DCT-Reg@1de42c7; no new experiments",
+  "source_code_changed_this_update": false,
   "public_files": [
     {
       "path": ".gitattributes",
@@ -33,9 +51,10 @@
     },
     {
       "path": "README.md",
-      "bytes": 4197,
-      "sha256": "741279fac7f854b32ffdd47ee82a6874bec5541bea9812b0e2eddc9e37a815b0",
-      "source": "generated_independent_repository_documentation"
+      "bytes": 6573,
+      "sha256": "c7666a7572658ab4817c4743358d464f85aa962237265beda8c240ab1e3577c3",
+      "source": "documentation_update_after_source_and_server_report_review",
+      "previous_sha256": "741279fac7f854b32ffdd47ee82a6874bec5541bea9812b0e2eddc9e37a815b0"
     },
     {
       "path": "configs/slotspe_attribution_server.json",
@@ -63,9 +82,10 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 4206,
-      "sha256": "192486a27173cbbd32a59f303594c0148bea55cce63153426e4b8c7ce46b02b2",
-      "source": "generated_independent_repository_documentation"
+      "bytes": 6861,
+      "sha256": "316c0f8df8850832ab3cda3f12fba61e4a167dfb31f2bdb07982fd1c605b1bdf",
+      "source": "documentation_update_after_source_and_server_report_review",
+      "previous_sha256": "192486a27173cbbd32a59f303594c0148bea55cce63153426e4b8c7ce46b02b2"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -516,6 +536,60 @@
       "bytes": 7466,
       "sha256": "773b32c18bd4c64ce673724d639e9f83032f4ae8f795ca3798b30d03fdf01acd",
       "source": "E:\\DCT-Reg\\docs\\research\\slotspe_p8_20261020\\source_review.json"
+    },
+    {
+      "path": "docs/research/slotspe_server_claims_20261020/artifact_lookup.json",
+      "source": "generated_server_claim_audit_documentation",
+      "sha256": "ac1d05da9590c0717965d8e1c0b1628d79f6679c9927b159499c048657627091",
+      "bytes": 1431
+    },
+    {
+      "path": "docs/research/slotspe_server_claims_20261020/claim_review.json",
+      "source": "generated_server_claim_audit_documentation",
+      "sha256": "0dfce36ae6f33fd4a1aeffd8e3984238e6880427320c3d7b852374849714b6ff",
+      "bytes": 7728
+    },
+    {
+      "path": "docs/research/slotspe_server_claims_20261020/review_validation.json",
+      "source": "generated_server_claim_audit_documentation",
+      "sha256": "1781aff26446a1875587b51824acacf7e189e391aa2c2aa689670569e494743c",
+      "bytes": 1073
+    },
+    {
+      "path": "docs/research/slotspe_server_claims_20261020/server_commit_evidence.json",
+      "source": "generated_server_claim_audit_documentation",
+      "sha256": "0c3cdeeabbba6b5cbeba8494926e0c1348768224d3a39cf0f4062883d4270b4a",
+      "bytes": 4396
+    },
+    {
+      "path": "docs/research/slotspe_server_claims_20261020/source_evidence.json",
+      "source": "generated_server_claim_audit_documentation",
+      "sha256": "35325b4da721c4330f137af50f2c166abb554f637b7480d501e210f00778e159",
+      "bytes": 13674
+    },
+    {
+      "path": "docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt",
+      "source": "generated_server_claim_audit_documentation",
+      "sha256": "11f94b18d9609067b59d64111091a3233c2cd1b625cbce1b72bcbf719e165468",
+      "bytes": 3960
+    },
+    {
+      "path": "docs/research/slotspe_server_claims_20261020/服务器结论复核.txt",
+      "source": "generated_server_claim_audit_documentation",
+      "sha256": "50eb4dc7d34fc1d4dfcb9e791bb61bf006f3298521ad3e0c917ce127249a09c6",
+      "bytes": 4191
+    },
+    {
+      "path": "docs/research/slotspe_target_review_20261020/source_identity_receipt.json",
+      "source": "generated_server_claim_audit_documentation",
+      "sha256": "4b1835e85e65d9f86d7f41437d94127901834ab96c527fc7e734842e317469f0",
+      "bytes": 14285
+    },
+    {
+      "path": "docs/research/slotspe_target_review_20261020/指定目录八项问题核查.txt",
+      "source": "generated_server_claim_audit_documentation",
+      "sha256": "c1e4baf252082600c98b417411038950c6d09af1a3a31982f2181574ee7d4fe8",
+      "bytes": 11254
     },
     {
       "path": "evidence/code_snapshots/slotspe_clean_original_validation_20261019/finalize.py",
@@ -991,19 +1065,5 @@
       "sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
       "source": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\process_args.py"
     }
-  ],
-  "contains_patient_cache_or_checkpoints": false,
-  "local_evidence_files_planned": 2798,
-  "local_evidence_bytes_planned": 5242680220,
-  "excluded_other_line_directories": [
-    {
-      "path": "E:\\DCT-Reg\\.review\\slotspe_repository_export_20261020",
-      "reason": "transport_line_or_current_export_workspace"
-    },
-    {
-      "path": "E:\\DCT-Reg\\.review\\slotspe_transport_push_20261019",
-      "reason": "transport_line_or_current_export_workspace"
-    }
-  ],
-  "root_original_literature_files": 15
+  ]
 }

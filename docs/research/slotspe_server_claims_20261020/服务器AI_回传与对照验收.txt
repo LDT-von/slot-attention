@@ -1,0 +1,27 @@
+请先验收现有SlotSPE产物，不扩展训练或创新模块。
+
+你已提交DCT-Reg@1de42c7，但该提交仅有AGENTS.md和.gitignore，诊断脚本及原始结果未回传。请先返回已有材料，不要以新训练代替原始交付，也不要删改失败或旧结果。
+
+第一步：打包现有产物，提供ZIP完整SHA256与文件清单。
+1. 实际运行的_p1246_diag.py及_spe09_viz.py，即使被gitignore也要随私有回传包提供。可公开的是去除私有路径/凭据后的诊断源码。
+2. results/slotspe_proof/p1246_diagnostic_blca_fold0_20261020/diagnostic.json及生成它的日志、命令、配置、源码SHA、checkpoint SHA、版本/设备信息。
+3. 原original-audit运行的native_model_audit.json、trained_selector_gradients.json、eval_repeats.json、validation_predictions.csv、patient_slot_intervention.json、natural_gate_observations.json，以及manifest/receipt/配置/日志。
+4. 保留逐患者索引对齐、事件/删失定义、logits/risk、槽向量/矩阵、置换索引和随机状态记录。不要把原始患者数组和临床信息推到公开仓库；缺什么如实列出。
+
+第二步：只读核对原脚本/记录，按以下问题修正结论。
+P1：n究竟是patch数还是槽数？是否改变候选槽配置、Top-K、权重或仅截断输入？若仅变patch数，改名为输入预算敏感性，不登记动态槽收益或固定槽损害。
+P2：100%是否仅指每患者至少一对cos>0.95？请报每患者28个去对角配对的分布、超过阈值的配对占比、槽范数/成对L2差；保留未舍入值。不要用max或均值置换不变宣称8槽全复制或患者损害。
+P3：0.0035标明为20次队列C-index标准差；原始risk极差在不同说明中有0.136和0.0301，逐项对回JSON键/人群/重复范围。不能把标准差叫噪声上界。
+P4：明确只测mean(slots)，还是完整模型+同步置换keep；前者仅sanity check，不属于已证患者损害。
+P5：0.011若是max_logit_difference就写logit；risk和C-index分别报告。人工零行不代表真实无关组织。核对基线与干预的配对RNG和患者/批次一致。
+P6：先验证原始输入与重排输入的每名患者patch多重集合完全一致、组学/批次/权重/eval模式一致。生成置换本身不得额外推进被比较的模型随机状态。
+  逐次恢复相同的Python/NumPy/Torch CPU及全部CUDA RNG状态，或导出并验证两模态初槽与Gumbel抽样一致；不能只在整个脚本开头seed一次。
+  必须有“原输入vs原输入，同RNG”零变更对照、“原输入vs重排，同RNG”目标对照，以及同单位自然随机前向差异分布。logits/risk/C-index分别比较，不能除以另一指标的std。
+  现有原始记录若没有这些控制，就写order_effect_not_identified，先提交最小补查方案；不要把未控RNG的差异写成顺序损害。
+P7：主融合NLL与辅助损失分开列8个参数的None/zero/nonzero；需要时另报Slot Attention编码参数主梯度。仅pred_keep_slot直接主梯度断开，不是整个模型无生存监督；一阶梯度不要称二阶审计。
+risk方向：明确risk=-sum(cumprod(1-sigmoid(logits)))与事件/删失标识；在同一组患者、同样删失规则下计算C(risk)、C(-risk)及可比较对数量。普通risk/观察时间Spearman只能作探索性描述，不能单独证明方向翻转。
+gate：区分gate_sum近1和每槽gate近1；原版Top-2归一化gate不可能8个分量各近1。
+
+第三步：如果现有产物缺控制，只列缺口并提出最小同权重复核；本提示词不新增训练/患者干预授权，不自动运行五折、30轮或添加模块。
+报告分为：原始观测已验收／计算敏感性／患者预测损害／修正收益；问题未出现就写not_observed。
+不要再将“6项患者损害全立”“论文证据闭环”“Slot Attention完全看不到hazard”作为当前结论。
