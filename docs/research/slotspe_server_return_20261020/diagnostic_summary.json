@@ -1,0 +1,306 @@
+{
+  "schema": "slotspe_server_return_diagnostic_summary_v1",
+  "summary_marked_as": "SUMMARY",
+  "summary_is_not": "Complete original raw results have NOT been returned to this public repository.",
+  "recorded_at": "2026-10-20T20:35:00+08:00",
+  "server_task": "SPE-08",
+  "cohort": "BLCA (TCGA)",
+  "aggregate_method": {
+    "scope_per_fold": "Each row is one independent fold of the same 5-fold packaged split, seed 3, arm 'original', 3 epochs, 256 real patches.",
+    "population_std": "numpy/std default (ddof=0) as recorded by the producer in summary.json field val_cindex_std_population; the producer notes it is translation-invariant after subtracting the first repeat.",
+    "five_fold_aggregation": "No cross-fold pooled statistic is published here. Each fold's queue-level C-index is measured on a different held-out cohort, so pooling would mix incomparable denominators. Any 5-fold number must be recomputed locally from the original per-fold artifacts.",
+    "cindex_definition": "Producer-implemented Harrell C-index inside _p1246_diag.py (_concordance); comparable-pair counting skips equal times and censored earlier subjects.",
+    "risk_definition": "risk = -sum(cumprod(1 - sigmoid(logits))) over the 4 discrete hazard bins."
+  },
+  "primary_run_fold0": {
+    "checkpoint_sha256": "1c6daa01969879c40612bc67dd17ab7b9d3ed9e5ea56671e7f8278dd4c30aec5",
+    "optimizer_steps": 114,
+    "parameter_count": 33093390,
+    "epochs": 3,
+    "repeats": 20,
+    "cindex_mean_exploratory": 0.7223454833597466,
+    "cindex_std_population": 0.00353836981961428,
+    "cindex_min_exploratory": 0.7131537242472267,
+    "cindex_max_exploratory": 0.7297939778129953,
+    "patient_risk_std_mean": 0.007265894678631447,
+    "patient_risk_std_max": 0.030086301932403293,
+    "patient_risk_range_max": 0.13613557815551758,
+    "selector_parameter_count": 8,
+    "main_gradient_none_parameter_count": 8,
+    "main_gradient_connected_parameter_count": 0,
+    "disconnected_selector_status": "observed",
+    "source_file_sha256": {
+      "summary.json": "see artifact_manifest.json",
+      "note": "All original JSON key names are preserved verbatim in this file so local acceptance can map them back to the producer files."
+    }
+  },
+  "five_fold_rows": [
+    {
+      "fold": 0,
+      "seed": 3,
+      "cindex_mean": 0.69588,
+      "cindex_std_population": 0.00776,
+      "patient_risk_range_max": 1.4082,
+      "main_gradient_none_parameter_count": 8
+    },
+    {
+      "fold": 1,
+      "seed": 3,
+      "cindex_mean": 0.56244,
+      "cindex_std_population": 0.01605,
+      "patient_risk_range_max": 0.9222,
+      "main_gradient_none_parameter_count": 8
+    },
+    {
+      "fold": 2,
+      "seed": 3,
+      "cindex_mean": 0.58607,
+      "cindex_std_population": 0.00913,
+      "patient_risk_range_max": 2.8241,
+      "main_gradient_none_parameter_count": 8
+    },
+    {
+      "fold": 3,
+      "seed": 3,
+      "cindex_mean": 0.61383,
+      "cindex_std_population": 0.00411,
+      "patient_risk_range_max": 1.1909,
+      "main_gradient_none_parameter_count": 8
+    },
+    {
+      "fold": 4,
+      "seed": 3,
+      "cindex_mean": 0.68385,
+      "cindex_std_population": 0.0064,
+      "patient_risk_range_max": 1.5427,
+      "main_gradient_none_parameter_count": 8
+    }
+  ],
+  "five_fold_rounded_display_only": "The five_fold_rows numbers are display-rounded to 5 decimals because the producer files are read from a console transcript; the authoritative values are the per-fold summary.json files listed in artifact_manifest.json. Local acceptance should recompute from those originals, not from this table.",
+  "original_json_keys_used": [
+    "val_cindex_mean_exploratory",
+    "val_cindex_std_population",
+    "patient_risk_range_max",
+    "patient_risk_std_max",
+    "main_gradient_none_parameter_count",
+    "disconnected_selector_status",
+    "checkpoint_sha256"
+  ],
+  "metric_unit_separation_note": "C-index standard deviation, logit difference and risk difference are DIFFERENT units and are deliberately NOT compared against one shared noise threshold anywhere in this return.",
+  "diagnosis_p1246": {
+    "source": "results/slotspe_proof/p1246_diagnostic_blca_fold0_20261020/diagnostic.json",
+    "original_keys": [
+      "timestamp",
+      "blca_fold0_seed3_3epoch",
+      "p1",
+      "p2",
+      "p4",
+      "p6"
+    ],
+    "note": "This file contains p1/p2/p4/p6 ONLY. P3, P5 and P7 numbers come from native_model_audit.json and summary.json, not from this file.",
+    "p1": {
+      "measured_variable": "number of real WSI patch TOKENS truncated from the prepared cache (n=64,96,128,192,256), NOT the number of slots",
+      "top_k_or_selector_config_unchanged": true,
+      "baseline_val_cindex_at_256": 0.7137192704203014,
+      "series": [
+        {
+          "n": 64,
+          "val_cindex": 0.7224425059476606,
+          "n_pairs": 1261,
+          "max_abs_risk_diff": 0.09226953983306885
+        },
+        {
+          "n": 96,
+          "val_cindex": 0.7216494845360825,
+          "n_pairs": 1261,
+          "max_abs_risk_diff": 0.05655825138092041
+        },
+        {
+          "n": 128,
+          "val_cindex": 0.7200634417129262,
+          "n_pairs": 1261,
+          "max_abs_risk_diff": 0.04414212703704834
+        },
+        {
+          "n": 192,
+          "val_cindex": 0.7176843774781919,
+          "n_pairs": 1261,
+          "max_abs_risk_diff": 0.017101526260375977
+        },
+        {
+          "n": 256,
+          "val_cindex": 0.7137192704203014,
+          "n_pairs": 1261,
+          "max_abs_risk_diff": 0.0
+        }
+      ],
+      "correct_label": "input-budget sensitivity, not a slot-count experiment",
+      "does_not_support": [
+        "dynamic slot capacity benefit",
+        "fixed-slot patient harm"
+      ]
+    },
+    "p2": {
+      "measured_variable": "8x8 WSI slot cosine matrix per patient; diagonal zeroed; off-diagonal pairs total C(8,2)=28 per patient",
+      "n_patients": 77,
+      "fraction_patients_with_at_least_one_offdiag_pair_above_0.95": 1.0,
+      "mean_high_cos_pairs_per_patient": 56.0,
+      "high_cos_pairs_count_semantics": "The producer counts matrix elements >0.95 with the diagonal zeroed. 8x8 minus 8 diagonal = 56 off-diagonal elements. The observed value is 56 for EVERY patient (all 77 identical), i.e. every off-diagonal element exceeds 0.95, which means all 28 distinct unordered pairs are above threshold.",
+      "corrected_reading_of_P2": "The data is STRONGER than the earlier 'at least one pair per patient' wording: all 28 unordered off-diagonal slot pairs exceed cos 0.95 for all 77/77 patients. This corrects the understated description previously recorded in PROGRESS.json. It still does NOT establish that the 8 slots are copies of one another, because mutual high cosine does not prove identical vectors: 8 distinct vectors sharing a dominant common component would also give cos ~0.9996.",
+      "mean_max_offdiag_cos": 0.9996116811578925,
+      "max_max_offdiag_cos": 0.9998906254768372,
+      "min_patient_max_offdiag_cos": 0.9989901781082153,
+      "correct_claim": "For all 77 patients, all 28 distinct unordered WSI slot pairs exceed cos 0.95, with per-patient maximum off-diagonal cosine averaging 0.99961 (min 0.99899). Slot redundancy is therefore uniform across this validation cohort, not a rare tail case.",
+      "does_not_support": [
+        "the 8 slots are literal copies of one another (needs norms and pairwise L2)",
+        "full 8-slot redundancy established as vector identity",
+        "patient predictive harm"
+      ],
+      "missing_for_strict_acceptance": [
+        "per-patient slot norms",
+        "per-patient pairwise L2 differences",
+        "residual direction after removing the shared mean component"
+      ]
+    },
+    "p4": {
+      "measured_variable": "mean of the 8 WSI slots, compared against ONE fixed hardcoded permutation [3,6,1,4,0,7,2,5]",
+      "n_patients": 10,
+      "max_diff_overall": 9.5367431640625e-07,
+      "unit": "absolute difference of the slot mean, NOT a logit difference despite the producer's key name max_abs_logit_diff_among_permutations",
+      "correct_claim": "A mean over slots is mathematically permutation invariant up to floating point; this is a sanity check on the setup.",
+      "does_not_support": [
+        "actual slot semantic drift",
+        "fixed slot semantics absent in the real model",
+        "patient harm"
+      ],
+      "not_done": [
+        "full model forward with synchronised slot-index permutation through the selector/keep path"
+      ]
+    },
+    "p6": {
+      "measured_variable": "absolute risk difference after permuting the patch dimension of x_wsi",
+      "n_reps": 50,
+      "mean_max_diff": 0.0235053813457489,
+      "max_diff": 0.08502888679504395,
+      "mean_mean_diff": 0.008692857222631573,
+      "rng_control_status": "NOT_IDENTIFIED",
+      "why_not_identified": "In _p1246_diag.py the permutation is drawn from a fresh np.random.default_rng(seed=100+rep) per batch, and the baseline forward pass and the permuted forward pass are two SEPARATE model calls that do NOT restore Python/NumPy/Torch/CUDA RNG state between them. Model eval uses Gumbel/top-k sampling, so the sampling noise of the two calls is not held constant.",
+      "no_zero_change_control": "There is no 'original input vs original input, same RNG' zero-change control in this file, so the 0.0235 mean-max cannot be attributed to patch order.",
+      "registered_as": "order_effect_not_identified",
+      "does_not_support": [
+        "patch order causes risk change",
+        "spatial scale harms prediction"
+      ]
+    }
+  },
+  "p3_eval_randomness_fold0": {
+    "cindex_std_population": 0.00353836981961428,
+    "unit": "standard deviation of 20 queue-level C-index values on the SAME fold/seed/weights",
+    "is_not": "a general noise upper bound",
+    "separate_measure": "per-patient risk std max = 0.030086301932403293 and per-patient risk range max = 0.13613557815551758 are RISK units and must not be thresholded against the C-index std"
+  },
+  "p5_padding_fold0": {
+    "source": "native_model_audit.json -> padding",
+    "input_scope": "real_patient_cache_plus_controlled_zero_rows_not_natural_padding_prevalence",
+    "n_records": 154,
+    "design": "77 patients x 2 controlled conditions (16 and 64 added zero feature rows); every record has original_zero_feature_rows = 0",
+    "threshold_used_by_producer": 1e-07,
+    "by_added_rows": [
+      {
+        "added_controlled_zero_rows": 16,
+        "n": 77,
+        "max_logit_difference": 0.00950122,
+        "mean_logit_difference": 0.00425705,
+        "median_logit_difference": 0.0039072,
+        "min_logit_difference": 0.00131094,
+        "max_logit_difference_above_0.01": 0,
+        "max_risk_abs_difference": 0.00525999
+      },
+      {
+        "added_controlled_zero_rows": 64,
+        "n": 77,
+        "max_logit_difference": 0.0325937,
+        "mean_logit_difference": 0.0145489,
+        "max_risk_abs_difference": 0.0180179
+      }
+    ],
+    "number_discrepancy_explained": "Three different numbers appear in earlier server text and in _spe09_viz.py: 4.14e-3, 0.011 and this table. 4.14e-3 is a SINGLE patient's 16-row record (TCGA-2F-A9KO, probe_seed 3092000), not the cohort maximum. The 16-row cohort maximum is 0.0095. The largest value in this file is 0.0326 at 64 added rows. The figure 0.011 does not match any value in this JSON and is not supported by the current artifact.",
+    "correct_claim": "Adding controlled zero rows measurably shifts logits and risk, with magnitude scaling in the number of added rows.",
+    "does_not_support": [
+      "zero rows represent real irrelevant tissue",
+      "natural padding prevalence in the production cohort",
+      "patient predictive harm",
+      "correction benefit"
+    ]
+  },
+  "p7_selector_gradient_fold0": {
+    "source": "trained_selector_gradients.json",
+    "probe_seed": 3090000,
+    "n_parameters_reported": 8,
+    "main_nll_kind_counts": {
+      "None": 8,
+      "zero": 0,
+      "nonzero": 0
+    },
+    "aux_kind_counts": {
+      "nonzero": 7,
+      "zero": 1,
+      "None": 0
+    },
+    "summary_json_counts": {
+      "main_gradient_none_parameter_count": 8,
+      "main_gradient_connected_parameter_count": 0,
+      "main_gradient_nonzero_parameter_count": 0,
+      "main_gradient_zero_parameter_count": 0
+    },
+    "correct_claim": "For the 8 pred_keep_slot parameters, the MAIN fused survival NLL produces no gradient at all (autograd .grad is None) after 114 optimizer steps, while the auxiliary branch still produces gradients.",
+    "does_not_support": [
+      "the whole model lacks survival supervision",
+      "single-modal auxiliary survival supervision is disconnected (it is NOT)",
+      "generalised objective conflict",
+      "patient harm",
+      "B/C arm benefit"
+    ],
+    "not_a_second_order_audit": "This is a first-order gradient-connectivity probe, not a second-order/Hessian audit.",
+    "not_reported": "Slot Attention encoder parameters' main-loss gradient was not reported in this return; a separate probe is required if local acceptance needs it."
+  },
+  "p8": {
+    "applicability": "not_applicable",
+    "reason": "Original SlotSPE implements no cross-modal optimal-transport stage, so a two-stage OT conflict cannot arise in it."
+  },
+  "gate_counterexample": {
+    "input_scope": "constructed_scores_separate_native_decoder_not_patient_frequency",
+    "counterexample": "observed",
+    "correct_claim": "A constructed score tensor, fed to the native decoder separately, can make the gate sum collapse to ~7.6e-36.",
+    "does_not_support": [
+      "this happens at the observed patient frequency",
+      "gate collapse damages real predictions"
+    ],
+    "gate_normalization_note": "gate_sum near 1 and per-slot gate near 1 are different quantities; the original Top-2 normalised gate cannot have all 8 components near 1."
+  },
+  "purity": {
+    "native_model_class": true,
+    "native_forward": true,
+    "native_slot_classes": true,
+    "native_decoder_classes": true,
+    "no_repaired_eval_buffers": true,
+    "transport_added": false,
+    "repaired_models_constructed": false,
+    "checkpoint_state_unchanged_by_diagnostics": true
+  },
+  "rng_replay_control": {
+    "eval_seed": 3080000,
+    "max_logit_difference": 0.0,
+    "within_1e_minus_6": true,
+    "meaning": "Identical input under a re-established eval seed reproduces logits exactly. This is a positive determinism control and it does NOT substitute for the missing P6 paired-Gaussian/Gumbel control."
+  },
+  "new_execution_this_stage": {
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_backward_passes": 0,
+    "new_patient_interventions": 0,
+    "five_fold_extension_started": false,
+    "note": "This stage only packaged and returned artifacts that already existed on the server. All numbers above were read from existing JSON; nothing was recomputed or re-measured."
+  },
+  "patient_effect_or_correction_efficacy": "not_established"
+}

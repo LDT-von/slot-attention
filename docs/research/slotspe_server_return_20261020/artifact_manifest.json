@@ -1,0 +1,109 @@
+{
+  "schema": "slotspe_server_return_artifact_manifest_v1",
+  "recorded_at": "2026-10-20T20:45:00+08:00",
+  "server_task": "SPE-08",
+  "privacy_statement": "This public manifest contains NO patient identifiers, NO per-patient arrays, NO weights, NO features and NO clinical tables. It lists only scripts and aggregate numbers.",
+
+  "published_in_this_commit": [
+    {
+      "path": "scripts/server_diagnostics/_p1246_diag.server-original.py",
+      "role": "byte-identical original of the actually executed diagnostic script",
+      "sha256": "ee590425f61e3406aeb378005acacffa5d84e78da549c673175cf04835468592",
+      "server_origin": "/data1/DCT-Reg/_p1246_diag.py",
+      "bytes": 15488,
+      "is_historical_artifact": true,
+      "note": "Not rewritten. Contains the server absolute path, which is the honest historical record."
+    },
+    {
+      "path": "scripts/server_diagnostics/_p1246_diag.py",
+      "role": "redacted public copy of the executed script",
+      "sha256": "17d6c329430e1769c7276a37a02e94cbad5c6b2e04fff0badfcc9f300b902099",
+      "derived_from": "_p1246_diag.server-original.py",
+      "diff_from_original": "1 line: REPO path made overridable via SLOTSPE_SERVER_ROOT env var.",
+      "diff_line_count": 1
+    },
+    {
+      "path": "scripts/server_diagnostics/_spe09_viz.server-original.py",
+      "role": "byte-identical original of the actually executed visualisation script",
+      "sha256": "656fc9a76df16a2aeb0e334fddc645a380f909a27cf6bdbd73a29a50cea982b0",
+      "server_origin": "/data1/DCT-Reg/_spe09_viz.py",
+      "bytes": 18669,
+      "is_historical_artifact": true
+    },
+    {
+      "path": "scripts/server_diagnostics/_spe09_viz.py",
+      "role": "redacted public copy of the executed visualisation script",
+      "sha256": "b86b66e44a5e5f36e500998f7fbccb5701a7da9e48241a45b886c89f0638503f",
+      "derived_from": "_spe09_viz.server-original.py",
+      "diff_from_original": "3 lines: docstring output path generalised; ROOT path overridable via SLOTSPE_SERVER_ROOT; one patient ID in a caption string replaced by 'val probe patient'.",
+      "diff_line_count": 3,
+      "identifier_removed": "TCGA-2F-A9KO (single-patient caption value, not a cohort statistic)"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/diagnostic_summary.json",
+      "role": "aggregate queue-level results with original JSON keys, units and limits",
+      "sha256": "e6444bd86d2d418f388d85f41c4fd8ffddf654bdbb8ed41a114002fa8f4a3817"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/provenance.json",
+      "role": "execution commands, config, source versions, queue, seeds, patch budget, counts, checkpoint SHA, device deps, eval protocol",
+      "sha256": "cb5501fe31f5de1965e63267bc92267ba1fe91c875c18fa03b4a8bfc74a4ae3d"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/服务器发现报告.txt",
+      "role": "per-finding narrative with units, controls, evidence limits and unobserved phenomena"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/artifact_manifest.json",
+      "role": "this file"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/missing_artifacts.json",
+      "role": "what was NOT returned publicly, where originals live, and why"
+    }
+  ],
+
+  "withheld_local_only": {
+    "statement": "The following exist on the server and are being prepared for a PRIVATE return package. They must NOT be pushed to this public repository, any GitHub Release, or any public attachment.",
+    "storage_location": "server working copy /data1/DCT-Reg (results/slotspe_proof/**), to be copied into an ignored local_evidence/ directory at the accepting side",
+    "reason_classes": {
+      "patient_identifiers": "contains TCGA case IDs",
+      "per_patient_arrays": "per-patient logits/risk/slot vectors/matrices",
+      "model_weights": "132 MB checkpoint tensors",
+      "clinical_data": "time/censor/label per patient",
+      "absolute_paths": "server filesystem layout"
+    },
+    "items": [
+      {"path": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/pairs/fold_0/seed_3/original/last.pt", "sha256": "1c6daa01969879c40612bc67dd17ab7b9d3ed9e5ea56671e7f8278dd4c30aec5", "bytes": 132733457, "reason": "model weights"},
+      {"path": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/pairs/fold_0/seed_3/original/validation_predictions.csv", "sha256": "182a281967eee2baae0deff5c152a23313e0a58304668540658c7adfd71f7a0e", "bytes": 32883, "reason": "patient_id + time + censor + label + 20 per-repeat risks"},
+      {"path": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/pairs/fold_0/seed_3/original/trained_selector_gradients.json", "sha256": "5f4f99be9ba00f0eb19375facd97f23b8c9c582689b56ab0000248afc3036f95", "bytes": 3359, "reason": "contains patient_ids list"},
+      {"path": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/pairs/fold_0/seed_3/original/native_model_audit.json", "sha256": "48edfa8ad9038a02f71cd1d2330f0bd1e53a0a828b0e695769de4b0950c6fe5d", "bytes": 115591, "reason": "contains patient_ids and per-patient padding records"},
+      {"path": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/pairs/fold_0/seed_3/original/eval_repeats.json", "sha256": "58a3d63926810f092d53726413d8fd90d4c10979609fc618bfa192c564a1fbda", "bytes": 245618, "reason": "per-patient risks keyed by patient id"},
+      {"path": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/pairs/fold_0/seed_3/original/patient_slot_intervention.json", "sha256": "5cc167460f03d0a358b0cbf3bbfbfe00c1d7fc16690a3d32abb93a3a423d4514", "bytes": 2843217, "reason": "per-patient slot intervention arrays and ids"},
+      {"path": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/pairs/fold_0/seed_3/original/natural_gate_observations.json", "sha256": "63a071eb05973be3a835fb99fdaae9c30e587c1f000a76587cb042a3a0845989", "bytes": 2199921, "reason": "per-patient gate observations and ids"},
+      {"path": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/pairs/fold_0/seed_3/original/curve.json", "sha256": "086c7187448fa3c90ca0f134edaf7a1a6ea809b2611a4b9436bc413ba86012bc", "bytes": 1275, "reason": "train/val curve, cohort-level, private package for completeness"},
+      {"path": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/pairs/fold_0/seed_3/original/summary.json", "sha256": "f9252b77cb2b744d5dc1517482296d3ac44148046c2546ae76b90f0ab67c9dc2", "bytes": 1283, "reason": "cohort-level, safe, but kept with the private pack so the summary can be recomputed verbatim"},
+      {"path": "results/slotspe_proof/p1246_diagnostic_blca_fold0_20261020/diagnostic.json", "sha256": "ec691eff85c67f670baef9ec2e37e140603e4fd2b388c2ff18bfefcf14ae03d6", "bytes": 4440, "reason": "verified to contain NO patient identifiers; still withheld so acceptance can diff it against the summary table"},
+      {"path": "results/slotspe_proof/slotspe_full_blca_5fold_20261020/pairs/fold_0/seed_3/original/last.pt", "sha256": "b3c7378665ebd686dcbb5f08ea2b33cfda253be598ddcb06aad3e00791354480", "reason": "model weights"},
+      {"path": "results/slotspe_proof/slotspe_full_blca_5fold_20261020/pairs/fold_1/seed_3/original/last.pt", "sha256": "d14497946756e894d7fd5bad294a696dc21315438c003b749864a6720e1ee4e6", "reason": "model weights"},
+      {"path": "results/slotspe_proof/slotspe_full_blca_5fold_20261020/pairs/fold_2/seed_3/original/last.pt", "sha256": "0d20c46002a93cbacb766210c018f17c364095a92eca8f3b60bc0e69c1aadaf3", "reason": "model weights"},
+      {"path": "results/slotspe_proof/slotspe_full_blca_5fold_20261020/pairs/fold_3/seed_3/original/last.pt", "sha256": "a873915d776b883712417f0e988be78852afd9042e4bae90f7df0d88e7893cac", "reason": "model weights"},
+      {"path": "results/slotspe_proof/slotspe_full_blca_5fold_20261020/pairs/fold_4/seed_3/original/last.pt", "sha256": "34c7407aeba84103e2d4014e740c9adffb8a8e28ef11e9bf38ea725b16b3cb47", "reason": "model weights"},
+      {"path": "configs/slotspe_clean_original_server.json", "sha256": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778", "reason": "absolute server paths"},
+      {"path": "configs/slotspe_proof_server.json", "sha256": "67876f3ffc7ed9b2fbbd9e4b6e94a1f1e86aece5fb1e0ff417edac94b1b7ea41", "reason": "absolute server paths; note the target repo .gitignore already excludes local_evidence/legacy_configs/slotspe_proof_server.json"},
+      {"path": "实验档案/表格图片/SPE09_slotspe_clean_original_20261020/*.png (9 files)", "sha256": "per-file, listed in the private pack", "reason": "figure panels retained for the private pack; the baked-in single-patient caption is also corrected in the public script copy"}
+    ]
+  },
+
+  "third_party_source_identity": {
+    "third_party_SlotSPE_models_SlotSPE_py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "third_party_SlotSPE_models_slot_attention_py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "third_party_SlotSPE_utils_loss_func_py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "note": "Full upstream source tree is preserved byte-for-byte in the target repository at third_party/SlotSPE/ and was NOT modified by this return."
+  },
+
+  "historical_reports_modified": false,
+  "historical_hashes_rewritten": false,
+  "patient_identifiers_published": 0,
+  "credentials_published": 0
+}

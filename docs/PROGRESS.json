@@ -1,16 +1,16 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-20T17:49:42+08:00",
+  "recorded_at": "2026-10-20T20:50:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
   "issues": {
     "P1": "固定8候选/Top-2结构已确认；固定容量的患者损害未证。服务器n=64..256变量定义待脚本，不能混作槽数实验。",
-    "P2": "历史训练后高相似已观察；服务器报告77/77至少一对cos>0.95、max=0.9999，不证明8槽全复制或患者损害。",
+    "P2": "77/77 患者的全部 28 个无序非对角槽对 cos 均 >0.95（每患者计数恒为 56，即 8x8 去对角后的 56 个元素全部超阈），每患者最大非对角 cos 均值 0.99961。这是普遍冗余，不是尾部病例；但互高相似不等于向量相同，缺槽范数/成对 L2，仍不能宣称 8 槽为同一副本，也不证明患者损害。",
     "P3": "初槽不以当前患者为条件、后续迭代读取患者；同权重eval波动已确认。服务器C-index std=0.0035待原始回传，不是通用噪声上界；冷启动损害及修正收益未证。",
     "P4": "槽编号无固定语义保证；均值置换是sanity check，不证明实际语义漂移或患者损害。",
-    "P5": "补零无mask风险及同RNG合成敏感性已确认；服务器max logit变化0.011待原始验收，真实无关组织占槽/损害未证。",
-    "P6": "显式坐标/倍率接口缺口已确认；服务器重排risk差需核对RNG，尚不能归因顺序，也不证明空间尺度预测损害。",
+    "P5": "补零无 mask 风险及同RNG合成敏感性已确认。回传 JSON 的实测值：16 行条件 max|Δlogit|=0.0095（无记录超 0.01），64 行条件 max|Δlogit|=0.0326、max|Δrisk|=0.0180。此前文字中的 0.011 在现有产物中无对应值；viz 脚本里的 4.14e-3 是单个患者的 16 行记录，不是队列最大值。人工零行不代表真实无关组织，自然补零发生率、真实占槽与损害未证。",
+    "P6": "显式坐标/倍率接口缺口已确认。顺序效应登记为 order_effect_not_identified：_p1246_diag.py 的基线前向与置换前向是两次独立调用且未恢复 RNG 状态，也没有同输入同 RNG 的零变更对照，故 risk 差 0.0235/0.0850 不能归因于 patch 顺序。空间尺度预测损害未证。",
     "P7": "最终融合主损失到选槽器的直接梯度断开已确认；单模态生存辅助仍连通，广义目标冲突、患者损害及B/C收益未证。",
     "P8": "原版无后续跨模态OT，双阶段冲突不适用。"
   },
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "先回传1de42c7实际诊断脚本及原始产物，按同单位/同输入/同RNG控制验收P2/P6及risk方向。保留已确认P3/P7等现象；不自动扩训练，不宣称患者损害和修正收益已闭环。",
+  "next_action": "已回传 SPE-08 诊断脚本与聚合摘要（SUMMARY，非完整原始结果）；下一步由本地验收 P1 变量定义更正、P2 全对超阈、P3/P7 保留结论、P4 仅 sanity check、P5 三处数字矛盾、P6 order_effect_not_identified；私有完整原始包与 P6 配对 RNG 补查需另行授权。",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -113,6 +113,47 @@
     "P3 native eval randomness affects predictions",
     "P7 direct fused-loss selector gradient disconnect",
     "P5 missing padding mask and synthetic zero-row sensitivity",
-    "unselected self-slot contribution despite selection mask"
-  ]
+    "unselected self-slot contribution despite selection mask",
+    "P2 slot pairwise redundancy is uniform across the validation cohort (77/77, all 28 pairs >0.95)"
+  ],
+  "latest_server_artifact_return": {
+    "recorded_at": "2026-10-20T20:50:00+08:00",
+    "task_id": "SPE-08",
+    "status": "server_artifacts_returned_summary_only_pending_local_acceptance",
+    "source_repo": "LDT-von/DCT-Reg",
+    "delivery_branch": "codex/server-slotspe-evidence-20261020",
+    "base_commit": "a5819e40319794488609e2052d8ff5778d006e50",
+    "report": "docs/research/slotspe_server_return_20261020/服务器发现报告.txt",
+    "diagnostic_summary": "docs/research/slotspe_server_return_20261020/diagnostic_summary.json",
+    "provenance": "docs/research/slotspe_server_return_20261020/provenance.json",
+    "artifact_manifest": "docs/research/slotspe_server_return_20261020/artifact_manifest.json",
+    "missing_artifacts": "docs/research/slotspe_server_return_20261020/missing_artifacts.json",
+    "executed_scripts_public": "scripts/server_diagnostics/_p1246_diag.py, scripts/server_diagnostics/_spe09_viz.py",
+    "executed_scripts_originals_preserved": "scripts/server_diagnostics/_p1246_diag.server-original.py, scripts/server_diagnostics/_spe09_viz.server-original.py",
+    "mark": "SUMMARY ONLY - complete original raw results were NOT returned to public git",
+    "private_pack_produced": false,
+    "private_pack_sha256": null,
+    "patient_identifiers_published": 0,
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_backward_passes": 0,
+    "new_patient_interventions": 0,
+    "five_fold_extension_started": false,
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false,
+    "submitted_for_local_acceptance": [
+      "actual executed diagnostic scripts (original + redacted copies)",
+      "queue-level aggregate results with original JSON keys, units and limits",
+      "execution provenance incl. checkpoint SHA, seeds, patch budget, device deps",
+      "artifact manifest and missing-material list"
+    ],
+    "still_awaiting_local_acceptance": [
+      "complete private original-return package (not authorized in this task)",
+      "P6 same-input/same-RNG zero-change control and paired Gumbel/Gaussian RNG restore",
+      "P2 per-pair distribution, slot norms and pairwise L2",
+      "P4 full-model synchronised slot permutation through the selector/keep path",
+      "risk direction validation C(risk) vs C(-risk)"
+    ]
+  },
+  "server_aggregate_results_received": true
 }
