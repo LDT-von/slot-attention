@@ -1,16 +1,16 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-20T20:50:00+08:00",
+  "recorded_at": "2026-10-20T13:20:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
   "issues": {
     "P1": "固定8候选/Top-2结构已确认；固定容量的患者损害未证。服务器n=64..256变量定义待脚本，不能混作槽数实验。",
-    "P2": "77/77 患者的全部 28 个无序非对角槽对 cos 均 >0.95（每患者计数恒为 56，即 8x8 去对角后的 56 个元素全部超阈），每患者最大非对角 cos 均值 0.99961。这是普遍冗余，不是尾部病例；但互高相似不等于向量相同，缺槽范数/成对 L2，仍不能宣称 8 槽为同一副本，也不证明患者损害。",
+    "P2": "补查后确认：77 名患者每对最大非对角 cos 均值 0.999596（min 0.999064），所有 28 个无序配对均超 cos 0.95，但仅 4 对在所有患者上超 0.99；去公共均值后残差 cos 最大 0.978，残差范数 ≈ 公共分量 5%。8 槽共享一个占主导分量叠加小但非零残差，未证为完全副本。",
     "P3": "初槽不以当前患者为条件、后续迭代读取患者；同权重eval波动已确认。服务器C-index std=0.0035待原始回传，不是通用噪声上界；冷启动损害及修正收益未证。",
-    "P4": "槽编号无固定语义保证；均值置换是sanity check，不证明实际语义漂移或患者损害。",
-    "P5": "补零无 mask 风险及同RNG合成敏感性已确认。回传 JSON 的实测值：16 行条件 max|Δlogit|=0.0095（无记录超 0.01），64 行条件 max|Δlogit|=0.0326、max|Δrisk|=0.0180。此前文字中的 0.011 在现有产物中无对应值；viz 脚本里的 4.14e-3 是单个患者的 16 行记录，不是队列最大值。人工零行不代表真实无关组织，自然补零发生率、真实占槽与损害未证。",
-    "P6": "显式坐标/倍率接口缺口已确认。顺序效应登记为 order_effect_not_identified：_p1246_diag.py 的基线前向与置换前向是两次独立调用且未恢复 RNG 状态，也没有同输入同 RNG 的零变更对照，故 risk 差 0.0235/0.0850 不能归因于 patch 顺序。空间尺度预测损害未证。",
+    "P4": "补查后反转均值层的旧结论：完整模型（含 cross/self/to_logits）对 slot 同步置换产生 4-8% logit 差异（77 患者 max 0.077, mean 0.025），P4 不再只是均值 sanity check。原记录（约 1e-7，置换不变）只是均值路径性质，完整模型路径不置换不变。",
+    "P5": "补零无 mask 风险已确认。16 行 / 64 行两组补零的受控队列最大值分别 0.00950 / 0.0326（|Δlogit|），|Δrisk| 队列最大 0.0180。三处旧数字 （4.14e-3、0.011、0.0326）的边界已澄清：4.14e-3 为单患者 16 行记录；0.011 在 现有产物中无对应值。仍是人工零行，不代表自然补零率，真实占槽与损害未证。",
+    "P6": "补查后【可量化】：RNG 受控下 77 患者 × 20 重复，patch 顺序置换 产生 |Δrisk| 队列 max 0.0748、mean_max 0.0455。原诊断的 0.0235/0.0850 是测量【含 Gumbel 采样噪声的总扰动】，剔除噪声后纯顺序效应贡献 ≈ 0.0455。结论修正：顺序效应在 RNG 受控下可观察；是否转化为 C-index 改动、是否蕴含患者损害仍未做。",
     "P7": "最终融合主损失到选槽器的直接梯度断开已确认；单模态生存辅助仍连通，广义目标冲突、患者损害及B/C收益未证。",
     "P8": "原版无后续跨模态OT，双阶段冲突不适用。"
   },
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "已回传 SPE-08 诊断脚本与聚合摘要（SUMMARY，非完整原始结果）；下一步由本地验收 P1 变量定义更正、P2 全对超阈、P3/P7 保留结论、P4 仅 sanity check、P5 三处数字矛盾、P6 order_effect_not_identified；私有完整原始包与 P6 配对 RNG 补查需另行授权。",
+  "next_action": "SPE-08 补查已落服务器（eval-only, 4 节 / 一份 addendum.json）；已公开含正解的 P2/P4/P6/risk 方向报告与脚本。仍待办：完整私有回传包未打包（未授权）；P6 是否到 C-index 仍需端到端对照；P2 '共享主导成分'是否可修正、怎么修正仍是未安排阶段。",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -119,7 +119,7 @@
   "latest_server_artifact_return": {
     "recorded_at": "2026-10-20T20:50:00+08:00",
     "task_id": "SPE-08",
-    "status": "server_artifacts_returned_summary_only_pending_local_acceptance",
+    "status": "server_artifacts_returned_with_p6_addendum_eval_only_run",
     "source_repo": "LDT-von/DCT-Reg",
     "delivery_branch": "codex/server-slotspe-evidence-20261020",
     "base_commit": "a5819e40319794488609e2052d8ff5778d006e50",
@@ -153,7 +153,48 @@
       "P2 per-pair distribution, slot norms and pairwise L2",
       "P4 full-model synchronised slot permutation through the selector/keep path",
       "risk direction validation C(risk) vs C(-risk)"
-    ]
+    ],
+    "p6_addendum_branch": "codex/server-slotspe-evidence-20261020",
+    "p6_addendum_report": "docs/research/slotspe_p6_addendum_20261020/补查报告.txt",
+    "p6_addendum_summary": "docs/research/slotspe_p6_addendum_20261020/addendum.json",
+    "p6_addendum_findings": {
+      "S1_P6_RNG_controlled": {
+        "zero_change_max": 0.0,
+        "perm_max_logit_overall": 0.1345834732055664,
+        "perm_mean_max_logit": 0.0828080952167511,
+        "perm_max_risk_overall": 0.07479381561279297,
+        "perm_mean_max_risk": 0.04554996192455292,
+        "conclusion": "order effect observable under controlled RNG; new number is pure order contribution"
+      },
+      "S2_P2_slot_details": {
+        "all_28_pairs_cos_above_0.95_in_all_patients": 28,
+        "all_28_pairs_cos_above_0.99_in_all_patients": 4,
+        "per_patient_max_offdiag_cos_min": 0.999064564704895,
+        "residual_offdiag_cos_max": 0.9777317643165588,
+        "residual_over_mean_norm_ratio": 0.0499,
+        "conclusion": "shared dominant component + small non-trivial residual; not literal copies"
+      },
+      "S3_P4_full_model": {
+        "logit_diff_per_patient_max_max": 0.07744276523590088,
+        "logit_diff_per_patient_max_mean": 0.024790927380710454,
+        "risk_diff_per_patient_max_max": 0.04991912841796875,
+        "conclusion": "full model carries slot identity; old mean invariance was mean-path only"
+      },
+      "S4_risk_direction": {
+        "C_risk_mean": 0.7221252973830292,
+        "C_minus_risk_mean": 0.27787470261697067,
+        "evidence_for_correct_sign": true,
+        "conclusion": "producer sign convention verified"
+      }
+    },
+    "new_execution_this_stage": {
+      "new_training_runs": 0,
+      "new_backward_passes": 0,
+      "forward_passes_estimated": 1000,
+      "five_fold_extension_started": false,
+      "patient_predictive_harm_established": false,
+      "correction_efficacy_established": false
+    }
   },
   "server_aggregate_results_received": true
 }

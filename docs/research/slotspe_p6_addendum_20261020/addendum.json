@@ -1,0 +1,430 @@
+{
+  "recorded_at": "2026-10-20T13:15:52",
+  "blca_fold0_seed3_3epoch_eval_only": {
+    "epoch_loaded": 3,
+    "checkpoint_sha256": "1c6daa01969879c40612bc67dd17ab7b9d3ed9e5ea56671e7f8278dd4c30aec5",
+    "training_runs": 0,
+    "backward_passes": 0,
+    "model_class": "SlotSPE",
+    "patches": 256,
+    "val_ids_count": 77
+  },
+  "S3_p4_full_perm": {
+    "n_patients": 77,
+    "logit_diff_max_per_patient": {
+      "max": 0.07744276523590088,
+      "mean": 0.024790927380710454,
+      "median": 0.019496679306030273,
+      "min": 0.004120349884033203,
+      "n_above_1e-6": 77
+    },
+    "risk_diff_max_per_patient": {
+      "max": 0.04991912841796875,
+      "mean": 0.008479725230823864,
+      "median": 0.0060079097747802734,
+      "min": 0.00013756752014160156
+    },
+    "permutation": [
+      3,
+      6,
+      1,
+      4,
+      0,
+      7,
+      2,
+      5
+    ],
+    "scope": "synchronised permutation BEFORE keep_mask top-k, full forward",
+    "interpretation_criterion": "If max logit diff is well above floating point, slots DO carry model-visible identity"
+  },
+  "S4_risk_direction_offline": {
+    "reps": 20,
+    "val_patients": 77,
+    "comparable_pairs": [],
+    "C_risk_mean": 0.7221252973830292,
+    "C_risk_min": 0.7129262490087233,
+    "C_risk_max": 0.7295796986518636,
+    "C_minus_risk_mean": 0.27787470261697067,
+    "C_minus_risk_min": 0.2704203013481364,
+    "C_minus_risk_max": 0.28707375099127674,
+    "C_minus_risk_minus_C_risk_mean": -0.44425059476605855,
+    "interpretation": "By producer convention C_risk should be > 0.5 and > 1 - C_minus_risk",
+    "evidence_for_correct_sign": true
+  },
+  "S1_p6_rng_controls": {
+    "n_patients": 77,
+    "n_reps": 20,
+    "baseline_repeat_range": {
+      "min": 0.0,
+      "max": 0.0,
+      "n_zero_diff": 200,
+      "n_pairs_total": 200
+    },
+    "perm_diff_vs_baseline": {
+      "logit_max_max_abs": 0.1345834732055664,
+      "logit_max_mean": 0.0828080952167511,
+      "risk_max_max_abs": 0.07479381561279297,
+      "risk_max_mean": 0.04554996192455292,
+      "risk_mean_mean": 0.04554996192455292,
+      "per_rep_logit_max": [
+        0.09269893169403076,
+        0.07099133729934692,
+        0.0764232873916626,
+        0.0937579870223999,
+        0.10589540004730225,
+        0.09485054016113281,
+        0.06036043167114258,
+        0.10787820816040039,
+        0.07250046730041504,
+        0.05865347385406494,
+        0.08299636840820312,
+        0.06339573860168457,
+        0.06203716993331909,
+        0.0652003288269043,
+        0.1140371561050415,
+        0.07569503784179688,
+        0.1345834732055664,
+        0.06729650497436523,
+        0.08402979373931885,
+        0.07288026809692383
+      ],
+      "per_rep_risk_max": [
+        0.05640077590942383,
+        0.03676950931549072,
+        0.026768922805786133,
+        0.06409168243408203,
+        0.07122254371643066,
+        0.06701970100402832,
+        0.04803800582885742,
+        0.07479381561279297,
+        0.019921839237213135,
+        0.0370638370513916,
+        0.040712833404541016,
+        0.05674314498901367,
+        0.03371739387512207,
+        0.03916454315185547,
+        0.03179764747619629,
+        0.05962371826171875,
+        0.0372314453125,
+        0.02628636360168457,
+        0.037811279296875,
+        0.04582023620605469
+      ]
+    },
+    "per_repeat_summary": [
+      {
+        "rep": 0,
+        "rng_seed": 500000,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.09269893169403076,
+        "risk_perm_max_abs": 0.05640077590942383
+      },
+      {
+        "rep": 1,
+        "rng_seed": 500007,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.07099133729934692,
+        "risk_perm_max_abs": 0.03676950931549072
+      },
+      {
+        "rep": 2,
+        "rng_seed": 500014,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.0764232873916626,
+        "risk_perm_max_abs": 0.026768922805786133
+      },
+      {
+        "rep": 3,
+        "rng_seed": 500021,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.0937579870223999,
+        "risk_perm_max_abs": 0.06409168243408203
+      },
+      {
+        "rep": 4,
+        "rng_seed": 500028,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.10589540004730225,
+        "risk_perm_max_abs": 0.07122254371643066
+      },
+      {
+        "rep": 5,
+        "rng_seed": 500035,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.09485054016113281,
+        "risk_perm_max_abs": 0.06701970100402832
+      },
+      {
+        "rep": 6,
+        "rng_seed": 500042,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.06036043167114258,
+        "risk_perm_max_abs": 0.04803800582885742
+      },
+      {
+        "rep": 7,
+        "rng_seed": 500049,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.10787820816040039,
+        "risk_perm_max_abs": 0.07479381561279297
+      },
+      {
+        "rep": 8,
+        "rng_seed": 500056,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.07250046730041504,
+        "risk_perm_max_abs": 0.019921839237213135
+      },
+      {
+        "rep": 9,
+        "rng_seed": 500063,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.05865347385406494,
+        "risk_perm_max_abs": 0.0370638370513916
+      },
+      {
+        "rep": 10,
+        "rng_seed": 500070,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.08299636840820312,
+        "risk_perm_max_abs": 0.040712833404541016
+      },
+      {
+        "rep": 11,
+        "rng_seed": 500077,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.06339573860168457,
+        "risk_perm_max_abs": 0.05674314498901367
+      },
+      {
+        "rep": 12,
+        "rng_seed": 500084,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.06203716993331909,
+        "risk_perm_max_abs": 0.03371739387512207
+      },
+      {
+        "rep": 13,
+        "rng_seed": 500091,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.0652003288269043,
+        "risk_perm_max_abs": 0.03916454315185547
+      },
+      {
+        "rep": 14,
+        "rng_seed": 500098,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.1140371561050415,
+        "risk_perm_max_abs": 0.03179764747619629
+      },
+      {
+        "rep": 15,
+        "rng_seed": 500105,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.07569503784179688,
+        "risk_perm_max_abs": 0.05962371826171875
+      },
+      {
+        "rep": 16,
+        "rng_seed": 500112,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.1345834732055664,
+        "risk_perm_max_abs": 0.0372314453125
+      },
+      {
+        "rep": 17,
+        "rng_seed": 500119,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.06729650497436523,
+        "risk_perm_max_abs": 0.02628636360168457
+      },
+      {
+        "rep": 18,
+        "rng_seed": 500126,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.08402979373931885,
+        "risk_perm_max_abs": 0.037811279296875
+      },
+      {
+        "rep": 19,
+        "rng_seed": 500133,
+        "logit_zero_change_max_abs": 0.0,
+        "risk_zero_change_max_abs": 0.0,
+        "logit_perm_max_abs": 0.07288026809692383,
+        "risk_perm_max_abs": 0.04582023620605469
+      }
+    ],
+    "verdict": {
+      "zero_change_control_passed": true,
+      "perm_attributable_to_order_if": "perm max abs > 0 AND zero change max is 0",
+      "rep0_zero_change": 0.0,
+      "rep0_perm_max_abs": 0.09269893169403076
+    }
+  },
+  "S2_p2_slot_details": {
+    "n_patients": 77,
+    "slot_norm_per_slot_mean": [
+      18.84804916381836,
+      18.85941505432129,
+      18.77701759338379,
+      18.728670120239258,
+      18.762605667114258,
+      18.773921966552734,
+      18.807048797607422,
+      18.697786331176758
+    ],
+    "slot_norm_per_slot_std": [
+      1.0339813232421875,
+      1.0131968259811401,
+      1.0275994539260864,
+      1.0541675090789795,
+      0.9773251414299011,
+      1.0621448755264282,
+      1.0122913122177124,
+      0.9262345433235168
+    ],
+    "slot_norm_l2_norms_dist": {
+      "min": 15.997727394104004,
+      "max": 21.789600372314453,
+      "mean": 18.781814575195312,
+      "median": 18.798538208007812,
+      "std": 1.0155208110809326
+    },
+    "all_28_pairs_cohort_mean_cosine": [
+      0.9975022124005603,
+      0.997287722377034,
+      0.997320467001432,
+      0.9970830493159109,
+      0.9972205208493518,
+      0.9975032876064251,
+      0.997445565539521,
+      0.9971632818122963,
+      0.9970164213861737,
+      0.9969542506453278,
+      0.9974511072233125,
+      0.9971572756767273,
+      0.9975152603991619,
+      0.997436133298007,
+      0.9972566528753801,
+      0.9976446249268272,
+      0.9973873929543928,
+      0.9972912429215072,
+      0.9968641570636204,
+      0.9971050124663812,
+      0.9970683447726361,
+      0.9971879681983551,
+      0.9975114464759827,
+      0.99716478353971,
+      0.9967522543746156,
+      0.9972560305099982,
+      0.99726675470154,
+      0.9975597115306111
+    ],
+    "pair_share_above_0.95": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "pair_share_above_0.99": [
+      0.987012987012987,
+      0.948051948051948,
+      0.974025974025974,
+      1.0,
+      0.987012987012987,
+      1.0,
+      0.987012987012987,
+      0.974025974025974,
+      0.961038961038961,
+      0.974025974025974,
+      0.987012987012987,
+      0.987012987012987,
+      0.974025974025974,
+      0.987012987012987,
+      1.0,
+      0.987012987012987,
+      1.0,
+      0.961038961038961,
+      0.922077922077922,
+      0.961038961038961,
+      0.948051948051948,
+      0.961038961038961,
+      0.987012987012987,
+      0.974025974025974,
+      0.961038961038961,
+      0.987012987012987,
+      0.961038961038961,
+      0.987012987012987
+    ],
+    "per_patient_max_offdiag_cos_mean": 0.9995963263821293,
+    "per_patient_max_offdiag_cos_median": 0.9996235966682434,
+    "per_patient_max_offdiag_cos_min": 0.999064564704895,
+    "n_pairs_all_above_0.95_in_all_patients": 28,
+    "n_pairs_all_above_0.99_in_all_patients": 4,
+    "residual_offdiag_cos": {
+      "mean": -0.10590244792311078,
+      "median": -0.02764773741364479,
+      "min": -0.9848320484161377,
+      "max": 0.9777317643165588,
+      "std": 0.5149090406462188,
+      "n_above_0.5": 2154,
+      "n_above_0.1": 3912,
+      "total": 4928
+    },
+    "residual_mean_norm_per_patient_mean": 0.9368279150554112,
+    "residual_mean_norm_per_patient_max": 1.527553677558899,
+    "mean_slot_norm_per_patient_mean": 18.759290744731953,
+    "mean_slot_norm_per_patient_max": 20.889013290405273,
+    "distinguish_test": {
+      "all_28_pairs_cohort_cos_above_0.99": 4,
+      "mean_residual_offdiag_cos": -0.10590244792311078,
+      "max_residual_offdiag_cos": 0.9777317643165588,
+      "residual_vs_mean_norm_ratio": 0.049939410172982916
+    },
+    "interpretation": "at least one unordered pair is NOT collapsed"
+  },
+  "recorded_at_final": "2026-10-20T13:20:01"
+}

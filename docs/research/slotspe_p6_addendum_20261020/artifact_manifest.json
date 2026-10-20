@@ -1,0 +1,82 @@
+{
+  "schema": "slotspe_p6_addendum_artifact_manifest_v1",
+  "recorded_at": "2026-10-20T13:20:00+08:00",
+  "scope": "Eval-only addendum on the existing fold0 last.pt. No training, no backward, no patient intervention.",
+  "patient_identifiers_published": 0,
+  "credentials_published": 0,
+  "private_pack_assets_referenced": false,
+  "published_files": [
+    {
+      "path": "scripts/server_diagnostics/_s2026_1020_addendum.py",
+      "role": "main eval-only addendum script (S1/S2/S3/S4 in one file)",
+      "sha256": "edef02fc196cbb8d2f792de56af3bb333451f150a596812fcb6bb4aceaf1a285"
+    },
+    {
+      "path": "scripts/server_diagnostics/_s2026_1020_addendum_resume.py",
+      "role": "resume runner (S3 + S4 only)",
+      "sha256": "33db97918ed63db9b96d44b6793c5b75c115f108f60bc45053e4eaf5f030b77c"
+    },
+    {
+      "path": "scripts/server_diagnostics/_s2026_1020_addendum_s1s2.py",
+      "role": "second-pass runner that fills in S1+S2 over the partially-saved addendum.json",
+      "sha256": "9460a1deee5d7cf3449ee392a68cb3c8393a00eb9c61d13f7554d887496ca877"
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/addendum.json",
+      "role": "aggregate JSON with the four sections (S1/S2/S3/S4)",
+      "sha256": "435fa9036adce79f142232130afc59155542b713c06dcdf8b3f23ad9bbd877fe"
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/补查报告.txt",
+      "role": "human-readable findings; this commit message itself"
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/artifact_manifest.json",
+      "role": "this file"
+    }
+  ],
+  "withheld_local_only": [
+    {
+      "path": "results/slotspe_proof/slot_attention_addendum_20261020/addendum.json (server master)",
+      "sha256_same_as_published": true,
+      "reason": "identical to published copy; local master retained"
+    }
+  ],
+  "rng_strategy_used": [
+    "Python random.getstate + setstate",
+    "NumPy np.random.get_state + set_state",
+    "torch.random.get_rng_state + set_rng_state",
+    "torch.cuda.get_rng_state + set_rng_state",
+    "torch.backends.cudnn.deterministic = True",
+    "torch.backends.cudnn.benchmark = False",
+    "scoped around each forward; no other forward runs in the same scope"
+  ],
+  "key_findings_numbers_only": {
+    "S1_zero_change_control_max": 0.0,
+    "S1_perm_logit_max_overall": 0.1345834732055664,
+    "S1_perm_logit_mean_max": 0.0828080952167511,
+    "S1_perm_risk_max_overall": 0.07479381561279297,
+    "S1_perm_risk_mean_max": 0.04554996192455292,
+    "S2_n_pairs_all_above_0.99_in_all_patients": 4,
+    "S2_n_pairs_all_above_0.95_in_all_patients": 28,
+    "S2_per_patient_max_offdiag_cos_min": 0.999064564704895,
+    "S2_slot_norm_per_slot_min_over_8": 18.6978,
+    "S2_slot_norm_per_slot_max_over_8": 18.8594,
+    "S2_residual_offdiag_cos_max": 0.9777317643165588,
+    "S2_residual_vs_mean_norm_ratio": 0.0499,
+    "S3_logit_diff_max_per_patient_max": 0.07744276523590088,
+    "S3_logit_diff_max_per_patient_mean": 0.024790927380710454,
+    "S3_risk_diff_max_per_patient_max": 0.04991912841796875,
+    "S4_C_risk_mean": 0.7221252973830292,
+    "S4_C_minus_risk_mean": 0.27787470261697067,
+    "S4_evidence_for_correct_sign": true
+  },
+  "execution_stats": {
+    "new_training_runs": 0,
+    "backward_passes": 0,
+    "forward_passes_estimated": 1000,
+    "five_fold_extension_started": false,
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false
+  }
+}
