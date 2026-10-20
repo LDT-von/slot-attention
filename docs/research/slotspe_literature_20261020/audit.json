@@ -1,0 +1,92 @@
+{
+  "task_id": "SPE-08",
+  "date": "2026-10-20",
+  "stage": "literature_identity_applicability_and_P1_source",
+  "stage_complete": true,
+  "all_eight_patient_problems_proved": false,
+  "source_root": "C:\\Users\\栋栋\\Desktop\\slot attention",
+  "local_pdfs": 8,
+  "local_archives": 7,
+  "missing_local_papers_primary_pages_checked": 7,
+  "review_depth": "本地8份PDF核查身份和完整相关页，7个ZIP静态核查；额外7篇只有一手摘要/指定段落，不称全文复现。",
+  "matrix": [
+    {
+      "id": "P1",
+      "literature": "固定候选容量/有效数量问题在对象任务有依据",
+      "original_slotspe": "默认8候选和Top-2掩码固定；cross仍读8槽",
+      "patient_failure": "not_established",
+      "next_evidence": "先查既有checkpoint真实占用、覆盖和读取路径；数量不变不等于预测受损"
+    },
+    {
+      "id": "P2",
+      "literature": "冗余竞争及对象碎片化有实证，DIAS公开代码不含删槽/重初始化",
+      "original_slotspe": "共享更新允许重复槽；训练后实际有害冗余未证",
+      "patient_failure": "not_established",
+      "next_evidence": "真实attention重叠、组织/通路内容和预先指定槽干预联合核查"
+    },
+    {
+      "id": "P3",
+      "literature": "SmoothSA明确cold-start样本线索不足，BO-QSA为可学习query与双层优化",
+      "original_slotspe": "初始槽不以患者内容为条件，迭代会读取输入；已有整体随机波动",
+      "patient_failure": "initialization_specific_harm_not_established",
+      "next_evidence": "分开记录初始化/Gumbel随机来源与逐轮attention，不能把所有波动归于初始化"
+    },
+    {
+      "id": "P4",
+      "literature": "CoSA类型绑定与PSA允许变换的可辨识性不是固定数组编号",
+      "original_slotspe": "匿名槽无固定语义身份保证",
+      "patient_failure": "matched_content_instability_not_established",
+      "next_evidence": "先允许槽匹配，再检查内容稳定；无可信组织标签不称病理语义错误"
+    },
+    {
+      "id": "P5",
+      "literature": "Foreground背景纹理干扰，CODA扩散条件register吸收残余注意力",
+      "original_slotspe": "补零敏感已证；真实无关组织占用并挤出预后信息待证",
+      "patient_failure": "real_tissue_displacement_not_established",
+      "next_evidence": "组织依据与可回查patch，不能把间质/免疫直接标作无关"
+    },
+    {
+      "id": "P6",
+      "literature": "MSF图像金字塔/VAE目标，MUFASA ViT多层语义，均不同于病理物理倍率",
+      "original_slotspe": "无显式坐标/倍率接口；真实特征提取配方仍须核实",
+      "patient_failure": "not_established",
+      "next_evidence": "实际特征层/倍率/空间元数据及对应患者信息遗漏，现有单层文件不能补造多尺度数据"
+    },
+    {
+      "id": "P7",
+      "literature": "OCEBO目标编码器漂移不直接证明生存任务目标冲突",
+      "original_slotspe": "最终融合损失到selector直接梯度缺失已证；辅助生存梯度仍连通",
+      "patient_failure": "auxiliary_vs_fusion_conflict_not_established",
+      "next_evidence": "已有B/C的匹配患者归因及必要的目标梯度/训练折诊断，不混入新模块"
+    },
+    {
+      "id": "P8",
+      "literature": "MESH解释模块内SA与OT关联，没有两阶段冲突实证",
+      "original_slotspe": "后续为cross-attention，无第二跨模态OT",
+      "patient_failure": "not_applicable_original_slotspe",
+      "next_evidence": "本线不追加OT；具体DCT组合假设需独立范围证据"
+    }
+  ],
+  "new_model_changes": false,
+  "patient_data_read": false,
+  "patient_jobs_started": false,
+  "packages_installed": false,
+  "server_report": {
+    "commit": "d64530cc1ab45e00787a1f3204c90535a8991bb0",
+    "source": "AGENTS.md section 独立干净原版 SlotSPE 启动实测",
+    "execution_status": "reported_completed_not_independently_verified",
+    "raw_results_received": false,
+    "all_eight_covered": false
+  },
+  "reports": [
+    "capacity_review.json",
+    "semantics_review.json",
+    "noise_objective_review.json",
+    "initialization_transport_review.json",
+    "primary_lookup.json",
+    "p1_source_check.json"
+  ],
+  "human_report": "第一阶段_文献与原版对应核查.txt",
+  "next_stage": "P1：先复用现有原版checkpoint确认真实槽占用与内容覆盖；不自动新增训练预算。",
+  "negative_result_rule": "观测不到记not_observed；只有结构/材料不足记not_established或insufficient_evidence，不能强迫八项全成立。"
+}

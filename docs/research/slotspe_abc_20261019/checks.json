@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-19",
+  "scope": "invented_metadata_tensors_and_checkpoints_only",
+  "tests_passed": 32,
+  "tests": [
+    {
+      "path": ".review/slotspe_abc_validation_20261019/unit_attempt2.xml",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "path": ".review/slotspe_abc_validation_20261019/queue_attempt2.xml",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "patient_jobs_started": false,
+  "server_results_received": false,
+  "remote_published": false,
+  "source_sha256": {
+    "survot_rank/research/slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f",
+    "survot_rank/research/slotspe_proof/patient.py": "8310d3234c579c8a9a4b2c59a5eaa1f399f4929f09dad76e98c5b99462b09604",
+    "survot_rank/research/slotspe_proof/queue.py": "d58f9524813b47292fa3f238daf98bd628b2c202435034582ce809d23b79d344",
+    "survot_rank/research/slotspe_proof/worker.py": "e4c61065b28c5aafa9811f39699a989986ca0b234c1745392276dc18d9e8fb51",
+    "survot_rank/research/slotspe_proof/attribution.py": "be526f12d1ac455ce903e0fa264df0a58116b2b59424d4f4dca6576256f789e6",
+    "survot_rank/research/slotspe_proof/interventions.py": "f9e24fc19a646be871e28bef491a5cba468d2eec92d9dcc666ae1bab0390971e",
+    "survot_rank/research/slotspe_proof/acceptance.py": "d5a4a11b9edf6512b961b9ed2c5122702aeeb79c91b23bdb430e980d9879adb4"
+  },
+  "verified": [
+    "B/C exact forward and selection equality for two selection methods and three seeds",
+    "B main selector gradients None; C connected and nonzero in both modalities on synthetic inputs",
+    "B/C all-parameter auxiliary gradients exactly equal, including None vs zero",
+    "A retains mean-all self; all three have the same auxiliary graph and parameter schema",
+    "Fixed-support B/C self output excludes perturbed dropped slots; dense cross held fixed",
+    "Extreme tied finite gates, repeatable evaluation and batch-independent evaluation initializer",
+    "Separate reproduction and ABC queues execute on invented metadata/features",
+    "Extracted self-contained ZIP executes both modes without the original checkout",
+    "Returned artifact hashes, patient IDs, budgets and checkpoints checked offline",
+    "Prediction tampering, failed status, configuration edits and partial queues rejected"
+  ],
+  "matched_state_raw_reports": [
+    ".review/slotspe_abc_validation_20261019/unit_attempt2/test_bc_full_forward_main_and_0/attribution_checks.json"
+  ],
+  "retained_failed_attempts": [
+    {
+      "path": ".review/slotspe_abc_validation_20261019/unit_attempt1.xml",
+      "reason": "pytest basetemp parent absent; corrected setup and retained original error record"
+    }
+  ],
+  "evidence_boundary": {
+    "problem_proof": "previous local observations retained; server proof pending",
+    "code_checks": "passed_on_synthetic_inputs",
+    "patient_effect": "not_evaluated_this_work",
+    "attribution": "code contrasts ready; no patient conclusion",
+    "remaining_capability_gap": "not_determined"
+  }
+}

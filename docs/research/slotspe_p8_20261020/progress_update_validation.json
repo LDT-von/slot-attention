@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-10-20T17:02:45+08:00",
+  "all_other_tasks_unchanged": true,
+  "non_slotspe_lines_unchanged": true,
+  "V2_and_transport_human_sections_unchanged": true,
+  "last_actual_measurement_P4_preserved": true,
+  "original_source_hashes_match_history_and_remain_unchanged": true,
+  "P5_original_report_unchanged": true,
+  "all_13_archive_markers_unchanged": true,
+  "historical_cache_checkpoint_manifest_hashes_match": true,
+  "evidence_refs_resolve": true,
+  "new_model_execution": false,
+  "new_synthetic_checks": 0,
+  "new_training_runs": 0,
+  "new_patient_tensors_loaded": false,
+  "server_raw_received": false,
+  "backup": "E:\\DCT-Reg\\docs\\history\\slotspe_handoff_readonly_20261020_170245",
+  "reports_and_evidence_sha256": {
+    "docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt": "6a5e331ed683405937578948dd981af6598772fdc25b4ea99ac6a24ca32eeb8a",
+    "docs/research/slotspe_p5_20261020/readonly_handoff_receipt.json": "0644f8f293fcd36f09e4b83f01d754d36a9c3748f476eb4bc03b833bbea0644d",
+    "docs/research/slotspe_p6_20261020/P6_只读核验报告.txt": "5a92210de31a6120e69b3a52fe18d4529546b88bd9e28f437527712b3ad666db",
+    "docs/research/slotspe_p6_20261020/source_review.json": "3172e523cb81053628f3a9fa3a1b4168eb814ad1688665228b2f553d35ac5307",
+    "docs/research/slotspe_p7_20261020/P7_只读核验报告.txt": "109652f9deb3b67ccd48f3c209048418a196e9a915c00a1fd095b81d09f2fc7b",
+    "docs/research/slotspe_p7_20261020/source_review.json": "70e36757ef5fe31bb52d25f47e1765635332c68abdb58fe825eb57509f3d3afb",
+    "docs/research/slotspe_p8_20261020/P8_只读核验报告.txt": "7bb542e08fe9edc6bcbf0f5527c0764159f859bd9ec2b50940a03c450197b33b",
+    "docs/research/slotspe_p8_20261020/source_review.json": "773b32c18bd4c64ce673724d639e9f83032f4ae8f795ca3798b30d03fdf01acd"
+  },
+  "progress_after_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
+  "human_after_sha256": "490d9e8f6dca4f1a105644f3805ccaff80476189fe9eed9363290fb2091dc03e"
+}

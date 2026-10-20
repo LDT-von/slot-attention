@@ -1,0 +1,83 @@
+{
+  "review_date": "2026-10-20",
+  "scope": "P1固定槽数量、P2槽冗余与碎片化：只读核查本地MetaSlot/DIAS论文全文相关页和ZIP文本摘录；未运行任何模型、导入、安装或患者任务。",
+  "source_artifacts": [
+    {"path": "extracted_text/NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference.txt", "sha256": "58b8dbb24a23bd884de6335c1ddec50ba22a4bc6a5f6841c558095d28867f69c"},
+    {"path": "extracted_text/2507.23755v3.txt", "sha256": "4675a8609b7f5fbc98ed2ea055b9c6b21b032bb6e113c0051b98e5cf72b051a5"},
+    {"path": "archive_text/MetaSlot-main.json", "sha256": "31fcb8fb5996a17df17b5b1f1a41588e38f98cdea20b2a0ca045d1ef79f408d6"},
+    {"path": "archive_text/DIAS-main.json", "sha256": "48ea9f788b40177eb8a874855556137eb450453401dd6c9c437e988363732c27"}
+  ],
+  "papers": [
+    {
+      "name": "MetaSlot",
+      "title": "MetaSlot: Break Through the Fixed Number of Slots in Object-Centric Learning",
+      "identity": "Hongjia Liu, Rongzhen Zhao, Haohan Chen, Joni Pajarinen；本地PDF标注NeurIPS 2025；代码README指向arXiv:2505.20772。",
+      "primary_links": ["https://arxiv.org/abs/2505.20772", "https://github.com/lhj-lhj/MetaSlot"],
+      "pdf_evidence": [
+        {"page": 2, "section": "Introduction，第2段及Dynamic slot allocation段", "finding": "提出固定槽数在对象数变化时会造成欠分割或过分割；先固定容量聚合、量化到全局prototype，再按prototype索引去重，动态调整有效活跃槽。这里是作者针对对象分解的研究动机，不是任意任务都会失败的定理。"},
+        {"page": 4, "section": "2.2 Nearest-neighbour quantisation / Duplicate-removal mask，式4-5；2.3", "finding": "同一prototype索引仅保留首次命中，余者mask；第二阶段对剩余prototype再次聚合。有效槽数不大于初始候选数，未突破最大槽容量。"},
+        {"page": 6, "section": "Figure 2及Experiments训练说明", "finding": "展示BO-QSA将单个train对象切为多部分的可视化，MetaSlot缓解；实验是ClevrTex、COCO、VOC和HQ-YTVIS的对象发现/集合预测。"},
+        {"page": 7, "section": "Training Details / 4.1 Metrics", "finding": "DINOv2 ViT(s/14)、50k训练步、batch32、codebook512、三随机种子；采用ARI、FG-ARI、mBO、mIoU，与实例真值mask比较，不是生存预测指标。"},
+        {"page": 8, "section": "Table 1及Table 2", "finding": "COCO/DINOSAUR的FG-ARI由35.0±1.2到40.3±0.5，mBO由28.3±0.5到29.5±0.2；该替换包含prototype、去重及噪声等多项变化，不能把整体增益全部归于动态槽数。并非全部指标皆升：ClevrTex/SlotDiffusion的FG-ARI从82.7±1.6变为77.6±1.1；YTVIS的mIoU从30.1±0.6变为28.3±0.7。"},
+        {"page": 10, "section": "Table 5", "finding": "COCO固定最大候选7槽，w/o mask的FG-ARI/mBO/mIoU为38.2/28.5/26.9，完整版本为40.3/29.5/27.9；支持该设置下prototype去重有贡献，不支持SlotSPE病人必然需要动态槽。"},
+        {"page": 10, "section": "6 Limitations and Future Directions", "finding": "作者承认prototype会受位置噪声影响、细粒度属性组合不足、尚未广泛验证OOD。"},
+        {"page": 18, "section": "Table 7", "finding": "即便动态mask，仍比较固定最大候选5/7/11/15；FG-ARI为37.8/40.3/38.7/36.0，最大容量依然是超参数。增大候选数并不单调改善。"}
+      ],
+      "code_evidence": [
+        {"member": "MetaSlot-main/Config/config-metaslot/dinosaur_r-coco.py", "lines": "1,71-79", "finding": "max_num=7，NormalSeparat初始化固定最大候选数，MetaSlot以3轮聚合、codebook512运行。"},
+        {"member": "MetaSlot-main/object_centric_bench/model/metaslot.py", "lines": "57-76", "finding": "逐batch遍历codebook索引，重复索引槽清零并设置smask=False。"},
+        {"member": "MetaSlot-main/object_centric_bench/model/metaslot.py", "lines": "99-124", "finding": "第一阶段聚合后量化；训练按逐渐增加的clust_prob启用去重；eval直接使用去重mask。"},
+        {"member": "MetaSlot-main/object_centric_bench/model/metaslot.py", "lines": "126-150,154-163", "finding": "第二阶段复用slot更新；mask将无效槽attention logits设为负无穷；输出tensor保留原候选维度，动态的是有效mask。"},
+        {"member": "MetaSlot-main/object_centric_bench/model/metaslot.py", "lines": "78-84,101-103,126-128", "finding": "噪声在每阶段迭代中逐步衰减；此实现调用未显式受self.training限制。因此不能把其全部差异概括为只改槽数。"},
+        {"member": "MetaSlot-main/README.md", "lines": "6-8,20-31,39-45", "finding": "论文身份与核心代码入口对应；固定数量与随机初始化均为其处理目标。"}
+      ],
+      "transfer_to_slotspe": {
+        "supported": ["可以借鉴固定容量与有效活跃数量的区分。", "对象任务说明过多候选可能造成竞争、重复或碎片，需要到SlotSPE的真实注意力与预测路径中寻找同类现象。"],
+        "not_supported": ["不能将自然图像对象数量等同于一个患者的预后因素数量。", "不能根据固定8候选/2保留直接宣称患者信息被挤掉。", "不能把MetaSlot的分割增益换算成C-index增益。", "同prototype去重依赖跨样本学到的codebook；SlotSPE原版不存在该证据条件，不能直接按同编号或高cosine认定同语义。"]
+      }
+    },
+    {
+      "name": "DIAS",
+      "title": "Slot Attention with Re-Initialization and Self-Distillation",
+      "identity": "Rongzhen Zhao, Yi Zhao, Juho Kannala, Joni Pajarinen；本地PDF为arXiv:2507.23755v3；代码README标注ACM MM 2025 Poster。",
+      "primary_links": ["https://arxiv.org/abs/2507.23755v3", "https://github.com/Genera1Z/DIAS"],
+      "pdf_evidence": [
+        {"page": 2, "section": "Introduction i1/r1/s1；Related Work", "finding": "当对象数少于预定义槽数，冗余槽竞争对象superpixels，可能使对象分裂；仅聚合完成后删冗余槽，保留槽此前仍受竞争影响。作者主张删槽后还需额外聚合更新。"},
+        {"page": 4, "section": "3.2 Re-Initialized Aggregation，式6-11", "finding": "以cosine距离加手动阈值做凝聚聚类，冗余槽清零，额外聚合时attention logits应用mask；原来只是删槽后解码的对照与删槽后再聚合不同。"},
+        {"page": 5, "section": "4 Experiment / 4.1 Object Discovery", "finding": "三随机种子；对象分割用ARI、FG-ARI、mBO、mIoU；不是真实WSI或患者预后实验。"},
+        {"page": 6, "section": "4.1-4.3；Table 5", "finding": "涵盖ClevrTex、COCO、VOC、MOVi-D、YTVIS及Physion对象/物理推理任务。对象识别以每槽MLP预测类别与bbox；COCO表5完整DIAS top1/R2=0.70/0.63，DINOSAUR=0.61/0.57。"},
+        {"page": 7, "section": "Table 6", "finding": "完整DIAS ARI/FG-ARI为22.1±0.8/42.7±0.2；去掉reinitialization、保留删槽/蒸馏/随机解码为21.3±0.8/42.0±0.4；再去掉删槽为20.6±0.7/41.5±0.3。支持该配置的局部贡献，并非所有变化只来自冗余。"},
+        {"page": 7, "section": "Table 7及4.4", "finding": "删槽+重初始化top1/R2为0.70/0.63，仅删槽为0.68/0.62；说明去冗余与后续重新聚合应分开归因。"},
+        {"page": 7, "section": "Conclusion末句，跨到页7右栏顶部", "finding": "作者承认重初始化基础和self-distillation仍依赖手动阈值。"}
+      ],
+      "code_evidence": [
+        {"member": "DIAS-main/readme.md", "lines": "34-37", "finding": "明确声明公开实现不包含slot pruning和re-initialization。不能把此ZIP称作论文完整去冗余实现。"},
+        {"member": "DIAS-main/object_centric_bench/model/dias.py", "lines": "92-114", "finding": "公开forward为encoder→一次aggregator→decoder，无论文中的聚类删槽→额外聚合路径，与README限制一致。"},
+        {"member": "DIAS-main/object_centric_bench/model/dias.py", "lines": "13-47", "finding": "SlotAttentionWithAllAttent输出每轮attention，用于内部蒸馏。"},
+        {"member": "DIAS-main/config-dias/dias_r-coco.py", "lines": "130-138,196-213", "finding": "NormalShared固定候选槽，3轮聚合；重构损失加首末迭代attention蒸馏。代码还更改encoder/config，不能据公开README分数反推只改删槽收益。"},
+        {"member": "DIAS-main/object_centric_bench/model/dias.py", "lines": "159-213", "finding": "实现随机autoregressive decoder，另一个独立改动；不是SlotSPE原生生存头。"}
+      ],
+      "transfer_to_slotspe": {
+        "supported": ["需要区分表示重复、同一组织被多个槽拆分、以及重复是否使其他组织/预后信息遗漏。", "只在最后删槽不能证明消除了此前的slot竞争；SlotSPE本来就是先聚合再选槽，因此P2是可检验假设。"],
+        "not_supported": ["多个槽读取相似病理区域可能分别编码不同细胞/状态；重叠本身不是功能性冗余。", "没有对象/组织标注时，不能将任意分割细化称作过分割。", "论文不证明SlotSPE训练后出现同类冗余，更不证明这使生存预测受损。", "本地DIAS ZIP缺核心删槽与重初始化部分，不能直接作为现成完整修复对照。"]
+      }
+    }
+  ],
+  "p1_minimal_falsifiable_patient_diagnostic_not_executed": {
+    "starting_point": "先只读已有干净SlotSPE训练后checkpoint、固定真实patch列表和预先指定held-out患者。复用原生forward，记录native随机状态，先消除重复前向随机性影响；不安装论文代码或新模块。",
+    "raw_records_required": ["每患者、每模态的全部8槽向量、每轮原生patch/pathway注意力、原始selector分数与保留索引。", "相同输入/随机状态重复回放、checkpoint和代码哈希、患者划分与patch ID。", "原生最终预测、逐患者NLL、组学/病理两模态输出；注意self汇总漏选槽路径与cross路径分开说明。"],
+    "claims_separated": [
+      {"claim": "结构上固定候选/活跃数", "minimum_evidence": "逐患者实际记录8候选且恒定2个选中；这只能证实数量不变。"},
+      {"claim": "存在表示容量浪费或不足", "minimum_evidence": "预先定义有效覆盖、槽间注意力重叠和独立信息指标；在固定随机状态下寻找真实病例，其中选中槽高度重复且未选槽稳定覆盖不同组织/通路。至少两类证据一致；只看cosine、熵或非零槽数不足。"},
+      {"claim": "固定2个选中造成预测损害", "minimum_evidence": "已有checkpoint的替换选槽/槽消融只检验计算敏感性；要判断预测损害，需随后另行授权同划分、同预算、同损失、同最大8候选而不同保留数量的配对训练，避免改变初始化、mask、梯度、数值处理、评估随机性等混杂。原版self汇总使用全部槽的问题需单独控制，不能把其变化混记成P1。"},
+      {"claim": "需要逐患者动态数量", "minimum_evidence": "全局最佳k不同不是充分证据；需要预先定义且只用训练集确定的选择规则，在独立患者上比较动态规则与训练折确定的固定k；不能用单患者验证结局选择其k。此阶段超出只读初查，当前未实施。"}
+    ],
+    "negative_outcome_rules": ["若重复槽不普遍、未选槽无独立覆盖，记录未观察到P1容量证据。", "若不同k没有稳定held-out收益，记录固定数量导致预测受损未获支持。", "病例复杂度差异或对象数差异不直接说明需要更多预后槽；一个患者的生存结局也不是可数的预后事件清单。"],
+    "p2_minimal_readout": "先用同患者配对attention重叠、槽表征差异、组织/通路内容、以及预先指定的单槽/成对槽干预联合核查。相似度高只记候选冗余；同区域多槽只记候选碎片化；缺组织标注就明确语义证据待补。"
+  },
+  "external_context_received_from_parent_not_rechecked_here": [
+    {"name": "AdaSlot", "source": "父agent已从CVPR2024官网核查", "finding": "固定最大候选列表加动态离散选择，可自适应活跃槽数量。不能因候选数固定而否认其动态能力。"},
+    {"name": "SlotCurri", "source": "父agent摘要级核查；本地无PDF", "title": "Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning", "arxiv": "2603.22758", "finding": "视频重构下单对象分配多槽的碎片化，使用课程扩槽；不是每患者动态活跃槽的直接证据，尚无本地全文/代码核验。"}
+  ],
+  "current_slotspe_verdict": {"P1": "固定候选数/保留数是结构事实；患者容量不匹配和预测损害待真实患者证据。", "P2": "文献确有冗余/碎片化实证，但SlotSPE训练后发生率、语义及功能损害仍待证。", "patient_experiments_performed_in_this_review": false}
+}

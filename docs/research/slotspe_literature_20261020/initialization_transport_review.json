@@ -1,0 +1,39 @@
+{
+  "task_id": "SPE-08",
+  "date": "2026-10-20",
+  "scope": "原始Slot Attention和MESH完整相关页、MESH代码包静态核查；未运行模型。",
+  "papers": [
+    {
+      "name": "Slot Attention",
+      "title": "Object-Centric Learning with Slot Attention",
+      "local_pdf": "C:\\Users\\栋栋\\Desktop\\slot attention\\Centric Learning with Slot Attention.pdf",
+      "pdf_pages": [1, 2, 3],
+      "finding": "算法1从共享可学习高斯采样初始槽，之后每轮用输入的key/value更新槽；命题1给出输入置换不变和槽置换等变。匿名槽是集合表示设计，不是已证明的训练失败。",
+      "slotspe_mapping": "models/slot_attention.py:38-41,69-110；当前默认10轮，而原论文示例为3轮。",
+      "P3_status": "源代码支持初始槽不以当前样本内容为条件；此前重复评估证明整体随机前向波动，尚未隔离初始化与Gumbel各自影响，也未测前几轮聚合质量。",
+      "P4_status": "编号不具固定身份是结构性质；是否缺乏任务需要的语义稳定性须匹配槽并检查内容。"
+    },
+    {
+      "name": "MESH",
+      "title": "Unlocking Slot Attention by Changing Optimal Transport Costs",
+      "url": "https://proceedings.mlr.press/v202/zhang23ba.html",
+      "local_pdf": "C:\\Users\\栋栋\\Desktop\\slot attention\\zhang23ba.pdf",
+      "pdf_evidence": [
+        {"page": 1, "section": "Introduction", "finding": "重复/相似槽在set-equivariant更新中难以打破平局，可能读取同一输入的平均内容。"},
+        {"page": 3, "section": "3 Connecting slot attention to optimal transport", "finding": "将SA两次归一化解释为单步Sinkhorn近似，建立的是模块内部注意力与熵正则OT的机制关联。"},
+        {"page": 4, "section": "4 and 4.1", "finding": "MESH修改成本并以小噪声打破平局，再进行Sinkhorn；并未给出上游SA和另一个下游跨模态OT组合必然冲突的结论。"}
+      ],
+      "code_evidence": [
+        {"member": "MESH-main/mesh.py", "lines": "9-36,40-70", "finding": "定义Sinkhorn和成本扰动下的熵最小化。"},
+        {"member": "MESH-main/slot_attention.py", "lines": "158-189", "finding": "在同一模块中分支对比mesh、sinkhorn和original_slot_attention；不是两个跨模态运输阶段。"}
+      ],
+      "P8_status_original_slotspe": "不适用；原版models/SlotSPE.py:294使用cross-attention，无后续跨模态OT。",
+      "P8_status_dct": "本轮未审计DCT。即便具体DCT有SA和OT两段，也只能登记潜在组合假设；不能由MESH直接推导已发生信息损失。",
+      "P2_status": "支持重复/相似槽的理论机制风险，不证明SlotSPE训练后真实冗余发生率。"
+    }
+  ],
+  "visual_page_checks": ["MetaSlot PDF page 1", "MESH PDF page 3", "OCEBO PDF page 1"],
+  "raw_patient_outputs_received": false,
+  "model_changes": false,
+  "patient_jobs_started": false
+}

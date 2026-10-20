@@ -1,0 +1,1220 @@
+{
+  "stage": "SPE-08 literature identity and applicability audit",
+  "created_utc": "2026-10-20T01:51:06.581771+00:00",
+  "source": "C:\\Users\\栋栋\\Desktop\\slot attention",
+  "patient_data_read": false,
+  "model_code_executed": false,
+  "items": [
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\2507.23755v3.pdf",
+      "bytes": 1537135,
+      "sha256": "c562ba606ad0b0ca88ba92a6cb38324fdf1436d9302dba7c08b3bb375f6147f7",
+      "pages": 8,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "Slot Attention with Re-Initialization and Self-Distillation",
+        "author": "Rongzhen Zhao; Yi Zhao; Juho Kannala; Joni Pajarinen",
+        "subject": "-  Computing methodologies  ->  Computer vision representations.",
+        "keywords": " Object-Centric Learning, Slot Attention, Object Representation, Visual Prediction, Visual Reasoning ",
+        "creator": "arXiv GenPDF (tex2pdf:4177c2c)",
+        "producer": "pikepdf 8.15.1",
+        "creationDate": "D:20251111020501+00'00'",
+        "modDate": "D:20251111020501+00'00'",
+        "trapped": "",
+        "encryption": null
+      },
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\extracted_text\\2507.23755v3.txt",
+      "first_page_excerpt": "          Slot Attention with Re-Initialization and Self-Distillation\n                      Rongzhen Zhao∗                                     Yi Zhao\n             Department of Electrical Engineering and Automation     Department of Electrical Engineering and Automation\n                               Aalto University                                        Aalto University\n                                Espoo, Finland                                         Espoo, Finland\n                            rongzhen.zhao@aalto.fi                                      yi.zhao@aalto.fi\n\n                         Juho Kannala                                     Joni Pajarinen\n                     Department of Computer Science              Department of Electrical Engineering and Automation\n                               Aalto University                                        Aalto University\n                                Espoo, Finland                                         Espoo, Finland\n                 Center for Machine Vision and Signal Analysis                         joni.pajarinen@aalto.fi\n                               University of Oulu\n                                Oulu, Finland2025\n                             juho.kannala@aalto.fi\n\n        Abstract                                                                                      o1:andSlotslocalizationredundancy(right),reductionwhileyieldsre-initializationlimited boostsboostsin objectboth objectrecognition,discoveryi.e.,andclassificationrecognition.(left)\n                                                                                                                                            0.66                                               0.66                DINOSAURNov    Unlike popular solutions based on dense feature maps, Object-\n                                                                                                                                              + reduction\n9    Centric Learning (OCL) represents visual scenes as sub-symbolic                0.64                                               0.64            + reduction + reinitializ.\n            object-level feature vector",
+      "sha256_after_read": "c562ba606ad0b0ca88ba92a6cb38324fdf1436d9302dba7c08b3bb375f6147f7",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\6936_Grounded_Object_Centric_L.pdf",
+      "bytes": 19986955,
+      "sha256": "208aa2ae460ac5b1b5ef948febfbd52b221033e51e9ca959d0127978cfebd387",
+      "pages": 45,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20240319101139Z",
+        "modDate": "D:20240319101139Z",
+        "trapped": "",
+        "encryption": null
+      },
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\extracted_text\\6936_Grounded_Object_Centric_L.txt",
+      "first_page_excerpt": "Published as a conference paper at ICLR 2024\n\n\nGROUNDED OBJECT-CENTRIC LEARNING\n\n\n Avinash Kori †, Francesco Locatello ‡ ∗, Fabio De Sousa Ribeiro†,\n Francesca Toni †, and Ben Glocker †\n  † Imperial College London, ‡ Institute of Science and Technology Austria\n a.kori21@imperial.ac.uk\n\n\n\n                         ABSTRACT\n\n       The extraction of modular object-centric representations for downstream tasks is an\n        emerging area of research. Learning grounded representations of objects that are\n        guaranteed to be stable and invariant promises robust performance across different\n         tasks and environments. Slot Attention (SA) learns object-centric representations by\n         assigning objects to slots, but presupposes a single distribution from which all slots\n         are randomly initialised. This results in an inability to learn specialized slots which\n        bind to specific object types and remain invariant to identity-preserving changes in\n         object appearance. To address this, we present COnditional Slot Attention (COSA)\n        using a novel concept of Grounded Slot Dictionary (GSD) inspired by vector\n         quantization. Our proposed GSD comprises (i) canonical object-level property\n         vectors and (ii) parametric Gaussian distributions, which define a prior over the\n          slots. We demonstrate the benefits of our method in multiple downstream tasks\n        such as scene generation, composition, and task adaptation, whilst remaining\n         competitive with SA in popular object discovery benchmarks.\n\n\n1  INTRODUCTION\n\nA key step in aligning AI systems with humans amounts to imbuing them with notions of objectness\nakin to human understanding (Lake et al., 2017).  It has been argued that humans understand\ntheir environment by subconsciously segregating percepts into object entities (Rock, 1973; Hinton,\n1979; Kulkarni et al., 2015; Behrens et al., 2018). Objectness is a multifaceted property that can\nbe characterised as physical, abstract, semantic, geometric, or via spaces and boundaries (Yuille\n& Kersten, 2006; Epstein et al., 2017). The goal of object-centric representation learning is to\nequip systems with a notion of o",
+      "sha256_after_read": "208aa2ae460ac5b1b5ef948febfbd52b221033e51e9ca959d0127978cfebd387",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\Centric Learning with Slot Attention.pdf",
+      "bytes": 3437358,
+      "sha256": "ff310f9ee610ce0bad20bfc7517cb730b19e11b8f45195cd548b510616164b1f",
+      "pages": 27,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.21",
+        "creationDate": "D:20201015001915Z",
+        "modDate": "D:20201015001915Z",
+        "trapped": "",
+        "encryption": null
+      },
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\extracted_text\\Centric Learning with Slot Attention.txt",
+      "first_page_excerpt": "                 Object-Centric Learning with Slot Attention\n\n\n\n\n                     Francesco Locatello2,3,†,*, Dirk Weissenborn1, Thomas Unterthiner1, Aravindh Mahendran1,\n                        Georg Heigold1, Jakob Uszkoreit1, Alexey Dosovitskiy1,‡, and Thomas Kipf1,‡,*\n\n                                                 1Google Research, Brain Team\n                                                 2Dept. of Computer Science, ETH Zurich\n2020                                     3Max-Planck Institute for Intelligent Systems\nOct                                            Abstract                             Learning object-centric representations of complex scenes is a promising step\n14                          Yet,towardsmostenablingdeep learningefﬁcient approachesabstract reasoninglearn distributedfrom low-levelrepresentationsperceptual features.that do\n                               not capture the compositional properties of natural scenes.  In this paper, we\n                                 present the Slot Attention module, an architectural component that interfaces with\n                               perceptual representations such as the output of a convolutional neural network\n                            and produces a set of task-dependent abstract representations which we call slots.\n                            These slots are exchangeable and can bind to any object in the input by specializing\n                              through a competitive procedure over multiple rounds of attention. We empirically[cs.LG]\n                             demonstrate that Slot Attention can extract object-centric representations that\n                               enable generalization to unseen compositions when trained on unsupervised object\n                               discovery and supervised property prediction tasks.\n\n\n                1  Introduction\n\n                        Object-centric representations have the potential to improve sample efﬁciency and generalization of\n                     machine learning algorithms across a range of application domains, such as visual reasoning [1], mod-\n                         eling of structured environments [2], mul",
+      "sha256_after_read": "ff310f9ee610ce0bad20bfc7517cb730b19e11b8f45195cd548b510616164b1f",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\coda-main.zip",
+      "bytes": 194359,
+      "sha256": "7f1138823c9497f21afb4690115670745396da8cafce9ad315ce977b3bb43dbd",
+      "members": [
+        {
+          "name": "coda-main/3rd_party/LICENCE_LDM",
+          "bytes": 1101
+        },
+        {
+          "name": "coda-main/3rd_party/LICENCE_LSD",
+          "bytes": 1069
+        },
+        {
+          "name": "coda-main/3rd_party/LICENCE_SDM",
+          "bytes": 1063
+        },
+        {
+          "name": "coda-main/LICENSE",
+          "bytes": 10685
+        },
+        {
+          "name": "coda-main/README.md",
+          "bytes": 5011
+        },
+        {
+          "name": "coda-main/assets/diagram_coda.png",
+          "bytes": 129750
+        },
+        {
+          "name": "coda-main/experiment/__init__.py",
+          "bytes": 0
+        },
+        {
+          "name": "coda-main/experiment/dataset/__init__.py",
+          "bytes": 0
+        },
+        {
+          "name": "coda-main/experiment/dataset/coco.py",
+          "bytes": 20374
+        },
+        {
+          "name": "coda-main/experiment/dataset/data.py",
+          "bytes": 1913
+        },
+        {
+          "name": "coda-main/experiment/dataset/movi.py",
+          "bytes": 3220
+        },
+        {
+          "name": "coda-main/experiment/dataset/voc.py",
+          "bytes": 12908
+        },
+        {
+          "name": "coda-main/experiment/eval.py",
+          "bytes": 9367
+        },
+        {
+          "name": "coda-main/experiment/linear_prob.py",
+          "bytes": 18257
+        },
+        {
+          "name": "coda-main/experiment/setup/dataset/coco.yaml",
+          "bytes": 620
+        },
+        {
+          "name": "coda-main/experiment/setup/dataset/movi-c.yaml",
+          "bytes": 461
+        },
+        {
+          "name": "coda-main/experiment/setup/dataset/movi-e.yaml",
+          "bytes": 461
+        },
+        {
+          "name": "coda-main/experiment/setup/dataset/prob_movi-c.yaml",
+          "bytes": 262
+        },
+        {
+          "name": "coda-main/experiment/setup/dataset/prob_movi-e.yaml",
+          "bytes": 262
+        },
+        {
+          "name": "coda-main/experiment/setup/dataset/voc.yaml",
+          "bytes": 705
+        },
+        {
+          "name": "coda-main/experiment/setup/eval.yaml",
+          "bytes": 436
+        },
+        {
+          "name": "coda-main/experiment/setup/pipeline/encoder/lsd_register.yaml",
+          "bytes": 611
+        },
+        {
+          "name": "coda-main/experiment/setup/pipeline/pipeline.yaml",
+          "bytes": 570
+        },
+        {
+          "name": "coda-main/experiment/setup/prob.yaml",
+          "bytes": 453
+        },
+        {
+          "name": "coda-main/experiment/setup/train.yaml",
+          "bytes": 1066
+        },
+        {
+          "name": "coda-main/experiment/train.py",
+          "bytes": 4215
+        },
+        {
+          "name": "coda-main/preprocess/download.sh",
+          "bytes": 1708
+        },
+        {
+          "name": "coda-main/preprocess/download_movi.py",
+          "bytes": 2963
+        },
+        {
+          "name": "coda-main/requirements.txt",
+          "bytes": 357
+        },
+        {
+          "name": "coda-main/scripts/eval.sh",
+          "bytes": 841
+        },
+        {
+          "name": "coda-main/scripts/train.sh",
+          "bytes": 1128
+        },
+        {
+          "name": "coda-main/src/__init__.py",
+          "bytes": 0
+        },
+        {
+          "name": "coda-main/src/layers/__init__.py",
+          "bytes": 0
+        },
+        {
+          "name": "coda-main/src/layers/backbone.py",
+          "bytes": 3246
+        },
+        {
+          "name": "coda-main/src/layers/ops.py",
+          "bytes": 13689
+        },
+        {
+          "name": "coda-main/src/layers/slot_attn.py",
+          "bytes": 7046
+        },
+        {
+          "name": "coda-main/src/metric/segmentation.py",
+          "bytes": 11225
+        },
+        {
+          "name": "coda-main/src/model/__init__.py",
+          "bytes": 0
+        },
+        {
+          "name": "coda-main/src/model/encoder.py",
+          "bytes": 6718
+        },
+        {
+          "name": "coda-main/src/model/pipeline.py",
+          "bytes": 16969
+        },
+        {
+          "name": "coda-main/src/utils/__init__.py",
+          "bytes": 0
+        },
+        {
+          "name": "coda-main/src/utils/helper.py",
+          "bytes": 10414
+        },
+        {
+          "name": "coda-main/src/utils/logger.py",
+          "bytes": 784
+        },
+        {
+          "name": "coda-main/src/utils/trainer.py",
+          "bytes": 8447
+        }
+      ],
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\archive_text\\coda-main.json",
+      "sha256_after_read": "7f1138823c9497f21afb4690115670745396da8cafce9ad315ce977b3bb43dbd",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\CoSA-master.zip",
+      "bytes": 206898,
+      "sha256": "592a49ff4acde7874d07818dcdeb41af62fd44c5c0cc9c841e874e1ab6e35079",
+      "members": [
+        {
+          "name": "CoSA-master/.gitignore",
+          "bytes": 1859
+        },
+        {
+          "name": "CoSA-master/LICENSE",
+          "bytes": 1516
+        },
+        {
+          "name": "CoSA-master/README.md",
+          "bytes": 1205
+        },
+        {
+          "name": "CoSA-master/adaptability.py",
+          "bytes": 25920
+        },
+        {
+          "name": "CoSA-master/adhoc_reasoning.py",
+          "bytes": 18894
+        },
+        {
+          "name": "CoSA-master/adhoc_setprediction.py",
+          "bytes": 20014
+        },
+        {
+          "name": "CoSA-master/baselineclassifier.py",
+          "bytes": 13963
+        },
+        {
+          "name": "CoSA-master/datagen/floatingMNIST.py",
+          "bytes": 4686
+        },
+        {
+          "name": "CoSA-master/datagen/tfrecords2png.py",
+          "bytes": 3453
+        },
+        {
+          "name": "CoSA-master/eval.ipynb",
+          "bytes": 142135
+        },
+        {
+          "name": "CoSA-master/object_discovery.py",
+          "bytes": 20847
+        },
+        {
+          "name": "CoSA-master/reasoning.py",
+          "bytes": 20895
+        },
+        {
+          "name": "CoSA-master/scripts/exps.sh",
+          "bytes": 5554
+        },
+        {
+          "name": "CoSA-master/scripts/intra-cluster.sh",
+          "bytes": 448
+        },
+        {
+          "name": "CoSA-master/scripts/run-re.sh",
+          "bytes": 3521
+        },
+        {
+          "name": "CoSA-master/scripts/run-sp.sh",
+          "bytes": 799
+        },
+        {
+          "name": "CoSA-master/scripts/run.sh",
+          "bytes": 1480
+        },
+        {
+          "name": "CoSA-master/scripts/slurm-wrapper.sh",
+          "bytes": 1343
+        },
+        {
+          "name": "CoSA-master/semantics.py",
+          "bytes": 6099
+        },
+        {
+          "name": "CoSA-master/set_prediction.py",
+          "bytes": 19969
+        },
+        {
+          "name": "CoSA-master/slot_composition.py",
+          "bytes": 6089
+        },
+        {
+          "name": "CoSA-master/src/Analysis.ipynb",
+          "bytes": 54354
+        },
+        {
+          "name": "CoSA-master/src/__init__.py",
+          "bytes": 0
+        },
+        {
+          "name": "CoSA-master/src/dataset.py",
+          "bytes": 5894
+        },
+        {
+          "name": "CoSA-master/src/hpenalty.py",
+          "bytes": 6679
+        },
+        {
+          "name": "CoSA-master/src/legacy_vq.py",
+          "bytes": 15786
+        },
+        {
+          "name": "CoSA-master/src/metrics.py",
+          "bytes": 19323
+        },
+        {
+          "name": "CoSA-master/src/mixtures.py",
+          "bytes": 2140
+        },
+        {
+          "name": "CoSA-master/src/model.py",
+          "bytes": 45214
+        },
+        {
+          "name": "CoSA-master/src/qkcodebook.py",
+          "bytes": 3067
+        },
+        {
+          "name": "CoSA-master/src/transformers.py",
+          "bytes": 3839
+        },
+        {
+          "name": "CoSA-master/src/utils.py",
+          "bytes": 18366
+        },
+        {
+          "name": "CoSA-master/src/vq.py",
+          "bytes": 17430
+        }
+      ],
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\archive_text\\CoSA-master.json",
+      "sha256_after_read": "592a49ff4acde7874d07818dcdeb41af62fd44c5c0cc9c841e874e1ab6e35079",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\DIAS-main.zip",
+      "bytes": 51951,
+      "sha256": "fa699dbff2238f74175ac83dcbc6d88dd610e0d59e2fdbce1b7d043de6a38b40",
+      "members": [
+        {
+          "name": "DIAS-main/.gitignore",
+          "bytes": 115
+        },
+        {
+          "name": "DIAS-main/LICENSE",
+          "bytes": 1065
+        },
+        {
+          "name": "DIAS-main/config-dias/dias_r-clevrtex.py",
+          "bytes": 7938
+        },
+        {
+          "name": "DIAS-main/config-dias/dias_r-coco.py",
+          "bytes": 7920
+        },
+        {
+          "name": "DIAS-main/config-dias/dias_r-voc.py",
+          "bytes": 7926
+        },
+        {
+          "name": "DIAS-main/eval.py",
+          "bytes": 7828
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/__init__.py",
+          "bytes": 64
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/datum/__init__.py",
+          "bytes": 432
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/datum/collate.py",
+          "bytes": 2667
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/datum/dataset.py",
+          "bytes": 922
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/datum/dataset_clevrtex.py",
+          "bytes": 7750
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/datum/dataset_coco.py",
+          "bytes": 13044
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/datum/dataset_voc.py",
+          "bytes": 7674
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/datum/transform.py",
+          "bytes": 12624
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/learn/__init__.py",
+          "bytes": 367
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/learn/callback.py",
+          "bytes": 1327
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/learn/callback_log.py",
+          "bytes": 3877
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/learn/callback_sched.py",
+          "bytes": 2262
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/learn/metric.py",
+          "bytes": 9446
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/learn/optim.py",
+          "bytes": 786
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/model/__init__.py",
+          "bytes": 667
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/model/basic.py",
+          "bytes": 9430
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/model/dias.py",
+          "bytes": 7675
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/model/ocl.py",
+          "bytes": 5226
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/util.py",
+          "bytes": 5702
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/util_datum.py",
+          "bytes": 2424
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/util_learn.py",
+          "bytes": 1865
+        },
+        {
+          "name": "DIAS-main/object_centric_bench/util_model.py",
+          "bytes": 632
+        },
+        {
+          "name": "DIAS-main/readme.md",
+          "bytes": 6700
+        },
+        {
+          "name": "DIAS-main/requirements.txt",
+          "bytes": 485
+        },
+        {
+          "name": "DIAS-main/train.py",
+          "bytes": 8570
+        }
+      ],
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\archive_text\\DIAS-main.json",
+      "sha256_after_read": "fa699dbff2238f74175ac83dcbc6d88dd610e0d59e2fdbce1b7d043de6a38b40",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\ICLR-2025-object-centric-pretraining-via-target-encoder-bootstrapping-Paper-Conference.pdf",
+      "bytes": 748528,
+      "sha256": "c5199a7684f4acec22c9e48beaa2953d6da8a8cdb63a92d3b874a8c63e274392",
+      "pages": 14,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.26",
+        "creationDate": "D:20250226123212Z",
+        "modDate": "D:20250226123212Z",
+        "trapped": "",
+        "encryption": null
+      },
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\extracted_text\\ICLR-2025-object-centric-pretraining-via-target-encoder-bootstrapping-Paper-Conference.txt",
+      "first_page_excerpt": "Published as a conference paper at ICLR 2025\n\n\nOBJECT-CENTRIC PRETRAINING VIA TARGET EN-\nCODER BOOTSTRAPPING\n\n\n                 Nikola Ðuki´c      Tim Lebailly       Tinne Tuytelaars\n                        KU Leuven\n        {nikola.djukic, tim.lebailly, tinne.tuytelaars}@kuleuven.be\n\n\n\n                         ABSTRACT\n\n         Object-centric representation learning has recently been successfully applied to\n         real-world datasets.  This success can be attributed to pretrained non-object-\n         centric foundation models, whose features serve as reconstruction targets for slot\n          attention. However, targets must remain frozen throughout the training, which\n          sets an upper bound on the performance object-centric models can attain.  At-\n        tempts to update the target encoder by bootstrapping result in large performance\n         drops, which can be attributed to its lack of object-centric inductive biases, caus-\n        ing the object-centric model’s encoder to drift away from representations use-\n          ful as reconstruction targets. To address these limitations, we propose Object-\n        CEntric Pretraining by Target Encoder BOotstrapping, a self-distillation setup\n         for training object-centric models from scratch, on real-world data, for the first\n        time ever. In OCEBO, the target encoder is updated as an exponential moving\n        average of the object-centric model, thus explicitly being enriched with object-\n         centric inductive biases introduced by slot attention while removing the upper\n       bound on performance present in other models. We mitigate the slot collapse\n        caused by random initialization of the target encoder by introducing a novel cross-\n        view patch filtering approach that limits the supervision to sufficiently informa-\n          tive patches. When pretrained on 241k images from COCO, OCEBO achieves\n        unsupervised object discovery performance comparable to that of object-centric\n       models with frozen non-object-centric target encoders pretrained on hundreds of\n         millions of images. The code and pretrained models are publicly available at\n      https://github.com",
+      "sha256_after_read": "c5199a7684f4acec22c9e48beaa2953d6da8a8cdb63a92d3b874a8c63e274392",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\ICLR-2026-improved-object-centric-diffusion-learning-with-registers-and-contrastive-alignment-Paper-Conference.pdf",
+      "bytes": 29388981,
+      "sha256": "d98570d8c58800816acea29210dc344d8d4ad19105bd21d1d2ed38271fd064ae",
+      "pages": 29,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.27",
+        "creationDate": "D:20260219130007Z",
+        "modDate": "D:20260219130007Z",
+        "trapped": "",
+        "encryption": null
+      },
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\extracted_text\\ICLR-2026-improved-object-centric-diffusion-learning-with-registers-and-contrastive-alignment-Paper-Conference.txt",
+      "first_page_excerpt": "Published as a conference paper at ICLR 2026\n\n\nIMPROVED OBJECT-CENTRIC DIFFUSION LEARNING\nWITH REGISTERS AND CONTRASTIVE ALIGNMENT\n\n\n Bac Nguyen1∗, Yuhta Takida1, Naoki Murata1, Chieh-Hsin Lai1, Toshimitsu Uesaka1,\n Stefano Ermon2, Yuki Mitsufuji1,3\n 1Sony AI, 2Stanford University, 3Sony Group Corporation\n\n\n                         ABSTRACT\n\n         Slot Attention (SA) with pretrained diffusion models has recently shown promise\n         for object-centric learning (OCL), but suffers from slot entanglement and weak\n        alignment between object slots and image content. We propose Contrastive Object-\n         centric Diffusion Alignment (CODA), a simple extension that (i) employs register\n          slots to absorb residual attention and reduce interference between object slots,\n       and (ii) applies a contrastive alignment loss to explicitly encourage slot–image\n        correspondence. The resulting training objective serves as a tractable surrogate\n         for maximizing mutual information (MI) between slots and inputs, strengthening\n          slot representation quality. On both synthetic (MOVi-C/E) and real-world datasets\n       (VOC, COCO), CODA improves object discovery (e.g., +6.1% FG-ARI on COCO),\n        property prediction, and compositional image generation over strong baselines.\n         Register slots add negligible overhead, keeping CODA efficient and scalable. These\n          results indicate potential applications of CODA as an effective framework for robust\n     OCL in complex, real-world scenes. Code and pretrained models are available at\n      https://github.com/sony/coda.\n\n\n1  INTRODUCTION\n\nObject-centric learning (OCL) aims to decompose complex scenes into structured, interpretable object\nrepresentations, enabling downstream tasks such as visual reasoning (Assouel et al., 2022; D’Amario\net al., 2021), causal inference (Schölkopf et al., 2021; Zholus et al., 2022), world modeling (Ke et al.,\n2021), robotic control (Haramati et al., 2024), and compositional generation (Singh et al., 2022a). Yet,\nlearning such compositional representations directly from images remains a core challenge. Unlike\ntext, where words naturally form composable unit",
+      "sha256_after_read": "d98570d8c58800816acea29210dc344d8d4ad19105bd21d1d2ed38271fd064ae",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\MESH-main.zip",
+      "bytes": 20200,
+      "sha256": "bef8eadd0ef48198f9c1ca82c2d7c99e4849adcde95cc270a0ec8a7e3155d29c",
+      "members": [
+        {
+          "name": "MESH-main/.gitignore",
+          "bytes": 160
+        },
+        {
+          "name": "MESH-main/LICENSE",
+          "bytes": 1063
+        },
+        {
+          "name": "MESH-main/README.md",
+          "bytes": 748
+        },
+        {
+          "name": "MESH-main/config/data/clevrer_l.yaml",
+          "bytes": 646
+        },
+        {
+          "name": "MESH-main/config/data/clevrer_s.yaml",
+          "bytes": 645
+        },
+        {
+          "name": "MESH-main/config/data/clevrtex64.yaml",
+          "bytes": 501
+        },
+        {
+          "name": "MESH-main/config/data/mdsprites.yaml",
+          "bytes": 501
+        },
+        {
+          "name": "MESH-main/config/model/image.yaml",
+          "bytes": 243
+        },
+        {
+          "name": "MESH-main/config/model/slot_attention/mesh.yaml",
+          "bytes": 421
+        },
+        {
+          "name": "MESH-main/config/model/slot_attention/original_slot_attention.yaml",
+          "bytes": 225
+        },
+        {
+          "name": "MESH-main/config/model/slot_attention/sinkhorn.yaml",
+          "bytes": 282
+        },
+        {
+          "name": "MESH-main/config/model/video.yaml",
+          "bytes": 461
+        },
+        {
+          "name": "MESH-main/config/object_discovery.yaml",
+          "bytes": 423
+        },
+        {
+          "name": "MESH-main/data.py",
+          "bytes": 1859
+        },
+        {
+          "name": "MESH-main/data_scripts/README.md",
+          "bytes": 447
+        },
+        {
+          "name": "MESH-main/data_scripts/clevrtex2h5py.py",
+          "bytes": 2826
+        },
+        {
+          "name": "MESH-main/data_scripts/frames2h5py.py",
+          "bytes": 3843
+        },
+        {
+          "name": "MESH-main/data_scripts/video2frames.py",
+          "bytes": 1085
+        },
+        {
+          "name": "MESH-main/losses.py",
+          "bytes": 5837
+        },
+        {
+          "name": "MESH-main/lr_scheduler.py",
+          "bytes": 1086
+        },
+        {
+          "name": "MESH-main/mesh.py",
+          "bytes": 1869
+        },
+        {
+          "name": "MESH-main/requirements.txt",
+          "bytes": 165
+        },
+        {
+          "name": "MESH-main/run_object_discovery.py",
+          "bytes": 7367
+        },
+        {
+          "name": "MESH-main/slot_attention.py",
+          "bytes": 12758
+        }
+      ],
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\archive_text\\MESH-main.json",
+      "sha256_after_read": "bef8eadd0ef48198f9c1ca82c2d7c99e4849adcde95cc270a0ec8a7e3155d29c",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\MetaSlot-main.zip",
+      "bytes": 602771,
+      "sha256": "fb319222dfd13a77ea3efc6b274aef88eb2394c9c56d60057bf877e4eb01ffe1",
+      "members": [
+        {
+          "name": "MetaSlot-main/.gitignore",
+          "bytes": 1022
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/dinosaur_r-clevrtex.py",
+          "bytes": 4962
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/dinosaur_r-coco-ViT_B16.py",
+          "bytes": 4994
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/dinosaur_r-coco.py",
+          "bytes": 4992
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/dinosaur_r-voc.py",
+          "bytes": 5172
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/slate_r_vqvae-clevrtex.py",
+          "bytes": 6011
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/slate_r_vqvae-coco.py",
+          "bytes": 6032
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/slate_r_vqvae-voc.py",
+          "bytes": 5998
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/slotdiffusion_r_vqvae-clevrtex.py",
+          "bytes": 6497
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/slotdiffusion_r_vqvae-coco.py",
+          "bytes": 6518
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/slotdiffusion_r_vqvae-voc.py",
+          "bytes": 6495
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/spot_r-coco.py",
+          "bytes": 6106
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/vqvae-clevrtex-c256.py",
+          "bytes": 3789
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/vqvae-clevrtex-c4.py",
+          "bytes": 4094
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/vqvae-coco-c256.py",
+          "bytes": 3817
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/vqvae-coco-c4.py",
+          "bytes": 4122
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/vqvae-voc-c256.py",
+          "bytes": 3781
+        },
+        {
+          "name": "MetaSlot-main/Config/config-metaslot/vqvae-voc-c4.py",
+          "bytes": 4086
+        },
+        {
+          "name": "MetaSlot-main/LICENSE",
+          "bytes": 1064
+        },
+        {
+          "name": "MetaSlot-main/README.md",
+          "bytes": 5108
+        },
+        {
+          "name": "MetaSlot-main/data/.gitkeep",
+          "bytes": 0
+        },
+        {
+          "name": "MetaSlot-main/eval.py",
+          "bytes": 3365
+        },
+        {
+          "name": "MetaSlot-main/imgs/model.jpg",
+          "bytes": 370526
+        },
+        {
+          "name": "MetaSlot-main/imgs/result.png",
+          "bytes": 201313
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/__init__.py",
+          "bytes": 0
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/datum/__init__.py",
+          "bytes": 755
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/datum/dataset.py",
+          "bytes": 2391
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/datum/dataset_clevrtex.py",
+          "bytes": 6885
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/datum/dataset_coco.py",
+          "bytes": 23384
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/datum/dataset_movi.py",
+          "bytes": 15590
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/datum/dataset_voc.py",
+          "bytes": 7891
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/datum/dataset_ytvis.py",
+          "bytes": 11712
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/datum/transform.py",
+          "bytes": 21504
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/datum/utils.py",
+          "bytes": 9127
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/__init__.py",
+          "bytes": 793
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/callback.py",
+          "bytes": 1475
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/callback_ema.py",
+          "bytes": 2871
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/callback_log.py",
+          "bytes": 4394
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/callback_sched.py",
+          "bytes": 5186
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/metric.py",
+          "bytes": 11809
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/metric.py.bak",
+          "bytes": 14440
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/metric_spot.py",
+          "bytes": 1114
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/metric_videosaur.py",
+          "bytes": 1489
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/optim.py",
+          "bytes": 1482
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/learn/utils.py",
+          "bytes": 1521
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/__init__.py",
+          "bytes": 1523
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/basic.py",
+          "bytes": 23412
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/dinosaur.py",
+          "bytes": 6073
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/mae.py",
+          "bytes": 3620
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/metaslot.py",
+          "bytes": 28178
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/ocl.py",
+          "bytes": 18095
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/savi.py",
+          "bytes": 4233
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/slatesteve.py",
+          "bytes": 5753
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/slotdiffusion.py",
+          "bytes": 4801
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/slotformer.py",
+          "bytes": 4844
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/spot.py",
+          "bytes": 12222
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/spot_zero.py",
+          "bytes": 18673
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/utils.py",
+          "bytes": 2507
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/vaez.py",
+          "bytes": 21658
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/model/videosaur.py",
+          "bytes": 2731
+        },
+        {
+          "name": "MetaSlot-main/object_centric_bench/utils.py",
+          "bytes": 13769
+        },
+        {
+          "name": "MetaSlot-main/requirements.txt",
+          "bytes": 408
+        },
+        {
+          "name": "MetaSlot-main/train.py",
+          "bytes": 7587
+        }
+      ],
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\archive_text\\MetaSlot-main.json",
+      "sha256_after_read": "fb319222dfd13a77ea3efc6b274aef88eb2394c9c56d60057bf877e4eb01ffe1",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\NeurIPS-2024-identifiable-object-centric-representation-learning-via-probabilistic-slot-attention-Paper-Conference.pdf",
+      "bytes": 6943800,
+      "sha256": "349d837347a425def3a623a7ec45f81281725b529fcc219854f81eeab5bd12b2",
+      "pages": 36,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.25",
+        "creationDate": "D:20241030073315Z",
+        "modDate": "D:20241030073315Z",
+        "trapped": "",
+        "encryption": null
+      },
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\extracted_text\\NeurIPS-2024-identifiable-object-centric-representation-learning-via-probabilistic-slot-attention-Paper-Conference.txt",
+      "first_page_excerpt": " Identifiable Object-Centric Representation Learning\n            via Probabilistic Slot Attention\n\n\n\n      Avinash Kori1∗       Francesco Locatello2       Ainkaran Santhirasekaram1\n\n        Francesca Toni1        Ben Glocker1         Fabio De Sousa Ribeiro1∗\n\n\n                                  1 Imperial College London, UK\n                           2 Institute of Science and Technology, Austria\n                          a.kori21@imperial.ac.uk\n\n\n                                Abstract\n\n\n        Learning modular object-centric representations is crucial for systematic general-\n          ization. Existing methods show promising object-binding capabilities empirically,\n         but theoretical identifiability guarantees remain relatively underdeveloped. Un-\n        derstanding when object-centric representations can theoretically be identified is\n          crucial for scaling slot-based methods to high-dimensional images with correctness\n         guarantees. To that end, we propose a probabilistic slot-attention algorithm that\n        imposes an aggregate mixture prior over object-centric slot representations, thereby\n        providing slot identifiability guarantees without supervision, up to an equivalence\n          relation. We provide empirical verification of our theoretical identifiability result\n        using both simple 2-dimensional data and high-resolution imaging datasets.\n\n\n1  Introduction\n\nIt has been hypothesized that developing machine learning (ML) systems capable of human-level\nunderstanding requires imbuing them with notions of objectness [48, 65]. Objectness notions can\nbe characterised as physical, abstract, semantic, geometric, or via spaces and boundaries [83, 17].\nHumans can generalise across environments with few examples to learn from [70], and this has been\nattributed to our ability to segregate percepts into object entities [64, 25, 45, 4].\n\nObtaining object-centric representations is deemed to be a key step for achieving true compositional\ngeneralization [5, 48, 3, 22], and uncovering causal influence between discrete concepts and their\nenvironment [57, 19, 20, 65, 4]. Significant progress in learning object-centric representations has",
+      "sha256_after_read": "349d837347a425def3a623a7ec45f81281725b529fcc219854f81eeab5bd12b2",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference.pdf",
+      "bytes": 9235148,
+      "sha256": "d496dc81809df6f4c394a1621dbc85d79526da1038cc5eece7bceca75ac9c4b1",
+      "pages": 26,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "",
+        "author": "",
+        "subject": "",
+        "keywords": "",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.27",
+        "creationDate": "D:20251020214547Z",
+        "modDate": "D:20251020214547Z",
+        "trapped": "",
+        "encryption": null
+      },
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\extracted_text\\NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference.txt",
+      "first_page_excerpt": "MetaSlot: Break Through the Fixed Number of Slots\n              in Object-Centric Learning\n\n\n\n\n           Hongjia Liu1  Rongzhen Zhao1∗ Haohan Chen2   Joni Pajarinen1\n    1Department of Electrical Engineering and Automation, Aalto University, Espoo, Finland\n            2Department of Computer Science, Sichuan University, Chengdu, China\n           {hongjia.liu, rongzhen.zhao, joni.pajarinen}@aalto.fi\n                            sajel@stu.scu.edu.cn\n\n\n                                Abstract\n\n        Learning object-level, structured representations is widely regarded as a key to bet-\n          ter generalization in vision and underpins the design of next-generation Pre-trained\n        Vision Models (PVMs). Mainstream Object-Centric Learning (OCL) methods\n        adopt Slot Attention or its variants to iteratively aggregate objects’ super-pixels\n         into a fixed set of query feature vectors, termed slots. However, their reliance on\n        a static slot count leads to an object being represented as multiple parts when the\n       number of objects varies. We introduce MetaSlot, a plug-and-play Slot Attention\n         variant that adapts to variable object counts. MetaSlot (i) maintains a codebook that\n        holds prototypes of objects in a dataset by vector-quantizing the resulting slot rep-\n         resentations; (ii) removes duplicate slots from the traditionally aggregated slots by\n         quantizing them with the codebook; and (iii) injects progressively weaker noise into\n         the Slot Attention iterations to accelerate and stabilize the aggregation. MetaSlot is\n        a general Slot Attention variant that can be seamlessly integrated into existing OCL\n          architectures. Across multiple public datasets and tasks–including object discovery\n       and recognition–models equipped with MetaSlot achieve significant performance\n         gains and markedly interpretable slot representations, compared with existing Slot\n        Attention variants. The code is available at https://github.com/lhj-lhj/MetaSlot.\n\n\n1  Introduction\n\nHuman intelligence is rooted in limited perceptual experience–especially visual information–which\nenables it to demonstrate o",
+      "sha256_after_read": "d496dc81809df6f4c394a1621dbc85d79526da1038cc5eece7bceca75ac9c4b1",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\ocebo-main.zip",
+      "bytes": 49461,
+      "sha256": "bfcef318faed665f418d4b2bed3f18c41649f36423e9731229385b93f536f555",
+      "members": [
+        {
+          "name": "ocebo-main/.gitignore",
+          "bytes": 97
+        },
+        {
+          "name": "ocebo-main/LICENSE",
+          "bytes": 11357
+        },
+        {
+          "name": "ocebo-main/README.md",
+          "bytes": 2904
+        },
+        {
+          "name": "ocebo-main/custom_transforms.py",
+          "bytes": 10437
+        },
+        {
+          "name": "ocebo-main/eval_ocl.py",
+          "bytes": 8740
+        },
+        {
+          "name": "ocebo-main/evaluation/ocl/README.md",
+          "bytes": 1662
+        },
+        {
+          "name": "ocebo-main/evaluation/ocl/datasets.py",
+          "bytes": 15819
+        },
+        {
+          "name": "ocebo-main/evaluation/ocl/ocl_metrics.py",
+          "bytes": 27055
+        },
+        {
+          "name": "ocebo-main/main_ocebo.py",
+          "bytes": 28219
+        },
+        {
+          "name": "ocebo-main/models/__init__.py",
+          "bytes": 91
+        },
+        {
+          "name": "ocebo-main/models/head.py",
+          "bytes": 9043
+        },
+        {
+          "name": "ocebo-main/models/ocebo.py",
+          "bytes": 2454
+        },
+        {
+          "name": "ocebo-main/models/slot_attention.py",
+          "bytes": 11374
+        },
+        {
+          "name": "ocebo-main/models/vision_transformer.py",
+          "bytes": 11407
+        },
+        {
+          "name": "ocebo-main/utils.py",
+          "bytes": 27832
+        }
+      ],
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\archive_text\\ocebo-main.json",
+      "sha256_after_read": "bfcef318faed665f418d4b2bed3f18c41649f36423e9731229385b93f536f555",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\PSA-master.zip",
+      "bytes": 16176383,
+      "sha256": "d6050b9e4670f9adf48cd1a925d8808d7db08812f9f196d7da3e17bf30baf69f",
+      "members": [
+        {
+          "name": "PSA-master/.gitignore",
+          "bytes": 3165
+        },
+        {
+          "name": "PSA-master/LICENSE",
+          "bytes": 1065
+        },
+        {
+          "name": "PSA-master/README.md",
+          "bytes": 1338
+        },
+        {
+          "name": "PSA-master/data/download_data.py",
+          "bytes": 4221
+        },
+        {
+          "name": "PSA-master/datasets.py",
+          "bytes": 22451
+        },
+        {
+          "name": "PSA-master/eval/__init__.py",
+          "bytes": 0
+        },
+        {
+          "name": "PSA-master/eval/get_metrics.py",
+          "bytes": 11992
+        },
+        {
+          "name": "PSA-master/eval/mcc.py",
+          "bytes": 21770
+        },
+        {
+          "name": "PSA-master/eval/metrics.py",
+          "bytes": 5172
+        },
+        {
+          "name": "PSA-master/eval/run_scripts.sh",
+          "bytes": 678
+        },
+        {
+          "name": "PSA-master/hps.py",
+          "bytes": 10472
+        },
+        {
+          "name": "PSA-master/main.py",
+          "bytes": 3654
+        },
+        {
+          "name": "PSA-master/model.py",
+          "bytes": 50784
+        },
+        {
+          "name": "PSA-master/playground/2drepresentationEM.ipynb",
+          "bytes": 19834573
+        },
+        {
+          "name": "PSA-master/playground/EMtesting.ipynb",
+          "bytes": 705904
+        },
+        {
+          "name": "PSA-master/playground/plots.ipynb",
+          "bytes": 1504971
+        },
+        {
+          "name": "PSA-master/requirements.txt",
+          "bytes": 144
+        },
+        {
+          "name": "PSA-master/scripts/local_run.sh",
+          "bytes": 1789
+        },
+        {
+          "name": "PSA-master/scripts/local_run_d1.sh",
+          "bytes": 1748
+        },
+        {
+          "name": "PSA-master/scripts/local_run_d2.sh",
+          "bytes": 1799
+        },
+        {
+          "name": "PSA-master/scripts/local_run_d3.sh",
+          "bytes": 1867
+        },
+        {
+          "name": "PSA-master/scripts/local_run_d4.sh",
+          "bytes": 1823
+        },
+        {
+          "name": "PSA-master/scripts/local_run_d5.sh",
+          "bytes": 1789
+        },
+        {
+          "name": "PSA-master/scripts/slurm_exps.sh",
+          "bytes": 416
+        },
+        {
+          "name": "PSA-master/scripts/slurm_training.sh",
+          "bytes": 608
+        },
+        {
+          "name": "PSA-master/scripts/training.sh",
+          "bytes": 591
+        },
+        {
+          "name": "PSA-master/train_setup.py",
+          "bytes": 4304
+        },
+        {
+          "name": "PSA-master/trainer.py",
+          "bytes": 6579
+        },
+        {
+          "name": "PSA-master/utils.py",
+          "bytes": 11989
+        }
+      ],
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\archive_text\\PSA-master.json",
+      "sha256_after_read": "d6050b9e4670f9adf48cd1a925d8808d7db08812f9f196d7da3e17bf30baf69f",
+      "source_unchanged": true
+    },
+    {
+      "file": "C:\\Users\\栋栋\\Desktop\\slot attention\\zhang23ba.pdf",
+      "bytes": 4793443,
+      "sha256": "4135fdf1546b33299af1d2a22d585ba27524f6d3e962063a9b54d898597fda07",
+      "pages": 21,
+      "metadata": {
+        "format": "PDF 1.5",
+        "title": "",
+        "author": "Yan Zhang, David W. Zhang, Simon Lacoste-Julien, Gertjan J. Burghouts, Cees G. M. Snoek",
+        "subject": "",
+        "keywords": "",
+        "creator": "LaTeX with hyperref",
+        "producer": "pdfTeX-1.40.21",
+        "creationDate": "D:20230529175443Z",
+        "modDate": "D:20230529175443Z",
+        "trapped": "",
+        "encryption": null
+      },
+      "text_path": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\extracted_text\\zhang23ba.txt",
+      "first_page_excerpt": "       Unlocking Slot Attention by Changing Optimal Transport Costs\n\n\n\n   Yan Zhang * 1 David W. Zhang * 2 Simon Lacoste-Julien 1 3 4 Gertjan J. Burghouts 5 Cees G. M. Snoek 2\n\n                 Abstract                          has especially been a problem in the video domain due to oc-\n                                                              clusions and new objects appearing (Kipf et al., 2022). For\n     Slot attention is a powerful method for object-                                                         example, Wu et al. (2022) observe in experiments that when\n     centric modeling in images and videos. However,                                                               there are two objects but ﬁve “slots” (equivalent to queries\n      its set-equivariance limits its ability to handle                                                                in the previous example), the three slots that do not have a\n     videos with a dynamic number of objects because                                                           speciﬁc object to model become nearly identical. Once that\n       it cannot break ties. To overcome this limitation,                                                          has happened, the “cat problem” from before applies: these\n   we ﬁrst establish a connection between slot atten-                                                           very similar slots (queries) must receive essentially the same\n     tion and optimal transport. Based on this new per-                                                             information. Consequently, if multiple new objects appear\n     spective we propose MESH (Minimize Entropy                                                                  in the video, these three slots can—at best—all bind to only\n     of Sinkhorn): a cross-attention module that com-                                                         a single object, which is clearly undesirable.\n     bines the tiebreaking properties of unregularized\n     optimal transport with the speed of regularized op-        This  issue  is  present because  cross-attention  is  set-\n     timal transport. We evaluate slot attention using        ",
+      "sha256_after_read": "4135fdf1546b33299af1d2a22d585ba27524f6d3e962063a9b54d898597fda07",
+      "source_unchanged": true
+    }
+  ],
+  "all_sources_unchanged": true
+}

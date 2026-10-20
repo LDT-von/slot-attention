@@ -1,0 +1,10 @@
+# Use an existing environment; this export does not install dependencies.
+torch
+einops>=0.6.1
+numpy
+pandas
+scipy
+scikit-survival
+lifelines
+matplotlib
+pytest

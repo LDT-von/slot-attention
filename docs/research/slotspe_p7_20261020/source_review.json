@@ -1,0 +1,148 @@
+{
+  "task_id": "SPE-08",
+  "recorded_at": "2026-10-20T17:02:45+08:00",
+  "method": "exact_source_read_and_existing_metadata_hash_review_only",
+  "new_training_runs": 0,
+  "new_model_forward_passes": 0,
+  "new_backward_passes": 0,
+  "patient_tensors_loaded_this_review": false,
+  "new_synthetic_checks_run": 0,
+  "server_execution_verified": false,
+  "server_raw_results_received": false,
+  "historical_synthetic_record": {
+    "path": "E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\\synthetic_checks.json",
+    "bytes": 19122,
+    "sha256": "07747247f199cf82fa5ed937b2e6ba71ac48f45a8366e22e163c7617e377dc79"
+  },
+  "original_source_hashes": {
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\dataset\\dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\scripts\\SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9"
+  },
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "issue": "P7",
+  "conclusion": "direct_fused_loss_selector_gradient_disconnected_auxiliary_connected",
+  "source_excerpts": [
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+      "bytes": 14109,
+      "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "start": 43,
+      "end": 70,
+      "source": "43:     def forward(self, slots):\n44:         # --- 1. Map slots ---\n45:         slots = self.map(slots)  # (B, S, D)\n46: \n47:         # --- 2. Slot-level logits ---\n48:         slot_logits = self.decoder(slots)  # (B, S, C)\n49: \n50:         # --- 3. Predict keep scores ---\n51:         keep_score = self.pred_keep_slot(slots).squeeze(-1)  # (B, S)\n52:         # print(\"keep_score shape:\", keep_score.shape)\n53: \n54:         # --- 4. Gumbel-Softmax-K ---\n55:         if self.top_k_method == 'gumbel_topk_st':\n56:             hard_keep, _ = gumbel_topk_st(keep_score, temperature=self.temperature, k=self.k)\n57:         elif self.top_k_method == 'parallel_topk_st':\n58:             hard_keep, _ = parallel_topk_st(keep_score, temperature=self.temperature, k=self.k)\n59:         else:\n60:             raise ValueError(f\"Invalid top_k_method: {self.top_k_method}\")\n61: \n62:         # --- 5. Slot gate (weighted by soft attention) ---\n63:         slot_gate = torch.softmax(keep_score / self.temperature, dim=-1)  # (B, S)\n64:         slot_gate = slot_gate * hard_keep  # (B, S)\n65:         slot_gate = slot_gate / (slot_gate.sum(dim=1, keepdim=True) + 1e-8)\n66: \n67:         # --- 6. Final weighted prediction ---\n68:         x = torch.einsum('bs,bsc->bc', slot_gate, slot_logits)  # (B, C)\n69: \n70:         return x, slot_gate, hard_keep"
+    },
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+      "bytes": 14109,
+      "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "start": 283,
+      "end": 328,
+      "source": "283:         slots_wsi = self.slot_attention_wsi(x_wsi_proj) # (batch_size, num_slots, dim)\n284:         # print(x_omics.shape)\n285:         slots_omic = self.slot_attention_omic(x_omics)\n286: \n287:         # ---> decoder\n288:         # wsi decoder\n289:         logits_wsi, _, wsi_keep_slots = self.slot_decoder_wsi(slots_wsi)\n290:         # omic decoder\n291:         logits_omic, _, omic_keep_slots = self.slot_decoder_omic(slots_omic)\n292: \n293:         # ---> cross attention\n294:         x_inter = self.cross_attention(slots_wsi, slots_omic)\n295:         # ---> self attention\n296:         wsi_intra = self.self_attention_wsi(slots_wsi, mask=wsi_keep_slots.bool())\n297:         omic_intra = self.self_attention_omic(slots_omic, mask=omic_keep_slots.bool())\n298: \n299:         # survival prediction\n300:         x = torch.cat([x_inter.mean(dim=1), wsi_intra.mean(dim=1), omic_intra.mean(dim=1)], dim=1)\n301:         logits = self.to_logits(x)\n302: \n303:         if self.training:\n304:             h_omic_bag_origin = x_omics.detach()\n305:             # ---> reconstruction\n306:             recon_omic = self.reconstruction_head_omic(x_omics, slots_omic, mask=omic_keep_slots.bool())\n307:             recon_mse = F.mse_loss(recon_omic, h_omic_bag_origin)\n308: \n309:             slots_omic_from_wsi = self.slot_attention_omic(x_wsi_proj)\n310:             recon_omic_joint = self.reconstruction_head_joint(x_omics, slots_omic_from_wsi)\n311:             recon_mse += F.mse_loss(recon_omic_joint, h_omic_bag_origin)\n312: \n313:             recon_wsi = self.reconstruction_head_wsi(x_wsi_proj, slots_wsi, mask=wsi_keep_slots.bool())\n314:             recon_wsi = F.normalize(recon_wsi, dim=-1)\n315:             target_wsi = F.normalize(x_wsi_proj, dim=-1)\n316:             recon_loss_wsi = 1-F.cosine_similarity(recon_wsi, target_wsi, dim=-1).mean()\n317: \n318:             # ---> reconstruction loss\n319:             recon_loss = recon_mse + recon_loss_wsi\n320: \n321:             # ---> loss for slot decoder\n322:             y = kwargs[\"y\"]\n323:             c = kwargs[\"c\"]\n324:             loss_decoder = self.loss_fn(logits_wsi, y=y, c=c,t=None) + self.loss_fn(logits_omic, y=y, c=c,t=None)\n325:             loss_decoder = loss_decoder / y.shape[0]\n326: \n327:             # ---> total auxiliary loss\n328:             aux_loss = loss_decoder + self.args.lambda_recon_loss * recon_loss"
+    },
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\core_utils.py",
+      "bytes": 19403,
+      "sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+      "start": 232,
+      "end": 251,
+      "source": "232:         h, y_disc, event_time, c = _process_data_and_forward(args, model, data, device)\n233: \n234:         if args.method.startswith(\"SlotSPE\"):\n235:             logits, slot_loss = h\n236:         else:\n237:             raise ValueError(f\"Method {args.method} not implemented\")\n238: \n239:         if args.bag_loss == \"cox_surv\":\n240:             loss_surv = loss_fn(logits, event_time, c) #y_hat, T, E\n241:         else:\n242:             loss_surv = loss_fn(logits, y_disc, event_time, c)\n243:         loss_surv = loss_surv / y_disc.shape[0]\n244: \n245:         if args.method.startswith(\"SlotSPE\"):\n246:             loss = loss_surv + slot_loss\n247:         else:\n248:             raise ValueError(f\"Method {args.method} not implemented\")\n249: \n250:         loss = loss / accumulation_steps\n251:         loss.backward()"
+    }
+  ],
+  "existing_synthetic_gradient_records": [
+    {
+      "method": "parallel_topk_st",
+      "main_nll": 1.8181746006011963,
+      "auxiliary": 3.4933857917785645,
+      "main_gradient": {
+        "slot_decoder_wsi.pred_keep_slot.0.weight": null,
+        "slot_decoder_wsi.pred_keep_slot.0.bias": null,
+        "slot_decoder_wsi.pred_keep_slot.2.weight": null,
+        "slot_decoder_wsi.pred_keep_slot.2.bias": null,
+        "slot_decoder_omic.pred_keep_slot.0.weight": null,
+        "slot_decoder_omic.pred_keep_slot.0.bias": null,
+        "slot_decoder_omic.pred_keep_slot.2.weight": null,
+        "slot_decoder_omic.pred_keep_slot.2.bias": null
+      },
+      "auxiliary_gradient": {
+        "slot_decoder_wsi.pred_keep_slot.0.weight": 0.048048026859760284,
+        "slot_decoder_wsi.pred_keep_slot.0.bias": 0.05012298747897148,
+        "slot_decoder_wsi.pred_keep_slot.2.weight": 0.026858989149332047,
+        "slot_decoder_wsi.pred_keep_slot.2.bias": 0.0,
+        "slot_decoder_omic.pred_keep_slot.0.weight": 0.013541778549551964,
+        "slot_decoder_omic.pred_keep_slot.0.bias": 0.01754577085375786,
+        "slot_decoder_omic.pred_keep_slot.2.weight": 0.007124167867004871,
+        "slot_decoder_omic.pred_keep_slot.2.bias": 3.725290298461914e-09
+      },
+      "main_all_none": true,
+      "auxiliary_all_connected": true
+    },
+    {
+      "method": "gumbel_topk_st",
+      "main_nll": 1.8181746006011963,
+      "auxiliary": 3.4933857917785645,
+      "main_gradient": {
+        "slot_decoder_wsi.pred_keep_slot.0.weight": null,
+        "slot_decoder_wsi.pred_keep_slot.0.bias": null,
+        "slot_decoder_wsi.pred_keep_slot.2.weight": null,
+        "slot_decoder_wsi.pred_keep_slot.2.bias": null,
+        "slot_decoder_omic.pred_keep_slot.0.weight": null,
+        "slot_decoder_omic.pred_keep_slot.0.bias": null,
+        "slot_decoder_omic.pred_keep_slot.2.weight": null,
+        "slot_decoder_omic.pred_keep_slot.2.bias": null
+      },
+      "auxiliary_gradient": {
+        "slot_decoder_wsi.pred_keep_slot.0.weight": 0.048048026859760284,
+        "slot_decoder_wsi.pred_keep_slot.0.bias": 0.05012298747897148,
+        "slot_decoder_wsi.pred_keep_slot.2.weight": 0.026858989149332047,
+        "slot_decoder_wsi.pred_keep_slot.2.bias": 0.0,
+        "slot_decoder_omic.pred_keep_slot.0.weight": 0.013541772961616516,
+        "slot_decoder_omic.pred_keep_slot.0.bias": 0.01754576340317726,
+        "slot_decoder_omic.pred_keep_slot.2.weight": 0.0071241650730371475,
+        "slot_decoder_omic.pred_keep_slot.2.bias": 1.862645149230957e-09
+      },
+      "main_all_none": true,
+      "auxiliary_all_connected": true
+    }
+  ],
+  "historical_random_weight_real_input_record": {
+    "path": "E:\\DCT-Reg\\.review\\slotspe_problem_audit_20261016\\diagnostic_results.json",
+    "bytes": 30183,
+    "sha256": "57c2a3806d1d779b346a662705ce0b5acf7a6ca3985aed882399baebde6933e0",
+    "trained_checkpoint_loaded": false,
+    "optimizer_steps": 0,
+    "record": {
+      "main_nll": 0.9786609411239624,
+      "main_nll_to_selector": {
+        "slot_decoder_wsi.pred_keep_slot.0.weight": null,
+        "slot_decoder_wsi.pred_keep_slot.0.bias": null,
+        "slot_decoder_wsi.pred_keep_slot.2.weight": null,
+        "slot_decoder_wsi.pred_keep_slot.2.bias": null,
+        "slot_decoder_omic.pred_keep_slot.0.weight": null,
+        "slot_decoder_omic.pred_keep_slot.0.bias": null,
+        "slot_decoder_omic.pred_keep_slot.2.weight": null,
+        "slot_decoder_omic.pred_keep_slot.2.bias": null
+      },
+      "auxiliary_to_selector": {
+        "slot_decoder_wsi.pred_keep_slot.0.weight": 0.06756574660539627,
+        "slot_decoder_wsi.pred_keep_slot.0.bias": 0.0226557869464159,
+        "slot_decoder_wsi.pred_keep_slot.2.weight": 0.04190749302506447,
+        "slot_decoder_wsi.pred_keep_slot.2.bias": 4.061124769805247e-09,
+        "slot_decoder_omic.pred_keep_slot.0.weight": 0.1897430717945099,
+        "slot_decoder_omic.pred_keep_slot.0.bias": 0.0800125002861023,
+        "slot_decoder_omic.pred_keep_slot.2.weight": 0.13945238292217255,
+        "slot_decoder_omic.pred_keep_slot.2.bias": 1.1319819748223381e-08
+      },
+      "note": "Auxiliary unimodal supervision remains; absence of main gradient is not absence of all selector training."
+    }
+  },
+  "new_gradient_experiment": false,
+  "does_not_mean_all_selector_training_absent": true,
+  "abc_patient_attribution": "pending"
+}

@@ -1,0 +1,76 @@
+{
+  "task_id": "SPE-08",
+  "recorded_at": "2026-10-20T17:02:45+08:00",
+  "method": "exact_source_read_and_existing_metadata_hash_review_only",
+  "new_training_runs": 0,
+  "new_model_forward_passes": 0,
+  "new_backward_passes": 0,
+  "patient_tensors_loaded_this_review": false,
+  "new_synthetic_checks_run": 0,
+  "server_execution_verified": false,
+  "server_raw_results_received": false,
+  "historical_synthetic_record": {
+    "path": "E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\\synthetic_checks.json",
+    "bytes": 19122,
+    "sha256": "07747247f199cf82fa5ed937b2e6ba71ac48f45a8366e22e163c7617e377dc79"
+  },
+  "original_source_hashes": {
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\dataset\\dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\scripts\\SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9"
+  },
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "issue": "P8",
+  "conclusion": "not_applicable_to_original_no_downstream_crossmodal_OT",
+  "source_excerpts": [
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+      "bytes": 14109,
+      "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "start": 1,
+      "end": 8,
+      "source": "1: import torch\n2: import torch.nn as nn\n3: from models.slot_attention import MultiHeadSlotAttention, gumbel_topk_st, parallel_topk_st\n4: from models.transformer import IterativeCrossAttTransformer, Transformer\n5: from models.omics_encoder import SNN_Block, WSI_Mlp\n6: from utils.loss_func import NLLSurvLoss\n7: import numpy as np\n8: import torch.nn.functional as F"
+    },
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+      "bytes": 14109,
+      "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "start": 196,
+      "end": 199,
+      "source": "196:         # ---> transformer\n197:         self.self_attention_wsi = Transformer(dim=self.wsi_projection_dim)\n198:         self.self_attention_omic = Transformer(dim=self.wsi_projection_dim)\n199:         self.cross_attention = IterativeCrossAttTransformer(dim=self.wsi_projection_dim)"
+    },
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+      "bytes": 14109,
+      "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "start": 283,
+      "end": 301,
+      "source": "283:         slots_wsi = self.slot_attention_wsi(x_wsi_proj) # (batch_size, num_slots, dim)\n284:         # print(x_omics.shape)\n285:         slots_omic = self.slot_attention_omic(x_omics)\n286: \n287:         # ---> decoder\n288:         # wsi decoder\n289:         logits_wsi, _, wsi_keep_slots = self.slot_decoder_wsi(slots_wsi)\n290:         # omic decoder\n291:         logits_omic, _, omic_keep_slots = self.slot_decoder_omic(slots_omic)\n292: \n293:         # ---> cross attention\n294:         x_inter = self.cross_attention(slots_wsi, slots_omic)\n295:         # ---> self attention\n296:         wsi_intra = self.self_attention_wsi(slots_wsi, mask=wsi_keep_slots.bool())\n297:         omic_intra = self.self_attention_omic(slots_omic, mask=omic_keep_slots.bool())\n298: \n299:         # survival prediction\n300:         x = torch.cat([x_inter.mean(dim=1), wsi_intra.mean(dim=1), omic_intra.mean(dim=1)], dim=1)\n301:         logits = self.to_logits(x)"
+    },
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\transformer.py",
+      "bytes": 10848,
+      "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "start": 211,
+      "end": 238,
+      "source": "211:             # Cross attention\n212:             attn1 = (q1 @ k2.transpose(-2, -1)) * self.scale  # x1 attends to x2\n213:             attn2 = (q2 @ k1.transpose(-2, -1)) * self.scale  # x2 attends to x1\n214: \n215:             # Apply masks if present\n216:             if mask1 is not None and mask2 is not None:\n217:                 assert (mask1.sum(dim=1) > 0).all()\n218:                 assert (mask2.sum(dim=1) > 0).all()\n219: \n220:                 mask_q1 = mask1.unsqueeze(1).unsqueeze(-1)\n221:                 mask_k2 = mask2.unsqueeze(1).unsqueeze(2)\n222:                 attn1 = attn1.masked_fill(mask_q1 * mask_k2 == 0, -1e9)\n223: \n224:                 mask_q2 = mask2.unsqueeze(1).unsqueeze(-1)\n225:                 mask_k1 = mask1.unsqueeze(1).unsqueeze(2)\n226:                 attn2 = attn2.masked_fill(mask_q2 * mask_k1 == 0, -1e9)\n227: \n228:             # Attention softmax\n229:             attn1 = self.attn_drop(F.softmax(attn1, dim=-1))\n230:             attn2 = self.attn_drop(F.softmax(attn2, dim=-1))\n231: \n232:             # Weighted sum\n233:             update1 = rearrange(attn1 @ v2, 'b h n d -> b n (h d)')\n234:             update2 = rearrange(attn2 @ v1, 'b h n d -> b n (h d)')\n235: \n236:             # Project\n237:             update1 = self.proj_drop(self.proj(update1))\n238:             update2 = self.proj_drop(self.proj(update2))"
+    },
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\transformer.py",
+      "bytes": 10848,
+      "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "start": 292,
+      "end": 299,
+      "source": "292:     def forward(self, x1, x2, mask1=None, mask2=None):\n293:         attn1, attn2 = self.attn(self.norm1(x1), self.norm1(x2), mask1=mask1, mask2=mask2)\n294:         x1 = x1 + self.drop_path(attn1)\n295:         x2 = x2 + self.drop_path(attn2)\n296:         x1 = x1 + self.drop_path(self.mlp(self.norm2(x1)))\n297:         x2 = x2 + self.drop_path(self.mlp(self.norm2(x2)))\n298:         x = torch.cat([x1, x2], dim=1)\n299:         return x"
+    }
+  ],
+  "upstream_slot_attention_OT_theory_is_not_a_second_crossmodal_OT_stage": true,
+  "transport_plugin_evidence_used": false
+}

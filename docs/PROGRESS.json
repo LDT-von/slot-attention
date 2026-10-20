@@ -1,0 +1,78 @@
+{
+  "schema": "slotspe_independent_progress_v1",
+  "recorded_at": "2026-10-20T17:17:16+08:00",
+  "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
+  "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
+  "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
+  "issues": {
+    "P1": "默认每模态8候选/Top-2；cross仍读全槽；固定容量损害未证。",
+    "P2": "历史短程模型读取高重叠且干预有计算差异；有害冗余/碎片化未证。",
+    "P3": "历史同权重同输入eval波动已有本地原始记录；固定两处抽样可去除该协议波动，提分未证。",
+    "P4": "无固定槽编号语义保证；真实组织/跨患者语义漂移及损害未证。",
+    "P5": "无padding mask及补零分支存在；零行历史统计缺该轮原始记录，真实无关组织占槽/损害未证。",
+    "P6": "缺显式空间/倍率接口；上游尺度内容及患者预测损害未证。",
+    "P7": "最终融合主损失到选槽器直接梯度断开，辅助仍连通；患者损害及B/C收益未证。",
+    "P8": "原版无后续跨模态OT，双阶段冲突不适用。"
+  },
+  "tasks": [
+    {
+      "id": "SPE-01",
+      "title": "实现A/B/C汇总与监督归因臂",
+      "status": "completed_local",
+      "next_action": "本地实现已完成，患者归因等待服务器产物与独立队列。"
+    },
+    {
+      "id": "SPE-02",
+      "title": "验收归因实现与梯度隔离",
+      "status": "completed_local",
+      "next_action": "合成验收完成；按回传原始产物验收实际患者行为。"
+    },
+    {
+      "id": "SPE-03",
+      "title": "发布可独立运行的归因包",
+      "status": "completed_published",
+      "next_action": "SlotSPE源码、配置、检查证据和新旧交接包已隔离推送并核验；等待SPE-07服务器原始产物，不安排新实验。"
+    },
+    {
+      "id": "SPE-04",
+      "title": "服务器患者归因：先短程验收，再按证据扩展",
+      "status": "waiting_for_dependencies",
+      "next_action": "先验收SPE-07原始产物；A/B/C当前准备fold0/seed3、3轮、256真实patch、20次评估，30轮/4096patch仍属后续未安排阶段。"
+    },
+    {
+      "id": "SPE-05",
+      "title": "有依据后扩展五折多种子",
+      "status": "conditional",
+      "next_action": "归因和数值行为可解释后再扩大配对实验。"
+    },
+    {
+      "id": "SPE-06",
+      "title": "定位修正后能力缺口",
+      "status": "conditional",
+      "next_action": "比较两单模态、简单融合与现有跨模态融合，再判断是否需要新机制。"
+    },
+    {
+      "id": "SPE-07",
+      "title": "服务器先复现一组SlotSPE问题",
+      "status": "reported_completed_awaiting_raw_artifacts",
+      "next_action": "验收d64530c登记的SPE-09原始manifest/梯度/预测/槽干预/checkpoint；文字记录不等于原始证据通过。"
+    },
+    {
+      "id": "SPE-08",
+      "title": "核实八类槽问题在指定原版SlotSPE中的存在性",
+      "status": "partially_completed_local",
+      "next_action": "优先验收SPE09现有原始回传；P5自然零行统计待原始记录，真实无关组织占槽/损害未证；P6患者空间尺度损害、P7患者B/C归因待证；P8原版不适用。不新增训练/模块。"
+    },
+    {
+      "id": "SPE-09",
+      "title": "交付干净原版单臂服务器检查与严格回传验收",
+      "status": "completed_published",
+      "next_action": "服务器AI拉取main@f5370b6并解压原版单臂包执行；尚无可调用服务器AI通道和启动/结果回执。"
+    }
+  ],
+  "patient_effect_or_abc_efficacy": "not_established",
+  "server_raw_results_received": false,
+  "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
+  "next_action": "优先验收SPE09现有原始回传；P5自然零行统计待原始记录，真实无关组织占槽/损害未证；P6患者空间尺度损害、P7患者B/C归因待证；P8原版不适用。不新增训练/模块。",
+  "git_remote": "https://github.com/LDT-von/slot-attention.git"
+}

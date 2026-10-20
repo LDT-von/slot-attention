@@ -1,0 +1,17 @@
+{
+  "all_other_tasks_unchanged": true,
+  "non_slotspe_lines_unchanged": true,
+  "V2_and_transport_human_sections_unchanged": true,
+  "backup": "E:\\DCT-Reg\\docs\\history\\slotspe_p3_patient_20261020_110031",
+  "raw_audit": {
+    "status": "accepted_native_and_draw_control_observations",
+    "patients": 71,
+    "repeats_per_condition": 20,
+    "conditions": 4,
+    "new_training_runs": 0,
+    "server_raw_results_received": false
+  },
+  "original_hashes_rechecked": true,
+  "frozen_measurement_source_verified": true,
+  "new_training_runs": 0
+}

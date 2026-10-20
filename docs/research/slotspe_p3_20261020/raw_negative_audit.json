@@ -1,0 +1,25 @@
+{
+  "scope": "copies of real result metadata, no new patient inference",
+  "checks": [
+    {
+      "attack": "wrong_checkpoint_seed",
+      "rehashed_report": true,
+      "rejected": true,
+      "reason": "P1 identity differs"
+    },
+    {
+      "attack": "empty_rng_digests",
+      "rehashed_report": true,
+      "rejected": true,
+      "reason": "Invalid external RNG schema"
+    },
+    {
+      "attack": "false_summary",
+      "rehashed_report": true,
+      "rejected": true,
+      "reason": "Raw metrics differ"
+    }
+  ],
+  "original_outputs_unchanged": true,
+  "count_not_added_to_synthetic_tests": true
+}

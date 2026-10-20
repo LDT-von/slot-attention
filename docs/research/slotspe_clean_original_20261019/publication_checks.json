@@ -1,0 +1,11 @@
+{
+  "status": "validated_ready_for_normal_push",
+  "remote_base": "cc81df1586b4b0e437cbdffe04c923ed6546fadf",
+  "scoped_delivery": true,
+  "isolated_native_tests_passed": 2,
+  "counts_additive_with_previous_suites": false,
+  "frozen_archive_sha256": "a690578675d51c1328c92cac8d7dc41dc6494fbd179e53476763df06621007a4",
+  "server_execution_verified": false,
+  "patient_jobs_run_by_this_window": false,
+  "validation": "Native-only standalone package, safe default, native classes, raw-record acceptance and tamper rejection"
+}

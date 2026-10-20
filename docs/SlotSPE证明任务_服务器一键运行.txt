@@ -1,0 +1,219 @@
+当前最高优先级：干净原版SlotSPE单臂问题复现（SPE-07 / SPE-09，2026-10-19）
+
+本轮先运行original一个训练臂：fold0、seed3、3轮、256真实patch、batch8、末轮同权重重复评估20次。
+交接包：docs/deliveries/slotspe_clean_original_audit_20261019_v1.zip；解压到新目录。
+包中原版源码直接从用户指定桌面仓库逐字节封存，哈希见DELIVERY_MANIFEST.json。
+本轮不构造修正版模型，不启动A/B/C或运输；原模型forward、槽类、decoder类及参数都有原版一致性检查。
+任务包默认配置也已绑定单臂短程任务；没有--run时只打印计划。
+
+服务器AI：使用现成Python环境，先确认数据目录和GPU任务；将SlotSPE作为本轮最高优先级安排，不中断其他已在运行的任务。
+设置SLOTSPE_METADATA_ROOT和SLOTSPE_FEATURES_ROOT为服务器真实目录，PYTHON为现成解释器（需要时）。然后顺序执行：
+
+    bash run_slotspe_proof.sh --config configs/slotspe_clean_original_server.json --doctor
+    bash run_slotspe_proof.sh --config configs/slotspe_clean_original_server.json --plan
+    bash run_slotspe_proof.sh --config configs/slotspe_clean_original_server.json --run
+
+计划必须显示training_arms=[original]、training_runs=1、same_weights_eval_controls=0。
+模型保持原版；病例准备为配对完整输入、固定真实patch和训练折分箱。它是诊断协议，不是原论文完整基准配方。
+原版全队列分箱的验证结局依赖，单独在内存副本中执行原源码函数检查，不把该问题带入可比较训练。
+
+五项检查分别报告：
+1. 最终融合NLL到选槽器的梯度，主/辅助分开，逐参数None/zero/nonzero：trained_selector_gradients.json。
+2. 真实验证患者末轮槽干预：固定keep和selected槽、固定cross，只改变未选槽；保存前后self池化、logits和risk：patient_slot_intervention.json。
+3. 相同权重、患者、patch及顺序重复20次；另同RNG重放：eval_repeats.json、validation_predictions.csv、native_model_audit.json。
+4. 补零敏感性：真实患者缓存的副本上加16/64零行，保存前后logits/risk。人为补零不是实际发生率；病例排除和原有零行数量另报。
+5. 自然输入门控：20次真实验证前向仅旁观原门控、记录所有患者与两模态，是否近零如实报告：natural_gate_observations.json。
+   同时在独立原decoder副本上做合成分数反例，写在native_model_audit.json，不能拿它当患者问题发生率。
+
+原版未观察到某问题就写not_observed；不改阈值、样本或源码强迫失败。错误和失败目录原样保留。
+本窗口已有的数值是本地合成/随机权重证据，见包内docs/research/slotspe_eight_issues_20261019/synthetic_checks.json；服务器证据仍待新批次原始回传。
+
+完整批次返回：
+    python -B scripts/pack_slotspe_return.py --root '/实际结果批次' --output '/新目录/slotspe_clean_return.zip'
+回传ZIP和打印的SHA256；包含末轮checkpoint、配置、manifest、日志、receipts、曲线与所有诊断JSON/CSV，不包含prepared/cache的患者输入张量。
+验收：
+    python -B scripts/audit_slotspe_return.py --root '/解压后的slotspe_server_return' --delivery '/本批次交付ZIP'
+需要原始产物核验后才能说服务器复现。只看C-index或“运行成功”不足以证明这些计算问题。
+
+以下保留历史两臂和A/B/C说明，供后续修正与归因；本轮入口以上述原版单臂为准。
+================================================================
+
+SlotSPE 证明实验：本窗口独立任务（2026-10-19）
+
+用途
+把本窗口的“问题存在性—最小修正”实验放到有数据的服务器运行。
+这一项可以作为其他窗口统一实验清单中的一个任务；入口独立，不修改历史队列。
+本任务不安装运输插件，不改DCT原生版本，不将工程修正登记为新方法。
+
+本轮交接包：docs/deliveries/slotspe_proof_abc_20261019_v2.zip。
+旧包slotspe_server_proof_20261019.zip原样保留，其源码没有A/B/C及患者末轮槽干预。
+新包同时保留原版/组合修正版复现入口，并增加独立A/B/C入口；两种队列分开运行和验收。
+已有任务继续使用其原包；不得覆盖源码后沿用旧批次续跑。尚未启动的任务解压新包到新目录。
+
+本次交给服务器AI的任务（2026-10-19）
+用户要求“在服务器上跑一次证明有问题”，并说明服务器已有AI负责执行。
+请先运行一组短程复现，不直接运行默认五折三种子队列：
+
+    bash run_slotspe_proof.sh --doctor --folds 0 --seeds 3 --epochs 3 --patches 256
+    bash run_slotspe_proof.sh --plan --folds 0 --seeds 3 --epochs 3 --patches 256
+    bash run_slotspe_proof.sh --run --folds 0 --seeds 3 --epochs 3 --patches 256
+
+先按下文填写已有数据路径和Python环境，确认空闲GPU；需要时显式加 --device cuda:编号。
+计划应显示：2次训练、1个同原版权重的评估修正对照，每臂3轮、重复预测20次。
+实际服务器运行由服务器AI完成；本地打包、接口检查或打印计划均不算服务器复现。
+解压到新的任务目录，不覆盖服务器现有仓库或结果。交付包不包含患者数据与权重。
+
+验收时请逐项报告，而非只回复“运行成功”：
+  1. 最终融合NLL到选槽器：真实患者输入，末轮权重；逐参数主/辅助梯度，区分None、零值和非零值。
+  2. 未选槽干扰：旧包只有合成槽结构证明。新包增加patient_slot_intervention.json：使用末轮权重产生的验证患者槽，固定选择集合，仅扰动未选槽；记录self汇总、冻结cross时最终logits和风险的变化。cross本来是全槽分支，此检查保持其原输出固定，不能据此声称整个模型排除了未选槽。代码可导出不等于服务器已测到；须回传文件后验收。
+  3. 评估波动：相同训练权重、相同验证患者与缓存输入重复20次，回传逐患者风险及C-index范围；重复预测不算多次独立训练。
+  4. 分箱污染：在临时副本中只改验证患者结局，比较原训练标签；不得修改原CSV。训练时两臂统一使用训练折分箱。
+原问题没出现就写not_observed，记录来源与条件，不改源码强迫出现预定结论。
+
+必须回传的文件（以启动时打印的实际结果目录为准）：
+  resolved_config.json、queue_manifest.json、queue_status.json；
+  proof_summary.txt/json、patient_summary.json、prepared/manifest.json；
+  各阶段证明JSON、日志与receipts；
+  pairs/fold_0/seed_3 下的protocol.json、两训练臂curve.json、summary.json、
+  trained_selector_gradients.json、patient_slot_intervention.json、eval_repeats.json、validation_predictions.csv；
+  same_weights_eval_fix的summary.json与重复预测，保存末轮checkpoint及其哈希。
+回报代码/SlotSPE源码哈希、环境、患者纳入排除、实际步数、峰值显存（未记录则写未记录）和耗时。
+失败时保留目录及failure信息，停止后续，不把缺文件当完成。严禁把本次短程分数宣传为正式改进。
+
+这一步完成后先验收；默认短程命令仍只运行原版与组合修正版。
+A/B/C归因代码现已提供，运行计划见第六节；30轮影响实验和五折多种子不由本次交接自动启动。
+
+完整批次可打包回传（不带prepared/cache患者输入张量，但包含病例manifest、日志、预测及末轮checkpoint）：
+
+    python -B scripts/pack_slotspe_return.py --root '/实际结果批次' --output '/新目录/slotspe_return.zip'
+
+回传ZIP及命令打印的SHA256。失败批次保留原目录、日志和failure.json，不改配置冒充完成；可原样压缩失败目录回传。
+本窗口解压后先做离线完整性验收，不需要服务器原数据路径：
+
+    python -B scripts/audit_slotspe_return.py --root '/解压目录/slotspe_server_return' --delivery '/对应本批次交付ZIP'
+
+先验收收据/哈希、患者身份、训练步数、分箱、checkpoint和重复预测，再阅读observed/not_observed原始记录。
+完整性检查通过不自动等于远程执行事实、患者提分或归因结论。旧包回传可不带--delivery验收，缺患者槽干预如实登记，不能把旧包与新包哈希混用。
+
+一、在服务器运行
+进入仓库根目录；独立交付ZIP则进入解压后的 slotspe_proof_task_20261019 目录。
+使用服务器已经可用的Python环境。需要Python 3.10+、PyTorch 2.1+、numpy、pandas、支持pack/unpack的einops、scikit-survival。
+若python命令不是所需环境，可先 export PYTHON=/实际环境/bin/python。
+本任务不会自动安装依赖或下载患者数据。
+
+先设置两处实际服务器路径：
+
+    export SLOTSPE_METADATA_ROOT='/填写实际元数据根目录'
+    export SLOTSPE_FEATURES_ROOT='/填写实际病理pt_files目录'
+
+元数据根目录须包含：
+    clinical/all/blca.csv
+    raw_rna_data_inter/blca_rna_inter.csv
+    signatures/combine_signatures.csv
+    splits/5fold/blca/fold_0.csv ... fold_4.csv
+
+特征目录是直接含切片 .pt 的那一级，不是所有癌种的上级目录。
+张量须为 [patch数量, 特征维度]。维度从实际特征读取并一致性核验，不固定为1024。
+默认源码是交付包/仓库中的 third_party/SlotSPE，可用 --source-root 指定其他完整本地SlotSPE源码。
+
+查看任务（默认模式，不读取患者输入、不加载torch、不执行实验）：
+
+    bash run_slotspe_proof.sh --plan
+
+检查服务器目录和依赖，不读取病理张量、不训练（CUDA配置下仅做一个元素的合成设备检查）：
+
+    bash run_slotspe_proof.sh --doctor
+
+本次推荐入口：一组短程问题复现，顺序执行证明与配对实验。
+
+    bash run_slotspe_proof.sh --run --folds 0 --seeds 3 --epochs 3 --patches 256
+
+也可以不设置环境变量，直接传 --metadata-root '/实际目录' --features-root '/实际pt_files目录'。
+输出默认新建在 results/slotspe_proof/<癌种_UTC时间戳>/，启动后打印准确位置。
+
+二、默认队列和任务规模
+配置：configs/slotspe_proof_server.json。
+默认BLCA，原SlotSPE五折划分，fold0–4，seed3/17/29。
+每个fold/seed按同一初始化顺序训练 original 和 readout_fix；每臂30轮，batch8，4096个真实patch。
+总计15个配对任务、30次训练；另有15个不再训练的同原版权重 eval_fix 对照。
+每个末轮checkpoint重复评估20次。固定最后一轮，不挑验证最高轮。
+实际病例人数、通路宽度、更新步数、特征维度均从本批次输入记录，不沿用此前本机数字。
+
+后续阶段若明确安排30轮影响实验，单组命令为（本次不自动执行）：
+
+    bash run_slotspe_proof.sh --run --folds 0 --seeds 3
+
+本次已选择 --epochs 3 --patches 256，结果必须标成短程诊断。没有覆盖参数的默认全队列是后续选项，不是本次执行任务。
+交付记录中的本机检查均为完全合成数据；服务器是否完成以新回传的原始产物为准。
+
+三、执行内容
+1. 临床/划分协议干预：只改变验证结局，记录原训练标签变化；训练折专属分箱作修正对照。
+2. 小型合成重构反例：区分dropout关闭与原训练模式，不把它当作真实患者坍缩证据。
+3. 合成机制干预：最终NLL到选槽器梯度、self分支未选槽干预、重复预测与同参数控制。
+4. 准备真实配对输入：共同患者清单、固定patch缓存、训练折专属分箱。
+5. 逐fold/seed完成原版/工程修正版训练、末轮保存、重复预测、主/辅助梯度、患者槽干预和同原版权重评估。
+6. 验真汇总，保存 proof_summary.txt、proof_summary.json、patient_summary.json。
+
+original严格使用指定源码；readout_fix仅修正self汇总、选择梯度和数值/评估规则。
+eval_fix复用原版训练权重，只固定评估采样与门控规则，不改变原self汇总，不新增优化步。
+两训练臂都有原SlotSPE的生存和辅助目标，不携带任何DCT额外目标。
+cross保留原全槽设计，不宣称整个模型全局稀疏。
+原版问题若在指定源码/队列中没有出现，输出not_observed；不为证明预先结论强迫原版失败。
+
+四、数据和结果保护
+只保留真实输入完整的患者，缺RNA、缺切片、非有限值和真实patch不足均逐项排除并记录。
+不以零向量填充缺失输入。patch不足导致的排除可能改变队列，必须查看 prepared/manifest.json。
+模型源码和CSV哈希、缓存内容哈希、原特征路径/维度/大小/mtime均记录。
+原始完整病理特征文件不全量计算内容哈希；实际进入模型的缓存张量有内容哈希。
+这一缓存抽样/分箱/固定末轮协议与原论文完整训练配方有差别；不得直接混合旧分数作方法优劣结论。
+
+每阶段有 logs/ 日志、receipts/ 输出哈希和 queue_status.json；错误即停止后续任务。
+新运行拒绝覆盖非空结果。已完成阶段可校验后续跑：
+
+    bash run_slotspe_proof.sh --run --resume --output-root '/上次准确结果目录'
+
+续跑时配置、源码、CSV、运行库和实现都必须相同，完成产物的哈希必须匹配。
+每阶段前后以及子进程启动时均核验保存的配置；编辑resolved_config.json会停止任务，不能更改参数后沿用旧批次身份。
+未完成配对训练不支持在半成品目录原地重启；保留其失败记录，并为重跑选择新的输出批次。
+若进程被强制杀死留下 .queue.lock，先确认该队列进程已经结束，再人工处理这一个锁文件。
+不同窗口的任务应使用各自输出目录；由总队列统一安排GPU，或显式选择 --device cuda:编号。
+
+五、另一个统筹窗口如何登记
+任务ID：slotspe_problem_proof
+本次任务入口：bash run_slotspe_proof.sh --run --folds 0 --seeds 3 --epochs 3 --patches 256
+输入：上述服务器元数据目录、病理特征目录、指定SlotSPE源码和配置。
+输出：本批次 proof_summary.txt/json，病例清单、曲线、逐患者重复预测、梯度、checkpoint和日志。
+任务描述文件：docs/SLOTSPE_PROOF_TASK.json。
+本窗口只交付这一项独立任务；没有替其他窗口改队列，也没有向其他聊天发送消息。
+
+六、A/B/C分项归因（代码准备完成，患者归因未完成）
+独立配置：configs/slotspe_attribution_server.json；默认fold0、seed3、每臂3轮、256真实patch、batch8、重复评估20次。
+本次服务器先执行前面的两臂问题复现；下面提供检查与计划，不自动安排额外患者训练。
+
+    python -B -m survot_rank.research.slotspe_proof.attribution --source-root third_party/SlotSPE --output-dir '/新的合成检查目录' --seeds 3 17 29
+    bash run_slotspe_proof.sh --config configs/slotspe_attribution_server.json --doctor
+    bash run_slotspe_proof.sh --config configs/slotspe_attribution_server.json --plan
+
+第一条只用合成输入、随机权重，零优化步；报告B/C完整前向、选择集合、主梯度以及所有参数辅助梯度的逐项精确比较。
+计划应显示3次训练，A/B/C，0个同原版权重评估修正对照。以后明确安排此短程归因时，将上述--plan改为--run并使用新结果目录；不得复用原版/组合修正版的批次。
+30轮/4096patch需另行安排，不能擅自扩展本次预算。
+
+三臂只回答两项修正：
+  A：保留原self输出的全槽均值。
+  B：仅汇总选中self输出，汇总时detach选择权重；辅助损失仍接原选择张量。
+  C：与B执行相同前向运算，只取消汇总处的detach。
+A/B/C共用选择采样、温度1代理梯度、辅助损失及梯度、稳定门控、固定评估初始化、训练折分箱和参数集合。
+严格原源码模型另保留为original，不把A冒充原论文完整配方。readout_fix与C使用同一组合修正实现。
+
+比较A→B回答self汇总改变是否影响预测；比较B→C回答接通最终融合监督是否有用。
+B/C同权重检查中前向应一致；分别训练后权重可以不同，不能再要求其预测相同。
+辅助梯度只要求在同权重/输入/RNG下相同；训练后不同权重的梯度值本来可以不同。
+matched_state_bc_checks.json是实际训练输入、共同初始权重的检查；它不证明患者效果。
+各臂仍导出curve、末轮checkpoint、逐患者预测、主/辅助梯度和患者槽干预；配对summary另列B_minus_A、C_minus_B差值。
+只有原始患者产物验收后才能解释哪项修正有效；短程分数只能说明这组条件下的表现。
+修正后缺什么能力仍待两单模态、简单融合和现有融合的匹配比较，暂不指定运输或新模块。
+
+解释边界
+检查通过说明队列和接口可执行；本次真实执行交给服务器AI，结果须以回传产物核验后确认。
+验证指标是描述性证据，五折/多种子并不自动构成独立外部测试。
+这项任务既不自动证明泛化提升，也不证明OT必要或论文创新成立。

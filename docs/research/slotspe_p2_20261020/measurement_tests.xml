@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="5" time="9.146" timestamp="2026-10-20T10:37:36.499865+08:00" hostname="LAPTOP-SO0VT873"><testcase classname="tests.test_slotspe_p2_diagnostics" name="test_plan_does_not_load_tensors_or_torch" time="0.005"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 系统找不到指定的路径。: 'E:\\DCT-Reg\\.review\\slotspe_p2_20261020\\pytest_tmp'&quot;">self = WindowsPath('E:/DCT-Reg/.review/slotspe_p2_20261020/pytest_tmp')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           self._accessor.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 系统找不到指定的路径。: 'E:\\DCT-Reg\\.review\\slotspe_p2_20261020\\pytest_tmp'
+
+D:\python\lib\pathlib.py:1175: FileNotFoundError</error></testcase><testcase classname="tests.test_slotspe_p2_diagnostics" name="test_pair_selection_has_no_outcome_or_vector_dependence" time="0.274" /><testcase classname="tests.test_slotspe_p2_diagnostics" name="test_all_probes_preserve_count_mean_and_masks_without_mutating_input" time="0.025" /><testcase classname="tests.test_slotspe_p2_diagnostics" name="test_risk_and_margin_count_are_recomputed_from_logits" time="0.014" /><testcase classname="tests.test_slotspe_p2_diagnostics" name="test_readout_matches_native_and_permutation_preserves_rng_and_weights" time="7.762" /></testsuite></testsuites>

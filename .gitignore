@@ -1,0 +1,41 @@
+# Local evidence, patient inputs, raw predictions, checkpoints and original downloads
+/local_evidence/
+/.review/
+/.validation/
+/LOCAL_MIGRATION_MANIFEST.json
+/.publication_paths.nul
+/*.pdf
+/*.zip
+/results/
+/data/
+/prepared/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+.env.*
+*.pt
+*.pth
+*.npz
+*.h5
+*.hdf5
+
+# Exact historical files retained locally but excluded from publication
+/local_evidence/legacy_configs/slotspe_proof_server.json
+/docs/research/slotspe_literature_20261020/archive_text/coda-main.json
+/docs/research/slotspe_literature_20261020/archive_text/CoSA-master.json
+/docs/research/slotspe_literature_20261020/archive_text/DIAS-main.json
+/docs/research/slotspe_literature_20261020/archive_text/MESH-main.json
+/docs/research/slotspe_literature_20261020/archive_text/MetaSlot-main.json
+/docs/research/slotspe_literature_20261020/archive_text/ocebo-main.json
+/docs/research/slotspe_literature_20261020/archive_text/PSA-master.json
+/docs/research/slotspe_literature_20261020/extracted_text/2507.23755v3.txt
+/docs/research/slotspe_literature_20261020/extracted_text/6936_Grounded_Object_Centric_L.txt
+/docs/research/slotspe_literature_20261020/extracted_text/Centric Learning with Slot Attention.txt
+/docs/research/slotspe_literature_20261020/extracted_text/ICLR-2025-object-centric-pretraining-via-target-encoder-bootstrapping-Paper-Conference.txt
+/docs/research/slotspe_literature_20261020/extracted_text/ICLR-2026-improved-object-centric-diffusion-learning-with-registers-and-contrastive-alignment-Paper-Conference.txt
+/docs/research/slotspe_literature_20261020/extracted_text/NeurIPS-2024-identifiable-object-centric-representation-learning-via-probabilistic-slot-attention-Paper-Conference.txt
+/docs/research/slotspe_literature_20261020/extracted_text/NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference.txt
+/docs/research/slotspe_literature_20261020/extracted_text/zhang23ba.txt
+/docs/research/slotspe_literature_20261020/server_reported_d64530c_AGENTS.txt
+/docs/research/slotspe_p1_20261020/descriptive_summary.json

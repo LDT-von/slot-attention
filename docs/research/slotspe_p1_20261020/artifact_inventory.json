@@ -1,0 +1,2232 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-20T02:10:15.562668+00:00",
+  "scope": "Read-only inventory/metadata/hash audit only; no model construction, forward, training, or external patient feature-store scan. Loaded only the existing historical local cached tensor and checkpoint state dictionaries.",
+  "best_available_candidate": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient",
+  "historical_cohort": {
+    "study": "blca",
+    "fold": 0,
+    "train": 289,
+    "validation": 71,
+    "unique_patients": 360,
+    "patches_per_patient": 256,
+    "omic_pathways": 331,
+    "provenance": "Historical local 2026-10-18 RTX 3060 Laptop short-course experiment; NOT server SPE09; do not merge with server-reported 302/77 cohort.",
+    "checkpoint_selection": "fixed_final_epoch",
+    "epochs": 3,
+    "optimizer_steps_per_arm": 111,
+    "protocol": {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\training_protocol.json",
+      "exists": true,
+      "bytes": 3204,
+      "sha256": "a851ef94165726284efc8f8cb3471c9fc26a8b738c4daa9a81403127f2b35134"
+    },
+    "manifest": {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\manifest.json",
+      "exists": true,
+      "bytes": 1712374,
+      "sha256": "ac7921b8a3e1ef290a292c0bc2bbdec575ae07ebbb39fc0fe444e3e5eea85fe3",
+      "expected_sha256": "ac7921b8a3e1ef290a292c0bc2bbdec575ae07ebbb39fc0fe444e3e5eea85fe3",
+      "hash_matches": true
+    },
+    "cache": {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\cache\\paired_blca_fold0.pt",
+      "exists": true,
+      "bytes": 391625938,
+      "sha256": "06ff3816afebd0cca1ff53cb3bc05e5fc34e2989e521c85222631c50bc8f1b61",
+      "expected_sha256": "06ff3816afebd0cca1ff53cb3bc05e5fc34e2989e521c85222631c50bc8f1b61",
+      "hash_matches": true
+    },
+    "runner": {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\run_patient_proof.py",
+      "exists": true,
+      "bytes": 22489,
+      "sha256": "eb0d61e2a69bdce06eb349336332420c2c3f6bb0c0c4dedcc2a97c7b2ee0cf98",
+      "expected_sha256": "eb0d61e2a69bdce06eb349336332420c2c3f6bb0c0c4dedcc2a97c7b2ee0cf98",
+      "hash_matches": true
+    },
+    "native_forward_review": "Pending root inspection of unchanged historical runner original arm builder; this inventory did not inspect implementation code.",
+    "cache_structure": {
+      "wsi": {
+        "shape": [
+          360,
+          256,
+          1024
+        ],
+        "dtype": "torch.float32"
+      },
+      "omics": {
+        "container": "list",
+        "length": 331,
+        "shapes": [
+          [
+            360,
+            21
+          ],
+          [
+            360,
+            32
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            23
+          ],
+          [
+            360,
+            64
+          ],
+          [
+            360,
+            18
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            14
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            25
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            18
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            63
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            45
+          ],
+          [
+            360,
+            25
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            14
+          ],
+          [
+            360,
+            14
+          ],
+          [
+            360,
+            17
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            69
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            19
+          ],
+          [
+            360,
+            19
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            17
+          ],
+          [
+            360,
+            14
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            49
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            24
+          ],
+          [
+            360,
+            15
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            17
+          ],
+          [
+            360,
+            17
+          ],
+          [
+            360,
+            17
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            20
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            14
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            15
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            15
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            20
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            28
+          ],
+          [
+            360,
+            29
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            19
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            33
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            16
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            191
+          ],
+          [
+            360,
+            194
+          ],
+          [
+            360,
+            95
+          ],
+          [
+            360,
+            35
+          ],
+          [
+            360,
+            192
+          ],
+          [
+            360,
+            42
+          ],
+          [
+            360,
+            158
+          ],
+          [
+            360,
+            111
+          ],
+          [
+            360,
+            72
+          ],
+          [
+            360,
+            137
+          ],
+          [
+            360,
+            199
+          ],
+          [
+            360,
+            146
+          ],
+          [
+            360,
+            194
+          ],
+          [
+            360,
+            197
+          ],
+          [
+            360,
+            195
+          ],
+          [
+            360,
+            195
+          ],
+          [
+            360,
+            154
+          ],
+          [
+            360,
+            189
+          ],
+          [
+            360,
+            196
+          ],
+          [
+            360,
+            35
+          ],
+          [
+            360,
+            193
+          ],
+          [
+            360,
+            190
+          ],
+          [
+            360,
+            194
+          ],
+          [
+            360,
+            86
+          ],
+          [
+            360,
+            198
+          ],
+          [
+            360,
+            94
+          ],
+          [
+            360,
+            197
+          ],
+          [
+            360,
+            193
+          ],
+          [
+            360,
+            195
+          ],
+          [
+            360,
+            197
+          ],
+          [
+            360,
+            194
+          ],
+          [
+            360,
+            192
+          ],
+          [
+            360,
+            56
+          ],
+          [
+            360,
+            197
+          ],
+          [
+            360,
+            31
+          ],
+          [
+            360,
+            183
+          ],
+          [
+            360,
+            192
+          ],
+          [
+            360,
+            39
+          ],
+          [
+            360,
+            103
+          ],
+          [
+            360,
+            103
+          ],
+          [
+            360,
+            94
+          ],
+          [
+            360,
+            46
+          ],
+          [
+            360,
+            132
+          ],
+          [
+            360,
+            53
+          ],
+          [
+            360,
+            197
+          ],
+          [
+            360,
+            106
+          ],
+          [
+            360,
+            138
+          ],
+          [
+            360,
+            153
+          ],
+          [
+            360,
+            41
+          ],
+          [
+            360,
+            196
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            18
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            25
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            25
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            13
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            24
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            21
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            23
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            16
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            31
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            14
+          ],
+          [
+            360,
+            14
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            12
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            50
+          ],
+          [
+            360,
+            14
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            15
+          ],
+          [
+            360,
+            15
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            54
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            28
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            12
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            34
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            13
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            15
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            13
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            5
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            12
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            38
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            27
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            8
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            2
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            3
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            13
+          ],
+          [
+            360,
+            10
+          ],
+          [
+            360,
+            17
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            21
+          ],
+          [
+            360,
+            9
+          ],
+          [
+            360,
+            11
+          ],
+          [
+            360,
+            13
+          ],
+          [
+            360,
+            6
+          ],
+          [
+            360,
+            7
+          ],
+          [
+            360,
+            17
+          ],
+          [
+            360,
+            1
+          ],
+          [
+            360,
+            4
+          ],
+          [
+            360,
+            18
+          ],
+          [
+            360,
+            14
+          ],
+          [
+            360,
+            10
+          ]
+        ],
+        "dtype": "torch.float32"
+      },
+      "label": {
+        "shape": [
+          360
+        ],
+        "dtype": "torch.int64"
+      },
+      "censor": {
+        "shape": [
+          360
+        ],
+        "dtype": "torch.float32"
+      },
+      "time": {
+        "shape": [
+          360
+        ],
+        "dtype": "torch.float64"
+      },
+      "patient_id": {
+        "length": 360,
+        "unique": 360
+      },
+      "split": {
+        "train": 289,
+        "val": 71
+      },
+      "omic_sizes": [
+        21,
+        32,
+        11,
+        5,
+        23,
+        64,
+        18,
+        1,
+        2,
+        14,
+        2,
+        6,
+        4,
+        4,
+        25,
+        6,
+        4,
+        3,
+        10,
+        10,
+        4,
+        4,
+        3,
+        10,
+        18,
+        3,
+        1,
+        6,
+        4,
+        63,
+        4,
+        7,
+        45,
+        25,
+        3,
+        5,
+        5,
+        5,
+        3,
+        5,
+        3,
+        14,
+        14,
+        17,
+        2,
+        9,
+        2,
+        6,
+        1,
+        5,
+        3,
+        6,
+        69,
+        4,
+        19,
+        19,
+        3,
+        3,
+        2,
+        2,
+        17,
+        14,
+        11,
+        11,
+        4,
+        49,
+        5,
+        2,
+        24,
+        15,
+        2,
+        2,
+        3,
+        17,
+        17,
+        17,
+        4,
+        5,
+        9,
+        20,
+        5,
+        6,
+        1,
+        5,
+        5,
+        14,
+        2,
+        2,
+        8,
+        2,
+        4,
+        3,
+        15,
+        1,
+        4,
+        15,
+        2,
+        20,
+        3,
+        28,
+        29,
+        2,
+        2,
+        19,
+        3,
+        1,
+        9,
+        1,
+        7,
+        33,
+        11,
+        16,
+        8,
+        5,
+        1,
+        191,
+        194,
+        95,
+        35,
+        192,
+        42,
+        158,
+        111,
+        72,
+        137,
+        199,
+        146,
+        194,
+        197,
+        195,
+        195,
+        154,
+        189,
+        196,
+        35,
+        193,
+        190,
+        194,
+        86,
+        198,
+        94,
+        197,
+        193,
+        195,
+        197,
+        194,
+        192,
+        56,
+        197,
+        31,
+        183,
+        192,
+        39,
+        103,
+        103,
+        94,
+        46,
+        132,
+        53,
+        197,
+        106,
+        138,
+        153,
+        41,
+        196,
+        4,
+        5,
+        8,
+        9,
+        11,
+        4,
+        11,
+        8,
+        10,
+        10,
+        10,
+        10,
+        6,
+        18,
+        9,
+        25,
+        4,
+        5,
+        2,
+        2,
+        2,
+        25,
+        4,
+        13,
+        11,
+        2,
+        3,
+        7,
+        8,
+        24,
+        2,
+        8,
+        6,
+        9,
+        1,
+        7,
+        4,
+        21,
+        2,
+        5,
+        4,
+        8,
+        2,
+        1,
+        5,
+        2,
+        23,
+        7,
+        2,
+        6,
+        16,
+        4,
+        8,
+        4,
+        6,
+        6,
+        1,
+        6,
+        31,
+        11,
+        7,
+        1,
+        14,
+        14,
+        6,
+        4,
+        7,
+        3,
+        2,
+        4,
+        5,
+        4,
+        2,
+        4,
+        10,
+        11,
+        12,
+        9,
+        2,
+        4,
+        3,
+        5,
+        8,
+        2,
+        10,
+        10,
+        50,
+        14,
+        10,
+        15,
+        15,
+        3,
+        54,
+        3,
+        28,
+        3,
+        12,
+        5,
+        1,
+        2,
+        34,
+        5,
+        9,
+        6,
+        13,
+        2,
+        5,
+        4,
+        2,
+        10,
+        6,
+        15,
+        3,
+        1,
+        3,
+        4,
+        10,
+        10,
+        13,
+        2,
+        2,
+        2,
+        5,
+        1,
+        7,
+        12,
+        3,
+        3,
+        38,
+        1,
+        1,
+        2,
+        2,
+        27,
+        1,
+        3,
+        8,
+        8,
+        11,
+        7,
+        2,
+        11,
+        10,
+        9,
+        3,
+        6,
+        4,
+        4,
+        7,
+        6,
+        13,
+        10,
+        17,
+        4,
+        21,
+        9,
+        11,
+        13,
+        6,
+        7,
+        17,
+        1,
+        4,
+        18,
+        14,
+        10
+      ]
+    },
+    "cache_manifest_alignment": {
+      "cache_manifest_id_order_equal": true,
+      "cache_manifest_splits_equal": true,
+      "cache_manifest_labels_equal": true,
+      "per_patient_patch_content_hash_match_count": 360,
+      "cache_omic_sizes_equal": true
+    },
+    "source_files": [
+      {
+        "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+        "exists": true,
+        "bytes": 14109,
+        "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "expected_sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "hash_matches": true
+      },
+      {
+        "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\slot_attention.py",
+        "exists": true,
+        "bytes": 4975,
+        "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "expected_sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "hash_matches": true
+      },
+      {
+        "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\transformer.py",
+        "exists": true,
+        "bytes": 10848,
+        "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "expected_sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "hash_matches": true
+      },
+      {
+        "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\omics_encoder.py",
+        "exists": true,
+        "bytes": 648,
+        "sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "expected_sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "hash_matches": true
+      },
+      {
+        "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\loss_func.py",
+        "exists": true,
+        "bytes": 16600,
+        "sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+        "expected_sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+        "hash_matches": true
+      },
+      {
+        "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\process_args.py",
+        "exists": true,
+        "bytes": 5407,
+        "sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+        "expected_sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+        "hash_matches": true
+      },
+      {
+        "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\core_utils.py",
+        "exists": true,
+        "bytes": 19403,
+        "sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+        "expected_sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+        "hash_matches": true
+      },
+      {
+        "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\dataset\\dataset_survival.py",
+        "exists": true,
+        "bytes": 14691,
+        "sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+        "expected_sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+        "hash_matches": true
+      }
+    ],
+    "source_files_all_current_hashes_match": true,
+    "original_arms": [
+      {
+        "seed": 3,
+        "classification": "historical_local_real_patient_original_candidate_pending_native_forward_review",
+        "checkpoint": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\original\\last.pt",
+          "exists": true,
+          "bytes": 127715498,
+          "sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
+          "expected_sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
+          "hash_matches": true
+        },
+        "checkpoint_top_keys": [
+          "state_dict",
+          "seed",
+          "arm",
+          "epochs",
+          "optimizer_steps",
+          "omic_sizes",
+          "config",
+          "checkpoint_selection"
+        ],
+        "checkpoint_metadata": {
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 111,
+          "checkpoint_selection": "fixed_final_epoch"
+        },
+        "checkpoint_config_matches_training_protocol_source_hashes": true,
+        "checkpoint_omic_sizes_equal_cache": true,
+        "state_dict_tensor_count": 1493,
+        "state_dict_numel_including_buffers": 31839396,
+        "state_dict_slot_shapes": {
+          "slot_attention_wsi.slots_mu": [
+            1,
+            1,
+            256
+          ],
+          "slot_attention_omic.slots_mu": [
+            1,
+            1,
+            256
+          ]
+        },
+        "summary": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\original\\summary.json",
+          "exists": true,
+          "bytes": 807,
+          "sha256": "3eea0cf5b8d5810ed4c8e9c081876e285287cbd163b16f8657847595baf3bc32"
+        },
+        "training_curve": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\original\\curve.json",
+          "exists": true,
+          "bytes": 1204,
+          "sha256": "79d44416bc7686d84c900181387e875d6f408774497a53b0e220ac8aee9e42c6"
+        },
+        "curve_epochs": [
+          1,
+          2,
+          3
+        ],
+        "curve_final_optimizer_steps": 111,
+        "predictions": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\original\\validation_predictions.csv",
+          "exists": true,
+          "bytes": 30296,
+          "sha256": "bcc1114dda33013b2dce9dc268ee4f37a6e3d04fbae50f58cd9c4ef678c17fed"
+        },
+        "prediction_patient_count": 71,
+        "prediction_patient_ids_equal_validation_set": true,
+        "prediction_repeat_columns": 20,
+        "trained_selector_gradients": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\original\\trained_selector_gradients.json",
+          "exists": true,
+          "bytes": 3072,
+          "sha256": "b19a66d05de5c42740a8dc49ee97cad3ba733b1a55e5edf8f0f46a6277127d67"
+        },
+        "eval_repeats": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\original\\eval_repeats.json",
+          "exists": true,
+          "bytes": 236747,
+          "sha256": "0d529b7674889a78b34d8f81b81ea6c55b651c0ffed0df03179a587d3c167527"
+        }
+      },
+      {
+        "seed": 17,
+        "classification": "historical_local_real_patient_original_candidate_pending_native_forward_review",
+        "checkpoint": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\original\\last.pt",
+          "exists": true,
+          "bytes": 127715498,
+          "sha256": "8e7085472b49b0071dd8c17b200d1bc5d65cd9b294d609d56e92f4ec1d271349",
+          "expected_sha256": "8e7085472b49b0071dd8c17b200d1bc5d65cd9b294d609d56e92f4ec1d271349",
+          "hash_matches": true
+        },
+        "checkpoint_top_keys": [
+          "state_dict",
+          "seed",
+          "arm",
+          "epochs",
+          "optimizer_steps",
+          "omic_sizes",
+          "config",
+          "checkpoint_selection"
+        ],
+        "checkpoint_metadata": {
+          "seed": 17,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 111,
+          "checkpoint_selection": "fixed_final_epoch"
+        },
+        "checkpoint_config_matches_training_protocol_source_hashes": true,
+        "checkpoint_omic_sizes_equal_cache": true,
+        "state_dict_tensor_count": 1493,
+        "state_dict_numel_including_buffers": 31839396,
+        "state_dict_slot_shapes": {
+          "slot_attention_wsi.slots_mu": [
+            1,
+            1,
+            256
+          ],
+          "slot_attention_omic.slots_mu": [
+            1,
+            1,
+            256
+          ]
+        },
+        "summary": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\original\\summary.json",
+          "exists": true,
+          "bytes": 810,
+          "sha256": "d95420a9c9cd6a3f449cf6cfe1f14e3860e19f041c7b5363481ec4e59ee0817d"
+        },
+        "training_curve": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\original\\curve.json",
+          "exists": true,
+          "bytes": 1201,
+          "sha256": "a5104ba892fcc56b693b7a80ec6596aa0fd19823651fb07c2e72f4c0ebfa846f"
+        },
+        "curve_epochs": [
+          1,
+          2,
+          3
+        ],
+        "curve_final_optimizer_steps": 111,
+        "predictions": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\original\\validation_predictions.csv",
+          "exists": true,
+          "bytes": 30292,
+          "sha256": "0516be9410f135105414fc7679b4c562da0663f1232f0bcb91c5150fb1ba6e8f"
+        },
+        "prediction_patient_count": 71,
+        "prediction_patient_ids_equal_validation_set": true,
+        "prediction_repeat_columns": 20,
+        "trained_selector_gradients": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\original\\trained_selector_gradients.json",
+          "exists": true,
+          "bytes": 3077,
+          "sha256": "4af927e9e4829df350ede39e756936e3bb0764092cdd283682b8fa33085dcd78"
+        },
+        "eval_repeats": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\original\\eval_repeats.json",
+          "exists": true,
+          "bytes": 236402,
+          "sha256": "327ad6a10fe5797bd0afc9a741c7f3138d693cb40ad484f68adc8e476aa42103"
+        }
+      },
+      {
+        "seed": 29,
+        "classification": "historical_local_real_patient_original_candidate_pending_native_forward_review",
+        "checkpoint": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\original\\last.pt",
+          "exists": true,
+          "bytes": 127715498,
+          "sha256": "c4223f003e611330afba1f74be412354c362550178e24c7506ede8d530dce271",
+          "expected_sha256": "c4223f003e611330afba1f74be412354c362550178e24c7506ede8d530dce271",
+          "hash_matches": true
+        },
+        "checkpoint_top_keys": [
+          "state_dict",
+          "seed",
+          "arm",
+          "epochs",
+          "optimizer_steps",
+          "omic_sizes",
+          "config",
+          "checkpoint_selection"
+        ],
+        "checkpoint_metadata": {
+          "seed": 29,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 111,
+          "checkpoint_selection": "fixed_final_epoch"
+        },
+        "checkpoint_config_matches_training_protocol_source_hashes": true,
+        "checkpoint_omic_sizes_equal_cache": true,
+        "state_dict_tensor_count": 1493,
+        "state_dict_numel_including_buffers": 31839396,
+        "state_dict_slot_shapes": {
+          "slot_attention_wsi.slots_mu": [
+            1,
+            1,
+            256
+          ],
+          "slot_attention_omic.slots_mu": [
+            1,
+            1,
+            256
+          ]
+        },
+        "summary": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\original\\summary.json",
+          "exists": true,
+          "bytes": 803,
+          "sha256": "96bd95b7d803e04ba345fb511581a3c84cfb55dcac5ff57bc748b79ecd37e22a"
+        },
+        "training_curve": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\original\\curve.json",
+          "exists": true,
+          "bytes": 1202,
+          "sha256": "1eea646ef322ba6219d4ff0a456373e14dd575bdda0b2699e5ae71d3989f84b6"
+        },
+        "curve_epochs": [
+          1,
+          2,
+          3
+        ],
+        "curve_final_optimizer_steps": 111,
+        "predictions": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\original\\validation_predictions.csv",
+          "exists": true,
+          "bytes": 30477,
+          "sha256": "afaee14a588df5cce485c5b6a2fc8720cef7ac9768d7eda86e9067e93aaf1b93"
+        },
+        "prediction_patient_count": 71,
+        "prediction_patient_ids_equal_validation_set": true,
+        "prediction_repeat_columns": 20,
+        "trained_selector_gradients": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\original\\trained_selector_gradients.json",
+          "exists": true,
+          "bytes": 3074,
+          "sha256": "630468aa4c913ef093a459cdebe85b6b5aeee30b16cd99eeff8e784af1e58db7"
+        },
+        "eval_repeats": {
+          "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\original\\eval_repeats.json",
+          "exists": true,
+          "bytes": 238407,
+          "sha256": "71eabdd0e3c2b65b2347d5ea7ff9ed75f6aada7e815273889c08ca4ce8cb87cd"
+        }
+      }
+    ],
+    "existing_p1_slot_attention_exports": false,
+    "missing_for_p1": [
+      "Per-patient native slot-attention allocation and selected-slot data from trained original checkpoints",
+      "Matched slot capacity intervention / controlled cross-capacity retraining for prediction-harm attribution",
+      "Native forward provenance and original recorded prediction replay audit by root"
+    ]
+  },
+  "not_usable_as_native_trained_patient_evidence": [
+    {
+      "paths": [
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\readout_fix\\last.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\readout_fix\\last.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\readout_fix\\last.pt"
+      ],
+      "reason": "Trained repaired readout arm; not unchanged native original."
+    },
+    {
+      "paths": [
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\same_weights_eval_fix",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\same_weights_eval_fix",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\same_weights_eval_fix"
+      ],
+      "reason": "Original checkpoint with altered deterministic evaluation; not native eval behavior."
+    },
+    {
+      "paths": [
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\shared_initial_state.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\shared_initial_state.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\shared_initial_state.pt"
+      ],
+      "reason": "Untrained initialization, not trained checkpoint."
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_problem_audit_20261016\\diagnostic_results.json",
+      "reason": "Explicit scope unchanged_original_code_random_weights_not_trained_performance; useful mechanism evidence only."
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_clean_publication_20261019\\pytest\\test_clean_delivery_runs_nativ0\\results\\prepared\\manifest.json",
+      "reason": "Native-class standalone smoke test uses seven SYNTHETIC_CASE IDs, 8 patches and 16 features, 1 epoch; not real patients.",
+      "patient_ids": [
+        "SYNTHETIC_CASE_0",
+        "SYNTHETIC_CASE_1",
+        "SYNTHETIC_CASE_2",
+        "SYNTHETIC_CASE_3",
+        "SYNTHETIC_CASE_4",
+        "SYNTHETIC_CASE_5",
+        "SYNTHETIC_CASE_6"
+      ],
+      "patches": 8,
+      "encoding_dim": 16
+    },
+    {
+      "path": "E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\\synthetic_checks.json",
+      "reason": "Invented tensors/random weights; structural controls only."
+    },
+    {
+      "path": "E:\\DCT-Reg\\results",
+      "reason": "Existing 5 named subfolders and root files concern DCT v3.11/v3.13 proofs/audits; no SlotSPE patient checkpoint/cache in this root file inventory."
+    }
+  ],
+  "server_spe09": {
+    "reported_results_directory": "E:\\DCT-Reg\\实验档案\\结果\\SPE09_slotspe_clean_original_20261019",
+    "local_directory_exists": false,
+    "local_archive_results_root_exists": false,
+    "reported_status_document": "E:\\DCT-Reg\\docs\\research\\slotspe_literature_20261020\\server_reported_d64530c_AGENTS.txt",
+    "raw_artifacts_verified_locally": false,
+    "do_not_infer_server_run_status_from_local_absence": true
+  },
+  "desktop_native_repo_output_dirs": [
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\results",
+      "exists": false
+    },
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\checkpoints",
+      "exists": false
+    }
+  ],
+  "review_inventory": [
+    {
+      "root": "E:\\DCT-Reg\\.review\\slotspe_abc_validation_20261019",
+      "total_files": 643,
+      "pt_pth_ckpt_files": 122,
+      "pt_files_outside_test_fixture_paths": [],
+      "classification": "synthetic_test_fixture_or_publication"
+    },
+    {
+      "root": "E:\\DCT-Reg\\.review\\slotspe_clean_original_validation_20261019",
+      "total_files": 874,
+      "pt_pth_ckpt_files": 144,
+      "pt_files_outside_test_fixture_paths": [],
+      "classification": "synthetic_test_fixture_or_publication"
+    },
+    {
+      "root": "E:\\DCT-Reg\\.review\\slotspe_clean_publication_20261019",
+      "total_files": 95,
+      "pt_pth_ckpt_files": 16,
+      "pt_files_outside_test_fixture_paths": [],
+      "classification": "synthetic_test_fixture_or_publication"
+    },
+    {
+      "root": "E:\\DCT-Reg\\.review\\slotspe_eight_issues_20261019",
+      "total_files": 3,
+      "pt_pth_ckpt_files": 0,
+      "pt_files_outside_test_fixture_paths": [],
+      "classification": "reports_code_checks_or_delivery_only"
+    },
+    {
+      "root": "E:\\DCT-Reg\\.review\\slotspe_literature_20261020",
+      "total_files": 6,
+      "pt_pth_ckpt_files": 0,
+      "pt_files_outside_test_fixture_paths": [],
+      "classification": "reports_code_checks_or_delivery_only"
+    },
+    {
+      "root": "E:\\DCT-Reg\\.review\\slotspe_problem_audit_20261016",
+      "total_files": 7,
+      "pt_pth_ckpt_files": 0,
+      "pt_files_outside_test_fixture_paths": [],
+      "classification": "reports_code_checks_or_delivery_only"
+    },
+    {
+      "root": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018",
+      "total_files": 94,
+      "pt_pth_ckpt_files": 10,
+      "pt_files_outside_test_fixture_paths": [
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\cache\\paired_blca_fold0.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\shared_initial_state.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\original\\last.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_17\\readout_fix\\last.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\shared_initial_state.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\original\\last.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_29\\readout_fix\\last.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\shared_initial_state.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\original\\last.pt",
+        "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\readout_fix\\last.pt"
+      ],
+      "classification": "historical_real_patient_short_course_plus_original_and_readout_controls"
+    },
+    {
+      "root": "E:\\DCT-Reg\\.review\\slotspe_publication_20261019",
+      "total_files": 524,
+      "pt_pth_ckpt_files": 77,
+      "pt_files_outside_test_fixture_paths": [],
+      "classification": "synthetic_test_fixture_or_publication"
+    },
+    {
+      "root": "E:\\DCT-Reg\\.review\\slotspe_transport_push_20261019",
+      "total_files": 15,
+      "pt_pth_ckpt_files": 0,
+      "pt_files_outside_test_fixture_paths": [],
+      "classification": "reports_code_checks_or_delivery_only"
+    }
+  ],
+  "boundary": "No conclusions on fixed-slot predictive harm, dynamic capacity benefit, native clinical validity or server proof follow from this inventory."
+}

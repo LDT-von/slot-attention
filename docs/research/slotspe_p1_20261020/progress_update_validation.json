@@ -1,0 +1,30 @@
+{
+  "non_slotspe_tasks_unchanged": true,
+  "non_slotspe_lines_unchanged": true,
+  "backup": "E:\\DCT-Reg\\docs\\history\\slotspe_p1_patient_20261020_102423",
+  "raw_audit": {
+    "status": "accepted_raw_observations",
+    "patient_count": 71,
+    "candidate_counts": {
+      "wsi": [
+        8
+      ],
+      "omic": [
+        8
+      ]
+    },
+    "selected_counts": {
+      "wsi": [
+        2
+      ],
+      "omic": [
+        2
+      ]
+    },
+    "server_SPE09_evidence": false,
+    "P1_predictive_harm_proved": false
+  },
+  "original_sources_rehashed_unchanged": true,
+  "new_training_runs": 0,
+  "new_readonly_patient_forward_work": true
+}

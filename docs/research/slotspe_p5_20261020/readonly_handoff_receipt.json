@@ -1,0 +1,263 @@
+{
+  "task_id": "SPE-08",
+  "recorded_at": "2026-10-20T17:02:45+08:00",
+  "method": "exact_source_read_and_existing_metadata_hash_review_only",
+  "new_training_runs": 0,
+  "new_model_forward_passes": 0,
+  "new_backward_passes": 0,
+  "patient_tensors_loaded_this_review": false,
+  "new_synthetic_checks_run": 0,
+  "server_execution_verified": false,
+  "server_raw_results_received": false,
+  "historical_synthetic_record": {
+    "path": "E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\\synthetic_checks.json",
+    "bytes": 19122,
+    "sha256": "07747247f199cf82fa5ed937b2e6ba71ac48f45a8366e22e163c7617e377dc79"
+  },
+  "original_source_hashes": {
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\dataset\\dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\scripts\\SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9"
+  },
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "issue": "P5_handoff_and_record_integrity",
+  "original_p5_report": {
+    "path": "E:\\DCT-Reg\\docs\\research\\slotspe_p5_20261020\\P5_只读核验报告.txt",
+    "bytes": 7300,
+    "sha256": "5f87ad54aae735bb87c8fc0ef74a0cb0617afee352dd05fbf053b8a9d6c7eb36"
+  },
+  "original_p5_report_unchanged": true,
+  "p5_original_directory_files_before": [
+    "P5_只读核验报告.txt"
+  ],
+  "historical_files": [
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\cache\\paired_blca_fold0.pt",
+      "bytes": 391625938,
+      "sha256": "06ff3816afebd0cca1ff53cb3bc05e5fc34e2989e521c85222631c50bc8f1b61"
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\seed_3\\original\\last.pt",
+      "bytes": 127715498,
+      "sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c"
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient\\manifest.json",
+      "bytes": 1712374,
+      "sha256": "ac7921b8a3e1ef290a292c0bc2bbdec575ae07ebbb39fc0fe444e3e5eea85fe3"
+    }
+  ],
+  "manifest_metadata_summary": {
+    "patients": 360,
+    "splits": {
+      "train": 289,
+      "val": 71
+    },
+    "minimum_full_patch_count": 445,
+    "tensor_zero_counts_recomputed_this_review": false
+  },
+  "p1_p4_raw_inventory": [
+    {
+      "issue": "P1",
+      "raw_root": "E:\\DCT-Reg\\.review\\slotspe_p1_20261020\\seed3_native_v2\\raw",
+      "direct_npz_count": 71,
+      "docs_npz_count_recursive": 0,
+      "report_receipt": {
+        "path": "E:\\DCT-Reg\\docs\\research\\slotspe_p1_20261020\\measurement_receipt.json",
+        "bytes": 2434,
+        "sha256": "f07c5885463e89f8090db530db32217b9c303cceca0e6703ae1e9422872d6853"
+      },
+      "statistics_recomputed_this_review": false
+    },
+    {
+      "issue": "P2",
+      "raw_root": "E:\\DCT-Reg\\.review\\slotspe_p2_20261020\\seed3_native_v1\\raw",
+      "direct_npz_count": 71,
+      "docs_npz_count_recursive": 0,
+      "report_receipt": {
+        "path": "E:\\DCT-Reg\\docs\\research\\slotspe_p2_20261020\\measurement_receipt.json",
+        "bytes": 3042,
+        "sha256": "fd02ddb5cb32732aef006a2de279e192e2d4d97cb5d56addcdc60c5dacb91674"
+      },
+      "statistics_recomputed_this_review": false
+    },
+    {
+      "issue": "P3",
+      "raw_root": "E:\\DCT-Reg\\.review\\slotspe_p3_20261020\\seed3_native_v1",
+      "direct_npz_count": 6,
+      "docs_npz_count_recursive": 0,
+      "report_receipt": {
+        "path": "E:\\DCT-Reg\\docs\\research\\slotspe_p3_20261020\\measurement_receipt.json",
+        "bytes": 10626,
+        "sha256": "7e2b9a3321a9d091e4d47fe3059a6c2f643156426c176977ff47bc5760cb56d2"
+      },
+      "statistics_recomputed_this_review": false
+    },
+    {
+      "issue": "P4",
+      "raw_root": "E:\\DCT-Reg\\.review\\slotspe_p4_20261020\\seed3_native_v1\\raw",
+      "direct_npz_count": 71,
+      "docs_npz_count_recursive": 0,
+      "report_receipt": {
+        "path": "E:\\DCT-Reg\\docs\\research\\slotspe_p4_20261020\\measurement_receipt.json",
+        "bytes": 5545,
+        "sha256": "08c60dd8a336be4f3e238cb1805b203872479126ede0e9a88b3dabe61ce89a0c"
+      },
+      "statistics_recomputed_this_review": false
+    }
+  ],
+  "archive_markers": [
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_abc_validation_20261019\\ARCHIVED.txt",
+      "bytes": 421,
+      "sha256": "a0de2b1b27d68c3c2d01edfc1947f704a75ed62eeb7e61f4425a430e704be008",
+      "content": "ARCHIVED — 历史快照，非本次任务产物\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_abc_validation_20261019\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\n冗余理由：服务器AI交付测试存档，非P1-P5患者级只读核验产物\n保留原因：研究规范要求历史快照与失败记录不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_clean_original_validation_20261019\\ARCHIVED.txt",
+      "bytes": 380,
+      "sha256": "f7adfd798a677f9c6b6d7de33a9f1690193e7d287f02afe610e2382b1f745fef",
+      "content": "ARCHIVED — 历史快照，非本次任务产物\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_clean_original_validation_20261019\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\n冗余理由：替代交付方案测试存档\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_clean_publication_20261019\\ARCHIVED.txt",
+      "bytes": 372,
+      "sha256": "07756c24ea03908764e76c97a801a9d231f76626bc1c290e1004fcd1b8125cf6",
+      "content": "ARCHIVED — 历史快照，非本次任务产物\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_clean_publication_20261019\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\n冗余理由：替代交付方案测试存档\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_eight_issues_20261019\\ARCHIVED.txt",
+      "bytes": 363,
+      "sha256": "a00f192add24e0cd7dab8c1ce703917e35e6cb908af53336edb51fbfd8d78a53",
+      "content": "ARCHIVED — 与docs/research/下的同名目录重复\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_eight_issues_20261019\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\n冗余理由：相同内容的副本\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_literature_20261020\\ARCHIVED.txt",
+      "bytes": 391,
+      "sha256": "6ce03fda83d9e677ecd3f1670e28f07c9f7775ae1f0fdf4e764397f93dbfac8e",
+      "content": "ARCHIVED — 历史快照，非本次任务产物\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_literature_20261020\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\n冗余理由：文献核验存档，非P1-P5患者级只读核验产物\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_p1_20261020\\ARCHIVED.txt",
+      "bytes": 343,
+      "sha256": "fdcd9b4df041de69bac906c2f166fc5d3b078576d193bc836549495c8a698230",
+      "content": "ARCHIVED — 与docs/research/下的同名目录重复\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_p1_20261020\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_p1_20261020\n冗余理由：相同内容的副本\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_p2_20261020\\ARCHIVED.txt",
+      "bytes": 343,
+      "sha256": "79a4f4e2dc5308948c8201bb82c7930947011712981a0616a10c273f56b1480b",
+      "content": "ARCHIVED — 与docs/research/下的同名目录重复\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_p2_20261020\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_p2_20261020\n冗余理由：相同内容的副本\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_p3_20261020\\ARCHIVED.txt",
+      "bytes": 343,
+      "sha256": "ae2be285db0c3c3aca8f4f4a3b42f2efb4b3da0b237cbf57a96c0d22387bb551",
+      "content": "ARCHIVED — 与docs/research/下的同名目录重复\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_p3_20261020\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_p3_20261020\n冗余理由：相同内容的副本\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_p4_20261020\\ARCHIVED.txt",
+      "bytes": 343,
+      "sha256": "25db19959a7e6a459d98ad8192cfd6be7bc8e2500acd89c5b39499f78e92cfb5",
+      "content": "ARCHIVED — 与docs/research/下的同名目录重复\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_p4_20261020\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_p4_20261020\n冗余理由：相同内容的副本\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_problem_audit_20261016\\ARCHIVED.txt",
+      "bytes": 405,
+      "sha256": "55b3c6a22aac6388b307fc470fbbb5c77dfd66d329eab6dabb9cbfd8152bb694",
+      "content": "ARCHIVED — 早期审计，被新版覆盖\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_problem_audit_20261016\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\n冗余理由：2026-10-19的版本已包含本次任务所需的全部八类问题结论\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\ARCHIVED.txt",
+      "bytes": 337,
+      "sha256": "3199a41843f760933f68f500b9969fffa201ce0d7b06cccfa60a26806ae89fa9",
+      "content": "ARCHIVED — 早期证明存档\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_proof_20261018\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\n冗余理由：2026-10-19已重新审计\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_publication_20261019\\ARCHIVED.txt",
+      "bytes": 351,
+      "sha256": "8b60eec671eaaab784d9df9cfd13bb65fea94a9be08acd14cfa1ca8763a64e2f",
+      "content": "ARCHIVED — 历史快照，非本次任务产物\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_publication_20261019\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\n冗余理由：发布版存档\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_transport_push_20261019\\ARCHIVED.txt",
+      "bytes": 369,
+      "sha256": "397d722d1e8caabe6163ae7a1ac3a992ca2bf471f21e3c3b4307a07ed790bf8e",
+      "content": "ARCHIVED — 历史快照，非本次任务产物\n==========================================\n原目录：E:\\DCT-Reg\\.review\\slotspe_transport_push_20261019\n当前任务产物目录：E:\\DCT-Reg\\docs\\research\\slotspe_eight_issues_20261019\n冗余理由：替代交付方案测试存档\n保留原因：研究规范要求历史快照不得删除\n时间：2026-10-20\n",
+      "marker_alone_proves_duplicate_or_deletable": false
+    }
+  ],
+  "server_paths_checked": [
+    {
+      "path": "E:\\DCT-Reg\\实验档案\\结果\\SPE09_slotspe_clean_original_20261019",
+      "exists": false
+    },
+    {
+      "path": "E:\\DCT-Reg\\results\\slotspe_proof\\slotspe_clean_original_blca_run_20261020",
+      "exists": false
+    }
+  ],
+  "corrections": [
+    {
+      "lines": "33",
+      "old": "manifest.csv",
+      "correct": "实际依据为manifest.json；已重算完整SHA，见本收据。"
+    },
+    {
+      "lines": "34,146",
+      "old": "缓存可读/checkpoint可加载=可重算复核通过",
+      "correct": "存在和哈希一致不等于已经独立重算P1-P4数值；本轮没有重算。"
+    },
+    {
+      "lines": "63,154",
+      "old": "71名验证患者零行统计后写已检查360患者",
+      "correct": "统计范围不一致，且未随报告落盘原始统计；零行结果本轮未重新核验。manifest总人数360=289训练+71验证。"
+    },
+    {
+      "lines": "100",
+      "old": "零行会被分配0权重",
+      "correct": "没有输入mask保障；带偏置MLP可将零输入映射为非零，softmax及eps归一化不会自动排除该token。不能断言零注意力。"
+    },
+    {
+      "lines": "68",
+      "old": "无法用现有缓存直接验证零行干预",
+      "correct": "无自然零行只限制自然发生率观察；人工拼零仍可在配对随机状态下检验计算敏感性。其结果不能代表真实无关组织。"
+    },
+    {
+      "lines": "166,169",
+      "old": "1名患者的零行注入比较C-index",
+      "correct": "单患者无可比较患者对，不能算有效C-index。个体干预应报logits/risk差；队列排序需多个患者及明确配对规则。"
+    },
+    {
+      "lines": "125",
+      "old": "P2/P3/P4都是槽层面的干预",
+      "correct": "P3还包括整模型20次重复评估及槽/Gumbel随机数控制，不能统称只做槽层干预。"
+    },
+    {
+      "lines": "13个ARCHIVED.txt",
+      "old": "P1-P4与docs目录是相同内容副本",
+      "correct": ".review保存原始NPZ而docs保存报告；两者互补。不能据此认定可删，原标记保留并由本收据纠偏。"
+    }
+  ],
+  "P5_natural_zero_rows": "reported_zero_in_71_validation_not_recomputed_and_raw_statistics_not_retained_in_P5_directory",
+  "P5_real_irrelevant_tissue_occupancy_or_harm": "not_established"
+}

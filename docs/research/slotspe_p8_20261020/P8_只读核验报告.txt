@@ -1,0 +1,33 @@
+SlotSPE P8只读源码复核报告
+记录：2026-10-20T17:02:45+08:00；原版仓库：C:\Users\栋栋\Desktop\特征解耦论文\SlotSPE-main\SlotSPE-main
+结论：不适用原版SlotSPE：原版没有后续跨模态OT阶段。
+
+1. 路线和任务号
+SlotSPE八类问题存在性核实；SPE-08/P8。
+
+2. 本轮已经完成什么
+原版构造IterativeCrossAttTransformer，跨模态前向调用cross_attention(slots_wsi,slots_omic)。
+实现为双向q/k点积、softmax、加权v、投影、GRU和残差，并非后续运输求解器。
+源码：models/SlotSPE.py:3-6,196-199,293-301；models/transformer.py:211-238,292-299。
+本轮按可执行调用路径复核，而非仅凭全文未搜到OT字样。
+
+3. 对应文件、报告或提交号
+本报告：E:\DCT-Reg\docs\research\slotspe_p8_20261020\P8_只读核验报告.txt
+源码摘录、完整SHA和旧证据引用：E:\DCT-Reg\docs\research\slotspe_p8_20261020\source_review.json
+历史合成记录：E:\DCT-Reg\docs\research\slotspe_eight_issues_20261019\synthetic_checks.json
+既有2026-10-19八项综合报告已含P6/P7/P8；本轮补独立落盘与复核，不登记为首次新实验。
+未提交、未推送。
+
+4. 检查是否通过；服务器实际运行与原始回传
+九份原版源码/示例文件SHA与历史合成记录一致；源码检查及既有JSON一致性核对通过。
+新合成测试0、新前向0、新反向0、新训练0；本轮未加载患者缓存张量。
+旧实验指标仅作为标明日期/输入/权重状态的既有记录，未重新执行或独立重算。
+服务器有用户转述的完成消息，两个约定目录尚无原始产物，实际运行未独立核验。
+
+5. 未完成事项及原因
+SlotAttention内部竞争归一化与OT的理论联系，不会自动生成第二个跨模态OT阶段；不能据此证明双阶段冲突。
+加运输插件后的新模型属于另一条任务，不能倒推成原版SlotSPE缺陷。
+
+6. 已安排下一步及所需材料
+原版P8登记not_applicable，停止为其安排患者故障实验。后续若检查另一个实际有OT的模型，须单独定义范围和对照。
+当前用户只需转交已有服务器原始包与SHA供验收，无需提供SSH。不能用运行成功消息代替原始产物。

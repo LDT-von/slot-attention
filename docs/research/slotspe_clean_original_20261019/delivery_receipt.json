@@ -1,0 +1,30 @@
+{
+  "output": "E:\\DCT-Reg\\docs\\deliveries\\slotspe_clean_original_audit_20261019_v1.zip",
+  "bytes": 123161,
+  "sha256": "a690578675d51c1328c92cac8d7dc41dc6494fbd179e53476763df06621007a4",
+  "files": 38,
+  "recorded_at": "2026-10-19T21:59:25+08:00",
+  "baseline_10_files_byte_exact": true,
+  "safe_default_original_only": true,
+  "local_validation": {
+    "full_suite_before_final_hardening": {
+      "tests": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "final_native_and_legacy_e2e": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "counts_are_additive": false,
+    "scope": "invented metadata/tensors only; includes standalone ZIP, native class checks, safe default plan, raw-record audit and tamper rejection"
+  },
+  "server_execution_verified": false,
+  "raw_server_results_received": false,
+  "remote_published": false,
+  "previous_archive_sha256": "18baac2c686307f0b89684f85768f60b75415830b009fde857ea1a55c75f89ec",
+  "backup": "docs/history/slotspe_clean_original_20261019_215925"
+}

@@ -1,0 +1,66 @@
+{
+  "excerpts": [
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\slot_attention.py",
+      "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "locations": [
+        {
+          "line": 38,
+          "text": "self.slots_mu = nn.Parameter(torch.randn(1, 1, dim))"
+        },
+        {
+          "line": 40,
+          "text": "self.slots_logsigma = nn.Parameter(torch.zeros(1, 1, dim))"
+        },
+        {
+          "line": 50,
+          "text": "self.to_q = nn.Linear(dim, dim_inner)"
+        },
+        {
+          "line": 57,
+          "text": "self.gru = nn.GRUCell(dim, dim)"
+        },
+        {
+          "line": 80,
+          "text": "slots = mu + sigma * torch.randn(mu.shape, device=device, dtype=dtype)"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+      "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "locations": [
+        {
+          "line": 294,
+          "text": "x_inter = self.cross_attention(slots_wsi, slots_omic)"
+        },
+        {
+          "line": 296,
+          "text": "wsi_intra = self.self_attention_wsi(slots_wsi, mask=wsi_keep_slots.bool())"
+        },
+        {
+          "line": 297,
+          "text": "omic_intra = self.self_attention_omic(slots_omic, mask=omic_keep_slots.bool())"
+        },
+        {
+          "line": 300,
+          "text": "x = torch.cat([x_inter.mean(dim=1), wsi_intra.mean(dim=1), omic_intra.mean(dim=1)], dim=1)"
+        }
+      ]
+    }
+  ],
+  "finding": "Shared slot initialization distribution and shared updates; no tissue label attached to array index. This is an anonymous set structure, not itself a survival failure.",
+  "prior_real_patient_downstream_permutation_control": {
+    "raw_root": "E:\\DCT-Reg\\.review\\slotspe_p2_20261020\\seed3_native_v1",
+    "audit": {
+      "status": "accepted_conditional_raw_probes",
+      "patients": 71,
+      "arms": 11,
+      "server_SPE09_evidence": false,
+      "harm_or_correction_efficacy_proved": false
+    },
+    "receipt_sha256": "cdc0f16bb751e158e080ac4455297360fb25927a6e30a252bc4b8d78d1af5a0b",
+    "simultaneous_slot_keep_permutation_max_logit_error": 3.5762786865234375e-07,
+    "interpretation": "Conditional downstream permutation check, not a claim that permuting only slots while keeping masks fixed is invariant."
+  }
+}

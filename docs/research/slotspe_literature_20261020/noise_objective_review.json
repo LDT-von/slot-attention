@@ -1,0 +1,327 @@
+{
+  "stage": "SPE-08 P5/P6/P7 literature and archive static review",
+  "review_date": "2026-10-20",
+  "source_root": "C:\\Users\\栋栋\\Desktop\\slot attention",
+  "scope": {
+    "papers_reviewed": [
+      "CODA",
+      "OCEBO"
+    ],
+    "archive_code_imported_or_executed": false,
+    "packages_installed": false,
+    "patient_data_read": false,
+    "patient_jobs_started": false,
+    "source_files_modified": false,
+    "meaning": "论文中的对象发现问题只作为机制依据；不据此宣布 SlotSPE 或 DCT 的患者问题已经出现。"
+  },
+  "CODA": {
+    "title": "Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment",
+    "venue_as_printed": "ICLR 2026",
+    "local_pdf": "C:\\Users\\栋栋\\Desktop\\slot attention\\ICLR-2026-improved-object-centric-diffusion-learning-with-registers-and-contrastive-alignment-Paper-Conference.pdf",
+    "sha256": "d98570d8c58800816acea29210dc344d8d4ad19105bd21d1d2ed38271fd064ae",
+    "primary_links_from_local_readme": [
+      "https://arxiv.org/abs/2601.01224",
+      "https://github.com/sony/coda"
+    ],
+    "pdf_pages_completely_read_and_rendered": [
+      4,
+      5,
+      19
+    ],
+    "other_text_sections_read": [
+      "Abstract and Introduction, pages 1-2",
+      "Section 4.3, pages 5-6",
+      "Section 5.4/Table 5, pages 9-10",
+      "Appendix F, page 26"
+    ],
+    "short_quote": "absorbing shared or background information and preventing object slots from mixing",
+    "quote_word_count": 11,
+    "findings": [
+      {
+        "locator": "Section 4.1, pages 4-5; Figure 2, page 4",
+        "claim": "CODA 给预训练扩散解码器的条件序列追加与输入无关的 register，缓解所有 semantic slot 之间的注意力残余分配与纠缠。机制位置是 U-Net 的 cross-attention，不是在上游 Slot Attention 内识别并丢弃背景 patch。",
+        "relevance": "支持 P5 的背景/残余注意力可能干扰语义表征这一机制可能性；不能直接证明 WSI 中常见组织占了预后槽容量。"
+      },
+      {
+        "locator": "Section 4.1, page 5; Appendix C, page 19",
+        "claim": "当 U-Net query 不匹配任何 semantic slot 时，跨槽 softmax 仍强制注意力总和为 1，register 作为剩余注意力的接收者。作者在 COCO 可视化了 register 吸收的注意力质量。",
+        "relevance": "这是归一化的残余分配问题，不是已经获得组织学无关标签、证明肿瘤关键信息被背景挤掉的证据。"
+      },
+      {
+        "locator": "Appendix D, page 19",
+        "claim": "作者明确指出 register 不提供前景/背景硬分离；semantic slots 仍可吸收对重构有用的纹理和边界背景，仍会残留背景碎片。",
+        "counterevidence_to_overclaim": "不能将该论文改写成所有背景都被去除，或加入 register 就必然解决患者无关信息占槽。"
+      },
+      {
+        "locator": "Section 4.3, pages 5-6; Appendix D, page 19",
+        "claim": "完整槽集合重构得好，不保证单个槽对应独立可组合概念；只以去噪为目标也不显式保证槽与原图概念一致。作者增加 slot-image contrastive alignment，并在负项中停止更新扩散解码器。",
+        "relevance": "给 P7 的代理目标不保证目标表征性质提供对象生成领域的依据。该任务目标是分解、生成、组合性，不是生存预测。"
+      },
+      {
+        "locator": "Appendix D, page 19",
+        "claim": "作者同时说明单槽生成可能是分布外使用：所有槽联合训练完成整体重构，测试时只留下一个槽会改变条件分布。",
+        "relevance": "SlotSPE 中删槽后变差本身不能自动证明该槽冗余或无关，需保留分布外干预的解释边界。"
+      },
+      {
+        "locator": "Appendix F, page 26",
+        "claim": "作者承认其固定 semantic slots 的容量瓶颈依旧存在，register 不能解决对象数超过 semantic slots 时的合并；DINOv2 与 SD 也可能带来领域偏差。",
+        "relevance": "不支持直接移植 CODA 到 WSI 就得到患者预测收益。"
+      }
+    ],
+    "archive_static_evidence": [
+      {
+        "member": "coda-main/README.md",
+        "lines": [
+          1,
+          7
+        ],
+        "fact": "论文及 CODA 名称和官方仓库链接与本地 PDF 对应。"
+      },
+      {
+        "member": "coda-main/src/model/encoder.py",
+        "lines": [
+          15,
+          29
+        ],
+        "fact": "将空字符串交给 CLIP tokenizer，以 max_length padding，经 text_encoder 后 detach；此实现是空提示编码，静态阅读不能把 tokenizer 的全部 token ID 都称作纯 pad。"
+      },
+      {
+        "member": "coda-main/src/model/encoder.py",
+        "lines": [
+          84,
+          93
+        ],
+        "fact": "null_embedding 注册为 buffer；负提示从该 buffer 重复得到。"
+      },
+      {
+        "member": "coda-main/src/model/encoder.py",
+        "lines": [
+          160,
+          184
+        ],
+        "fact": "num_registers>0 是可学习 register；num_registers<0 追加 frozen null_embedding。compute_hidden_states 在 output_slots 已生成后追加，未在 slot_attn 的竞争内加入该 register。"
+      },
+      {
+        "member": "coda-main/experiment/setup/pipeline/encoder/lsd_register.yaml",
+        "lines": [
+          21,
+          26
+        ],
+        "fact": "默认 num_registers=-1，使用冻结空提示 embeddings；dino_enable_register=false。CODA decoder register 与 DINO backbone register 是两个不同开关。"
+      },
+      {
+        "member": "coda-main/src/model/pipeline.py",
+        "lines": [
+          238,
+          243
+        ],
+        "fact": "U-Net 以 encoder_hidden_states 和 encoder_attention_mask 接收槽条件序列。"
+      },
+      {
+        "member": "coda-main/src/model/pipeline.py",
+        "lines": [
+          258,
+          265
+        ],
+        "fact": "可共享初始化噪声，两半 batch 同一初始化后生成槽；此为负槽组合对齐控制，不是患者引导的初始化。"
+      },
+      {
+        "member": "coda-main/src/model/pipeline.py",
+        "lines": [
+          291,
+          309
+        ],
+        "fact": "contrastive warmup 后，负去噪损失计算时关闭 U-Net 可训练参数梯度，正项恢复；最终为正去噪项加权负项。"
+      },
+      {
+        "member": "coda-main/experiment/setup/pipeline/pipeline.yaml",
+        "lines": [
+          16,
+          28
+        ],
+        "fact": "只训练 cross-attention 的 K、V、output projection，contrastive_weight=0.05，sampling_rate=0.5，warmup=20000。"
+      }
+    ],
+    "cannot_infer_for_SlotSPE": [
+      "不能把自然图像对象分割中的背景等同于与患者生存无关的组织；免疫、间质、正常区域也可能包含预后信息。",
+      "不能把增加零特征行的敏感性当作真实无关组织占槽的直接证据。",
+      "没有从本论文得到 SlotSPE 中实际背景注意力占比、稀少预后模式遗漏率或 C-index 损害幅度。",
+      "不把 FG-ARI、mBO、FID/KID 的变化换算成患者预测收益。",
+      "不能仅根据 SlotSPE 没有 CODA register 就认定 SlotSPE 必然存在相同的扩散解码器残余注意力故障。"
+    ]
+  },
+  "OCEBO": {
+    "title": "Object-Centric Pretraining via Target Encoder Bootstrapping",
+    "venue_as_printed": "ICLR 2025",
+    "local_pdf": "C:\\Users\\栋栋\\Desktop\\slot attention\\ICLR-2025-object-centric-pretraining-via-target-encoder-bootstrapping-Paper-Conference.pdf",
+    "sha256": "c5199a7684f4acec22c9e48beaa2953d6da8a8cdb63a92d3b874a8c63e274392",
+    "primary_links_from_local_readme": [
+      "https://openreview.net/pdf?id=7d2JwGbxhA",
+      "https://github.com/djukicn/ocebo"
+    ],
+    "pdf_pages_completely_read_and_rendered": [
+      2,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "other_text_sections_read": [
+      "Abstract, page 1",
+      "Appendix A-B text"
+    ],
+    "short_quote": "lack of object-centric inductive biases in the target encoder",
+    "quote_word_count": 9,
+    "findings": [
+      {
+        "locator": "Introduction, page 2",
+        "claim": "论文关注冻结预训练 target encoder 限制自监督对象学习扩展，以及直接 EMA 更新 target encoder 时语义特征向位置特征漂移。作者将缺乏对象归纳偏置作为机制假说，而不是所有下游任务已被证实存在监督冲突。",
+        "relevance": "P7 可收窄为学习目标、目标特征质量与欲获得的对象性质不一致；不直接支持 SlotSPE 的预后目标与重构目标冲突。"
+      },
+      {
+        "locator": "Section 3.1, page 4; Figure 1",
+        "claim": "在线模型重构 patch 表征，teacher 输出 backbone 特征；teacher 通过在线 encoder 的 EMA 更新。",
+        "relevance": "必须先确认宿主是否存在可训练 target encoder、EMA 和相应 cross-view 输入，才可讨论同一种移动重构目标故障。"
+      },
+      {
+        "locator": "Sections 3.2-3.3, pages 5-6; equations 7-8",
+        "claim": "对相互重叠的两视图做反增强对齐；只有同一物理 patch 在两个方向都处于 top-k 近邻才参与对象蒸馏，以避免随机 teacher 早期不可靠目标。",
+        "relevance": "过滤是按目标表征可靠性决定监督哪些 patch，不是病理组织前景标签，也不是证明常见组织对预后无用。"
+      },
+      {
+        "locator": "Section 3.4, page 6; Section 4.2, page 8",
+        "claim": "因 target encoder 持续变化导致边界模糊，后期冻结 target，并以 L2 重构进行可选 mask sharpening。",
+        "relevance": "证明该训练体系存在移动目标相关的掩码清晰度问题，不证明固定离线 WSI 特征存在同样 EMA 漂移。"
+      },
+      {
+        "locator": "Section 4.2, Table 1, page 7; analysis page 8",
+        "claim": "作者报告 COCO 训练后 MOVi-E/EntitySeg 零样本对象发现：去掉 patch filtering 标为 collapse；去掉对象蒸馏训练亦标为 collapse。OCEBO 的 collapse 主要按位置块而非对象聚合定义，另一退化是像素全归一个槽。",
+        "reported_table_values": {
+          "OCEBO": {
+            "d": 0.13,
+            "collapse": false,
+            "MOVi-E_FG-ARI": 54.8,
+            "MOVi-E_mBO": 25.8,
+            "EntitySeg_FG-ARI": 41.5,
+            "EntitySeg_mBO": 15.3
+          },
+          "without_patch_filtering": {
+            "d": 0.02,
+            "collapse": true,
+            "MOVi-E_FG-ARI": 27.7,
+            "MOVi-E_mBO": 10.6,
+            "EntitySeg_FG-ARI": 31.7,
+            "EntitySeg_mBO": 10.0
+          }
+        },
+        "relevance": "是该论文模型和数据下的消融实测，不能登记为 SlotSPE 实验，也不能将 collapse 直接等同于所有槽向量相同。"
+      }
+    ],
+    "archive_static_evidence": [
+      {
+        "member": "ocebo-main/README.md",
+        "lines": [
+          1,
+          13
+        ],
+        "fact": "官方 OCEBO/ICLR 2025 链接，训练输入为 COCO/COCO+。没有生存标签或生存任务实验。"
+      },
+      {
+        "member": "ocebo-main/models/ocebo.py",
+        "lines": [
+          58,
+          70
+        ],
+        "fact": "teacher=True 取 head(img_feats) 与 backbone patch 特征；student 取 head(sa_out) 与槽解码重构特征。输出分支体现 teacher target 与 slot reconstruction 的区别。"
+      },
+      {
+        "member": "ocebo-main/main_ocebo.py",
+        "lines": [
+          188,
+          208
+        ],
+        "fact": "建立 student 与 teacher，同权重初始化，teacher 参数不接反向梯度。"
+      },
+      {
+        "member": "ocebo-main/main_ocebo.py",
+        "lines": [
+          378,
+          384
+        ],
+        "fact": "teacher EMA 在 mask sharpening 前进行；最后阶段不再更新 EMA。"
+      },
+      {
+        "member": "ocebo-main/main_ocebo.py",
+        "lines": [
+          446,
+          467
+        ],
+        "fact": "get_teacher_patch_mask 默认 num_neighbors=7，计算双向余弦近邻，要求真实对齐 index 同时出现在两向 top-k。"
+      },
+      {
+        "member": "ocebo-main/main_ocebo.py",
+        "lines": [
+          483,
+          503
+        ],
+        "fact": "反增强先对齐 teacher/student patch，teacher 输出 detach，生成过滤 mask。"
+      },
+      {
+        "member": "ocebo-main/main_ocebo.py",
+        "lines": [
+          508,
+          535
+        ],
+        "fact": "正常阶段是跨视图全局损失加过滤 patch 交叉熵；mask sharpening 使用同视图 teacher/student backbone/重构特征平方差。没有生存损失或患者终点。"
+      }
+    ],
+    "cannot_infer_for_SlotSPE": [
+      "OCEBO 的 teacher 随机初始化不是 Slot Attention 的槽随机初始化，两者是不同对象，不能作为 P3 的同一证据。",
+      "OCEBO 未比较重构与生存目标，没有证明 SlotSPE 的辅助生存监督不对齐最终融合目标。",
+      "SlotSPE 最终融合梯度到选槽器断开，是宿主源码/梯度证据；OCEBO 论文没有证明这条梯度断开会降低患者泛化。",
+      "即使测到不同损失梯度夹角为负，也只说明某批次局部梯度冲突，不单独证明长期训练或患者预测受损。",
+      "不建议为了套用论文而增加 EMA teacher、cross-view 数据、register 或新损失；先核实宿主是否出现对应故障。"
+    ]
+  },
+  "P6_inventory_and_scope": {
+    "local_pdf_count": 8,
+    "local_paper_identities": [
+      "Object-Centric Learning with Slot Attention",
+      "Grounded Object-Centric Learning / CoSA",
+      "Identifiable Object-Centric Representation Learning via Probabilistic Slot Attention",
+      "MetaSlot: Break Through the Fixed Number of Slots in Object-Centric Learning",
+      "Slot Attention with Re-Initialization and Self-Distillation / DIAS",
+      "Object-Centric Pretraining via Target Encoder Bootstrapping / OCEBO",
+      "Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment / CODA",
+      "Unlocking Slot Attention by Changing Optimal Transport Costs / MESH"
+    ],
+    "MSF_pdf_present": false,
+    "MUFASA_pdf_present": false,
+    "Pay_Attention_to_the_Foreground_CVPR2025_pdf_present": false,
+    "scope_of_absence": "依据当前 source_manifest.json 中8个顶层PDF的身份及原件目录清单；不声称这些题名没有在其他论文参考文献中出现。",
+    "three_different_meanings_of_scale": [
+      {
+        "kind": "输入图像金字塔或多分辨率重构目标",
+        "example_supplied_by_parent": "MSF, Multi-Scale Fusion for Object Representation",
+        "boundary": "多分辨率目标设计不同于宿主没有坐标输入；本子任务未读取缺失原文。"
+      },
+      {
+        "kind": "同一 ViT 不同层的表征层次",
+        "example_supplied_by_parent": "MUFASA, A Multi-Layer Framework for Slot Attention",
+        "boundary": "多层语义/细节表征不是多倍率 WSI；本子任务未读取缺失原文。"
+      },
+      {
+        "kind": "病理 patch 的物理倍率、视野和坐标空间",
+        "boundary": "需核对实际 feature extractor、patch_size、mpp/magnification、抽样与坐标契约；仅依据 SlotSPE forward 不带倍率或坐标参数，不能断言其编码器完全不含尺度或形态信息。"
+      }
+    ],
+    "conclusion": "现有 CODA/OCEBO 材料不直接证明 SlotSPE 的 P6。MSF/MUFASA/Foreground 的本地 PDF 缺失需如实记录，不能用名字补全文献证据。"
+  },
+  "patient_truth_gates_not_executed": {
+    "P5": "需先定义并有独立证据标记候选无效区域，再观察训练后注意力/占槽、重要组织是否受挤压及同患者受控预测变化；常见组织或非肿瘤组织不得自动标为无关。",
+    "P7": "需区分辅助目标表征不一致、计算梯度不连通、梯度方向冲突与患者任务受损。现有论文仅支持提出目标问题，真实收益须匹配训练对照验收。",
+    "P6": "先确认实际输入特征包含何种空间与尺度信息；缺少专用接口只是结构事实，患者预测损害另证。"
+  },
+  "final_scope_statement": "本轮完成文献身份、机制位置和静态代码证据核对；没有新增模型、改训练代码、运行患者实验或宣布 P5/P6/P7 患者问题已经证实。"
+}

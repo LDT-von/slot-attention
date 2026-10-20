@@ -1,0 +1,84 @@
+{
+  "task": "SPE-08",
+  "stage": "P1 static existence and forward-scope check",
+  "recorded_utc": "2026-10-20T01:57:00.383090+00:00",
+  "original_repository": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main",
+  "method": "AST parse and exact source read; no model execution",
+  "patient_data_read": false,
+  "checkpoint_loaded": false,
+  "defaults": {
+    "--slot_num_wsi": 8,
+    "--slot_num_omics": 8,
+    "--topk_ratio": 0.25,
+    "--slot_iters": 10
+  },
+  "default_candidate_slots_per_modality": 8,
+  "default_selected_slots_per_modality": 2,
+  "claims": [
+    {
+      "claim": "候选槽数量是配置值，主模型没有按患者推断数量",
+      "status": "source_confirmed",
+      "source": "models/SlotSPE.py:173-194,283-285; models/slot_attention.py:69-80"
+    },
+    {
+      "claim": "默认Top-K掩码每患者为2，但不是最终预测的总槽容量",
+      "status": "source_confirmed",
+      "source": "models/SlotSPE.py:27,289-300"
+    },
+    {
+      "claim": "cross分支读取全部候选槽",
+      "status": "source_confirmed",
+      "source": "models/SlotSPE.py:294"
+    },
+    {
+      "claim": "固定8候选槽造成真实患者预后信息损失",
+      "status": "not_yet_established",
+      "source": null
+    },
+    {
+      "claim": "固定Top-2造成真实患者预后信息损失",
+      "status": "not_yet_established",
+      "source": null
+    }
+  ],
+  "boundary": "这是默认配置与读取路径事实；CLI可覆盖槽数。不能把候选数量、Top-K掩码数量、生物学事件数量混为一谈，也不能把cross全槽读取说成Top-K过滤失败。",
+  "source_files": [
+    {
+      "relative_path": "models/SlotSPE.py",
+      "absolute_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+      "sha256_before": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "sha256_after": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e"
+    },
+    {
+      "relative_path": "models/slot_attention.py",
+      "absolute_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\slot_attention.py",
+      "sha256_before": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "sha256_after": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109"
+    },
+    {
+      "relative_path": "models/transformer.py",
+      "absolute_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\transformer.py",
+      "sha256_before": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "sha256_after": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985"
+    },
+    {
+      "relative_path": "models/omics_encoder.py",
+      "absolute_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\omics_encoder.py",
+      "sha256_before": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+      "sha256_after": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685"
+    },
+    {
+      "relative_path": "utils/process_args.py",
+      "absolute_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\utils\\process_args.py",
+      "sha256_before": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+      "sha256_after": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b"
+    },
+    {
+      "relative_path": "scripts/SlotSPE.sh",
+      "absolute_path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\scripts\\SlotSPE.sh",
+      "sha256_before": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+      "sha256_after": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9"
+    }
+  ],
+  "all_source_files_unchanged": true
+}

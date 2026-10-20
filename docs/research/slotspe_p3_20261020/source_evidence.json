@@ -1,0 +1,46 @@
+{
+  "original_sources_unchanged": true,
+  "excerpts": [
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\slot_attention.py",
+      "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "locations": [
+        {
+          "line": 38,
+          "text": "self.slots_mu = nn.Parameter(torch.randn(1, 1, dim))"
+        },
+        {
+          "line": 40,
+          "text": "self.slots_logsigma = nn.Parameter(torch.zeros(1, 1, dim))"
+        },
+        {
+          "line": 80,
+          "text": "slots = mu + sigma * torch.randn(mu.shape, device=device, dtype=dtype)"
+        },
+        {
+          "line": 122,
+          "text": "noise = torch.rand_like(t)"
+        }
+      ]
+    },
+    {
+      "path": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\models\\SlotSPE.py",
+      "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "locations": [
+        {
+          "line": 58,
+          "text": "hard_keep, _ = parallel_topk_st(keep_score, temperature=self.temperature, k=self.k)"
+        },
+        {
+          "line": 283,
+          "text": "slots_wsi = self.slot_attention_wsi(x_wsi_proj) # (batch_size, num_slots, dim)"
+        },
+        {
+          "line": 285,
+          "text": "slots_omic = self.slot_attention_omic(x_omics)"
+        }
+      ]
+    }
+  ],
+  "interpretation": "Shared learned Gaussian is not conditioned on current patient; native slot refinement does use patient inputs. Both Gaussian and Gumbel sampling remain active in eval."
+}

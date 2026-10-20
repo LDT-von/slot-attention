@@ -1,0 +1,39 @@
+{
+  "recorded_at": "2026-10-20T17:17:16+08:00",
+  "python_files_AST_parsed": 75,
+  "queue_plans": [
+    {
+      "config": "original_audit",
+      "training_arms": [
+        "original"
+      ],
+      "training_runs": 1,
+      "epochs": 3,
+      "patches": 256,
+      "patient_execution": false
+    },
+    {
+      "config": "attribution_abc",
+      "training_arms": [
+        "A",
+        "B",
+        "C"
+      ],
+      "training_runs": 3,
+      "epochs": 3,
+      "patches": 256,
+      "patient_execution": false
+    }
+  ],
+  "P1_P4_missing_input_plans_fail_closed": 4,
+  "new_training_runs": 0,
+  "new_model_forward_passes": 0,
+  "patient_tensors_loaded": false,
+  "new_synthetic_experiments_run": 0,
+  "baseline_and_diagnostic_files_copied_exactly": true,
+  "prior_packaging_check_failure": "Initial v1 harness expected ready for P1; its actual field is ready_for_readonly_check. Harness corrected, failed staging directory preserved. Model/diagnostic source unchanged.",
+  "prior_publication_filter_stop": "v2 rejected upstream README fake TCGA-XX-XXXX/TCGA-YY-YYYY templates. Those exact placeholders were reviewed and exempted; real identifier filtering remains enabled. Prior staging preserved.",
+  "existing_dct_sources_modified": false,
+  "server_raw_received": false,
+  "safe_default_change": "New default uses byte-identical existing clean-original config; former broad default retained locally"
+}

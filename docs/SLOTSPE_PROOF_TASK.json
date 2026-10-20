@@ -1,0 +1,197 @@
+{
+  "schema": "independent_research_task_v1",
+  "task_id": "slotspe_problem_proof",
+  "title": "SlotSPE问题存在性与最小修正证明",
+  "owner_scope": "本窗口独立交付，供其他窗口统一清单登记",
+  "entrypoint_argv": [
+    "bash",
+    "run_slotspe_proof.sh",
+    "--config",
+    "configs/slotspe_clean_original_server.json",
+    "--run"
+  ],
+  "plan_argv": [
+    "bash",
+    "run_slotspe_proof.sh",
+    "--config",
+    "configs/slotspe_clean_original_server.json",
+    "--plan"
+  ],
+  "preflight_argv": [
+    "bash",
+    "run_slotspe_proof.sh",
+    "--config",
+    "configs/slotspe_clean_original_server.json",
+    "--doctor"
+  ],
+  "config": "configs/slotspe_clean_original_server.json",
+  "required_environment": [
+    "SLOTSPE_METADATA_ROOT",
+    "SLOTSPE_FEATURES_ROOT"
+  ],
+  "default_training_runs": 30,
+  "default_same_weights_eval_controls": 15,
+  "execution": "用户要求SlotSPE最高优先级，干净原版先复现；服务器AI执行，本窗口准备任务并验收，无SSH请求。",
+  "delivery_status": "clean_original_only_local_delivery_ready_server_artifacts_pending",
+  "local_validation": {
+    "full_suite_before_final_hardening": {
+      "tests": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "final_native_and_legacy_e2e": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "counts_are_additive": false,
+    "scope": "invented metadata/tensors only; includes standalone ZIP, native class checks, safe default plan, raw-record audit and tamper rejection"
+  },
+  "server_patient_run_status": "awaiting_clean_original_server_ai_execution_and_raw_artifacts",
+  "transport_added": false,
+  "output_summary": [
+    "proof_summary.txt",
+    "proof_summary.json",
+    "patient_summary.json"
+  ],
+  "guide": "docs/SlotSPE证明任务_服务器一键运行.txt",
+  "requested_reproduction": {
+    "authorized_by": "用户：你只是在本地证明的我需要你在服务器上跑一次证明有问题；那边有ai你别担心这个。",
+    "executor": "server-side AI",
+    "folds": [
+      0
+    ],
+    "seeds": [
+      3
+    ],
+    "epochs_per_arm": 3,
+    "patches": 256,
+    "batch_size": 8,
+    "eval_repeats": 20,
+    "training_runs": 2,
+    "same_weights_eval_controls": 1,
+    "argv": [
+      "bash",
+      "run_slotspe_proof.sh",
+      "--run",
+      "--folds",
+      "0",
+      "--seeds",
+      "3",
+      "--epochs",
+      "3",
+      "--patches",
+      "256"
+    ],
+    "scope": "短程问题复现，不是正式性能比较或A/B/C归因",
+    "proof_input_scopes": {
+      "main_and_aux_gradients": "real_patient_batch_after_training",
+      "self_unselected_intervention": "synthetic_slots_plus_implemented_final_patient_slot_export_awaiting_server_results",
+      "evaluation_randomness": "trained_checkpoint_real_validation_patients",
+      "binning_intervention": "copied_real_clinical_and_split_metadata"
+    },
+    "result_status": "pending_artifact_audit",
+    "auto_expand_to_default_grid": false,
+    "remaining_evidence_gap": "旧证据只有合成槽干扰；新包已实现末轮患者槽人工干预导出，仍待服务器实际运行及回传验收。",
+    "current_status": "retained_two_arm_followup_after_clean_original_audit"
+  },
+  "previous_local_validation": {
+    "date": "2026-10-19",
+    "test_command": "python -B -m pytest tests/test_slotspe_proof_queue.py -q --disable-warnings --maxfail=1",
+    "passed": 19,
+    "failures": 0,
+    "input_scope": "invented_metadata_and_tensors_only",
+    "standalone_archive_end_to_end": "passed",
+    "saved_config_tamper_rejection": "passed",
+    "server_execution": "not_started"
+  },
+  "delivery": {
+    "path": "docs/deliveries/slotspe_clean_original_audit_20261019_v1.zip",
+    "remote_published_this_work": true,
+    "server_execution_verified": false,
+    "sha256_sidecar": "docs/deliveries/slotspe_clean_original_audit_20261019_v1.zip.sha256",
+    "baseline": "byte_exact_user_original_snapshot",
+    "report": "docs/research/slotspe_clean_original_20261019/evidence_and_contract.json",
+    "source_commit": "f5370b63f24dcffb8504a8885b8d296ef1f01876",
+    "remote_branch": "origin/main",
+    "publication_receipt": "docs/research/slotspe_clean_original_20261019/publication_receipt.json",
+    "archive_build_snapshot_note": "ZIP bytes unchanged. Its descriptor/receipt records pre-publication build state; this receipt verifies later publication."
+  },
+  "attribution": {
+    "config": "configs/slotspe_attribution_server.json",
+    "experiment": "attribution_abc",
+    "arms": {
+      "A": "原self全槽均值",
+      "B": "选中self汇总，仅在最终汇总处detach选择权重",
+      "C": "与B相同前向，接通最终融合监督到选择权重"
+    },
+    "common": "选择、辅助目标及梯度、稳定数值、评估、参数和训练折分箱相同；cross全槽保留",
+    "prepared_budget": {
+      "folds": [
+        0
+      ],
+      "seeds": [
+        3
+      ],
+      "epochs": 3,
+      "patches": 256,
+      "batch_size": 8,
+      "eval_repeats": 20,
+      "training_runs": 3
+    },
+    "plan_argv": [
+      "bash",
+      "run_slotspe_proof.sh",
+      "--config",
+      "configs/slotspe_attribution_server.json",
+      "--plan"
+    ],
+    "patient_execution": "not_started_by_this_window; reproduction_artifacts_first; no_automatic_expansion",
+    "checks": "docs/research/slotspe_abc_20261019/checks.json",
+    "patient_effect": "pending",
+    "attribution_conclusion": "pending"
+  },
+  "return_acceptance": {
+    "pack": "scripts/pack_slotspe_return.py",
+    "audit": "scripts/audit_slotspe_return.py",
+    "requires": "raw receipts/logs/manifest/curves/predictions/checkpoints; no proof from a success message",
+    "observed_required": false
+  },
+  "previous_delivery_before_clean_audit": {
+    "path": "docs/deliveries/slotspe_proof_abc_20261019_v2.zip",
+    "legacy_archive_retained": "docs/deliveries/slotspe_server_proof_20261019.zip",
+    "server_execution_verified": false,
+    "remote_published_this_work": true,
+    "source_commit": "cc81df1586b4b0e437cbdffe04c923ed6546fadf",
+    "remote_branch": "origin/main",
+    "publication_receipt": "docs/research/slotspe_abc_20261019/publication_receipt.json",
+    "archive_build_snapshot_note": "ZIP bytes remain unchanged; its task descriptor is the pre-publication snapshot."
+  },
+  "current_training_runs": 1,
+  "current_priority": "highest_SlotSPE",
+  "requested_clean_original": {
+    "priority": "highest_SlotSPE",
+    "experiment": "original_audit",
+    "arms": [
+      "original"
+    ],
+    "training_runs": 1,
+    "folds": [
+      0
+    ],
+    "seeds": [
+      3
+    ],
+    "epochs": 3,
+    "patches": 256,
+    "batch_size": 8,
+    "eval_repeats": 20,
+    "config": "configs/slotspe_clean_original_server.json",
+    "checkpoint_selection": "fixed_last_epoch",
+    "repaired_models_constructed": false,
+    "transport_added": false,
+    "abc_training": false
+  }
+}

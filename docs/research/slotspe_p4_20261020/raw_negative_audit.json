@@ -1,0 +1,19 @@
+{
+  "scope": "copies of actual result metadata; no patient inference",
+  "checks": [
+    {
+      "attack": "unsupported_semantic_claim",
+      "rehashed_report": true,
+      "rejected": true,
+      "reason": "Unsupported execution or semantic conclusion"
+    },
+    {
+      "attack": "false_matching",
+      "rehashed_report": true,
+      "rejected": true,
+      "reason": "Raw matching statistics differ"
+    }
+  ],
+  "original_outputs_unchanged": true,
+  "not_added_to_synthetic_test_count": true
+}

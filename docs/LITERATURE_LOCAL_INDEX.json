@@ -1,0 +1,81 @@
+{
+  "location": "C:\\Users\\栋栋\\Desktop\\slot attention",
+  "existing_files_preserved": [
+    {
+      "filename": "2507.23755v3.pdf",
+      "bytes": 1537135,
+      "sha256": "c562ba606ad0b0ca88ba92a6cb38324fdf1436d9302dba7c08b3bb375f6147f7"
+    },
+    {
+      "filename": "6936_Grounded_Object_Centric_L.pdf",
+      "bytes": 19986955,
+      "sha256": "208aa2ae460ac5b1b5ef948febfbd52b221033e51e9ca959d0127978cfebd387"
+    },
+    {
+      "filename": "Centric Learning with Slot Attention.pdf",
+      "bytes": 3437358,
+      "sha256": "ff310f9ee610ce0bad20bfc7517cb730b19e11b8f45195cd548b510616164b1f"
+    },
+    {
+      "filename": "coda-main.zip",
+      "bytes": 194359,
+      "sha256": "7f1138823c9497f21afb4690115670745396da8cafce9ad315ce977b3bb43dbd"
+    },
+    {
+      "filename": "CoSA-master.zip",
+      "bytes": 206898,
+      "sha256": "592a49ff4acde7874d07818dcdeb41af62fd44c5c0cc9c841e874e1ab6e35079"
+    },
+    {
+      "filename": "DIAS-main.zip",
+      "bytes": 51951,
+      "sha256": "fa699dbff2238f74175ac83dcbc6d88dd610e0d59e2fdbce1b7d043de6a38b40"
+    },
+    {
+      "filename": "ICLR-2025-object-centric-pretraining-via-target-encoder-bootstrapping-Paper-Conference.pdf",
+      "bytes": 748528,
+      "sha256": "c5199a7684f4acec22c9e48beaa2953d6da8a8cdb63a92d3b874a8c63e274392"
+    },
+    {
+      "filename": "ICLR-2026-improved-object-centric-diffusion-learning-with-registers-and-contrastive-alignment-Paper-Conference.pdf",
+      "bytes": 29388981,
+      "sha256": "d98570d8c58800816acea29210dc344d8d4ad19105bd21d1d2ed38271fd064ae"
+    },
+    {
+      "filename": "MESH-main.zip",
+      "bytes": 20200,
+      "sha256": "bef8eadd0ef48198f9c1ca82c2d7c99e4849adcde95cc270a0ec8a7e3155d29c"
+    },
+    {
+      "filename": "MetaSlot-main.zip",
+      "bytes": 602771,
+      "sha256": "fb319222dfd13a77ea3efc6b274aef88eb2394c9c56d60057bf877e4eb01ffe1"
+    },
+    {
+      "filename": "NeurIPS-2024-identifiable-object-centric-representation-learning-via-probabilistic-slot-attention-Paper-Conference.pdf",
+      "bytes": 6943800,
+      "sha256": "349d837347a425def3a623a7ec45f81281725b529fcc219854f81eeab5bd12b2"
+    },
+    {
+      "filename": "NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference.pdf",
+      "bytes": 9235148,
+      "sha256": "d496dc81809df6f4c394a1621dbc85d79526da1038cc5eece7bceca75ac9c4b1"
+    },
+    {
+      "filename": "ocebo-main.zip",
+      "bytes": 49461,
+      "sha256": "bfcef318faed665f418d4b2bed3f18c41649f36423e9731229385b93f536f555"
+    },
+    {
+      "filename": "PSA-master.zip",
+      "bytes": 16176383,
+      "sha256": "d6050b9e4670f9adf48cd1a925d8808d7db08812f9f196d7da3e17bf30baf69f"
+    },
+    {
+      "filename": "zhang23ba.pdf",
+      "bytes": 4793443,
+      "sha256": "4135fdf1546b33299af1d2a22d585ba27524f6d3e962063a9b54d898597fda07"
+    }
+  ],
+  "publication": "Original PDF/download ZIP files remain local; source links and reviews are in docs/research/slotspe_literature_20261020"
+}

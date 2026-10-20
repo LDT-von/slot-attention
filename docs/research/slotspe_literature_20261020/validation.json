@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-20",
+  "source_files_rehashed": 15,
+  "original_baseline_files_rehashed": 6,
+  "all_source_bytes_unchanged": true,
+  "all_review_json_parse": true,
+  "capacity_extracted_source_hashes_match": true,
+  "non_slotspe_tasks_unchanged": true,
+  "non_slotspe_lines_unchanged": true,
+  "patient_jobs_started": false,
+  "model_code_changed": false,
+  "new_training_runs": 0,
+  "new_synthetic_experiments": 0,
+  "backup": "E:\\DCT-Reg\\docs\\history\\slotspe_literature_20261020_100213",
+  "scope": "材料/结构化报告校验，不是模型或患者实验通过数"
+}

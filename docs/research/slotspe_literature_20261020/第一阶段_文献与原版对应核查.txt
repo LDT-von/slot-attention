@@ -1,0 +1,115 @@
+SlotSPE八类槽问题：第一阶段文献与原版对应核查
+日期：2026年10月20日
+任务：SPE-08；本轮完成材料、论文适用条件和P1源码核查，尚未完成八项患者问题证明。
+
+一、本轮实际做了什么
+
+读取用户目录 C:\Users\栋栋\Desktop\slot attention 中8份PDF和7个ZIP。
+保存15份原件的SHA256、PDF页数、压缩包成员清单；提取相关正文和代码文本。
+原件只读，未安装、导入或运行任何论文代码，未读取患者数据或启动训练/推理。
+核查指定桌面原版SlotSPE的6个源码/示例文件，保存读取前后哈希；原版未改。
+本轮不是对原版论文分数的复现，也未把文献分割指标当作本项目生存结果。
+
+二、第一项P1已经查到的事实
+
+1. 默认两种模态各生成8个候选槽，Top-K比例0.25，每模态选2个。
+2. 主模型没有按患者内容推断候选槽数或Top-K数量；这些是可由CLI覆盖的配置值。
+3. 但“最终预测只剩2槽”不成立：cross分支读取全部8槽，self分支应用掩码后仍做全部输出槽均值。
+4. 因此必须区分：固定8候选容量、固定Top-2掩码，以及最终预测实际读了哪些槽。
+5. 当前只能确认数量固定；固定8或Top-2是否造成真实患者预后信息损失，均未证明。
+
+源码证据：
+C:\Users\栋栋\Desktop\特征解耦论文\SlotSPE-main\SlotSPE-main\utils\process_args.py 第82–90行。
+C:\Users\栋栋\Desktop\特征解耦论文\SlotSPE-main\SlotSPE-main\models\SlotSPE.py 第27、173–194、283–300行。
+C:\Users\栋栋\Desktop\特征解耦论文\SlotSPE-main\SlotSPE-main\models\slot_attention.py 第69–110行。
+可核验记录：p1_source_check.json。
+
+三、文献与八项问题逐项对应
+
+P1 固定槽数量
+MetaSlot与AdaSlot确实研究对象数量变化下的固定槽数问题。
+MetaSlot保持固定最大候选数，再通过原型去重得到数量可变的有效槽；AdaSlot从候选列表采样可变数量。
+这支持检查SlotSPE容量是否匹配，但不能将图像对象数当作患者预后事件数。
+患者结论：容量不匹配和预测损害待证。
+
+P2 冗余与碎片化
+DIAS、MetaSlot有对象分解中的重复竞争/碎片化实验，MESH解释了相似槽难打破平局的机制。
+但相同初始化的合成反例、高cosine或多个槽读取同一区域，均不能单独证明训练后功能冗余。
+患者结论：须联合检查真实注意力重叠、读取内容以及槽干预；尚未证明真实发生率和预后损害。
+
+P3 初始化缺少样本线索
+原始SA与SlotSPE均从共享可学习高斯采样，初始值没有以当前患者内容为条件；随后迭代会读取患者输入。
+SmoothSA明确讨论cold-start query缺少样本线索；BO-QSA主要是可学习query与双层优化，不等同逐患者条件初始化。
+SlotSPE默认十轮，不能直接套用其他论文三轮或视频首帧的失效程度。
+患者结论：已有整体随机前向波动证据；初始化与Gumbel各自的贡献、前几轮聚合质量尚未隔离。
+
+P4 固定语义身份
+CoSA追求字典条目层面的类型绑定；PSA在特定生成/解码假设下证明允许槽置换和仿射变换的可辨识性。
+二者均不要求普通匿名槽的同一个数组下标永远代表同一种病理概念。
+患者结论：先允许槽匹配，再检查读取内容是否稳定；匿名编号、匹配后不稳定、语义错误、预测损害是四个不同结论。
+
+P5 无关区域占槽
+Foreground论文处理自然图像背景纹理干扰前景对象；CODA在扩散解码条件中追加register吸收残余/共享背景注意力。
+CODA不是直接在上游SA中识别病理无关组织；原版SlotSPE也没有CODA的扩散解码器。
+补零敏感性是无效输入风险的证据，但不能替代真实组织占槽证据。间质、免疫组织不自动等于无关。
+患者结论：需要可信组织内容依据及计算干预；真实无关区域挤占预后容量待证。
+
+P6 表征尺度
+必须拆成三项：MSF的图像金字塔/VAE重构目标尺度、MUFASA的ViT中间特征层、病理切片的物理倍率与空间布局。
+当前没有坐标/倍率接口只说明显式输入能力边界；不能证明离线UNI/UNI2-h特征没有尺度或形态信息。
+患者结论：须先核实实际特征提取配方及可用原图/坐标；具体遗漏和预测损害待证。
+
+P7 学习目标与预后任务
+OCEBO主要研究重构目标编码器及EMA更新的漂移和目标质量，不能直接作为SlotSPE生存目标冲突的证明。
+SlotSPE本来已有融合生存、两路单模态生存和重构监督。
+当前主损失到选槽器直接梯度断开是确定的训练路径事实；辅助目标是否偏离融合预后目标仍需另证。
+患者结论：现有B/C用于隔离选择梯度，不能据梯度缺失直接宣称目标冲突或修正必然有效。
+
+P8 Slot竞争与后续OT
+MESH建立SA内部归一化与OT的联系，研究平局与成本；没有证明两个连续运输约束必然冲突。
+干净原版SlotSPE后续为cross-attention，没有第二个跨模态OT，因此P8不适用原版。
+本轮未改或运行DCT；具体DCT两阶段影响仍是另一范围中的待验证假设，不在此处算成SlotSPE缺陷。
+
+四、论文代码的实际缺口
+
+DIAS-main.zip 的 readme.md 第34–37行明确写明公开代码没有slot pruning和re-initialization。
+其 object_centric_bench/model/dias.py 第105–110行只有一次聚合后解码，与该限制一致。
+因此不能把这个ZIP当作完整的论文删槽/重新聚合实现，不能直接接入后宣称验证了P2。
+
+MetaSlot的有效槽去重确有实现，但仍有固定最大容量、原型字典及额外噪声设计；整体分数不等于单一去重收益。
+CoSA比较的是字典条目，不是普通输出槽编号。PSA的评估实现仍须单独验收，不能凭指标名称直接复制。
+
+五、下一阶段先查P1，需要怎样的证据
+
+先复用SPE-09已有checkpoint和固定患者patch，不启动新的槽数训练网格。
+由服务器AI只读导出：实际8槽向量、逐轮patch/pathway注意力、原始selector分数、Top-K索引、逐患者预测、RNG和源码/checkpoint哈希。
+先确认每患者数量和读取路径，再与P2联合看是否存在重复占用、独立内容遗漏及可回查的组织/通路案例。
+同一checkpoint的槽替换/消融只说明计算敏感性，不能单独证明固定槽数损害了泛化。
+若后续确需数量对照训练，须保持候选容量、损失、初始化、梯度、掩码、分箱、随机评估规则和预算可比；不能一次混入MetaSlot/DIAS等多个机制。
+没有可信覆盖证据，记证据不足；未观察到问题，记not_observed。不得用验证患者结局为其挑选最优槽数并报告成可部署收益。
+
+六、服务器证据状态
+
+origin/main缓存的d64530cc1ab45e00787a1f3204c90535a8991bb0已经在AGENTS.md和提交说明中登记SPE-09完成。
+这证明已收到服务器运行的文字报告；本地尚无该运行目录的原始预测、槽、梯度、manifest及checkpoint可供验收。
+因此本轮不新增“服务器已独立证明全部问题”“患者提分”或“归因完成”的结论。
+
+七、材料与精确定位
+
+source_manifest.json：15份原件哈希、PDF身份和ZIP成员；所有原件读取前后不变。
+capacity_review.json：MetaSlot/DIAS页码、消融与代码行号、P1/P2最低证据条件。
+semantics_review.json：CoSA/PSA页码、理论假设、语义与编号区别、评估实现审查。
+noise_objective_review.json：CODA/OCEBO页码和代码位置、P5/P6/P7迁移边界。
+initialization_transport_review.json：原始SA/MESH相关页与源码对应。
+primary_lookup.json：本地缺失7篇的一手链接和实际核查深度，均未登记为本地全文复现。
+p1_source_check.json：原版默认8/2/10轮及cross全槽读取的静态证据。
+
+本地PDF精确来源：
+MetaSlot：C:\Users\栋栋\Desktop\slot attention\NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference.pdf 第4、10、18页。
+DIAS：C:\Users\栋栋\Desktop\slot attention\2507.23755v3.pdf 第2、4、7页。
+CoSA：C:\Users\栋栋\Desktop\slot attention\6936_Grounded_Object_Centric_L.pdf 第5–6、39页。
+PSA：C:\Users\栋栋\Desktop\slot attention\NeurIPS-2024-identifiable-object-centric-representation-learning-via-probabilistic-slot-attention-Paper-Conference.pdf 第7、10页。
+CODA：C:\Users\栋栋\Desktop\slot attention\ICLR-2026-improved-object-centric-diffusion-learning-with-registers-and-contrastive-alignment-Paper-Conference.pdf 第4–5、19页。
+OCEBO：C:\Users\栋栋\Desktop\slot attention\ICLR-2025-object-centric-pretraining-via-target-encoder-bootstrapping-Paper-Conference.pdf 第1–2、4–8页。
+SA：C:\Users\栋栋\Desktop\slot attention\Centric Learning with Slot Attention.pdf 第3页。
+MESH：C:\Users\栋栋\Desktop\slot attention\zhang23ba.pdf 第1、3–4页。

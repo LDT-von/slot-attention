@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-19",
+  "scope": "SlotSPE proof, ABC attribution and portable server delivery only",
+  "prepared_against": "5abfc31f4bb40da7ce0e07fb4416dafa6407cd35",
+  "delivery_sha256": "18baac2c686307f0b89684f85768f60b75415830b009fde857ea1a55c75f89ec",
+  "original_validation_report": "docs/research/slotspe_abc_20261019/checks.json",
+  "published_evidence_files": [
+    "docs/research/slotspe_abc_20261019/evidence/unit_tests.xml",
+    "docs/research/slotspe_abc_20261019/evidence/queue_tests.xml",
+    "docs/research/slotspe_abc_20261019/evidence/retained_setup_failure.xml",
+    "docs/research/slotspe_abc_20261019/evidence/matched_bc_raw.json",
+    "docs/research/slotspe_abc_20261019/evidence/isolated_tests.xml"
+  ],
+  "evidence_note": "The unchanged original checks.json retains its original local audit paths; portable copies are listed above.",
+  "baseline_comparison": "Vendored SlotSPE differs from frozen archive only in line endings; upstream files left unchanged.",
+  "primary_worktree_modified": false,
+  "patient_jobs_started": false,
+  "server_results_received": false,
+  "transport_or_v2_changes_included": false,
+  "publication_status": "checks_passed_ready_for_publication",
+  "isolated_validation": {
+    "passed": 32,
+    "failures": 0,
+    "errors": 0,
+    "input_scope": "invented_metadata_tensors_checkpoints_only",
+    "junit": "docs/research/slotspe_abc_20261019/evidence/isolated_tests.xml",
+    "seconds": 272.478
+  },
+  "archive_build_snapshot_preserved": true,
+  "archive_build_snapshot_note": "checks.json and SLOTSPE_PROOF_TASK.json retain the immutable ZIP build snapshot; subsequent publication is established by the Git commit and remote ref.",
+  "legacy_archive_sha256": "107e16baecddd5a318fa56a790d258b1b2c6de2868f34546e2281b12a7adf8c1"
+}

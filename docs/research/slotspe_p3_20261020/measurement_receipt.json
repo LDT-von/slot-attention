@@ -1,0 +1,295 @@
+{
+  "task": "SPE-08/P3",
+  "date": "2026-10-20",
+  "scope": "historical_local_BLCA_trained_native_eval_randomness",
+  "raw_export": "E:\\DCT-Reg\\.review\\slotspe_p3_20261020\\seed3_native_v1",
+  "fold": 0,
+  "seed": 3,
+  "previous_training_epochs": 3,
+  "previous_optimizer_steps": 111,
+  "patients": 71,
+  "patches": 256,
+  "repeats_per_condition": 20,
+  "conditions": 4,
+  "new_training_runs": 0,
+  "new_optimizer_steps": 0,
+  "new_full_native_eval_passes": 20,
+  "new_module_eval_passes": 80,
+  "module_passes_include_20_native_alignment_replays": true,
+  "independent_patient_count": 71,
+  "conditions_and_repeats_are_not_independent_patients": true,
+  "historical_20_repeat_replay_max_logit_error": 0.0,
+  "native_vs_module_replay_max_logit_error": 0.0,
+  "native_encoded_inputs_equal_across_all_repeats": true,
+  "original_weights_sources_and_cache_unchanged": true,
+  "controlled_replays_preserve_external_rng": true,
+  "model_forward_or_parameters_replaced": false,
+  "hooks_removed": true,
+  "source_snapshots": {
+    "measurement_v1": {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_p3_20261020\\probe_source_v1.py",
+      "sha256": "338b07a686c367ca6f93416b9d510a8f6940274405f933e1eb455e51130b1112"
+    },
+    "offline_auditor_v2": {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_p3_20261020\\auditor_source_v2.py",
+      "sha256": "d0337f4f44cff4cb36797798178e98986dfc756cb7cd6dedfebb1959223a71d0"
+    }
+  },
+  "audit_failure_preserved": {
+    "error": "ValueError: Raw metrics differ",
+    "cause": "Auditor combined 20 repeats in one float32 CPU sigmoid call; original evaluation calculated each 71-patient pass separately",
+    "observed_max_rounding_difference": 4.76837158203125e-07,
+    "fix": "Recompute each repeat with historical tensor shape; require exact equality, no tolerance relaxation",
+    "new_regression_test": "test_exact_risk_audit_preserves_each_historical_pass_kernel_shape",
+    "patient_inference_repeated_after_fix": false,
+    "measured_computation_functions_ast_unchanged": true
+  },
+  "checks": {
+    "synthetic_final_passed": 7,
+    "earlier_6_checks_not_added": true,
+    "raw_metadata_tamper_rejections": 3,
+    "raw_checks_separate_from_synthetic": true,
+    "offline_raw_audit": {
+      "status": "accepted_native_and_draw_control_observations",
+      "patients": 71,
+      "repeats_per_condition": 20,
+      "conditions": 4,
+      "new_training_runs": 0,
+      "server_raw_results_received": false
+    }
+  },
+  "P3_initial_distribution_patient_conditioned": false,
+  "initial_distribution_description": "globally learned shared mu/sigma; subsequent slot iterations are patient-input conditioned",
+  "P3_native_same_input_prediction_variability": "observed_71_of_71_historical_validation_patients",
+  "P3_slot_initialization_downstream_effect": "observed_after_10_iterations_with_native_gumbel_draws_held_fixed",
+  "P3_gumbel_downstream_effect": "observed_with_native_slot_draws_held_fixed",
+  "P3_fix_both_removes_repeat_variability_in_this_protocol": true,
+  "P3_patient_conditioned_initializer_predictive_advantage": "not_established",
+  "correction_efficacy_or_generalization": "not_tested",
+  "server_SPE09_status": "reported_completed_not_independently_verified",
+  "server_raw_results_received": false,
+  "summaries": {
+    "native": {
+      "patients": 71,
+      "eval_repeats": 20,
+      "C_index_validation_exploratory": {
+        "values": [
+          0.6866267465069861,
+          0.689620758483034,
+          0.6926147704590818,
+          0.7015968063872255,
+          0.6916167664670658,
+          0.6866267465069861,
+          0.689620758483034,
+          0.6926147704590818,
+          0.6846307385229541,
+          0.6926147704590818,
+          0.6976047904191617,
+          0.6906187624750499,
+          0.688622754491018,
+          0.688622754491018,
+          0.688622754491018,
+          0.6906187624750499,
+          0.687624750499002,
+          0.6846307385229541,
+          0.6826347305389222,
+          0.6956087824351297
+        ],
+        "min": 0.6826347305389222,
+        "max": 0.7015968063872255,
+        "mean": 0.6901696606786427,
+        "std_population": 0.004434946035709557
+      },
+      "patient_risk_range": {
+        "min": 0.005254983901977539,
+        "median": 0.009101390838623047,
+        "max": 0.01368856430053711
+      },
+      "patient_risk_std_population": {
+        "min": 0.0012341107622558772,
+        "median": 0.0022999173651453483,
+        "max": 0.003269670969854246
+      },
+      "patients_risk_range_above_numerical_threshold": 71,
+      "max_logit_range": 0.04463529586791992,
+      "patients_logit_range_above_numerical_threshold": 71,
+      "wsi": {
+        "initial_slot_max_repeat_range": 8.17311692237854,
+        "final_slot_max_repeat_range": 5.077042102813721,
+        "patients_keep_mask_changed": 71
+      },
+      "omic": {
+        "initial_slot_max_repeat_range": 8.341201543807983,
+        "final_slot_max_repeat_range": 1.3586649894714355,
+        "patients_keep_mask_changed": 71
+      }
+    },
+    "fix_slot_draws": {
+      "patients": 71,
+      "eval_repeats": 20,
+      "C_index_validation_exploratory": {
+        "values": [
+          0.6866267465069861,
+          0.6826347305389222,
+          0.6916167664670658,
+          0.6906187624750499,
+          0.688622754491018,
+          0.6846307385229541,
+          0.6936127744510978,
+          0.689620758483034,
+          0.6866267465069861,
+          0.687624750499002,
+          0.6856287425149701,
+          0.6906187624750499,
+          0.6856287425149701,
+          0.687624750499002,
+          0.688622754491018,
+          0.6856287425149701,
+          0.687624750499002,
+          0.6866267465069861,
+          0.6856287425149701,
+          0.6936127744510978
+        ],
+        "min": 0.6826347305389222,
+        "max": 0.6936127744510978,
+        "mean": 0.6879740518962075,
+        "std_population": 0.002845186684660358
+      },
+      "patient_risk_range": {
+        "min": 0.0016543865203857422,
+        "median": 0.0038161277770996094,
+        "max": 0.007172107696533203
+      },
+      "patient_risk_std_population": {
+        "min": 0.0004853689567370819,
+        "median": 0.0010699553732070196,
+        "max": 0.001975537231944855
+      },
+      "patients_risk_range_above_numerical_threshold": 71,
+      "max_logit_range": 0.01348412036895752,
+      "patients_logit_range_above_numerical_threshold": 71,
+      "wsi": {
+        "initial_slot_max_repeat_range": 0.0,
+        "final_slot_max_repeat_range": 0.0,
+        "patients_keep_mask_changed": 71
+      },
+      "omic": {
+        "initial_slot_max_repeat_range": 0.0,
+        "final_slot_max_repeat_range": 0.0,
+        "patients_keep_mask_changed": 71
+      }
+    },
+    "fix_gumbel_draws": {
+      "patients": 71,
+      "eval_repeats": 20,
+      "C_index_validation_exploratory": {
+        "values": [
+          0.6866267465069861,
+          0.6936127744510978,
+          0.6866267465069861,
+          0.6966067864271457,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6856287425149701,
+          0.6916167664670658,
+          0.6866267465069861,
+          0.689620758483034,
+          0.7035928143712575,
+          0.6906187624750499,
+          0.6946107784431138,
+          0.6836327345309381,
+          0.6866267465069861,
+          0.689620758483034,
+          0.688622754491018,
+          0.6796407185628742,
+          0.6806387225548902,
+          0.6956087824351297
+        ],
+        "min": 0.6796407185628742,
+        "max": 0.7035928143712575,
+        "mean": 0.6891716566866268,
+        "std_population": 0.005515947388701053
+      },
+      "patient_risk_range": {
+        "min": 0.005379199981689453,
+        "median": 0.008803606033325195,
+        "max": 0.014790058135986328
+      },
+      "patient_risk_std_population": {
+        "min": 0.0014269267516077524,
+        "median": 0.0022502318417520033,
+        "max": 0.003201549244920103
+      },
+      "patients_risk_range_above_numerical_threshold": 71,
+      "max_logit_range": 0.04483842849731445,
+      "patients_logit_range_above_numerical_threshold": 71,
+      "wsi": {
+        "initial_slot_max_repeat_range": 8.17311692237854,
+        "final_slot_max_repeat_range": 5.077042102813721,
+        "patients_keep_mask_changed": 19
+      },
+      "omic": {
+        "initial_slot_max_repeat_range": 8.341201543807983,
+        "final_slot_max_repeat_range": 1.3586649894714355,
+        "patients_keep_mask_changed": 15
+      }
+    },
+    "fix_both_draws": {
+      "patients": 71,
+      "eval_repeats": 20,
+      "C_index_validation_exploratory": {
+        "values": [
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861,
+          0.6866267465069861
+        ],
+        "min": 0.6866267465069861,
+        "max": 0.6866267465069861,
+        "mean": 0.6866267465069862,
+        "std_population": 1.1102230246251565e-16
+      },
+      "patient_risk_range": {
+        "min": 0.0,
+        "median": 0.0,
+        "max": 0.0
+      },
+      "patient_risk_std_population": {
+        "min": 0.0,
+        "median": 0.0,
+        "max": 0.0
+      },
+      "patients_risk_range_above_numerical_threshold": 0,
+      "max_logit_range": 0.0,
+      "patients_logit_range_above_numerical_threshold": 0,
+      "wsi": {
+        "initial_slot_max_repeat_range": 0.0,
+        "final_slot_max_repeat_range": 0.0,
+        "patients_keep_mask_changed": 0
+      },
+      "omic": {
+        "initial_slot_max_repeat_range": 0.0,
+        "final_slot_max_repeat_range": 0.0,
+        "patients_keep_mask_changed": 0
+      }
+    }
+  },
+  "raw_receipt_sha256": "ac6ba225240109a1491af0e40aed686e3c1c210a36b72bacdbf4cb4bcb6206ca",
+  "next": "按顺序到P4：区分槽编号的置换与真实语义身份漂移，先核查可用语义证据；不新增模块或训练。SPE09原始回传继续单独验收。"
+}

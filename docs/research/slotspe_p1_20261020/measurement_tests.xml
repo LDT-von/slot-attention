@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="1" failures="0" skipped="0" tests="3" time="5.885" timestamp="2026-10-20T10:12:31.170090+08:00" hostname="LAPTOP-SO0VT873"><testcase classname="tests.test_slotspe_p1_diagnostics" name="test_plan_does_not_import_torch_or_open_tensors" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 系统找不到指定的路径。: 'E:\\DCT-Reg\\.review\\slotspe_p1_20261020\\test_tmp'&quot;">self = WindowsPath('E:/DCT-Reg/.review/slotspe_p1_20261020/test_tmp')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           self._accessor.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 系统找不到指定的路径。: 'E:\\DCT-Reg\\.review\\slotspe_p1_20261020\\test_tmp'
+
+D:\python\lib\pathlib.py:1175: FileNotFoundError</error></testcase><testcase classname="tests.test_slotspe_p1_diagnostics" name="test_observer_preserves_native_prediction_rng_and_state" time="5.329" /><testcase classname="tests.test_slotspe_p1_diagnostics" name="test_raw_attention_normalizations_are_not_confused" time="0.002" /></testsuite></testsuites>

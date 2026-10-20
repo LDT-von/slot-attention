@@ -1,0 +1,101 @@
+{
+  "task_id": "SPE-09",
+  "recorded_at": "2026-10-19T21:59:25+08:00",
+  "status": "local_delivery_ready_server_artifacts_pending",
+  "baseline_repository": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main",
+  "baseline_files_sha256": {
+    "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+    "dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "README.md": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82",
+    "requirements.txt": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d"
+  },
+  "local_evidence": {
+    "scope": "synthetic_original_modules_random_weights_only",
+    "source_unchanged": true,
+    "patient_data_read": false,
+    "trained_checkpoint_loaded": false,
+    "optimizer_steps": 0,
+    "self_intervention": {
+      "selected_slots_unchanged": true,
+      "keep_mask_fixed": true,
+      "cross_output_frozen": true,
+      "max_logit_difference": 0.568557620048523,
+      "max_risk_difference": 0.040930986404418945,
+      "note": "Invented inputs, random untrained weights, post-slot intervention; does not replace final-checkpoint patient intervention."
+    },
+    "eval_repeat": {
+      "repetitions": 20,
+      "logit_max_range": 0.173200786113739,
+      "exact_rng_replay_error": 0.0,
+      "rule": "one forward per repetition; no averaging"
+    },
+    "raw_json": "docs/research/slotspe_eight_issues_20261019/synthetic_checks.json"
+  },
+  "validation": {
+    "full_suite_before_final_hardening": {
+      "tests": 34,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "final_native_and_legacy_e2e": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "counts_are_additive": false,
+    "scope": "invented metadata/tensors only; includes standalone ZIP, native class checks, safe default plan, raw-record audit and tamper rejection"
+  },
+  "server_plan": {
+    "priority": "highest_SlotSPE",
+    "experiment": "original_audit",
+    "arms": [
+      "original"
+    ],
+    "training_runs": 1,
+    "folds": [
+      0
+    ],
+    "seeds": [
+      3
+    ],
+    "epochs": 3,
+    "patches": 256,
+    "batch_size": 8,
+    "eval_repeats": 20,
+    "config": "configs/slotspe_clean_original_server.json",
+    "checkpoint_selection": "fixed_last_epoch",
+    "repaired_models_constructed": false,
+    "transport_added": false,
+    "abc_training": false
+  },
+  "protocol_boundary": "Unchanged original model and losses; diagnostic cache uses complete paired cases, fixed real patches and train-only bins. Original cohort-wide binning is tested separately from unchanged AST on copies, not used to contaminate training.",
+  "required_native_outputs": [
+    "trained_selector_gradients.json",
+    "patient_slot_intervention.json",
+    "eval_repeats.json",
+    "validation_predictions.csv",
+    "natural_gate_observations.json",
+    "native_model_audit.json",
+    "last.pt",
+    "curve.json",
+    "protocol.json",
+    "prepared/manifest.json",
+    "logs",
+    "receipts"
+  ],
+  "observation_policy": "Every item may be observed or not_observed; controlled zeros and toy gate scores are never natural occurrence rates.",
+  "server_execution": "unknown_no_raw_return",
+  "patient_effect": "not_evaluated",
+  "attribution_conclusion": "pending_separate_matched_correction_comparison",
+  "archive": "docs/deliveries/slotspe_clean_original_audit_20261019_v1.zip",
+  "remote_published": false,
+  "previous_archive_preserved": true
+}

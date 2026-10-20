@@ -1,0 +1,25 @@
+{
+  "scope": "only annotations carried by retained experiment evidence; not an exhaustive external-data search",
+  "patient_record_fields": [
+    "index",
+    "patient_id",
+    "split",
+    "time",
+    "censor",
+    "original_label",
+    "full_patch_count",
+    "patch_indices_concatenated_slide_order",
+    "sample_seed",
+    "slides",
+    "selected_patch_tensor_sha256",
+    "label"
+  ],
+  "patient_count": 71,
+  "patch_identity_available": true,
+  "patch_features_available": true,
+  "tissue_type_per_patch_labels_in_evidence": false,
+  "fixed_slot_biological_type_labels_in_evidence": false,
+  "survival_labels_are_tissue_semantics": false,
+  "cross_patient_patch_indices_are_shared_semantic_coordinates": false,
+  "P4_biological_semantic_drift_assessable_from_this_evidence": false
+}

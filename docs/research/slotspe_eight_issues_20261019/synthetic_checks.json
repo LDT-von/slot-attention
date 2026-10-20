@@ -1,0 +1,621 @@
+{
+  "created_utc": "2026-10-19T13:34:22.785557+00:00",
+  "source": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main",
+  "scope": "synthetic_original_modules_random_weights_only",
+  "patient_data_read": false,
+  "trained_checkpoint_loaded": false,
+  "optimizer_steps": 0,
+  "device": "cpu",
+  "torch": "2.6.0+cu124",
+  "source_hashes_before": {
+    "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+    "dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "scripts/SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9"
+  },
+  "model_configuration": {
+    "omic_sizes": [
+      5,
+      7,
+      3
+    ],
+    "n_classes": 4,
+    "encoding_dim": 32,
+    "wsi_projection_dim": 32,
+    "rna_format": "Pathways",
+    "slot_num_wsi": 8,
+    "slot_num_omics": 8,
+    "slot_iters": 10,
+    "temperature": 0.01,
+    "topk_ratio": 0.25,
+    "top_k_method": "parallel_topk_st",
+    "bag_loss": "nll_surv",
+    "alpha_surv": 0.0,
+    "lambda_recon_loss": 0.01
+  },
+  "checks": {
+    "slot_permutation_equivariance": true,
+    "identical_slot_states_not_split_by_update": true,
+    "main_selector_gradient_disconnected_both_methods": true,
+    "auxiliary_selector_gradient_connected_both_methods": true,
+    "eval_changes_with_rng": true,
+    "eval_replay_same_rng": true,
+    "candidate_and_selected_cardinality_fixed": true,
+    "prediction_invariant_to_slot_relabeling": true,
+    "prediction_invariant_to_patch_reordering": true,
+    "unselected_slots_change_mean_despite_mask": true,
+    "unselected_self_slots_change_full_prediction": true,
+    "zero_tokens_change_prediction": true,
+    "gate_normalization_can_collapse": true,
+    "original_source_unchanged": true
+  },
+  "findings": {
+    "slot_symmetry": [
+      {
+        "seed": 3,
+        "permutation_equivariance_error": 4.172325134277344e-07,
+        "tied_initial_states_output_difference": 0.0,
+        "ordinary_initialization_mean_offdiag_cosine": 0.9226275682449341
+      },
+      {
+        "seed": 17,
+        "permutation_equivariance_error": 2.980232238769531e-07,
+        "tied_initial_states_output_difference": 0.0,
+        "ordinary_initialization_mean_offdiag_cosine": 0.9421970248222351
+      },
+      {
+        "seed": 29,
+        "permutation_equivariance_error": 5.960464477539062e-07,
+        "tied_initial_states_output_difference": 0.0,
+        "ordinary_initialization_mean_offdiag_cosine": 0.8869504928588867
+      }
+    ],
+    "selector_gradient": [
+      {
+        "method": "parallel_topk_st",
+        "main_nll": 1.8181746006011963,
+        "auxiliary": 3.4933857917785645,
+        "main_gradient": {
+          "slot_decoder_wsi.pred_keep_slot.0.weight": null,
+          "slot_decoder_wsi.pred_keep_slot.0.bias": null,
+          "slot_decoder_wsi.pred_keep_slot.2.weight": null,
+          "slot_decoder_wsi.pred_keep_slot.2.bias": null,
+          "slot_decoder_omic.pred_keep_slot.0.weight": null,
+          "slot_decoder_omic.pred_keep_slot.0.bias": null,
+          "slot_decoder_omic.pred_keep_slot.2.weight": null,
+          "slot_decoder_omic.pred_keep_slot.2.bias": null
+        },
+        "auxiliary_gradient": {
+          "slot_decoder_wsi.pred_keep_slot.0.weight": 0.048048026859760284,
+          "slot_decoder_wsi.pred_keep_slot.0.bias": 0.05012298747897148,
+          "slot_decoder_wsi.pred_keep_slot.2.weight": 0.026858989149332047,
+          "slot_decoder_wsi.pred_keep_slot.2.bias": 0.0,
+          "slot_decoder_omic.pred_keep_slot.0.weight": 0.013541778549551964,
+          "slot_decoder_omic.pred_keep_slot.0.bias": 0.01754577085375786,
+          "slot_decoder_omic.pred_keep_slot.2.weight": 0.007124167867004871,
+          "slot_decoder_omic.pred_keep_slot.2.bias": 3.725290298461914e-09
+        },
+        "main_all_none": true,
+        "auxiliary_all_connected": true
+      },
+      {
+        "method": "gumbel_topk_st",
+        "main_nll": 1.8181746006011963,
+        "auxiliary": 3.4933857917785645,
+        "main_gradient": {
+          "slot_decoder_wsi.pred_keep_slot.0.weight": null,
+          "slot_decoder_wsi.pred_keep_slot.0.bias": null,
+          "slot_decoder_wsi.pred_keep_slot.2.weight": null,
+          "slot_decoder_wsi.pred_keep_slot.2.bias": null,
+          "slot_decoder_omic.pred_keep_slot.0.weight": null,
+          "slot_decoder_omic.pred_keep_slot.0.bias": null,
+          "slot_decoder_omic.pred_keep_slot.2.weight": null,
+          "slot_decoder_omic.pred_keep_slot.2.bias": null
+        },
+        "auxiliary_gradient": {
+          "slot_decoder_wsi.pred_keep_slot.0.weight": 0.048048026859760284,
+          "slot_decoder_wsi.pred_keep_slot.0.bias": 0.05012298747897148,
+          "slot_decoder_wsi.pred_keep_slot.2.weight": 0.026858989149332047,
+          "slot_decoder_wsi.pred_keep_slot.2.bias": 0.0,
+          "slot_decoder_omic.pred_keep_slot.0.weight": 0.013541772961616516,
+          "slot_decoder_omic.pred_keep_slot.0.bias": 0.01754576340317726,
+          "slot_decoder_omic.pred_keep_slot.2.weight": 0.0071241650730371475,
+          "slot_decoder_omic.pred_keep_slot.2.bias": 1.862645149230957e-09
+        },
+        "main_all_none": true,
+        "auxiliary_all_connected": true
+      }
+    ],
+    "evaluation_randomness": {
+      "repetitions": 20,
+      "logit_max_range": 0.173200786113739,
+      "exact_rng_replay_error": 0.0,
+      "rule": "one forward per repetition; no averaging"
+    },
+    "fixed_cardinality": [
+      {
+        "input_tokens": 8,
+        "candidate_shape": [
+          2,
+          8,
+          32
+        ],
+        "selected_counts": [
+          2.0,
+          2.0
+        ],
+        "bool_counts": [
+          2,
+          2
+        ]
+      },
+      {
+        "input_tokens": 16,
+        "candidate_shape": [
+          2,
+          8,
+          32
+        ],
+        "selected_counts": [
+          2.0,
+          2.0
+        ],
+        "bool_counts": [
+          2,
+          2
+        ]
+      },
+      {
+        "input_tokens": 64,
+        "candidate_shape": [
+          2,
+          8,
+          32
+        ],
+        "selected_counts": [
+          2.0,
+          2.0
+        ],
+        "bool_counts": [
+          2,
+          2
+        ]
+      }
+    ],
+    "full_prediction_slot_relabeling": {
+      "max_logit_difference": 1.1920928955078125e-07,
+      "controlled_gumbel_noise": "constant 0.5 uniforms in both runs",
+      "note": "Checks arbitrary index labels, not biological semantics or observed cross-patient drift."
+    },
+    "patch_order_invariance": {
+      "max_logit_difference": 1.1920928955078125e-07,
+      "coordinates_supplied": false,
+      "note": "Same feature multiset and RNG. No explicit spatial-layout interface; not evidence that local patch features lack morphology or that multiscale would improve prognosis."
+    },
+    "unselected_self_slots": {
+      "kept_output_change": 0.0,
+      "all_slot_mean_change": 3.4156346321105957,
+      "dropped_slot_gradient_norm": 2.1701748371124268,
+      "dropped_query_first_head_weights": [
+        0.125,
+        0.125,
+        0.125,
+        0.125,
+        0.125,
+        0.125,
+        0.125,
+        0.125
+      ],
+      "note": "Fixed mask, controlled synthetic slot tensors; includes residual route and uniform fully masked query rows."
+    },
+    "unselected_self_full_prediction": {
+      "selected_slots_unchanged": true,
+      "keep_mask_fixed": true,
+      "cross_output_frozen": true,
+      "max_logit_difference": 0.568557620048523,
+      "max_risk_difference": 0.040930986404418945,
+      "note": "Invented inputs, random untrained weights, post-slot intervention; does not replace final-checkpoint patient intervention."
+    },
+    "unmasked_zero_tokens": {
+      "rows": [
+        {
+          "added_zero_tokens": 16,
+          "max_logit_difference": 0.05229301005601883
+        },
+        {
+          "added_zero_tokens": 64,
+          "max_logit_difference": 0.08311322331428528
+        }
+      ],
+      "zero_raw_feature_projection_norm": 0.694193959236145,
+      "note": "Invented zero rows, same weights/RNG. Loader can insert zero rows; observed patient prevalence and harm are not measured."
+    },
+    "low_temperature_gate_counterexample": {
+      "scores": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "temperature": 0.01,
+      "trials": [
+        {
+          "seed": 20000,
+          "top_score_selected": false,
+          "selected_indices": [
+            5,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20001,
+          "top_score_selected": false,
+          "selected_indices": [
+            3,
+            6
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20002,
+          "top_score_selected": false,
+          "selected_indices": [
+            3,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20003,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            4
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20004,
+          "top_score_selected": false,
+          "selected_indices": [
+            4,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20005,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            2
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20006,
+          "top_score_selected": false,
+          "selected_indices": [
+            3,
+            6
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20007,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            5
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20008,
+          "top_score_selected": false,
+          "selected_indices": [
+            3,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20009,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            4
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20010,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            7
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20011,
+          "top_score_selected": false,
+          "selected_indices": [
+            2,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20012,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            7
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20013,
+          "top_score_selected": false,
+          "selected_indices": [
+            1,
+            5
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20014,
+          "top_score_selected": false,
+          "selected_indices": [
+            5,
+            6
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20015,
+          "top_score_selected": false,
+          "selected_indices": [
+            2,
+            5
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20016,
+          "top_score_selected": false,
+          "selected_indices": [
+            1,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20017,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            3
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20018,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            2
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20019,
+          "top_score_selected": false,
+          "selected_indices": [
+            6,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20020,
+          "top_score_selected": false,
+          "selected_indices": [
+            1,
+            2
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20021,
+          "top_score_selected": false,
+          "selected_indices": [
+            5,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20022,
+          "top_score_selected": false,
+          "selected_indices": [
+            1,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20023,
+          "top_score_selected": false,
+          "selected_indices": [
+            4,
+            6
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20024,
+          "top_score_selected": false,
+          "selected_indices": [
+            4,
+            5
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20025,
+          "top_score_selected": false,
+          "selected_indices": [
+            4,
+            7
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20026,
+          "top_score_selected": false,
+          "selected_indices": [
+            1,
+            5
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        },
+        {
+          "seed": 20027,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            3
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20028,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            1
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20029,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            4
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20030,
+          "top_score_selected": true,
+          "selected_indices": [
+            0,
+            1
+          ],
+          "gate_sum": 1.0,
+          "prediction_norm": 0.21454757452011108,
+          "finite": true
+        },
+        {
+          "seed": 20031,
+          "top_score_selected": false,
+          "selected_indices": [
+            3,
+            4
+          ],
+          "gate_sum": 7.567011707354012e-36,
+          "prediction_norm": 0.0,
+          "finite": true
+        }
+      ],
+      "below_1e6_count": 20,
+      "note": "Controlled reachable score pattern and original decoder; no claim about trained-model prevalence."
+    }
+  },
+  "source_hashes_after": {
+    "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+    "dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "scripts/SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9"
+  },
+  "source_unchanged": true,
+  "all_checks_passed": true
+}

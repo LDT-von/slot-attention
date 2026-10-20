@@ -1,0 +1,264 @@
+{
+  "raw_export": "E:\\DCT-Reg\\.review\\slotspe_p2_20261020\\seed3_native_v1",
+  "observation_sha256": "6f0cd081786af8552c842be604b5f748e958ca6e1b4ed393a69a217e4cf1b785",
+  "protocol": {
+    "schema": "slotspe_p2_protocol_v1",
+    "arms": [
+      "identity",
+      "permute_wsi",
+      "permute_omic",
+      "permute_both",
+      "wsi_closest_pair",
+      "omic_closest_pair",
+      "wsi_selected_pair",
+      "omic_selected_pair",
+      "wsi_all_mean",
+      "omic_all_mean",
+      "both_all_mean"
+    ],
+    "input": "P1 audited native final slots and original hard keep masks, identical patient order/batch size",
+    "pair_selection": "largest mean of per-head attention overlap sum(min(p,q)); lexicographic tie break; no outcomes used",
+    "closest_pair": "replace both members by their arithmetic mean, preserving modal slot count and sum",
+    "selected_pair": "replace the two originally selected slots by their arithmetic mean; keep unchanged",
+    "all_mean": "replace all 8 slots by their modal arithmetic mean repeated 8 times; keep unchanged",
+    "permutation": "reverse slot order and corresponding keep mask together",
+    "readout": "original cross_attention, self_attention_wsi/omic and to_logits in eval; no decoder re-selection",
+    "baseline_tolerance": 1e-06,
+    "control_tolerance": 1e-06,
+    "numerical_logit_threshold": 1e-05,
+    "numerical_risk_threshold": 1e-06,
+    "threshold_meaning": "numerical sensitivity only, not a clinical/harm/redundancy threshold",
+    "risk": "negative sum of cumprod(1-sigmoid(logits)) over 4 bins, calculated in float64",
+    "outcomes_used": false,
+    "new_optimizer_steps": 0,
+    "interpretation": "Artificial latent intervention with frozen keep, possibly outside training distribution; no correction efficacy or biological fragmentation conclusion."
+  },
+  "summaries": {
+    "identity": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 0.0,
+        "median": 0.0,
+        "max": 0.0
+      },
+      "absolute_risk_difference": {
+        "min": 0.0,
+        "median": 0.0,
+        "max": 0.0
+      },
+      "patients_logit_difference_above_numerical_threshold": 0,
+      "patients_risk_difference_above_numerical_threshold": 0,
+      "risk_order_reversals": 0,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "permute_wsi": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 0.0,
+        "median": 1.1920928955078125e-07,
+        "max": 3.5762786865234375e-07
+      },
+      "absolute_risk_difference": {
+        "min": 0.0,
+        "median": 3.0107054627137586e-08,
+        "max": 1.5442240641760918e-07
+      },
+      "patients_logit_difference_above_numerical_threshold": 0,
+      "patients_risk_difference_above_numerical_threshold": 0,
+      "risk_order_reversals": 0,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "permute_omic": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 0.0,
+        "median": 1.1920928955078125e-07,
+        "max": 3.5762786865234375e-07
+      },
+      "absolute_risk_difference": {
+        "min": 0.0,
+        "median": 2.658500752872328e-08,
+        "max": 1.5036938494361607e-07
+      },
+      "patients_logit_difference_above_numerical_threshold": 0,
+      "patients_risk_difference_above_numerical_threshold": 0,
+      "risk_order_reversals": 0,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "permute_both": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 0.0,
+        "median": 1.7881393432617188e-07,
+        "max": 3.5762786865234375e-07
+      },
+      "absolute_risk_difference": {
+        "min": 0.0,
+        "median": 3.874548593074678e-08,
+        "max": 1.9091381231461924e-07
+      },
+      "patients_logit_difference_above_numerical_threshold": 0,
+      "patients_risk_difference_above_numerical_threshold": 0,
+      "risk_order_reversals": 0,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "wsi_closest_pair": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 1.3947486877441406e-05,
+        "median": 9.512901306152344e-05,
+        "max": 0.001435995101928711
+      },
+      "absolute_risk_difference": {
+        "min": 5.228552208969006e-07,
+        "median": 1.899108323222265e-05,
+        "max": 0.0007135822286388205
+      },
+      "patients_logit_difference_above_numerical_threshold": 71,
+      "patients_risk_difference_above_numerical_threshold": 67,
+      "risk_order_reversals": 1,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "omic_closest_pair": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 8.463859558105469e-06,
+        "median": 2.002716064453125e-05,
+        "max": 0.000538945198059082
+      },
+      "absolute_risk_difference": {
+        "min": 3.536390244640586e-06,
+        "median": 1.152163002116069e-05,
+        "max": 0.00023723266065456272
+      },
+      "patients_logit_difference_above_numerical_threshold": 66,
+      "patients_risk_difference_above_numerical_threshold": 71,
+      "risk_order_reversals": 0,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "wsi_selected_pair": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 5.53131103515625e-05,
+        "median": 0.000329434871673584,
+        "max": 0.0011531710624694824
+      },
+      "absolute_risk_difference": {
+        "min": 2.2467521492153253e-06,
+        "median": 2.1326318276670975e-05,
+        "max": 0.00012633519349503075
+      },
+      "patients_logit_difference_above_numerical_threshold": 71,
+      "patients_risk_difference_above_numerical_threshold": 71,
+      "risk_order_reversals": 0,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "omic_selected_pair": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 2.2172927856445312e-05,
+        "median": 8.213520050048828e-05,
+        "max": 0.00023484230041503906
+      },
+      "absolute_risk_difference": {
+        "min": 1.0065888141230772e-05,
+        "median": 3.6750722889777876e-05,
+        "max": 0.00012674385873978622
+      },
+      "patients_logit_difference_above_numerical_threshold": 71,
+      "patients_risk_difference_above_numerical_threshold": 71,
+      "risk_order_reversals": 0,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "wsi_all_mean": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 0.0007617473602294922,
+        "median": 0.0027135610580444336,
+        "max": 0.007716655731201172
+      },
+      "absolute_risk_difference": {
+        "min": 1.5843128172488008e-05,
+        "median": 0.0009872481953707712,
+        "max": 0.002781197411056535
+      },
+      "patients_logit_difference_above_numerical_threshold": 71,
+      "patients_risk_difference_above_numerical_threshold": 71,
+      "risk_order_reversals": 13,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "omic_all_mean": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 0.0003107786178588867,
+        "median": 0.001059412956237793,
+        "max": 0.003234386444091797
+      },
+      "absolute_risk_difference": {
+        "min": 5.853770272068459e-06,
+        "median": 0.0003175202228820062,
+        "max": 0.0013295195748499467
+      },
+      "patients_logit_difference_above_numerical_threshold": 71,
+      "patients_risk_difference_above_numerical_threshold": 71,
+      "risk_order_reversals": 5,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    },
+    "both_all_mean": {
+      "patients": 71,
+      "max_abs_logit_difference": {
+        "min": 0.0009098052978515625,
+        "median": 0.002857208251953125,
+        "max": 0.0072640180587768555
+      },
+      "absolute_risk_difference": {
+        "min": 5.438112181010979e-06,
+        "median": 0.0009672750617890635,
+        "max": 0.003126377317554496
+      },
+      "patients_logit_difference_above_numerical_threshold": 71,
+      "patients_risk_difference_above_numerical_threshold": 71,
+      "risk_order_reversals": 11,
+      "eligible_patient_pairs_above_risk_margin_both_arms": 2484,
+      "all_patient_pairs": 2485,
+      "original_risk_range": 0.255700515219095
+    }
+  },
+  "closest_pair_selected_members": {
+    "wsi": {
+      "0": 35,
+      "1": 35,
+      "2": 1
+    },
+    "omic": {
+      "0": 42,
+      "1": 27,
+      "2": 2
+    }
+  },
+  "patients": 71,
+  "independent_patient_count": 71,
+  "patient_pair_count_is_not_independent_sample_count": true,
+  "outcomes_not_used": true,
+  "C_index_not_evaluated": true
+}

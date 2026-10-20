@@ -1,0 +1,68 @@
+{
+  "task_id": "SPE-08",
+  "date": "2026-10-20",
+  "scope": "historical_local_native_checkpoint_readonly_real_validation",
+  "run_root": "E:\\DCT-Reg\\.review\\slotspe_proof_20261018\\patient",
+  "raw_export_root": "E:\\DCT-Reg\\.review\\slotspe_p1_20261020\\seed3_native_v2",
+  "fold": 0,
+  "seed": 3,
+  "epochs_previously_trained": 3,
+  "old_optimizer_steps": 111,
+  "new_training_runs": 0,
+  "new_optimizer_steps": 0,
+  "patient_count": 71,
+  "patches": 256,
+  "measurement_versions_run": [
+    "v1",
+    "v2"
+  ],
+  "native_validation_passes_including_v1_and_v2": 4,
+  "measurement_versions_are_independent_patients": false,
+  "final_export": "v2",
+  "historical_prediction_replay_max_error": 0.0,
+  "observer_prediction_max_error": 0.0,
+  "native_attention_update_reconstruction_max_error": 0.0,
+  "all_rng_states_match": true,
+  "checkpoint_tensors_unchanged": true,
+  "original_artifacts_and_source_bytes_unchanged": true,
+  "offline_raw_audit": {
+    "status": "accepted_raw_observations",
+    "patient_count": 71,
+    "candidate_counts": {
+      "wsi": [
+        8
+      ],
+      "omic": [
+        8
+      ]
+    },
+    "selected_counts": {
+      "wsi": [
+        2
+      ],
+      "omic": [
+        2
+      ]
+    },
+    "server_SPE09_evidence": false,
+    "P1_predictive_harm_proved": false
+  },
+  "P1_fixed_count_observed": true,
+  "P1_harm_proved": false,
+  "P2_native_attention_overlap_observed": true,
+  "P2_functional_redundancy_or_harm_proved": false,
+  "server_SPE09_run": "reported_completed_not_independently_verified",
+  "server_raw_results_received": false,
+  "new_tests": {
+    "final_passed": 8,
+    "scope": "invented inputs/serialization only",
+    "counts_not_additive_across_reruns": true,
+    "first_attempt": "2 passed and 1 temporary-directory setup error; measurement_tests.xml retained",
+    "final_xml": "measurement_tests_complete.xml"
+  },
+  "observer_source_snapshot": "E:\\DCT-Reg\\.review\\slotspe_p1_20261020\\observer_source_v2.py",
+  "observer_source_sha256": "40c05588e66ba9302272808ad74639f1962773cab68a9b6e59167348be0fb88d",
+  "observation_receipt_sha256": "c0f62d7a4a6ec617d6f7f391582cbe322cfdc864548cc443099b171e554f3192",
+  "human_report": "P1_真实患者只读检查.txt",
+  "next_scope": "P2：先查高读取重叠是否仍具有独立内容和不同计算贡献；不自动训练新模型或扩大患者网格。"
+}

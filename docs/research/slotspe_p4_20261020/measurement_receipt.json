@@ -1,0 +1,152 @@
+{
+  "task": "SPE-08/P4",
+  "date": "2026-10-20",
+  "scope": "historical_local_native_within_patient_slot_matching",
+  "raw_export": "E:\\DCT-Reg\\.review\\slotspe_p4_20261020\\seed3_native_v1",
+  "fold": 0,
+  "seed": 3,
+  "previous_training_epochs": 3,
+  "previous_optimizer_steps": 111,
+  "patients": 71,
+  "repeats": 20,
+  "reference_repeat": 0,
+  "paired_repeats_per_patient": 19,
+  "paired_repeats_per_modality": 1349,
+  "paired_repeats_are_independent_patients": false,
+  "new_training_runs": 0,
+  "new_optimizer_steps": 0,
+  "new_module_replays": 20,
+  "new_full_patient_encoder_passes": 0,
+  "new_performance_or_correction_comparisons": 0,
+  "replay_max_logit_error": 0.0,
+  "replay_max_final_slot_error": 0.0,
+  "native_attention_update_max_error": 0.0,
+  "reference_vs_P1_attention_max_error": 0.0,
+  "original_weights_sources_and_previous_artifacts_unchanged": true,
+  "external_rng_unchanged": true,
+  "hooks_removed": true,
+  "probe_source_snapshot": {
+    "path": "E:\\DCT-Reg\\.review\\slotspe_p4_20261020\\probe_source_v1.py",
+    "sha256": "b58c51584a2dfcffcf575726f4e33ef06dca4cb89b118f868d532b1b7ce46359"
+  },
+  "checks": {
+    "synthetic_passed": 9,
+    "raw_metadata_rejections_separate": 2,
+    "counts_not_additive": true,
+    "raw_audit": {
+      "status": "accepted_within_patient_matching_observations",
+      "patients": 71,
+      "paired_repeats_per_patient": 19,
+      "biological_semantic_drift_proved": false,
+      "server_raw_received": false
+    }
+  },
+  "P4_no_fixed_index_semantics_guarantee": "confirmed_structural_property",
+  "P4_same_patient_index_correspondence_changes_under_matching": "observed",
+  "P4_residual_reading_distribution_difference_after_matching": "observed_small_TV_not_biological_semantics",
+  "P4_real_tissue_semantic_drift": "not_established",
+  "P4_cross_patient_semantics": "not_evaluated_no_labels",
+  "P4_predictive_harm_or_correction_efficacy": "not_tested",
+  "server_SPE09_status": "reported_completed_not_independently_verified",
+  "server_raw_results_received": false,
+  "summaries": {
+    "wsi": {
+      "patients": 71,
+      "paired_repeats": 1349,
+      "paired_repeats_are_independent_patients": false,
+      "attention_diagonal_mean_TV": {
+        "min": 0.0007548605226475047,
+        "median": 0.0013544117737183115,
+        "max": 0.002217650000602589
+      },
+      "attention_matched_mean_TV": {
+        "min": 0.0005934751461609267,
+        "median": 0.0009616240749892313,
+        "max": 0.00140976326110831
+      },
+      "attention_second_best_mean_gap": {
+        "min": 2.0299921743571758e-08,
+        "median": 6.39952122583054e-06,
+        "max": 5.13424129167106e-05
+      },
+      "attention_near_tie_pairs": 12,
+      "attention_reassigned_slots_fraction": 0.8766679021497406,
+      "vector_diagonal_mean_angular_cost": {
+        "min": 0.002620702072019074,
+        "median": 0.005995348124498298,
+        "max": 0.013914679230213806
+      },
+      "vector_matched_mean_angular_cost": {
+        "min": 0.0015780257611191228,
+        "median": 0.003153903309843331,
+        "max": 0.006461224669934831
+      },
+      "attention_vector_assignment_agreement": {
+        "min": 0.0,
+        "median": 0.75,
+        "max": 1.0
+      },
+      "matched_top5_overlap_fraction": {
+        "min": 0.0,
+        "median": 0.25,
+        "max": 0.575
+      },
+      "top5_mass_above_uniform": {
+        "min": 2.2489264665637165e-05,
+        "median": 4.815257852897048e-05,
+        "max": 9.908597712637857e-05
+      },
+      "all_known_reverse_attention_costs_zero": true
+    },
+    "omic": {
+      "patients": 71,
+      "paired_repeats": 1349,
+      "paired_repeats_are_independent_patients": false,
+      "attention_diagonal_mean_TV": {
+        "min": 0.002876821716199629,
+        "median": 0.003928982614525012,
+        "max": 0.005378588222811231
+      },
+      "attention_matched_mean_TV": {
+        "min": 0.0025520092149236007,
+        "median": 0.0031163900403043954,
+        "max": 0.0038442185414169217
+      },
+      "attention_second_best_mean_gap": {
+        "min": 3.572131390683353e-08,
+        "median": 1.466542380512692e-05,
+        "max": 0.00010854831634787843
+      },
+      "attention_near_tie_pairs": 7,
+      "attention_reassigned_slots_fraction": 0.8747220163083765,
+      "vector_diagonal_mean_angular_cost": {
+        "min": 0.0007114852853776221,
+        "median": 0.0011763000813252156,
+        "max": 0.0020169544371989034
+      },
+      "vector_matched_mean_angular_cost": {
+        "min": 0.00047565910580510407,
+        "median": 0.0007627486629020741,
+        "max": 0.0012794779387370614
+      },
+      "attention_vector_assignment_agreement": {
+        "min": 0.0,
+        "median": 0.75,
+        "max": 1.0
+      },
+      "matched_top5_overlap_fraction": {
+        "min": 0.0,
+        "median": 0.1,
+        "max": 0.275
+      },
+      "top5_mass_above_uniform": {
+        "min": 6.457690736326287e-05,
+        "median": 9.292687948956983e-05,
+        "max": 0.0001289567813107361
+      },
+      "all_known_reverse_attention_costs_zero": true
+    }
+  },
+  "raw_receipt_sha256": "5c7055de2706aa624c11c1f2d198f67217c425177fa1785e62f65c7d3cfab163",
+  "next": "按顺序到P5：先核对真实输入中的补零/无mask影响，再区分人为零patch干预与真实无关组织占槽；不新增模块或训练。P4真实跨患者语义结论保留待组织/槽语义标注。"
+}

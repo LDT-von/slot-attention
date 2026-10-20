@@ -1,0 +1,249 @@
+{
+  "stage": "SPE-08 P4 literature identity and applicability review",
+  "date": "2026-10-20",
+  "scope": "P4 semantic identity; local supplied CoSA and PSA papers and static archived source",
+  "execution": {
+    "patient_data_read": false,
+    "checkpoint_loaded": false,
+    "model_code_imported_or_executed": false,
+    "installed_packages": false,
+    "experiments_run": false,
+    "source_archives_modified": false
+  },
+  "terminology": [
+    {
+      "term": "anonymous slot index",
+      "meaning": "交换槽初始状态的顺序，会对应交换输出槽顺序；数组下标本身不是组织类型标签。",
+      "does_not_mean": "不能仅凭编号交换就认定读取内容丢失、预测失效或跨患者语义混乱。"
+    },
+    {
+      "term": "semantic specialization / grounding",
+      "meaning": "某个可识别的字典条目或槽分布在不同输入中绑定相似对象类型，并对保留对象身份的变化保持一致。",
+      "does_not_mean": "一个样本的第3个输出槽必然等于另一个样本的第3个输出槽，也不等于该条目已具有经病理验证的生物学含义。"
+    },
+    {
+      "term": "identifiability up to an equivalence relation",
+      "meaning": "在规定的生成模型及分布假设下，产生相同观测分布的潜变量模型，只相差允许的变换。PSA允许槽置换和仿射变换。",
+      "does_not_mean": "不保证输出编号固定，不保证每个有限数据训练运行都收敛，不保证每个槽对应已知组织，不保证预后预测提高。"
+    }
+  ],
+  "papers": [
+    {
+      "identity": {
+        "title": "Grounded Object-Centric Learning",
+        "method": "COnditional Slot Attention (CoSA)",
+        "authors": ["Avinash Kori", "Francesco Locatello", "Fabio De Sousa Ribeiro", "Francesca Toni", "Ben Glocker"],
+        "venue": "ICLR 2024, as printed in the supplied final PDF",
+        "identity_note": "Archive README BibTeX says year 2023 although the PDF is marked conference paper at ICLR 2024; report the PDF venue and preserve the mismatch.",
+        "local_pdf": "C:\\Users\\栋栋\\Desktop\\slot attention\\6936_Grounded_Object_Centric_L.pdf",
+        "sha256": "208aa2ae460ac5b1b5ef948febfbd52b221033e51e9ca959d0127978cfebd387",
+        "official_link_from_readme": "https://openreview.net/pdf/66165ac8488ed6d946efbafac570d3d4388587c6.pdf",
+        "code_url_printed_in_paper": "https://github.com/koriavinash1/CoSA",
+        "supplied_archive": "C:\\Users\\栋栋\\Desktop\\slot attention\\CoSA-master.zip",
+        "archive_sha256": "592a49ff4acde7874d07818dcdeb41af62fd44c5c0cc9c841e874e1ab6e35079"
+      },
+      "evidence": [
+        {
+          "pdf_pages": [1, 2],
+          "section": "Abstract; Introduction and Contributions",
+          "claim": "论文明确批评标准SA从共享分布随机初始化，缺乏绑定特定对象类型的专门化约束。其解决目标是类型层面的grounding，不是给原SA数组下标事后附上语义。"
+        },
+        {
+          "pdf_pages": [5, 6],
+          "section": "Section 4, Definition 1, Algorithm 1",
+          "claim": "GSD把离散对象属性向量与各自的槽先验分布配对；输入特征先选字典条目，再从这些条目对应的分布采样并迭代细化。类型关联依赖字典索引，不是本次输出列表的位置。"
+        },
+        {
+          "pdf_pages": [7, 8],
+          "section": "Section 5.1, Figure 3",
+          "claim": "图中将Bitmoji的若干字典条目与脸颊、前额、眼睛等外观联系起来；基准为对象发现与组合，不是患者生存。"
+        },
+        {
+          "pdf_pages": [16, 37],
+          "section": "Appendix A Assumptions 1-5; Appendix J Proposition 3",
+          "claim": "理论依赖观测到潜空间的对象分离、无表示拥挤、对象类型充分覆盖、字典足够大、解码器单射；收敛讨论使用无限数据极限。不能将其套用于任意病理bag或有限3轮训练。",
+          "assumptions": [
+            "观测空间中对象的分离在潜空间仍可分辨。",
+            "一个输入潜向量至多编码一个对象，且槽数不大于潜向量数。",
+            "原始分布没有训练数据未覆盖的额外对象类型。",
+            "字典容量足以容纳所有对象类型。",
+            "解码器满足单射条件。"
+          ]
+        },
+        {
+          "pdf_pages": [39],
+          "section": "Appendix K.1 Slot Dictionary Analysis",
+          "claim": "作者明确说展示的语义由观察者主观命名；在FFHQ自然图像上仍难以解耦，只能看到若干外观相似区域被归组。此页限制了把字典ID直接当作客观语义真值的解释。"
+        },
+        {
+          "pdf_pages": [9, 43],
+          "section": "Conclusion; Appendix N Limitations and Future Work",
+          "claim": "作者列出组合变化受限、无表示拥挤假设及基于最大对象面积/特征谱的启发式等限制。没有证明该方法在病理生存上有效。"
+        }
+      ],
+      "code_evidence": [
+        {
+          "archive_member": "CoSA-master/README.md",
+          "lines": [1, 17],
+          "observation": "仓库自称CoSA并链接Grounded Object Centric Learning；BibTeX年与最终PDF会议年存在差异。"
+        },
+        {
+          "archive_member": "CoSA-master/src/model.py",
+          "lines": [293, 313],
+          "observation": "sample_quantized_slots以输入k（可先进行feature_abstraction）调用量化器，得到cbidxs和slots；cb_querykey分支依据字典结果重新组织槽。"
+        },
+        {
+          "archive_member": "CoSA-master/src/model.py",
+          "lines": [316, 333],
+          "observation": "baseline分支将同一mu/sigma扩展到所有槽并随机采样；与有字典分支区分明确。"
+        },
+        {
+          "archive_member": "CoSA-master/src/model.py",
+          "lines": [357, 403],
+          "observation": "forward区分quantize与baseline，两种分支随后共享迭代细化；输出包含cbidxs。"
+        },
+        {
+          "archive_member": "CoSA-master/src/qkcodebook.py",
+          "lines": [12, 49],
+          "observation": "使用离散encodings选择mu/sigma并选择条目特异的fc权重。注意这份实现mu_embeddings、sigma_embeddings为register_buffer，条目特异fc为Parameter；不能笼统说所有GSD高斯参数在此文件中都是直接可训练Parameter。"
+        },
+        {
+          "archive_member": "CoSA-master/semantics.py",
+          "lines": [112, 137],
+          "observation": "按唯一codebook index归组可视化结果并保存图片；归组键是字典概念索引，不是任意输出槽位置。"
+        }
+      ],
+      "supports_for_slotspe": "共享随机先验且没有额外类型锚定的槽，不能凭同编号声称跨患者是同种病理概念；这与CoSA所针对的grounding缺口相关。",
+      "does_not_establish_for_slotspe": [
+        "不证明SlotSPE已经发生可观测的真实患者语义漂移。",
+        "不证明SlotSPE无法学到任何稳定的可重复组织模式。",
+        "不证明加入CoSA或字典能提高C-index。",
+        "不证明字典类型或自然图像对象与生存相关病理模式一一对应。"
+      ]
+    },
+    {
+      "identity": {
+        "title": "Identifiable Object-Centric Representation Learning via Probabilistic Slot Attention",
+        "method": "Probabilistic Slot Attention (PSA)",
+        "authors": ["Avinash Kori", "Francesco Locatello", "Ainkaran Santhirasekaram", "Francesca Toni", "Ben Glocker", "Fabio De Sousa Ribeiro"],
+        "venue": "NeurIPS 2024, as printed in the supplied PDF",
+        "arxiv_id_from_readme": "2406.07141",
+        "local_pdf": "C:\\Users\\栋栋\\Desktop\\slot attention\\NeurIPS-2024-identifiable-object-centric-representation-learning-via-probabilistic-slot-attention-Paper-Conference.pdf",
+        "sha256": "349d837347a425def3a623a7ec45f81281725b529fcc219854f81eeab5bd12b2",
+        "paper_link_from_readme": "https://arxiv.org/pdf/2406.07141v2",
+        "supplied_archive": "C:\\Users\\栋栋\\Desktop\\slot attention\\PSA-master.zip",
+        "archive_sha256": "d6050b9e4670f9adf48cd1a925d8808d7db08812f9f196d7da3e17bf30baf69f"
+      },
+      "evidence": [
+        {
+          "pdf_pages": [1, 2, 3],
+          "section": "Abstract; Contributions; Related Work",
+          "claim": "标准对象中心方法的经验结果不等于具有可辨识性保证；PSA通过局部GMM和聚合后验为槽潜空间施加分布结构。PSA本身仍具有输出置换对称性。"
+        },
+        {
+          "pdf_pages": [5, 6],
+          "section": "Section 4; Algorithm 1; Aggregate Posterior Gaussian Mixture",
+          "claim": "局部GMM通过带混合权重和方差的EM式迭代得到槽分布，聚合各样本后验形成全局混合；不是给普通SA附加一个固定编号标签。"
+        },
+        {
+          "pdf_pages": [7],
+          "section": "Section 5, Definition 3, Theorems 1-2, Corollary 3",
+          "claim": "可辨识性允许槽置换及仿射变换。定理要求最优非退化聚合GMM先验、拼接槽满足GMM形式，以及分段仿射且弱单射的混合/解码函数。允许置换意味着即便定理成立，也不能强求不同训练运行中槽编号相同。"
+        },
+        {
+          "pdf_pages": [17, 21, 22],
+          "section": "Appendix A Assumption 8; Appendices C-D",
+          "claim": "弱单射要求至少某观测邻域具有唯一逆像，且无限多逆像集合在映射像空间上测度为零；文中给出特定LeakyReLU网络的充分条件及证明。仅选用LeakyReLU名称不自动保证所有网络满足该条件。"
+        },
+        {
+          "pdf_pages": [8, 24],
+          "section": "Section 6 Eq.12; Appendix F Metrics",
+          "claim": "SMCC在评估前做槽匹配和表示轴变换；不直接按同编号比较。没有真值时可比较跨运行表示，但这是表示一致性指标，不能独自命名为病理语义正确率。"
+        },
+        {
+          "pdf_pages": [10],
+          "section": "Discussion, Limitations and Future Work",
+          "claim": "作者承认弱单射及分段仿射假设可能不满足真实架构；实际解码器对槽置换不变，这与可逆性存在理论张力；遮挡对象也未充分研究。因此不能把定理当作任意模型可直接继承的保证。"
+        }
+      ],
+      "code_evidence": [
+        {
+          "archive_member": "PSA-master/README.md",
+          "lines": [1, 17],
+          "observation": "README对应论文2406.07141v2；以PDF会议页确认NeurIPS2024身份。"
+        },
+        {
+          "archive_member": "PSA-master/model.py",
+          "lines": [589, 623],
+          "observation": "设置pi和sigma并迭代EM，随后将batch局部pi/sigma/slots展平为Categorical与Independent Normal，通过MixtureSameFamily构造aggregate_posterior。"
+        },
+        {
+          "archive_member": "PSA-master/model.py",
+          "lines": [716, 770],
+          "observation": "EM_step用带pi与sigma的高斯log概率计算竞争attention，更新混合权重、槽均值和方差；不是标准SA的同名替换。"
+        },
+        {
+          "archive_member": "PSA-master/eval/mcc.py",
+          "lines": [428, 438],
+          "observation": "逐样本计算槽向量距离矩阵并做Hungarian assignment，确认官方评估也不默认槽同编号对应。"
+        },
+        {
+          "archive_member": "PSA-master/eval/mcc.py",
+          "lines": [446, 482],
+          "observation": "重要的静态实现差异：名为affine_transformation的开关实际调用RBF KernelRidge，不是严格仿射映射；80/20切分后以预测x替代x_、但以hz_eval替代y_，随后对二者计算相关而不是预测x与z_eval。不能未审查直接迁移为本项目的理论仿射对齐指标。此处为源码检查，未运行或认定论文全部数值失效。"
+        },
+        {
+          "archive_member": "PSA-master/eval/mcc.py",
+          "lines": [517, 562],
+          "observation": "numpy分支中ny保存匹配后的槽，但后续仍读取原始y[:,sk]；亦使用RBF KernelRidge及同样的预测/目标选择。静态发现足以要求独立核验指标实现，不能直接引用其开关名。"
+        },
+        {
+          "archive_member": "PSA-master/eval/get_metrics.py",
+          "lines": [241, 255],
+          "observation": "评估分别调用带和不带affine_transformation的slot_mean_corr_coef，并将结果命名为SMCC_Affine及SMCC；命名不能代替对实现公式的核对。"
+        }
+      ],
+      "supports_for_slotspe": "跨运行或跨患者槽比较须允许合适的槽匹配；对不同训练运行还须处理潜空间坐标变换。槽编号匿名性与表征稳定性是不同问题。",
+      "does_not_establish_for_slotspe": [
+        "不证明普通SlotSPE满足PSA的混合先验、最优性或弱单射条件。",
+        "不证明SlotSPE缺少可辨识性即无法预测生存。",
+        "不证明PSA可辨识性可恢复病理真语义或生物因果因素。",
+        "不证明不匹配槽编号得到的低相关就是患者语义漂移。",
+        "不证明将t-SNE或原始余弦直接跨独立训练运行比较是有效评估。"
+      ]
+    }
+  ],
+  "p4_current_judgement": {
+    "structural_property": "同编号不保证固定语义，属于标准匿名槽的结构性质；不是已经完成的患者故障证明。",
+    "patient_failure": "尚无本轮新增患者观测，不能声称已证明SlotSPE训练后语义漂移。",
+    "predictive_harm": "尚未证明匿名性或匹配后不稳定造成生存预测损害。",
+    "biological_semantics": "无病理标注、patch坐标/图像或独立语义核查时，最多检验读取内容稳定性，不能检验组织语义正确性。"
+  },
+  "minimal_falsifiable_observation_proposal": {
+    "status": "proposal only, not run or scheduled by this review",
+    "scope": "只读既有干净SlotSPE checkpoint；不训练、不加模块、不改模型前向，不将P4与P3采样来源混为一谈。",
+    "claim_to_test_first": "同一已训练模型、完全相同患者bag，即使允许槽重新编号，每次推理仍会读取相同内容集合。",
+    "required_existing_artifacts": [
+      "checkpoint哈希、原始源码版本、模型参数和训练协议。",
+      "固定患者bag的patient ID、固定patch ID及特征行顺序。",
+      "重复评估的RNG状态及每轮每槽对输入patch的attention、槽向量、选择结果和最终风险。",
+      "如需真实组织语义，另需可信组织标注或能回查原图的patch坐标；缺失时明确仅验证内容稳定性。"
+    ],
+    "steps": [
+      "先用完全相同RNG重放同一前向作为测量基准；应能复原对应槽与预测。记录失败，不把测量管线问题称语义漂移。",
+      "对既有20次同bag推理，基于同一批patch上的归一化attention分布进行一次一对一槽匹配，例如最小JS距离的Hungarian匹配。先匹配所有8槽，再检查选中2槽是否也保持对应。",
+      "同时报告匹配前与匹配后的attention距离、top-patch重合、槽内容稳定性和患者风险变化；不得仅凭编号切换判定失败。",
+      "如果匹配后读取内容仍明显变化，可拒绝该患者的内容稳定性命题；报告全部患者分布与具体可回查示例，不能凭一个示例估计总体发生率。",
+      "若匹配后稳定，则记录P4此层未观察到故障；编号交换可以只是匿名槽的合法表示。若内容不稳定而风险稳定，结论限于解释稳定性，不宣称预测受损。",
+      "跨患者固定语义另作更强命题：用独立可信组织标签检查匹配后槽的组织组成是否一致；没有外部语义依据时不能由特征聚类替代病理真值。",
+      "比较不同训练checkpoint时先在训练患者内拟合并冻结允许的表示坐标映射，在留出的患者上评估；不要在验收患者上自由拟合高容量映射，也不要直接照搬存在实现差异的PSA SMCC。"
+    ],
+    "decision_categories": [
+      "只发生编号交换：未观察到匹配后内容故障。",
+      "匹配后内容不稳定但风险稳定：解释重复性问题，未证明预测损害。",
+      "匹配后内容及风险均不稳定：两种现象同时存在，仍需受控干预才能归因于P4。",
+      "具有可信语义标签且出现系统性错配：可报告相应范围的语义一致性不足。",
+      "缺少attention、patch标识或真实语义依据：证据不足，不得升级结论。"
+    ]
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "task_id": "SPE-08",
+  "recorded_at": "2026-10-19T21:37:06+08:00",
+  "original_repository": "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main",
+  "scope": "原版源码与合成结构核查；无患者特征读取、训练、checkpoint评估或新模块",
+  "inputs": {
+    "C:\\Users\\栋栋\\Desktop\\特征解耦论文\\SlotSPE-main\\SlotSPE-main\\docs\\slot_attention_issues.md": "120c6c108052583d27a3d5f1d1a4f31c29b64c1d6c619c1aa5ae15e5001dadda"
+  },
+  "source_hashes": {
+    "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+    "dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "scripts/SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9"
+  },
+  "original_source_unchanged": true,
+  "historical_evidence_source_hashes_match_current": true,
+  "synthetic_checks": {
+    "passed": 14,
+    "total": 14,
+    "independent_patient_experiments": 0,
+    "report": "synthetic_checks.json",
+    "runner": "run_synthetic_audit.py"
+  },
+  "issues": [
+    {
+      "id": "P1",
+      "status": "结构限制已确认_预测损害未证",
+      "finding": "默认候选槽8、保留2；输入8/16/64个token时数量不变。主模型没有按患者推断激活数量。",
+      "evidence": [
+        "utils/process_args.py:82-89",
+        "models/SlotSPE.py:27",
+        "models/SlotSPE.py:173-194",
+        "models/slot_attention.py:75",
+        "synthetic_checks.json:fixed_cardinality"
+      ],
+      "limitation": "固定容量不自动构成预测缺陷；SlotAttention单模块支持num_slots覆盖，主模型未按输入调用。动态内容与动态数量不同。"
+    },
+    {
+      "id": "P2",
+      "status": "允许重复槽的结构已确认_训练后冗余待证",
+      "finding": "同一患者的槽若从相同状态出发，10轮后仍完全相同；共享更新没有使相同槽主动分离的确定机制。",
+      "evidence": [
+        "models/slot_attention.py:77-110",
+        "models/SlotSPE.py:324-328",
+        "synthetic_checks.json:slot_symmetry"
+      ],
+      "limitation": "相同初始化是人为控制边界，不是普通随机初始化的发生率。随机权重cosine高不能证明已训练模型功能冗余、碎片化或丢失预后信息。"
+    },
+    {
+      "id": "P3",
+      "status": "随机性及单次评估波动已确认",
+      "finding": "初始化参数为共享[1,1,D]高斯；每次forward重采样。Gumbel在eval仍采样。本轮固定权重和合成输入20次前向最大logit范围0.1732008。",
+      "evidence": [
+        "models/slot_attention.py:38-41",
+        "models/slot_attention.py:77-80",
+        "models/slot_attention.py:121-123",
+        "models/slot_attention.py:173",
+        "utils/core_utils.py:348-408",
+        "synthetic_checks.json:evaluation_randomness"
+      ],
+      "limitation": "槽迭代会读取当前输入，不能说最终槽缺乏输入信息。真实末轮checkpoint患者稳定性仍待服务器回传。"
+    },
+    {
+      "id": "P4",
+      "status": "同编号语义无保证_实际语义漂移未证",
+      "finding": "共享初始化和共享更新具有槽置换等变性；重命名两侧槽后完整预测最大差1.19e-7。槽编号没有固定病理名称。",
+      "evidence": [
+        "models/slot_attention.py:38-40",
+        "models/slot_attention.py:77-110",
+        "synthetic_checks.json:slot_symmetry",
+        "synthetic_checks.json:full_prediction_slot_relabeling"
+      ],
+      "limitation": "编号任意不等于学习失败；患者特异事件设计本身容许集合表示。不能用编号频率或直接同编号跨fold t-SNE证明语义身份。"
+    },
+    {
+      "id": "P5",
+      "status": "输入无效token风险已确认_真实无关组织占槽待证",
+      "finding": "loader可插入零patch，槽聚合没有padding mask；零输入经带偏置MLP非零。本轮补16/64个零token导致最终logit变化0.052293/0.083113。另有未选槽self泄漏。",
+      "evidence": [
+        "dataset/dataset_survival.py:222-236",
+        "dataset/dataset_survival.py:285-292",
+        "models/omics_encoder.py:18-23",
+        "models/slot_attention.py:69-100",
+        "models/SlotSPE.py:296-300",
+        "synthetic_checks.json:unmasked_zero_tokens"
+      ],
+      "limitation": "合成零token不等于已发现真实患者无关组织；非肿瘤、基质和免疫组织不能自动归为无关。TopK槽也不等于删除patch。"
+    },
+    {
+      "id": "P6",
+      "status": "显式空间多尺度接口缺口已确认_患者损害未证",
+      "finding": "主路径只收patch特征矩阵，没有坐标、倍率或层级接口。同一特征多重集重排后预测差1.19e-7；不能用该入口区分相同patch特征的不同空间布局。",
+      "evidence": [
+        "dataset/dataset_survival.py:278-301",
+        "models/SlotSPE.py:253-255",
+        "models/slot_attention.py:95-100",
+        "synthetic_checks.json:patch_order_invariance"
+      ],
+      "limitation": "当前入口不显式处理尺度，不代表上游patch编码没有形态或尺度信息；更不证明新增多尺度后会提分。"
+    },
+    {
+      "id": "P7",
+      "status": "最终目标到选槽器的直接梯度缺失已确认",
+      "finding": "完整模型丢弃decoder的连续slot_gate，只将hard_keep.bool用于self；两种TopK实现下主NLL对8个选槽参数梯度均None，辅助目标仍连通。另有编码空间重构的常量退化解。",
+      "evidence": [
+        "models/SlotSPE.py:289-300",
+        "models/SlotSPE.py:304-328",
+        "utils/core_utils.py:239-246",
+        "synthetic_checks.json:selector_gradient",
+        "E:\\DCT-Reg\\.review\\slotspe_problem_audit_20261016\\diagnostic_results.json"
+      ],
+      "limitation": "模型已有主生存与单模态生存辅助监督；直接主梯度缺失不代表选槽器完全不训练，也不自动证明这种监督分工导致预测损害。"
+    },
+    {
+      "id": "P8",
+      "status": "不适用原版SlotSPE",
+      "finding": "原版后续交互为cross-attention，没有用户所说的跨模态OT阶段，因此不能把双阶段OT冲突算成原版问题。",
+      "evidence": [
+        "models/SlotSPE.py:196-199",
+        "models/SlotSPE.py:293-294",
+        "models/transformer.py:292-299"
+      ],
+      "limitation": "Slot Attention内部归一化与OT的理论联系，不是另一个跨模态OT阶段存在或冲突的证据。"
+    }
+  ],
+  "concrete_findings": [
+    {
+      "id": "F1",
+      "title": "self掩码后仍平均未选槽",
+      "level": "新合成干预_原模块",
+      "source": "models/transformer.py:89-100,128-132; models/SlotSPE.py:296-301",
+      "metrics": {
+        "selected_slots_unchanged": true,
+        "keep_mask_fixed": true,
+        "cross_output_frozen": true,
+        "max_logit_difference": 0.568557620048523,
+        "max_risk_difference": 0.040930986404418945,
+        "note": "Invented inputs, random untrained weights, post-slot intervention; does not replace final-checkpoint patient intervention."
+      },
+      "explanation": "全掩码query行softmax变均匀，残差还保留原槽，最后mean再次纳入。固定mask和cross后最终预测变化。真实患者末轮槽干预未完成。"
+    },
+    {
+      "id": "F2",
+      "title": "最终NLL不能经选择权重直接训练选槽器",
+      "level": "源码与新合成梯度",
+      "evidence": "synthetic_checks.json:selector_gradient",
+      "explanation": "bool转化切断连续门控路线；辅助单模态生存损失仍训练选槽器，必须通过B/C患者对照判断这种分工影响。"
+    },
+    {
+      "id": "F3",
+      "title": "eval仍随机且原评估逐病例单次前向",
+      "level": "源码与新合成重复评估",
+      "metrics": {
+        "repetitions": 20,
+        "logit_max_range": 0.173200786113739,
+        "exact_rng_replay_error": 0.0,
+        "rule": "one forward per repetition; no averaging"
+      }
+    },
+    {
+      "id": "F4",
+      "title": "补零token未被排除",
+      "level": "数据加载源码与新合成反例",
+      "metrics": {
+        "rows": [
+          {
+            "added_zero_tokens": 16,
+            "max_logit_difference": 0.05229301005601883
+          },
+          {
+            "added_zero_tokens": 64,
+            "max_logit_difference": 0.08311322331428528
+          }
+        ],
+        "zero_raw_feature_projection_norm": 0.694193959236145,
+        "note": "Invented zero rows, same weights/RNG. Loader can insert zero rows; observed patient prevalence and harm are not measured."
+      }
+    },
+    {
+      "id": "F5",
+      "title": "低温全槽softmax后掩码导致门控近零",
+      "level": "原decoder可达分数模式反例",
+      "source": "models/SlotSPE.py:63-68",
+      "scores": [
+        1.0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "temperature": 0.01,
+      "trials": 32,
+      "collapse_count": 20,
+      "minimum_gate_sum": 7.567011707354012e-36,
+      "explanation": "Gumbel选集可能不含未加噪声的最大分槽，其余分数先经低温softmax变极小，再被分母1e-8压成近零。该输出用于辅助decoder；发生频率及训练影响未在真实checkpoint测量。"
+    },
+    {
+      "id": "F6",
+      "title": "重构目标允许常量编码退化",
+      "level": "历史合成反例原始JSON复核_本轮不重跑",
+      "source": "E:\\DCT-Reg\\.review\\slotspe_problem_audit_20261016\\diagnostic_results.json",
+      "result": {
+        "input_type": "constructed distinct random raw inputs; controlled weights in separate model instance",
+        "omics_self_mse": 0.0,
+        "cross_mse": 0.0,
+        "wsi_cosine_loss": 0.0,
+        "raw_wsi_patient_variance": 1.0508254766464233,
+        "encoded_wsi_patient_variance": 0.0,
+        "encoded_omics_patient_variance": 0.0,
+        "note": "Only reconstruction objective degeneracy. Survival losses are still positive and oppose losing prognostic information."
+      },
+      "explanation": "可训练编码空间的目标不是信息保留保证；主/辅助生存目标仍可反对坍缩。"
+    },
+    {
+      "id": "F7",
+      "title": "全队列分箱让验证结局影响训练标签",
+      "level": "历史真实元数据内存反事实原始JSON复核_本轮不重跑",
+      "source": "E:\\DCT-Reg\\.review\\slotspe_problem_audit_20261016\\data_protocol_results.json",
+      "changed_training_labels": 55,
+      "total_training_cases": 303,
+      "explanation": "原qcut结果被后续全队列等宽pd.cut覆盖。历史一名验证时间极端干预改变55/303训练标签；非正常数据偏差估计或提分证明。"
+    }
+  ],
+  "paper_code_boundary": {
+    "dense_cross": "论文3.2明确为保留跨模态协同而使用全部槽，此项是设计，不能作为self泄漏缺陷。",
+    "paper_url": "https://arxiv.org/html/2512.01116v1"
+  },
+  "corrections_to_supplied_material": [
+    "本仓库入口是survival.py、dataset/dataset_survival.py；附件slot_spe/model.py、slot_spe/trainer.py是示例路径。",
+    "实际slots_mu/logsigma为[1,1,D]共享参数，不是文档代码块的[1,num_slots,D]。",
+    "默认8槽、比例0.25，所以TopK为2；不是固定7槽或默认TopK=4。默认slot_iters=10，不是3。",
+    "示例脚本读取UNI离线特征，不能按DINOv2四层特征或冻结EMA目标编码器诊断。",
+    "原模型已有融合生存、两路单模态生存和三路重构；不是只优化重建，也没有本轮所说的图像像素分割输出。",
+    "TopK编号频率不证明语义一致；高cosine不单独证明功能冗余；跨fold t-SNE须先处理槽置换和表示坐标差异。",
+    "未选槽不是被丢弃patch；无真值实例掩码和对象分割输出，FG-ARI/mBO及+2%～+8%提升数字不能作为本任务指标或预期结果。",
+    "P1/P2/P4/P6需保留结构事实与患者问题之间的证据缺口，缺某模块不等于已有故障。"
+  ],
+  "primary_literature": [
+    {
+      "name": "SlotSPE",
+      "url": "https://arxiv.org/html/2512.01116v1",
+      "checked_scope": "self稀疏读取与cross全槽设计、总体监督；没有用论文患者分数当本轮结果"
+    },
+    {
+      "name": "AdaSlot",
+      "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Fan_Adaptive_Slot_Attention_Object_Discovery_with_Dynamic_Slot_Number_CVPR_2024_paper.html",
+      "boundary": "也可先建候选槽后离散选择；关键是激活数量能否变化"
+    },
+    {
+      "name": "CoSA",
+      "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/ba4caa85ecdcafbf9102ab8ec384182d-Abstract-Conference.html",
+      "boundary": "对象语义字典不等于跨患者通路语义已验证"
+    },
+    {
+      "name": "Probabilistic Slot Attention",
+      "url": "https://papers.neurips.cc/paper_files/paper/2024/file/a9a3f0e4a95cb273867931369c8fc3b1-Paper-Conference.pdf",
+      "boundary": "理论条件下仍允许槽置换和仿射变换；非固定同编号病理身份保证"
+    },
+    {
+      "name": "MESH",
+      "url": "https://proceedings.mlr.press/v202/zhang23ba.html",
+      "boundary": "内部运输解释不证明两阶段跨模态运输冲突"
+    }
+  ],
+  "other_literature_entries": "本轮未逐项实测全部15条会议与标题，不登记为已验证",
+  "server_execution": "not_verified",
+  "server_raw_results_received": false,
+  "patient_effect": "not_evaluated_this_audit",
+  "attribution": "现有A/B/C代码验收与本轮原版诊断分开；尚无患者结果支持修正提分或新增模块必要性",
+  "next_existing_task": "SPE-07按既定短程预算等待服务器AI原始产物验收；本轮不增加服务器实验或模块。"
+}

@@ -1,0 +1,75 @@
+{
+  "task_id": "SPE-08",
+  "date": "2026-10-20",
+  "scope": "本地缺失论文的一手页面身份、摘要及指定方法段核查；未下载或运行这些方法，也未把摘要核查写成全文复现。",
+  "entries": [
+    {
+      "name": "AdaSlot",
+      "title": "Adaptive Slot Attention: Object Discovery with Dynamic Slot Number",
+      "url": "https://openaccess.thecvf.com/content/CVPR2024/html/Fan_Adaptive_Slot_Attention_Object_Discovery_with_Dynamic_Slot_Number_CVPR_2024_paper.html",
+      "local_pdf_present": false,
+      "review_depth": "publisher_abstract",
+      "finding": "从候选槽列表中离散采样数量可变的选中集合，并用masked decoder排除未选槽。固定最大候选容量不等于固定有效槽数。",
+      "cannot_infer": "不证明SlotSPE的固定候选或固定Top-K已造成患者预测损害。"
+    },
+    {
+      "name": "BO-QSA",
+      "title": "Improving Object-centric Learning with Query Optimization",
+      "url": "https://arxiv.org/abs/2210.08990v2",
+      "code_url": "https://github.com/YuLiu-LY/BO-QSA",
+      "local_pdf_present": false,
+      "review_depth": "author_abstract_and_official_repository_readme",
+      "finding": "研究learnable queries与双层优化，改善对象分割和重构中的训练与概念绑定。",
+      "cannot_infer": "学习到的数据集级query不等于逐样本条件初始化；不直接证明SlotSPE前几轮无法稳定聚合。"
+    },
+    {
+      "name": "SmoothSA",
+      "title": "Smoothing Slot Attention Iterations and Recurrences",
+      "url": "https://arxiv.org/abs/2508.05417v5",
+      "local_pdf_present": false,
+      "review_depth": "author_abstract_and_version_metadata",
+      "finding": "明确讨论cold-start queries缺少样本线索，并区分视频第一帧与后续帧聚合；以样本信息预热query。",
+      "cannot_infer": "论文的三轮/视频复发设置不能直接套到SlotSPE的十轮WSI聚合；评估随机性也不能单独归因于槽初始化。"
+    },
+    {
+      "name": "SlotCurri",
+      "title": "Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning",
+      "url": "https://arxiv.org/abs/2603.22758",
+      "local_pdf_present": false,
+      "review_depth": "author_abstract",
+      "finding": "视频重构下，全部槽参与可鼓励同一对象被多个槽拆开；用逐阶段扩槽的课程处理。",
+      "cannot_infer": "训练阶段槽课程不等于按患者推断槽数；视频对象碎片化与WSI患者预后信息遗漏不是同一实验证据。"
+    },
+    {
+      "name": "Foreground",
+      "title": "Pay Attention to the Foreground in Object-Centric Learning",
+      "url": "https://openaccess.thecvf.com/content/CVPR2025/html/Tian_Pay_Attention_to_the_Foreground_in_Object-Centric_Learning_CVPR_2025_paper.html",
+      "local_pdf_present": false,
+      "review_depth": "publisher_abstract_and_paper_introduction",
+      "finding": "复杂自然图像中的背景纹理会被过细分解，干扰前景对象分割；方法区分foreground things和background stuff。",
+      "cannot_infer": "病理中的间质和免疫组织也可能有预后价值；不能自动将非肿瘤区域标为无关或套用自然图像前景定义。"
+    },
+    {
+      "name": "MSF",
+      "title": "Multi-Scale Fusion for Object Representation",
+      "url": "https://arxiv.org/abs/2410.01539",
+      "publisher_pdf": "https://proceedings.iclr.cc/paper_files/paper/2025/file/b4779c2d7130d5e4c29b5a233c34fbdb-Paper-Conference.pdf",
+      "local_pdf_present": false,
+      "review_depth": "author_abstract_and_publisher_method_section_3",
+      "finding": "以图像金字塔及尺度间/尺度内融合改善VAE中间重构指导的尺度适用范围。",
+      "cannot_infer": "不等同SlotSPE缺少patch坐标；当前SlotSPE未使用该论文的VAE目标流水线。"
+    },
+    {
+      "name": "MUFASA",
+      "title": "MUFASA: A Multi-Layer Framework for Slot Attention",
+      "url": "https://openaccess.thecvf.com/content/CVPR2026/html/Bock_MUFASA_A_Multi-Layer_Framework_for_Slot_Attention_CVPR_2026_paper.html",
+      "arxiv": "https://arxiv.org/abs/2602.07544",
+      "local_pdf_present": false,
+      "review_depth": "publisher_abstract_and_paper_introduction",
+      "finding": "聚合ViT多个中间层而非只使用最后层的特征。",
+      "cannot_infer": "特征层次不等同切片物理倍率，也不证明现有UNI/UNI2-h离线特征遗漏的具体信息。"
+    }
+  ],
+  "non_primary_search_results_used_as_evidence": false,
+  "additional_patient_experiments": 0
+}

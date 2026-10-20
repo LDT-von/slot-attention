@@ -1,0 +1,15 @@
+{
+  "all_other_tasks_unchanged": true,
+  "non_slotspe_lines_unchanged": true,
+  "V2_and_transport_human_sections_unchanged": true,
+  "backup": "E:\\DCT-Reg\\docs\\history\\slotspe_p4_patient_20261020_111146",
+  "raw_audit": {
+    "status": "accepted_within_patient_matching_observations",
+    "patients": 71,
+    "paired_repeats_per_patient": 19,
+    "biological_semantic_drift_proved": false,
+    "server_raw_received": false
+  },
+  "original_hashes_rechecked": true,
+  "new_training_runs": 0
+}

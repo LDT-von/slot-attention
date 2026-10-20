@@ -1,0 +1,74 @@
+{
+  "task": "SPE-08/P2",
+  "date": "2026-10-20",
+  "scope": "historical_local_BLCA_native_final_slot_conditional_interventions",
+  "raw_export": "E:\\DCT-Reg\\.review\\slotspe_p2_20261020\\seed3_native_v1",
+  "fold": 0,
+  "seed": 3,
+  "previous_training_epochs": 3,
+  "previous_optimizer_steps": 111,
+  "patients": 71,
+  "patches_in_original_cache": 256,
+  "new_training_runs": 0,
+  "new_optimizer_steps": 0,
+  "new_full_patient_encoder_passes": 0,
+  "retained_final_slot_conditions": 11,
+  "controls": 4,
+  "interventions": 7,
+  "conditions_are_not_independent_patients_or_training_runs": true,
+  "native_downstream_replay_max_error": 0.0,
+  "permutation_max_logit_error": 3.5762786865234375e-07,
+  "max_modal_mean_error": 2.384185791015625e-07,
+  "rng_unchanged": true,
+  "checkpoint_tensors_unchanged": true,
+  "original_model_cache_P1_outputs_unchanged": true,
+  "offline_raw_audit": {
+    "status": "accepted_conditional_raw_probes",
+    "patients": 71,
+    "arms": 11,
+    "server_SPE09_evidence": false,
+    "harm_or_correction_efficacy_proved": false
+  },
+  "source_snapshots": {
+    "measurement_v1": {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_p2_20261020\\probe_source_v1.py",
+      "sha256": "fd716f72c9ed8a1ac9fe8dec535e244302c564439aacc6e7b6faaeb21bb80bcf"
+    },
+    "offline_auditor_v2": {
+      "path": "E:\\DCT-Reg\\.review\\slotspe_p2_20261020\\auditor_source_v2.py",
+      "sha256": "0b3d9fd4dbee3b4c9222e1f63b6f2d1303d6195e08734a07f9cc361be6ba9c15"
+    }
+  },
+  "audit_hardening_after_measurement": {
+    "changed": "metadata identity/RNG schema/original-input flag validation only",
+    "measurement_functions_ast_unchanged": [
+      "protocol",
+      "pair_choices",
+      "transform",
+      "native_readout",
+      "perturbation_statistics",
+      "risks",
+      "summarize",
+      "run"
+    ],
+    "patient_probes_repeated": false
+  },
+  "synthetic_checks": {
+    "final_passed": 10,
+    "counts_not_additive": true,
+    "first_attempt": "4 passed, 1 temporary-directory setup error; retained measurement_tests.xml",
+    "intermediate": "5 passed; retained measurement_tests_complete.xml",
+    "final_xml": "measurement_tests_hardened.xml"
+  },
+  "P2_reading_overlap": "observed_on_historical_real_patient_native_attention",
+  "P2_final_slots_identical": false,
+  "P2_conditional_readout_sensitivity": "observed_with_fixed_keep_and_mean_preserving_latent_interventions",
+  "P2_independent_biological_or_prognostic_information": "not_established",
+  "P2_harmful_redundancy": "not_established",
+  "P2_fragmentation": "not_established",
+  "P2_correction_efficacy": "not_tested",
+  "server_SPE09_status": "user_reported_completed_not_independently_verified",
+  "server_raw_results_received": false,
+  "raw_receipt_sha256": "cdc0f16bb751e158e080ac4455297360fb25927a6e30a252bc4b8d78d1af5a0b",
+  "next": "P2本地条件干预阶段完成；等待SPE09原始产物再按相同协议复核。后续逐项到P3，不新增训练预算或模块。"
+}
