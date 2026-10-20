@@ -1,0 +1,166 @@
+{
+  "schema": "slotspe_server_return_provenance_v1",
+  "recorded_at": "2026-10-20T20:40:00+08:00",
+  "server_task": "SPE-08",
+  "mark": "SUMMARY - execution provenance of ALREADY PRODUCED artifacts; this stage did not execute any training, forward, backward or patient intervention.",
+  "execution_commands": [
+    {
+      "id": "C1-train-fold0",
+      "purpose": "Train the clean-original single arm on BLCA fold 0, seed 3, 3 epochs, 256 real patches.",
+      "command": "python3 scripts/run_slotspe_proof.py --config configs/slotspe_clean_original_server.json --run",
+      "status": "executed_before_this_return",
+      "produced": "results/slotspe_proof/slotspe_clean_original_blca_run_20261020/",
+      "note": "Exact argv is reconstructed from the run manifest, not copied from a shell transcript; treat the argv string as indicative and the resolved_config.json in the private pack as authoritative."
+    },
+    {
+      "id": "C2-train-5fold",
+      "purpose": "Extend the same single arm across folds 0-4, seed 3.",
+      "command": "python3 scripts/run_slotspe_proof.py --config configs/slotspe_clean_original_server.json --run --folds 0,1,2,3,4",
+      "status": "executed_before_this_return",
+      "produced": "results/slotspe_proof/slotspe_full_blca_5fold_20261020/",
+      "note": "This five-fold set already existed on the server. This stage did NOT start or extend it."
+    },
+    {
+      "id": "C3-p1246-diagnostic",
+      "purpose": "P1/P2/P4/P6 patient-level diagnostics against the existing fold0 last.pt.",
+      "command": "/home/ubuntu/.conda/envs/dct/bin/python3.10 /data1/DCT-Reg/_p1246_diag.py",
+      "status": "executed",
+      "timestamp_in_output": "2026-10-20T03:26:05",
+      "produced": "results/slotspe_proof/p1246_diagnostic_blca_fold0_20261020/diagnostic.json",
+      "important": "This script produced p1/p2/p4/p6 ONLY. It does not produce p3, p5 or p7."
+    },
+    {
+      "id": "C4-viz",
+      "purpose": "Render the 8-problem figure panels.",
+      "command": "/home/ubuntu/.conda/envs/dct/bin/python3.10 /data1/DCT-Reg/_spe09_viz.py",
+      "status": "executed",
+      "produced": "实验档案/表格图片/SPE09_slotspe_clean_original_20261020/*.png",
+      "important": "The caption baked into this script hardcodes '4.14e-3' and one patient ID. Both are single-patient values, not cohort maxima, and the ID must not be published. The redacted public copy corrects both; the original is preserved separately."
+    }
+  ],
+  "configuration": {
+    "arm": "original (unmodified upstream SlotSPE)",
+    "transport_added": false,
+    "repaired_models_constructed": false,
+    "note": "config JSON files themselves are withheld from this public return because they carry absolute server paths; they are listed in missing_artifacts.json and included in the private pack."
+  },
+  "source_code_versions": {
+    "p1246_diag_original_sha256": "ee590425f61e3406aeb378005acacffa5d84e78da549c673175cf04835468592",
+    "spe09_viz_original_sha256": "656fc9a76df16a2aeb0e334fddc645a380f909a27cf6bdbd73a29a50cea982b0",
+    "p1246_diag_public_sha256": "see artifact_manifest.json",
+    "spe09_viz_public_sha256": "see artifact_manifest.json",
+    "third_party_SlotSPE_models_slot_attention_py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "third_party_SlotSPE_utils_loss_func_py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "upstream_slot_attention_baseline": "Initial clean SlotSPE source from delivery v1, sha256 eb5518a7e7dbc0 (recorded in DCT-Reg commit 38b5e87)"
+  },
+  "queue": {
+    "cohort": "BLCA",
+    "folds_returned_here": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "fold": 0,
+    "seed": 3,
+    "epochs": 3,
+    "optimizer_steps": 114,
+    "patch_budget": 256,
+    "patch_budget_semantics": "256 REAL patch tokens; the P1 series varies this token budget and does not vary slot count",
+    "topk_ratio": null,
+    "eval_repeats": 20,
+    "train_patients_prepared": 302,
+    "val_patients": 77,
+    "parameter_count": 33093390,
+    "producer_reported_topk_ratio": 2,
+    "selected_slot_count_reported": 2,
+    "topk_config_status": "Actual resolved_config is withheld. Prior field value 2 appears to confuse selected count with ratio; not treated as verified execution ratio."
+  },
+  "checkpoint_sha256": {
+    "fold0_seed3_original_last_pt": "1c6daa01969879c40612bc67dd17ab7b9d3ed9e5ea56671e7f8278dd4c30aec5",
+    "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+    "checkpoint_state_unchanged_by_diagnostics": true,
+    "note": "Five-fold checkpoints have different hashes and are only in the private pack."
+  },
+  "device_and_environment": {
+    "device": "cuda:0",
+    "peak_allocated_cuda_bytes": 1064786432,
+    "peak_memory_scope": "training_and_final_diagnostics",
+    "python": "3.10 (/home/ubuntu/.conda/envs/dct/bin/python3.10)",
+    "torch": "2.10.0+cu128",
+    "numpy": "1.26.4",
+    "scipy": "1.15.3",
+    "cuda_available": true,
+    "gpu_model_dependency": "Results depend on CUDA device and cuDNN kernel selection for floating point reduction order. Bit-identical reproduction on different hardware is NOT guaranteed; see rng_replay control which reproduced exactly on this host."
+  },
+  "evaluation_protocol": {
+    "cindex": "Harrell's C implemented in the diagnostic script itself; skips equal event times and pairs whose earlier subject is censored; returns concordant + 0.5*tied over comparable pairs.",
+    "risk": "risk = -sum(cumprod(1 - sigmoid(logits))) over 4 discrete hazard bins.",
+    "risk_direction_note": "No C(risk) vs C(-risk) direction-flip test was run in this return. The sign convention above is the producer's; acceptance should verify it before any directional claim.",
+    "eval_mode": "model.eval(); per-repeat Gumbel/top-k sampling is NOT disabled, which is why 20 repeats of identical forward passes differ.",
+    "rng_seeds_observed": {
+      "eval_replay": 3080000,
+      "padding_probe": "3092000 + 8*k per patient",
+      "selector_gradient_probe": 3090000
+    }
+  },
+  "controls_present": [
+    {
+      "control": "identical input under re-established eval seed reproduces logits",
+      "result": "max_logit_difference = 0.0",
+      "scope": "positive determinism control only"
+    },
+    {
+      "control": "checkpoint state unchanged by diagnostics",
+      "result": true,
+      "scope": "no evaluation mutated weights"
+    },
+    {
+      "control": "purity checks on native classes",
+      "result": "all true",
+      "scope": "no repaired/replacement modules in the eval path"
+    }
+  ],
+  "controls_missing": [
+    {
+      "control": "P6 'original input vs original input, same RNG' zero-change control",
+      "status": "absent",
+      "consequence": "P6 registered as order_effect_not_identified"
+    },
+    {
+      "control": "P6 paired Gaussian/Gumbel RNG restore between baseline and permuted forward",
+      "status": "absent",
+      "consequence": "order effect not attributable"
+    },
+    {
+      "control": "P6 multiset identity verification of permuted patch sets",
+      "status": "absent"
+    },
+    {
+      "control": "P2 distribution over all 28 distinct unordered slot pairs",
+      "status": "absent"
+    },
+    {
+      "control": "P4 full-model synchronised slot permutation through selector",
+      "status": "absent",
+      "consequence": "P4 remains a mean-level sanity check"
+    }
+  ],
+  "new_execution_this_stage": {
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_backward_passes": 0,
+    "new_patient_interventions": 0,
+    "new_synthetic_experiments": 0,
+    "five_fold_extension_started": false,
+    "network_transfer_only": true
+  },
+  "public_integration_revision": {
+    "source_commit": "82582f212f5882b5beb52f081bafa3d261d6e393",
+    "original_scripts_publicly_included": false,
+    "public_scripts_have_os_import": true,
+    "actual_execution_originals_preserved_privately": true,
+    "new_model_execution": false
+  }
+}

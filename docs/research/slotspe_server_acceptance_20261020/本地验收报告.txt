@@ -1,0 +1,62 @@
+SlotSPE服务器提交82582f2本地验收（2026-10-20）
+
+1. 路线和任务
+SlotSPE / SPE-08。验收服务器分支codex/server-slotspe-evidence-20261020，指定提交82582f212f5882b5beb52f081bafa3d261d6e393。
+方法仅为GitHub API读取、Git blob和SHA256核对、源码/JSON静态审阅；没有执行下载脚本、加载患者张量或checkpoint。
+
+2. 已完成与判定
+Git回传通道已验证：GitHub API查询到服务器分支指向82582f2，main仍指向a5819e40319794488609e2052d8ff5778d006e50，82582f2父提交为a5819e4。
+已下载本次10个变更文件至忽略的local_evidence/server_returns/82582f212f5882b5beb52f081bafa3d261d6e393/。逐文件重算Git blob SHA1并与API一致；两份server-original脚本SHA256与服务器收据及manifest一致。
+git ls-remote本轮连接失败；分支状态通过GitHub API独立核对，不冒称本轮git ls-remote通过。
+
+合并验收未通过，有下列具体阻塞：
+A. 整次提交仍含患者标识。扫描到4个文件各1处同一个非模板TCGA病例标识：
+   scripts/server_diagnostics/_spe09_viz.server-original.py:444
+   docs/research/slotspe_server_return_20261020/artifact_manifest.json:40
+   docs/research/slotspe_server_return_20261020/diagnostic_summary.json:227
+   docs/research/slotspe_server_return_20261020/服务器发现报告.txt:124
+   本报告不复制该标识。两个脱敏公开脚本未检出同类标识，不等于整个提交无标识。manifest里identifier_removed字段把被删标识重新写了出来；未脱敏原件也不应在公开仓库保留。
+B. 两个公开脚本引入os.environ但未import os：_p1246_diag.py:42、_spe09_viz.py:24。静态AST可解析，但名称未定义；这不是实际执行版本失效的证明，属于公开路径改写新引入的问题。本轮未执行验证。
+C. artifact_manifest.json中diagnostic_summary.json的SHA256不匹配：
+   登记e6444bd86d2d418f388d85f41c4fd8ffddf654bdbb8ed41a114002fa8f4a3817
+   实际7b4ca6be7b8705c2e83c2cfc40e95fa39fe61abcbb5b59080204ffccde80995f
+   清单中其他有完整SHA且已取得的5个文件均匹配；摘要修订后需重建清单，不推断为恶意篡改。
+D. provenance.json queue.topk_ratio=2，与原版8槽、k=max(1,int(8*ratio))的比例参数不符；可能把k=2误记成ratio，须以实际resolved_config/checkpoint参数核对，不能据此断言实际训练用错配置。
+
+科学结论核对：
+- P1源码_batch_n直接截取wsi[:token_count]，确为输入patch预算变化，不是槽数变化。原版固定槽容量的预测损害仍未证。
+- P2源码_p1246_diag.py:232-247对8x8余弦矩阵去对角后计数，计数上界56。若77名患者的原始整数计数均为56（或未舍入均值精确为56），确能推出每人28个无序槽对全部cos>0.95。新摘要报告该更强结果，不能继续只把服务器主张写成“至少一对”；但原始high_cos_pairs列表与诊断JSON尚未回传，数值仍属服务器摘要。高余弦不证明向量完全相同，也不证明患者预测损害。
+- P5摘要登记16行零输入条件max_logit_difference=0.00950122，64行条件=0.0325937；4.14e-3为单例，0.011未对应当前摘要所述原始产物。源码/摘要交付后仍不能把这些数值写成本地重算通过，native_model_audit.json需要私下回传。logit/risk/C-index分开报告。
+- P6源码:285-300确为基线与置换两次model调用且中间不恢复高斯/Gumbel随机状态，缺同输入同RNG零变更对照；order_effect_not_identified判定成立。
+- P6 n_reps=50实际是10个验证batch乘5次置换的比较数，不是50轮全队列评估。mean_max_diff为batch级最大风险差的均值，不能写成人均风险差。最后batch人数不同还需明确加权口径。
+- P4 n_patients=10实际是循环中10个batch的均值置换误差条目，不是10名患者；源码对77人按batch8处理，只测试槽均值的一次固定置换，没有测试完整模型同步槽置换。
+- 五折表明确来自控制台记录的舍入值，非本轮收到的各折原始summary.json。初始单折fold0与另一次五折队列fold0有不同checkpoint SHA，不能混作同一次实验。训练/执行授权沿革在当前回传中未独立验收。
+- P3、P7已有本地与源码结论保留；服务器新摘要8个选择器主梯度None、辅助7个nonzero和1个zero，仍待原始逐参数记录验收。没有把None、zero和nonzero混同。
+
+进展文件增量声明核对：与父提交a5819e4相比，9个tasks、source_progress_sha256、latest_source_review、latest_server_report_review均逐字段相同；issues仅P2/P5/P6变化。该声明通过。它只证明进展文件没有改写这些字段，不证明数据来源正确或患者损害成立。
+
+3. 对应路径与提交
+远端受审提交：82582f212f5882b5beb52f081bafa3d261d6e393；远端main基线a5819e40319794488609e2052d8ff5778d006e50。
+本地报告：docs/research/slotspe_server_acceptance_20261020/本地验收报告.txt。
+公开安全的检查收据：同目录acceptance_receipt.json。
+下一轮服务器提示词：同目录服务器AI_修正公开交付并私有打包.txt。
+完整下载原件及API补丁仅存在忽略的local_evidence/，不会暂存或推送。
+本轮未切换分支、未合并、未创建提交或推送；保留本机既有未提交交接材料。
+
+4. 检查、实际运行与回传
+已独立收到并核对代码/公开摘要10文件；GitHub API分支、父提交与逐文件Git blob检查通过。
+隐私检查、公开脚本静态名称检查、摘要清单哈希检查未通过。只对已取得提交的10个文件做检查，不声称完成整个仓库历史的隐私清理。
+本轮模型前向0、反向0、训练0、患者干预0；未重新计算逐患者统计。
+完整私有原始包尚未收到；患者损害和修正收益仍未建立。
+
+5. 缺口与原因
+禁止将“Git通道已打通”“代码已收到”提升为“原始患者结果已验收”。
+原始诊断JSON、逐参数梯度、预测、配置、权重及已有RNG记录需通过私有渠道回传；缺失的运行日志和精确argv应保留为缺失，不能靠复跑伪造历史记录。
+公开患者标识已经进入82582f2历史；追加删除提交不等于历史清除。本轮不删除分支、不重写历史。历史清理需要单独列明范围并取得相应明确授权。
+上一份服务器提示词已明确授权整理私有回传包并提供SHA；“本次未授权打包”的说法与该提示词不一致。传输渠道未指定与本地打包授权是两回事。
+
+6. 下一步与用户输入
+先修正公开交付问题，并在服务器只整理已有原始材料形成私有包、完整SHA256、文件清单和缺失清单；不执行P6或其他新模型任务。
+建议从未包含标识的main@a5819e4建立新的干净修正分支，携带必要的脱敏脚本/摘要/正确清单。原件留私有；不要把含标识旧分支直接merge进main。保留服务器原数据与原件。
+P6最小配对RNG方案可先写出来，执行等待用户明确授权。main保持不合并，直到公开文件、来源收据和私有原始结果验收通过。
+私有包可先留服务器并返回哈希和目录；只通过用户指定且已授权的私有渠道传输，不上传公开GitHub附件。已有公开历史的处理另行确认。

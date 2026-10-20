@@ -1,0 +1,101 @@
+{
+  "schema": "slotspe_server_return_missing_artifacts_v1",
+  "recorded_at": "2026-10-20T20:45:00+08:00",
+  "server_task": "SPE-08",
+  "mark": "SUMMARY - what was NOT returned to the public repository, why, and where the originals stay.",
+  "summary": {
+    "complete_original_raw_results_returned_to_public_git": false,
+    "private_pack_prepared": false,
+    "private_pack_sha256": null,
+    "private_pack_status": "NOT YET PACKED - listed here so acceptance can request it explicitly",
+    "statement": "Only aggregate numbers, executed scripts and provenance were published. The complete original raw results have NOT been returned. No GitHub Release, public attachment or public issue carries them."
+  },
+  "missing_from_public_return": [
+    {
+      "item": "Complete private return package (ZIP) with all original per-patient artifacts",
+      "reason": "Contains patient identifiers, per-patient arrays, model weights and clinical fields; repository rules forbid publishing these.",
+      "where_original_lives": "/data1/DCT-Reg/results/slotspe_proof/ and /data1/DCT-Reg/实验档案/",
+      "what_is_needed_to_produce_it": "Local assembly was already requested in the prior handoff. Prepare existing artifacts and SHA on the server; transfer only through a user-approved private channel. No new model execution.",
+      "blocking": "for strict per-patient acceptance"
+    },
+    {
+      "item": "Run logs with full stdout/stderr for C1, C2, C3, C4",
+      "reason": "Not produced to disk at execution time; only the printed console output existed.",
+      "where_original_lives": "lost - only partial console capture",
+      "what_is_needed_to_produce_it": "Re-running the commands, which this stage is explicitly forbidden from doing.",
+      "blocking": "non-blocking; command reconstruction is recorded in provenance.json with an explicit 'indicative argv' caveat"
+    },
+    {
+      "item": "Exact verbatim command lines with timestamps",
+      "reason": "No shell history or run ledger was written.",
+      "where_original_lives": "not available",
+      "what_is_needed_to_produce_it": "Authoritative resolved_config.json and queue_manifest.json in the private pack partially substitute; they are listed as withheld.",
+      "blocking": "non-blocking"
+    },
+    {
+      "item": "Resolved configuration JSON (resolved_config.json, queue_manifest.json) for both runs",
+      "reason": "Carry absolute server paths.",
+      "where_original_lives": "/data1/DCT-Reg/results/slotspe_proof/slotspe_clean_original_blca_run_20261020/ and .../slotspe_full_blca_5fold_20261020/",
+      "blocking": "non-blocking; the key queue parameters are transcribed into provenance.json"
+    }
+  ],
+  "missing_controls_that_no_existing_artifact_provides": [
+    {
+      "control": "P6 same-input / same-RNG zero-change control and paired Gaussian-Gumbel state restore",
+      "status": "absent from all existing artifacts",
+      "consequence": "P6 is registered as order_effect_not_identified. The 0.0235 mean-max risk difference CANNOT be attributed to patch order.",
+      "minimum_followup": "One extra eval-only pass per patient that restores Python/NumPy/Torch CPU/CUDA RNG state immediately before both the baseline and the permuted forward, plus an identical-input/identical-RNG zero-change arm. This is a diagnostic re-run, NOT a new training run, but it still requires separate execution authorisation.",
+      "blocking": "for any P6 order-effect conclusion"
+    },
+    {
+      "control": "P2 full distribution over the 28 distinct unordered slot pairs per patient",
+      "status": "partial - the artifact reports per-patient MAX off-diagonal cosine and a full-matrix count above 0.95",
+      "consequence": "'at least one high-similarity pair per patient' cannot be upgraded to 'all 8 slots are duplicates'.",
+      "minimum_followup": "Record all 28 pairwise cosines plus slot norms per patient.",
+      "blocking": "for any full-collapse claim"
+    },
+    {
+      "control": "P4 full-model slot permutation through the selector and keep path",
+      "status": "absent - only the mean over slots was permuted",
+      "consequence": "P4 remains a mathematical sanity check. It cannot support 'slot semantics drift' or any harm claim.",
+      "minimum_followup": "Forward the model with a synchronised slot-index permutation applied before the top-k selection and report logit/risk differences.",
+      "blocking": "for any P4 harm claim"
+    },
+    {
+      "control": "risk direction validation C(risk) vs C(-risk) with matched censoring rules",
+      "status": "absent",
+      "consequence": "The sign convention of the reported C-index is unverified; exploratory risk/time Spearman is not a substitute.",
+      "minimum_followup": "Compute both C(risk) and C(-risk) on the same patients with the same comparable-pair rule.",
+      "blocking": "for any directional risk claim"
+    },
+    {
+      "control": "P5 natural padding prevalence",
+      "status": "absent - the loader opportunity counts are recorded (1 missing endpoint/WSI string, 1 fewer real patches) but all probes use CONTROLLED zero rows, not real irrelevant tissue",
+      "consequence": "The logit/risk sensitivity is real for synthetic zeros; its clinical relevance is unestablished.",
+      "minimum_followup": "Quantify how often real cohorts contain fewer patches than the configured budget.",
+      "blocking": "for any real-cohort harm claim"
+    },
+    {
+      "control": "Slot Attention encoder parameters' main-loss gradient",
+      "status": "absent from this return",
+      "consequence": "P7 scope is limited to the 8 pred_keep_slot parameters.",
+      "minimum_followup": "Separate first-order probe on encoder parameters.",
+      "blocking": "for broadening P7 scope"
+    }
+  ],
+  "explicitly_not_claimed": [
+    "six patient-harm items all established - NOT claimed",
+    "Slot Attention cannot see hazard - NOT claimed",
+    "paper evidence closed loop - NOT claimed",
+    "correction benefit or B/C arm efficacy - NOT claimed",
+    "five-fold pooled performance - NOT claimed; per-fold numbers only",
+    "P6 patch-order harm - NOT claimed; registered as order_effect_not_identified"
+  ],
+  "acceptance_blockers_summary": [
+    "Private pack not yet received; assembly already requested, private transfer channel pending",
+    "P6 RNG controls absent from existing artifacts",
+    "P2 pair distribution incomplete",
+    "P4 full-model permutation not measured",
+    "Risk direction unverified"
+  ]
+}

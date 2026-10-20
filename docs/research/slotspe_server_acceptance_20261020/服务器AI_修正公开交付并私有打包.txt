@@ -1,0 +1,30 @@
+继续SPE-08。82582f2已在本地通过GitHub API取回，Git回传通道确认建立；main暂不合并，P6及其他新模型执行暂不启动。
+
+先完成以下已有产物交付修正，不再把私有打包当成缺少授权：上一份提示词已经明确要求准备私有包并返回SHA。先在服务器打包留存，不需要先选定外传渠道。
+
+1. 修正公开文件中的患者标识
+同一个非模板病例标识仍出现在4处：
+scripts/server_diagnostics/_spe09_viz.server-original.py:444；
+docs/research/slotspe_server_return_20261020/artifact_manifest.json:40；
+同目录diagnostic_summary.json:227；服务器发现报告.txt:124。
+不要在回复、修改说明或新公开清单中复制该值；写“病例标识已脱敏”即可。
+含标识的原件只保留服务器/忽略的local_evidence/，公开仓库只放脱敏副本和原件SHA，不把实际被删除标识写回identifier_removed字段。
+
+2. 修正公开脚本与收据
+两个公开脚本分别在42/24行使用os.environ却没import os，补齐导入并记录是公开副本的新修正，不改写实际执行原件。
+diagnostic_summary.json在提交中的实际SHA为7b4ca6be7b8705c2e83c2cfc40e95fa39fe61abcbb5b59080204ffccde80995f，与manifest登记e6444bd...不符。完成所有脱敏/修订后重新计算完整文件哈希，逐项验证。
+provenance里的topk_ratio=2需核对实际resolved_config：分清ratio=0.25与k=2，不能靠猜测改实验配置。
+P4的n_patients=10是10个batch误差条目，P6的n_reps=50是10batch×5置换比较；修正摘要单位和聚合口径，不改原始JSON。
+五折表若来自控制台舍入值就保留该来源，不冒称已经交回各折原始summary.json。
+
+3. 准备私有原始包
+只打包已有诊断JSON、native_model_audit、trained_selector_gradients、eval_repeats、validation_predictions、patient_slot_intervention、natural_gate_observations、manifest/resolved_config/queue_manifest、summary/curve、实际执行脚本原件、已有RNG记录与必要checkpoint；各队列分目录保留，不混淆单折和五折的fold0。
+保留原文件字节，提供包SHA256、每文件完整SHA/大小清单、缺失清单。包和含病例标识的清单留服务器/忽略的local_evidence，不推公开Git、Release或附件。日志原本未保存就标缺，不复跑来补历史日志。
+若包较大可将元数据/逐患者结果与权重分别分卷，清单注明分卷关系，不默认复制整套患者输入特征。
+先返回包已生成的路径、大小和SHA；外传只用用户指定且已授权的私有渠道。
+
+4. 交付分支与边界
+建议从干净main@a5819e4建立codex/server-slotspe-evidence-clean-20261020新分支，复制通过检查的脱敏交付文件；不把含标识旧分支直接merge到main。此建议不授权删除或重写旧分支历史。
+对旧公开历史的处理请单独列出方案、范围与影响，等待明确授权；不能声称追加删除文件就已清除历史。
+更新进展为“公开交付已修正待验收；私有包已准备/未传输”，实际push后返回分支、完整SHA和远端核验结果。不要把准备包等同于本地已验收原始数据。
+本轮不训练、不新增前向/反向、不做患者干预；P6仅可准备配对RNG补查方案，不能执行。

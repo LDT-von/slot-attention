@@ -6,7 +6,15 @@
 
 当前入口：[进度](docs/PROGRESS.json)、[服务器新结论复核](docs/research/slotspe_server_claims_20261020/服务器结论复核.txt)、[原始回传与对照要求](docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt)、[P5勘误](docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt)。
 
-## 2026-10-20服务器新汇报：已查到提交，原始诊断尚未回传
+## 2026-10-20最新回传：公开内容已修正整合，私有原始验收待完成
+
+服务器来源分支`codex/server-slotspe-evidence-20261020@82582f2`的公开代码和摘要已整理为干净整合提交。实际执行原件留在忽略的本地证据目录，公开树仅保留脱敏副本和原件哈希；已补齐两脚本的`os`导入、重算摘要清单哈希，并纠正P4/P6批次数口径。Top-K实际比例仍等待原始配置核对。
+
+整合不引入来源提交的患者标识文件及其历史；旧服务器分支历史未重写。本地既有交接报告和进展也已保留。P1测的是patch预算；P2全部28对高相似仍是待原始JSON验收的服务器摘要；P6未配对RNG，不能归因顺序。完整私有原始产物尚未收到，患者损害与修正收益仍未建立。
+
+当前入口：[整合说明](docs/research/slotspe_merge_20261020/合并说明.txt)、[此前本地验收](docs/research/slotspe_server_acceptance_20261020/本地验收报告.txt)、[统一进展](docs/PROGRESS.json)。此前报告保留其当时状态；下一步接收已授权私有原始包，不新增模型执行。
+
+## 2026-10-20早期服务器汇报复核：1de42c7仅有说明
 
 核对到原[DCT-Reg提交1de42c7](https://github.com/LDT-von/DCT-Reg/commit/1de42c777054b061ed278eb3ecb02d0bfbd2cca3)。它只改了`AGENTS.md`和`.gitignore`，把`_p1246_diag.py`加入忽略列表；在该提交中未取得诊断JSON或脚本。这证明汇报已入库，不能代替原始结果验收，也不表示服务器没有实际运行。
 

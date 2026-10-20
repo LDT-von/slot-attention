@@ -1,0 +1,240 @@
+{
+  "schema": "slotspe_server_return_local_acceptance_v1",
+  "recorded_at": "2026-10-20T20:47:08+08:00",
+  "route_task": "SlotSPE / SPE-08",
+  "reviewed_commit": "82582f212f5882b5beb52f081bafa3d261d6e393",
+  "remote_refs_verified_via_GitHub_API": {
+    "main": "a5819e40319794488609e2052d8ff5778d006e50",
+    "codex/server-slotspe-evidence-20261020": "82582f212f5882b5beb52f081bafa3d261d6e393"
+  },
+  "parents": [
+    "a5819e40319794488609e2052d8ff5778d006e50"
+  ],
+  "git_ls_remote_passed_this_review": false,
+  "git_connection_error": "Direct git HTTPS connection failed; GitHub API calls independently succeeded.",
+  "changed_files_downloaded": 10,
+  "all_git_blob_hashes_verified": true,
+  "file_identities": [
+    {
+      "path": "docs/PROGRESS.json",
+      "bytes": 10025,
+      "sha256": "865d57ac271e3b195ca2d7ec13ecb765cb679830aa4ed05458799b95726dfa65",
+      "git_blob_sha": "d5cacf30c4498b1c2945668592539d88d330b58e"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/artifact_manifest.json",
+      "bytes": 9456,
+      "sha256": "f9b71790be1021dfdf557061fa1411cb1dacfe496f843757c95b1fc0304d5bbf",
+      "git_blob_sha": "4646118653700365ca8f3abaeffddb6a2e24dd27"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/diagnostic_summary.json",
+      "bytes": 14960,
+      "sha256": "7b4ca6be7b8705c2e83c2cfc40e95fa39fe61abcbb5b59080204ffccde80995f",
+      "git_blob_sha": "1834bb2cf010c1d3a25710682b4ec14924d3226c"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/missing_artifacts.json",
+      "bytes": 6480,
+      "sha256": "2a6d92027102cedef604f3f94d90e61b9d67169e763552539fa9a18386a8c46c",
+      "git_blob_sha": "259aaf6df2c8ab88b00aaa5e7725acabc2556bc4"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/provenance.json",
+      "bytes": 7239,
+      "sha256": "cb5501fe31f5de1965e63267bc92267ba1fe91c875c18fa03b4a8bfc74a4ae3d",
+      "git_blob_sha": "9633f560268fc56dc643a62e2dcfd3263d28fa26"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/服务器发现报告.txt",
+      "bytes": 13949,
+      "sha256": "70883d6ec4018125975b4b200f30e01c616e6d4b1d2ad6df16612288a3d8a309",
+      "git_blob_sha": "5e42fe82f1d920ac7bcbb086a03e56777bfd574f"
+    },
+    {
+      "path": "scripts/server_diagnostics/_p1246_diag.py",
+      "bytes": 15560,
+      "sha256": "17d6c329430e1769c7276a37a02e94cbad5c6b2e04fff0badfcc9f300b902099",
+      "git_blob_sha": "43d39dfdbb0607aec192eb60a821dd4d0891e214"
+    },
+    {
+      "path": "scripts/server_diagnostics/_p1246_diag.server-original.py",
+      "bytes": 15488,
+      "sha256": "ee590425f61e3406aeb378005acacffa5d84e78da549c673175cf04835468592",
+      "git_blob_sha": "3a1f1cbaa6974f71d6fdff39f2652e820defdd32"
+    },
+    {
+      "path": "scripts/server_diagnostics/_spe09_viz.py",
+      "bytes": 18745,
+      "sha256": "b86b66e44a5e5f36e500998f7fbccb5701a7da9e48241a45b886c89f0638503f",
+      "git_blob_sha": "0196540c35c47936a41381ccdf0123d74083a4d5"
+    },
+    {
+      "path": "scripts/server_diagnostics/_spe09_viz.server-original.py",
+      "bytes": 18669,
+      "sha256": "656fc9a76df16a2aeb0e334fddc645a380f909a27cf6bdbd73a29a50cea982b0",
+      "git_blob_sha": "4dd6dfee3c0759a3096ae2f360632427c81b150b"
+    }
+  ],
+  "privacy_review": {
+    "scope": "10 changed files in specified commit, not entire Git history",
+    "affected_files": [
+      {
+        "path": "docs/research/slotspe_server_return_20261020/artifact_manifest.json",
+        "line_numbers": [
+          40
+        ]
+      },
+      {
+        "path": "docs/research/slotspe_server_return_20261020/diagnostic_summary.json",
+        "line_numbers": [
+          227
+        ]
+      },
+      {
+        "path": "docs/research/slotspe_server_return_20261020/服务器发现报告.txt",
+        "line_numbers": [
+          124
+        ]
+      },
+      {
+        "path": "scripts/server_diagnostics/_spe09_viz.server-original.py",
+        "line_numbers": [
+          444
+        ]
+      }
+    ],
+    "affected_file_count": 4,
+    "unique_nonplaceholder_patient_id_count": 1,
+    "patient_id_values_in_this_receipt": false,
+    "server_zero_identifier_claim_accepted": false
+  },
+  "public_script_static_checks": [
+    {
+      "path": "scripts/server_diagnostics/_p1246_diag.py",
+      "syntax_valid": true,
+      "os_load_lines": [
+        42
+      ],
+      "imports_os": false,
+      "missing_os_import": true
+    },
+    {
+      "path": "scripts/server_diagnostics/_spe09_viz.py",
+      "syntax_valid": true,
+      "os_load_lines": [
+        24
+      ],
+      "imports_os": false,
+      "missing_os_import": true
+    }
+  ],
+  "artifact_manifest_hash_checks": [
+    {
+      "path": "scripts/server_diagnostics/_p1246_diag.server-original.py",
+      "declared_sha256": "ee590425f61e3406aeb378005acacffa5d84e78da549c673175cf04835468592",
+      "actual_sha256": "ee590425f61e3406aeb378005acacffa5d84e78da549c673175cf04835468592",
+      "match": true
+    },
+    {
+      "path": "scripts/server_diagnostics/_p1246_diag.py",
+      "declared_sha256": "17d6c329430e1769c7276a37a02e94cbad5c6b2e04fff0badfcc9f300b902099",
+      "actual_sha256": "17d6c329430e1769c7276a37a02e94cbad5c6b2e04fff0badfcc9f300b902099",
+      "match": true
+    },
+    {
+      "path": "scripts/server_diagnostics/_spe09_viz.server-original.py",
+      "declared_sha256": "656fc9a76df16a2aeb0e334fddc645a380f909a27cf6bdbd73a29a50cea982b0",
+      "actual_sha256": "656fc9a76df16a2aeb0e334fddc645a380f909a27cf6bdbd73a29a50cea982b0",
+      "match": true
+    },
+    {
+      "path": "scripts/server_diagnostics/_spe09_viz.py",
+      "declared_sha256": "b86b66e44a5e5f36e500998f7fbccb5701a7da9e48241a45b886c89f0638503f",
+      "actual_sha256": "b86b66e44a5e5f36e500998f7fbccb5701a7da9e48241a45b886c89f0638503f",
+      "match": true
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/diagnostic_summary.json",
+      "declared_sha256": "e6444bd86d2d418f388d85f41c4fd8ffddf654bdbb8ed41a114002fa8f4a3817",
+      "actual_sha256": "7b4ca6be7b8705c2e83c2cfc40e95fa39fe61abcbb5b59080204ffccde80995f",
+      "match": false
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/provenance.json",
+      "declared_sha256": "cb5501fe31f5de1965e63267bc92267ba1fe91c875c18fa03b4a8bfc74a4ae3d",
+      "actual_sha256": "cb5501fe31f5de1965e63267bc92267ba1fe91c875c18fa03b4a8bfc74a4ae3d",
+      "match": true
+    }
+  ],
+  "provenance_issues": [
+    {
+      "field": "queue.topk_ratio",
+      "reported_value": 2,
+      "status": "requires_resolved_config_check; likely count-versus-ratio metadata confusion, actual execution configuration not determined"
+    }
+  ],
+  "counting_units": {
+    "p2_directed_offdiagonal_matrix_elements": 56,
+    "p2_distinct_unordered_pairs": 28,
+    "p2_sample_count_reported": 77,
+    "p2_numeric_raw_acceptance": "pending_original_high_cos_pairs_list_and_diagnostic_JSON",
+    "p4_reported_n_patients_10_means": "10 batches of slot-mean permutation errors, not 10 patients",
+    "p6_reported_n_reps_50_means": "10 batches times 5 permutations, not 50 whole-cohort evaluations"
+  },
+  "p6_source_control_audit": {
+    "baseline_forward_line": 289,
+    "permuted_forward_line": 297,
+    "rng_restored_between_calls": false,
+    "registered_as": "order_effect_not_identified"
+  },
+  "server_summary_p5": {
+    "status": "reported_not_recomputed",
+    "16_added_rows_max_logit_difference": 0.00950122,
+    "64_added_rows_max_logit_difference": 0.0325937,
+    "previous_0_011": "reported_unsupported_by_current_producer_artifacts; raw source not yet received"
+  },
+  "progress_parent_comparison": {
+    "tasks_equal": true,
+    "source_progress_sha256_equal": true,
+    "latest_source_review_equal": true,
+    "latest_server_report_review_equal": true,
+    "changed_issue_keys": [
+      "P2",
+      "P5",
+      "P6"
+    ]
+  },
+  "packaging_authorization": {
+    "prior_prompt": "docs/research/slotspe_server_connection_20261020/服务器AI_接入独立仓库并回传发现.txt",
+    "line": 25,
+    "local_assembly_already_requested": true,
+    "private_transmission_channel": "not_specified"
+  },
+  "acceptance": {
+    "git_return_channel_verified": true,
+    "public_code_and_summary_received": true,
+    "public_delivery_accepted": false,
+    "merge_ready": false,
+    "private_raw_package_received": false,
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false
+  },
+  "execution": {
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_backward_passes": 0,
+    "patient_tensor_or_checkpoint_loads": 0,
+    "downloaded_scripts_executed": false,
+    "new_synthetic_experiments": 0
+  },
+  "local_git": {
+    "main_switched_or_merged": false,
+    "new_commit_created": false,
+    "remote_mutations": false
+  },
+  "report": "docs/research/slotspe_server_acceptance_20261020/本地验收报告.txt",
+  "report_sha256": "4835c62e041c3733a379115becc2374e00a1a0b2f32b549f03e1c995a9393190",
+  "followup_prompt": "docs/research/slotspe_server_acceptance_20261020/服务器AI_修正公开交付并私有打包.txt",
+  "next_action": "Correct public privacy/static import/manifest/provenance issues and assemble already-authorized private raw package; hold new P6 execution and main merge."
+}

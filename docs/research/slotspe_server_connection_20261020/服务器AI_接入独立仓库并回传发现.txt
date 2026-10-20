@@ -1,0 +1,40 @@
+请把服务器已有的SlotSPE新发现及其实际诊断代码，回传到我们现在使用的独立仓库，建立后续按提交号协作的通道。
+
+目标仓库：https://github.com/LDT-von/slot-attention.git
+任务：SPE-08，服务器发现与诊断产物回传。
+本地已知基线：main@a5819e40319794488609e2052d8ff5778d006e50；操作时先读取最新origin/main。
+原DCT-Reg@1de42c7只提交了说明和忽略规则，未把实际诊断脚本/原始结果交到这个独立库。本次要交付可核对的文件。
+
+1. 接入正确仓库
+在服务器新建独立clone，或复用remote正确且工作区干净的slot-attention目录；不要把DCT-Reg的origin改指向新库，也不要把两个Git历史拼接。
+先读新库README.md、AGENTS.md、docs/PROGRESS.json，以及docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt。
+基于最新origin/main建立codex/server-slotspe-evidence-20261020分支；同名已存在就检查并继续自己的分支，归属不明则新建带后缀的分支。保留所有原工作区和未提交修改，不reset、不clean、不force push。
+
+2. 把真正使用过的代码交进来
+将实际运行的_p1246_diag.py、_spe09_viz.py和其他支撑新发现的诊断脚本，复制到scripts/server_diagnostics/，不要只在说明里提名字。
+保留服务器原文件字节与SHA256；公开副本若需移除凭据、患者信息或改为可配置路径，另存副本并记录原始SHA、公开SHA和具体差异，不能把修改后的版本冒充当时执行版本。
+不要修改third_party/SlotSPE原版、添加创新模块或混入其他DCT实验。
+
+3. 提交已有发现、协议与来源
+在docs/research/slotspe_server_return_20261020/提交：
+- 服务器发现报告.txt：逐项写清观察、指标单位、已有对照、是否配对同一随机状态、证据缺口及not_observed结果；区分观测、计算敏感性、患者预测损害、修正收益。
+- diagnostic_summary.json：从现有结果提取可公开的队列级统计，注明原JSON键、聚合方法与原文件SHA，明确这是摘要而非完整原始诊断。
+- provenance.json：原执行代码版本/哈希、已脱敏命令与配置、队列、fold、seed、实际训练轮数、patch预算、训练/验证人数、checkpoint SHA、设备/依赖、评估次数和RNG控制方式。没有保存的内容标明未知。
+- artifact_manifest.json及missing_artifacts.json：列出已有产物类型、大小/完整SHA、哪些只在服务器保存、哪些缺失及原因。公开清单使用不含患者标识的逻辑名称。
+现有diagnostic.json、native_model_audit.json、trained_selector_gradients.json、eval_repeats.json、patient_slot_intervention.json、natural_gate_observations.json等若含逐患者内容，原件保存在忽略的local_evidence/，只从已有结果整理公开摘要。没有的文件如实列缺，不临时制造。
+患者特征、权重、标识、逐患者预测/槽数组和原始临床表均不进入公开Git；完整原始材料另在服务器准备私有回传包，返回包SHA和缺失清单。只在有已授权私有渠道时传输，不上传到公开Release或公开附件，不索取或暴露凭据。
+
+4. 沿用已经厘清的结论边界
+P2“每患者至少一对cos>0.95、max=0.9999”不等于8槽全复制；P3的0.0035是C-index标准差，P5的0.011是logit差，P6的0.085是risk差，不能共用噪声阈值。
+P6若没有相同特征集合、权重、eval和高斯/Gumbel随机状态的配对控制，登记order_effect_not_identified；P4均值置换不变仅是sanity check。
+P7断开的是选槽器直接融合主梯度，辅助生存监督仍连通；风险方向须按实际risk公式和删失规则检查，Spearman不能单独定论。P8不适用原版。
+在docs/PROGRESS.json登记“服务器公开材料已提交，等待本地验收”，不能把它写成原始患者产物已验收或六项患者损害全立。不要改写历史报告和历史哈希。
+
+5. 实际push并核对远端
+仅暂存本次公开代码、报告、摘要与进展的明确路径，检查暂存清单及内容，确保没有患者材料、权重、凭据或无关改动。不能只提交AGENTS.md/.gitignore，也不要整库git add .。
+提交并push到上述新库分支；不要直接覆盖main。用git ls-remote核对远端分支SHA与本地HEAD完全一致，并用提交树核对诊断脚本和摘要确实进入提交。
+权限或网络失败时保留本地提交，报告实际错误和需要的最小用户操作；不要绕过权限，也不要声称push成功。
+
+6. 返回给用户的交接收据
+返回：路线/任务；完成工作；仓库URL、实际分支、完整commit SHA、GitHub分支或提交链接、关键文件路径；远端核验结果和本次实际执行；缺失产物及原因；下一步/用户输入。
+本次只整理、校验和回传已有材料，不新增训练、模型前向/反向、患者干预或五折扩展。公开材料push成功只代表Git回传通道建立，完整患者证据仍须私下回传并独立验收。

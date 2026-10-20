@@ -1,0 +1,86 @@
+{
+  "schema": "slotspe_clean_server_integration_v1",
+  "recorded_at": "2026-10-20T20:58:08+08:00",
+  "base_main_commit": "a5819e40319794488609e2052d8ff5778d006e50",
+  "source_server_commit": "82582f212f5882b5beb52f081bafa3d261d6e393",
+  "method": "Clean squash integration, preserving source identity without source commit ancestry",
+  "preserved_dirty_file_backup_count": 6,
+  "private_original_scripts_excluded_from_main": true,
+  "all_current_public_text_files_scanned": true,
+  "nonplaceholder_patient_id_hits": 0,
+  "new_model_execution": false,
+  "original_SlotSPE_bytes_unchanged": true,
+  "topk_ratio_status": "awaiting actual resolved configuration",
+  "changed_files": [
+    {
+      "path": "README.md",
+      "bytes": 7701,
+      "sha256": "363e1955b25e4d4ced7bbcee3295aed09ba4d4b7c4e1575d0b9680ca563d6ab8"
+    },
+    {
+      "path": "docs/PROGRESS.json",
+      "bytes": 13224,
+      "sha256": "8374a4da510c6fb7ae2c34618dc73715ff54ebd0cbe9c4b9aa25e264b4b159a7"
+    },
+    {
+      "path": "docs/research/slotspe_merge_20261020/合并说明.txt",
+      "bytes": 1424,
+      "sha256": "bc65e5e7163f23f56ddbc45ea54a4b205fb78c44cab89e2d96bd9331d46cf81d"
+    },
+    {
+      "path": "docs/research/slotspe_server_acceptance_20261020/acceptance_receipt.json",
+      "bytes": 9274,
+      "sha256": "f76f207e19c716a33498af39b0d9300ff4bc3dfa7e5a614a31fd6b5ddade885c"
+    },
+    {
+      "path": "docs/research/slotspe_server_acceptance_20261020/服务器AI_修正公开交付并私有打包.txt",
+      "bytes": 3329,
+      "sha256": "959bbb4d91da66dd590e29154b060efa17f7419109e02123922d635e3d3c2e5b"
+    },
+    {
+      "path": "docs/research/slotspe_server_acceptance_20261020/本地验收报告.txt",
+      "bytes": 7359,
+      "sha256": "4835c62e041c3733a379115becc2374e00a1a0b2f32b549f03e1c995a9393190"
+    },
+    {
+      "path": "docs/research/slotspe_server_connection_20261020/服务器AI_接入独立仓库并回传发现.txt",
+      "bytes": 5108,
+      "sha256": "903ae321e4d43e413c1fbaa3fdf3eb214db7c38540cc96a48ee5c6737abec0fc"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/artifact_manifest.json",
+      "bytes": 11116,
+      "sha256": "8ac6c019a37cf235ddb15f0b4d7e3df03cf43beb5983183cfedc03a4c2f0f7de"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/diagnostic_summary.json",
+      "bytes": 15846,
+      "sha256": "b02b2e419de8abd13159fa07ca9df8bc3c2eeba4168b32cd2a3113856b509ee0"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/missing_artifacts.json",
+      "bytes": 6491,
+      "sha256": "c8b63b5169b585a96af8f3c7f1e86fc8fbe97223e2dce0d33778a4afbaaf758b"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/provenance.json",
+      "bytes": 7990,
+      "sha256": "81b152a968778be2769f414561063b10c9e69c790769377e75843d6168e0d062"
+    },
+    {
+      "path": "docs/research/slotspe_server_return_20261020/服务器发现报告.txt",
+      "bytes": 14356,
+      "sha256": "57d6ed02faa2c94b09d2ed0e2b8184a8c557a58591d4991d1e2236146f2784e4"
+    },
+    {
+      "path": "scripts/server_diagnostics/_p1246_diag.py",
+      "bytes": 15570,
+      "sha256": "497cfaa96609f1c6156c5f8c6d286af9fafe77c8fb455ec1550eb56369426572"
+    },
+    {
+      "path": "scripts/server_diagnostics/_spe09_viz.py",
+      "bytes": 18755,
+      "sha256": "c4fe8ee67ab2a7a5a118aae3a5f9a90ce051c881e345b4d6c211c69871148c67"
+    }
+  ]
+}
