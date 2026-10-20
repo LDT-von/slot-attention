@@ -10,7 +10,7 @@
     "P3": "初槽不以当前患者为条件、后续迭代读取患者；同权重eval波动已确认。服务器C-index std=0.0035待原始回传，不是通用噪声上界；冷启动损害及修正收益未证。",
     "P4": "补查后反转均值层的旧结论：完整模型（含 cross/self/to_logits）对 slot 同步置换产生 4-8% logit 差异（77 患者 max 0.077, mean 0.025），P4 不再只是均值 sanity check。原记录（约 1e-7，置换不变）只是均值路径性质，完整模型路径不置换不变。",
     "P5": "补零无 mask 风险已确认。16 行 / 64 行两组补零的受控队列最大值分别 0.00950 / 0.0326（|Δlogit|），|Δrisk| 队列最大 0.0180。三处旧数字 （4.14e-3、0.011、0.0326）的边界已澄清：4.14e-3 为单患者 16 行记录；0.011 在 现有产物中无对应值。仍是人工零行，不代表自然补零率，真实占槽与损害未证。",
-    "P6": "补查后【可量化】：RNG 受控下 77 患者 × 20 重复，patch 顺序置换 产生 |Δrisk| 队列 max 0.0748、mean_max 0.0455。原诊断的 0.0235/0.0850 是测量【含 Gumbel 采样噪声的总扰动】，剔除噪声后纯顺序效应贡献 ≈ 0.0455。结论修正：顺序效应在 RNG 受控下可观察；是否转化为 C-index 改动、是否蕴含患者损害仍未做。",
+    "P6": "补查后【可量化】：RNG 受控下 77 患者 × 20 重复，同输入同 RNG 零变更对照 20/20 次精确为 0，patch 序列置换产生 |Δrisk| 队列 max 0.0748、mean_max 0.0455（|Δlogit| 0.1346 / 0.0828）。原诊断的 0.0235/0.0850 是测量【含 Gumbel 采样噪声的总扰动】，置换臂为其噪声受控版本。【重要边界】0.0455 是【patch 置换复合效应】，不是纯顺序效应：SlotSPE 用 Gumbel 噪声 + top-k 选 patch，置换序列同时改变被选中的 patch 集合，故'顺序'与'选择集变化'尚未分离。结论修正：扰动在 RNG 受控下可归因于置换操作；是否转化为 C-index 改动、是否蕴含患者损害仍未做。",
     "P7": "最终融合主损失到选槽器的直接梯度断开已确认；单模态生存辅助仍连通，广义目标冲突、患者损害及B/C收益未证。",
     "P8": "原版无后续跨模态OT，双阶段冲突不适用。"
   },
@@ -196,5 +196,27 @@
       "correction_efficacy_established": false
     }
   },
-  "server_aggregate_results_received": true
+  "server_aggregate_results_received": true,
+  "latest_addendum_figures": {
+    "recorded_at": "2026-10-20T21:40:00+08:00",
+    "task_id": "SPE-08",
+    "why": "S1-S4 had aggregate JSON but zero figures; every existing figure predates the addendum and shows the superseded wording.",
+    "manifest": "evidence/addendum_figures_20261020/figures_manifest.json",
+    "script": "scripts/server_diagnostics/_s2026_1020_addendum_figs.py",
+    "new_measurement": false,
+    "forward_passes": 0,
+    "backward_passes": 0,
+    "patient_identifiers_in_figures": 0,
+    "figures": [
+      "A_p6_rng_controlled_order_effect.png (S1/P6: zero-change control + permutation arms)",
+      "B_p2_slot_redundancy_28pairs.png (S2/P2: 28 pairs + residual test)",
+      "C_p4_full_model_permutation.png (S3/P4: full-model non-invariance)",
+      "D_risk_direction_sign_check.png (S4: C(risk) vs C(-risk))"
+    ],
+    "defects_found_while_drawing": {
+      "D1_p6_composite_effect": "S1 measures a composite patch-permutation effect; Gumbel top-k means the selected patch set also changes. 'Pure order' is NOT isolated.",
+      "D2_s4_comparable_pairs_empty": "S4 records comparable_pairs = [] while claiming evidence_for_correct_sign = true; the pair count backing the C-index was not captured. S4 direction is NOT fully verified.",
+      "D3_p7_patient_id_in_public_original": "_spe09_viz.server-original.py:444 still contains a patient identifier in a published caption."
+    }
+  }
 }

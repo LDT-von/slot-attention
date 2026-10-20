@@ -1,0 +1,77 @@
+{
+  "schema": "slotspe_addendum_figures_v1",
+  "recorded_at": "2026-10-20T21:40:00+08:00",
+  "task_id": "SPE-08",
+  "purpose": "Visual evidence for the SPE-08 addendum (S1-S4). These four findings had aggregate JSON but NO figure; every existing figure predates the addendum and shows the OLD wording.",
+  "source_of_every_number": "docs/research/slotspe_p6_addendum_20261020/addendum.json",
+  "byte_identical_to_server_copy": "results/slotspe_proof/slot_attention_addendum_20261020/addendum.json",
+  "new_measurement": false,
+  "checkpoint_loaded": false,
+  "forward_passes": 0,
+  "backward_passes": 0,
+  "per_patient_arrays_read": false,
+  "clinical_tables_read": false,
+  "patient_identifiers_in_figures": 0,
+  "script": "scripts/server_diagnostics/_s2026_1020_addendum_figs.py",
+  "reproduce": "/home/ubuntu/.conda/envs/dct/bin/python3.10 scripts/server_diagnostics/_s2026_1020_addendum_figs.py",
+  "figures": [
+    {
+      "file": "evidence/addendum_figures_20261020/A_p6_rng_controlled_order_effect.png",
+      "covers": "S1 / P6",
+      "shows": "Panel 1 is the previously absent control: identical input + identical RNG reproduces the baseline exactly, max diff 0.0 in 20/20 repeats. Panels 2-3 then show the permutation arm alone: |Dlogit| mean-max 0.0828, |Drisk| mean-max 0.0455, cohort max 0.1346 / 0.0748.",
+      "evidence_that": "the risk difference IS attributable to the permutation, because the same-RNG same-input arm is identically zero while the permutation arm is not",
+      "known_limitation": "the permutation arm changes which patches win top-k, so this figure bounds a COMPOSITE patch-permutation effect; it does NOT separate pure ordering from a change in the selected patch set. See PROGRESS P6 caveat."
+    },
+    {
+      "file": "evidence/addendum_figures_20261020/B_p2_slot_redundancy_28pairs.png",
+      "covers": "S2 / P2",
+      "shows": "Panel 1: all 28 unordered slot pairs have cohort-mean cosine 0.9968-0.9976, every one above 0.95. Panel 2: the 0.95 threshold is met by 28/28 pairs in 100% of 77 patients; the 0.99 threshold by only 4/28. Panel 3: the residual after removing the shared component still has max off-diagonal cosine 0.978 and residual/mean norm 0.0499.",
+      "evidence_that": "the 'at least one pair' wording understated the result (it is 28/28 in 77/77), and simultaneously shows why 'the 8 slots are literal copies' is NOT supported",
+      "known_limitation": "cohort-mean and per-patient max are the summary statistics; the full per-patient 28-pair matrix is server-side only (not in the public aggregate)."
+    },
+    {
+      "file": "evidence/addendum_figures_20261020/C_p4_full_model_permutation.png",
+      "covers": "S3 / P4",
+      "shows": "Panel 1: after a synchronised slot permutation applied BEFORE top-k, |Dlogit| per-patient max spans 0.00412-0.07744 (median 0.0195, mean 0.0248) and 77/77 patients move above 1e-6. Panel 2: the per-patient effect spans about 360x (risk 0.000138 to 0.04992).",
+      "evidence_that": "the full model is NOT slot-permutation invariant, reversing the earlier '~1e-7, permutation invariant' reading which described only the mean-aggregation path",
+      "known_limitation": "this is a mechanism/mechanism-visibility result. It is NOT a patient-harm claim and NOT a performance claim."
+    },
+    {
+      "file": "evidence/addendum_figures_20261020/D_risk_direction_sign_check.png",
+      "covers": "S4 / risk direction",
+      "shows": "C(risk) = 0.7221 [0.7129, 0.7296] versus C(-risk) = 0.2779 [0.2704, 0.2871] over 20 repeats and 77 patients; gap 0.4443.",
+      "evidence_that": "the producer's sign convention puts higher risk scores earlier events, so upstream 'risk increased / decreased' language can be read literally",
+      "known_limitation": "the figure deliberately prints comparable_pairs = [] in red. The recorded evidence_for_correct_sign = true is produced alongside an EMPTY comparable-pair list, so the pair count backing this C-index was not captured. This must be resolved before S4 is treated as fully verified."
+    }
+  ],
+  "open_defects_found_while_drawing": [
+    {
+      "id": "D1",
+      "severity": "blocking-for-P6",
+      "finding": "S1 arm (b) permutes the patch sequence, but SlotSPE selects patches with Gumbel-noised top-k. Permuting the sequence therefore also changes WHICH patches are selected. The recorded 0.0455 / 0.0748 is a composite 'patch permutation' effect, not a pure ordering effect.",
+      "why_it_matters": "the earlier P6 concern was that the difference could not be attributed to order. It is now attributable to the permutation, but 'order' and 'selection-set change' are still not separated.",
+      "would_require": "a further eval-only run with a selection-set-preserving control. Not done; not authorised."
+    },
+    {
+      "id": "D2",
+      "severity": "blocking-for-S4",
+      "finding": "S4 records comparable_pairs = [] while also recording evidence_for_correct_sign = true. Either the pair counter is never populated, or the comparable-pair rule yielded nothing and the C-index came from a different path.",
+      "why_it_matters": "the C-index direction check is the foundation for reading every 'risk increased/decreased' statement in S1 and S3.",
+      "would_require": "reading the _concordance helper in scripts/server_diagnostics/_s2026_1020_addendum.py and re-deriving the pair count offline from eval_repeats.json. No training or forward pass needed."
+    },
+    {
+      "id": "D3",
+      "severity": "still-open-from-previous-list",
+      "finding": "scripts/server_diagnostics/_spe09_viz.server-original.py:444 still contains the patient identifier TCGA-2F-A9KO inside a published caption.",
+      "why_it_matters": "P7 from the previous problem list is unresolved; the original file is in the public repository.",
+      "would_require": "redacting the caption in the original copy or withdrawing it from the public path."
+    }
+  ],
+  "explicitly_not_claimed_by_these_figures": [
+    "patient predictive harm - NOT claimed",
+    "correction or B/C efficacy - NOT claimed",
+    "five-fold pooled performance - NOT claimed; these are single fold0 numbers",
+    "P6 order effect converted into a C-index change - NOT measured",
+    "P2 as a correctable defect - the shared component is characterised, not yet shown to be fixable"
+  ]
+}
