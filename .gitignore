@@ -39,3 +39,4 @@ __pycache__/
 /docs/research/slotspe_literature_20261020/extracted_text/zhang23ba.txt
 /docs/research/slotspe_literature_20261020/server_reported_d64530c_AGENTS.txt
 /docs/research/slotspe_p1_20261020/descriptive_summary.json
+.cursor/
