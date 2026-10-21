@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-21T20:10:31+08:00",
+  "recorded_at": "2026-10-21T20:14:02+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "将单项内容分配版本接入一份固定宿主训练协议；当前只有阶段核心与配置验收，不启动患者任务，不修改E盘既有方法。",
+  "next_action": "服务器可拉取研究载荷并做合成检查；完整患者训练尚未接入，DIAS/MetaSlot未实现，不自动启动患者任务。",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -505,7 +505,7 @@
   "latest_research_module_publication": {
     "recorded_at": "2026-10-21T20:10:31+08:00",
     "task_id": "SPE-08",
-    "status": "checked_ready_to_publish",
+    "status": "completed_published",
     "repository": "https://github.com/LDT-von/slot-attention",
     "branch": "main",
     "base_including_server_report": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
@@ -524,6 +524,13 @@
     "new_server_raw_artifacts_audited": false,
     "private_payloads_staged": false,
     "protected_original_sources_modified": false,
-    "next_action": "Publish scoped payload, verify remote ref/tree, and retain explicit training-readiness limits."
+    "next_action": "服务器可拉取研究载荷并做合成检查；完整患者训练尚未接入，DIAS/MetaSlot未实现，不自动启动患者任务。",
+    "payload_commit": "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
+    "payload_tree": "9171373dac2e7f90d32c2ecbf02d3b7260750014",
+    "remote_payload_commit_verified": "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
+    "remote_payload_tree_verified": "9171373dac2e7f90d32c2ecbf02d3b7260750014",
+    "verified_payload_files": 29,
+    "publication_receipt": "docs/research/slotspe_redundancy_methods_20261021/publication_verified.json",
+    "verified_at": "2026-10-21T20:14:02+08:00"
   }
 }

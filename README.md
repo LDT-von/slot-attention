@@ -8,6 +8,8 @@
 
 ## 本轮发布范围与服务器入口（2026-10-21）
 
+研究载荷已推送到`main`，提交[`41e33e5`](https://github.com/LDT-von/slot-attention/commit/41e33e5d55959c3ddaf3271d3046db1e9ba6f008)；远端提交、文件树和29份载荷文件均已核验。[发布收据](docs/research/slotspe_redundancy_methods_20261021/publication_verified.json)。
+
 本轮载荷通过29项相关合成检查和3个默认计划入口检查，包含历史本地诊断的公开汇总、MESH式分配/原型桥接核心及D0-D4阶段配置。[发布与服务器拉取](docs/research/slotspe_redundancy_methods_20261021/发布与服务器拉取.txt)。完整患者训练尚未接入，DIAS/MetaSlot未实现，不能将五份阶段配置当作三篇论文的完整训练版本。
 
 已快进保留服务器新提交`2a806c2`及其[observe汇总](docs/research/slotspe_mechanism_protocol_20261021/observe_结果汇总_20261021.md)。本轮只登记报告到达，原始患者产物尚未在此验收；与本地71人历史记录分开。本次发布不启动服务器患者任务。

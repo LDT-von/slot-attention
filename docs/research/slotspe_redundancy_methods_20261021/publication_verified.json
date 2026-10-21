@@ -1,0 +1,21 @@
+{
+  "schema": "slotspe_research_publication_verified_v1",
+  "verified_at": "2026-10-21T20:14:02+08:00",
+  "repository": "https://github.com/LDT-von/slot-attention",
+  "branch": "main",
+  "payload_commit": "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
+  "payload_tree": "9171373dac2e7f90d32c2ecbf02d3b7260750014",
+  "remote_payload_commit_verified": "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
+  "remote_payload_tree_verified": "9171373dac2e7f90d32c2ecbf02d3b7260750014",
+  "verified_payload_files": 29,
+  "remote_verification_channel": "GitHub Git Data API (native ls-remote had a transient connection failure after successful push)",
+  "server_report_commit_preserved": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
+  "tests_passed": 29,
+  "plan_only_cli_checks_passed": 3,
+  "raw_patient_payloads_published": false,
+  "original_sources_modified": false,
+  "new_patient_tasks_during_publication": 0,
+  "new_training_runs_during_publication": 0,
+  "readiness": "research core and five stage specs only; full patient training not integrated; DIAS/MetaSlot not implemented",
+  "closure_note": "This subsequent metadata commit records an already-pushed and independently-verified payload. Its own final remote ref is checked outside this self-referential document."
+}
