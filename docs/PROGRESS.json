@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-21T21:20:00+08:00",
+  "recorded_at": "2026-10-22T02:05:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
@@ -67,13 +67,13 @@
       "id": "SPE-09",
       "title": "交付干净原版单臂服务器检查与严格回传验收",
       "status": "completed_local_execution",
-      "next_action": "本机CPU已执行默认原版单臂BLCA队列并完成；结果见latest_local_blca_run；机制对照与D0-D4训练需另行授权。"
+      "next_action": "trisurv环境GPU已跑通并与DCT-Reg参考运行数值完全一致(1485个模型张量0差异)；下一步由用户授权对照臂与队列规模。"
     }
   ],
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "本机CPU完成默认原版单臂BLCA运行(379人/302训练/77验证，20次评估C-index均值0.7279)；下一步由用户决定是否授权机制对照或D0-D4宿主训练接入。",
+  "next_action": "trisurv环境GPU复现DCT-Reg参考BLCA基线完全一致(C-index均值0.72235,20次)；下一步由用户决定授权哪个对照臂。",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -664,5 +664,110 @@
     "correction_efficacy_established": false,
     "gaps_reasons": "单fold单seed、3轮、20次评估的一次探索性原版运行；未测P1-P7机制干预，未比较D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot。C-index为探索性均值，不构成患者表现结论。",
     "next_action_user_input": "如需继续，请授权具体对照(如关闭稀疏选择或匹配容量训练)与队列规模；D0-D4需先完成宿主训练接入。"
+  },
+  "latest_local_blca_gpu_run": {
+    "recorded_at": "2026-10-22T02:05:00+08:00",
+    "task_id": "SPE-09",
+    "route": "local_blca_clean_original_gpu_run",
+    "status": "completed_local_gpu_execution",
+    "authorization": "用户于2026-10-22 01:40指定使用trisurv环境与uni2-h数据集继续跑BLCA；沿用既有默认原版单臂配置，未扩大队列。",
+    "completed": "改用/home/ubuntu/.conda/envs/trisurv(torch 2.10.0+cu128, 支持sm_120)在RTX 5090上执行默认clean-original原版单臂队列，四阶段完成。",
+    "output_root": "results/slotspe_proof/blca_gpu_trisurv_a512169",
+    "run_log": "local_evidence/blca_gpu_trisurv_a512169_run.log",
+    "environment": {
+      "python": "/home/ubuntu/.conda/envs/trisurv/bin/python (3.10.20)",
+      "torch": "2.10.0+cu128",
+      "cuda_arch_list_includes_sm_120": true,
+      "gpu": "NVIDIA GeForce RTX 5090",
+      "device": "cuda:0",
+      "numpy": "2.2.6",
+      "pandas": "2.3.3",
+      "einops": "0.8.2",
+      "scikit-survival": "0.25.0"
+    },
+    "features": "uni2-h (.h5), /data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files",
+    "config": {
+      "study": "blca",
+      "fold": 0,
+      "seed": 3,
+      "epochs": 3,
+      "patches": 256,
+      "batch_size": 8,
+      "eval_repeats": 20,
+      "arm": "original",
+      "experiment": "original_audit"
+    },
+    "cohort": {
+      "train": 302,
+      "val": 77,
+      "excluded": 2,
+      "unique_complete_case_patients": 379
+    },
+    "training_curve": [
+      {
+        "epoch": 1,
+        "loss": 2.85843,
+        "val_cindex": 0.7258320126782885
+      },
+      {
+        "epoch": 2,
+        "loss": 2.5802,
+        "val_cindex": 0.742472266244057
+      },
+      {
+        "epoch": 3,
+        "loss": 2.41856,
+        "val_cindex": 0.722662440570523
+      }
+    ],
+    "final_metrics": {
+      "val_cindex_mean_exploratory": 0.7223454833597466,
+      "val_cindex_std_population": 0.00353836981961428,
+      "val_cindex_min_exploratory": 0.7131537242472267,
+      "val_cindex_max_exploratory": 0.7297939778129953
+    },
+    "reference_match_dct_reg_gpu_run": {
+      "all_20_repeat_metrics_identical": true,
+      "same_initial_state_sha256": true,
+      "epoch_loss_and_val_cindex_identical": true,
+      "model_tensors_compared": 1485,
+      "model_tensors_mismatching": 0,
+      "checkpoint_sha256_differs_only_in": [
+        "protocol/python",
+        "protocol/started_utc",
+        "protocol/runner_sha256",
+        "protocol/source_hashes_before",
+        "protocol/manifest_sha256"
+      ],
+      "checkpoint_model_weights_identical": true,
+      "verdict": "本机trisurv环境GPU运行与DCT-Reg参考GPU运行数值完全一致，可作为可信基线；checkpoint文件SHA不同仅因内嵌运行环境与时间戳元数据"
+    },
+    "structural_observations": {
+      "selector_parameter_count": 8,
+      "main_gradient_none_parameter_count": 8,
+      "main_gradient_connected_parameter_count": 0,
+      "disconnected_selector_status": "observed",
+      "evaluation_randomness_observed": true
+    },
+    "provenance": {
+      "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
+      "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+      "parameter_count": 33093390,
+      "optimizer_steps": 114,
+      "elapsed_seconds": 129.2282225158997,
+      "peak_allocated_cuda_bytes": 1064786432
+    },
+    "device_comparison_cpu_vs_gpu": "同一协议CPU运行C-index均值0.72789(std 0.00243) vs GPU均值0.72235(std 0.00354)。两者初始状态SHA不同，差异含设备/库版本/浮点顺序，只能作为可重复性量级参考，不能作性能结论。",
+    "checks": {
+      "doctor_ready_on_gpu": true,
+      "original_source_modified": false,
+      "default_queue_config_modified": false,
+      "patient_identifiers_staged_to_git": false,
+      "queue_status": "completed/4 stages"
+    },
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false,
+    "gaps_reasons": "单fold单seed、3轮、20次评估的一次原版基线；未测P1-P7机制干预，未跑D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot。C-index为探索性均值。",
+    "next_action_user_input": "GPU已可用且与参考运行数值一致；下一步由用户授权具体对照臂(如关闭稀疏选择、匹配容量训练)与队列规模。"
   }
 }
