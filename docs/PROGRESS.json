@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-21T20:40:00+08:00",
+  "recorded_at": "2026-10-21T21:20:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
@@ -66,14 +66,14 @@
     {
       "id": "SPE-09",
       "title": "交付干净原版单臂服务器检查与严格回传验收",
-      "status": "completed_published",
-      "next_action": "服务器AI拉取main@f5370b6并解压原版单臂包执行；尚无可调用服务器AI通道和启动/结果回执。"
+      "status": "completed_local_execution",
+      "next_action": "本机CPU已执行默认原版单臂BLCA队列并完成；结果见latest_local_blca_run；机制对照与D0-D4训练需另行授权。"
     }
   ],
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "研究核心与D0-D4阶段配置已发布(a512169)并在本机拉取复核通过；完整患者训练未接入，DIAS/MetaSlot未实现；下一步由用户决定固定宿主单项阶段适配与是否启动患者对照，不自动启动患者任务。",
+  "next_action": "本机CPU完成默认原版单臂BLCA运行(379人/302训练/77验证，20次评估C-index均值0.7279)；下一步由用户决定是否授权机制对照或D0-D4宿主训练接入。",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -576,5 +576,93 @@
     "correction_efficacy_established": false,
     "gaps_reasons": "本轮只做拉取与只读复核；发布载荷仍只含研究核心与D0-D4阶段配置，完整宿主/患者训练器未接入，DIAS/MetaSlot未实现，不能当作三篇论文的完整实现或患者训练版本；服务器新报告2a806c2的原始患者产物仍未在本轮验收。",
     "next_action_user_input": "服务器可在LDT-von/slot-attention checkout执行git pull --ff-only origin main并复核；下一步由用户决定是否先完成固定宿主的单项阶段适配与匹配训练入口，患者对照实验另行授权。"
+  },
+  "latest_local_blca_run": {
+    "recorded_at": "2026-10-21T21:20:00+08:00",
+    "task_id": "SPE-09",
+    "route": "local_blca_clean_original_run",
+    "status": "completed_local_cpu_execution",
+    "authorization": "用户于2026-10-21 20:50明确要求跑BLCA看结果；仅执行既有默认原版单臂配置，未扩大队列。",
+    "completed": "在本机CPU执行默认clean-original原版单臂队列(fold0/seed3/3轮/256真实patch/batch8/20次评估)，prepare与训练、评估、汇总四阶段全部完成。",
+    "output_root": "results/slotspe_proof/blca_cpu_a512169",
+    "run_log": "local_evidence/blca_cpu_a512169_run.log",
+    "config": {
+      "study": "blca",
+      "fold": 0,
+      "seed": 3,
+      "epochs": 3,
+      "patches": 256,
+      "batch_size": 8,
+      "eval_repeats": 20,
+      "arm": "original",
+      "device": "cpu",
+      "experiment": "original_audit"
+    },
+    "data_roots": {
+      "metadata_root": "/data1/dataset_csv",
+      "features_root": "/data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files"
+    },
+    "device_deviation": "本机GPU为RTX 5090(sm_120)，已装torch 2.6.0+cu124最高仅支持sm_90，CUDA实际执行报no kernel image；改用CPU执行。模型与数据未因此改变。",
+    "harness_change": "仓库prepare阶段原只接受.pt特征，本机BLCA特征为UNI2-h的.h5，导致首跑prepare失败(No complete-case train patients)。已按DCT-Reg同源harness补入.h5回退与h5py读取；third_party/SlotSPE原版源码未改，默认配置未改。",
+    "cohort": {
+      "train": 302,
+      "val": 77,
+      "excluded": 2,
+      "unique_complete_case_patients": 379,
+      "matches_prior_gpu_run": true
+    },
+    "training_curve": [
+      {
+        "epoch": 1,
+        "loss": 2.85085,
+        "val_cindex": 0.7385103011093502
+      },
+      {
+        "epoch": 2,
+        "loss": 2.57833,
+        "val_cindex": 0.7408874801901744
+      },
+      {
+        "epoch": 3,
+        "loss": 2.48526,
+        "val_cindex": 0.7258320126782885
+      }
+    ],
+    "final_metrics": {
+      "val_cindex_mean_exploratory": 0.7278922345483361,
+      "val_cindex_std_population": 0.002434594531812554,
+      "val_cindex_min_exploratory": 0.7242472266244057,
+      "val_cindex_max_exploratory": 0.7329635499207607,
+      "repeats": 20,
+      "evaluation_randomness_observed": true,
+      "patient_risk_std_mean": 0.006621851422651604,
+      "patient_risk_range_max": 0.08941268920898438
+    },
+    "structural_observations": {
+      "selector_parameter_count": 8,
+      "main_gradient_none_parameter_count": 8,
+      "main_gradient_connected_parameter_count": 0,
+      "disconnected_selector_status": "observed",
+      "interpretation": "选槽器对融合主损失仍无梯度(P7局部结构事实在本机原版重现)"
+    },
+    "provenance": {
+      "checkpoint_sha256": "23549f7c82303d5e8eb9de4c4e6cac399a4a546daf051929e789f6ccaed9b3e5",
+      "same_initial_state_sha256": "888730935c696ec0daf18be2492c4e974e0ec498f3c8e0f94c3954d6fcb8e6f2",
+      "parameter_count": 33093390,
+      "optimizer_steps": 114,
+      "elapsed_seconds": 438.24358389992267
+    },
+    "comparison_to_prior_gpu_run": "同队列同协议；GPU run同权重20次均值0.72235(std 0.00354)，本机CPU均值0.72789(std 0.00243)。checkpoint与初始状态SHA不同，未做逐位对齐；差异来源含设备/库版本与浮点顺序，不能作为性能结论。",
+    "checks": {
+      "doctor_ready_on_cpu": true,
+      "patient_features_read": true,
+      "original_source_modified": false,
+      "default_queue_config_modified": false,
+      "patient_identifiers_staged_to_git": false
+    },
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false,
+    "gaps_reasons": "单fold单seed、3轮、20次评估的一次探索性原版运行；未测P1-P7机制干预，未比较D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot。C-index为探索性均值，不构成患者表现结论。",
+    "next_action_user_input": "如需继续，请授权具体对照(如关闭稀疏选择或匹配容量训练)与队列规模；D0-D4需先完成宿主训练接入。"
   }
 }
