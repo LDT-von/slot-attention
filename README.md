@@ -14,6 +14,8 @@ P2同时测槽向量和真实输入读取的重复程度；P3比较随机、本�
 
 本地只完成合成测试、静态审查和计划检查，未运行真实模型或患者任务；新协议的服务器结果仍待回传。
 
+本轮代码及公开证据复核已发布到`main`（实验载荷提交`abfaf11`）；[服务器拉取入口](docs/research/slotspe_mechanism_protocol_20261021/服务器AI_拉取本轮实验.txt)。发布收据见统一进度，以下历史阶段的“尚未提交”保留其当时状态。
+
 ## 2026-10-21服务器补充材料：汇总算术已复核，部分诊断结论拒绝采信
 
 来源为DCT-Reg指定提交`2ad3853`、`0cbdbf9`、`9b3a5a8`，已仅同步15个SlotSPE诊断脚本和18份证据文档/JSON，未引入transport模块或改动默认队列。入口：[EVIDENCE_README](docs/research/slotspe_p6_addendum_20261020/EVIDENCE_README.md)、[来源与哈希](docs/research/slotspe_scoped_sync_20261021/import_manifest.json)、[本轮同步收据](docs/research/slotspe_scoped_sync_20261021/同步收据.txt)。

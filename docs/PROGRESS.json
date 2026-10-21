@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-21T12:17:01+08:00",
+  "recorded_at": "2026-10-21T12:48:59+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
@@ -303,7 +303,7 @@
     "recorded_at": "2026-10-21T12:17:01+08:00",
     "task_id": "SPE-08",
     "route": "original_questions_v1",
-    "status": "implemented_synthetic_checked_server_execution_pending",
+    "status": "published_server_execution_pending",
     "completed": "围绕原P1–P7编写直接机制测量、匹配容量训练独立入口、内容/角色/配对来源门槛和服务器执行提示词；P8不适用。",
     "protocol": "docs/research/slotspe_mechanism_protocol_20261021/实验协议与判定.txt",
     "server_prompt": "docs/research/slotspe_mechanism_protocol_20261021/服务器AI_原八项问题实验.txt",
@@ -337,8 +337,9 @@
       "C-index统一问题门槛"
     ],
     "gaps_reasons": "63项仅为合成与接口测试；原生checkpoint逐轮重放和aux重建需服务器验收。P4/P5/P6外部依据不可虚构；P1充分训练及复杂度交互、P3训练分布外初态限制如实登记。",
-    "new_commit_or_push": false,
-    "next_action_user_input": "交付ZIP与提示词，服务器先plan和observe；不自动启动独立capacity_train，不扩大五折训练；私下回传原始产物、公开仅队列级汇总。"
+    "new_commit_or_push": true,
+    "next_action_user_input": "交付ZIP与提示词，服务器先plan和observe；不自动启动独立capacity_train，不扩大五折训练；私下回传原始产物、公开仅队列级汇总。",
+    "published_payload_commit": "abfaf11525a67371c57d2dc938912a0b819541fd"
   },
   "latest_git_delivery_request": {
     "task_id": "SPE-08",
@@ -350,5 +351,30 @@
     "scope": "scoped server evidence imports, conservative reviews, original-question experiments, protocol, synthetic tests and sanitized delivery archive",
     "patient_execution_started": false,
     "private_patient_data_staged": false
+  },
+  "latest_git_delivery": {
+    "recorded_at": "2026-10-21T12:48:59+08:00",
+    "task_id": "SPE-08",
+    "route": "original_questions_v1",
+    "status": "payload_published_and_remote_verified",
+    "completed": "57个公开文件已提交并发布；包含原八项实验、协议、服务器拉取提示词、脱离私有数据的证据与复核记录。",
+    "repository": "https://github.com/LDT-von/slot-attention",
+    "branch": "main",
+    "payload_commit": "abfaf11525a67371c57d2dc938912a0b819541fd",
+    "payload_tree": "eefae532a90af573933624e447db2044bc79d617",
+    "checks": {
+      "synthetic_tests_passed": 63,
+      "staged_json_python_privacy_checks_passed": true,
+      "local_and_remote_payload_commit_identical": true,
+      "local_and_remote_payload_tree_identical": true,
+      "original_executable_source_and_default_configs_unchanged": true,
+      "private_patient_inputs_staged": false
+    },
+    "publish_method": "Git transport failed; GitHub Git Data API uploaded identical objects and updated main with force=false.",
+    "server_handoff": "docs/research/slotspe_mechanism_protocol_20261021/服务器AI_拉取本轮实验.txt",
+    "server_execution_started": false,
+    "new_server_raw_results_received": false,
+    "gaps_reasons": "只发布并核验代码；服务器尚未回传本协议原生重放或患者机制测量结果。",
+    "next_action_user_input": "服务器在LDT-von/slot-attention checkout拉取main；不得在DCT-Reg里误拉；先读取协议并检查plan。"
   }
 }
