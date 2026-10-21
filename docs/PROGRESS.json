@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-21T20:14:02+08:00",
+  "recorded_at": "2026-10-21T20:40:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
@@ -61,7 +61,7 @@
       "id": "SPE-08",
       "title": "核实八类槽问题在指定原版SlotSPE中的存在性",
       "status": "partially_completed_local",
-      "next_action": "核查文献分配模块与任务条件重复设计；患者验证尚未执行，继续原八项问题证据验收，未经执行授权不启动训练。"
+      "next_action": "研究核心与D0-D4阶段配置已发布并在本机拉取复核(29项合成测试+3个计划入口通过)；完整患者训练未接入，DIAS/MetaSlot未实现；服务器原始产物验收与是否启动患者对照待用户决定。"
     },
     {
       "id": "SPE-09",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "服务器可拉取研究载荷并做合成检查；完整患者训练尚未接入，DIAS/MetaSlot未实现，不自动启动患者任务。",
+  "next_action": "研究核心与D0-D4阶段配置已发布(a512169)并在本机拉取复核通过；完整患者训练未接入，DIAS/MetaSlot未实现；下一步由用户决定固定宿主单项阶段适配与是否启动患者对照，不自动启动患者任务。",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -532,5 +532,49 @@
     "verified_payload_files": 29,
     "publication_receipt": "docs/research/slotspe_redundancy_methods_20261021/publication_verified.json",
     "verified_at": "2026-10-21T20:14:02+08:00"
+  },
+  "latest_research_module_pull": {
+    "recorded_at": "2026-10-21T20:40:00+08:00",
+    "task_id": "SPE-08",
+    "route": "research_module_pull_and_local_verification",
+    "status": "pulled_and_locally_verified_no_execution",
+    "completed": "在/data1/SlotSPE执行git pull --ff-only origin main，从2a806c2快进到a512169；本地与远端提交、文件树一致，工作区干净；复核29项合成测试与3个默认计划入口。",
+    "repository": "https://github.com/LDT-von/slot-attention",
+    "branch": "main",
+    "previous_local_commit": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
+    "local_head_commit": "a5121692c9cce5ef65ee75a9a821800eb1283992",
+    "local_head_tree": "c9dc1a7d55918c0bfc6b812b540bd49e63b603ba",
+    "remote_main_commit_verified": "a5121692c9cce5ef65ee75a9a821800eb1283992",
+    "remote_main_via_ls_remote": "a5121692c9cce5ef65ee75a9a821800eb1283992",
+    "incoming_commits": [
+      "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
+      "a5121692c9cce5ef65ee75a9a821800eb1283992"
+    ],
+    "fast_forward_only": true,
+    "local_remote_diff_empty": true,
+    "working_tree_clean": true,
+    "checks": {
+      "synthetic_tests_passed": 29,
+      "synthetic_test_command": "python -B -m pytest tests/test_slotspe_assignment_router.py tests/test_slotspe_prototype_assignment.py tests/test_slotspe_sparsity_off.py -q",
+      "plan_only_cli_checks_passed": 3,
+      "plan_only_cli_entries": [
+        "scripts/check_slotspe_assignment_router.py",
+        "scripts/check_slotspe_retained_redundancy.py --input-root <nonexistent>",
+        "scripts/check_slotspe_sparsity_off.py --observations-root <nonexistent> --checkpoint <nonexistent>"
+      ],
+      "patient_data_read_during_plan_checks": false,
+      "third_party_SlotSPE_modified": false,
+      "existing_default_queue_configs_modified": false,
+      "private_patient_inputs_staged": false,
+      "local_evidence_tracked_by_git": false
+    },
+    "new_patient_tasks_this_stage": 0,
+    "new_training_runs_this_stage": 0,
+    "new_model_forward_passes": 0,
+    "server_execution_this_stage": false,
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false,
+    "gaps_reasons": "本轮只做拉取与只读复核；发布载荷仍只含研究核心与D0-D4阶段配置，完整宿主/患者训练器未接入，DIAS/MetaSlot未实现，不能当作三篇论文的完整实现或患者训练版本；服务器新报告2a806c2的原始患者产物仍未在本轮验收。",
+    "next_action_user_input": "服务器可在LDT-von/slot-attention checkout执行git pull --ff-only origin main并复核；下一步由用户决定是否先完成固定宿主的单项阶段适配与匹配训练入口，患者对照实验另行授权。"
   }
 }
