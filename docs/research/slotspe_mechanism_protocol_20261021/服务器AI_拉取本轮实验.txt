@@ -1,0 +1,28 @@
+请拉取本轮原八项问题实验代码。
+
+目标仓库：https://github.com/LDT-von/slot-attention
+分支：main
+不要在LDT-von/DCT-Reg仓库内执行下面的pull来获取这批代码。
+
+若已存在slot-attention的干净checkout：
+git remote get-url origin
+确认输出为LDT-von/slot-attention后执行：
+git pull --ff-only origin main
+git rev-parse HEAD
+
+若现有目录不是该仓库，或存在本地改动，保留原目录，新建副本：
+git clone --branch main https://github.com/LDT-von/slot-attention.git slot-attention-original-questions
+cd slot-attention-original-questions
+git rev-parse HEAD
+
+入口文档：
+docs/research/slotspe_mechanism_protocol_20261021/实验协议与判定.txt
+docs/research/slotspe_mechanism_protocol_20261021/服务器AI_原八项问题实验.txt
+
+已经通过git获取代码，无需再解压ZIP；继续按第二份文档的输入核对和执行步骤操作。
+先只检查计划：
+python -B scripts/run_slotspe_problem_experiments.py --plan
+
+模型/患者输入继续引用既有服务器私有路径，不复制进公开仓库。
+本条拉取指令不启动训练、前向或梯度测量；后续运行遵循实验提示词中的明确范围。
+回报实际拉到的完整SHA、原生recipe/数据来源是否齐备及缺失条件，不报告未运行的实验结果。

@@ -1,0 +1,670 @@
+{
+  "schema": "slotspe_scoped_cross_repo_import_v1",
+  "recorded_at": "2026-10-21T10:56:41+08:00",
+  "task": "SPE-08",
+  "source_repository": "https://github.com/LDT-von/DCT-Reg.git",
+  "source_ref": "9b3a5a8815bc1283ca427d2063434ee029404e75",
+  "source_commits": [
+    "2ad3853f337949c93a299ad204a06ec9a31031f3",
+    "0cbdbf9a103920561158de766d2558ae42bc9950",
+    "9b3a5a8815bc1283ca427d2063434ee029404e75"
+  ],
+  "target_repository": "https://github.com/LDT-von/slot-attention.git",
+  "target_local_base": "2c176264d2855404ecc2dd5e5eef3e1c991f569d",
+  "scope": "SlotSPE diagnostic scripts and aggregate evidence only",
+  "copied_files": [
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/EVIDENCE_README.md",
+      "bytes": 4297,
+      "sha256": "eb8cfa8bccb285841fe486935286bab08e4bb3fc7d16e604bbacfaa5c8a00673",
+      "git_blob_sha": "b64637c74f881e008332feb79b771b8ed8a7ec2e",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/FINAL_RECEIPT.md",
+      "bytes": 6213,
+      "sha256": "c2df8093f340bbfc92690b65b60d13eaa2899b39303a3427cd620a7b89ba9bf1",
+      "git_blob_sha": "8ea2ac578433f362a5ec4d22ac21405ea6e9d730",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/PART_AB_RECEIPT.md",
+      "bytes": 6898,
+      "sha256": "a67d619b34d45a55b018d60759d845b437eb5600a978553ae29287aec9332340",
+      "git_blob_sha": "33e7af75c3ca519c8b7f0bdcdc0ecfbbd2cb0471",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/RESULTS.md",
+      "bytes": 4186,
+      "sha256": "fe1c34b644086ab9a66d40ac637a7eabd98370a90c1c238e915442cfe5731b08",
+      "git_blob_sha": "f28fb6d7961ad5cb5172bdcf5dacf97a563b43be",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/audit.md",
+      "bytes": 5862,
+      "sha256": "65c43d1bf71e49286ecc8e42f7f2a47e30f487a090a3289970b7c00b2b2cd36f",
+      "git_blob_sha": "e69ee92c64ef928cf15b7598c15f39f71df538e7",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/bit_exact_probe.json",
+      "bytes": 1417,
+      "sha256": "f43e92f48bd6e40d8966b31341a8e40854673936278a522c6e183ec433230ea4",
+      "git_blob_sha": "1f3d8a225f5c52c2483ed59cf5411899040d787c",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "stage",
+        "checkpoint_sha256",
+        "experiments"
+      ],
+      "array_schema": [
+        {
+          "key": ".experiments.E1_default_determinism.pairwise_max_abs_diff",
+          "length": 4,
+          "item_keys": null
+        },
+        {
+          "key": ".experiments.E1_default_determinism.logit_sha256",
+          "length": 5,
+          "item_keys": null
+        },
+        {
+          "key": ".experiments.E2_use_deterministic_algorithms.pairwise_max_abs_diff",
+          "length": 4,
+          "item_keys": null
+        },
+        {
+          "key": ".experiments.E2_use_deterministic_algorithms.logit_sha256",
+          "length": 5,
+          "item_keys": null
+        }
+      ]
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/cross_env_trisurv.json",
+      "bytes": 1336,
+      "sha256": "c406dc199a0a1f8812c0c43071809e81aa1497ee6df0f79a2d39fd590f06a312",
+      "git_blob_sha": "228ec6f12643cd973b694fb6cc22c388ff2f57d1",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "env",
+        "python",
+        "torch",
+        "a_bit_exact_same_seed",
+        "b_cindex_distribution",
+        "c_topk_keep_drift",
+        "expected_dct_values",
+        "verdict"
+      ],
+      "array_schema": [
+        {
+          "key": ".b_cindex_distribution.paired_delta_ci95",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".expected_dct_values.paired_delta_ci95_expected",
+          "length": 2,
+          "item_keys": null
+        }
+      ]
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/cross_env_trisurv.md",
+      "bytes": 3364,
+      "sha256": "c53921de8ef82ce081059eb03b9812efe25ac6547d582926658681d363bc2faa",
+      "git_blob_sha": "d3403b8d75f6ae2e504818359a4f64ef9a9b9c6d",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/post_training_analysis.json",
+      "bytes": 13085,
+      "sha256": "17c162bd0efd9f0f77c254b617328e6757e154cde0570697f60d45cf760c492b",
+      "git_blob_sha": "ac921afd72ac768116c1158ece576a55697167ea",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "stage",
+        "scan_dirs",
+        "n_pairs",
+        "per_pair",
+        "eval_fix",
+        "overfitting",
+        "fold_spread",
+        "original_all_pairs"
+      ],
+      "array_schema": [
+        {
+          "key": ".scan_dirs",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".per_pair",
+          "length": 18,
+          "item_keys": [
+            "fold",
+            "seed",
+            "dir",
+            "orig_mean",
+            "orig_std",
+            "orig_median",
+            "orig_n",
+            "fix_mean",
+            "fix_std",
+            "fix_median",
+            "fix_n",
+            "curve_epochs"
+          ]
+        },
+        {
+          "key": ".eval_fix.bootstrap_ci95",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".eval_fix.range",
+          "length": 2,
+          "item_keys": null
+        }
+      ]
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/slotspe_evalfix_evidence.json",
+      "bytes": 208103,
+      "sha256": "7751e15bf9167fdf74a27f1da20c7552d5f79dde364a9b91b4939905be957046",
+      "git_blob_sha": "0dae0f2bac173998af5f652415e2128b61dafff8",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "_README",
+        "generated",
+        "n_pairs",
+        "epochs_used",
+        "headline",
+        "critical_limitation",
+        "per_pair"
+      ],
+      "array_schema": [
+        {
+          "key": "._README.how_to_verify",
+          "length": 3,
+          "item_keys": null
+        },
+        {
+          "key": ".headline.bootstrap_ci95",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".headline.range",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".critical_limitation.best_epoch_range",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".per_pair",
+          "length": 18,
+          "item_keys": [
+            "fold",
+            "seed",
+            "label",
+            "epochs_requested",
+            "parameter_count",
+            "checkpoint_sha256_original",
+            "same_initial_state_sha256",
+            "disconnected_selector_status",
+            "delta_cindex",
+            "arms",
+            "curve",
+            "curve_peak"
+          ]
+        },
+        {
+          "key": ".per_pair[0].arms.original.cindex_values",
+          "length": 20,
+          "item_keys": null
+        },
+        {
+          "key": ".per_pair[0].arms.original.mean_95ci",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".per_pair[0].arms.same_weights_eval_fix.cindex_values",
+          "length": 20,
+          "item_keys": null
+        },
+        {
+          "key": ".per_pair[0].arms.same_weights_eval_fix.mean_95ci",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".per_pair[0].curve",
+          "length": 30,
+          "item_keys": [
+            "epoch",
+            "val_cindex_exploratory",
+            "val_cindex_status",
+            "train_main_nll",
+            "val_nll_exploratory",
+            "optimizer_steps"
+          ]
+        },
+        {
+          "key": ".per_pair[0].protocol_sha256_input",
+          "length": 2,
+          "item_keys": null
+        }
+      ]
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/stage2_findings.md",
+      "bytes": 4284,
+      "sha256": "e11ae33c171c548ec34025a1b33407987d74c23aade04cbf7d7969a132f1eea7",
+      "git_blob_sha": "db6e607730abbf54e362072da0ee3c89d019f5b0",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/stage3_corrected_s3_b1.json",
+      "bytes": 2467,
+      "sha256": "ff339997bb8e177327e62a6e83bc10cdca836792913924cced3aff2068f78ee5",
+      "git_blob_sha": "d7ee16340eadb959d008ef916a27fbdfda0582fc",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "stage",
+        "checkpoint_sha256",
+        "checkpoint_note",
+        "part_a_corrected_permutation",
+        "part_b_slot_init_collapse"
+      ],
+      "array_schema": [
+        {
+          "key": ".part_b_slot_init_collapse.slot_attention_wsi.slots_mu_shape",
+          "length": 3,
+          "item_keys": null
+        },
+        {
+          "key": ".part_b_slot_init_collapse.slot_attention_omic.slots_mu_shape",
+          "length": 3,
+          "item_keys": null
+        }
+      ]
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/stage3b_permutation_decomposition.json",
+      "bytes": 767,
+      "sha256": "360d84efe245df44b86aa3988b1ff2519c66651c82fc29b343446b08b24134a2",
+      "git_blob_sha": "2232606a76ef016331d503910af176c8890709dc",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "note",
+        "kept_slots_k",
+        "keep_mask_under_permutation",
+        "topk_score_gap",
+        "per_stage_pool_diff",
+        "roundoff_control_max"
+      ],
+      "array_schema": []
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/stage4a2_corrected_cindex.json",
+      "bytes": 1298,
+      "sha256": "c1bbbef4b568580319f00069443cd17f6931ce9a1dbc04ad3a38a1a532c728ab",
+      "git_blob_sha": "32da25db27e03db159be0bc4b667ebdc524d7628",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "stage",
+        "n_val",
+        "n_comparable_pairs",
+        "n_reps_per_arm",
+        "reinit_distribution",
+        "patch_distribution",
+        "paired_delta_patch_minus_reinit",
+        "discordant_pair_flips",
+        "worst_drop_vs_median",
+        "decision_rule",
+        "verdict"
+      ],
+      "array_schema": [
+        {
+          "key": ".paired_delta_patch_minus_reinit.bootstrap_ci95",
+          "length": 2,
+          "item_keys": null
+        }
+      ]
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/stage4a_cindex_impact.json",
+      "bytes": 14036,
+      "sha256": "c75f304266aa8172178c6a0f7d4ab8610187a9337de7c08b4567db67ab8dd505",
+      "git_blob_sha": "92ecc8030918d85cfbb28644d2019490b2c7c901",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "stage",
+        "n_val",
+        "n_reps",
+        "baseline_cindex",
+        "comparable_pairs",
+        "reinits",
+        "patches",
+        "decision_rule",
+        "worst_abs_d_cindex",
+        "verdict",
+        "raw"
+      ],
+      "array_schema": [
+        {
+          "key": ".reinits.bootstrap_ci95_mean_delta",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".patches.bootstrap_ci95_mean_delta",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".raw.reinits",
+          "length": 20,
+          "item_keys": [
+            "rep",
+            "seed",
+            "cindex",
+            "d_cindex",
+            "logit_max_abs_diff",
+            "mean_abs_rank_shift",
+            "max_abs_rank_shift",
+            "n_patients_shifted_gt10"
+          ]
+        },
+        {
+          "key": ".raw.patches",
+          "length": 20,
+          "item_keys": [
+            "rep",
+            "seed",
+            "cindex",
+            "d_cindex",
+            "logit_max_abs_diff",
+            "mean_abs_rank_shift",
+            "max_abs_rank_shift",
+            "n_patients_shifted_gt10"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/stage5_self_interference_cindex.json",
+      "bytes": 1428,
+      "sha256": "cc4f11fe02e51fa94757cd0ddddfbc50195d2a22fa7a87952af9191bee19ed0d",
+      "git_blob_sha": "5d8a784de84c70fec26b2f56aef0597bfebe573d",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "stage",
+        "env",
+        "n_val",
+        "n_reps",
+        "shipped_readout",
+        "cindex_base",
+        "cindex_sel",
+        "cindex_shuf",
+        "paired_sel_minus_base",
+        "paired_shuf_minus_base",
+        "decision_rule",
+        "verdict"
+      ],
+      "array_schema": [
+        {
+          "key": ".env.arch_list",
+          "length": 7,
+          "item_keys": null
+        },
+        {
+          "key": ".env.compute_cap",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".paired_sel_minus_base.ci95",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".paired_shuf_minus_base.ci95",
+          "length": 2,
+          "item_keys": null
+        }
+      ]
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/stage5b_attribution.json",
+      "bytes": 811,
+      "sha256": "7f4a9e8ec36d88deaf2e12f165ea9e36b27dbaaacc93c7c0a610d6ce7dcad743",
+      "git_blob_sha": "7b68ee803608d83af8d330e8e6617c38b499e6c7",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "stage",
+        "n_reps",
+        "mechanism",
+        "cindex_median",
+        "delta_junk_self_minus_base",
+        "delta_junk_cross_minus_base",
+        "cross_attn_mass_on_discarded_keys",
+        "cross_attn_is_dense"
+      ],
+      "array_schema": [
+        {
+          "key": ".delta_junk_self_minus_base.ci95",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".delta_junk_cross_minus_base.ci95",
+          "length": 2,
+          "item_keys": null
+        }
+      ]
+    },
+    {
+      "path": "docs/research/slotspe_p6_addendum_20261020/stage6_eval_fix.json",
+      "bytes": 1840,
+      "sha256": "3f5149f5a58f3f5a1d6fd19096526d09696ce9eeb2dfe6cdbfef09230b2c5289",
+      "git_blob_sha": "e80aacdc04a8ab4b1cd22b7f87898c51bd21a754",
+      "patient_identifier_lines": [],
+      "top_keys": [
+        "stage",
+        "env",
+        "note",
+        "results",
+        "comparison",
+        "decision_rule",
+        "verdict"
+      ],
+      "array_schema": [
+        {
+          "key": ".env.arch_list",
+          "length": 7,
+          "item_keys": null
+        },
+        {
+          "key": ".env.compute_cap",
+          "length": 2,
+          "item_keys": null
+        },
+        {
+          "key": ".comparison.original_cindex_spread",
+          "length": 2,
+          "item_keys": null
+        }
+      ]
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/gpu_guard.py",
+      "bytes": 3400,
+      "sha256": "b6ac9e7a4e96709e48d92a19250123adc67a44cad30731c4e6f9a575f3ed1098",
+      "git_blob_sha": "132452382a534aef6f925dd543a5aa70a1267bbf",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s1_bitexact_probe.py",
+      "bytes": 8946,
+      "sha256": "42f317ea0e8ab0ff18b4caa8daf3b9279430c55d06281d114a739c9b31558422",
+      "git_blob_sha": "64bef376fabdae71df94e8908e5b718f8e37654b",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s2_slot_permutation_corrected.py",
+      "bytes": 11700,
+      "sha256": "a829e4a6177cb3eae5ff4c9b6862814b26218db1f64b158326bc689629ff32f4",
+      "git_blob_sha": "bf53f1a39fd38231536b5d070f446d9fc2859944",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s2b_permutation_decomposition.py",
+      "bytes": 8732,
+      "sha256": "a575db1953e2f570bb4f0d051e48cf3e75f8fdeea9328842c1ffb37af3281db5",
+      "git_blob_sha": "662dad2309c7a2d4e7e11f7e10ddf439501fcd9c",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s3_cindex_impact.py",
+      "bytes": 10100,
+      "sha256": "0c2a9ab8b497fa67683d87ab11c3a46783a099d90ed1362673fcce92a3c444c2",
+      "git_blob_sha": "3f44df341d32bfb94e6a04b1fbf5eb0480f73e7f",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s3b_cindex_impact_corrected.py",
+      "bytes": 9075,
+      "sha256": "1189a3efb6536b9ad3d42bb670e903f3acdd52fdb8f76af7fc7f83e06d437ac1",
+      "git_blob_sha": "1baba972b2fd36886e32c27f0d0f948ca152488e",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s4_self_interference_cindex.py",
+      "bytes": 10991,
+      "sha256": "7da13a0c86992eec4f473df86285cbcd84dcbe1bca892217226539b937f5247f",
+      "git_blob_sha": "63da81a83e459090669f362b7ee6359969118256",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s4b_attribution.py",
+      "bytes": 9097,
+      "sha256": "71703a4c70926c08cd989587610d4151a18a9678feca3920f173f5841453c77f",
+      "git_blob_sha": "262fae4a9bcc83168ec300fb64d84a6b1941b8d5",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s5_eval_fix_determinism.py",
+      "bytes": 6987,
+      "sha256": "2e485c6068971f50a2021ede9bc7c29d5ef19f964f10c681eb3b199dc7d1ba2c",
+      "git_blob_sha": "9cf5fd268a72f1d82d85b81afd395937c256d8c3",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s6_crossenv_trisurv.py",
+      "bytes": 8628,
+      "sha256": "dca10536dbb810e3859d8c211b33fdc42fd582ff373f161ecda1cfac5ae6a386",
+      "git_blob_sha": "342af3bba2636b27a8ed4bffd8b1fa5a1f3109b2",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s7_post_training_analysis.py",
+      "bytes": 9371,
+      "sha256": "320cf013453deef4e191515f2f928f4b799a2d1383cc7108ef8c8d5438ffe43e",
+      "git_blob_sha": "a03ee6aeef32f1668f15083ce232a54cee960be0",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/s8_export_evidence_bundle.py",
+      "bytes": 11062,
+      "sha256": "bb237486bae66e5b6bb03febfaee4debe56b24810b475036cf0b2f849f388914",
+      "git_blob_sha": "8a2206b20d2b27bd441ec8ab242d9656c331f099",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/spe08_full_addendum.py",
+      "bytes": 27000,
+      "sha256": "edef02fc196cbb8d2f792de56af3bb333451f150a596812fcb6bb4aceaf1a285",
+      "git_blob_sha": "25f0429b85ed1bbddbac945beda1dd6944b447fd",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/spe08_s1s2.py",
+      "bytes": 1089,
+      "sha256": "9460a1deee5d7cf3449ee392a68cb3c8393a00eb9c61d13f7554d887496ca877",
+      "git_blob_sha": "8b8a83509d463376de993e83a0b3b0f3a930dc17",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    },
+    {
+      "path": "scripts/slotspe_diagnostics/spe08_s3s4_resume.py",
+      "bytes": 1802,
+      "sha256": "33db97918ed63db9b96d44b6793c5b75c115f108f60bc45053e4eaf5f030b77c",
+      "git_blob_sha": "5096b9e6444120f4389c9298008f1b022f9bce77",
+      "patient_identifier_lines": [],
+      "top_keys": null,
+      "array_schema": []
+    }
+  ],
+  "source_files_retained_ignored": 54,
+  "ignored_archive_files": 21,
+  "syntax_parsed_scripts": 15,
+  "patient_identifier_hits_in_copied_files": 0,
+  "explicit_patient_vector_warnings": [],
+  "original_source_and_default_configs_unchanged": true,
+  "modified_E_DCT_Reg": false,
+  "new_model_execution": false,
+  "new_local_commit_created": false,
+  "remote_mutations": false,
+  "original_server_conclusions_accepted_this_sync": false,
+  "raw_patient_results_received": false,
+  "private_source_snapshot": "local_evidence/sync_intake_20261021/source_files/"
+}

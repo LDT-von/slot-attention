@@ -1,18 +1,18 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-20T20:58:08+08:00",
+  "recorded_at": "2026-10-21T12:17:01+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
   "issues": {
-    "P1": "固定8候选/Top-2已确认；新回传源码证明n=64..256改的是输入patch预算，不是槽数；固定容量患者损害未证。",
-    "P2": "服务器新摘要报告77人全部28对cos>0.95；源码确认56个有向非对角元素的计数定义，数值待原始JSON私下验收；不证明向量同一副本或患者损害。",
-    "P3": "初槽不以当前患者为条件、后续迭代读取患者；同权重eval波动已确认。服务器C-index std=0.0035待原始回传，不是通用噪声上界；冷启动损害及修正收益未证。",
-    "P4": "槽编号无固定语义保证；均值置换是sanity check，不证明实际语义漂移或患者损害。",
-    "P5": "补零无mask及既有合成敏感性已确认；服务器新摘要报16/64零行max logit差0.00950122/0.0325937，旧0.011未有对应值；新数值待原始产物验收，真实组织占槽/损害未证。",
-    "P6": "回传源码确认基线与置换前向未恢复配对RNG，登记order_effect_not_identified；50为10batch×5置换比较数，不能归因顺序或空间尺度损害。",
-    "P7": "最终融合主损失到选槽器的直接梯度断开已确认；单模态生存辅助仍连通，广义目标冲突、患者损害及B/C收益未证。",
-    "P8": "原版无后续跨模态OT，双阶段冲突不适用。"
+    "P1": "原义：固定槽容量不适配患者复杂度。当前固定8候选/Top-2有结构依据，但patch预算改变不是槽数改变；容量不匹配及碎片化未被本次实验直接检验。",
+    "P2": "原义：冗余、竞争与碎片化。高槽cos为直接相关线索；缺少读取重叠、独立信息及组织/通路对应，不能等同完整冗余或碎片化证明。",
+    "P3": "原义：冷启动缺少患者特异线索。共享高斯初槽不读当前患者内容的结构事实成立，后续迭代读取输入；聚合质量和收敛后果未测。评估随机性单列附加问题，不能代替P3。",
+    "P4": "原义：槽语义身份不稳定。尚未直接测匹配内容后的跨抽样/种子/患者语义一致性；槽置换/编号变化不是语义漂移证明。",
+    "P5": "原义：无关内容干扰或占槽。补零无mask是相关输入处理风险，不能替代真实无关patch/通路占槽的直接证据。",
+    "P6": "原义：尺度或特征层次不足。本轮无多倍率/多编码器层匹配比较。patch顺序必须另记Q6，不再作为P6证据。",
+    "P7": "原义：槽学习目标与生存预测目标不一致。直接融合主梯度断路是选槽支路的局部证据，辅助生存监督仍连通；整体目标一致性与表示后果未被直接测全。",
+    "P8": "原义：Slot聚合与后续跨模态OT双阶段约束。原版SlotSPE没有该后续OT，故本仓库不适用。"
   },
   "tasks": [
     {
@@ -55,13 +55,13 @@
       "id": "SPE-07",
       "title": "服务器先复现一组SlotSPE问题",
       "status": "reported_completed_awaiting_raw_artifacts",
-      "next_action": "服务器公开代码/摘要已修正整合；接收已授权私有原始包并验收数值与配置。P6补查仍待明确执行授权，不新增训练或推理。"
+      "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。"
     },
     {
       "id": "SPE-08",
       "title": "核实八类槽问题在指定原版SlotSPE中的存在性",
       "status": "partially_completed_local",
-      "next_action": "服务器公开代码/摘要已修正整合；接收已授权私有原始包并验收数值与配置。P6补查仍待明确执行授权，不新增训练或推理。"
+      "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。"
     },
     {
       "id": "SPE-09",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "服务器公开代码/摘要已修正整合；接收已授权私有原始包并验收数值与配置。P6补查仍待明确执行授权，不新增训练或推理。",
+  "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -220,5 +220,135 @@
     "new_model_execution": false,
     "legacy_server_branch_history_rewritten": false,
     "next_action": "服务器公开代码/摘要已修正整合；接收已授权私有原始包并验收数值与配置。P6补查仍待明确执行授权，不新增训练或推理。"
+  },
+  "latest_scoped_server_sync": {
+    "recorded_at": "2026-10-21T10:56:41+08:00",
+    "task_id": "SPE-08",
+    "status": "source_files_copied_local_pending_content_audit",
+    "source_repository": "LDT-von/DCT-Reg",
+    "source_ref": "9b3a5a8815bc1283ca427d2063434ee029404e75",
+    "local_base_commit": "2c176264d2855404ecc2dd5e5eef3e1c991f569d",
+    "import_manifest": "docs/research/slotspe_scoped_sync_20261021/import_manifest.json",
+    "receipt": "docs/research/slotspe_scoped_sync_20261021/同步收据.txt",
+    "entry": "docs/research/slotspe_p6_addendum_20261020/EVIDENCE_README.md",
+    "diagnostic_scripts": 15,
+    "evidence_documents_and_json": 18,
+    "archive_files_in_ignored_local_evidence": 21,
+    "protected_source_and_configs_unchanged": true,
+    "E_DCT_Reg_modified": false,
+    "copied_bytes_verified": true,
+    "new_model_execution": false,
+    "server_raw_patient_results_received": false,
+    "source_claims_independently_validated": false,
+    "new_commit_or_push": false,
+    "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。"
+  },
+  "latest_results_review": {
+    "recorded_at": "2026-10-21T11:15:18+08:00",
+    "task_id": "SPE-08",
+    "status": "aggregate_arithmetic_verified_diagnostic_claims_partially_rejected_raw_pending",
+    "report": "docs/research/slotspe_results_review_20261021/服务器结果证据复核.txt",
+    "arithmetic_receipt": "docs/research/slotspe_results_review_20261021/aggregate_verification.json",
+    "arithmetic_verifier": "docs/research/slotspe_results_review_20261021/verify_aggregates.py",
+    "source_bundle_sha256": "7751e15bf9167fdf74a27f1da20c7552d5f79dde364a9b91b4939905be957046",
+    "unique_fold_seed_pairs": 18,
+    "completed": "已复算18组20次重复C-index、30轮曲线和10000次bootstrap，并核对关键诊断源码；来源脚本/历史报告保持原样。",
+    "new_finding": "30轮协议下强烈晚期验证退化迹象；18/18组峰值至末轮降幅>0.01，平均0.12629；训练NLL下降而验证NLL上升。",
+    "eval_fix_mean_delta": 0.002687207939272277,
+    "eval_fix_bootstrap_ci95": [
+      -0.0012017681781401875,
+      0.006794907538660746
+    ],
+    "rejected_claims": [
+      "P6顺序效应已隔离或顺序无害",
+      "P4 mask变化已证明选择不等变",
+      "self干预零差证明未选槽无影响",
+      "高相似由训练造成",
+      "eval_fix已证明无性能代价或稳定提升"
+    ],
+    "checks": "独立聚合验算完成；源码静态核查发现RNG混杂、错误比较对象、空操作和错误统计字段。",
+    "new_training_or_model_execution": false,
+    "server_actual_execution_directly_observed": false,
+    "patient_raw_received": false,
+    "server_original_checkpoint_hashes_independently_verified": false,
+    "patient_cindex_reconstructed": false,
+    "gaps_reasons": "公开包缺逐患者风险/删失/时间、原始梯度、checkpoint和完整运行日志；可验算汇总，不能从原始患者预测独立重建指标。",
+    "new_commit_or_push": false,
+    "next_action_user_inputs": "先修正服务器诊断逻辑并私下回传已有原始产物；需重新模型前向的补查另获明确执行授权；不扩大训练。"
+  },
+  "additional_implementation_findings": {
+    "eval_randomness": "评估重复性缺陷已确认；固定噪声改善重复性，与P3冷启动质量不同。",
+    "Q6_patch_order": "原问题附件明确另列Q6。当前置换仍消耗模型共用RNG，order_effect_not_identified。",
+    "late_training_validation_deterioration": "18组30轮曲线支持晚期退化/过拟合迹象；训练协议风险，不归入原八项架构机制。",
+    "diagnostic_reliability": "错误比较对象、空操作及统计字段问题需修正；不当作模型机制结论。"
+  },
+  "latest_question_alignment": {
+    "recorded_at": "2026-10-21T11:40:26+08:00",
+    "task_id": "SPE-08",
+    "route": "SlotSPE原八项研究问题对齐",
+    "completed": "重读用户附件定义，纠正P3/评估随机性、P6/顺序混用；逐项标出结构事实、相关线索、直接测量缺口。",
+    "report": "docs/research/slotspe_results_review_20261021/八个原始问题对齐勘误.txt",
+    "current_entries_updated": [
+      "README.md",
+      "docs/PROGRESS.json"
+    ],
+    "historical_reports_and_source_scripts_edited": false,
+    "checks_and_receipt": "原附件与已打开原始源码对读；无新服务器执行或患者结果。此前汇总算术仍有效，但问题编号以本勘误为准。",
+    "new_model_execution": false,
+    "new_commit_or_push": false,
+    "gaps_reasons": "现有服务器实验没有原八项的完整操作定义和直接测量，不能用实现异常和最终C-index代替全部研究机制。",
+    "next_action_user_inputs": "以P2冗余/碎片化、P3冷启动质量、P7目标一致性重新组织测量要求；P4/P5需语义/相关性依据、P6需倍率/层次来源；新执行只列计划，不启动。"
+  },
+  "latest_mechanism_experiment_design": {
+    "recorded_at": "2026-10-21T12:17:01+08:00",
+    "task_id": "SPE-08",
+    "route": "original_questions_v1",
+    "status": "implemented_synthetic_checked_server_execution_pending",
+    "completed": "围绕原P1–P7编写直接机制测量、匹配容量训练独立入口、内容/角色/配对来源门槛和服务器执行提示词；P8不适用。",
+    "protocol": "docs/research/slotspe_mechanism_protocol_20261021/实验协议与判定.txt",
+    "server_prompt": "docs/research/slotspe_mechanism_protocol_20261021/服务器AI_原八项问题实验.txt",
+    "runner": "scripts/run_slotspe_problem_experiments.py",
+    "config": "configs/slotspe_problem_experiments.json",
+    "receipt": "docs/research/slotspe_mechanism_protocol_20261021/本地交付收据.json",
+    "delivery": "docs/deliveries/slotspe_original_questions_v1_20261021.zip",
+    "delivery_sha256": "ec8c663355d44225931397d2954e1dc80bbcea9ffbc3aef58d67f027cbcb533c",
+    "checks": {
+      "synthetic_tests_passed": 63,
+      "plan_only_phases_checked": [
+        "observe",
+        "capacity_train"
+      ],
+      "original_source_and_default_configs_unchanged": true,
+      "package_file_hashes_verified": true
+    },
+    "new_native_model_or_patient_execution": false,
+    "new_server_execution_receipt": false,
+    "primary_endpoints": [
+      "槽表示与读取冗余/内容碎片化",
+      "原生预算聚合内容读出",
+      "匹配内容后的稳定性",
+      "候选干扰竞争",
+      "真正配对尺度/层内容对照",
+      "共享参数目标梯度关系"
+    ],
+    "excluded_as_primary_results": [
+      "过拟合",
+      "评估随机波动",
+      "C-index统一问题门槛"
+    ],
+    "gaps_reasons": "63项仅为合成与接口测试；原生checkpoint逐轮重放和aux重建需服务器验收。P4/P5/P6外部依据不可虚构；P1充分训练及复杂度交互、P3训练分布外初态限制如实登记。",
+    "new_commit_or_push": false,
+    "next_action_user_input": "交付ZIP与提示词，服务器先plan和observe；不自动启动独立capacity_train，不扩大五折训练；私下回传原始产物、公开仅队列级汇总。"
+  },
+  "latest_git_delivery_request": {
+    "task_id": "SPE-08",
+    "route": "original_questions_v1",
+    "authorized_action": "commit and push for server pull",
+    "remote": "https://github.com/LDT-von/slot-attention.git",
+    "branch": "main",
+    "server_handoff": "docs/research/slotspe_mechanism_protocol_20261021/服务器AI_拉取本轮实验.txt",
+    "scope": "scoped server evidence imports, conservative reviews, original-question experiments, protocol, synthetic tests and sanitized delivery archive",
+    "patient_execution_started": false,
+    "private_patient_data_staged": false
   }
 }

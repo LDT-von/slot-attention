@@ -1,0 +1,64 @@
+{
+  "stage": "5_self_interference_cindex",
+  "env": {
+    "python": "3.10.20",
+    "torch": "2.10.0+cu128",
+    "torch_cuda": "12.8",
+    "arch_list": [
+      "sm_70",
+      "sm_75",
+      "sm_80",
+      "sm_86",
+      "sm_90",
+      "sm_100",
+      "sm_120"
+    ],
+    "device_name": "NVIDIA GeForce RTX 5090",
+    "compute_cap": [
+      12,
+      0
+    ]
+  },
+  "n_val": 77,
+  "n_reps": 40,
+  "shipped_readout": "mean over ALL 8 slots (k=2 kept by gate)",
+  "cindex_base": {
+    "median": 0.7224425059476606,
+    "mean": 0.7227597145122918,
+    "min": 0.7160983346550357,
+    "max": 0.7295796986518636,
+    "std": 0.00298239208890469
+  },
+  "cindex_sel": {
+    "median": 0.7232355273592387,
+    "mean": 0.723116574147502,
+    "min": 0.7145122918318795,
+    "max": 0.7303727200634417,
+    "std": 0.004037845198607204
+  },
+  "cindex_shuf": {
+    "median": 0.7224425059476606,
+    "mean": 0.7227597145122918,
+    "min": 0.7160983346550357,
+    "max": 0.7295796986518636,
+    "std": 0.00298239208890469
+  },
+  "paired_sel_minus_base": {
+    "mean_delta": 0.0003568596352101494,
+    "ci95": [
+      -0.0007736915146708929,
+      0.0014472640761300504
+    ],
+    "p_value": 0.6199623598698816
+  },
+  "paired_shuf_minus_base": {
+    "mean_delta": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ],
+    "p_value": 0.0
+  },
+  "decision_rule": "material <=> 'sel' arm raises C with CI excluding 0",
+  "verdict": "NO_DISCRIMINATION_EFFECT"
+}

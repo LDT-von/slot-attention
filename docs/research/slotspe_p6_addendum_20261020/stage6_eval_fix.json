@@ -1,0 +1,66 @@
+{
+  "stage": "6_eval_fix_determinism",
+  "env": {
+    "python": "3.10.20",
+    "torch": "2.10.0+cu128",
+    "torch_cuda": "12.8",
+    "arch_list": [
+      "sm_70",
+      "sm_75",
+      "sm_80",
+      "sm_86",
+      "sm_90",
+      "sm_100",
+      "sm_120"
+    ],
+    "device_name": "NVIDIA GeForce RTX 5090",
+    "compute_cap": [
+      12,
+      0
+    ]
+  },
+  "note": "evaluated WITHOUT the frozen-RNG harness, so any nondeterminism in `original` is visible as the product behaves",
+  "results": {
+    "original": {
+      "deterministic_without_harness": false,
+      "max_logit_diff_across_repeats": 0.10902488231658936,
+      "cindex_is_single_value": false,
+      "cindex_median": 0.7232355273592387,
+      "cindex_min": 0.7129262490087233,
+      "cindex_max": 0.7319587628865979,
+      "cindex_std": 0.00388914404843499
+    },
+    "eval_fix": {
+      "deterministic_without_harness": true,
+      "max_logit_diff_across_repeats": 0.0,
+      "cindex_is_single_value": true,
+      "cindex_median": 0.7176843774781919,
+      "cindex_min": 0.7176843774781919,
+      "cindex_max": 0.7176843774781919,
+      "cindex_std": 0.0
+    },
+    "readout_fix": {
+      "deterministic_without_harness": true,
+      "max_logit_diff_across_repeats": 0.0,
+      "cindex_is_single_value": true,
+      "cindex_median": 0.711340206185567,
+      "cindex_min": 0.711340206185567,
+      "cindex_max": 0.711340206185567,
+      "cindex_std": 0.0
+    }
+  },
+  "comparison": {
+    "original_cindex_spread": [
+      0.7129262490087233,
+      0.7319587628865979
+    ],
+    "eval_fix_cindex": 0.7176843774781919,
+    "eval_fix_inside_original_spread": true,
+    "determinism_gain": {
+      "before": 0.10902488231658936,
+      "after": 0.0
+    }
+  },
+  "decision_rule": "adopt <=> deterministic AND C-index inside original's own spread",
+  "verdict": "ADOPT_FREE_FIX"
+}

@@ -1,0 +1,26 @@
+{
+  "task": "SPE-08-original_questions_v1",
+  "recorded_utc": "2026-10-21T04:16:04.797248+00:00",
+  "base_git_commit": "2c176264d2855404ecc2dd5e5eef3e1c991f569d",
+  "package": "docs/deliveries/slotspe_original_questions_v1_20261021.zip",
+  "package_sha256": "ec8c663355d44225931397d2954e1dc80bbcea9ffbc3aef58d67f027cbcb533c",
+  "package_bytes": 102681,
+  "package_payload_files": 32,
+  "local_checks": {
+    "synthetic_tests_passed": 63,
+    "native_patient_model_execution": false,
+    "plan_phases": [
+      "observe",
+      "capacity_train"
+    ]
+  },
+  "package_file_hashes_verified": true,
+  "source_and_default_configs_unchanged": true,
+  "server_execution_receipt_received": false,
+  "new_patient_features_weights_predictions_or_identifiers_public": false,
+  "new_commit_or_push": false,
+  "gaps": "Native checkpoint/trajectory and aux replay must pass on server; semantic/role/aligned-feature sidecars require real evidence.",
+  "next_action": "Transfer package, run server plan, then observe within the supplied scope; do not automatically start capacity training.",
+  "package_identifier_scan_passed": true,
+  "upstream_readme_excluded_from_archive_only": true
+}

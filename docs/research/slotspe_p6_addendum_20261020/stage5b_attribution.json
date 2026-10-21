@@ -1,0 +1,31 @@
+{
+  "stage": "5b_attribution_of_self_interference",
+  "n_reps": 30,
+  "mechanism": {
+    "self_attention_mask": "final_mask = mask_q * mask_k; discarded slots are masked as both query and key, so they contribute nothing",
+    "cross_attention_mask": "called as cross_attention(slots_wsi, slots_omic) with no mask argument -> dense over all 8 slots"
+  },
+  "cindex_median": {
+    "base": 0.7224425059476606,
+    "junk_self": 0.7224425059476606,
+    "junk_cross": 0.7224425059476606
+  },
+  "delta_junk_self_minus_base": {
+    "mean": 0.0,
+    "max_abs": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  "delta_junk_cross_minus_base": {
+    "mean": 0.0,
+    "max_abs": 0.0,
+    "ci95": [
+      0.0,
+      0.0
+    ]
+  },
+  "cross_attn_mass_on_discarded_keys": 0.7496330142021179,
+  "cross_attn_is_dense": true
+}

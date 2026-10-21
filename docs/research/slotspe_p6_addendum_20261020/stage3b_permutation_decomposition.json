@@ -1,0 +1,22 @@
+{
+  "note": "one shared frozen RNG draw for all arms within a batch",
+  "kept_slots_k": 2,
+  "keep_mask_under_permutation": {
+    "total_mask_elements_changed": 580.0,
+    "n_batches": 20,
+    "changed_per_batch_mean": 29.0,
+    "interpretation": "0 => gate follows slot contents (equivariant); >0 => tie-breaking breaks symmetry"
+  },
+  "topk_score_gap": {
+    "mean": 0.009888025073262004,
+    "min": 0.00021058320999145508,
+    "median": 0.00885935127735138,
+    "max": 0.033529698848724365,
+    "interpretation": "gap ~0 => top-k is numerically arbitrary among 8 near-identical slots"
+  },
+  "per_stage_pool_diff": {
+    "cross_attention_mean_pool": 9.5367431640625e-07,
+    "self_attention_wsi_mean_pool": 1.9073486328125e-06
+  },
+  "roundoff_control_max": 0.0
+}

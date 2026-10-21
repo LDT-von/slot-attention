@@ -1,0 +1,69 @@
+{
+  "recorded_at": "2026-10-21T03:12:45.674324+00:00",
+  "source_file": "docs/research/slotspe_p6_addendum_20261020/slotspe_evalfix_evidence.json",
+  "source_sha256": "7751e15bf9167fdf74a27f1da20c7552d5f79dde364a9b91b4939905be957046",
+  "execution_scope": "Aggregate JSON arithmetic only; no model execution or patient processing.",
+  "n_pairs": 18,
+  "n_unique_fold_seed_keys": 18,
+  "n_unique_checkpoint_hashes_recorded": 18,
+  "pairs_per_fold": {
+    "0": 4,
+    "1": 4,
+    "2": 4,
+    "3": 3,
+    "4": 3
+  },
+  "selector_disconnection_server_status": {
+    "observed": 18
+  },
+  "all_pairs_report_completed_and_source_unchanged": true,
+  "largest_mean_or_delta_recalculation_error": 0.0,
+  "eval_fix_same_weights": {
+    "mean_delta_cindex": 0.002687207939272277,
+    "bootstrap_ci95": [
+      -0.0012017681781401875,
+      0.006794907538660746
+    ],
+    "bootstrap_samples": 10000,
+    "bootstrap_seed": 0,
+    "n_positive": 11,
+    "n_negative": 7,
+    "range": [
+      -0.013367174280879746,
+      0.020728744939271238
+    ],
+    "all_fixed_repeat_values_identical_within_pair": true,
+    "original_mean": 0.6044085695264532,
+    "fixed_mean": 0.6070957774657254,
+    "interpretation": "No consistent direction detected in these final checkpoints; not an equivalence test. Shared patients/folds mean these are not 18 independent cohorts."
+  },
+  "training_curves": {
+    "mean_observed_peak_cindex": 0.7167526574828907,
+    "mean_epoch30_cindex": 0.5904618110468758,
+    "mean_peak_to_final_drop": 0.12629084643601496,
+    "pairs_dropping_over_0_01": 18,
+    "observed_peak_epoch_range": [
+      2,
+      24
+    ],
+    "observed_peak_epoch_median": 6.5,
+    "mean_first_train_nll": 1.0637035343204906,
+    "mean_final_train_nll": 0.21616497293060125,
+    "pairs_with_train_nll_decreasing": 18,
+    "mean_first_val_nll": 0.9728181369436357,
+    "mean_final_val_nll": 1.9600735569439047,
+    "pairs_with_val_nll_increasing": 18,
+    "interpretation": "Strong evidence of late-stage validation deterioration under the recorded 30-epoch protocol. Observed validation maxima include selection bias and stochastic evaluation; not population-optimal epochs."
+  },
+  "export_errors": {
+    "fixed_arm_mean_95ci_excludes_its_identical_repeat_value_count": 18,
+    "protocol_sha256_input_contains_arm_names_not_digest": true,
+    "note": "Faulty per-arm wilson_ci intervals are excluded from acceptance. The headline bootstrap is separately recomputed."
+  },
+  "limitations": [
+    "Per-patient risks/logits, event/time arrays, original run logs and checkpoints not received in this public bundle.",
+    "Recorded source/checkpoint hashes are provenance claims, not locally rehashed server checkpoints.",
+    "Stored C-indices were aggregated; patient-level C-index calculations were not independently reconstructed.",
+    "Same-weight eval_fix comparison used final checkpoints, not independently selected best checkpoints."
+  ]
+}

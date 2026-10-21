@@ -1,0 +1,48 @@
+{
+  "env": "/home/ubuntu/.conda/envs/trisurv",
+  "python": "3.10.20",
+  "torch": "2.10.0+cu128",
+  "a_bit_exact_same_seed": {
+    "bitwise": true,
+    "max_abs_diff": 0.0,
+    "diff_seed_max_abs_diff": 0.08057403564453125
+  },
+  "b_cindex_distribution": {
+    "n_reps": 60,
+    "reinit_median": 0.7228390166534496,
+    "reinit_min": 0.7137192704203014,
+    "reinit_max": 0.7303727200634417,
+    "reinit_std": 0.0033892044989460054,
+    "patch_median": 0.7224425059476606,
+    "patch_min": 0.7121332275971451,
+    "patch_max": 0.7295796986518636,
+    "patch_std": 0.0035927582110816597,
+    "paired_delta_mean": -0.0006608511763150915,
+    "paired_delta_ci95": [
+      -0.0018107322231033507,
+      0.0004758128469468659
+    ]
+  },
+  "c_topk_keep_drift": {
+    "mask_elements_changed_total": 170,
+    "batches_observed": 10,
+    "mean_per_batch": 17.0
+  },
+  "expected_dct_values": {
+    "bitwise_same_seed_expected": true,
+    "bitwise_max_abs_diff_expected": 0.0,
+    "reinit_c_median_expected": 0.7228,
+    "paired_delta_mean_expected": -0.0007,
+    "paired_delta_ci95_expected": [
+      -0.0018,
+      0.0005
+    ],
+    "topk_keep_drift_mean_per_batch_expected": 29.0
+  },
+  "verdict": {
+    "bit_exactness": "PASS",
+    "paired_delta_within_1.5e-3": "PASS",
+    "topk_keep_drift_within_0.2": "FAIL",
+    "overall": "DIVERGENT"
+  }
+}

@@ -1,0 +1,74 @@
+任务：SlotSPE / SPE-08 / original_questions_v1
+
+你要检验用户最初的P1–P7机制问题。以本包“实验协议与判定.txt”为准，
+不再把评估随机性、过拟合或Patch顺序作为八项的主要研究结果。
+本次先做observe：真实前向、受控诊断和梯度测量，0个优化步骤。
+capacity_train是独立的匹配容量训练阶段，本轮只报计划与预算，不自动启动。
+
+1. 接收代码
+解压本次slotspe_original_questions_v1_20261021.zip到全新的工作目录，保留已有原始工程和结果。
+包内没有患者数据/权重。检查包内PACKAGE_MANIFEST.json中的每个文件SHA256。
+不要覆盖旧diagnostics脚本；原始SlotSPE源码必须与既有prepared manifest的source_hashes一致。
+使用现有环境，不自动安装依赖或替换torch/CUDA。
+
+2. 找到真实输入，不重新制备或训练
+SLOTSPE_PROOF_ROOT指向真实任务根目录，其下已有prepared/manifest.json和缓存；
+SLOTSPE_CHECKPOINT指向与其来源匹配的原版last.pt；
+SLOTSPE_MODEL_ARGS指向实际model_args JSON，或native_model_audit.json中purity.model_args。
+不能从权重形状猜temperature、迭代数、Top-K方法和比例。缺recipe须回查原运行记录。
+环境变量示例（把右侧替换为服务器已经存在的真实路径，不使用占位值运行）：
+export SLOTSPE_PROOF_ROOT='/实际既有任务根目录'
+export SLOTSPE_CHECKPOINT='/实际既有原版checkpoint/last.pt'
+export SLOTSPE_MODEL_ARGS='/实际既有原版native_model_audit.json'
+
+先执行：
+python -B scripts/run_slotspe_problem_experiments.py --plan
+
+核对模型/数据/源码来源、fold=0、seed=3及manifest真实patch数。记录实际checkpoint选择依据。
+优先使用事先固定选择的checkpoint；若只有末轮，明确限制，不从本批结果反选有利权重。
+当前observe不训练，容量phase默认3轮/3个K也不得自动启动。
+
+3. 外部依据可选，但绝不能伪造
+复制configs/slotspe_problem_experiments.json到服务器的私有配置目录，在该复制件里填写
+annotations和paired_features的路径；没有就保留null，相关结论明确not_testable。
+annotations根：prepared_manifest_sha256、patients。
+每患者键使用原私有patient_id，值至少含cache_sha256、review_provenance、label_definition；
+token_groups按缓存真实行顺序排列（如已有审核的组织/区域实例类别）。
+P5还需roles数组(signal/candidate_nuisance/unknown)、role_scope和依据；
+prognostic_irrelevance_claim还需independent_prognostic_evidence。不给伪“无关”标签。
+P4匹配列和评分列由脚本固定分开，不能看评分结果再改标签。
+paired_features根同样绑定prepared_manifest_sha256、patients；每患者含base_patch_indices
+（必须等于manifest中的patch_indices_concatenated_slide_order）、review_provenance、contract。
+contract五项必须真实为true：same_patient、same_coordinates_and_fov_contract、
+same_row_order、common_feature_space、independently_reviewed。
+variants每项含name、kind(scale或encoder_layer)、features_path、sha256、
+coordinate_manifest_sha256、encoder_provenance（明确实际倍率/层名/encoder来源）。
+features_path是保存[N,原始embedding维度] Tensor的真实文件；同维不等于对齐，不能虚填契约。
+Annotations和配对特征文件全部保留私有，不提交Git。
+
+4. 执行observe
+配置准备完成后，使用新的私有输出目录（路径中时间戳每次更新）：
+python -B scripts/run_slotspe_problem_experiments.py --run --phase observe --config configs/slotspe_problem_experiments.json --output-dir local_evidence/original_questions_20261021_observe_01
+
+若使用私有复制配置，将--config替换为其真实路径。
+原生逐轮重放或aux分解失败就停，保留失败收据，不放宽容差、不改原模型、不换成近似实现。
+P5/P6缺依据时跳过对应检验并准确报告，其他已具备条件的P2/P3/P7继续。
+长迭代末态不是聚合真值；自己的输入线索须与3名错配训练供体在原生预算处比较内容读出。
+不可把读取变了直接写成信息损失，也不可把负梯度cos直接写成预测受损。
+
+5. P1匹配容量训练只准备计划
+python -B scripts/run_slotspe_problem_experiments.py --plan --phase capacity_train
+WSI槽4/8/16、omic固定8，两侧实际选中数固定2，从同一新初态按相同预算训练；
+训练授权后才能把--plan替换为--run并给全新私有输出目录。
+训练结果的capacity_training/wsi_K*/args.json包含实际decoder.k设置，
+后续observe必须使用该args.json，不得只用slot数猜实际选中数。
+P1还需独立复杂度与共同内容标签，分析K×复杂度，不以单独K16平均变化充当自适应容量证据。
+
+6. 回传
+私有保留execution_receipt.json、patient_records.json、objective_gradients.json、
+training_dictionary.pt及patient_*_native.npz；包含患者ID、内容数组或模型权重的文件不公开。
+每项按“原问题→直接测量→对照→实际数值→支持/未观察/代理/缺条件→剩余解释”写结果。
+按患者先汇总重复，再报告患者数、效应分布与覆盖范围，禁止把槽对/种子数伪装成患者数。
+公开只提交无ID、无原始数组的汇总报告、源代码与收据中的哈希/软件版本；给分支与完整SHA。
+先回报原始私有产物路径、文件大小与SHA256，再走已经约定的私有交付渠道。
+不要再用“六项损害全立”“未显著所以无害”等结论；问题未观察到就如实记。

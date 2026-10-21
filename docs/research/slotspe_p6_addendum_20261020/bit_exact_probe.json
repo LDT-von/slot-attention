@@ -1,0 +1,54 @@
+{
+  "stage": "2_bitexact_probe",
+  "checkpoint_sha256": null,
+  "experiments": {
+    "E1_default_determinism": {
+      "n_repeats": 5,
+      "ids": 8,
+      "pairwise_max_abs_diff": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "all_bitwise_identical": true,
+      "logit_sha256": [
+        "452a9011b059cd1f",
+        "452a9011b059cd1f",
+        "452a9011b059cd1f",
+        "452a9011b059cd1f",
+        "452a9011b059cd1f"
+      ]
+    },
+    "E2_use_deterministic_algorithms": {
+      "use_deterministic_algorithms": true,
+      "pairwise_max_abs_diff": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "all_bitwise_identical": true,
+      "logit_sha256": [
+        "452a9011b059cd1f",
+        "452a9011b059cd1f",
+        "452a9011b059cd1f",
+        "452a9011b059cd1f",
+        "452a9011b059cd1f"
+      ]
+    },
+    "E3_full_sweep_replay": {
+      "n_patients": 77,
+      "same_seed_max_abs_diff": 0.0,
+      "same_seed_bitwise_identical": true,
+      "diff_seed_max_abs_diff": 0.07387399673461914,
+      "interpretation": "same_seed ~0 and diff_seed >0 => harness isolates order effects cleanly; same_seed >0 => residual non-determinism remains"
+    },
+    "E4_slot_cos_replay": {
+      "residual_max_offdiag_cos_run1": 0.9995975200231974,
+      "residual_max_offdiag_cos_run2": 0.9995975200231974,
+      "absolute_drift": 0.0,
+      "bitwise_slot_identical": true
+    }
+  }
+}

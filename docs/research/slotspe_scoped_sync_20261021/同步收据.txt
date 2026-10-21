@@ -1,0 +1,25 @@
+SlotSPE跨仓库范围同步收据（2026-10-21）
+
+1. 路线/任务
+SlotSPE / SPE-08，仅将用户指定DCT-Reg提交中的SlotSPE诊断与证据同步到当前独立库。用户撤销更新E盘仓库的选择；本轮没有修改E:\DCT-Reg。
+
+2. 已完成
+从DCT-Reg@9b3a5a8815bc1283ca427d2063434ee029404e75逐字节取回54个SlotSPE相关文件，逐文件核对Git blob和SHA256。将15个scripts/slotspe_diagnostics/*.py与18个docs/research/slotspe_p6_addendum_20261020/*同步到相同相对路径，保持源字节。16张PNG和5份旧归档材料保留在忽略的local_evidence/sync_intake_20261021/source_files，旧REPORT含患者标识，未复制到公开候选路径；原图隐私/版面未审，暂不进入公开候选。
+未导入DCT transport生产模块、projection_tol修改、transport训练入口、DCT队列/忽略规则或AGENTS备份；这些原件仍在来源仓库，没有删除。
+
+3. 路径/版本
+来源：LDT-von/DCT-Reg。提交链2ad3853f337949c93a299ad204a06ec9a31031f3 → 0cbdbf9a103920561158de766d2558ae42bc9950 → 9b3a5a8815bc1283ca427d2063434ee029404e75。目标本地基线为2c176264d2855404ecc2dd5e5eef3e1c991f569d。
+入口：docs/research/slotspe_p6_addendum_20261020/EVIDENCE_README.md。33文件来源与哈希见同目录外的docs/research/slotspe_scoped_sync_20261021/import_manifest.json。
+本轮为跨仓库文件同步，不切换当前库remote，不合并整套DCT历史；未创建提交、未推送。
+
+4. 检查/实际执行
+33个同步文件均与来源SHA一致；15脚本AST语法解析通过；JSON解析和标识/显式患者向量字段检查通过。原版third_party/SlotSPE与当前默认configs逐文件哈希保持。
+仅同步文件和做静态/哈希检查；未执行任何诊断脚本、训练、模型前向/反向、患者干预或验证片段。
+约203KB证据包确已取得，其逐次C-index和训练曲线属于fold/seed级材料；完整逐患者预测和权重没有随此包回传，server_raw_results_received仍为false。
+
+5. 缺口/限制
+NO_SYSTEMATIC_EFFECT、18pairs、平均差值/CI与过拟合描述均保留为服务器材料中的结论，本轮没有验算或接受患者结论；跨折/多种子依赖和统计推断仍需审阅。原文中“单次负差就是抽样波动”等较强措辞不因复制成功而被认可。
+脚本保留服务器原有绝对路径与依赖，不宣称已经在本独立库无修改可运行。没有安装环境或执行gpu_guard。历史报告的路径与哈希未改写。
+
+6. 下一步/用户输入
+材料已在当前独立库本地就位。下一步可只读审阅RESULTS与证据包、核对汇总计算和协议；若要模型复跑需另有明确执行授权。提交/推送当前独立库不属于本轮“拉取覆盖本地”的操作，待用户需要时再交付。

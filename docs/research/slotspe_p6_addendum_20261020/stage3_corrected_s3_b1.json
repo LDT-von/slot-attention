@@ -1,0 +1,77 @@
+{
+  "stage": "3_corrected_s3_and_b1",
+  "checkpoint_sha256": "1c6daa01969879c40612bc67dd17ab7b9d3ed9e5ea56671e7f8278dd4c30aec5",
+  "checkpoint_note": "checkpoint unchanged; read-only",
+  "part_a_corrected_permutation": {
+    "n_patients": 77,
+    "n_permutations": 3,
+    "permutation_logit_diff": {
+      "[3, 6, 1, 4, 0, 7, 2, 5]": {
+        "max": 0.01829206943511963,
+        "mean": 0.008142752945423127,
+        "min": 0.0036246776580810547
+      },
+      "[7, 6, 5, 4, 3, 2, 1, 0]": {
+        "max": 0.01818382740020752,
+        "mean": 0.006948113441467285,
+        "min": 0.004080057144165039
+      },
+      "[1, 0, 3, 2, 5, 4, 7, 6]": {
+        "max": 0.025521278381347656,
+        "mean": 0.007730711251497269,
+        "min": 0.0045773983001708984
+      }
+    },
+    "permutation_overall": {
+      "max": 0.025521278381347656,
+      "mean": 0.0076071925461292265
+    },
+    "control_rng_noise_max": 0.1000601053237915,
+    "control_rng_noise_mean": 0.06476607769727707,
+    "reconstruction_matches_model_max": 0.09602594375610352,
+    "verdict": "NOT_INVARIANT",
+    "interpretation": "Slot permutation changes the output by 2.552e-02, versus 1.001e-01 for a pure slot re-initialisation change under the same harness."
+  },
+  "part_b_slot_init_collapse": {
+    "slot_attention_wsi": {
+      "slots_mu_shape": [
+        1,
+        1,
+        256
+      ],
+      "slots_mu_std": 0.954393208026886,
+      "slots_mu_absmean": 0.7783740758895874,
+      "sigma_min": 0.8974030613899231,
+      "sigma_max": 1.1209977865219116,
+      "sigma_mean": 1.0044749975204468,
+      "sigma_std": 0.06072242185473442
+    },
+    "slot_attention_omic": {
+      "slots_mu_shape": [
+        1,
+        1,
+        256
+      ],
+      "slots_mu_std": 0.9967133402824402,
+      "slots_mu_absmean": 0.7959907054901123,
+      "sigma_min": 0.8951626420021057,
+      "sigma_max": 1.1159279346466064,
+      "sigma_mean": 1.000101089477539,
+      "sigma_std": 0.06187638267874718
+    },
+    "init_only_cosine": {
+      "slot_attention_wsi": {
+        "init_max_offdiag_cos": 0.560522735118866,
+        "init_min_offdiag_cos": 0.0,
+        "init_mean_offdiag_cos": 0.40530890226364136
+      },
+      "slot_attention_omic": {
+        "init_max_offdiag_cos": 0.6226828098297119,
+        "init_min_offdiag_cos": 0.0,
+        "init_mean_offdiag_cos": 0.4385276436805725
+      }
+    },
+    "post_training_max_offdiag_cos_mean": 0.9995975200231974,
+    "verdict": "TRAINING_COLLAPSED_SLOTS"
+  }
+}
