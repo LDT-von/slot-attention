@@ -1,0 +1,37 @@
+{
+  "schema": "dct_prototype_bridge_source_and_synthetic_check_v1",
+  "source_root": "E:\\DCT-Reg",
+  "source_sha256_before": {
+    "survot_rank/research/methods/dct_v2/transport.py": "fd88fb12561fb850f6e1c45b2d1cdf28d7f0da73d29cd3ce486a8494044fd449",
+    "survot_rank/research/components/slot_attention.py": "8ebfa58b86cb47a7ccdad36f618546d86e7d13db9aabb2baade79618a3d2e024",
+    "survot_rank/research/methods/dct_v23/model.py": "d19d75e74c1d9db564e3e8f8c965571889e8034276cd70ce8d9a614b5a2d9fd5",
+    "survot_rank/research/methods/dct_v22/model.py": "9ee3cdb895187d91b532f1a52ff8a057a639d5780cf553e0d045481078937fb8",
+    "survot_rank/research/methods/dct_v21/model.py": "ebcbe13a7ef2bab2f6a4ed6ba36846ae30a0e108f0326e6eab8aaeeeaeb58503",
+    "survot_rank/research/methods/dct_v2/model.py": "d66b530390bd4bc03cf44d78442a77a5a430e357b6b482f0885a7aebff2a0749",
+    "survot_rank/research/methods/legacy/experimental/dct_v313_transport_reconstruction/model.py": "fb4a59e56f7f8aa4387728bcf6fd5e86aaf5b5744c05ba2fc75f8da9ad33a5d0",
+    "configs/dct_rg_blca_legacy_val.yaml": "ffec2ed081733bef6b31455c493fb15953ee472f05607a3ebf5662a457d0702c"
+  },
+  "source_sha256_after": {
+    "survot_rank/research/methods/dct_v2/transport.py": "fd88fb12561fb850f6e1c45b2d1cdf28d7f0da73d29cd3ce486a8494044fd449",
+    "survot_rank/research/components/slot_attention.py": "8ebfa58b86cb47a7ccdad36f618546d86e7d13db9aabb2baade79618a3d2e024",
+    "survot_rank/research/methods/dct_v23/model.py": "d19d75e74c1d9db564e3e8f8c965571889e8034276cd70ce8d9a614b5a2d9fd5",
+    "survot_rank/research/methods/dct_v22/model.py": "9ee3cdb895187d91b532f1a52ff8a057a639d5780cf553e0d045481078937fb8",
+    "survot_rank/research/methods/dct_v21/model.py": "ebcbe13a7ef2bab2f6a4ed6ba36846ae30a0e108f0326e6eab8aaeeeaeb58503",
+    "survot_rank/research/methods/dct_v2/model.py": "d66b530390bd4bc03cf44d78442a77a5a430e357b6b482f0885a7aebff2a0749",
+    "survot_rank/research/methods/legacy/experimental/dct_v313_transport_reconstruction/model.py": "fb4a59e56f7f8aa4387728bcf6fd5e86aaf5b5744c05ba2fc75f8da9ad33a5d0",
+    "configs/dct_rg_blca_legacy_val.yaml": "ffec2ed081733bef6b31455c493fb15953ee472f05607a3ebf5662a457d0702c"
+  },
+  "source_unchanged": true,
+  "native_pool_function_ast_only": true,
+  "native_sa_component_loaded": true,
+  "dct_survival_model_constructed": false,
+  "synthetic_seed": 73,
+  "native_local_replay_max_abs_error": 0.0,
+  "native_prototype_pool_max_abs_error": 0.0,
+  "both_mesh_insertion_sites_finite": true,
+  "nonfinite_padding_control": true,
+  "native_parameters_unchanged": true,
+  "patient_tasks": 0,
+  "training_runs": 0,
+  "server_runs": 0
+}

@@ -6,6 +6,34 @@
 
 当前入口：[进度](docs/PROGRESS.json)、[服务器新结论复核](docs/research/slotspe_server_claims_20261020/服务器结论复核.txt)、[原始回传与对照要求](docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt)、[P5勘误](docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt)。
 
+## 本轮发布范围与服务器入口（2026-10-21）
+
+本轮载荷通过29项相关合成检查和3个默认计划入口检查，包含历史本地诊断的公开汇总、MESH式分配/原型桥接核心及D0-D4阶段配置。[发布与服务器拉取](docs/research/slotspe_redundancy_methods_20261021/发布与服务器拉取.txt)。完整患者训练尚未接入，DIAS/MetaSlot未实现，不能将五份阶段配置当作三篇论文的完整训练版本。
+
+已快进保留服务器新提交`2a806c2`及其[observe汇总](docs/research/slotspe_mechanism_protocol_20261021/observe_结果汇总_20261021.md)。本轮只登记报告到达，原始患者产物尚未在此验收；与本地71人历史记录分开。本次发布不启动服务器患者任务。
+
+## 槽冗余文献与分配模块原型（2026-10-21）
+
+已核对本地8篇论文与7个源码包，重点复核DIAS的删槽后再聚合、MetaSlot的原型去重、MESH的内部破平局。DIAS下载包缺少论文的删槽/重新初始化核心，不能直接视为完整实现。新模块仅提供原版、均匀边缘Sinkhorn及MESH式适配三个聚合内部对照，未改原版源码、默认配置或患者队列。
+
+模块12项合成检查通过；生成张量例子同时展示了“分配更不同”并不保证“value更新更不同”。自己的任务条件重复分配仍是候选设计，未实现、未查明新颖性、未证明患者收益。[文献到模块与方法设计](docs/research/slotspe_redundancy_methods_20261021/文献到模块与方法设计.txt)、[合成探针](docs/research/slotspe_redundancy_methods_20261021/synthetic_probe.json)。本轮无训练、患者推理或服务器执行。
+
+## DCT原型与分配模块的适配（2026-10-21）
+
+已只读确认E盘DCT-RG/v2.3与DCT-B/v3.13使用槽后的原型汇总；它不等于MetaSlot的VQ去重。新增双位置研究接口和5份独立阶段配置，分别比较槽内读取与原型汇总。两模块26项合成检查通过；对E盘原生SA和原型公式的生成张量重放误差均为0。[原型核查与版本表](docs/research/slotspe_redundancy_methods_20261021/DCT原型核查与独立版本.txt)。尚未接入完整患者训练，DIAS/MetaSlot版本未实现；E盘源码未改，无患者或服务器任务。
+
+## 本地关闭稀疏选择：受控读出对照已执行（2026-10-21）
+
+按用户要求在同一3轮原版权重、71人原生槽上关闭Top-K，没有训练或重新生成槽。最终C-index原版0.686627；仅病理关闭0.687625、仅基因关闭0.687625、两侧关闭0.684631。两侧关闭的风险平均绝对变化0.000960。原设置的logit/score/gate均精确重现，误差0；交互后的槽仍高度相似。
+
+这是冻结权重的推理干预，不能判断不带门控训练会学出什么槽。详见[关闭选择对照](docs/research/slotspe_sparsity_off_20261021/关闭稀疏选择对照.txt)、[公开汇总](docs/research/slotspe_sparsity_off_20261021/aggregate_summary.json)。
+
+## 本地保留槽已复算：选中后仍高度重叠（2026-10-21）
+
+历史BLCA fold0/seed3、训练3轮的71名患者记录，实际两侧均8选2。选中槽cos均值：病理0.99447、基因0.99862；选中槽读取分布重叠均值分别99.858%和99.555%。表示和读取层面的冗余在选择后仍存在。这不是服务器77人结果，也不是门控训练因果效应或预测损害的证明。
+
+本轮只复算已有数组，73份历史输出哈希匹配，未运行模型。详见[实测报告](docs/research/slotspe_local_redundancy_20261021/本地槽冗余与门控实测.txt)、[汇总数值](docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json)。
+
 ## 原八项问题的实验入口（2026-10-21）
 
 [实验协议与判定](docs/research/slotspe_mechanism_protocol_20261021/实验协议与判定.txt)、[服务器执行提示词](docs/research/slotspe_mechanism_protocol_20261021/服务器AI_原八项问题实验.txt)。入口为`python -B scripts/run_slotspe_problem_experiments.py --plan`；只有`--run`才执行，产物限定在忽略的`local_evidence`。

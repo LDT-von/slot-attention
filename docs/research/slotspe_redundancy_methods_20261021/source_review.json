@@ -1,0 +1,191 @@
+{
+  "schema": "slotspe_redundancy_literature_module_review_v1",
+  "original_downloads": [
+    {
+      "file": "2507.23755v3.pdf",
+      "sha256": "c562ba606ad0b0ca88ba92a6cb38324fdf1436d9302dba7c08b3bb375f6147f7",
+      "matches_registered_original": true
+    },
+    {
+      "file": "6936_Grounded_Object_Centric_L.pdf",
+      "sha256": "208aa2ae460ac5b1b5ef948febfbd52b221033e51e9ca959d0127978cfebd387",
+      "matches_registered_original": true
+    },
+    {
+      "file": "Centric Learning with Slot Attention.pdf",
+      "sha256": "ff310f9ee610ce0bad20bfc7517cb730b19e11b8f45195cd548b510616164b1f",
+      "matches_registered_original": true
+    },
+    {
+      "file": "coda-main.zip",
+      "sha256": "7f1138823c9497f21afb4690115670745396da8cafce9ad315ce977b3bb43dbd",
+      "matches_registered_original": true
+    },
+    {
+      "file": "CoSA-master.zip",
+      "sha256": "592a49ff4acde7874d07818dcdeb41af62fd44c5c0cc9c841e874e1ab6e35079",
+      "matches_registered_original": true
+    },
+    {
+      "file": "DIAS-main.zip",
+      "sha256": "fa699dbff2238f74175ac83dcbc6d88dd610e0d59e2fdbce1b7d043de6a38b40",
+      "matches_registered_original": true
+    },
+    {
+      "file": "ICLR-2025-object-centric-pretraining-via-target-encoder-bootstrapping-Paper-Conference.pdf",
+      "sha256": "c5199a7684f4acec22c9e48beaa2953d6da8a8cdb63a92d3b874a8c63e274392",
+      "matches_registered_original": true
+    },
+    {
+      "file": "ICLR-2026-improved-object-centric-diffusion-learning-with-registers-and-contrastive-alignment-Paper-Conference.pdf",
+      "sha256": "d98570d8c58800816acea29210dc344d8d4ad19105bd21d1d2ed38271fd064ae",
+      "matches_registered_original": true
+    },
+    {
+      "file": "MESH-main.zip",
+      "sha256": "bef8eadd0ef48198f9c1ca82c2d7c99e4849adcde95cc270a0ec8a7e3155d29c",
+      "matches_registered_original": true
+    },
+    {
+      "file": "MetaSlot-main.zip",
+      "sha256": "fb319222dfd13a77ea3efc6b274aef88eb2394c9c56d60057bf877e4eb01ffe1",
+      "matches_registered_original": true
+    },
+    {
+      "file": "NeurIPS-2024-identifiable-object-centric-representation-learning-via-probabilistic-slot-attention-Paper-Conference.pdf",
+      "sha256": "349d837347a425def3a623a7ec45f81281725b529fcc219854f81eeab5bd12b2",
+      "matches_registered_original": true
+    },
+    {
+      "file": "NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference.pdf",
+      "sha256": "d496dc81809df6f4c394a1621dbc85d79526da1038cc5eece7bceca75ac9c4b1",
+      "matches_registered_original": true
+    },
+    {
+      "file": "ocebo-main.zip",
+      "sha256": "bfcef318faed665f418d4b2bed3f18c41649f36423e9731229385b93f536f555",
+      "matches_registered_original": true
+    },
+    {
+      "file": "PSA-master.zip",
+      "sha256": "d6050b9e4670f9adf48cd1a925d8808d7db08812f9f196d7da3e17bf30baf69f",
+      "matches_registered_original": true
+    },
+    {
+      "file": "zhang23ba.pdf",
+      "sha256": "4135fdf1546b33299af1d2a22d585ba27524f6d3e962063a9b54d898597fda07",
+      "matches_registered_original": true
+    }
+  ],
+  "code_members_read": [
+    {
+      "archive": "MESH-main.zip",
+      "member": "MESH-main/mesh.py",
+      "sha256": "ac86bcf708d605afab509158ae31462860d1f7ee3be34a206ebef368322b5a93",
+      "lines": 69
+    },
+    {
+      "archive": "MESH-main.zip",
+      "member": "MESH-main/slot_attention.py",
+      "sha256": "765e65dfece613d0f6f5195011ddd768fa9747733d45629c37bc1b25c60e7708",
+      "lines": 359
+    },
+    {
+      "archive": "MetaSlot-main.zip",
+      "member": "MetaSlot-main/object_centric_bench/model/metaslot.py",
+      "sha256": "a46f7e5c903b88d40bf9cf53d45bbb000a2f63c309c2853db3ab3480fabee492",
+      "lines": 693
+    },
+    {
+      "archive": "DIAS-main.zip",
+      "member": "DIAS-main/readme.md",
+      "sha256": "62fc5c4628ed22b56845c19286c8810475ad71c25b2e34d4134fd6172ba3792a",
+      "lines": 164
+    },
+    {
+      "archive": "DIAS-main.zip",
+      "member": "DIAS-main/object_centric_bench/model/dias.py",
+      "sha256": "015b61f1e09c8cc60135b8114ac316ca88dc2e4dccfcbf4487b817fabfc2be0b",
+      "lines": 227
+    },
+    {
+      "archive": "CoSA-master.zip",
+      "member": "CoSA-master/src/model.py",
+      "sha256": "aa001713455fb088d79abdcc86b2586d4c7b38cb73458a3a1f0ec3622f811dfe",
+      "lines": 1142
+    },
+    {
+      "archive": "CoSA-master.zip",
+      "member": "CoSA-master/src/qkcodebook.py",
+      "sha256": "a57cebbf250d435fe618ecdfcb4a797d76e7573fa0a663a632dc5aeabf541a6f",
+      "lines": 79
+    },
+    {
+      "archive": "PSA-master.zip",
+      "member": "PSA-master/model.py",
+      "sha256": "9031ee0fe114487836e8fc1f1dee325e1fe927d741fde117f80f1e998bf444a0",
+      "lines": 1352
+    },
+    {
+      "archive": "coda-main.zip",
+      "member": "coda-main/src/model/encoder.py",
+      "sha256": "64fed766a3f0c5f917682923bba9ce829fe064a94696fb0f626e196be959c8ed",
+      "lines": 196
+    },
+    {
+      "archive": "ocebo-main.zip",
+      "member": "ocebo-main/models/ocebo.py",
+      "sha256": "107b6d3ceba7b40ebbdd6caaa9bd220e779ed804c8b0d00a5fcdcf172bc71301",
+      "lines": 72
+    }
+  ],
+  "rendered_pages": [
+    {
+      "file": "2507.23755v3_p4.png",
+      "sha256": "c30a905cd289995e35d0ea3b118aabd86662348a382cdb295d6e7a8f1ecd377a"
+    },
+    {
+      "file": "NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference_p4.png",
+      "sha256": "842ee5e66f930f17377ccc733063d8fdd9eb0a9f5ef94e65bf38032ada5db6fa"
+    },
+    {
+      "file": "zhang23ba_p4.png",
+      "sha256": "e3c504545d1655ee73a311d5d6f0eed87c3de48717e51acd6aaee47f8a927053"
+    }
+  ],
+  "other_paper_theory_review": "Reuse prior local literature review; relevant archived code entries reread this turn.",
+  "public_primary_urls": [
+    "https://arxiv.org/html/2507.23755v3",
+    "https://arxiv.org/html/2505.20772v2",
+    "https://proceedings.mlr.press/v202/zhang23ba.html",
+    "https://arxiv.org/html/2601.12936v2",
+    "https://arxiv.org/html/2605.02323v1"
+  ],
+  "module": "survot_rank/research/slotspe_proof/assignment_router.py",
+  "novel_method_implemented": false,
+  "candidate_design": "Task-conditional duplicate allocation; design only, novelty not established.",
+  "mesh_adaptation_differences": [
+    "Uniform marginals, unlike supplied model learned marginals.",
+    "20 inner Sinkhorn iterations by default; supplied MESH helper uses 5.",
+    "No image encoder/decoder or original authors training objectives.",
+    "No internal random draws; explicit per-iteration noise."
+  ],
+  "downloaded_archive_code_executed": false,
+  "new_patient_tasks": 0,
+  "new_training_runs": 0,
+  "server_runs": 0,
+  "pdf_method_pages_reread": {
+    "2507.23755v3.pdf": [
+      4,
+      7
+    ],
+    "NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference.pdf": [
+      4,
+      10
+    ],
+    "zhang23ba.pdf": [
+      3,
+      4
+    ]
+  }
+}

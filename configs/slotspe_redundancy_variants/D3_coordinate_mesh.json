@@ -1,0 +1,21 @@
+{
+  "schema": "dct_prototype_assignment_stage_spec_v1",
+  "variant_id": "D3_coordinate_mesh",
+  "description": "Change prototype pooling only",
+  "host_reference": "DCT-RG v2.3; existing prototypes reused; full host training not integrated",
+  "readiness": "stage_core_tested_not_patient_training_ready",
+  "local_assignment": {
+    "mode": "original",
+    "eps": 1e-08,
+    "temperature": 1.0,
+    "sinkhorn_steps": 20,
+    "mesh_steps": 4,
+    "mesh_lr": 1.0,
+    "noise_std": 0.001
+  },
+  "prototype_assignment": "mesh_uniform",
+  "coordinate_temperature": 0.3,
+  "prototype_parameter_policy": "reuse_identical_existing_host_parameters",
+  "other_model_and_loss_changes": false,
+  "patient_execution": false
+}

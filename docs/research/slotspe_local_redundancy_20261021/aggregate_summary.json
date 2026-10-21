@@ -1,0 +1,246 @@
+{
+  "task_id": "SPE-08",
+  "recorded_utc": "2026-10-21T10:28:08.068670+00:00",
+  "scope": "historical_local_real_BLCA_cached_validation",
+  "server_new_results": false,
+  "observations_sha256": "cf76047a16cd0536ce8bddd2710079ed686e2f91e784c140b7d915bf86bcb703",
+  "historical_receipt_sha256": "c0f62d7a4a6ec617d6f7f391582cbe322cfdc864548cc443099b171e554f3192",
+  "verified_historical_output_files": 73,
+  "historical_native_source_matches_current": true,
+  "patient_count": 71,
+  "fold": 0,
+  "seed": 3,
+  "historical_epochs": 3,
+  "historical_optimizer_steps": 111,
+  "patches": 256,
+  "eval_seed": 3080000,
+  "checkpoint_sha256_recorded": [
+    "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c"
+  ],
+  "new_model_forward_passes": 0,
+  "new_training_steps": 0,
+  "metric": "Raw final slots before decoder.map; unique unordered pairs only. Reading overlap=sum_token min(p_i,p_j), per-head row-normalized then averaged across heads.",
+  "cosine_0_95_is_descriptive_not_clinical_threshold": true,
+  "modalities": {
+    "wsi": {
+      "candidate_counts": {
+        "8": 71
+      },
+      "selected_counts": {
+        "2": 71
+      },
+      "nonzero_gate_weight_counts": {
+        "2": 71
+      },
+      "patients_all_unique_pairs_above_0_95": 71,
+      "patients_selected_pair_above_0_95": 71,
+      "patients_zero_gate_weight_sum": 0,
+      "distributions": {
+        "all_pair_cosine_mean": {
+          "n": 71,
+          "mean": 0.9937741507629392,
+          "median": 0.9940806087254171,
+          "min": 0.9882462720950042,
+          "max": 0.996912426744759
+        },
+        "all_pair_cosine_min": {
+          "n": 71,
+          "mean": 0.9837289252298623,
+          "median": 0.9855327753225556,
+          "min": 0.9635306803079018,
+          "max": 0.9942000261565873
+        },
+        "selected_pair_cosine": {
+          "n": 71,
+          "mean": 0.9944680934017909,
+          "median": 0.9954997235263886,
+          "min": 0.9820035941099258,
+          "max": 0.998871442670744
+        },
+        "pairs_cosine_above_0_95": {
+          "n": 71,
+          "mean": 28.0,
+          "median": 28.0,
+          "min": 28.0,
+          "max": 28.0
+        },
+        "all_pair_reading_overlap_mean": {
+          "n": 71,
+          "mean": 0.9985403725427686,
+          "median": 0.9985334818627517,
+          "min": 0.9979009621394346,
+          "max": 0.9990642975782519
+        },
+        "selected_pair_reading_overlap": {
+          "n": 71,
+          "mean": 0.9985833998212321,
+          "median": 0.9986219897014044,
+          "min": 0.9973364023416122,
+          "max": 0.9993193442090025
+        },
+        "selected_minus_all_pair_cosine": {
+          "n": 71,
+          "mean": 0.0006939426388514043,
+          "median": 0.0014910983488309881,
+          "min": -0.011824974278996314,
+          "max": 0.006465402184919977
+        },
+        "selected_minus_all_pair_reading_overlap": {
+          "n": 71,
+          "mean": 4.302727846370501e-05,
+          "median": 9.777902224572532e-05,
+          "min": -0.0011417986231877508,
+          "max": 0.000690603679496804
+        },
+        "centered_energy_fraction": {
+          "n": 71,
+          "mean": 0.005816994382187089,
+          "median": 0.005507728930691017,
+          "min": 0.0027762402437898474,
+          "max": 0.011019964889301162
+        },
+        "centered_effective_rank": {
+          "n": 71,
+          "mean": 3.621862473523406,
+          "median": 3.65519503639453,
+          "min": 2.1698440998300446,
+          "max": 5.3087328100761555
+        },
+        "gate_weight_sum": {
+          "n": 71,
+          "mean": 0.9999997888750751,
+          "median": 0.9999999515712261,
+          "min": 0.9999969899654388,
+          "max": 1.0000000596046448
+        },
+        "nonzero_gate_weights": {
+          "n": 71,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2.0,
+          "max": 2.0
+        },
+        "gate_weight_effective_slots": {
+          "n": 71,
+          "mean": 1.4659137685791632,
+          "median": 1.383989387640304,
+          "min": 1.003789107621027,
+          "max": 1.9992391834988812
+        }
+      }
+    },
+    "omic": {
+      "candidate_counts": {
+        "8": 71
+      },
+      "selected_counts": {
+        "2": 71
+      },
+      "nonzero_gate_weight_counts": {
+        "2": 71
+      },
+      "patients_all_unique_pairs_above_0_95": 71,
+      "patients_selected_pair_above_0_95": 71,
+      "patients_zero_gate_weight_sum": 0,
+      "distributions": {
+        "all_pair_cosine_mean": {
+          "n": 71,
+          "mean": 0.9987895138082374,
+          "median": 0.9988301163707732,
+          "min": 0.9979061218032499,
+          "max": 0.9991952621880454
+        },
+        "all_pair_cosine_min": {
+          "n": 71,
+          "mean": 0.9975782109852023,
+          "median": 0.9976857798778838,
+          "min": 0.9950858544391702,
+          "max": 0.998748533846412
+        },
+        "selected_pair_cosine": {
+          "n": 71,
+          "mean": 0.9986244912794483,
+          "median": 0.9987823005419842,
+          "min": 0.9950858544391702,
+          "max": 0.999562201816658
+        },
+        "pairs_cosine_above_0_95": {
+          "n": 71,
+          "mean": 28.0,
+          "median": 28.0,
+          "min": 28.0,
+          "max": 28.0
+        },
+        "all_pair_reading_overlap_mean": {
+          "n": 71,
+          "mean": 0.9957719284354354,
+          "median": 0.995813198496422,
+          "min": 0.9944475945198364,
+          "max": 0.9965324328850399
+        },
+        "selected_pair_reading_overlap": {
+          "n": 71,
+          "mean": 0.9955457868292232,
+          "median": 0.9957321425117367,
+          "min": 0.9911268388673263,
+          "max": 0.9973529583307971
+        },
+        "selected_minus_all_pair_cosine": {
+          "n": 71,
+          "mean": -0.00016502252878920393,
+          "median": -2.0354325148574937e-05,
+          "min": -0.003384727947006949,
+          "max": 0.0008236783660506841
+        },
+        "selected_minus_all_pair_reading_overlap": {
+          "n": 71,
+          "mean": -0.00022614160621206933,
+          "median": -0.00015646344505715337,
+          "min": -0.0042734732095894845,
+          "max": 0.001687992260809068
+        },
+        "centered_energy_fraction": {
+          "n": 71,
+          "mean": 0.0012057883903949726,
+          "median": 0.0011788634838464066,
+          "min": 0.0007905244845006147,
+          "max": 0.002154634954762151
+        },
+        "centered_effective_rank": {
+          "n": 71,
+          "mean": 4.673823821237448,
+          "median": 4.652248199982309,
+          "min": 3.7799154616548765,
+          "max": 5.552709671975517
+        },
+        "gate_weight_sum": {
+          "n": 71,
+          "mean": 0.9999999642162256,
+          "median": 0.9999999403953552,
+          "min": 0.9999998509883881,
+          "max": 1.0000000596046448
+        },
+        "nonzero_gate_weights": {
+          "n": 71,
+          "mean": 2.0,
+          "median": 2.0,
+          "min": 2.0,
+          "max": 2.0
+        },
+        "gate_weight_effective_slots": {
+          "n": 71,
+          "mean": 1.827456980416339,
+          "median": 1.8749897894732923,
+          "min": 1.204405053837628,
+          "max": 1.999792935124202
+        }
+      }
+    }
+  },
+  "conclusion_boundary": [
+    "Native retained final-slot and reading-distribution redundancy persists after this checkpoint's selection.",
+    "These are 71 historical local BLCA cases at one 3-epoch checkpoint and one retained eval draw, not the 77-case server run.",
+    "No new inference; decoder.map outputs, biological event labels and per-slot marginal predictive utility were not recomputed.",
+    "No without-gating matched training control: this does not identify the gate's causal training effect or predictive harm."
+  ]
+}

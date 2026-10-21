@@ -1,0 +1,638 @@
+{
+  "task_id": "SPE-08",
+  "protocol": {
+    "schema": "slotspe_sparsity_off_v1",
+    "arms": [
+      "native_top2",
+      "dense_wsi",
+      "dense_omic",
+      "dense_both",
+      "uniform_both"
+    ],
+    "baseline": "Exact retained native final slots, recorded Top2 masks and original weights",
+    "dense": "Actual original decoder at K=S=8; learned soft weights retained; all-true self masks",
+    "uniform": "K=S plus uniform 1/S single-modal weights; identical fused self masks to dense_both",
+    "one_modality_controls": true,
+    "other_branches": "Original dense cross-attention unchanged",
+    "training_steps": 0,
+    "new_slot_generation": 0,
+    "scope": "Frozen-checkpoint inference intervention, not a no-gating training ablation",
+    "replay_atol": 1e-06,
+    "batch_size": 8,
+    "device": "cuda:0",
+    "fused_and_auxiliary_predictions_reported_separately": true
+  },
+  "patients": 71,
+  "fold": 0,
+  "seed": 3,
+  "historical_training_epochs": 3,
+  "historical_optimizer_steps": 111,
+  "new_training_steps": 0,
+  "new_slot_generation": 0,
+  "new_full_model_forward_calls": 0,
+  "new_native_downstream_readout_sweeps": 7,
+  "checkpoint_sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
+  "controls_max_abs_errors": {
+    "historical_logits": 0.0,
+    "original_gate": 0.0,
+    "original_scores": 0.0,
+    "identical_input": 0.0,
+    "dense_all_true_vs_none_mask": 0.0,
+    "cross_branch": 0.0,
+    "dense_decoder_different_rng": 2.384185791015625e-07
+  },
+  "slot_vectors_before_gate_are_identical_by_design": true,
+  "arms": {
+    "native_top2": {
+      "heads": {
+        "fused": {
+          "cindex": 0.6866267465069861,
+          "concordant": 688,
+          "discordant": 314,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.838992714881897
+        },
+        "aux_wsi": {
+          "cindex": 0.6387225548902196,
+          "concordant": 640,
+          "discordant": 362,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8340452313423157
+        },
+        "aux_omic": {
+          "cindex": 0.7015968063872255,
+          "concordant": 703,
+          "discordant": 299,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8370117545127869
+        }
+      },
+      "activated_slot_cosine": {
+        "wsi": {
+          "mean": 0.9944680934017909,
+          "median": 0.9954997235263886,
+          "min": 0.9820035941099258,
+          "max": 0.998871442670744
+        },
+        "omic": {
+          "mean": 0.9986244912794483,
+          "median": 0.9987823005419845,
+          "min": 0.9950858544391702,
+          "max": 0.999562201816658
+        }
+      },
+      "gate_weight_effective_slots": {
+        "wsi": {
+          "mean": 1.4659137685791632,
+          "median": 1.383989387640304,
+          "min": 1.003789107621027,
+          "max": 1.9992391834988812
+        },
+        "omic": {
+          "mean": 1.827456980416339,
+          "median": 1.8749897894732923,
+          "min": 1.204405053837628,
+          "max": 1.999792935124202
+        }
+      },
+      "all_eight_post_self_slot_cosine": {
+        "wsi": {
+          "mean": 0.9938789743494303,
+          "median": 0.9941842709818403,
+          "min": 0.9883858882469876,
+          "max": 0.9970377499034043
+        },
+        "omic": {
+          "mean": 0.9988670832804029,
+          "median": 0.9988968296321638,
+          "min": 0.9980113357394306,
+          "max": 0.9992614071875152
+        }
+      },
+      "differences_vs_native": {
+        "fused": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "delta_cindex": 0.0
+        },
+        "aux_wsi": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "delta_cindex": 0.0
+        },
+        "aux_omic": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "delta_cindex": 0.0
+        }
+      }
+    },
+    "dense_wsi": {
+      "heads": {
+        "fused": {
+          "cindex": 0.687624750499002,
+          "concordant": 689,
+          "discordant": 313,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.839137852191925
+        },
+        "aux_wsi": {
+          "cindex": 0.6397205588822356,
+          "concordant": 641,
+          "discordant": 361,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8342484831809998
+        },
+        "aux_omic": {
+          "cindex": 0.7015968063872255,
+          "concordant": 703,
+          "discordant": 299,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8370117545127869
+        }
+      },
+      "activated_slot_cosine": {
+        "wsi": {
+          "mean": 0.9937741507629392,
+          "median": 0.9940806087254173,
+          "min": 0.988246272095004,
+          "max": 0.9969124267447591
+        },
+        "omic": {
+          "mean": 0.9986244912794483,
+          "median": 0.9987823005419845,
+          "min": 0.9950858544391702,
+          "max": 0.999562201816658
+        }
+      },
+      "gate_weight_effective_slots": {
+        "wsi": {
+          "mean": 2.986505435749818,
+          "median": 2.9704283205207282,
+          "min": 1.0619427486468467,
+          "max": 6.8143898135092735
+        },
+        "omic": {
+          "mean": 1.827456980416339,
+          "median": 1.8749897894732923,
+          "min": 1.204405053837628,
+          "max": 1.999792935124202
+        }
+      },
+      "all_eight_post_self_slot_cosine": {
+        "wsi": {
+          "mean": 0.9939627018901203,
+          "median": 0.9942830482978595,
+          "min": 0.9885462478801231,
+          "max": 0.9970519142322238
+        },
+        "omic": {
+          "mean": 0.9988670832804029,
+          "median": 0.9988968296321638,
+          "min": 0.9980113357394306,
+          "max": 0.9992614071875152
+        }
+      },
+      "differences_vs_native": {
+        "fused": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.0020503166695715674,
+            "median": 0.0017230510711669922,
+            "min": 0.00035512447357177734,
+            "max": 0.005635976791381836
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.0008902754045742081,
+            "median": 0.0007919407677676737,
+            "min": 1.390494636854811e-05,
+            "max": 0.002380304225217511
+          },
+          "delta_cindex": 0.0009980039920158834
+        },
+        "aux_wsi": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.028897988124632498,
+            "median": 0.016873478889465332,
+            "min": 0.0035103559494018555,
+            "max": 0.1622546911239624
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.014757673855383827,
+            "median": 0.008660011134178802,
+            "min": 0.00029293499354388075,
+            "max": 0.08640325963598361
+          },
+          "delta_cindex": 0.0009980039920159944
+        },
+        "aux_omic": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "delta_cindex": 0.0
+        }
+      }
+    },
+    "dense_omic": {
+      "heads": {
+        "fused": {
+          "cindex": 0.687624750499002,
+          "concordant": 689,
+          "discordant": 313,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8389184474945068
+        },
+        "aux_wsi": {
+          "cindex": 0.6387225548902196,
+          "concordant": 640,
+          "discordant": 362,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8340452313423157
+        },
+        "aux_omic": {
+          "cindex": 0.7045908183632734,
+          "concordant": 706,
+          "discordant": 296,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8374807238578796
+        }
+      },
+      "activated_slot_cosine": {
+        "wsi": {
+          "mean": 0.9944680934017909,
+          "median": 0.9954997235263886,
+          "min": 0.9820035941099258,
+          "max": 0.998871442670744
+        },
+        "omic": {
+          "mean": 0.9987895138082374,
+          "median": 0.998830116370773,
+          "min": 0.9979061218032498,
+          "max": 0.9991952621880452
+        }
+      },
+      "gate_weight_effective_slots": {
+        "wsi": {
+          "mean": 1.4659137685791632,
+          "median": 1.383989387640304,
+          "min": 1.003789107621027,
+          "max": 1.9992391834988812
+        },
+        "omic": {
+          "mean": 6.833511304556961,
+          "median": 6.8859559592961945,
+          "min": 5.292501504852089,
+          "max": 7.687061044517118
+        }
+      },
+      "all_eight_post_self_slot_cosine": {
+        "wsi": {
+          "mean": 0.9938789743494303,
+          "median": 0.9941842709818403,
+          "min": 0.9883858882469876,
+          "max": 0.9970377499034043
+        },
+        "omic": {
+          "mean": 0.9988808123455405,
+          "median": 0.9989241687019216,
+          "min": 0.9980405543537992,
+          "max": 0.9992610919242588
+        }
+      },
+      "differences_vs_native": {
+        "fused": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.0011432951604816275,
+            "median": 0.0010551214218139648,
+            "min": 0.00032711029052734375,
+            "max": 0.003141045570373535
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.0003871069741501167,
+            "median": 0.00028830606703866835,
+            "min": 2.335354932014866e-05,
+            "max": 0.0013189357514291622
+          },
+          "delta_cindex": 0.0009980039920158834
+        },
+        "aux_wsi": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "max": 0.0
+          },
+          "delta_cindex": 0.0
+        },
+        "aux_omic": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.009803897897962113,
+            "median": 0.008642077445983887,
+            "min": 0.0005080699920654297,
+            "max": 0.027058124542236328
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.004491164027679265,
+            "median": 0.0029395011703341467,
+            "min": 0.00013196934239845248,
+            "max": 0.01484484170884981
+          },
+          "delta_cindex": 0.0029940119760478723
+        }
+      }
+    },
+    "dense_both": {
+      "heads": {
+        "fused": {
+          "cindex": 0.6846307385229541,
+          "concordant": 686,
+          "discordant": 316,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8390634655952454
+        },
+        "aux_wsi": {
+          "cindex": 0.6397205588822356,
+          "concordant": 641,
+          "discordant": 361,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8342484831809998
+        },
+        "aux_omic": {
+          "cindex": 0.7045908183632734,
+          "concordant": 706,
+          "discordant": 296,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8374807238578796
+        }
+      },
+      "activated_slot_cosine": {
+        "wsi": {
+          "mean": 0.9937741507629392,
+          "median": 0.9940806087254173,
+          "min": 0.988246272095004,
+          "max": 0.9969124267447591
+        },
+        "omic": {
+          "mean": 0.9987895138082374,
+          "median": 0.998830116370773,
+          "min": 0.9979061218032498,
+          "max": 0.9991952621880452
+        }
+      },
+      "gate_weight_effective_slots": {
+        "wsi": {
+          "mean": 2.986505435749818,
+          "median": 2.9704283205207282,
+          "min": 1.0619427486468467,
+          "max": 6.8143898135092735
+        },
+        "omic": {
+          "mean": 6.833511304556961,
+          "median": 6.8859559592961945,
+          "min": 5.292501504852089,
+          "max": 7.687061044517118
+        }
+      },
+      "all_eight_post_self_slot_cosine": {
+        "wsi": {
+          "mean": 0.9939627018901203,
+          "median": 0.9942830482978595,
+          "min": 0.9885462478801231,
+          "max": 0.9970519142322238
+        },
+        "omic": {
+          "mean": 0.9988808123455405,
+          "median": 0.9989241687019216,
+          "min": 0.9980405543537992,
+          "max": 0.9992610919242588
+        }
+      },
+      "differences_vs_native": {
+        "fused": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.0022385875943680884,
+            "median": 0.00203859806060791,
+            "min": 0.00046062469482421875,
+            "max": 0.0053844451904296875
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.0009599443012013093,
+            "median": 0.0009137004945714011,
+            "min": 4.171520251627925e-05,
+            "max": 0.003301834454699115
+          },
+          "delta_cindex": -0.001996007984031989
+        },
+        "aux_wsi": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.028897988124632498,
+            "median": 0.016873478889465332,
+            "min": 0.0035103559494018555,
+            "max": 0.1622546911239624
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.014757673855383827,
+            "median": 0.008660011134178802,
+            "min": 0.00029293499354388075,
+            "max": 0.08640325963598361
+          },
+          "delta_cindex": 0.0009980039920159944
+        },
+        "aux_omic": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.009803897897962113,
+            "median": 0.008642077445983887,
+            "min": 0.0005080699920654297,
+            "max": 0.027058124542236328
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.004491164027679265,
+            "median": 0.0029395011703341467,
+            "min": 0.00013196934239845248,
+            "max": 0.01484484170884981
+          },
+          "delta_cindex": 0.0029940119760478723
+        }
+      }
+    },
+    "uniform_both": {
+      "heads": {
+        "fused": {
+          "cindex": 0.6846307385229541,
+          "concordant": 686,
+          "discordant": 316,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8390634655952454
+        },
+        "aux_wsi": {
+          "cindex": 0.6357285429141717,
+          "concordant": 637,
+          "discordant": 365,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8348392248153687
+        },
+        "aux_omic": {
+          "cindex": 0.7145708582834331,
+          "concordant": 716,
+          "discordant": 286,
+          "tied_risk": 0,
+          "tied_time": 1,
+          "native_nll_per_patient": 0.8372251391410828
+        }
+      },
+      "activated_slot_cosine": {
+        "wsi": {
+          "mean": 0.9937741507629392,
+          "median": 0.9940806087254173,
+          "min": 0.988246272095004,
+          "max": 0.9969124267447591
+        },
+        "omic": {
+          "mean": 0.9987895138082374,
+          "median": 0.998830116370773,
+          "min": 0.9979061218032498,
+          "max": 0.9991952621880452
+        }
+      },
+      "gate_weight_effective_slots": {
+        "wsi": {
+          "mean": 8.0,
+          "median": 8.0,
+          "min": 8.0,
+          "max": 8.0
+        },
+        "omic": {
+          "mean": 8.0,
+          "median": 8.0,
+          "min": 8.0,
+          "max": 8.0
+        }
+      },
+      "all_eight_post_self_slot_cosine": {
+        "wsi": {
+          "mean": 0.9939627018901203,
+          "median": 0.9942830482978595,
+          "min": 0.9885462478801231,
+          "max": 0.9970519142322238
+        },
+        "omic": {
+          "mean": 0.9988808123455405,
+          "median": 0.9989241687019216,
+          "min": 0.9980405543537992,
+          "max": 0.9992610919242588
+        }
+      },
+      "differences_vs_native": {
+        "fused": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.0022385875943680884,
+            "median": 0.00203859806060791,
+            "min": 0.00046062469482421875,
+            "max": 0.0053844451904296875
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.0009599443012013093,
+            "median": 0.0009137004945714011,
+            "min": 4.171520251627925e-05,
+            "max": 0.003301834454699115
+          },
+          "delta_cindex": -0.001996007984031989
+        },
+        "aux_wsi": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.029585671256965314,
+            "median": 0.021833419799804688,
+            "min": 0.006157040596008301,
+            "max": 0.09280359745025635
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.015160690951608626,
+            "median": 0.011756572173020619,
+            "min": 0.0001987676378876202,
+            "max": 0.04830675238311244
+          },
+          "delta_cindex": -0.0029940119760478723
+        },
+        "aux_omic": {
+          "per_patient_max_abs_logit": {
+            "mean": 0.009837446078448229,
+            "median": 0.008625268936157227,
+            "min": 0.0009558200836181641,
+            "max": 0.02851104736328125
+          },
+          "per_patient_abs_risk": {
+            "mean": 0.004388169815660547,
+            "median": 0.003610838785250259,
+            "min": 0.00012687127106403295,
+            "max": 0.01643740841375463
+          },
+          "delta_cindex": 0.012974051896207595
+        }
+      }
+    }
+  },
+  "conclusion_boundary": [
+    "Frozen weights and exact same retained slots; effects concern reading/prediction only.",
+    "Does not estimate how training without sparse selection changes learned slots.",
+    "One 3-epoch local checkpoint, 71 BLCA patients, one retained draw; no independent test or efficacy claim.",
+    "Cross branch remains dense as designed; dense learned versus uniform gates only differ in auxiliary modal predictions."
+  ]
+}

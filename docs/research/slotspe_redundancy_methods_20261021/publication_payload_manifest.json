@@ -1,0 +1,154 @@
+{
+  "schema": "slotspe_research_payload_manifest_v1",
+  "recorded_at": "2026-10-21T20:10:31+08:00",
+  "base_commit": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
+  "test_command": "python -B -m pytest tests/test_slotspe_assignment_router.py tests/test_slotspe_prototype_assignment.py tests/test_slotspe_sparsity_off.py -q",
+  "test_output": "29 passed in 3.22s",
+  "previous_verification_hashes_matched": 15,
+  "patient_jobs_this_publication": 0,
+  "raw_patient_arrays_included": false,
+  "readiness": "research_cores_and_stage_specs_only; full_patient_training_not_integrated; DIAS_MetaSlot_not_implemented",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 14863,
+      "sha256": "812e667b4161529268b5c27dcf61c20f48b47bb34f365a4e742e100f15a9fa63"
+    },
+    {
+      "path": "configs/slotspe_redundancy_variants/D0_native.json",
+      "bytes": 716,
+      "sha256": "f198336a1517c7a69f8fa78d685df395881f12f9a8506cbd0abe7a1b459f59f3"
+    },
+    {
+      "path": "configs/slotspe_redundancy_variants/D1_sa_sinkhorn.json",
+      "bytes": 724,
+      "sha256": "c1adc8e9256558a1052b748c83897c1829531f47b8e18338d1fb5345177010b7"
+    },
+    {
+      "path": "configs/slotspe_redundancy_variants/D2_sa_mesh.json",
+      "bytes": 724,
+      "sha256": "ca0d51ef99f82759c3869d486c2f15bb3549c555f088894c59fb3e11e2e0b56a"
+    },
+    {
+      "path": "configs/slotspe_redundancy_variants/D3_coordinate_mesh.json",
+      "bytes": 713,
+      "sha256": "dfcb7d90c3b29500f4670af93cc416bd3650861b36f75d823183a03c3e33d499"
+    },
+    {
+      "path": "configs/slotspe_redundancy_variants/D4_both_mesh.json",
+      "bytes": 736,
+      "sha256": "7b3e8f1291c71fd419f90ac06d923d252397438be82ca83a022cf6d750c6ef9d"
+    },
+    {
+      "path": "docs/PROGRESS.json",
+      "bytes": 30037,
+      "sha256": "25a36bccc22b9c35e72ce8acb46a63a47445b1756006e920eb3cd04e446a7724"
+    },
+    {
+      "path": "docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json",
+      "bytes": 7822,
+      "sha256": "9350f96dac2e2ad64d6bdc563610b139815e0f8a415bd8c0b5c2765d5082faac"
+    },
+    {
+      "path": "docs/research/slotspe_local_redundancy_20261021/本地槽冗余与门控实测.txt",
+      "bytes": 4865,
+      "sha256": "5161ccaa4b68b5ed687259ff1e9614d51ce5654bc33f7729a06b3352314ec1a6"
+    },
+    {
+      "path": "docs/research/slotspe_redundancy_methods_20261021/DCT_bridge_verification.json",
+      "bytes": 1652,
+      "sha256": "1a55ffbae6812eaa85927b3ed06459c1e4f15c9c05860f5103b04a3dc0a7bcd0"
+    },
+    {
+      "path": "docs/research/slotspe_redundancy_methods_20261021/DCT_source_and_synthetic_check.json",
+      "bytes": 2632,
+      "sha256": "765c7a982d85ac0dbc068853baed7b4a097c1ec25d390fc16baf66e741676b19"
+    },
+    {
+      "path": "docs/research/slotspe_redundancy_methods_20261021/DCT原型核查与独立版本.txt",
+      "bytes": 8302,
+      "sha256": "8a068f13b05f678eae6f869b39ffdc5464d1b450b1322d540df52c414a8d17d5"
+    },
+    {
+      "path": "docs/research/slotspe_redundancy_methods_20261021/source_review.json",
+      "bytes": 6925,
+      "sha256": "edc49ae26b0924c8f4de8ea5b5c15acdfe1f484d929f6c41330e588ca4657f5f"
+    },
+    {
+      "path": "docs/research/slotspe_redundancy_methods_20261021/synthetic_probe.json",
+      "bytes": 1281,
+      "sha256": "a769aca6664aea9cad9c791cc2234e17d9391937f56de3c6c82414958e4c8b4c"
+    },
+    {
+      "path": "docs/research/slotspe_redundancy_methods_20261021/verification.json",
+      "bytes": 1444,
+      "sha256": "2cfc3418f5744740541355ffaf1748dbe053e480b5cc7c02c3249206bf33a820"
+    },
+    {
+      "path": "docs/research/slotspe_redundancy_methods_20261021/发布与服务器拉取.txt",
+      "bytes": 2948,
+      "sha256": "51310e9580a5b9964ed197f8ff9bd903a822efaf36c99236ea4f74850c78c00d"
+    },
+    {
+      "path": "docs/research/slotspe_redundancy_methods_20261021/文献到模块与方法设计.txt",
+      "bytes": 13559,
+      "sha256": "f637eefc7b8adf90fdbef719f868c2451878f883c602f6075f8596de8051e8e5"
+    },
+    {
+      "path": "docs/research/slotspe_sparsity_off_20261021/aggregate_summary.json",
+      "bytes": 18985,
+      "sha256": "f673a346c9d6b71372c51c58d35ca445f2bb678da4a6209d41b4f27518b741e2"
+    },
+    {
+      "path": "docs/research/slotspe_sparsity_off_20261021/关闭稀疏选择对照.txt",
+      "bytes": 5723,
+      "sha256": "73f5780935eecf562193da42c45839c38ee16c10df2d1375b789edafb127a48d"
+    },
+    {
+      "path": "scripts/check_slotspe_assignment_router.py",
+      "bytes": 2812,
+      "sha256": "fcae61636bf1733d9025cd246dc44e407e19c67edbb82c2e115e793edf773f97"
+    },
+    {
+      "path": "scripts/check_slotspe_retained_redundancy.py",
+      "bytes": 9310,
+      "sha256": "e48971f627e09466d598ae94d6edb17e7c4fdc755af18f195bbaf53633a5dca0"
+    },
+    {
+      "path": "scripts/check_slotspe_sparsity_off.py",
+      "bytes": 336,
+      "sha256": "35a2e90bd171ea6d7163de47703eb3aed481f8efa70cf80c288667dcdeefa9b0"
+    },
+    {
+      "path": "survot_rank/research/slotspe_proof/assignment_router.py",
+      "bytes": 9053,
+      "sha256": "8adff623dffc74ed5fdfae1cacf230687dd2d68f9c84135744f827f183399608"
+    },
+    {
+      "path": "survot_rank/research/slotspe_proof/prototype_assignment.py",
+      "bytes": 5728,
+      "sha256": "def287637f689edf39505a36d8e059307e4b68ef08ce21cc691e9a26f52c1a29"
+    },
+    {
+      "path": "survot_rank/research/slotspe_proof/sparsity_ablation.py",
+      "bytes": 18438,
+      "sha256": "06f039017955831fb5846fad4978dc5697bf8cf823747fa842494f7db5677e5f"
+    },
+    {
+      "path": "tests/test_slotspe_assignment_router.py",
+      "bytes": 6516,
+      "sha256": "1624fa5d013a5699f6bbc9a86c626032bd37f741da5f62393fcf483b46da2096"
+    },
+    {
+      "path": "tests/test_slotspe_prototype_assignment.py",
+      "bytes": 6030,
+      "sha256": "56b376be56b11a115b39fb68910fafa51b5faf9b2d577da973d65b474958434a"
+    },
+    {
+      "path": "tests/test_slotspe_sparsity_off.py",
+      "bytes": 2331,
+      "sha256": "da7353ffafb5a766b8262ed8761dda758393e39730207f96d9d5d59232f10da6"
+    }
+  ],
+  "manifest_scope": "Snapshot of the research payload commit; final publication metadata may subsequently update README.md and docs/PROGRESS.json. The publication closure records the payload commit identity."
+}

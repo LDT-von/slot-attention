@@ -1,12 +1,12 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-21T12:48:59+08:00",
+  "recorded_at": "2026-10-21T20:10:31+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
   "issues": {
     "P1": "原义：固定槽容量不适配患者复杂度。当前固定8候选/Top-2有结构依据，但patch预算改变不是槽数改变；容量不匹配及碎片化未被本次实验直接检验。",
-    "P2": "原义：冗余、竞争与碎片化。高槽cos为直接相关线索；缺少读取重叠、独立信息及组织/通路对应，不能等同完整冗余或碎片化证明。",
+    "P2": "本地历史BLCA 3轮原版模型71人已逐NPZ复算：两侧全部28对均cos>0.95；选中2槽cos均值WSI0.99447/OMIC0.99862，读取重叠99.858%/99.555%，选择后表示与读取冗余仍存在。语义碎片化、去门控因果效应和预测损害未证；不是服务器77人结果。",
     "P3": "原义：冷启动缺少患者特异线索。共享高斯初槽不读当前患者内容的结构事实成立，后续迭代读取输入；聚合质量和收敛后果未测。评估随机性单列附加问题，不能代替P3。",
     "P4": "原义：槽语义身份不稳定。尚未直接测匹配内容后的跨抽样/种子/患者语义一致性；槽置换/编号变化不是语义漂移证明。",
     "P5": "原义：无关内容干扰或占槽。补零无mask是相关输入处理风险，不能替代真实无关patch/通路占槽的直接证据。",
@@ -61,7 +61,7 @@
       "id": "SPE-08",
       "title": "核实八类槽问题在指定原版SlotSPE中的存在性",
       "status": "partially_completed_local",
-      "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。"
+      "next_action": "核查文献分配模块与任务条件重复设计；患者验证尚未执行，继续原八项问题证据验收，未经执行授权不启动训练。"
     },
     {
       "id": "SPE-09",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。",
+  "next_action": "将单项内容分配版本接入一份固定宿主训练协议；当前只有阶段核心与配置验收，不启动患者任务，不修改E盘既有方法。",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -376,5 +376,154 @@
     "new_server_raw_results_received": false,
     "gaps_reasons": "只发布并核验代码；服务器尚未回传本协议原生重放或患者机制测量结果。",
     "next_action_user_input": "服务器在LDT-von/slot-attention checkout拉取main；不得在DCT-Reg里误拉；先读取协议并检查plan。"
+  },
+  "latest_local_redundancy_check": {
+    "recorded_at": "2026-10-21T18:30:01+08:00",
+    "task_id": "SPE-08",
+    "route": "retained_native_redundancy",
+    "status": "completed_existing_arrays_only",
+    "completed": "复算历史原版71人最终槽、实际选中槽、每头读取重叠与门控有效权重；73份历史输出SHA一致。",
+    "report": "docs/research/slotspe_local_redundancy_20261021/本地槽冗余与门控实测.txt",
+    "aggregate": "docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json",
+    "script": "scripts/check_slotspe_retained_redundancy.py",
+    "patient_count": 71,
+    "historical_epochs": 3,
+    "fold": 0,
+    "seed": 3,
+    "selected_counts": {
+      "wsi": 2,
+      "omic": 2
+    },
+    "candidate_counts": {
+      "wsi": 8,
+      "omic": 8
+    },
+    "selected_pair_cosine_mean": {
+      "wsi": 0.9944680934017909,
+      "omic": 0.9986244912794483
+    },
+    "selected_pair_reading_overlap_mean": {
+      "wsi": 0.9985833998212321,
+      "omic": 0.9955457868292232
+    },
+    "historical_output_hashes_verified": 73,
+    "current_original_model_source_matches": true,
+    "existing_npz_recomputation_executed": true,
+    "new_model_forward_passes": 0,
+    "new_training_steps": 0,
+    "is_server_77_patient_result": false,
+    "private_patient_rows_public": false,
+    "new_commit_or_push": false,
+    "gaps_reasons": "单fold/seed的3轮历史checkpoint与单次保留评估；未测decoder.map后表示、槽级边际预测效用、独立生物学标签或去门控匹配训练。",
+    "next_action_user_input": "同样复核服务器原始已训练槽/keep/gate记录；不为本地既有高度重叠现象重新训练。"
+  },
+  "latest_sparsity_off_inference": {
+    "recorded_at": "2026-10-21T18:51:20+08:00",
+    "task_id": "SPE-08",
+    "route": "sparsity_off_inference",
+    "status": "completed_local_patient_readout_intervention",
+    "authorization": "用户要求把稀疏选择关掉再看差距；本轮限定原权重下读出反事实，不训练。",
+    "completed": "71名历史本地患者的5臂选择开关对照及2个读出控制已执行；原生logit/score/gate重现误差0。",
+    "report": "docs/research/slotspe_sparsity_off_20261021/关闭稀疏选择对照.txt",
+    "aggregate": "docs/research/slotspe_sparsity_off_20261021/aggregate_summary.json",
+    "script": "scripts/check_slotspe_sparsity_off.py",
+    "implementation": "survot_rank/research/slotspe_proof/sparsity_ablation.py",
+    "patient_count": 71,
+    "fold": 0,
+    "seed": 3,
+    "historical_training_epochs": 3,
+    "checkpoint_sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
+    "fused_cindex": {
+      "native_top2": 0.6866267465069861,
+      "dense_wsi": 0.687624750499002,
+      "dense_omic": 0.687624750499002,
+      "dense_both": 0.6846307385229541,
+      "uniform_both": 0.6846307385229541
+    },
+    "new_training_steps": 0,
+    "new_slot_generation": 0,
+    "new_native_downstream_readout_sweeps": 7,
+    "raw_patient_predictions_public": false,
+    "source_weights_inputs_unchanged": true,
+    "checks": {
+      "synthetic_tests_passed": 3,
+      "baseline_replay_max_abs_error": 0.0,
+      "original_gate_score_replay_max_abs_error": 0.0,
+      "all_true_vs_no_mask_max_abs_error": 0.0,
+      "cross_branch_max_abs_error": 0.0,
+      "model_state_and_external_rng_unchanged": true
+    },
+    "gaps_reasons": "冻结已训练3轮权重与单次保留槽；只回答推理时选槽读出作用，不识别训练时门控对分工的因果作用。",
+    "new_commit_or_push": false,
+    "next_action_user_inputs": "若要判断门控训练作用，另做同初态同预算开/关门控配对训练；当前没有启动。"
+  },
+  "latest_redundancy_method_review": {
+    "recorded_at": "2026-10-21T19:08:37+08:00",
+    "task_id": "SPE-08",
+    "status": "literature_review_and_synthetic_assignment_prototype_completed",
+    "report": "docs/research/slotspe_redundancy_methods_20261021/文献到模块与方法设计.txt",
+    "source_review": "docs/research/slotspe_redundancy_methods_20261021/source_review.json",
+    "synthetic_probe": "docs/research/slotspe_redundancy_methods_20261021/synthetic_probe.json",
+    "modules": [
+      "original",
+      "sinkhorn_uniform",
+      "mesh_uniform_adaptation"
+    ],
+    "new_module_synthetic_tests_passed": 12,
+    "previous_stage_synthetic_tests_passed": 3,
+    "novel_method_status": "design_only_not_implemented_or_validated",
+    "patient_tasks_this_stage": 0,
+    "training_runs_this_stage": 0,
+    "server_runs_this_stage": 0,
+    "original_download_hash_matches": 15,
+    "original_sources_modified": false,
+    "default_configs_modified": false,
+    "patient_queue_integrated": false,
+    "commit_or_push_this_stage": false
+  },
+  "latest_dct_prototype_bridge_review": {
+    "recorded_at": "2026-10-21T19:36:54+08:00",
+    "task_id": "SPE-08",
+    "status": "dct_source_review_and_two_stage_synthetic_bridge_completed",
+    "report": "docs/research/slotspe_redundancy_methods_20261021/DCT原型核查与独立版本.txt",
+    "source_receipt": "docs/research/slotspe_redundancy_methods_20261021/DCT_source_and_synthetic_check.json",
+    "external_source_root": "E:/DCT-Reg",
+    "external_source_files_modified": false,
+    "implementation": "survot_rank/research/slotspe_proof/prototype_assignment.py",
+    "stage_specs": "configs/slotspe_redundancy_variants/",
+    "stage_spec_count": 5,
+    "readiness": "core_and_stage_specs_only_full_host_training_not_integrated",
+    "synthetic_tests_passed": 26,
+    "external_native_local_replay_max_abs_error": 0.0,
+    "external_native_prototype_pool_max_abs_error": 0.0,
+    "dias_and_metaslot_readiness": "not_implemented",
+    "patient_tasks": 0,
+    "training_runs": 0,
+    "server_runs": 0,
+    "commit_or_push": false
+  },
+  "latest_research_module_publication": {
+    "recorded_at": "2026-10-21T20:10:31+08:00",
+    "task_id": "SPE-08",
+    "status": "checked_ready_to_publish",
+    "repository": "https://github.com/LDT-von/slot-attention",
+    "branch": "main",
+    "base_including_server_report": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
+    "handoff": "docs/research/slotspe_redundancy_methods_20261021/发布与服务器拉取.txt",
+    "tests_passed": 29,
+    "safe_cli_plans_passed": 3,
+    "independent_reviews": {
+      "module_correctness": "no_blocking_findings",
+      "privacy_provenance_guards": "no_blocking_findings"
+    },
+    "readiness": "research_cores_and_stage_specs_only; full_patient_training_not_integrated; DIAS_MetaSlot_not_implemented",
+    "new_patient_jobs_this_publication": 0,
+    "new_training_runs_this_publication": 0,
+    "server_execution_this_publication": false,
+    "new_server_report_received": true,
+    "new_server_raw_artifacts_audited": false,
+    "private_payloads_staged": false,
+    "protected_original_sources_modified": false,
+    "next_action": "Publish scoped payload, verify remote ref/tree, and retain explicit training-readiness limits."
   }
 }

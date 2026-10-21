@@ -1,0 +1,34 @@
+{
+  "status": "synthetic_only_not_patient_efficacy",
+  "fixture": "four tied slots, twelve tokens, explicit noise seed 11",
+  "global_rng_unchanged": true,
+  "results": [
+    {
+      "mode": "original",
+      "attention_overlap_mean": 1.0,
+      "attention_row_entropy_mean": 2.484906649788001,
+      "value_update_cosine_distinct_values": 1.0,
+      "value_update_cosine_constant_values": 0.9999999999999999,
+      "row_sum_max_error": 0.0
+    },
+    {
+      "mode": "sinkhorn",
+      "attention_overlap_mean": 1.0,
+      "attention_row_entropy_mean": 2.4849066497880004,
+      "value_update_cosine_distinct_values": 1.0,
+      "value_update_cosine_constant_values": 0.9999999999999999,
+      "row_sum_max_error": 0.0
+    },
+    {
+      "mode": "mesh_uniform",
+      "attention_overlap_mean": 0.622673882719519,
+      "attention_row_entropy_mean": 2.330510797784822,
+      "value_update_cosine_distinct_values": 0.6830556170446784,
+      "value_update_cosine_constant_values": 0.9999999999999999,
+      "row_sum_max_error": 4.440892098500626e-16
+    }
+  ],
+  "interpretation": "Assignment can differ while constant-value updates remain identical. Lower overlap is not sufficient evidence of information or biological specialization.",
+  "training_runs": 0,
+  "patient_tasks": 0
+}

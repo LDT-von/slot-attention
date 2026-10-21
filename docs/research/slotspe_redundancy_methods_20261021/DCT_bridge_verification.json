@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "test_command": "python -B -m pytest tests/test_slotspe_prototype_assignment.py tests/test_slotspe_assignment_router.py -q",
+  "test_output": "26 passed in 3.10s",
+  "external_source_check": {
+    "files": 8,
+    "unchanged": true,
+    "local_replay_error": 0.0,
+    "prototype_pool_error": 0.0
+  },
+  "patient_tasks": 0,
+  "training_runs": 0,
+  "full_host_integrated": false,
+  "artifact_sha256": {
+    "survot_rank/research/slotspe_proof/prototype_assignment.py": "def287637f689edf39505a36d8e059307e4b68ef08ce21cc691e9a26f52c1a29",
+    "tests/test_slotspe_prototype_assignment.py": "56b376be56b11a115b39fb68910fafa51b5faf9b2d577da973d65b474958434a",
+    "configs/slotspe_redundancy_variants/D0_native.json": "f198336a1517c7a69f8fa78d685df395881f12f9a8506cbd0abe7a1b459f59f3",
+    "configs/slotspe_redundancy_variants/D1_sa_sinkhorn.json": "c1adc8e9256558a1052b748c83897c1829531f47b8e18338d1fb5345177010b7",
+    "configs/slotspe_redundancy_variants/D2_sa_mesh.json": "ca0d51ef99f82759c3869d486c2f15bb3549c555f088894c59fb3e11e2e0b56a",
+    "configs/slotspe_redundancy_variants/D3_coordinate_mesh.json": "dfcb7d90c3b29500f4670af93cc416bd3650861b36f75d823183a03c3e33d499",
+    "configs/slotspe_redundancy_variants/D4_both_mesh.json": "7b3e8f1291c71fd419f90ac06d923d252397438be82ca83a022cf6d750c6ef9d",
+    "docs/research/slotspe_redundancy_methods_20261021/DCT原型核查与独立版本.txt": "8a068f13b05f678eae6f869b39ffdc5464d1b450b1322d540df52c414a8d17d5",
+    "docs/research/slotspe_redundancy_methods_20261021/DCT_source_and_synthetic_check.json": "765c7a982d85ac0dbc068853baed7b4a097c1ec25d390fc16baf66e741676b19"
+  }
+}

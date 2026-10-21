@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "tests": {
+    "command": "python -B -m pytest tests/test_slotspe_assignment_router.py tests/test_slotspe_sparsity_off.py -q",
+    "exit_code": 0,
+    "observed_output": "15 passed in 2.74s",
+    "new_module_tests": 12,
+    "previous_stage_tests": 3
+  },
+  "git_diff_check": true,
+  "protected_original_and_configs_git_diff_empty": true,
+  "registered_download_hash_matches": 15,
+  "source_archive_imports_or_execution": 0,
+  "patient_tasks": 0,
+  "training_runs": 0,
+  "server_runs": 0,
+  "novel_method_implemented": false,
+  "tracked_changes_not_committed_or_pushed": true,
+  "artifact_sha256": {
+    "survot_rank/research/slotspe_proof/assignment_router.py": "8adff623dffc74ed5fdfae1cacf230687dd2d68f9c84135744f827f183399608",
+    "scripts/check_slotspe_assignment_router.py": "fcae61636bf1733d9025cd246dc44e407e19c67edbb82c2e115e793edf773f97",
+    "tests/test_slotspe_assignment_router.py": "1624fa5d013a5699f6bbc9a86c626032bd37f741da5f62393fcf483b46da2096",
+    "docs/research/slotspe_redundancy_methods_20261021/source_review.json": "edc49ae26b0924c8f4de8ea5b5c15acdfe1f484d929f6c41330e588ca4657f5f",
+    "docs/research/slotspe_redundancy_methods_20261021/synthetic_probe.json": "a769aca6664aea9cad9c791cc2234e17d9391937f56de3c6c82414958e4c8b4c",
+    "docs/research/slotspe_redundancy_methods_20261021/文献到模块与方法设计.txt": "f637eefc7b8adf90fdbef719f868c2451878f883c602f6075f8596de8051e8e5"
+  }
+}

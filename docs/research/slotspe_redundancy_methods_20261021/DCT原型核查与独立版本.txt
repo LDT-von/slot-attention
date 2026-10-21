@@ -1,0 +1,112 @@
+DCT原型核查与独立版本安排
+路线 / 任务：SlotSPE / SPE-08 / DCT原型只读核查与分配模块适配
+日期：2026-10-21
+
+结论
+有原型；能适配；应该每个机制一个独立版本，先单项对照，再做组合。
+这里的“能”是接口和合成梯度已经接通，不是已经证明能降低真实患者冗余或提高预测。
+本轮不改E盘原仓库，不复制其完整方法或历史结果到本库，不启动患者训练。
+
+一、E:\DCT-Reg实际用到的原型
+
+当前两条入口见docs/DCT_METHOD_NAMES.json：DCT-RG/v2.3与DCT-B/v3.13。
+检查的是本机当前文件内容，不是把本地旧HEAD当成服务器最新提交。
+
+DCT-RG/v2.3继承链：DCTV23 -> DCTV22 -> DCTV21 -> DCTV2；
+DCTV2.__init__实例化DCTV2Transport，后者继承DCTFeatureCore。
+源码：survot_rank/research/methods/dct_v2/transport.py。
+第114-115行：shared_wsi_prototypes、shared_omic_prototypes均为nn.Parameter。
+第229-236行：先原生Slot Attention，再调用semantic_slots(local, prototypes, temperature)。
+第51-56行：余弦相似度 -> 沿prototype轴softmax -> 沿local-slot轴归一化 -> 加权汇总。
+第241-255行：两侧汇总槽进入成本、边际与跨模态运输。
+本机configs/dct_rg_blca_legacy_val.yaml为每侧8槽、dim128、coordinate_temperature=0.3。
+因此该配方每侧原型张量为8×128，两套独立参数；跨患者共享，不是两模态共用一套参数。
+
+DCT-B/v3.13的model.py第589-599行同样先得到local_wsi/local_omic，
+再分别调用_semantic_slots和各自shared_*_prototypes。
+这里仅据可执行调用确认其原型汇总，不把v2.3的维度/完整训练配方套给v3.13。
+
+重要区别：
+1. 这不是MetaSlot的全局VQ字典：没有最近原型离散量化、重复ID删除和二阶段masked再聚合。
+2. 原型不是当前DCT Slot Attention的初槽；它位于局部槽形成之后。
+3. 固定原型坐标不保证不同原型读取不同内容，更不自动具有病理/通路真语义。
+4. 当前v2.3直接构造MultiHeadSlotAttention；components/slot_attention.py虽有
+   MultiHeadSlotAttentionV2的Sinkhorn可选分支，不能据“文件里存在”说v2.3已经启用。
+5. v2.3当前核心路径也没有调用SlotSPE的MoESlotDecoder/Top-K；配置中出现topk_ratio
+   不能替代实际调用证据。保留各宿主自身的预测路径，不将两者混称同一结构。
+
+二、适配位置：两处均能接，但要分开测
+
+位置A：输入token -> Slot Attention内部读取 -> local slots。
+复用前轮assignment_router，替换槽内归一化，保留相同初槽、投影、GRU、MLP和迭代数。
+
+位置B：local slots -> 原型加权汇总 -> semantic slots。
+新prototype_assignment.py接收原有prototypes张量，复用其参数，替换原型-局部槽分配。
+dct_soft逐元素复现DCT当前semantic_slots公式；其他可选sinkhorn_uniform/mesh_uniform。
+两侧均保持token加权均值尺度；不使用旧V2分支联合概率直接乘value造成的1/S更新尺度变化。
+
+为何两处都需要观察：
+若所有local slots相同，任何行归一化的原型加权平均仍相同，原型无法恢复丢掉的信息。
+若原型自身相同，它们会对不同local slots给出相同权重，重新汇总成重复输出。
+这是数学/合成反例，不是对DCT已训练权重的患者坍缩判定。
+需要同时记录local slots和semantic slots的读取、差异与有效秩，定位重复产生在哪一段。
+
+三、每个方法一个版本：本轮已建立的五份阶段配置
+
+配置目录：configs/slotspe_redundancy_variants/
+所有配置是assignment-stage spec，暂不是可交给现有训练器直接运行的完整患者配置。
+统一接口：prototype_assignment.replay_assignment_variant(spec,native,inputs,initial,prototypes,...)。
+不复制五套模型目录；独立配置、状态记录和结果目录即可保留每一版。
+
+D0_native：原版槽读取 + 原DCT原型汇总；基线。
+D1_sa_sinkhorn：只将槽内读取改为普通Sinkhorn；归一化对照。
+D2_sa_mesh：只将槽内读取改为MESH式分配；原型汇总不变。
+D3_coordinate_mesh：槽内读取不变，只将原型汇总改为MESH式分配。
+D4_both_mesh：两处均改；组合交互臂，不能代替D2/D3的单项归因。
+
+这五版核心已实现并通过生成张量检查，尚未接入E盘完整模型/训练器。
+DCT-RG为宿主时，基线本来就带原型，不应将“有原型/无原型”和MESH变化混在一个版本里。
+第一阶段固定一份宿主配方；若用off配方，明确只是off控制，不当成完整gain_calibrated效果。
+不同宿主分表比较，不将DCT与SlotSPE的不同损失、维度和预算当成单一去冗余消融。
+
+四、其余论文是否适合各一版：明确判断
+
+MESH：能。内部归一化适配已实现；当前是均匀边缘适配，不是作者含学习边缘的完整复现。
+DIAS：能重实现，但下载包不能直接提供核心。需要实现聚类删槽、保留槽再聚合、下游mask；
+      若接DCT固定原型坐标，需处理无效local slot不能被原型池重新读入的问题。当前未完成。
+MetaSlot：能适配，但当前DCT原型不能直接当作其VQ字典。需单独实现字典更新、重复ID mask、
+          原型初始化和二阶段聚合；改变有效槽数时要处理固定原型输出与mask。当前未完成。
+CoSA：可另做条件初始化版本，但不是本轮小分配模块直接覆盖的实现，需要字典/先验。
+PSA：不能作为当前归一化函数的一行替换；要改概率槽推断与相关训练目标，应另立完整方法版本。
+CODA：不能原样接这个宿主，它的register作用于扩散解码器；DCT/SlotSPE这里没有同一解码结构。
+OCEBO：不能作为当前离线特征宿主的同条件小模块直接替换；要引入encoder teacher/多视图目标。
+“每个方法各一版”应当覆盖可比的研究机制，不能为凑版本把全部论文强行套入同一个小接口。
+自己的任务条件重复分配仍是设计草案，不列入已实现版本，不提前登记为创新方法或训练成功。
+
+五、后续结果怎样比较才有意义（本轮未执行）
+
+统一患者、划分、输入特征、patch预算、初始化权重、原型初态、优化器、训练步数、
+原宿主损失、评估规则与checkpoint选择。显式记录MESH噪声、源码/配置/权重哈希。
+DIAS总迭代拆成(T-1)+1，MetaSlot两阶段开销单列；外层迭代相同不等于FLOPs相同。
+各版本独立目录和manifest，禁止覆盖原版权重或复用别臂患者结果。
+
+先看槽内分配、local slots、原型分配、semantic slots四层：
+读取重叠、value更新差异、中心化能量/有效秩、内容覆盖和匹配后稳定性；
+再报告完整预测的NLL/C-index、耗时与显存。辅助预测与最终预测分开。
+不能只用cos下降选版本，也不把每版最高验证点直接当成独立测试性能。
+若两侧皆有效再做WSI/OMIC单侧开关，避免一开始扩大成所有机制的全笛卡尔积。
+
+六、本轮交付与证据
+
+新增核心：survot_rank/research/slotspe_proof/prototype_assignment.py。
+新增版本：上述五份JSON；新增测试tests/test_slotspe_prototype_assignment.py。
+两模块合计26项合成检查通过，包含每版实际调用、梯度、原公式、重复/混合反例和无效padding。
+另实际读取E盘原生SA组件和semantic_slots函数，仅使用生成张量做适配验收：
+local replay最大误差0，原型汇总最大误差0；两处MESH前向有限，参数保持不变。
+没有实例化完整DCT生存模型，没有加载checkpoint或患者特征，没有训练步骤。
+源文件与配置8份读取前后哈希一致；本机E仓库原有未提交改动未动。
+可核验收据：DCT_source_and_synthetic_check.json。
+统一进度：docs/PROGRESS.json的latest_dct_prototype_bridge_review。
+本轮未提交或推送；服务器运行0、患者任务0。
+缺口：完整宿主适配器/训练器与DIAS、MetaSlot核心尚未实现；不登记为五个患者版本已就绪。
+下一步是把已验收的单项阶段版本接入一份固定宿主与匹配协议，再由用户授权服务器运行。
