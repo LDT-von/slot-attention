@@ -1219,14 +1219,18 @@
     "checks": {
       "assignment_and_prototype_tests_passed": 26,
       "assignment_and_prototype_test_command": "python3 -m pytest tests/test_slotspe_prototype_assignment.py tests/test_slotspe_assignment_router.py -q",
-      "full_test_suite_result": "159 passed, 1 failed",
-      "failing_test": "tests/test_slotspe_proof_queue.py::test_plan_is_import_and_data_free",
-      "failing_test_cause": "陈旧测试期望：断言 plan['training_runs']==30，但默认 configs/slotspe_proof_server.json 已改为 experiment=original_audit/folds=[0]/seeds=[3]/epochs=3/patches=256，实际 training_runs=1。属期望值未同步，非执行回归；该文件在 a512169 与 HEAD 之间无差异。",
+      "full_test_suite_result": "160 passed, 0 failed (2026-10-22T11:40+08:00, after fixing the stale expectation; previously 159 passed, 1 failed)",
+      "failing_test": "none",
+      "failing_test_cause": "已修复：陈旧测试期望断言 plan['training_runs']==30，但默认 configs/slotspe_proof_server.json 为 experiment=original_audit/folds=[0]/seeds=[3]/epochs=3/patches=256，实际 training_runs=1。属期望值未同步，非执行回归；现已改为从发布的默认配置推导期望值(1)，未改动任何队列默认或执行逻辑。",
       "plan_only_default_prints_training_runs": 1,
       "patient_data_read_during_audit": false,
       "third_party_SlotSPE_modified": false,
       "private_patient_inputs_staged": false,
-      "no_new_commit_or_push_this_audit": true
+      "no_new_commit_or_push_this_audit": false,
+      "new_commit_this_stage": "fix stale default-plan expectation in tests/test_slotspe_proof_queue.py; record in PROGRESS.json",
+      "push_this_stage": false,
+      "queue_defaults_or_execution_logic_changed": false,
+      "server_execution_this_stage": false
     },
     "interpretability_caveats": {
       "measurement_spread_between_fold_std": 0.06177959229302331,
@@ -1234,8 +1238,8 @@
       "note": "即使接通宿主训练，D0-D4 的单折单种子差值也需在该跨折离散度内重新判断；本审计不判定任何臂优劣。",
       "single_fold_single_seed_comparison_recommended": false
     },
-    "gaps_reasons": "D0-D4 五臂均无实际运行；宿主训练接入未完成；DIAS/MetaSlot 未实现；原版 SlotSPE 无原型池化阶段，② 只能落到 DCT 宿主；队列默认与陈旧测试期望不一致。",
-    "next_action_user_input": "由用户决定是否授权：(1)接通 DCT 宿主训练以运行 D0-D4；(2)先修 test_slotspe_proof_queue.py 的陈旧期望(30 -> 1)或改回原默认；(3)确定 D0-D4 应在 DCT 宿主(有②原型汇总)还是原版 SlotSPE(无②)上评估。未获明确执行授权前不启动训练或推理。",
+    "gaps_reasons": "D0-D4 五臂均无实际运行；宿主训练接入未完成；DIAS/MetaSlot 未实现；原版 SlotSPE 无原型池化阶段，② 只能落到 DCT 宿主；队列默认与陈旧测试期望已一致(本轮仅修测试期望，未改队列默认)。",
+    "next_action_user_input": "由用户决定是否授权：(1)接通 DCT 宿主训练以运行 D0-D4；(2)D0-D4 应在 DCT 宿主(有②原型汇总)还是原版 SlotSPE(无②)上评估。未获明确执行授权前不启动训练或推理。",
     "patient_predictive_harm_established": false,
     "correction_efficacy_established": false
   }

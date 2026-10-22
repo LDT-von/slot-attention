@@ -48,7 +48,16 @@ def test_plan_is_import_and_data_free(tmp_path, monkeypatch):
         "main(['--plan']); assert 'torch' not in sys.modules; assert 'pandas' not in sys.modules"]
     completed = subprocess.run(command, cwd=ROOT, capture_output=True, text=True, check=True)
     plan = json.loads(completed.stdout)
-    assert plan["training_runs"] == 30
+    # The shipped default queue config is the clean original-only fold0/seed3 run
+    # (configs/slotspe_proof_server.json); the expected run count follows that config
+    # instead of a hardcoded number from an older 5-fold/3-seed default.
+    default_config = queue.normalize_config(json.loads(
+        (ROOT / "configs/slotspe_proof_server.json").read_text(encoding="utf-8")))
+    expected_runs = (len(queue.training_arms(default_config))
+                     * len(default_config["folds"]) * len(default_config["seeds"]))
+    assert plan["config"]["experiment"] == default_config["experiment"]
+    assert plan["training_arms"] == queue.training_arms(default_config)
+    assert plan["training_runs"] == expected_runs == 1
     assert plan["patient_work_executed"] is False
     assert plan["unresolved_environment_variables"]
 
