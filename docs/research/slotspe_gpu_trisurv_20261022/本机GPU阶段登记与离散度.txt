@@ -1,0 +1,97 @@
+本机GPU阶段结果登记（2026-10-22，trisurv环境，RTX 5090）
+
+本文件登记本机已完成的六项GPU工作。登记阶段为只读：未启动任何训练、推理、患者干预或服务器任务。
+公开记录：docs/research/slotspe_gpu_trisurv_20261022/five_fold_and_mechanism_records.json
+生成脚本：scripts/record_slotspe_gpu_trisurv_20261022.py（--plan 只列计划，--run 只做记录登记）
+生成脚本在写出前会强制扫描：若记录中仍含患者标识或本机绝对路径则直接报错，不会写出。
+
+一、环境与公共协议
+
+Python /home/ubuntu/.conda/envs/trisurv/bin/python (3.10.20)，torch 2.10.0+cu128，CUDA 12.8，GPU NVIDIA GeForce RTX 5090。
+两个队列使用设备 cuda:0；observe 阶段与P1观察导出使用 cuda:1（本机有两张5090）。
+全部队列为原版单臂 original_audit：3轮、256真实patch、batch8、同权重20次评估、lr 5e-4、参数33093390、每对114步。
+未加transport，未构造修复模型，默认队列配置与third_party/SlotSPE原版源码均未改动。
+队列：BLCA，uni2-h特征，完全病例379人，每折排除2人，各折train/val分别为302/77、304/75、304/75、303/76、303/76。
+
+二、五折与五折三种子（已完成，20对全部完成无缺失）
+
+5折×seed3：均值0.66580，跨折样本标准差0.05366，最小0.62069，最大0.72644。
+5折×3种子(3/17/29)：15对全部完成，均值0.66319，跨运行标准差0.06059，最小0.58097，最大0.75836。
+
+逐对验证C-index（探索性，20次重复均值）：
+  fold0  seed3 0.72235  seed17 0.75836  seed29 0.74227
+  fold1  seed3 0.72644  seed17 0.67208  seed29 0.73782
+  fold2  seed3 0.62069  seed17 0.58680  seed29 0.58097
+  fold3  seed3 0.63219  seed17 0.61814  seed29 0.60016
+  fold4  seed3 0.62736  seed17 0.64920  seed29 0.67309
+
+每折三种子均值：fold0 0.74099、fold1 0.71211、fold2 0.59615、fold3 0.61683、fold4 0.64988。
+每种子五折均值：seed3 0.66580、seed17 0.65692、seed29 0.66686。
+折间标准差0.06178，种子间三种子均值跨度仅0.65692至0.66686。折间差异远大于种子间差异。
+20对初态SHA有3个（每种子一个），checkpoint SHA 20个互不相同，说明各对确实是独立训练结果。
+
+三、结构观察
+
+全部20对一致：选槽器8个参数对融合主损失梯度全部为None，connected为0。
+评估随机性在20对中全部观察到；单次20次重复评估的C-index标准差在0.00117至0.00547之间。
+这是P7的局部结构事实（选槽支路对融合主损失无梯度），不等于整个Slot Attention缺少生存监督，
+也不是患者预测损害的证明。
+
+四、保留槽冗余（77人，冻结权重只读复算）
+
+来源：local_evidence/retained_redundancy_gpu_trisurv_20261022，79份历史输出哈希已核验。
+WSI侧：77人全部28对均cos>0.95；全对cos均值0.99717，全对读取重叠均值0.99894；
+选中2槽cos均值0.99707，读取重叠均值0.99892；gate权重和均为1.000000，有效槽数均值1.3200。
+OMIC侧：73人全部28对均cos>0.95，76人选中对cos>0.95；全对cos均值0.99313；
+选中2槽cos均值0.99325，读取重叠均值0.99158；有效槽数均值1.5618。
+选中减全对的cos差分别-0.00010(WSI)与+0.00012(OMIC)，即选择没有把冗余降下来。
+0.95为描述性阈值，不是临床或有害判定。
+逐患者指标与原始数组留在忽略的local_evidence，未进入公开树。
+
+五、关闭稀疏选择（77人，冻结权重推理干预）
+
+来源：local_evidence/sparsity_off_gpu_trisurv_20261022。
+五臂融合C-index：native_top2 0.719493、仅病理关闭0.718700、仅基因关闭0.718700、两侧关闭0.719493、均匀权重0.719493。
+两侧关闭相对原版融合C-index差为0.000000，逐患者风险绝对变化均值0.001075，最大0.014302。
+单模态辅助头出现差异：仅病理关闭后aux_wsi 0.590333→0.606973；仅基因关闭后aux_omic 0.723455→0.721870。
+控制项：历史logit重放、原始gate、原始score、相同输入、跨分支、无mask对照，最大绝对误差均为0；
+仅稠密解码器换RNG对照为4.77e-07。模型状态、原输入、外部RNG均未改变。
+边界：冻结权重下的读出干预，不回答"不训练门控会学出什么槽"，也不构成患者收益或门控无用。
+
+六、P1原生槽观察导出（77人，只读）
+
+来源：local_evidence/p1_observations_gpu_trisurv_20261022，79份输出文件哈希已记录。
+历史重放最大logit差0.0，观察器最大logit差0.0，重构原生更新最大误差0.0，checkpoint张量未改变。
+两模态均为8候选、选2。逐患者competition_mass接近均匀，mass_entropy_effective_count约8.0（示例值7.99996）。
+本项自己标注 P1_fixed_count_predictive_harm=not_established、P2_functional_redundancy=not_established。
+逐患者记录与原始npz含患者标识，只保留在忽略的local_evidence；公开仅登记收据哈希。
+
+七、原八项问题 observe 阶段（77人，已完成）
+
+来源：local_evidence/original_questions_gpu_trisurv_observe_01。
+状态completed，fold0/seed3，参考迭代30，重复5次，原生重放误差n=770全部为0。
+问题状态（收据原文）：P1 frozen_sensitivity_only_use_separate_matched_training_for_capacity；
+P2 representation_and_input_reading_measured；P3 aggregation_trajectories_measured_causal_scope_limited；
+P4 external_content_scoring_when_labels_present_else_computational_only；
+P5 see_patient_specific_role_prerequisites；P6 see_patient_specific_aligned_features_and_content_targets；
+P7 exact_native_objective_gradient_geometry_measured；P8 not_applicable。
+收据明确 main_endpoint_is_not_cindex=true，repeat_rows_are_not_independent_patients=true。
+逐患者记录、目标梯度与原生NPZ含患者标识，只保留在忽略的local_evidence。
+
+八、需要留意的测量离散度（新增观察，不是性能结论）
+
+跨折与跨种子的离散度（15组标准差0.06059，范围0.58097至0.75836）远大于此前单点fold0/seed3上登记的对照效应量量级。
+折间标准差0.06178又远大于种子间，说明主要差异来自数据划分而不是随机种子。
+据此，以往单折单种子为基准的差值需要放在这一分布里重新判断，而不是继续在单折上叠加对照。
+这只是离散度的描述：不推翻任何已登记观察，不构成性能结论，也不构成对P1-P7机制的任何归因。
+
+九、本轮未做与边界
+
+本轮没有新增训练、推理或患者干预；没有测P1-P7机制干预；没有比较D0-D4阶段配置（完整宿主训练未接入）；
+未实现DIAS/MetaSlot。3轮探索性验证C-index不是泛化或临床性能结论。跨折与跨种子各对共享同一379名完全病例患者，
+不是独立证据单位，均值仅为描述性。患者预测损害与修正收益仍为 not_established。
+
+十、下一步需要的用户输入
+
+是否授权具体对照臂（关闭稀疏选择、匹配容量训练或A/B/C）与队列规模；D0-D4需先完成宿主训练接入。
+在获得明确执行授权前不启动新的训练或推理。

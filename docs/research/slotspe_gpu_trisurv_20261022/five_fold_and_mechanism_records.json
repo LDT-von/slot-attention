@@ -1,0 +1,1331 @@
+{
+  "schema": "slotspe_gpu_trisurv_20261022_record_v1",
+  "recorded_utc": "2026-10-22T02:42:47.372574+00:00",
+  "task_id": "SPE-09",
+  "scope": "Record-only registration of already-completed local GPU runs and already-completed read-only or frozen-checkpoint checks. No new execution.",
+  "environment": {
+    "torch": "2.10.0+cu128",
+    "cuda_runtime": "12.8",
+    "gpu": "NVIDIA GeForce RTX 5090"
+  },
+  "shared_queue_protocol": {
+    "experiment": "original_audit",
+    "arms": [
+      "original"
+    ],
+    "epochs": 3,
+    "patches": 256,
+    "batch_size": 8,
+    "eval_repeats": 20,
+    "lr": 0.0005,
+    "torch_threads": 2,
+    "parameter_count": 33093390,
+    "optimizer_steps_per_pair": 114,
+    "transport_added": false,
+    "repaired_models_constructed": false,
+    "feature_set": "uni2-h"
+  },
+  "queue_runs": {
+    "blca_5fold_seed3": {
+      "output_root": "results/slotspe_proof/blca_5fold_gpu_trisurv_a512169",
+      "proof_summary_sha256": "e6643c256cedf16fdc53f2ff34a10a901f72244b15af4175ff9fa838e42f6287",
+      "status": "completed",
+      "transport_added": false,
+      "training_arms": [
+        "original"
+      ],
+      "repaired_models_constructed": false,
+      "protocol_dependence": "observed",
+      "scope": "Unmodified native model; diagnostic preparation and controlled interventions disclosed separately",
+      "claims_not_supported": [
+        "Patient improvement",
+        "Correction attribution",
+        "Clinical causality",
+        "Guaranteed problem occurrence"
+      ],
+      "pairs_expected": 5,
+      "pairs_completed": 5,
+      "missing_pairs": [],
+      "generated_utc": "2026-10-21T19:49:10.025954+00:00",
+      "cohort_counts": {
+        "unique_complete_case_patients": 379,
+        "per_fold": {
+          "0": {
+            "train": 302,
+            "val": 77,
+            "excluded": 2,
+            "overlap": 0
+          },
+          "1": {
+            "train": 304,
+            "val": 75,
+            "excluded": 2,
+            "overlap": 0
+          },
+          "2": {
+            "train": 304,
+            "val": 75,
+            "excluded": 2,
+            "overlap": 0
+          },
+          "3": {
+            "train": 303,
+            "val": 76,
+            "excluded": 2,
+            "overlap": 0
+          },
+          "4": {
+            "train": 303,
+            "val": 76,
+            "excluded": 2,
+            "overlap": 0
+          }
+        }
+      },
+      "per_pair": [
+        {
+          "fold": 0,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.7223454833597466,
+          "val_cindex_std_population": 0.00353836981961428,
+          "val_cindex_min_exploratory": 0.7131537242472267,
+          "val_cindex_max_exploratory": 0.7297939778129953,
+          "patient_risk_std_mean": 0.007265894678631447,
+          "patient_risk_std_max": 0.030086301932403293,
+          "patient_risk_range_max": 0.13613557815551758,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "6c0c0ce6fa4197b3f12df4c98930babfe2c0fae124c2b7935f167f93146819ad",
+          "peak_allocated_cuda_bytes": 1064786432,
+          "elapsed_seconds": 128.0898050130345
+        },
+        {
+          "fold": 1,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.7264382402707276,
+          "val_cindex_std_population": 0.002770969752142528,
+          "val_cindex_min_exploratory": 0.7216582064297801,
+          "val_cindex_max_exploratory": 0.7326565143824028,
+          "patient_risk_std_mean": 0.021356202618019366,
+          "patient_risk_std_max": 0.16915778062645095,
+          "patient_risk_range_max": 0.6066858768463135,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "8a3f210343e0e5aad4072683895307a4ced2e0329832efb536747f6fd2a96e50",
+          "peak_allocated_cuda_bytes": 1066051072,
+          "elapsed_seconds": 125.16286634211428
+        },
+        {
+          "fold": 2,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6206882591093118,
+          "val_cindex_std_population": 0.0035059419709833587,
+          "val_cindex_min_exploratory": 0.6153846153846154,
+          "val_cindex_max_exploratory": 0.6283400809716599,
+          "patient_risk_std_mean": 0.009012361556790076,
+          "patient_risk_std_max": 0.08465317330071494,
+          "patient_risk_range_max": 0.40450334548950195,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "f1d30aaf40774b19381b4147585b999ef86333e754a60d03f7ed10c6e9f8b9a6",
+          "peak_allocated_cuda_bytes": 1066051072,
+          "elapsed_seconds": 126.29257966508158
+        },
+        {
+          "fold": 3,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6321857923497267,
+          "val_cindex_std_population": 0.0020584489838073607,
+          "val_cindex_min_exploratory": 0.6284153005464481,
+          "val_cindex_max_exploratory": 0.6360655737704918,
+          "patient_risk_std_mean": 0.004358698191362833,
+          "patient_risk_std_max": 0.011250510546925047,
+          "patient_risk_range_max": 0.04404282569885254,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "8634c0ce4a4128f2dc3b3274bb96778a276411217074ff3e194a7a9e00a526f3",
+          "peak_allocated_cuda_bytes": 1068785152,
+          "elapsed_seconds": 126.6498928819783
+        },
+        {
+          "fold": 4,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6273576512455517,
+          "val_cindex_std_population": 0.004001333901396336,
+          "val_cindex_min_exploratory": 0.6209964412811388,
+          "val_cindex_max_exploratory": 0.6370106761565836,
+          "patient_risk_std_mean": 0.005836457560981905,
+          "patient_risk_std_max": 0.010160525714118566,
+          "patient_risk_range_max": 0.04649806022644043,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "1aa41cf2bff4f7ac46a10e7bc7de8e1653977573bd660d2c36900fcc20878a46",
+          "peak_allocated_cuda_bytes": 1068785152,
+          "elapsed_seconds": 129.6440418791026
+        }
+      ],
+      "descriptive_aggregate": {
+        "pairs": 5,
+        "grand_mean": 0.6658030852670128,
+        "min": 0.6206882591093118,
+        "max": 0.7264382402707276,
+        "cross_run_sample_std": 0.05365907687387666,
+        "per_fold_mean_over_seeds": {
+          "0": 0.7223454833597466,
+          "1": 0.7264382402707276,
+          "2": 0.6206882591093118,
+          "3": 0.6321857923497267,
+          "4": 0.6273576512455517
+        },
+        "per_seed_mean_over_folds": {
+          "3": 0.6658030852670128
+        },
+        "between_fold_std_of_fold_means": 0.05365907687387666,
+        "per_repeat_std_population_min": 0.0020584489838073607,
+        "per_repeat_std_population_max": 0.004001333901396336,
+        "unique_initial_state_sha256": 1,
+        "unique_checkpoint_sha256": 5,
+        "elapsed_seconds_total": 635.8391857813112,
+        "peak_allocated_cuda_bytes_max": 1068785152,
+        "source_warning": "Cross-fold/seed mean is descriptive; pairs share patients and are not independent evidence units"
+      },
+      "structural_checks": {
+        "original_disconnection_observed_pairs": 5,
+        "evaluation_randomness_observed_pairs": 5,
+        "self_interference_observed_pairs": 5,
+        "padding_sensitivity_observed_pairs": 5,
+        "natural_gate_near_zero_observed_pairs": 1
+      },
+      "reported_validation_metrics_by_arm": {
+        "original": {
+          "completed_checkpoints": 5,
+          "mean_validation_cindex_exploratory": 0.6658030852670128,
+          "defined_cindex_pairs": 5,
+          "warning": "Cross-fold/seed mean is descriptive; pairs share patients and are not independent evidence units"
+        }
+      }
+    },
+    "blca_5fold_3seed": {
+      "output_root": "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169",
+      "proof_summary_sha256": "f7ff8c03062d6a7c073f5461333dfbd7699138e6adfcc20045b9b436157229bd",
+      "status": "completed",
+      "transport_added": false,
+      "training_arms": [
+        "original"
+      ],
+      "repaired_models_constructed": false,
+      "protocol_dependence": "observed",
+      "scope": "Unmodified native model; diagnostic preparation and controlled interventions disclosed separately",
+      "claims_not_supported": [
+        "Patient improvement",
+        "Correction attribution",
+        "Clinical causality",
+        "Guaranteed problem occurrence"
+      ],
+      "pairs_expected": 15,
+      "pairs_completed": 15,
+      "missing_pairs": [],
+      "generated_utc": "2026-10-21T20:33:24.789290+00:00",
+      "cohort_counts": {
+        "unique_complete_case_patients": 379,
+        "per_fold": {
+          "0": {
+            "train": 302,
+            "val": 77,
+            "excluded": 2,
+            "overlap": 0
+          },
+          "1": {
+            "train": 304,
+            "val": 75,
+            "excluded": 2,
+            "overlap": 0
+          },
+          "2": {
+            "train": 304,
+            "val": 75,
+            "excluded": 2,
+            "overlap": 0
+          },
+          "3": {
+            "train": 303,
+            "val": 76,
+            "excluded": 2,
+            "overlap": 0
+          },
+          "4": {
+            "train": 303,
+            "val": 76,
+            "excluded": 2,
+            "overlap": 0
+          }
+        }
+      },
+      "per_pair": [
+        {
+          "fold": 0,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.7223454833597466,
+          "val_cindex_std_population": 0.00353836981961428,
+          "val_cindex_min_exploratory": 0.7131537242472267,
+          "val_cindex_max_exploratory": 0.7297939778129953,
+          "patient_risk_std_mean": 0.007265894678631447,
+          "patient_risk_std_max": 0.030086301932403293,
+          "patient_risk_range_max": 0.13613557815551758,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "c6d936391ba6fe9c12a87d24ff24866eb665822ff097e66126a4bb81cc48c416",
+          "peak_allocated_cuda_bytes": 1064786432,
+          "elapsed_seconds": 129.65558860404417
+        },
+        {
+          "fold": 0,
+          "seed": 17,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.7583597464342313,
+          "val_cindex_std_population": 0.005469664703983282,
+          "val_cindex_min_exploratory": 0.7472266244057052,
+          "val_cindex_max_exploratory": 0.7670364500792393,
+          "patient_risk_std_mean": 0.004782930205695028,
+          "patient_risk_std_max": 0.03046483398519967,
+          "patient_risk_range_max": 0.10827445983886719,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "cda9033e9fab3e0deabbe310a0eb9df207513ab759500ef18f50719e65f38e38",
+          "checkpoint_sha256": "34d68539cc1243fcf9ca38b4f3b82315d62c0970d1f201608d9595ded6433350",
+          "peak_allocated_cuda_bytes": 1064786432,
+          "elapsed_seconds": 128.25618535187095
+        },
+        {
+          "fold": 0,
+          "seed": 29,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.7422741679873217,
+          "val_cindex_std_population": 0.0031384666239609453,
+          "val_cindex_min_exploratory": 0.7353407290015848,
+          "val_cindex_max_exploratory": 0.748811410459588,
+          "patient_risk_std_mean": 0.011401552471667522,
+          "patient_risk_std_max": 0.07916896129464171,
+          "patient_risk_range_max": 0.3192523717880249,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "75246af761b6eceb619363d698f5b9da6c9df4083e81341918e1b4b57584e510",
+          "checkpoint_sha256": "26eba16ab84fb51327af8cc6bfe190cd826b9d0be280384d82abeee5fb191ba9",
+          "peak_allocated_cuda_bytes": 1064786432,
+          "elapsed_seconds": 128.0364972150419
+        },
+        {
+          "fold": 1,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.7264382402707276,
+          "val_cindex_std_population": 0.002770969752142528,
+          "val_cindex_min_exploratory": 0.7216582064297801,
+          "val_cindex_max_exploratory": 0.7326565143824028,
+          "patient_risk_std_mean": 0.021356202618019366,
+          "patient_risk_std_max": 0.16915778062645095,
+          "patient_risk_range_max": 0.6066858768463135,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "8f3fa044bb229aa36d48487b7c7a867a0c3ce98f97fb545bfbafc3fb49c7ca99",
+          "peak_allocated_cuda_bytes": 1066051072,
+          "elapsed_seconds": 127.94374877191149
+        },
+        {
+          "fold": 1,
+          "seed": 17,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6720812182741117,
+          "val_cindex_std_population": 0.0028987887815586965,
+          "val_cindex_min_exploratory": 0.6649746192893401,
+          "val_cindex_max_exploratory": 0.6759729272419628,
+          "patient_risk_std_mean": 0.008773388458016932,
+          "patient_risk_std_max": 0.019940396810623262,
+          "patient_risk_range_max": 0.09436392784118652,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "cda9033e9fab3e0deabbe310a0eb9df207513ab759500ef18f50719e65f38e38",
+          "checkpoint_sha256": "439f1d03ea81dde28d08e27f6f20929190e121154624ec6b26a306bc4d25c3f3",
+          "peak_allocated_cuda_bytes": 1066051072,
+          "elapsed_seconds": 128.10483722016215
+        },
+        {
+          "fold": 1,
+          "seed": 29,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.7378172588832486,
+          "val_cindex_std_population": 0.0027661222883708717,
+          "val_cindex_min_exploratory": 0.7318104906937394,
+          "val_cindex_max_exploratory": 0.7428087986463621,
+          "patient_risk_std_mean": 0.019645606684476898,
+          "patient_risk_std_max": 0.09463468927786765,
+          "patient_risk_range_max": 0.4238460063934326,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "75246af761b6eceb619363d698f5b9da6c9df4083e81341918e1b4b57584e510",
+          "checkpoint_sha256": "34b0ae07daeb04c93adea51ac79c605427bb6e8f7096f6024a8ec3dc56738dd2",
+          "peak_allocated_cuda_bytes": 1066051072,
+          "elapsed_seconds": 128.66006683115847
+        },
+        {
+          "fold": 2,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6206882591093118,
+          "val_cindex_std_population": 0.0035059419709833587,
+          "val_cindex_min_exploratory": 0.6153846153846154,
+          "val_cindex_max_exploratory": 0.6283400809716599,
+          "patient_risk_std_mean": 0.009012361556790076,
+          "patient_risk_std_max": 0.08465317330071494,
+          "patient_risk_range_max": 0.40450334548950195,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "30a7f80b15ec40cbd05e6cc7bd39dc3e1c59eda990c0b239f4fab1e3c12acf93",
+          "peak_allocated_cuda_bytes": 1066051072,
+          "elapsed_seconds": 127.59664003108628
+        },
+        {
+          "fold": 2,
+          "seed": 17,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.5868016194331984,
+          "val_cindex_std_population": 0.0013081372001136212,
+          "val_cindex_min_exploratory": 0.5846153846153846,
+          "val_cindex_max_exploratory": 0.5894736842105263,
+          "patient_risk_std_mean": 0.020189731169535277,
+          "patient_risk_std_max": 0.1619458629248296,
+          "patient_risk_range_max": 0.5445765256881714,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "cda9033e9fab3e0deabbe310a0eb9df207513ab759500ef18f50719e65f38e38",
+          "checkpoint_sha256": "e4ee274f0d8d5a527075de50eae93631e903110d7e1d61cfefb5131cec6481c8",
+          "peak_allocated_cuda_bytes": 1066051072,
+          "elapsed_seconds": 128.77727126004174
+        },
+        {
+          "fold": 2,
+          "seed": 29,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.5809716599190283,
+          "val_cindex_std_population": 0.004814240160710853,
+          "val_cindex_min_exploratory": 0.5724696356275304,
+          "val_cindex_max_exploratory": 0.5910931174089069,
+          "patient_risk_std_mean": 0.0041381042217268574,
+          "patient_risk_std_max": 0.017796121970547075,
+          "patient_risk_range_max": 0.07350659370422363,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "75246af761b6eceb619363d698f5b9da6c9df4083e81341918e1b4b57584e510",
+          "checkpoint_sha256": "fa54f40b4bea3a09f8e5dd80762393fa5a564fa7a1e7406e7527bdbdb436e60b",
+          "peak_allocated_cuda_bytes": 1066051072,
+          "elapsed_seconds": 131.16014195699245
+        },
+        {
+          "fold": 3,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6321857923497267,
+          "val_cindex_std_population": 0.0020584489838073607,
+          "val_cindex_min_exploratory": 0.6284153005464481,
+          "val_cindex_max_exploratory": 0.6360655737704918,
+          "patient_risk_std_mean": 0.004358698191362833,
+          "patient_risk_std_max": 0.011250510546925047,
+          "patient_risk_range_max": 0.04404282569885254,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "a4d563e134a37deee5066147a72072ba8472a48f761c3cce3ebe3db8b7d3fa0e",
+          "peak_allocated_cuda_bytes": 1068785152,
+          "elapsed_seconds": 127.8561899161432
+        },
+        {
+          "fold": 3,
+          "seed": 17,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6181420765027322,
+          "val_cindex_std_population": 0.0011668937980361996,
+          "val_cindex_min_exploratory": 0.6163934426229508,
+          "val_cindex_max_exploratory": 0.6207650273224044,
+          "patient_risk_std_mean": 0.006303818853668905,
+          "patient_risk_std_max": 0.05170250191218128,
+          "patient_risk_range_max": 0.21427416801452637,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "cda9033e9fab3e0deabbe310a0eb9df207513ab759500ef18f50719e65f38e38",
+          "checkpoint_sha256": "04e3367c7bd3062ce810a675a8a0b1129d336ac3647f8d4d344fcd690f7cc99e",
+          "peak_allocated_cuda_bytes": 1068785152,
+          "elapsed_seconds": 131.91206673183478
+        },
+        {
+          "fold": 3,
+          "seed": 29,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6001639344262296,
+          "val_cindex_std_population": 0.00503533455152745,
+          "val_cindex_min_exploratory": 0.5901639344262295,
+          "val_cindex_max_exploratory": 0.6109289617486339,
+          "patient_risk_std_mean": 0.005554992854857325,
+          "patient_risk_std_max": 0.01504536846435188,
+          "patient_risk_range_max": 0.06183314323425293,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "75246af761b6eceb619363d698f5b9da6c9df4083e81341918e1b4b57584e510",
+          "checkpoint_sha256": "f56a8ec60184b2568ad4d904906ee1ff958758096228fc15aa4ce5c7a9a6a7fe",
+          "peak_allocated_cuda_bytes": 1068785152,
+          "elapsed_seconds": 129.7341340300627
+        },
+        {
+          "fold": 4,
+          "seed": 3,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6273576512455517,
+          "val_cindex_std_population": 0.004001333901396336,
+          "val_cindex_min_exploratory": 0.6209964412811388,
+          "val_cindex_max_exploratory": 0.6370106761565836,
+          "patient_risk_std_mean": 0.005836457560981905,
+          "patient_risk_std_max": 0.010160525714118566,
+          "patient_risk_range_max": 0.04649806022644043,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+          "checkpoint_sha256": "7e708ca6d4ae28d85c11f9df43020056597e12ae3ad74bcceda138d46cba6ac7",
+          "peak_allocated_cuda_bytes": 1068785152,
+          "elapsed_seconds": 127.14853138313629
+        },
+        {
+          "fold": 4,
+          "seed": 17,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6491992882562277,
+          "val_cindex_std_population": 0.001991372712241936,
+          "val_cindex_min_exploratory": 0.645017793594306,
+          "val_cindex_max_exploratory": 0.6539145907473309,
+          "patient_risk_std_mean": 0.008133128493297141,
+          "patient_risk_std_max": 0.051791012545023864,
+          "patient_risk_range_max": 0.19757437705993652,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "cda9033e9fab3e0deabbe310a0eb9df207513ab759500ef18f50719e65f38e38",
+          "checkpoint_sha256": "9d9316c39bcadf0588c61ec0e67171fa1fa4d5e8281b7e45b9ff89fb11c8dca8",
+          "peak_allocated_cuda_bytes": 1068785152,
+          "elapsed_seconds": 129.1104818219319
+        },
+        {
+          "fold": 4,
+          "seed": 29,
+          "arm": "original",
+          "epochs": 3,
+          "optimizer_steps": 114,
+          "parameter_count": 33093390,
+          "repeats": 20,
+          "defined_cindex_repeats": 20,
+          "val_cindex_mean_exploratory": 0.6730871886120996,
+          "val_cindex_std_population": 0.0018762541556017083,
+          "val_cindex_min_exploratory": 0.6699288256227758,
+          "val_cindex_max_exploratory": 0.6761565836298933,
+          "patient_risk_std_mean": 0.0037745791094939856,
+          "patient_risk_std_max": 0.007629556172109601,
+          "patient_risk_range_max": 0.026923537254333496,
+          "evaluation_randomness_observed": true,
+          "selector_parameter_count": 8,
+          "main_gradient_none_parameter_count": 8,
+          "main_gradient_connected_parameter_count": 0,
+          "disconnected_selector_status": "observed",
+          "same_initial_state_sha256": "75246af761b6eceb619363d698f5b9da6c9df4083e81341918e1b4b57584e510",
+          "checkpoint_sha256": "73972b7ded539bc9147edf5632584a4c78e1eedab2ec8a4970f220a750d91ed7",
+          "peak_allocated_cuda_bytes": 1068785152,
+          "elapsed_seconds": 130.7348866420798
+        }
+      ],
+      "descriptive_aggregate": {
+        "pairs": 15,
+        "grand_mean": 0.6631942390042329,
+        "min": 0.5809716599190283,
+        "max": 0.7583597464342313,
+        "cross_run_sample_std": 0.060593216005657105,
+        "per_fold_mean_over_seeds": {
+          "0": 0.7409931325937665,
+          "1": 0.712112239142696,
+          "2": 0.5961538461538461,
+          "3": 0.6168306010928962,
+          "4": 0.6498813760379597
+        },
+        "per_seed_mean_over_folds": {
+          "3": 0.6658030852670128,
+          "17": 0.6569167897801003,
+          "29": 0.6668628419655855
+        },
+        "between_fold_std_of_fold_means": 0.06177959229302331,
+        "per_repeat_std_population_min": 0.0011668937980361996,
+        "per_repeat_std_population_max": 0.005469664703983282,
+        "unique_initial_state_sha256": 3,
+        "unique_checkpoint_sha256": 15,
+        "elapsed_seconds_total": 1934.6872677674983,
+        "peak_allocated_cuda_bytes_max": 1068785152,
+        "source_warning": "Cross-fold/seed mean is descriptive; pairs share patients and are not independent evidence units"
+      },
+      "structural_checks": {
+        "original_disconnection_observed_pairs": 15,
+        "evaluation_randomness_observed_pairs": 15,
+        "self_interference_observed_pairs": 15,
+        "padding_sensitivity_observed_pairs": 15,
+        "natural_gate_near_zero_observed_pairs": 6
+      },
+      "reported_validation_metrics_by_arm": {
+        "original": {
+          "completed_checkpoints": 15,
+          "mean_validation_cindex_exploratory": 0.6631942390042329,
+          "defined_cindex_pairs": 15,
+          "warning": "Cross-fold/seed mean is descriptive; pairs share patients and are not independent evidence units"
+        }
+      }
+    }
+  },
+  "read_only_and_frozen_checks": {
+    "retained_native_redundancy": {
+      "route": "retained_native_redundancy",
+      "aggregate_summary_sha256": "06bfa9ce5ad2ff2a176953e66d4c9c60aa88dcd53bcc70e8881c346278266b2b",
+      "recorded_utc": "2026-10-21T20:08:08.470234+00:00",
+      "input_scope": "local_trisurv_gpu_current_training_run_real_BLCA_cached_validation",
+      "server_new_results": false,
+      "patient_count": 77,
+      "fold": 0,
+      "seed": 3,
+      "historical_epochs": 3,
+      "historical_optimizer_steps": 114,
+      "checkpoint_sha256_recorded": [
+        "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0"
+      ],
+      "verified_historical_output_files": 79,
+      "historical_native_source_matches_current": true,
+      "new_model_forward_passes": 0,
+      "new_training_steps": 0,
+      "metric_definition": "Raw final slots before decoder.map; unique unordered pairs only. Reading overlap=sum_token min(p_i,p_j), per-head row-normalized then averaged across heads.",
+      "cosine_0_95_is_descriptive_not_clinical_threshold": true,
+      "modalities": {
+        "wsi": {
+          "candidate_counts": {
+            "8": 77
+          },
+          "selected_counts": {
+            "2": 77
+          },
+          "patients_all_unique_pairs_above_0_95": 77,
+          "patients_selected_pair_above_0_95": 77,
+          "patients_zero_gate_weight_sum": 0,
+          "distribution_means": {
+            "all_pair_cosine_mean": 0.9971665810223995,
+            "all_pair_cosine_min": 0.9910296738231283,
+            "selected_pair_cosine": 0.9970702848068772,
+            "pairs_cosine_above_0_95": 28.0,
+            "all_pair_reading_overlap_mean": 0.9989444370081286,
+            "selected_pair_reading_overlap": 0.9989177387467753,
+            "selected_minus_all_pair_cosine": -9.629621552226314e-05,
+            "selected_minus_all_pair_reading_overlap": -2.6698261353190497e-05,
+            "centered_energy_fraction": 0.00312179134599639,
+            "centered_effective_rank": 2.54649748585428,
+            "gate_weight_sum": 0.9999993446675259,
+            "nonzero_gate_weights": 2.0,
+            "gate_weight_effective_slots": 1.3199614904492225
+          }
+        },
+        "omic": {
+          "candidate_counts": {
+            "8": 77
+          },
+          "selected_counts": {
+            "2": 77
+          },
+          "patients_all_unique_pairs_above_0_95": 73,
+          "patients_selected_pair_above_0_95": 76,
+          "patients_zero_gate_weight_sum": 0,
+          "distribution_means": {
+            "all_pair_cosine_mean": 0.9931348208830303,
+            "all_pair_cosine_min": 0.9846111992799362,
+            "selected_pair_cosine": 0.9932512312211002,
+            "pairs_cosine_above_0_95": 27.77922077922078,
+            "all_pair_reading_overlap_mean": 0.9916068818152846,
+            "selected_pair_reading_overlap": 0.9915839848724429,
+            "selected_minus_all_pair_cosine": 0.00011641033806961744,
+            "selected_minus_all_pair_reading_overlap": -2.2896942841858944e-05,
+            "centered_energy_fraction": 0.006325469859882902,
+            "centered_effective_rank": 4.5904669075227575,
+            "gate_weight_sum": 0.9999995579362496,
+            "nonzero_gate_weights": 2.0,
+            "gate_weight_effective_slots": 1.5617833367748133
+          }
+        }
+      },
+      "conclusion_boundary": [
+        "Native retained final-slot and reading-distribution redundancy persists after this checkpoint's selection.",
+        "These are 71 historical local BLCA cases at one 3-epoch checkpoint and one retained eval draw, not the 77-case server run.",
+        "No new inference; decoder.map outputs, biological event labels and per-slot marginal predictive utility were not recomputed.",
+        "No without-gating matched training control: this does not identify the gate's causal training effect or predictive harm."
+      ],
+      "private_artifacts_not_published": [
+        "patient_metrics.json"
+      ]
+    },
+    "sparsity_off_frozen_checkpoint": {
+      "route": "sparsity_off_frozen_checkpoint_inference",
+      "aggregate_summary_sha256": "f81109a25be0d7bfb37e9668c7f6844ff41808452e6fe968495ff06509e834f7",
+      "execution_receipt_sha256": "6d8f4684c4297275a2debde10b4b00928a845529bfb08f69801ddf911fa21f25",
+      "protocol": {
+        "schema": "slotspe_sparsity_off_v1",
+        "arms": [
+          "native_top2",
+          "dense_wsi",
+          "dense_omic",
+          "dense_both",
+          "uniform_both"
+        ],
+        "baseline": "Exact retained native final slots, recorded Top2 masks and original weights",
+        "dense": "Actual original decoder at K=S=8; learned soft weights retained; all-true self masks",
+        "uniform": "K=S plus uniform 1/S single-modal weights; identical fused self masks to dense_both",
+        "one_modality_controls": true,
+        "other_branches": "Original dense cross-attention unchanged",
+        "training_steps": 0,
+        "new_slot_generation": 0,
+        "scope": "Frozen-checkpoint inference intervention, not a no-gating training ablation",
+        "replay_atol": 1e-06,
+        "batch_size": 8,
+        "device": "cuda:0",
+        "fused_and_auxiliary_predictions_reported_separately": true
+      },
+      "patients": 77,
+      "fold": 0,
+      "seed": 3,
+      "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
+      "new_training_steps": 0,
+      "new_slot_generation": 0,
+      "new_full_model_forward_calls": 0,
+      "new_native_downstream_readout_sweeps": 7,
+      "controls_max_abs_errors": {
+        "historical_logits": 0.0,
+        "original_gate": 0.0,
+        "original_scores": 0.0,
+        "identical_input": 0.0,
+        "dense_all_true_vs_none_mask": 0.0,
+        "cross_branch": 0.0,
+        "dense_decoder_different_rng": 4.76837158203125e-07
+      },
+      "slot_vectors_before_gate_are_identical_by_design": true,
+      "arms": {
+        "native_top2": {
+          "heads": {
+            "fused": 0.7194928684627575,
+            "aux_wsi": 0.5903328050713154,
+            "aux_omic": 0.7234548335974643
+          },
+          "native_nll_per_patient": {
+            "fused": 0.8823312520980835,
+            "aux_wsi": 0.8874348998069763,
+            "aux_omic": 0.8710798621177673
+          },
+          "differences_vs_native": {
+            "fused": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "delta_cindex": 0.0
+            },
+            "aux_wsi": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "delta_cindex": 0.0
+            },
+            "aux_omic": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "delta_cindex": 0.0
+            }
+          }
+        },
+        "dense_wsi": {
+          "heads": {
+            "fused": 0.7187004754358162,
+            "aux_wsi": 0.606973058637084,
+            "aux_omic": 0.7234548335974643
+          },
+          "native_nll_per_patient": {
+            "fused": 0.8823260068893433,
+            "aux_wsi": 0.8868017792701721,
+            "aux_omic": 0.8710798621177673
+          },
+          "differences_vs_native": {
+            "fused": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.0013258108361200852,
+                "median": 0.001250147819519043,
+                "min": 0.00019073486328125,
+                "max": 0.0036635398864746094
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.00040135377437704775,
+                "median": 0.0003002102809448459,
+                "min": 2.406375029462282e-06,
+                "max": 0.0016008725965113157
+              },
+              "delta_cindex": -0.0007923930269413404
+            },
+            "aux_wsi": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.01619720652505949,
+                "median": 0.01131439208984375,
+                "min": 0.00022602081298828125,
+                "max": 0.06276679039001465
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.009611385433876752,
+                "median": 0.006426735865909805,
+                "min": 0.00014654545029735289,
+                "max": 0.03798672330012698
+              },
+              "delta_cindex": 0.016640253565768592
+            },
+            "aux_omic": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "delta_cindex": 0.0
+            }
+          }
+        },
+        "dense_omic": {
+          "heads": {
+            "fused": 0.7187004754358162,
+            "aux_wsi": 0.5903328050713154,
+            "aux_omic": 0.7218700475435816
+          },
+          "native_nll_per_patient": {
+            "fused": 0.882243275642395,
+            "aux_wsi": 0.8874348998069763,
+            "aux_omic": 0.8679431080818176
+          },
+          "differences_vs_native": {
+            "fused": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.002278956693488282,
+                "median": 0.0013508796691894531,
+                "min": 0.0001857280731201172,
+                "max": 0.020055145025253296
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.0009622891140643727,
+                "median": 0.00035644261180767245,
+                "min": 1.1446869055298237e-05,
+                "max": 0.013331048579404037
+              },
+              "delta_cindex": -0.0007923930269413404
+            },
+            "aux_wsi": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.0,
+                "median": 0.0,
+                "min": 0.0,
+                "max": 0.0
+              },
+              "delta_cindex": 0.0
+            },
+            "aux_omic": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.033236131942891455,
+                "median": 0.018965721130371094,
+                "min": 0.004132866859436035,
+                "max": 0.2540518045425415
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.008332678926359373,
+                "median": 0.004526367781185758,
+                "min": 0.00012281524198742844,
+                "max": 0.17803711792429233
+              },
+              "delta_cindex": -0.0015847860538826808
+            }
+          }
+        },
+        "dense_both": {
+          "heads": {
+            "fused": 0.7194928684627575,
+            "aux_wsi": 0.606973058637084,
+            "aux_omic": 0.7218700475435816
+          },
+          "native_nll_per_patient": {
+            "fused": 0.8822380304336548,
+            "aux_wsi": 0.8868017792701721,
+            "aux_omic": 0.8679431080818176
+          },
+          "differences_vs_native": {
+            "fused": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.002813134245671235,
+                "median": 0.0020908117294311523,
+                "min": 0.0004646778106689453,
+                "max": 0.020648181438446045
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.001075121331189324,
+                "median": 0.00048810736082227635,
+                "min": 3.68928413596592e-06,
+                "max": 0.014302094444214042
+              },
+              "delta_cindex": 0.0
+            },
+            "aux_wsi": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.01619720652505949,
+                "median": 0.01131439208984375,
+                "min": 0.00022602081298828125,
+                "max": 0.06276679039001465
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.009611385433876752,
+                "median": 0.006426735865909805,
+                "min": 0.00014654545029735289,
+                "max": 0.03798672330012698
+              },
+              "delta_cindex": 0.016640253565768592
+            },
+            "aux_omic": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.033236131942891455,
+                "median": 0.018965721130371094,
+                "min": 0.004132866859436035,
+                "max": 0.2540518045425415
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.008332678926359373,
+                "median": 0.004526367781185758,
+                "min": 0.00012281524198742844,
+                "max": 0.17803711792429233
+              },
+              "delta_cindex": -0.0015847860538826808
+            }
+          }
+        },
+        "uniform_both": {
+          "heads": {
+            "fused": 0.7194928684627575,
+            "aux_wsi": 0.6014263074484945,
+            "aux_omic": 0.7234548335974643
+          },
+          "native_nll_per_patient": {
+            "fused": 0.8822380304336548,
+            "aux_wsi": 0.885178804397583,
+            "aux_omic": 0.8672869801521301
+          },
+          "differences_vs_native": {
+            "fused": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.002813134245671235,
+                "median": 0.0020908117294311523,
+                "min": 0.0004646778106689453,
+                "max": 0.020648181438446045
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.001075121331189324,
+                "median": 0.00048810736082227635,
+                "min": 3.68928413596592e-06,
+                "max": 0.014302094444214042
+              },
+              "delta_cindex": 0.0
+            },
+            "aux_wsi": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.022238457357728635,
+                "median": 0.01904439926147461,
+                "min": 0.002328217029571533,
+                "max": 0.0649869441986084
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.013573576844157819,
+                "median": 0.01107598757556083,
+                "min": 0.0002587271438398986,
+                "max": 0.03974577563415904
+              },
+              "delta_cindex": 0.011093502377179099
+            },
+            "aux_omic": {
+              "per_patient_max_abs_logit": {
+                "mean": 0.03877552830940717,
+                "median": 0.025121212005615234,
+                "min": 0.003389492630958557,
+                "max": 0.15599966049194336
+              },
+              "per_patient_abs_risk": {
+                "mean": 0.009128795203783839,
+                "median": 0.006160695117892523,
+                "min": 1.6064852972341725e-05,
+                "max": 0.09106742446559402
+              },
+              "delta_cindex": 0.0
+            }
+          }
+        }
+      },
+      "conclusion_boundary": [
+        "Frozen weights and exact same retained slots; effects concern reading/prediction only.",
+        "Does not estimate how training without sparse selection changes learned slots.",
+        "One 3-epoch local checkpoint, 71 BLCA patients, one retained draw; no independent test or efficacy claim.",
+        "Cross branch remains dense as designed; dense learned versus uniform gates only differ in auxiliary modal predictions."
+      ],
+      "runner_sha256": "06f039017955831fb5846fad4978dc5697bf8cf823747fa842494f7db5677e5f",
+      "source_hashes": {
+        "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+      },
+      "model_state_unchanged": true,
+      "original_inputs_unchanged": true,
+      "external_rng_unchanged": true,
+      "private_artifacts_not_published": [
+        "predictions.npz",
+        "patient_order.json"
+      ]
+    },
+    "p1_native_slot_observations": {
+      "route": "p1_native_slot_observation_export",
+      "receipt_sha256": "4b044d00df18ce76b809d532480eec041e4f38e3570c099f8354d1f0b377ed44",
+      "schema": "slotspe_p1_receipt_v1",
+      "output_file_count": 79,
+      "observations_sha256": "06c4155a26b1eec560c80fe36303d63b93e7416209ca00dab0efa4f9e26a9f19",
+      "patient_provenance_sha256": "ce88a9841690d96c51dcbed55557dccb05ed853241db3f2a67e3c7df1652e31a",
+      "observer_source_sha256": "40c05588e66ba9302272808ad74639f1962773cab68a9b6e59167348be0fb88d",
+      "exporter_source_sha256": "88488dbdee3a45afa98631d746e34321be0ecf7cba2cf0824c12e9f643f66d4e",
+      "original_artifacts_unchanged": true,
+      "new_optimizer_steps": 0,
+      "input_scope": "local_trisurv_gpu_current_training_run_real_BLCA_cached_validation",
+      "note": "逐患者记录与逐患者原始数组含患者标识，仅保留在忽略的local_evidence，不进入公开树；公开仅登记收据与文件哈希。",
+      "private_artifacts_not_published": [
+        "observations.json",
+        "patient_provenance.json",
+        "raw/*.npz"
+      ]
+    },
+    "original_questions_observe": {
+      "route": "original_questions_observe_phase",
+      "execution_receipt_sha256": "0869c7215404566ea222e040901586bc9b405262acd2475c9e1bcd36084e2489",
+      "status": "completed",
+      "phase": "observe",
+      "started_utc": "2026-10-21T19:37:47.484530+00:00",
+      "finished_utc": "2026-10-21T21:32:06.006763+00:00",
+      "environment": {
+        "torch": "2.10.0+cu128",
+        "cuda_runtime": "12.8",
+        "device": "cuda:1",
+        "gpu": "NVIDIA GeForce RTX 5090",
+        "packages": {
+          "numpy": "2.2.6",
+          "scipy": "1.15.3",
+          "einops": "0.8.2"
+        }
+      },
+      "source_hashes": {
+        "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+      },
+      "helper_sha256": {
+        "problem_trace.py": "da3600ab06458203ff343a600fa6fd6647d1f4e9a3b5e45761cc5d85c9fd260f",
+        "problem_metrics.py": "22c045b74b142c60a96eec7685cd5cf88cd96f9e7f1192e7f086eeb029b2463d",
+        "problem_capacity.py": "f0bb9a25292e328ccdee287c1647f34c048adcc8ab89caba519f9656f3016067",
+        "patient.py": "d9cd5b3ce0949af36723481e59f7ff6229cf99690c6caeb4cde387f643d5c54b",
+        "model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f"
+      },
+      "runner_sha256": "33f572ff3ee53620e16a4eb0b02cd3983d3076ec2f5bcf1c9b0f4c2b918f1502",
+      "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
+      "source_unchanged": true,
+      "patient_outputs_private": true,
+      "result": {
+        "patients": 77,
+        "repeat_rows_are_not_independent_patients": true,
+        "native_replay_error": {
+          "n": 770,
+          "median": 0.0,
+          "q25": 0.0,
+          "q75": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "question_status": {
+          "P1": "frozen_sensitivity_only_use_separate_matched_training_for_capacity",
+          "P2": "representation_and_input_reading_measured",
+          "P3": "aggregation_trajectories_measured_causal_scope_limited",
+          "P4": "external_content_scoring_when_labels_present_else_computational_only",
+          "P5": "see_patient_specific_role_prerequisites",
+          "P6": "see_patient_specific_aligned_features_and_content_targets",
+          "P7": "exact_native_objective_gradient_geometry_measured",
+          "P8": "not_applicable"
+        },
+        "main_endpoint_is_not_cindex": true
+      },
+      "observation_settings": {
+        "fold": 0,
+        "seed": 3,
+        "repeats": 5,
+        "reference_iterations": 30,
+        "capacity_counts": [
+          4,
+          8,
+          16
+        ],
+        "capacity_modality": "wsi",
+        "dictionary_train_patients": 32,
+        "replay_atol": 1e-06
+      },
+      "private_artifacts_not_published": [
+        "patient_records.json",
+        "objective_gradients.json",
+        "patient_*_native.npz"
+      ]
+    }
+  },
+  "structural_observations": {
+    "pairs_with_disconnected_selector": 20,
+    "pairs_total": 20,
+    "selector_parameter_count": 8,
+    "main_gradient_connected_parameter_count": 0,
+    "interpretation": "选槽支路对融合主损失无梯度在全部20个已训练对中一致重现；这是P7的局部结构事实，不等于整个Slot Attention缺少生存监督，也不构成患者预测损害。"
+  },
+  "descriptive_measurement_spread": {
+    "five_fold_seed3_mean": 0.6658030852670128,
+    "five_fold_seed3_cross_run_std": 0.05365907687387666,
+    "five_fold_3seed_mean": 0.6631942390042329,
+    "five_fold_3seed_cross_run_std": 0.060593216005657105,
+    "five_fold_3seed_between_fold_std": 0.06177959229302331,
+    "five_fold_3seed_per_seed_means": {
+      "3": 0.6658030852670128,
+      "17": 0.6569167897801003,
+      "29": 0.6668628419655855
+    },
+    "note": "折间差异远大于种子间差异。此为测量离散度的描述，不是性能结论，也不构成对任何已登记对照的推翻。"
+  },
+  "checks": {
+    "new_training_runs_this_stage": 0,
+    "new_model_forward_passes_this_stage": 0,
+    "new_patient_interventions_this_stage": 0,
+    "server_execution_this_stage": false,
+    "original_source_modified": false,
+    "default_queue_config_modified": false,
+    "results_directory_git_ignored": true,
+    "local_evidence_git_ignored": true,
+    "patient_identifiers_staged_to_git": false,
+    "host_absolute_paths_staged_to_git": false
+  },
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false
+}

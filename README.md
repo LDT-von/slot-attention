@@ -4,7 +4,15 @@
 
 本仓库先检验槽表示、内容分配、聚合过程与学习目标，再分别研究预测后果和修正收益。表示机制的证据不必以C-index下降为前提；高相似、sanity check和人为干预的输出变化也不直接登记为预测损害。
 
-当前入口：[进度](docs/PROGRESS.json)、[服务器新结论复核](docs/research/slotspe_server_claims_20261020/服务器结论复核.txt)、[原始回传与对照要求](docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt)、[P5勘误](docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt)。
+当前入口：[进度](docs/PROGRESS.json)、[本机GPU阶段登记与离散度](docs/research/slotspe_gpu_trisurv_20261022/本机GPU阶段登记与离散度.txt)、[服务器新结论复核](docs/research/slotspe_server_claims_20261020/服务器结论复核.txt)、[原始回传与对照要求](docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt)、[P5勘误](docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt)。
+
+## 本机GPU多折与机制登记（2026-10-22）
+
+在trisurv环境（torch 2.10.0+cu128，RTX 5090）跑完原版单臂队列：5折×seed3与5折×3种子共20对，全部完成无缺失。15组验证C-index均值0.66319，跨运行标准差0.06059，范围0.58097–0.75836；折间标准差0.06178远大于种子间。3轮探索性验证C-index不是泛化或临床性能结论，跨折各对共享同一379名完全病例患者，均值仅描述性。
+
+同轮只读/冻结检查：保留槽冗余（77人，WSI全对cos均值0.99717、选中槽0.99707，读取重叠0.9989）、关闭稀疏选择五臂推理干预（融合C-index 0.7187–0.7195，两侧关闭差为0.000000）、P1原生槽观察导出与observe阶段（原生重放误差0）。全部20对一致重现选槽器对融合主损失无梯度（P7局部结构事实）。[公开记录](docs/research/slotspe_gpu_trisurv_20261022/five_fold_and_mechanism_records.json)、[报告](docs/research/slotspe_gpu_trisurv_20261022/本机GPU阶段登记与离散度.txt)。
+
+需要注意的测量事实：跨折跨种子离散度远大于此前在单点fold0/seed3上登记的对照效应量，且折间差异远大于种子间，说明差异主要来自数据划分。以往单折单种子差值需在该分布内重新判断，不应继续在单折上叠加对照。本轮为只读登记，未新增任何训练、推理或患者干预。
 
 ## 本轮发布范围与服务器入口（2026-10-21）
 

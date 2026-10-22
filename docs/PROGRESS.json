@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-22T02:05:00+08:00",
+  "recorded_at": "2026-10-22T10:05:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "trisurv环境GPU复现DCT-Reg参考BLCA基线完全一致(C-index均值0.72235,20次)；下一步由用户决定授权哪个对照臂。",
+  "next_action": "由用户决定是否授权具体对照臂(关闭稀疏选择、匹配容量训练或A/B/C)与队列规模；D0-D4需先完成宿主训练接入。未获明确执行授权前不启动训练或推理。",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -769,5 +769,385 @@
     "correction_efficacy_established": false,
     "gaps_reasons": "单fold单seed、3轮、20次评估的一次原版基线；未测P1-P7机制干预，未跑D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot。C-index为探索性均值。",
     "next_action_user_input": "GPU已可用且与参考运行数值一致；下一步由用户授权具体对照臂(如关闭稀疏选择、匹配容量训练)与队列规模。"
+  },
+  "latest_local_five_fold_three_seed_and_mechanism_records": {
+    "recorded_at": "2026-10-22T10:05:00+08:00",
+    "task_id": "SPE-09",
+    "route": "local_blca_five_fold_three_seed_and_read_only_mechanism_records",
+    "status": "completed_local_record_only_registration",
+    "authorization": "用户于2026-10-22询问当前情况，并在选择record_only后授权一并推送；本轮只登记已完成的本机GPU结果。",
+    "completed": "把本机已完成的五折、五折三种子、稀疏关闭、保留冗余、P1观察导出与observe阶段六项结果写入单一进度入口；未新增任何训练、推理或患者干预。",
+    "public_record": "docs/research/slotspe_gpu_trisurv_20261022/five_fold_and_mechanism_records.json",
+    "public_record_sha256": "db469daea77e50e6a40bcdcf4ca9021229df952c3574ed6bb5710f76dc830ef5",
+    "report": "docs/research/slotspe_gpu_trisurv_20261022/本机GPU阶段登记与离散度.txt",
+    "generator": "scripts/record_slotspe_gpu_trisurv_20261022.py",
+    "environment": {
+      "torch": "2.10.0+cu128",
+      "cuda_runtime": "12.8",
+      "gpu": "NVIDIA GeForce RTX 5090"
+    },
+    "shared_queue_protocol": {
+      "experiment": "original_audit",
+      "arms": [
+        "original"
+      ],
+      "epochs": 3,
+      "patches": 256,
+      "batch_size": 8,
+      "eval_repeats": 20,
+      "lr": 0.0005,
+      "torch_threads": 2,
+      "parameter_count": 33093390,
+      "optimizer_steps_per_pair": 114,
+      "transport_added": false,
+      "repaired_models_constructed": false,
+      "feature_set": "uni2-h"
+    },
+    "five_fold_seed3": {
+      "output_root": "results/slotspe_proof/blca_5fold_gpu_trisurv_a512169",
+      "status": "completed",
+      "pairs_completed": 5,
+      "pairs_expected": 5,
+      "missing_pairs": [],
+      "cohort_unique_complete_case_patients": 379,
+      "per_fold_counts": {
+        "0": {
+          "train": 302,
+          "val": 77,
+          "excluded": 2,
+          "overlap": 0
+        },
+        "1": {
+          "train": 304,
+          "val": 75,
+          "excluded": 2,
+          "overlap": 0
+        },
+        "2": {
+          "train": 304,
+          "val": 75,
+          "excluded": 2,
+          "overlap": 0
+        },
+        "3": {
+          "train": 303,
+          "val": 76,
+          "excluded": 2,
+          "overlap": 0
+        },
+        "4": {
+          "train": 303,
+          "val": 76,
+          "excluded": 2,
+          "overlap": 0
+        }
+      },
+      "mean_validation_cindex_exploratory": 0.6658030852670128,
+      "cross_run_sample_std": 0.05365907687387666,
+      "min": 0.6206882591093118,
+      "max": 0.7264382402707276,
+      "per_pair": {
+        "fold_0_seed_3": 0.7223454833597466,
+        "fold_1_seed_3": 0.7264382402707276,
+        "fold_2_seed_3": 0.6206882591093118,
+        "fold_3_seed_3": 0.6321857923497267,
+        "fold_4_seed_3": 0.6273576512455517
+      },
+      "structural_checks": {
+        "original_disconnection_observed_pairs": 5,
+        "evaluation_randomness_observed_pairs": 5,
+        "self_interference_observed_pairs": 5,
+        "padding_sensitivity_observed_pairs": 5,
+        "natural_gate_near_zero_observed_pairs": 1
+      }
+    },
+    "five_fold_three_seed": {
+      "output_root": "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169",
+      "status": "completed",
+      "pairs_completed": 15,
+      "pairs_expected": 15,
+      "missing_pairs": [],
+      "mean_validation_cindex_exploratory": 0.6631942390042329,
+      "cross_run_sample_std": 0.060593216005657105,
+      "min": 0.5809716599190283,
+      "max": 0.7583597464342313,
+      "per_fold_mean_over_seeds": {
+        "0": 0.7409931325937665,
+        "1": 0.712112239142696,
+        "2": 0.5961538461538461,
+        "3": 0.6168306010928962,
+        "4": 0.6498813760379597
+      },
+      "per_seed_mean_over_folds": {
+        "3": 0.6658030852670128,
+        "17": 0.6569167897801003,
+        "29": 0.6668628419655855
+      },
+      "between_fold_std_of_fold_means": 0.06177959229302331,
+      "per_repeat_std_population_min": 0.0011668937980361996,
+      "per_repeat_std_population_max": 0.005469664703983282,
+      "unique_initial_state_sha256": 3,
+      "unique_checkpoint_sha256": 15,
+      "elapsed_seconds_total": 1934.6872677674983,
+      "peak_allocated_cuda_bytes_max": 1068785152,
+      "per_pair": {
+        "fold_0_seed_3": 0.7223454833597466,
+        "fold_0_seed_17": 0.7583597464342313,
+        "fold_0_seed_29": 0.7422741679873217,
+        "fold_1_seed_3": 0.7264382402707276,
+        "fold_1_seed_17": 0.6720812182741117,
+        "fold_1_seed_29": 0.7378172588832486,
+        "fold_2_seed_3": 0.6206882591093118,
+        "fold_2_seed_17": 0.5868016194331984,
+        "fold_2_seed_29": 0.5809716599190283,
+        "fold_3_seed_3": 0.6321857923497267,
+        "fold_3_seed_17": 0.6181420765027322,
+        "fold_3_seed_29": 0.6001639344262296,
+        "fold_4_seed_3": 0.6273576512455517,
+        "fold_4_seed_17": 0.6491992882562277,
+        "fold_4_seed_29": 0.6730871886120996
+      },
+      "structural_checks": {
+        "original_disconnection_observed_pairs": 15,
+        "evaluation_randomness_observed_pairs": 15,
+        "self_interference_observed_pairs": 15,
+        "padding_sensitivity_observed_pairs": 15,
+        "natural_gate_near_zero_observed_pairs": 6
+      },
+      "source_warning": "Cross-fold/seed mean is descriptive; pairs share patients and are not independent evidence units"
+    },
+    "structural_observations": {
+      "pairs_with_disconnected_selector": 20,
+      "pairs_total": 20,
+      "selector_parameter_count": 8,
+      "main_gradient_connected_parameter_count": 0,
+      "interpretation": "选槽支路对融合主损失无梯度在全部20个已训练对中一致重现；这是P7的局部结构事实，不等于整个Slot Attention缺少生存监督，也不构成患者预测损害。"
+    },
+    "retained_native_redundancy": {
+      "route": "retained_native_redundancy",
+      "recorded_utc": "2026-10-21T20:08:08.470234+00:00",
+      "patient_count": 77,
+      "fold": 0,
+      "seed": 3,
+      "new_training_steps": 0,
+      "new_model_forward_passes": 0,
+      "verified_historical_output_files": 79,
+      "modalities": {
+        "wsi": {
+          "candidate_counts": {
+            "8": 77
+          },
+          "selected_counts": {
+            "2": 77
+          },
+          "patients_all_unique_pairs_above_0_95": 77,
+          "patients_selected_pair_above_0_95": 77,
+          "patients_zero_gate_weight_sum": 0,
+          "distribution_means": {
+            "all_pair_cosine_mean": 0.9971665810223995,
+            "all_pair_cosine_min": 0.9910296738231283,
+            "selected_pair_cosine": 0.9970702848068772,
+            "pairs_cosine_above_0_95": 28.0,
+            "all_pair_reading_overlap_mean": 0.9989444370081286,
+            "selected_pair_reading_overlap": 0.9989177387467753,
+            "selected_minus_all_pair_cosine": -9.629621552226314e-05,
+            "selected_minus_all_pair_reading_overlap": -2.6698261353190497e-05,
+            "centered_energy_fraction": 0.00312179134599639,
+            "centered_effective_rank": 2.54649748585428,
+            "gate_weight_sum": 0.9999993446675259,
+            "nonzero_gate_weights": 2.0,
+            "gate_weight_effective_slots": 1.3199614904492225
+          }
+        },
+        "omic": {
+          "candidate_counts": {
+            "8": 77
+          },
+          "selected_counts": {
+            "2": 77
+          },
+          "patients_all_unique_pairs_above_0_95": 73,
+          "patients_selected_pair_above_0_95": 76,
+          "patients_zero_gate_weight_sum": 0,
+          "distribution_means": {
+            "all_pair_cosine_mean": 0.9931348208830303,
+            "all_pair_cosine_min": 0.9846111992799362,
+            "selected_pair_cosine": 0.9932512312211002,
+            "pairs_cosine_above_0_95": 27.77922077922078,
+            "all_pair_reading_overlap_mean": 0.9916068818152846,
+            "selected_pair_reading_overlap": 0.9915839848724429,
+            "selected_minus_all_pair_cosine": 0.00011641033806961744,
+            "selected_minus_all_pair_reading_overlap": -2.2896942841858944e-05,
+            "centered_energy_fraction": 0.006325469859882902,
+            "centered_effective_rank": 4.5904669075227575,
+            "gate_weight_sum": 0.9999995579362496,
+            "nonzero_gate_weights": 2.0,
+            "gate_weight_effective_slots": 1.5617833367748133
+          }
+        }
+      },
+      "cosine_0_95_is_descriptive_not_clinical_threshold": true,
+      "conclusion_boundary": [
+        "Native retained final-slot and reading-distribution redundancy persists after this checkpoint's selection.",
+        "These are 71 historical local BLCA cases at one 3-epoch checkpoint and one retained eval draw, not the 77-case server run.",
+        "No new inference; decoder.map outputs, biological event labels and per-slot marginal predictive utility were not recomputed.",
+        "No without-gating matched training control: this does not identify the gate's causal training effect or predictive harm."
+      ],
+      "private_artifacts_not_published": [
+        "patient_metrics.json"
+      ]
+    },
+    "sparsity_off_frozen_checkpoint": {
+      "route": "sparsity_off_frozen_checkpoint_inference",
+      "patients": 77,
+      "fold": 0,
+      "seed": 3,
+      "new_training_steps": 0,
+      "new_slot_generation": 0,
+      "new_native_downstream_readout_sweeps": 7,
+      "fused_cindex": {
+        "native_top2": 0.7194928684627575,
+        "dense_wsi": 0.7187004754358162,
+        "dense_omic": 0.7187004754358162,
+        "dense_both": 0.7194928684627575,
+        "uniform_both": 0.7194928684627575
+      },
+      "aux_cindex": {
+        "native_top2": {
+          "aux_wsi": 0.5903328050713154,
+          "aux_omic": 0.7234548335974643
+        },
+        "dense_wsi": {
+          "aux_wsi": 0.606973058637084,
+          "aux_omic": 0.7234548335974643
+        },
+        "dense_omic": {
+          "aux_wsi": 0.5903328050713154,
+          "aux_omic": 0.7218700475435816
+        },
+        "dense_both": {
+          "aux_wsi": 0.606973058637084,
+          "aux_omic": 0.7218700475435816
+        },
+        "uniform_both": {
+          "aux_wsi": 0.6014263074484945,
+          "aux_omic": 0.7234548335974643
+        }
+      },
+      "controls_max_abs_errors": {
+        "historical_logits": 0.0,
+        "original_gate": 0.0,
+        "original_scores": 0.0,
+        "identical_input": 0.0,
+        "dense_all_true_vs_none_mask": 0.0,
+        "cross_branch": 0.0,
+        "dense_decoder_different_rng": 4.76837158203125e-07
+      },
+      "conclusion_boundary": [
+        "Frozen weights and exact same retained slots; effects concern reading/prediction only.",
+        "Does not estimate how training without sparse selection changes learned slots.",
+        "One 3-epoch local checkpoint, 71 BLCA patients, one retained draw; no independent test or efficacy claim.",
+        "Cross branch remains dense as designed; dense learned versus uniform gates only differ in auxiliary modal predictions."
+      ],
+      "private_artifacts_not_published": [
+        "predictions.npz",
+        "patient_order.json"
+      ]
+    },
+    "p1_native_slot_observations": {
+      "route": "p1_native_slot_observation_export",
+      "output_file_count": 79,
+      "new_optimizer_steps": 0,
+      "original_artifacts_unchanged": true,
+      "input_scope": "local_trisurv_gpu_current_training_run_real_BLCA_cached_validation",
+      "private_artifacts_not_published": [
+        "observations.json",
+        "patient_provenance.json",
+        "raw/*.npz"
+      ]
+    },
+    "original_questions_observe": {
+      "route": "original_questions_observe_phase",
+      "status": "completed",
+      "phase": "observe",
+      "started_utc": "2026-10-21T19:37:47.484530+00:00",
+      "finished_utc": "2026-10-21T21:32:06.006763+00:00",
+      "result": {
+        "patients": 77,
+        "repeat_rows_are_not_independent_patients": true,
+        "native_replay_error": {
+          "n": 770,
+          "median": 0.0,
+          "q25": 0.0,
+          "q75": 0.0,
+          "min": 0.0,
+          "max": 0.0
+        },
+        "question_status": {
+          "P1": "frozen_sensitivity_only_use_separate_matched_training_for_capacity",
+          "P2": "representation_and_input_reading_measured",
+          "P3": "aggregation_trajectories_measured_causal_scope_limited",
+          "P4": "external_content_scoring_when_labels_present_else_computational_only",
+          "P5": "see_patient_specific_role_prerequisites",
+          "P6": "see_patient_specific_aligned_features_and_content_targets",
+          "P7": "exact_native_objective_gradient_geometry_measured",
+          "P8": "not_applicable"
+        },
+        "main_endpoint_is_not_cindex": true
+      },
+      "observation_settings": {
+        "fold": 0,
+        "seed": 3,
+        "repeats": 5,
+        "reference_iterations": 30,
+        "capacity_counts": [
+          4,
+          8,
+          16
+        ],
+        "capacity_modality": "wsi",
+        "dictionary_train_patients": 32,
+        "replay_atol": 1e-06
+      },
+      "patient_outputs_private": true,
+      "private_artifacts_not_published": [
+        "patient_records.json",
+        "objective_gradients.json",
+        "patient_*_native.npz"
+      ]
+    },
+    "measurement_spread_note": {
+      "five_fold_seed3_mean": 0.6658030852670128,
+      "five_fold_seed3_cross_run_std": 0.05365907687387666,
+      "five_fold_3seed_mean": 0.6631942390042329,
+      "five_fold_3seed_cross_run_std": 0.060593216005657105,
+      "five_fold_3seed_between_fold_std": 0.06177959229302331,
+      "five_fold_3seed_per_seed_means": {
+        "3": 0.6658030852670128,
+        "17": 0.6569167897801003,
+        "29": 0.6668628419655855
+      },
+      "classification": "descriptive_measurement_spread_not_a_patient_performance_conclusion",
+      "detail": "跨折跨种子离散度远大于此前单点fold0/seed3上登记的对照效应量量级，且折间差异远大于种子间差异；说明主要差异来自数据划分。以往单折单种子差值需在该分布内重新判断，不应继续在单折上叠加对照。",
+      "does_not_override_prior_records": true
+    },
+    "checks": {
+      "new_training_runs_this_stage": 0,
+      "new_model_forward_passes_this_stage": 0,
+      "new_patient_interventions_this_stage": 0,
+      "server_execution_this_stage": false,
+      "original_source_modified": false,
+      "default_queue_config_modified": false,
+      "results_directory_git_ignored": true,
+      "local_evidence_git_ignored": true,
+      "patient_identifiers_staged_to_git": false,
+      "host_absolute_paths_staged_to_git": false,
+      "historical_reports_modified": false,
+      "private_patient_inputs_staged": false
+    },
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false,
+    "gaps_reasons": "3轮探索性验证C-index；跨折跨种子各对共享同一379名完全病例患者，不是独立证据单位，均值仅描述性；未测P1-P7机制干预，未跑D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot；本轮为只读登记，未启动任何新执行。",
+    "next_action_user_input": "由用户决定是否授权具体对照臂(关闭稀疏选择、匹配容量训练或A/B/C)与队列规模；D0-D4需先完成宿主训练接入。未获明确执行授权前不启动训练或推理。"
   }
 }
