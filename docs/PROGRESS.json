@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-22T10:05:00+08:00",
+  "recorded_at": "2026-10-22T11:07:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
@@ -1149,5 +1149,94 @@
     "correction_efficacy_established": false,
     "gaps_reasons": "3轮探索性验证C-index；跨折跨种子各对共享同一379名完全病例患者，不是独立证据单位，均值仅描述性；未测P1-P7机制干预，未跑D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot；本轮为只读登记，未启动任何新执行。",
     "next_action_user_input": "由用户决定是否授权具体对照臂(关闭稀疏选择、匹配容量训练或A/B/C)与队列规模；D0-D4需先完成宿主训练接入。未获明确执行授权前不启动训练或推理。"
+  },
+  "latest_d0_d4_execution_audit": {
+    "recorded_at": "2026-10-22T11:07:00+08:00",
+    "task_id": "SPE-08",
+    "route": "d0_d4_execution_status_audit",
+    "status": "audited_not_executed_d0_d4_arms_never_run",
+    "completed": "核查D0-D4五臂的真实执行状态：逐臂追踪配置、模块消费方、宿主接线、结果目录与全盘产物扫描。结论：D0-D4从未被实际运行；已发布的只是阶段核心与声明式配置。",
+    "question_asked": "用户询问表中D0-D4各版本是否已跑过。",
+    "arm_execution_evidence": {
+      "stage_specs_present": [
+        "D0_native",
+        "D1_sa_sinkhorn",
+        "D2_sa_mesh",
+        "D3_coordinate_mesh",
+        "D4_both_mesh"
+      ],
+      "stage_specs_path": "configs/slotspe_redundancy_variants/",
+      "each_spec_declares_patient_execution_false": true,
+      "each_spec_declares_readiness": "stage_core_tested_not_patient_training_ready",
+      "specs_consumed_by_any_runner": false,
+      "specs_referenced_only_in": [
+        "tests/test_slotspe_prototype_assignment.py",
+        "docs/PROGRESS.json",
+        "docs/research/slotspe_redundancy_methods_20261021/"
+      ],
+      "d0_d4_result_directories_found": 0,
+      "d0_d4_output_artifacts_found_anywhere_under_data1": 0,
+      "dct_host_contains_mesh_uniform_or_arm_specs": false,
+      "existing_runs_are_original_arm_only": true,
+      "existing_run_dirs": [
+        "results/slotspe_proof/blca_cpu_a512169",
+        "results/slotspe_proof/blca_gpu_trisurv_a512169",
+        "results/slotspe_proof/blca_5fold_gpu_trisurv_a512169",
+        "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169"
+      ],
+      "existing_runs_config": {
+        "folds": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "seeds": [
+          3,
+          17,
+          29
+        ],
+        "epochs": 3,
+        "patches": 256,
+        "experiment": "original_audit"
+      },
+      "new_patient_tasks_this_stage": 0,
+      "new_training_runs_this_stage": 0,
+      "new_model_forward_passes": 0,
+      "server_execution_this_stage": false
+    },
+    "why_not_runnable_yet": {
+      "stage1_slot_reading": "SlotAssignmentRouter 已实现，但它是独立重放器(replay_with_assignment)，需替换宿主 SA 内部注意力；原版 third_party/SlotSPE 未被修改，默认模型不导入该模块。",
+      "stage2_prototype_pooling": "原型汇总属于 DCT 宿主(DCT-Reg /data1/DCT-Reg)，而原版 SlotSPE 本身没有原型池化(third_party/SlotSPE 中 prototype 命中为0)；因此D3/D4的②在 SlotSPE 仓库内无宿主可挂载。",
+      "host_reference_in_configs": "DCT-RG v2.3 (configs 自述)；DCT-Reg 本机 HEAD 为 8c3dfa0 (E053, v3.13 同口径三臂复刻)。",
+      "prototype_semantics_match_verified": true,
+      "prototype_semantics_check": "SlotSPE 侧 dct_soft 与 DCT 宿主 model.py 的 softmax(scores/temperature, dim=1) 再按行 clamp_min(1e-8) 归一化一致。",
+      "sa_api_compatibility_verified": true,
+      "sa_api_check": "SlotSPE 重放用 SA 与 DCT 宿主 components/slot_attention.py 暴露相同接口(norm_input/split_heads/to_q/to_k/to_v/norm_slots/merge_heads/combine_heads/gru/norm_pre_ff/mlp, eps/scale/iters/dim)，router 可作为宿主 SA 的即插替换件。",
+      "di_and_metaslot_status": "not_implemented"
+    },
+    "checks": {
+      "assignment_and_prototype_tests_passed": 26,
+      "assignment_and_prototype_test_command": "python3 -m pytest tests/test_slotspe_prototype_assignment.py tests/test_slotspe_assignment_router.py -q",
+      "full_test_suite_result": "159 passed, 1 failed",
+      "failing_test": "tests/test_slotspe_proof_queue.py::test_plan_is_import_and_data_free",
+      "failing_test_cause": "陈旧测试期望：断言 plan['training_runs']==30，但默认 configs/slotspe_proof_server.json 已改为 experiment=original_audit/folds=[0]/seeds=[3]/epochs=3/patches=256，实际 training_runs=1。属期望值未同步，非执行回归；该文件在 a512169 与 HEAD 之间无差异。",
+      "plan_only_default_prints_training_runs": 1,
+      "patient_data_read_during_audit": false,
+      "third_party_SlotSPE_modified": false,
+      "private_patient_inputs_staged": false,
+      "no_new_commit_or_push_this_audit": true
+    },
+    "interpretability_caveats": {
+      "measurement_spread_between_fold_std": 0.06177959229302331,
+      "measurement_spread_3seed_cross_run_std": 0.060593216005657105,
+      "note": "即使接通宿主训练，D0-D4 的单折单种子差值也需在该跨折离散度内重新判断；本审计不判定任何臂优劣。",
+      "single_fold_single_seed_comparison_recommended": false
+    },
+    "gaps_reasons": "D0-D4 五臂均无实际运行；宿主训练接入未完成；DIAS/MetaSlot 未实现；原版 SlotSPE 无原型池化阶段，② 只能落到 DCT 宿主；队列默认与陈旧测试期望不一致。",
+    "next_action_user_input": "由用户决定是否授权：(1)接通 DCT 宿主训练以运行 D0-D4；(2)先修 test_slotspe_proof_queue.py 的陈旧期望(30 -> 1)或改回原默认；(3)确定 D0-D4 应在 DCT 宿主(有②原型汇总)还是原版 SlotSPE(无②)上评估。未获明确执行授权前不启动训练或推理。",
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false
   }
 }
