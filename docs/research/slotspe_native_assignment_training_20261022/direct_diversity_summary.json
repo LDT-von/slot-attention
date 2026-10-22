@@ -1,0 +1,1426 @@
+{
+  "schema": "native_slotspe_direct_diversity_public_v1",
+  "recorded_at": "2026-10-22T20:48:28.031492+08:00",
+  "source_summary_sha256": "2dc9d7626b557a9b32ec2007892b72f3c1ef25aa9e4a138cfa857a6e4e4f14c3",
+  "status": "completed_generated_only_matched_six_arm",
+  "plan": {
+    "data": "new invented 8-component tensors only; no patient input",
+    "variants": {
+      "R0": {
+        "regularizer": "none",
+        "regularizer_weight": 0.0,
+        "set_weight": 0.0
+      },
+      "R1": {
+        "regularizer": "off_diagonal_cosine_squared",
+        "regularizer_weight": 10.0,
+        "set_weight": 0.0
+      },
+      "R2": {
+        "regularizer": "SlotBERT_Eq11_transplant",
+        "regularizer_weight": 1.0,
+        "set_weight": 0.0
+      },
+      "R3": {
+        "regularizer": "SlotBERT_Eq11_transplant",
+        "regularizer_weight": 1.0,
+        "set_weight": 5.0
+      },
+      "R4": {
+        "regularizer": "none",
+        "regularizer_weight": 0.0,
+        "set_weight": 5.0
+      },
+      "R5": {
+        "regularizer": "off_diagonal_cosine_squared",
+        "regularizer_weight": 10.0,
+        "set_weight": 5.0
+      }
+    },
+    "seeds": [
+      3,
+      17,
+      29
+    ],
+    "train_size": 64,
+    "holdout_size": 32,
+    "steps": 128,
+    "batch_size": 8,
+    "eval_repeats": 3,
+    "projection_dim": 32,
+    "slots": 8,
+    "iterations": 3,
+    "encoding_dim": 16,
+    "pathways": 8,
+    "pathway_dim": 16,
+    "patches": 32,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "device": "cpu",
+    "threads": 1,
+    "native_loss": "unchanged native main NLL / B + native auxiliary loss",
+    "regularizer_reduction": "mean over the two prediction-path modality outputs",
+    "slotbert_temperature": 0.5,
+    "slotbert_scope": "Eq11 loss transplant only; batch examples replace frames; diagonal retained",
+    "slotbert_weight_boundary": "weight 1 is this experiment's preset, not the paper default 0.01",
+    "probe": "same shared per-slot MLPs in all arms; slots are the only decoder input",
+    "probe_updates": "detached-slot probe step, then frozen-probe core step",
+    "set_targets": "WSI per-case raw-token farthest/Lloyd clusters; OMIC raw pathway set",
+    "target_component_labels": "not used by training; train-mean oracle dictionary is evaluation only",
+    "pairing": "same seed-specific initial core/probe states, generated inputs, batches and step RNG",
+    "selection": "fixed final step; no heldout tuning or best-checkpoint selection",
+    "effective_rank_definition": "angular participation ratio K^2 / sum(G^2), not algebraic rank",
+    "content_boundary": "probe and donor checks measure generated content, not survival relevance",
+    "patient_execution": false,
+    "server_execution": false,
+    "expected_runs": 18,
+    "expected_core_optimizer_steps": 2304,
+    "expected_probe_optimizer_steps": 2304,
+    "expected_root_train_forwards": 2304,
+    "expected_root_eval_forwards": 216,
+    "expected_train_SA_calls": 6912,
+    "expected_eval_SA_calls": 432,
+    "comparison_boundary": "new richer benchmark; do not merge historical S0-S6 measurements"
+  },
+  "aggregate_final": {
+    "R0": {
+      "native_main_nll": 1.3944454855389063,
+      "native_auxiliary": 0.0,
+      "modalities": {
+        "wsi": {
+          "cosine": 0.8770953162643162,
+          "absolute_cosine": 0.8776365266434377,
+          "rms_cosine": 0.8895087019326485,
+          "max_cosine": 0.996343404433617,
+          "fraction_cosine_above_09": 0.6491815476190478,
+          "effective_rank": 1.2672634367759255,
+          "min_norm": 2.3323187608742897,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.2359220733245214,
+          "donor_set_mse": 0.23781988355848524,
+          "donor_to_own_ratio": 1.008011261622111,
+          "static_dictionary_set_mse": 0.04427962750196457,
+          "own_to_static_ratio": 5.329375478956435,
+          "same_noise_input_change_angular_distance": 0.3916426928650247
+        },
+        "omic": {
+          "cosine": 0.9436273991594767,
+          "absolute_cosine": 0.9436273991594767,
+          "rms_cosine": 0.9442096176407045,
+          "max_cosine": 0.9937405758241031,
+          "fraction_cosine_above_09": 0.8937251984126985,
+          "effective_rank": 1.1060799783950577,
+          "min_norm": 4.624934639272497,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.22501754264036813,
+          "donor_set_mse": 0.22497684425777856,
+          "donor_to_own_ratio": 0.9998191793759664,
+          "static_dictionary_set_mse": 0.04236374547084173,
+          "own_to_static_ratio": 5.311243428124322,
+          "same_noise_input_change_angular_distance": 0.003762298717954188
+        }
+      }
+    },
+    "R1": {
+      "native_main_nll": 1.412511666615804,
+      "native_auxiliary": 0.0,
+      "modalities": {
+        "wsi": {
+          "cosine": 0.11451650095268834,
+          "absolute_cosine": 0.2136984582587151,
+          "rms_cosine": 0.26423267310050264,
+          "max_cosine": 0.8920970456933822,
+          "fraction_cosine_above_09": 0.0,
+          "effective_rank": 5.420588826546225,
+          "min_norm": 2.9200008052224304,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.2082049929433399,
+          "donor_set_mse": 0.20892533991071915,
+          "donor_to_own_ratio": 1.003467473718855,
+          "static_dictionary_set_mse": 0.04427962750196457,
+          "own_to_static_ratio": 4.705295085906982,
+          "same_noise_input_change_angular_distance": 0.052058414472653546
+        },
+        "omic": {
+          "cosine": 0.04841890381593004,
+          "absolute_cosine": 0.17769974909234143,
+          "rms_cosine": 0.2218359707053703,
+          "max_cosine": 0.7908427753388421,
+          "fraction_cosine_above_09": 0.0,
+          "effective_rank": 5.980265903255401,
+          "min_norm": 2.0167680936975803,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.20737104780144164,
+          "donor_set_mse": 0.20742167201307085,
+          "donor_to_own_ratio": 1.000275777445899,
+          "static_dictionary_set_mse": 0.04236374547084173,
+          "own_to_static_ratio": 4.896892971462673,
+          "same_noise_input_change_angular_distance": 0.0028035555852186545
+        }
+      }
+    },
+    "R2": {
+      "native_main_nll": 1.4273247321446736,
+      "native_auxiliary": 0.0,
+      "modalities": {
+        "wsi": {
+          "cosine": 0.5597454423281082,
+          "absolute_cosine": 0.5631543068884656,
+          "rms_cosine": 0.5971242352268267,
+          "max_cosine": 0.9652898244607763,
+          "fraction_cosine_above_09": 0.009796626984126984,
+          "effective_rank": 2.3426432709331575,
+          "min_norm": 4.064312877553411,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.21276834110418955,
+          "donor_set_mse": 0.21310178935527802,
+          "donor_to_own_ratio": 1.001603431171841,
+          "static_dictionary_set_mse": 0.04427962750196457,
+          "own_to_static_ratio": 4.808931986490886,
+          "same_noise_input_change_angular_distance": 0.006510906129215244
+        },
+        "omic": {
+          "cosine": 0.4951138179818682,
+          "absolute_cosine": 0.49665570963442107,
+          "rms_cosine": 0.5338403474518437,
+          "max_cosine": 0.9629402833363125,
+          "fraction_cosine_above_09": 0.0021081349206349205,
+          "effective_rank": 2.7175468541640107,
+          "min_norm": 3.216533530297305,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.21104147202438775,
+          "donor_set_mse": 0.21083504789405402,
+          "donor_to_own_ratio": 0.9990530742539301,
+          "static_dictionary_set_mse": 0.04236374547084173,
+          "own_to_static_ratio": 4.982383198208279,
+          "same_noise_input_change_angular_distance": 0.006875497510272391
+        }
+      }
+    },
+    "R3": {
+      "native_main_nll": 1.3822561237547133,
+      "native_auxiliary": 0.0,
+      "modalities": {
+        "wsi": {
+          "cosine": 0.5692558520691348,
+          "absolute_cosine": 0.577030143123508,
+          "rms_cosine": 0.6197786421690186,
+          "max_cosine": 0.9766380916427078,
+          "fraction_cosine_above_09": 0.020089285714285712,
+          "effective_rank": 2.341299332235477,
+          "min_norm": 3.1695021414318387,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.20814938512113357,
+          "donor_set_mse": 0.20988692508803475,
+          "donor_to_own_ratio": 1.0083847178353205,
+          "static_dictionary_set_mse": 0.04427962750196457,
+          "own_to_static_ratio": 4.70582299762302,
+          "same_noise_input_change_angular_distance": 0.34222011437188044
+        },
+        "omic": {
+          "cosine": 0.4647138455634287,
+          "absolute_cosine": 0.4684501015513449,
+          "rms_cosine": 0.5139837641045956,
+          "max_cosine": 0.9394031366398538,
+          "fraction_cosine_above_09": 0.0034722222222222225,
+          "effective_rank": 2.8526749165089647,
+          "min_norm": 3.4280508235547207,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.20002512137095133,
+          "donor_set_mse": 0.19999061856004927,
+          "donor_to_own_ratio": 0.9998328023486668,
+          "static_dictionary_set_mse": 0.04236374547084173,
+          "own_to_static_ratio": 4.723263740539551,
+          "same_noise_input_change_angular_distance": 0.006125114624280414
+        }
+      }
+    },
+    "R4": {
+      "native_main_nll": 1.4471866819593642,
+      "native_auxiliary": 0.0,
+      "modalities": {
+        "wsi": {
+          "cosine": 0.7984523835824845,
+          "absolute_cosine": 0.8007406304443999,
+          "rms_cosine": 0.8166596722455255,
+          "max_cosine": 0.9958045304108001,
+          "fraction_cosine_above_09": 0.31250000000000006,
+          "effective_rank": 1.4680461654258574,
+          "min_norm": 2.9956778795336154,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.21956311828560296,
+          "donor_set_mse": 0.22016331719027626,
+          "donor_to_own_ratio": 1.00273953543769,
+          "static_dictionary_set_mse": 0.04427962750196457,
+          "own_to_static_ratio": 4.958433628082275,
+          "same_noise_input_change_angular_distance": 0.2893745058768526
+        },
+        "omic": {
+          "cosine": 0.8290128997732724,
+          "absolute_cosine": 0.8290128997732724,
+          "rms_cosine": 0.8353582736941264,
+          "max_cosine": 0.9888987498218161,
+          "fraction_cosine_above_09": 0.2961309523809524,
+          "effective_rank": 1.3701171956602198,
+          "min_norm": 4.535656221633133,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.2077054894632763,
+          "donor_set_mse": 0.20777563419606948,
+          "donor_to_own_ratio": 1.0003478791978624,
+          "static_dictionary_set_mse": 0.04236374547084173,
+          "own_to_static_ratio": 4.9052886433071565,
+          "same_noise_input_change_angular_distance": 0.0023540033883505626
+        }
+      }
+    },
+    "R5": {
+      "native_main_nll": 1.4042139053344727,
+      "native_auxiliary": 0.0,
+      "modalities": {
+        "wsi": {
+          "cosine": 0.16377341714810337,
+          "absolute_cosine": 0.25035760757779596,
+          "rms_cosine": 0.29982121242666765,
+          "max_cosine": 0.8527676980481198,
+          "fraction_cosine_above_09": 0.0,
+          "effective_rank": 5.010205302352413,
+          "min_norm": 3.0906983114899327,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.20909914374351501,
+          "donor_set_mse": 0.20954491198062897,
+          "donor_to_own_ratio": 1.0021456413798864,
+          "static_dictionary_set_mse": 0.04427962750196457,
+          "own_to_static_ratio": 4.725423283047147,
+          "same_noise_input_change_angular_distance": 0.05277009904859565
+        },
+        "omic": {
+          "cosine": 0.05598547067417977,
+          "absolute_cosine": 0.18094248995106302,
+          "rms_cosine": 0.22544049972023597,
+          "max_cosine": 0.8319069198219975,
+          "fraction_cosine_above_09": 0.0,
+          "effective_rank": 5.933916969927424,
+          "min_norm": 1.9653080478903155,
+          "slot_count": 8,
+          "case_count": 288,
+          "own_set_mse": 0.2036263760593202,
+          "donor_set_mse": 0.20359213650226593,
+          "donor_to_own_ratio": 0.999844253063202,
+          "static_dictionary_set_mse": 0.04236374547084173,
+          "own_to_static_ratio": 4.808063983917236,
+          "same_noise_input_change_angular_distance": 0.002103347050980891
+        }
+      }
+    }
+  },
+  "paired_final_vs_R0": {
+    "R1": {
+      "wsi": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.7531160919599477,
+          "absolute_cosine_delta": -0.655727082757368,
+          "native_nll_delta": 0.00794760386149096
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.7126015569824656,
+          "absolute_cosine_delta": -0.6234410890332552,
+          "native_nll_delta": -0.02885969479878736
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.8220187969924703,
+          "absolute_cosine_delta": -0.7126460333635445,
+          "native_nll_delta": 0.07511063416798924
+        }
+      ],
+      "omic": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.9191385652898588,
+          "absolute_cosine_delta": -0.7751612299131668,
+          "native_nll_delta": 0.00794760386149096
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.8990605825634866,
+          "absolute_cosine_delta": -0.7730108579725815,
+          "native_nll_delta": -0.02885969479878736
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.8674263381772944,
+          "absolute_cosine_delta": -0.7496108623156573,
+          "native_nll_delta": 0.07511063416798924
+        }
+      ]
+    },
+    "R2": {
+      "wsi": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.2742847414918026,
+          "absolute_cosine_delta": -0.27453703763605,
+          "native_nll_delta": -0.024194518725077385
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.3028616827770061,
+          "absolute_cosine_delta": -0.3018963029671081,
+          "native_nll_delta": 0.03529934088389086
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.3749031975398154,
+          "absolute_cosine_delta": -0.36701331866175857,
+          "native_nll_delta": 0.08753291765848803
+        }
+      ],
+      "omic": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.48140818366427646,
+          "absolute_cosine_delta": -0.4799242971712703,
+          "native_nll_delta": -0.024194518725077385
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.450816453455859,
+          "absolute_cosine_delta": -0.4493139505161655,
+          "native_nll_delta": 0.03529934088389086
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.41331610641269,
+          "absolute_cosine_delta": -0.41167682088773105,
+          "native_nll_delta": 0.08753291765848803
+        }
+      ]
+    },
+    "R3": {
+      "wsi": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.26532900385018143,
+          "absolute_cosine_delta": -0.2644263346187713,
+          "native_nll_delta": -0.07550982634226489
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.28282577105114837,
+          "absolute_cosine_delta": -0.27787293506044886,
+          "native_nll_delta": 0.01690928141276049
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.37536361768421433,
+          "absolute_cosine_delta": -0.35951988088056896,
+          "native_nll_delta": 0.02203245957692479
+        }
+      ],
+      "omic": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.4861880814785233,
+          "absolute_cosine_delta": -0.48428076340793885,
+          "native_nll_delta": -0.07550982634226489
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.47892118202472506,
+          "absolute_cosine_delta": -0.47757825192279824,
+          "native_nll_delta": 0.01690928141276049
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.47163139728489567,
+          "absolute_cosine_delta": -0.46367287749365815,
+          "native_nll_delta": 0.02203245957692479
+        }
+      ]
+    },
+    "R4": {
+      "wsi": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.022681475150981734,
+          "absolute_cosine_delta": -0.02376084987683591,
+          "native_nll_delta": 0.05146698156992602
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.11404734443216913,
+          "absolute_cosine_delta": -0.10772686025793321,
+          "native_nll_delta": 0.06203881899515795
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.0991999784623443,
+          "absolute_cosine_delta": -0.0991999784623443,
+          "native_nll_delta": 0.04471778869628906
+        }
+      ],
+      "omic": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.10934915550079138,
+          "absolute_cosine_delta": -0.10934915550079138,
+          "native_nll_delta": 0.05146698156992602
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.17166622822951727,
+          "absolute_cosine_delta": -0.17166622822951727,
+          "native_nll_delta": 0.06203881899515795
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.06282811442830405,
+          "absolute_cosine_delta": -0.06282811442830405,
+          "native_nll_delta": 0.04471778869628906
+        }
+      ]
+    },
+    "R5": {
+      "wsi": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.5773788010408074,
+          "absolute_cosine_delta": -0.5599811065977167,
+          "native_nll_delta": -0.0021119117736816406
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.7105930521228557,
+          "absolute_cosine_delta": -0.6210586162412779,
+          "native_nll_delta": -0.02116958300272631
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.8519938441849754,
+          "absolute_cosine_delta": -0.7007970343579307,
+          "native_nll_delta": 0.05258675416310643
+        }
+      ],
+      "omic": [
+        {
+          "seed": 3,
+          "cosine_delta": -0.9162516768948786,
+          "absolute_cosine_delta": -0.7752003637392691,
+          "native_nll_delta": -0.0021119117736816406
+        },
+        {
+          "seed": 17,
+          "cosine_delta": -0.8948011771779495,
+          "absolute_cosine_delta": -0.7683077320866523,
+          "native_nll_delta": -0.02116958300272631
+        },
+        {
+          "seed": 29,
+          "cosine_delta": -0.8518729313830626,
+          "absolute_cosine_delta": -0.7445466317993197,
+          "native_nll_delta": 0.05258675416310643
+        }
+      ]
+    }
+  },
+  "per_seed_final": [
+    {
+      "seed": 3,
+      "variant": "R0",
+      "final_holdout": {
+        "native_main_nll": 1.4062182903289795,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.8901425279703945,
+            "absolute_cosine": 0.8912219026962487,
+            "rms_cosine": 0.903658004908122,
+            "max_cosine": 0.996343404433617,
+            "fraction_cosine_above_09": 0.7354910714285715,
+            "effective_rank": 1.2338762850619387,
+            "min_norm": 3.9966976853813545,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.23756291965643564,
+            "donor_set_mse": 0.2385282168785731,
+            "donor_to_own_ratio": 1.0040661493937175,
+            "static_dictionary_set_mse": 0.04460082948207855,
+            "own_to_static_ratio": 5.326423803965251,
+            "same_noise_input_change_angular_distance": 0.2056728675417809
+          },
+          "omic": {
+            "cosine": 0.9559246156548453,
+            "absolute_cosine": 0.9559246156548453,
+            "rms_cosine": 0.9561963335496376,
+            "max_cosine": 0.9937405758241031,
+            "fraction_cosine_above_09": 0.9728422619047619,
+            "effective_rank": 1.0814043656754495,
+            "min_norm": 5.630698376883291,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2228305141131083,
+            "donor_set_mse": 0.22269914547602335,
+            "donor_to_own_ratio": 0.9994088212649027,
+            "static_dictionary_set_mse": 0.04209376126527786,
+            "own_to_static_ratio": 5.293670813242595,
+            "same_noise_input_change_angular_distance": 0.0024391351305491603
+          }
+        }
+      }
+    },
+    {
+      "seed": 3,
+      "variant": "R1",
+      "final_holdout": {
+        "native_main_nll": 1.4141658941904705,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.13702643601044687,
+            "absolute_cosine": 0.23549481993888063,
+            "rms_cosine": 0.29101632042187064,
+            "max_cosine": 0.8920970456933822,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.062794101032295,
+            "min_norm": 2.9200008052224304,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20690873761971793,
+            "donor_set_mse": 0.20764658351739249,
+            "donor_to_own_ratio": 1.0035727818806965,
+            "static_dictionary_set_mse": 0.04460082948207855,
+            "own_to_static_ratio": 4.63912296295166,
+            "same_noise_input_change_angular_distance": 0.005249948608091912
+          },
+          "omic": {
+            "cosine": 0.036786050364986465,
+            "absolute_cosine": 0.18076338574167847,
+            "rms_cosine": 0.22461595714510932,
+            "max_cosine": 0.7574518787524288,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.950567287446428,
+            "min_norm": 2.111051062031701,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20673436423142752,
+            "donor_set_mse": 0.20677277445793152,
+            "donor_to_own_ratio": 1.0001821716626484,
+            "static_dictionary_set_mse": 0.04209376126527786,
+            "own_to_static_ratio": 4.911282857259114,
+            "same_noise_input_change_angular_distance": 0.002256352301803712
+          }
+        }
+      }
+    },
+    {
+      "seed": 3,
+      "variant": "R2",
+      "final_holdout": {
+        "native_main_nll": 1.382023771603902,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.6158577864785919,
+            "absolute_cosine": 0.6166848650601987,
+            "rms_cosine": 0.6437713190743329,
+            "max_cosine": 0.9465297636674534,
+            "fraction_cosine_above_09": 0.018229166666666668,
+            "effective_rank": 2.077771894616674,
+            "min_norm": 4.927650231385343,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.21411442756652832,
+            "donor_set_mse": 0.21390373508135477,
+            "donor_to_own_ratio": 0.9990238944689432,
+            "static_dictionary_set_mse": 0.04460082948207855,
+            "own_to_static_ratio": 4.800682703653972,
+            "same_noise_input_change_angular_distance": 0.01812616293333961
+          },
+          "omic": {
+            "cosine": 0.47451643199056887,
+            "absolute_cosine": 0.47600031848357505,
+            "rms_cosine": 0.514552829922645,
+            "max_cosine": 0.8974439559291112,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 2.852639165265184,
+            "min_norm": 3.5115963613072907,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2069161186615626,
+            "donor_set_mse": 0.20708540578683218,
+            "donor_to_own_ratio": 1.0008461872736614,
+            "static_dictionary_set_mse": 0.04209376126527786,
+            "own_to_static_ratio": 4.915600617726644,
+            "same_noise_input_change_angular_distance": 0.00580361738812591
+          }
+        }
+      }
+    },
+    {
+      "seed": 3,
+      "variant": "R3",
+      "final_holdout": {
+        "native_main_nll": 1.3307084639867146,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.6248135241202131,
+            "absolute_cosine": 0.6267955680774774,
+            "rms_cosine": 0.65987874300817,
+            "max_cosine": 0.9766380916427078,
+            "fraction_cosine_above_09": 0.031994047619047616,
+            "effective_rank": 2.0615514609071757,
+            "min_norm": 3.38260169352969,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2075717250506083,
+            "donor_set_mse": 0.2083676258722941,
+            "donor_to_own_ratio": 1.003894607226054,
+            "static_dictionary_set_mse": 0.04460082948207855,
+            "own_to_static_ratio": 4.653987884521484,
+            "same_noise_input_change_angular_distance": 0.24577380827269524
+          },
+          "omic": {
+            "cosine": 0.469736534176322,
+            "absolute_cosine": 0.47164385224690647,
+            "rms_cosine": 0.5130454037684344,
+            "max_cosine": 0.9214940917923623,
+            "fraction_cosine_above_09": 0.0011160714285714285,
+            "effective_rank": 2.8614649406587964,
+            "min_norm": 3.5287085308035318,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20020493368307749,
+            "donor_set_mse": 0.1999876300493876,
+            "donor_to_own_ratio": 0.9989400704701742,
+            "static_dictionary_set_mse": 0.04209376126527786,
+            "own_to_static_ratio": 4.756166458129883,
+            "same_noise_input_change_angular_distance": 0.004472708050340494
+          }
+        }
+      }
+    },
+    {
+      "seed": 3,
+      "variant": "R4",
+      "final_holdout": {
+        "native_main_nll": 1.4576852718989055,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.8674610528194128,
+            "absolute_cosine": 0.8674610528194128,
+            "rms_cosine": 0.8754285452306595,
+            "max_cosine": 0.9958045304108001,
+            "fraction_cosine_above_09": 0.5349702380952381,
+            "effective_rank": 1.286594854312382,
+            "min_norm": 4.507082528395062,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.21724129716555277,
+            "donor_set_mse": 0.21779975791772208,
+            "donor_to_own_ratio": 1.0025660196940105,
+            "static_dictionary_set_mse": 0.04460082948207855,
+            "own_to_static_ratio": 4.870790322621663,
+            "same_noise_input_change_angular_distance": 0.1764227446690496
+          },
+          "omic": {
+            "cosine": 0.8465754601540539,
+            "absolute_cosine": 0.8465754601540539,
+            "rms_cosine": 0.8515235565499216,
+            "max_cosine": 0.9867888317804028,
+            "fraction_cosine_above_09": 0.3351934523809524,
+            "effective_rank": 1.3225779348979794,
+            "min_norm": 5.181114248467601,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2034853051106135,
+            "donor_set_mse": 0.2036262551943461,
+            "donor_to_own_ratio": 1.0006973147392273,
+            "static_dictionary_set_mse": 0.04209376126527786,
+            "own_to_static_ratio": 4.834096590677897,
+            "same_noise_input_change_angular_distance": 0.002561157535081282
+          }
+        }
+      }
+    },
+    {
+      "seed": 3,
+      "variant": "R5",
+      "final_holdout": {
+        "native_main_nll": 1.4041063785552979,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.31276372692958715,
+            "absolute_cosine": 0.33124079609853196,
+            "rms_cosine": 0.38225536363945806,
+            "max_cosine": 0.8527676980481198,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 4.01101089768943,
+            "min_norm": 3.6340373105087536,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.21255927781263986,
+            "donor_set_mse": 0.21274205048878989,
+            "donor_to_own_ratio": 1.0008578499158223,
+            "static_dictionary_set_mse": 0.04460082948207855,
+            "own_to_static_ratio": 4.765814463297526,
+            "same_noise_input_change_angular_distance": 0.002528497371367223
+          },
+          "omic": {
+            "cosine": 0.039672938759966685,
+            "absolute_cosine": 0.1807242519155762,
+            "rms_cosine": 0.2243033932580368,
+            "max_cosine": 0.787990610563628,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.951957234981422,
+            "min_norm": 2.286307128228902,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2026226967573166,
+            "donor_set_mse": 0.20283325016498566,
+            "donor_to_own_ratio": 1.0010446310043335,
+            "static_dictionary_set_mse": 0.04209376126527786,
+            "own_to_static_ratio": 4.81360403696696,
+            "same_noise_input_change_angular_distance": 0.001863157865722861
+          }
+        }
+      }
+    },
+    {
+      "seed": 17,
+      "variant": "R0",
+      "final_holdout": {
+        "native_main_nll": 1.4532679319381714,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.825323941429354,
+            "absolute_cosine": 0.8258681978408644,
+            "rms_cosine": 0.844969910221602,
+            "max_cosine": 0.9940063039060547,
+            "fraction_cosine_above_09": 0.47061011904761907,
+            "effective_rank": 1.402857044679674,
+            "min_norm": 2.3323187608742897,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2414014240105947,
+            "donor_set_mse": 0.2446262091398239,
+            "donor_to_own_ratio": 1.0133947134017944,
+            "static_dictionary_set_mse": 0.04575711488723755,
+            "own_to_static_ratio": 5.275713284810384,
+            "same_noise_input_change_angular_distance": 0.8110919126563426
+          },
+          "omic": {
+            "cosine": 0.9502533863120686,
+            "absolute_cosine": 0.9502533863120686,
+            "rms_cosine": 0.950701150659684,
+            "max_cosine": 0.9926916315672674,
+            "fraction_cosine_above_09": 0.9348958333333334,
+            "effective_rank": 1.092382838107553,
+            "min_norm": 5.936280384916918,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2312561422586441,
+            "donor_set_mse": 0.23125537733236948,
+            "donor_to_own_ratio": 0.9999997417132059,
+            "static_dictionary_set_mse": 0.04330158978700638,
+            "own_to_static_ratio": 5.340592384338379,
+            "same_noise_input_change_angular_distance": 0.0046514456382507645
+          }
+        }
+      }
+    },
+    {
+      "seed": 17,
+      "variant": "R1",
+      "final_holdout": {
+        "native_main_nll": 1.424408237139384,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.1127223844468883,
+            "absolute_cosine": 0.20242710880760914,
+            "rms_cosine": 0.25056000030937714,
+            "max_cosine": 0.8211771699796461,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.621497533415007,
+            "min_norm": 3.006376520262034,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2112378478050232,
+            "donor_set_mse": 0.21229123075803122,
+            "donor_to_own_ratio": 1.0050238370895386,
+            "static_dictionary_set_mse": 0.04575711488723755,
+            "own_to_static_ratio": 4.616502602895101,
+            "same_noise_input_change_angular_distance": 0.1501820926755607
+          },
+          "omic": {
+            "cosine": 0.05119280374858188,
+            "absolute_cosine": 0.17724252833948703,
+            "rms_cosine": 0.22115457908834976,
+            "max_cosine": 0.7908427753388421,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.982541572464702,
+            "min_norm": 2.0167680936975803,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20544241865475973,
+            "donor_set_mse": 0.20626290639241537,
+            "donor_to_own_ratio": 1.0039901336034138,
+            "static_dictionary_set_mse": 0.04330158978700638,
+            "own_to_static_ratio": 4.744454224904378,
+            "same_noise_input_change_angular_distance": 0.0029290645110529832
+          }
+        }
+      }
+    },
+    {
+      "seed": 17,
+      "variant": "R2",
+      "final_holdout": {
+        "native_main_nll": 1.4885672728220622,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.5224622586523479,
+            "absolute_cosine": 0.5239718948737563,
+            "rms_cosine": 0.5574409378928237,
+            "max_cosine": 0.9413575619847151,
+            "fraction_cosine_above_09": 0.002976190476190476,
+            "effective_rank": 2.5487392309030064,
+            "min_norm": 5.240555193984266,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.21319027741750082,
+            "donor_set_mse": 0.2136694739262263,
+            "donor_to_own_ratio": 1.0023203094800313,
+            "static_dictionary_set_mse": 0.04575711488723755,
+            "own_to_static_ratio": 4.6591722170511884,
+            "same_noise_input_change_angular_distance": 0.0001342045938438688
+          },
+          "omic": {
+            "cosine": 0.49943693285620955,
+            "absolute_cosine": 0.500939435795903,
+            "rms_cosine": 0.5386519778859844,
+            "max_cosine": 0.9629402833363125,
+            "fraction_cosine_above_09": 0.0033482142857142855,
+            "effective_rank": 2.6826646246691204,
+            "min_norm": 3.370932979887531,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.21395851174990335,
+            "donor_set_mse": 0.21353067457675934,
+            "donor_to_own_ratio": 0.9980042378107706,
+            "static_dictionary_set_mse": 0.04330158978700638,
+            "own_to_static_ratio": 4.941123644510905,
+            "same_noise_input_change_angular_distance": 0.007972458255860229
+          }
+        }
+      }
+    },
+    {
+      "seed": 17,
+      "variant": "R3",
+      "final_holdout": {
+        "native_main_nll": 1.4701772133509319,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.5424981703782056,
+            "absolute_cosine": 0.5479952627804155,
+            "rms_cosine": 0.5943307834472537,
+            "max_cosine": 0.9553734769715649,
+            "fraction_cosine_above_09": 0.013392857142857144,
+            "effective_rank": 2.5085676867777824,
+            "min_norm": 3.5435573500781987,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20752824346224466,
+            "donor_set_mse": 0.2104304482539495,
+            "donor_to_own_ratio": 1.0140009721120198,
+            "static_dictionary_set_mse": 0.04575711488723755,
+            "own_to_static_ratio": 4.535431067148845,
+            "same_noise_input_change_angular_distance": 0.5250412943980108
+          },
+          "omic": {
+            "cosine": 0.4713322042873435,
+            "absolute_cosine": 0.47267513438927033,
+            "rms_cosine": 0.516391500521306,
+            "max_cosine": 0.9325280958043858,
+            "fraction_cosine_above_09": 0.0037202380952380955,
+            "effective_rank": 2.8279273590024854,
+            "min_norm": 3.4280508235547207,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.19850687185923258,
+            "donor_set_mse": 0.19836923480033875,
+            "donor_to_own_ratio": 0.9992982347806295,
+            "static_dictionary_set_mse": 0.04330158978700638,
+            "own_to_static_ratio": 4.584285895029704,
+            "same_noise_input_change_angular_distance": 0.007402143326678195
+          }
+        }
+      }
+    },
+    {
+      "seed": 17,
+      "variant": "R4",
+      "final_holdout": {
+        "native_main_nll": 1.5153067509333293,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.7112765969971848,
+            "absolute_cosine": 0.7181413375829312,
+            "rms_cosine": 0.7522604095397813,
+            "max_cosine": 0.9810501951374782,
+            "fraction_cosine_above_09": 0.20647321428571427,
+            "effective_rank": 1.714440263523094,
+            "min_norm": 2.9956778795336154,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.22970988849798837,
+            "donor_set_mse": 0.23032516241073608,
+            "donor_to_own_ratio": 1.0026825666427612,
+            "static_dictionary_set_mse": 0.04575711488723755,
+            "own_to_static_ratio": 5.020200411478679,
+            "same_noise_input_change_angular_distance": 0.6703568502135244
+          },
+          "omic": {
+            "cosine": 0.7785871580825513,
+            "absolute_cosine": 0.7785871580825513,
+            "rms_cosine": 0.788622818561807,
+            "max_cosine": 0.9799400094438293,
+            "fraction_cosine_above_09": 0.15625,
+            "effective_rank": 1.5029786935502454,
+            "min_norm": 4.535656221633133,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20500701665878296,
+            "donor_set_mse": 0.20518657068411508,
+            "donor_to_own_ratio": 1.000867744286855,
+            "static_dictionary_set_mse": 0.04330158978700638,
+            "own_to_static_ratio": 4.734399318695068,
+            "same_noise_input_change_angular_distance": 0.002994116088963919
+          }
+        }
+      }
+    },
+    {
+      "seed": 17,
+      "variant": "R5",
+      "final_holdout": {
+        "native_main_nll": 1.432098348935445,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.1147308893064982,
+            "absolute_cosine": 0.20480958159958654,
+            "rms_cosine": 0.2533602479123693,
+            "max_cosine": 0.8372237760516719,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.603308522414859,
+            "min_norm": 3.0940192115552336,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20912464459737143,
+            "donor_set_mse": 0.2099247376124064,
+            "donor_to_own_ratio": 1.003857711950938,
+            "static_dictionary_set_mse": 0.04575711488723755,
+            "own_to_static_ratio": 4.570319652557373,
+            "same_noise_input_change_angular_distance": 0.15494050877333013
+          },
+          "omic": {
+            "cosine": 0.05545220913411905,
+            "absolute_cosine": 0.18194565422541634,
+            "rms_cosine": 0.2273043996028099,
+            "max_cosine": 0.8319069198219975,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.9044128597023375,
+            "min_norm": 1.9653080478903155,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20318428675333658,
+            "donor_set_mse": 0.20361515879631042,
+            "donor_to_own_ratio": 1.0020905534426372,
+            "static_dictionary_set_mse": 0.04330158978700638,
+            "own_to_static_ratio": 4.692305405934651,
+            "same_noise_input_change_angular_distance": 0.0024759969737787667
+          }
+        }
+      }
+    },
+    {
+      "seed": 29,
+      "variant": "R0",
+      "final_holdout": {
+        "native_main_nll": 1.3238502343495686,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.9158194793932001,
+            "absolute_cosine": 0.9158194793932001,
+            "rms_cosine": 0.9198981906682214,
+            "max_cosine": 0.9959271021288333,
+            "fraction_cosine_above_09": 0.7414434523809524,
+            "effective_rank": 1.1650569805861637,
+            "min_norm": 4.194117231503633,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2288018763065338,
+            "donor_set_mse": 0.23030522465705872,
+            "donor_to_own_ratio": 1.006572922070821,
+            "static_dictionary_set_mse": 0.042480938136577606,
+            "own_to_static_ratio": 5.385989348093669,
+            "same_noise_input_change_angular_distance": 0.15816329839695054
+          },
+          "omic": {
+            "cosine": 0.9247041955115162,
+            "absolute_cosine": 0.9247041955115162,
+            "rms_cosine": 0.925731368712792,
+            "max_cosine": 0.989637544215204,
+            "fraction_cosine_above_09": 0.7734375,
+            "effective_rank": 1.1444527314021704,
+            "min_norm": 4.624934639272497,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.22096597154935202,
+            "donor_set_mse": 0.22097600996494293,
+            "donor_to_own_ratio": 1.0000489751497905,
+            "static_dictionary_set_mse": 0.041695885360240936,
+            "own_to_static_ratio": 5.299467086791992,
+            "same_noise_input_change_angular_distance": 0.00419631538506264
+          }
+        }
+      }
+    },
+    {
+      "seed": 29,
+      "variant": "R1",
+      "final_holdout": {
+        "native_main_nll": 1.3989608685175579,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.09380068240072985,
+            "absolute_cosine": 0.20317344602965556,
+            "rms_cosine": 0.25112169857025995,
+            "max_cosine": 0.7545691705011341,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.577474845191372,
+            "min_norm": 3.4865096517573453,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20646839340527853,
+            "donor_set_mse": 0.2068382054567337,
+            "donor_to_own_ratio": 1.00180580218633,
+            "static_dictionary_set_mse": 0.042480938136577606,
+            "own_to_static_ratio": 4.8602596918741865,
+            "same_noise_input_change_angular_distance": 0.0007432021343080084
+          },
+          "omic": {
+            "cosine": 0.05727785733422178,
+            "absolute_cosine": 0.17509333319585882,
+            "rms_cosine": 0.21973737588265183,
+            "max_cosine": 0.7859232108766747,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 6.007688849855074,
+            "min_norm": 2.2169502907208405,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2099363605181376,
+            "donor_set_mse": 0.20922933518886566,
+            "donor_to_own_ratio": 0.9966550270716349,
+            "static_dictionary_set_mse": 0.041695885360240936,
+            "own_to_static_ratio": 5.034941832224528,
+            "same_noise_input_change_angular_distance": 0.0032252499427992687
+          }
+        }
+      }
+    },
+    {
+      "seed": 29,
+      "variant": "R2",
+      "final_holdout": {
+        "native_main_nll": 1.4113831520080566,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.5409162818533847,
+            "absolute_cosine": 0.5488061607314415,
+            "rms_cosine": 0.5901604487133234,
+            "max_cosine": 0.9652898244607763,
+            "fraction_cosine_above_09": 0.008184523809523808,
+            "effective_rank": 2.4014186872797922,
+            "min_norm": 4.064312877553411,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.21100031832853952,
+            "donor_set_mse": 0.21173215905825296,
+            "donor_to_own_ratio": 1.0034660895665486,
+            "static_dictionary_set_mse": 0.042480938136577606,
+            "own_to_static_ratio": 4.966941038767497,
+            "same_noise_input_change_angular_distance": 0.0012723508604622503
+          },
+          "omic": {
+            "cosine": 0.5113880890988262,
+            "absolute_cosine": 0.5130273746237851,
+            "rms_cosine": 0.5483162345469018,
+            "max_cosine": 0.9222422271344247,
+            "fraction_cosine_above_09": 0.002976190476190476,
+            "effective_rank": 2.6173367725577266,
+            "min_norm": 3.216533530297305,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2122497856616974,
+            "donor_set_mse": 0.21188906331857046,
+            "donor_to_own_ratio": 0.998308797677358,
+            "static_dictionary_set_mse": 0.041695885360240936,
+            "own_to_static_ratio": 5.090425332387288,
+            "same_noise_input_change_angular_distance": 0.00685041688683103
+          }
+        }
+      }
+    },
+    {
+      "seed": 29,
+      "variant": "R3",
+      "final_holdout": {
+        "native_main_nll": 1.3458826939264934,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.5404558617089857,
+            "absolute_cosine": 0.5562995985126311,
+            "rms_cosine": 0.6051264000516322,
+            "max_cosine": 0.9663325722832227,
+            "fraction_cosine_above_09": 0.014880952380952378,
+            "effective_rank": 2.453778849021473,
+            "min_norm": 3.1695021414318387,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.2093481868505478,
+            "donor_set_mse": 0.21086270113786063,
+            "donor_to_own_ratio": 1.0072585741678874,
+            "static_dictionary_set_mse": 0.042480938136577606,
+            "own_to_static_ratio": 4.9280500411987305,
+            "same_noise_input_change_angular_distance": 0.2558452404449352
+          },
+          "omic": {
+            "cosine": 0.4530727982266205,
+            "absolute_cosine": 0.461031318017858,
+            "rms_cosine": 0.5125143880240463,
+            "max_cosine": 0.9394031366398538,
+            "fraction_cosine_above_09": 0.005580357142857143,
+            "effective_rank": 2.868632449865611,
+            "min_norm": 3.5213536479449727,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20136355857054392,
+            "donor_set_mse": 0.20161499083042145,
+            "donor_to_own_ratio": 1.0012601017951965,
+            "static_dictionary_set_mse": 0.041695885360240936,
+            "own_to_static_ratio": 4.8293388684590655,
+            "same_noise_input_change_angular_distance": 0.006500492495822553
+          }
+        }
+      }
+    },
+    {
+      "seed": 29,
+      "variant": "R4",
+      "final_holdout": {
+        "native_main_nll": 1.3685680230458577,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.8166195009308558,
+            "absolute_cosine": 0.8166195009308558,
+            "rms_cosine": 0.8222900619661356,
+            "max_cosine": 0.9837681140727411,
+            "fraction_cosine_above_09": 0.19605654761904764,
+            "effective_rank": 1.4031033784420963,
+            "min_norm": 4.951126142495007,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.21173816919326782,
+            "donor_set_mse": 0.2123650312423706,
+            "donor_to_own_ratio": 1.002970019976298,
+            "static_dictionary_set_mse": 0.042480938136577606,
+            "own_to_static_ratio": 4.984310150146484,
+            "same_noise_input_change_angular_distance": 0.021343922747983645
+          },
+          "omic": {
+            "cosine": 0.8618760810832121,
+            "absolute_cosine": 0.8618760810832121,
+            "rms_cosine": 0.8659284459706508,
+            "max_cosine": 0.9888987498218161,
+            "fraction_cosine_above_09": 0.3969494047619048,
+            "effective_rank": 1.2847949585324345,
+            "min_norm": 4.772813637291708,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.21462414662043253,
+            "donor_set_mse": 0.21451407670974731,
+            "donor_to_own_ratio": 0.9994785785675049,
+            "static_dictionary_set_mse": 0.041695885360240936,
+            "own_to_static_ratio": 5.147370020548503,
+            "same_noise_input_change_angular_distance": 0.001506736541006488
+          }
+        }
+      }
+    },
+    {
+      "seed": 29,
+      "variant": "R5",
+      "final_holdout": {
+        "native_main_nll": 1.376436988512675,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.06382563520822472,
+            "absolute_cosine": 0.21502244503526935,
+            "rms_cosine": 0.2638480257281757,
+            "max_cosine": 0.7907418321422546,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.416296486952951,
+            "min_norm": 3.0906983114899327,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20561350882053375,
+            "donor_set_mse": 0.2059679478406906,
+            "donor_to_own_ratio": 1.0017213622728984,
+            "static_dictionary_set_mse": 0.042480938136577606,
+            "own_to_static_ratio": 4.84013573328654,
+            "same_noise_input_change_angular_distance": 0.0008412910010895981
+          },
+          "omic": {
+            "cosine": 0.07283126412845355,
+            "absolute_cosine": 0.18015756371219652,
+            "rms_cosine": 0.2247137062998612,
+            "max_cosine": 0.7805273657025741,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.94538081509851,
+            "min_norm": 2.0683768210128264,
+            "slot_count": 8,
+            "case_count": 96,
+            "own_set_mse": 0.20507214466730753,
+            "donor_set_mse": 0.2043280005455017,
+            "donor_to_own_ratio": 0.9963975747426351,
+            "static_dictionary_set_mse": 0.041695885360240936,
+            "own_to_static_ratio": 4.918282508850098,
+            "same_noise_input_change_angular_distance": 0.001970886313441046
+          }
+        }
+      }
+    }
+  ],
+  "counters": {
+    "root_train_forwards": 2304,
+    "root_eval_forwards": 216,
+    "train_SA_calls": 6912,
+    "eval_SA_calls": 432,
+    "core_optimizer_steps": 2304,
+    "probe_optimizer_steps": 2304
+  },
+  "validation": {
+    "analytic_tests_passed_after_fix": 26,
+    "initial_test_run": "25 pass, 1 dtype check fail; fixed before training",
+    "independent_numpy_scipy_modality_draw_checks": 216,
+    "paired_initial_states": true,
+    "raw_file_hash_checks": 42,
+    "source_and_config_unchanged": true,
+    "executed_implementation_unchanged": true,
+    "extra_native_test_root_forwards": 4,
+    "extra_native_regularizer_backwards": 2,
+    "extra_native_test_optimizer_steps": 0
+  },
+  "sample_units": {
+    "unique_generated_holdout_examples": 96,
+    "case_draws_per_arm_modality": 288,
+    "repeats_are_independent_examples": false
+  },
+  "protected_sha256": {
+    "configs/slotspe_attribution_server.json": "1a32f540adcfba9511b70802d43b850d02ba1183ac328d59ff605ad0a5987815",
+    "configs/slotspe_clean_original_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
+    "configs/slotspe_native_variants.json": "b40b1c2be9fce9c162aa15829494e9eca9a394c14b0cb5d091e2cf5d8f47de01",
+    "configs/slotspe_problem_experiments.json": "6c3ca7ba44746978f266bb0f15176ab68508c7c105a7ca3c553ceb5d7e266087",
+    "configs/slotspe_proof_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
+    "third_party/SlotSPE/dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "third_party/SlotSPE/models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "third_party/SlotSPE/utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "third_party/SlotSPE/utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b"
+  },
+  "implementation_sha256": {
+    "scripts/check_slotspe_direct_diversity.py": "268d31bc7d631ec086ec640787cd3f7c24ff09611e1822f8517320eff04b5b49",
+    "survot_rank/research/slotspe_proof/slot_regularization.py": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
+    "survot_rank/research/slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f"
+  },
+  "raw_file_sha256": {
+    "executed_implementation/scripts/check_slotspe_direct_diversity.py": "268d31bc7d631ec086ec640787cd3f7c24ff09611e1822f8517320eff04b5b49",
+    "executed_implementation/survot_rank/research/slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f",
+    "executed_implementation/survot_rank/research/slotspe_proof/slot_regularization.py": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
+    "generated_seed_17.pt": "66b6c63cb66651c5036dfc125323a7433a7ee6128db01fe431ae6bc0aaba085a",
+    "generated_seed_29.pt": "7cdaf0fd4d830b5f6c0d239cb027f8a29cf775a7f9b311726456b57133313fac",
+    "generated_seed_3.pt": "6de3a5839ba036c7b35467be877b5b228bc894dd65e44fd5611d20e0bdee19c5",
+    "matched_R0_seed_17.pt": "8fff167f7d5ad23aaf91dbc76d51b2dcea2529665fa3b35c0ad93ca682303fee",
+    "matched_R0_seed_29.pt": "9c9947bf5061cbe2f38e1a033cc6da20d40356e5c4d2f453bbc58d0ceacf3458",
+    "matched_R0_seed_3.pt": "0f757852d1c66c960fb297d6b4dbc8fdafb899450ec6f465d8fcf1fe1f7ab833",
+    "matched_R1_seed_17.pt": "a8152dc8291922ab3a80d425eedee2fcce2828cece3cb4575935133558ad74d3",
+    "matched_R1_seed_29.pt": "806ee8c448d1a2b23ac122d04a49b322b4bc03a17df5c0006ebcfe111ea69ac0",
+    "matched_R1_seed_3.pt": "df3604c951e531e50e5b021af0d9edbc48a6765883b1ea1c1b356957de7460b7",
+    "matched_R2_seed_17.pt": "e04e95b9b45e01e42fa1d305647a8c253fd5e22a306b06718c7ae30432950f3e",
+    "matched_R2_seed_29.pt": "3665410bbf6d64093101c2f06d509a4af972a7f07394aebc73d4535e323c1824",
+    "matched_R2_seed_3.pt": "1e8edbc460766bbcbd79bd93d64ed49f7f8ab464ad04ae88715fae56bb7adc75",
+    "matched_R3_seed_17.pt": "e21d7cec2e7b99a753f2878764fe57e84ac1a7713ee98a0ca1d415ae09bbcf18",
+    "matched_R3_seed_29.pt": "6a25af0f778d29a2dabf53d48763e576cc4a3f1ea42b0057edfea7418929bca3",
+    "matched_R3_seed_3.pt": "8909f64203d73a6ab75ec6affbe5a831beef8fb28dc43dc23587d56acfea9d52",
+    "matched_R4_seed_17.pt": "54bd5365e7218ff9ac8671e2134975501d45bfac09128643502b06d9095812d5",
+    "matched_R4_seed_29.pt": "94b1d3e3b476bd82c8f72461d5727772c5d29e8612348f55f9a34f11a3d76048",
+    "matched_R4_seed_3.pt": "679557b226248d6255d59f5b2b81cf454b63c36a0b6b3f45a044780e1242faf7",
+    "matched_R5_seed_17.pt": "2d6cef64ef1e30a22669353f8900dcade1547bb28d946d83176c74a1a8a1e32c",
+    "matched_R5_seed_29.pt": "1192e02575862110d174c1059bfd0813ab7b4cd41ea9154e6d38ef8b245f96e8",
+    "matched_R5_seed_3.pt": "1574f742286220bc04d5931adccf2142a0597944cc9768315ab48ec93a7b9599",
+    "numeric_R0_seed_17.json": "2619af86ae4c043056fb58cdf56bb4cc5c85394ff3e1bc656851a61073b07bdc",
+    "numeric_R0_seed_29.json": "8b0a7e7ebe6af56ee061e96e203e3cfdc2d32bc8776c606a3fc96e943efed201",
+    "numeric_R0_seed_3.json": "16cc2078e0797d4452c11e76720fd214ab43b1848543c23cd0e678a0c5d1004b",
+    "numeric_R1_seed_17.json": "ecbe0b7ba1786ee4797bd760f452f217ee2cee771bd520fc45d172846d510059",
+    "numeric_R1_seed_29.json": "eb372904c45fffd9196e7466b6bf0632c75d94a140ffd680ee3eae3eecbf00ea",
+    "numeric_R1_seed_3.json": "013ebed0428ddcf66d79ec66e167752232b7ebecddbdd3f207404c3bc6877cb8",
+    "numeric_R2_seed_17.json": "12f9be8d32f7620baafc4c2301ba4b02d62dd235a719ff54e7e37528b29317c9",
+    "numeric_R2_seed_29.json": "ff2d4356108fcfe4c05d0f2c4c1bb132e5e4ddb9429727aaf5e0ba8224bb51ec",
+    "numeric_R2_seed_3.json": "74781cdb38479e8c2f929362a8d72d265be37245c5e5f372f586173379b15a4d",
+    "numeric_R3_seed_17.json": "23de8a893f8b5a15ad9bdaa4fc0bbbdb06e827b52754fa8c9e7a5648ebf2ee03",
+    "numeric_R3_seed_29.json": "4dd16b877e87a84faa96d19ed0cb769e83b444acc806a22e7280f24e4ad5ffaa",
+    "numeric_R3_seed_3.json": "8b93fbf5023a9bbb96a2c1adec96053c1d9a2008f48118a89b518e5ef4beff73",
+    "numeric_R4_seed_17.json": "6ec4433e038dfb4db92d0365532de6926adcbac77acd8db2ccbfa7d476ecc7cb",
+    "numeric_R4_seed_29.json": "7a31be39d3ece24df0dabcd36d1ad1c40eca09e2be89eade6183bcd9ff42d3b3",
+    "numeric_R4_seed_3.json": "ce4f6ad85b4713282ccbc72f744486e1869417ac0cdc357ddc89dd1383b225f3",
+    "numeric_R5_seed_17.json": "0493f8d0e833175d24b4e2e2a0a96232011c47719c369e297d7c3b7946538cf8",
+    "numeric_R5_seed_29.json": "39693abf465a1316aa44931ba88789e04e5466691dd405e2a268433f6e4cf284",
+    "numeric_R5_seed_3.json": "06e18db5951a6ded2eafbec9a8ac00850b2daf5425345b911d4a0362e90df72e"
+  },
+  "patient_runs": 0,
+  "server_runs": 0,
+  "new_commit_or_push": false,
+  "boundary": "R0-R5 are fixed-weight exploratory candidates on an easy eight-component toy; native outputs and eight slots retained. Content probe is not a survival-information guarantee."
+}

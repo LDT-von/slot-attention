@@ -1,5 +1,23 @@
 # SlotSPE 问题核查
 
+## Executable eleven-arm diagnostic (2026-10-22)
+
+The current SlotSPE queue is implemented: **S0, S4, R1, R2, R3, R4, R5, S1, S2, S3, S5**, limited to **BLCA / existing UNI2-h / fold0 / seed3**. Defaults: 3 epochs, 256 real patches, logical batch 8, 20 evaluation repeats, final-epoch checkpoint. This is a short diagnostic; patient results are pending. S6 is held; R0 aliases S0. Historical D0-D4 below are a separate DCT-host design, not this SlotSPE queue.
+
+The complete 14-stage/11-arm generated-data smoke passed at native 256 dimensions, 8 slots and 10 iterations. It uses invented features, not patient or real UNI2-h inputs. Focused checks: 152 passed. Original SlotSPE source, existing default configs and A/B/C definitions are preserved.
+
+[Implementation, metrics and server handoff](docs/research/slotspe_native_assignment_training_20261022/十一组可执行队列与服务器交接.md) | [Validation receipt](docs/research/slotspe_native_assignment_training_20261022/eleven_arm_delivery_validation.json).
+
+```bash
+python -B scripts/run_slotspe_redundancy.py --plan
+# Reuse the existing SLOTSPE_METADATA_ROOT / SLOTSPE_FEATURES_ROOT environment.
+python -B scripts/run_slotspe_redundancy.py --doctor
+# Only --run executes patient work; use a fresh ignored local_evidence output.
+python -B scripts/run_slotspe_redundancy.py --run
+```
+
+All arms share paired initialization, cached inputs, per-example random schedules and logical optimizer updates. Content targets are fitted on training inputs only; variable-slot matching includes unmatched coverage. Geometry, reading, content, survival and resources are reported together; low cosine alone is not efficacy. Full details and the authorized server scope are in the handoff.
+
 **主线是用户原定的P1–P8研究问题，当前服务器实验尚未逐项测全。** 高槽相似直接关联P2，选槽器直接融合主梯度断路只覆盖P7的一个局部。评估随机波动、补零风险和训练后期退化单列为相关发现，不能替代原问题。
 
 本仓库先检验槽表示、内容分配、聚合过程与学习目标，再分别研究预测后果和修正收益。表示机制的证据不必以C-index下降为前提；高相似、sanity check和人为干预的输出变化也不直接登记为预测损害。

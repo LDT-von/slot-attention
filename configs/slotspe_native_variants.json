@@ -1,0 +1,92 @@
+{
+  "schema": "native_slotspe_S0_S6_research_variants_v1",
+  "host": "third_party/SlotSPE original model; source byte-preserved",
+  "patient_execution": false,
+  "server_execution": false,
+  "patient_queue_ready": false,
+  "variants": {
+    "S0": {
+      "family": "allocation",
+      "wsi": "original",
+      "omic": "original"
+    },
+    "S1": {
+      "family": "allocation",
+      "wsi": "sinkhorn",
+      "omic": "sinkhorn"
+    },
+    "S2": {
+      "family": "allocation",
+      "wsi": "mesh_uniform",
+      "omic": "original"
+    },
+    "S3": {
+      "family": "allocation",
+      "wsi": "original",
+      "omic": "mesh_uniform"
+    },
+    "S4": {
+      "family": "allocation",
+      "wsi": "mesh_uniform",
+      "omic": "mesh_uniform"
+    },
+    "S5": {
+      "family": "pruning",
+      "wsi": "dias",
+      "omic": "dias"
+    },
+    "S6": {
+      "family": "pruning",
+      "wsi": "metaslot",
+      "omic": "metaslot"
+    }
+  },
+  "S5_scope": "DIAS section3.2 redundancy core: T-1 native iterations, cosine average-linkage clusters and cluster means, one reaggregation step. No attention self-distillation or replacement image decoder.",
+  "S6_scope": "MetaSlot paper-guided core: T native iterations, nearest-L2 codebook quantization/first-occurrence pruning, T shared-weight refinement with training-only annealed input noise, final-step gradient truncation and original-query ST reconnect, explicit final-active-slot EMA/dead-code revival.",
+  "local_pruning_presets": {
+    "dias_distance": 0.05,
+    "prototype_count": 8,
+    "ema_rate": 0.05,
+    "noise_std": 0.5,
+    "dead_timeout": 100,
+    "kmeans_steps": 10
+  },
+  "paper_original_defaults_not_claimed": true,
+  "bank_fit": "only training split; WSI and OMIC distinct; OMIC shares the bank across native omic input and WSI reconstruction reuse; never fit/update held-out examples",
+  "downstream": "complete paired inputs, per-example compact effective slots through unchanged native decoder/cross/self/reconstruction/mean; decoder k=min(original_k,active_count)",
+  "logical_batch": "forward_compact averages native per-example auxiliary losses; same compact protocol must be used for matched S0 control",
+  "compute": "S5 uses T iterations; S6 uses 2T. Original S0-S4 vectorized results are historical and not direct matched scores for the compact protocol.",
+  "metrics": [
+    "per-modality valid-slot cosine",
+    "valid-pair coverage",
+    "active slot count",
+    "single-slot fraction",
+    "native-selected cosine",
+    "retained-before-refine cosine"
+  ],
+  "single_active_slot_cosine": null,
+  "synthetic_entrypoint": "scripts/check_slotspe_s5_s6.py --synthetic",
+  "native_reference": {
+    "projection_dim": 256,
+    "slots_per_modality": 8,
+    "slot_iterations": 10
+  },
+  "synthetic_learning_budget": {
+    "projection_dim": 32,
+    "slots_per_modality": 8,
+    "slot_iterations": 3,
+    "seeds": [
+      3,
+      17,
+      29
+    ],
+    "optimizer_steps": 24,
+    "logical_batch_size": 8
+  },
+  "paper_reference": {
+    "MetaSlot_codebook_size": 512,
+    "local_synthetic_codebook_size": 8,
+    "DIAS_threshold_linkage_representative": "not specified as verified author defaults; current .05/average/mean are local choices",
+    "reference_defaults_are_metadata_not_executed_patient_settings": true
+  }
+}

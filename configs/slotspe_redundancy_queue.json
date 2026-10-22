@@ -1,0 +1,382 @@
+{
+  "schema": "native_slotspe_redundancy_candidate_queue_v1",
+  "recorded_at": "2026-10-22T23:00:00+08:00",
+  "route_task": "SlotSPE / SPE-08 / executable eleven-arm BLCA single-fold diagnostic",
+  "status": "implemented_generated_validation_passed_no_patient_execution",
+  "host": "third_party/SlotSPE original; byte-preserved",
+  "patient_execution": false,
+  "server_execution": false,
+  "patient_queue_ready": true,
+  "execution_implemented": true,
+  "old_default_entrypoint": "scripts/run_slotspe_proof.py",
+  "planning_entrypoint": "scripts/plan_slotspe_redundancy_queue.py --plan",
+  "variant_catalog": {
+    "S0": {
+      "family": "allocation",
+      "wsi": "original",
+      "omic": "original",
+      "implementation_scope": "native allocation core",
+      "this_candidate_queue_training_integrated": true
+    },
+    "S1": {
+      "family": "allocation",
+      "wsi": "sinkhorn",
+      "omic": "sinkhorn",
+      "implementation_scope": "native allocation core",
+      "this_candidate_queue_training_integrated": true
+    },
+    "S2": {
+      "family": "allocation",
+      "wsi": "mesh_uniform",
+      "omic": "original",
+      "implementation_scope": "native allocation core",
+      "this_candidate_queue_training_integrated": true
+    },
+    "S3": {
+      "family": "allocation",
+      "wsi": "original",
+      "omic": "mesh_uniform",
+      "implementation_scope": "native allocation core",
+      "this_candidate_queue_training_integrated": true
+    },
+    "S4": {
+      "family": "allocation",
+      "wsi": "mesh_uniform",
+      "omic": "mesh_uniform",
+      "implementation_scope": "native allocation core",
+      "this_candidate_queue_training_integrated": true
+    },
+    "S5": {
+      "family": "pruning",
+      "wsi": "dias",
+      "omic": "dias",
+      "implementation_scope": "DIAS section3.2 redundancy core: T-1 native iterations, cosine average-linkage clusters and cluster means, one reaggregation step. No attention self-distillation or replacement image decoder.",
+      "this_candidate_queue_training_integrated": true
+    },
+    "S6": {
+      "family": "pruning",
+      "wsi": "metaslot",
+      "omic": "metaslot",
+      "implementation_scope": "MetaSlot paper-guided core: T native iterations, nearest-L2 codebook quantization/first-occurrence pruning, T shared-weight refinement with training-only annealed input noise, final-step gradient truncation and original-query ST reconnect, explicit final-active-slot EMA/dead-code revival.",
+      "this_candidate_queue_training_integrated": false
+    },
+    "R1": {
+      "family": "representation_loss",
+      "wsi": "original",
+      "omic": "original",
+      "regularizer": "off_diagonal_cosine_squared",
+      "regularizer_weight": 10.0,
+      "set_weight": 0.0,
+      "preset_scope": "Fixed diagnostic candidate weights transplanted from generated experiments; not validated patient-optimal settings. Separate objective/gradient scales are recorded; no heldout tuning.",
+      "this_candidate_queue_training_integrated": true
+    },
+    "R2": {
+      "family": "representation_loss",
+      "wsi": "original",
+      "omic": "original",
+      "regularizer": "SlotBERT_Eq11_transplant",
+      "regularizer_weight": 1.0,
+      "set_weight": 0.0,
+      "preset_scope": "Fixed diagnostic candidate weights transplanted from generated experiments; not validated patient-optimal settings. Separate objective/gradient scales are recorded; no heldout tuning.",
+      "this_candidate_queue_training_integrated": true
+    },
+    "R3": {
+      "family": "representation_loss",
+      "wsi": "original",
+      "omic": "original",
+      "regularizer": "SlotBERT_Eq11_transplant",
+      "regularizer_weight": 1.0,
+      "set_weight": 5.0,
+      "preset_scope": "Fixed diagnostic candidate weights transplanted from generated experiments; not validated patient-optimal settings. Separate objective/gradient scales are recorded; no heldout tuning.",
+      "this_candidate_queue_training_integrated": true
+    },
+    "R4": {
+      "family": "representation_loss",
+      "wsi": "original",
+      "omic": "original",
+      "regularizer": "none",
+      "regularizer_weight": 0.0,
+      "set_weight": 5.0,
+      "preset_scope": "Fixed diagnostic candidate weights transplanted from generated experiments; not validated patient-optimal settings. Separate objective/gradient scales are recorded; no heldout tuning.",
+      "this_candidate_queue_training_integrated": true
+    },
+    "R5": {
+      "family": "representation_loss",
+      "wsi": "original",
+      "omic": "original",
+      "regularizer": "off_diagonal_cosine_squared",
+      "regularizer_weight": 10.0,
+      "set_weight": 5.0,
+      "preset_scope": "Fixed diagnostic candidate weights transplanted from generated experiments; not validated patient-optimal settings. Separate objective/gradient scales are recorded; no heldout tuning.",
+      "this_candidate_queue_training_integrated": true
+    }
+  },
+  "aliases": {
+    "R0": "S0"
+  },
+  "alias_boundary": "Algorithm identity only. Historical R0/S0 datasets, batching, budgets and measurements remain distinct; a run may be reused only under identical audited protocol.",
+  "priority": {
+    "diagnostic_first": [
+      "S0",
+      "S4",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "S1",
+      "S2",
+      "S3",
+      "S5"
+    ],
+    "secondary_conditional": [],
+    "hold_for_revision": [
+      "S6"
+    ]
+  },
+  "hold_reasons": {
+    "S6": "Current small-codebook preset gave 287/288 WSI single-slot draws; valid OMIC subset cosine increased. Revise codebook/pruning, include active-count/coverage and 2T native/control comparisons before performance queue."
+  },
+  "secondary_controls": {
+    "S5": [
+      "Use the shared S0 run from THIS eleven-arm queue, only after all eleven arms use identical per-example batching/RNG/logical-loss aggregation. No additional baseline training task is planned."
+    ],
+    "S6": [
+      "Fresh matched compact S0",
+      "2T native and pruning/prototype component controls; not yet specified or implemented"
+    ]
+  },
+  "stages": [
+    {
+      "id": "integration_gate",
+      "kind": "implementation_and_generated_checks",
+      "patient_inputs": false,
+      "status": "passed_generated_native_forward_backward_and_complete_queue",
+      "requirements": [
+        "Native 256-dimension, 8-slot, 10-iteration forward/backward integration",
+        "Preserve native objective coefficients and A/B/C definitions",
+        "Record prediction-path first-call regularizers separately from OMIC reconstruction reuse",
+        "Finite gradients and numerical handling; no zero-norm or single-slot metric substitution",
+        "Same probe architecture/initialization/update budget across matched arms",
+        "Define heterogeneous real pathway target contract and WSI feature dimensions; no invented 8x16 toy target reuse",
+        "Use identical per-example compact forwarding and one optimizer update per logical batch across all eleven selected arms",
+        "Resolve variable-cardinality S5 probe matching and unmatched-target coverage; do not equate single-slot output with low redundancy",
+        "Validate the existing UNI2-h feature manifest, hashes and dimensions; do not substitute another WSI encoder or start feature extraction"
+      ]
+    },
+    {
+      "id": "real_data_diagnostic",
+      "kind": "single_fold_eleven_arm_diagnostic",
+      "status": "implemented_not_executed_on_patients",
+      "variants": [
+        "S0",
+        "S4",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "S1",
+        "S2",
+        "S3",
+        "S5"
+      ],
+      "study": "blca",
+      "folds": [
+        0
+      ],
+      "seeds": [
+        3
+      ],
+      "epochs": 3,
+      "real_patches": 256,
+      "batch_size": 8,
+      "eval_repeats": 20,
+      "budget_scope": "3 epochs / 256 real patches / logical batch 8 / 20 evaluation repeats; short diagnostic only",
+      "planned_unique_training_runs": 11,
+      "hyperparameters": "Locked core lr .0005, probe lr .0005, Gram weight10, paper weight1 temperature.5, content weight5; no heldout tuning.",
+      "preconditions": [
+        "Generated integration checks pass",
+        "Verify existing UNI2-h source and metadata paths on the server; doctor succeeds",
+        "Explicit --run in a fresh ignored output directory",
+        "Preserve configuration, source, split, cache, initial and final checkpoint hashes"
+      ],
+      "purpose": "One unified BLCA fold0/seed3 eleven-arm matched diagnostic; no automatic five-fold or multi-seed expansion. Current three-epoch preset is for short diagnosis, not full efficacy evidence.",
+      "feature_encoder": "UNI2-h"
+    }
+  ],
+  "matched_protocol": [
+    "Same eligible patients, split hashes, real-patch cache/order, train-fold-only survival bins and preprocessing",
+    "Same seed-specific initial core/probe weights, data batches and paired RNG within each batching protocol",
+    "All eleven arms share this queue per-example compact protocol; S0 is trained once and reused only within this exact matched protocol",
+    "Native 256-dimension 8-slot 10-iteration host; no source edits",
+    "Same survival/auxiliary/reconstruction objectives plus explicitly itemized experimental losses",
+    "Fixed checkpoint/evaluation rule, same repeated-evaluation seeds; no best-seed selection",
+    "Store all private features, identifiers, weights, raw predictions and per-case arrays only under ignored local_evidence"
+  ],
+  "required_metrics": {
+    "slot_geometry": [
+      "WSI and OMIC signed cosine",
+      "absolute cosine",
+      "RMS cosine",
+      "norm distribution",
+      "active slot counts",
+      "valid-pair coverage",
+      "single-slot fraction",
+      "angular participation ratio with definition",
+      "If active K<2, cosine is N/A with coverage and single-slot count; never substitute zero",
+      "Compare per-patient means, not a pooled pair mean that upweights high-K patients"
+    ],
+    "content": [
+      "Per-head/mean read distributions and overlap",
+      "Own versus donor content probe error with fixed probe capacity",
+      "Same-noise changed-input response and same-input changed-noise response",
+      "Input-independent dictionary control; state its information privilege and target construction"
+    ],
+    "objectives": [
+      "Native main NLL",
+      "Native auxiliary and reconstruction losses",
+      "Separate added penalties and their gradient scales",
+      "Patient survival risk/predictions and repeated C-index under one protocol"
+    ],
+    "resources": [
+      "Optimizer updates per core/probe",
+      "Native SA call/iteration counts",
+      "Wall time and peak memory"
+    ]
+  },
+  "decision_boundary": "This user-selected queue includes all eleven methods at one BLCA fold. It supports a matched local diagnostic/screen only; do not claim cross-fold generalization or expand scope automatically. Content uncertainty remains a measured outcome, not a reason to silently omit selected arms.",
+  "patient_target_contract": "Implemented: train-fold-only WSI/pathway mean and standard deviation; fixed type-specific random projections to 32 dimensions; deterministic per-case cluster sets up to eight. Same query-free probe architecture and detached probe update budget. Rectangular Hungarian matching plus nearest coverage costs for unmatched targets and slots, normalized by max(K,T); no padding, copied slots or discarded targets. This target differs from historical homogeneous generated targets.",
+  "evidence_sha256": {
+    "docs/research/slotspe_native_assignment_training_20261022/direct_diversity_summary.json": "11eabac2bdae4e3b70f22b1d1089ef024350687c3265d2ecb75aeda2769f88af",
+    "docs/research/slotspe_native_assignment_training_20261022/s5_s6_synthetic_summary.json": "b946acd322f0d546c9fd97f5e74a3995c3d22293e18d482e8e92992fbb7724c2"
+  },
+  "protected_existing_queue_sha256": {
+    "configs/slotspe_native_variants.json": "b40b1c2be9fce9c162aa15829494e9eca9a394c14b0cb5d091e2cf5d8f47de01",
+    "configs/slotspe_clean_original_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
+    "configs/slotspe_proof_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
+    "configs/slotspe_attribution_server.json": "1a32f540adcfba9511b70802d43b850d02ba1183ac328d59ff605ad0a5987815",
+    "survot_rank/research/slotspe_proof/queue.py": "5a6fd533896f41d8640eb5dfd52ea01592f397b439edab5d3c23d54d364e4dab",
+    "scripts/run_slotspe_proof.py": "902453fe7344a4bed6c5cbf87b7c6d32665dd5d5f50283ce240838f8303bfe77"
+  },
+  "actual_execution_this_update": {
+    "training_runs": 0,
+    "model_forwards": 0,
+    "patient_inputs_read": 0,
+    "server_runs": 0
+  },
+  "candidate_implementation_sha256": {
+    "survot_rank/research/slotspe_proof/native_allocation.py": "77da90d0ec2303ea90d77e1ffb92cada98c2b115c333fc33afd4ff3ac6ecbf77",
+    "survot_rank/research/slotspe_proof/native_pruning.py": "2a86f81afd3811effa74dacae7cd24cc5905c8b9dbc2ce02726eff9cd3d27244",
+    "survot_rank/research/slotspe_proof/prototype_bank.py": "b95c25130c0aee1e83d049c2535c6ae1d9673964c250fe5b212c2595fe0b2b95",
+    "survot_rank/research/slotspe_proof/native_variants.py": "a84e52746d53e70fe8e4df26f62766b26ece2ef5b5c1b2642573a05dc8b71444",
+    "survot_rank/research/slotspe_proof/slot_regularization.py": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
+    "survot_rank/research/slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f",
+    "survot_rank/research/slotspe_proof/redundancy_queue.py": "cede1bf2a496faf7f83937bf81c95956ce40d203326f21aeb3c1b6c7be751820",
+    "survot_rank/research/slotspe_proof/redundancy_engine.py": "40c2a845bffc19892e7b51d6f2b7bd4f49f9007370c13b996ca44e546826dc23",
+    "survot_rank/research/slotspe_proof/redundancy_content.py": "a58c48dd5fccd60683aaf7a74c4330ad1338748565e84b5b19677f4ba7eddc49",
+    "survot_rank/research/slotspe_proof/patient.py": "2b43f598678cf31d34b26769c09a45d418914ae74c67baa03ace655257c6d774",
+    "scripts/run_slotspe_redundancy.py": "1012bea771ce70894a0fcd891504c6a65501cf202ba367b498c73ce7b017ed86",
+    "scripts/plan_slotspe_redundancy_queue.py": "0addcc27c507eed7e8f3be8d353d2f434ede0d24dd9287167f065d12cd844b74"
+  },
+  "requested_scope": {
+    "study": "blca",
+    "folds": [
+      0
+    ],
+    "seeds": [
+      3
+    ],
+    "one_queue": true,
+    "selected_variants": [
+      "S0",
+      "S4",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "S1",
+      "S2",
+      "S3",
+      "S5"
+    ],
+    "automatic_cross_fold_expansion": false,
+    "fold_seed_choice": "Retain the existing fold0/seed3 setting; user limited scope to one BLCA fold.",
+    "budget_status": "Existing 3-epoch/256-real-patch diagnostic preset retained; a full-training budget was not newly specified.",
+    "feature_encoder": "UNI2-h"
+  },
+  "shared_batching_protocol": {
+    "all_selected_arms": "per-example compact forwarding; identical seed-to-example schedule for every arm",
+    "logical_batch_size": 8,
+    "auxiliary_loss": "mean of native per-example auxiliary losses",
+    "main_loss": "native survival NLL over concatenated per-example logits divided by logical batch size",
+    "added_losses": "prediction-path first WSI/OMIC outputs per example, aggregated once per logical batch; native OMIC reconstruction reuse stays unchanged",
+    "optimizer_steps": "one core update and the same probe-update budget per logical batch across all eleven arms; never one core update per patient",
+    "historical_results_reusable": false,
+    "native_stochastic_calls": "Reset the native root RNG independently for each example using the same predeclared seed schedule in all arms; S5 variable K must not change the next example RNG. Paired call order includes WSI/OMIC/reconstruction.",
+    "variable_slot_content_contract": "Implemented coverage_set_mse: rectangular Hungarian matching with coverage costs for every unmatched target and slot, divided by max(K,T); equal-K agrees with matched_set_mse. Same probe and target construction for all selected arms; K<2 geometry is N/A.",
+    "patient_equal_reduction": "Average slot-pair regularizers within each patient first, then average patients and modalities; variable K must not reweight patients by number of slot pairs."
+  },
+  "out_of_scope_stages": [
+    {
+      "id": "cross_fold_comparison",
+      "kind": "conditional_patient_comparison",
+      "status": "excluded_from_current_user_scope",
+      "folds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "seeds": [
+        3,
+        17,
+        29
+      ],
+      "runs_per_retained_arm": 15,
+      "retained_variants": null,
+      "epochs": null,
+      "real_patches": null,
+      "preconditions": [
+        "Audit diagnostic outputs including failures and content uncertainty",
+        "Lock eligible variants, budgets, splits, metric aggregation and checkpoint rule before final evaluation",
+        "Separate execution authorization"
+      ],
+      "interpretation": "Use paired fold/seed differences; one fold and stochastic repeats are not independent generalization evidence. Low cosine alone does not authorize expansion.",
+      "reason": "User requested only one BLCA fold to save time; not scheduled and no automatic promotion."
+    }
+  ],
+  "feature_contract": {
+    "wsi_encoder": "UNI2-h",
+    "input": "existing pre-extracted UNI2-h WSI features",
+    "new_feature_extraction": false,
+    "encoding_dim": null,
+    "format": "Existing .pt or .h5 features; HDF5 features must be [N,D] or [1,N,D]. Preparation hashes sampled private caches and records actual dimensions; no new encoding.",
+    "substitution_allowed": false,
+    "boundary": "Encoder origin is a server provenance requirement; shape checks alone cannot certify UNI2-h. Generated validation uses explicitly invented random features and never certifies this dataset."
+  },
+  "execution_entrypoint": "scripts/run_slotspe_redundancy.py --run",
+  "execution": {
+    "source_root": "third_party/SlotSPE",
+    "metadata_root": "${SLOTSPE_METADATA_ROOT}",
+    "features_root": "${SLOTSPE_FEATURES_ROOT}",
+    "device": "cuda:0",
+    "label_col": "survival_months_dss",
+    "signature": "combine",
+    "lr": 0.0005,
+    "probe_lr": 0.0005,
+    "torch_threads": 2,
+    "encoding_dim": null,
+    "projection_dim": 256,
+    "slot_iters": 10,
+    "content_target_dim": 32,
+    "content_clusters": 8,
+    "content_reference_seed": 731,
+    "dias_distance": 0.05,
+    "slotbert_temperature": 0.5,
+    "experiment": "original_audit"
+  },
+  "validation_receipt": "docs/research/slotspe_native_assignment_training_20261022/eleven_arm_delivery_validation.json"
+}

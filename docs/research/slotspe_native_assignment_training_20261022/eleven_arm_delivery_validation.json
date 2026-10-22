@@ -1,0 +1,69 @@
+{
+  "schema": "slotspe_generated_delivery_smoke_v1",
+  "status": "completed_generated_only",
+  "data": "seven invented cases and random 8-D features, not actual UNI2-h or patient data",
+  "stages": 14,
+  "training_arms": [
+    "S0",
+    "S4",
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "R5",
+    "S1",
+    "S2",
+    "S3",
+    "S5"
+  ],
+  "native_projection_dim": 256,
+  "native_slots": 8,
+  "native_slot_iterations": 10,
+  "epochs": 1,
+  "patches": 8,
+  "eval_repeats": 2,
+  "counters": {
+    "root_forwards": 121,
+    "slot_attention_calls": 297,
+    "slot_attention_iterations": 2970,
+    "core_backward_calls": 33,
+    "probe_backward_calls": 33,
+    "core_optimizer_steps": 33,
+    "probe_optimizer_steps": 33,
+    "component_autograd_grad_calls": 27
+  },
+  "source_and_configuration_pins_verified": true,
+  "completed_resume_retrained": false,
+  "patient_runs": 0,
+  "server_runs": 0,
+  "private_summary_sha256": "4b5a7899814e37c05a24ab3d02e868424d9433271283641e7f97bca9e07e6f97",
+  "focused_test_result": {
+    "passed": 152,
+    "failed": 0,
+    "seconds": 33.81,
+    "command": "python -B -m pytest -q tests/test_slotspe_redundancy_content.py tests/test_slotspe_redundancy_engine.py tests/test_slotspe_redundancy_queue.py tests/test_slotspe_h5_feature_layout.py tests/test_slotspe_native_allocation.py tests/test_slotspe_native_pruning.py tests/test_slotspe_slot_regularization.py"
+  },
+  "scope": "Local generated integration validation only. Random features are not real UNI2-h. No patient processing or server execution.",
+  "implementation_hashes": {
+    "survot_rank/research/slotspe_proof/native_allocation.py": "77da90d0ec2303ea90d77e1ffb92cada98c2b115c333fc33afd4ff3ac6ecbf77",
+    "survot_rank/research/slotspe_proof/native_pruning.py": "2a86f81afd3811effa74dacae7cd24cc5905c8b9dbc2ce02726eff9cd3d27244",
+    "survot_rank/research/slotspe_proof/prototype_bank.py": "b95c25130c0aee1e83d049c2535c6ae1d9673964c250fe5b212c2595fe0b2b95",
+    "survot_rank/research/slotspe_proof/native_variants.py": "a84e52746d53e70fe8e4df26f62766b26ece2ef5b5c1b2642573a05dc8b71444",
+    "survot_rank/research/slotspe_proof/slot_regularization.py": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
+    "survot_rank/research/slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f",
+    "survot_rank/research/slotspe_proof/redundancy_queue.py": "cede1bf2a496faf7f83937bf81c95956ce40d203326f21aeb3c1b6c7be751820",
+    "survot_rank/research/slotspe_proof/redundancy_engine.py": "40c2a845bffc19892e7b51d6f2b7bd4f49f9007370c13b996ca44e546826dc23",
+    "survot_rank/research/slotspe_proof/redundancy_content.py": "a58c48dd5fccd60683aaf7a74c4330ad1338748565e84b5b19677f4ba7eddc49",
+    "survot_rank/research/slotspe_proof/patient.py": "2b43f598678cf31d34b26769c09a45d418914ae74c67baa03ace655257c6d774",
+    "scripts/run_slotspe_redundancy.py": "1012bea771ce70894a0fcd891504c6a65501cf202ba367b498c73ce7b017ed86",
+    "scripts/plan_slotspe_redundancy_queue.py": "0addcc27c507eed7e8f3be8d353d2f434ede0d24dd9287167f065d12cd844b74"
+  },
+  "third_party_original_unchanged": true,
+  "server_runtime_validation": "pending_server_doctor",
+  "public_added_text_privacy_scan": {
+    "patient_identifier_matches": 0,
+    "host_absolute_path_matches": 0,
+    "public_file_count": 28,
+    "historical_tracked_text_scope": "added lines only; historical paths preserved"
+  }
+}

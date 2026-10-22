@@ -118,6 +118,16 @@ def _preparation_config(config):
             "label_col", "signature", "folds", "patches", "encoding_dim")}
 
 
+def _h5_feature_array(handle):
+    """Read supported UNI2-h layouts without dropping a real patch axis."""
+    values = handle["features"]
+    if values.ndim == 2:
+        return values[...]
+    if values.ndim == 3 and values.shape[0] == 1:
+        return values[0]
+    raise ValueError("HDF5 features must have shape [N,D] or [1,N,D]")
+
+
 def _dataset_module(config):
     """Load exactly the requested dataset file, independent of sys.path."""
     path = Path(config["source_root"]) / "dataset/dataset_survival.py"
@@ -246,7 +256,7 @@ def prepare(config, output_root):
                 if is_h5:
                     import h5py  # late import keeps the .pt path lean
                     with h5py.File(path, "r") as hf:
-                        raw = hf["features"][0]  # shape (N, channels)
+                        raw = _h5_feature_array(hf)
                     tensor = torch.from_numpy(raw)
                 else:
                     tensor = torch.load(path, map_location="cpu", weights_only=True, mmap=True)
@@ -255,7 +265,7 @@ def prepare(config, output_root):
                 # matching reader without mmap/weights_only.
                 if is_h5:
                     with h5py.File(path, "r") as hf:
-                        raw = hf["features"][0]
+                        raw = _h5_feature_array(hf)
                     tensor = torch.from_numpy(raw)
                 else:
                     tensor = torch.load(path, map_location="cpu", weights_only=True)

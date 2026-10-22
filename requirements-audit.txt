@@ -3,6 +3,7 @@ torch
 einops>=0.6.1
 numpy
 pandas
+h5py
 scipy
 scikit-survival
 lifelines
