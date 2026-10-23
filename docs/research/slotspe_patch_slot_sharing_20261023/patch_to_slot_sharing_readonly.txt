@@ -190,6 +190,19 @@ commit `24dedca`（2026-10-23 09:42）把配置从 `3 轮 / 256 patch` 改成了
 因此**"是否加 mask"已不再是本轮 4096 运行的前置阻塞项**；它是后续独立的修正对照。
 本轮协议检查只需按下面的清单**测量**补零的实际影响，而不需要改变补零行为。
 
+**该决定已变成可强制检查的守卫，而非仅是文字登记**：
+`scripts/check_slotspe_padding_policy_guard.py --run` 校验运行时配置无 padding 开关、
+十一臂执行路径上无 `token_mask`、队列成分仍是那十一臂、`_sample_bag` 仍用纯零补齐；
+`tests/test_slotspe_padding_policy_guard.py` 以回归测试锁定双向行为（干净仓库必须通过，五类违规必须被抓到）。
+守卫是**生成的结构检查，不证明任何患者性能**。
+
+守卫首次运行时发现 `slotspe_proof/prototype_assignment.py` 确实会向共享 replay 传 `token_mask`。
+经核查它是 DCT 宿主桥（需 `dct_prototype_assignment_stage_spec_v1`），十一臂引擎不导入它，
+故列为唯一豁免模块；豁免表示"不在十一臂执行路径上"，不表示"不受该决定约束"。
+
+> 守卫自身在编写中被发现并修好一处真实缺陷：初版按行扫描调用点，
+> 续行上的 `token_mask` 会被漏掉；改为检查完整调用表达式后才真正拦住注入。
+
 ## 边界与诚实登记
 
 - **单 fold0、单 seed3、单个冻结 3 轮 checkpoint、77 名验证患者。** 不是跨折稳健性证据。

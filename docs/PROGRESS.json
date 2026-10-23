@@ -1625,7 +1625,9 @@
       "recorded_at": "2026-10-23T18:46:00+08:00",
       "decision_1": "本轮 S0 及十一组共同保留官方训练补零行为，不新增 mask、不改成变长 bag。padding mask 另作独立修正对照，不混入当前模块比较，以避免把 mask 的作用混进 MESH、Gram 等模块的效果。",
       "decision_2": "先做 S0 的 4096 小规模协议检查，不先跑满 30 epochs；使用独立输出与临时权重，检查结果不冒充正式训练结果。检查通过后再启动同一协议下的十一组正式队列，保持 fold0/seed3，不自动扩展。",
-      "consequence": "是否加 mask 已不再是本轮 4096 运行的前置阻塞项，它是后续独立的修正对照。本轮协议检查只需测量补零的实际影响，而不需要改变补零行为。"
+      "consequence": "是否加 mask 已不再是本轮 4096 运行的前置阻塞项，它是后续独立的修正对照。本轮协议检查只需测量补零的实际影响，而不需要改变补零行为。",
+      "made_enforceable_not_merely_documented": "该决定原先只以文字登记，现已由 scripts/check_slotspe_padding_policy_guard.py 变成可强制检查的守卫，并在 tests/test_slotspe_padding_policy_guard.py 中以 8 项回归测试锁定双向行为：干净仓库必须通过，且每种违规必须被抓到。守卫校验四件事：(a) 运行时配置中不存在任何 padding 模式开关；(b) 十一臂执行路径上任何 replay_with_assignment 调用都不传 token_mask，按完整调用表达式检查而非单行，因此续行注入也会被抓到；(c) 队列成分仍是那十一臂，任何 mask 臂不得混入；(d) patient.py 的 _sample_bag 仍然用 torch.zeros 纯零补齐、无 mask、仍按 min(budget, available) 无放回抽样，并且不会退回已撤回的患者排除逻辑。已注入并确认被抓到的五类违规：native_allocation 臂路径传 mask、native_pruning（S5 臂路径）传 mask、非零补齐、mask 臂进入队列、患者排除原因复活。守卫自身在编写中被发现并修好了一处真实缺陷：初版按行扫描调用点，续行上的 token_mask 会被漏掉。",
+      "scope_boundary_found_by_the_guard": "守卫首次运行时发现 slotspe_proof/prototype_assignment.py 确实会向共享 replay 传 token_mask。经核查它是 DCT 宿主桥，只经 replay_assignment_variant 到达，而该函数要求 dct_prototype_assignment_stage_spec_v1 版本化宿主规格；十一臂引擎 redundancy_engine.py 只触及 native_allocation 与 native_pruning，不导入它。它因此被列为唯一豁免模块，且豁免必须写明理由，并由测试断言 redundancy_engine.py 不含 prototype_assignment。豁免的含义是'不在十一臂执行路径上'，不是'不受该决定约束'。"
     },
     "second_order_effect_on_this_stage_measurement": "本阶段全部读取侧均匀度数字都是在 3 轮/256 patch 下测得。在 4096 下分母变为 4096，补零行会让'每槽读取的有效 patch 数等于全部 patch 数'更加显眼，但那是补零造成的而非学习结果。因此本阶段的读取冗余数字既不能代表 4096 预算下的表现，也不能代表任何一种预算下的患者结论。",
     "risk_registration": "现在直接执行 --run 会同时首次发生三件从未实测的事：首次在 4096 patch 上训练、首次让 41 名患者（10.76%）拿到短袋、首次让其中 15 名（占全队列 3.94%）的 bag 过半为零。配置意图本身没有错（已对齐原版），风险在于该组合从未被运行验证过。",
@@ -1645,6 +1647,9 @@
       "patch_count_unit": "patient after merging that patient's slides, matching dataset_survival.py lines 222-236 and patient.py line 293",
       "superseded_slide_level_numbers": "The earlier slide-level figures (total_real_patches 5583592, 457 as a patient denominator, 50/457, 18) were withdrawn; they used slides where the loader uses patients.",
       "full_pytest_suite": "316 passed, 1 pre-existing CUDA fork_rng warning",
+      "full_pytest_suite_after_padding_guard": "324 passed (316 pre-existing + 8 new regression tests), 1 pre-existing CUDA fork_rng warning",
+      "padding_guard_result": "passed, 0 findings on the clean tree",
+      "padding_guard_violations_verified_caught": ["native_allocation arm path passes token_mask", "native_pruning S5 arm path passes token_mask", "non-zero padding instead of plain zeros", "mask arm added to the selected queue", "withdrawn patient-exclusion reason reintroduced"],
       "plan_imports_no_torch": true,
       "third_party_SlotSPE_modified": false,
       "default_configs_modified_this_stage": false,
@@ -1666,6 +1671,8 @@
       "report": "docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt",
       "sharing_entrypoint": "scripts/check_slotspe_patch_slot_sharing.py",
       "budget_probe": "local_evidence/diag_patch_budget_per_patient.py (ignored, metadata-only, per-patient unit)",
+      "padding_policy_guard": "scripts/check_slotspe_padding_policy_guard.py",
+      "padding_policy_guard_tests": "tests/test_slotspe_padding_policy_guard.py",
       "orphan_slide_reconciliation": "457 张切片中有 452 张被 clinical/all/blca.csv 引用，5 张为孤儿（合计 67334 个 patch）。因此切片口径总数 5,583,592 = 患者口径 5,516,258 + 67334，两个数字可以完全对上。此前 latest_official_semantics_alignment 中记录的是切片口径总量，作为容量可行性事实仍然正确（该记录的用途是说明 34 GB 缓存可行），但它不是训练 bag 的口径；两者不可互换。",
       "config_of_record": "configs/slotspe_redundancy_queue.json",
       "origins_of_discrepancy": ["configs/slotspe_redundancy_queue.json", "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/resolved_config.json", "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01_FAILED_cudactx/queue_manifest.json"]

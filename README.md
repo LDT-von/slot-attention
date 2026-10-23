@@ -8,6 +8,8 @@ The current SlotSPE queue is implemented: **S0, S4, R1, R2, R3, R4, R5, S1, S2, 
 
 Patch handling reproduces the original loader: all real patches are cached per patient, a fresh subset is drawn without replacement at each access, and bags shorter than the budget are zero-padded instead of excluding the patient (`third_party/SlotSPE/dataset/dataset_survival.py` lines 285-292). Earlier revisions of this harness excluded such patients and froze one fixed subset per patient; both were deviations from the original and are corrected. The published loader passes no padding mask, so padded rows still produce keys and values.
 
+The decision to keep that behaviour for all eleven arms, with any padding mask held out as an independent correction arm, is enforced rather than merely documented. Run `python -B scripts/check_slotspe_padding_policy_guard.py --run` to verify that no arm can silently gain a mask, that the queue still contains exactly those eleven arms, and that `_sample_bag` still pads with plain zeros. It is a generated structural check and asserts nothing about patient performance.
+
 The complete 14-stage/11-arm generated-data smoke passed at native 256 dimensions, 8 slots and 10 iterations. It uses invented features, not patient or real UNI2-h inputs. Focused checks: 312 passed. Original SlotSPE source, existing default configs and A/B/C definitions are preserved.
 
 [Implementation, metrics and server handoff](docs/research/slotspe_native_assignment_training_20261022/十一组可执行队列与服务器交接.md) | [Validation receipt](docs/research/slotspe_native_assignment_training_20261022/eleven_arm_delivery_validation.json).
