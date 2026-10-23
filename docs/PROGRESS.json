@@ -1600,10 +1600,41 @@
     "fact_a_configured_intent": "configs/slotspe_redundancy_queue.json 的 real_data_diagnostic 阶段当前为 epochs 30、real_patches 4096、splits_dir 5fold_uni2h。python -B scripts/run_slotspe_redundancy.py --plan 实测输出 epochs=30 patches=4096 splits_dir=5fold_uni2h，且 --plan 不导入 torch。此与原版一致：third_party/SlotSPE/utils/process_args.py 第 35 行 --num_patches 默认 4096，第 49 行 --max_epochs 默认 30。commit 24dedca（2026-10-23 09:42）把配置从 3 轮/256 patch 改为 30 轮/4096 patch。",
     "fact_b_what_actually_ran": "所有已完成的患者运行都是 3 轮/256 patch：results/slotspe_proof/blca_cpu_a512169、blca_gpu_trisurv_a512169、blca_5fold_gpu_trisurv_a512169（5 对）、blca_5fold_3seed_gpu_trisurv_a512169（15 对），以及两次失败的十一臂尝试 local_evidence/redundancy_blca_uni2h_fold0_seed3_run01_FAILED_cudactx（arm_S0 因 CUDA 上下文失败）与 redundancy_blca_uni2h_fold0_seed3_run01（arm_S4 失败）。每个目录内的 resolved_config.json / queue_manifest.json / summary.json 都记录 epochs=3 patches=256。4096 预算下的患者运行次数为 0。",
     "why_the_discrepancy_exists": "按文件时间戳而非推测：两次十一臂尝试的 resolved_config.json 写于 2026-10-23 08:53 与 09:57 UTC，而把配置改为 30/4096 的 commit 24dedca 时间是 09:42 UTC，因此最后一次尝试启动时配置仍是 3 轮/256 patch。更关键的是这两份 resolved_config.json 中没有 splits_dir 字段，而当前 slotspe_proof/redundancy_queue.py 第 72 行必定写入 stage.get('splits_dir','5fold')。字段缺失说明这两次运行是用 09:42 之前的旧代码执行的，而不是新代码读了旧配置。因此运行落后的原因包含旧代码，而不只是旧配置。",
-    "the_padding_risk_that_matters": "切换到 4096 会首次把补零问题从 1 人放大到 50 人。按现有 UNI2-h 文件的 HDF5 数据集形状只读统计（未加载任何患者数组、未跑模型）：457 张切片、特征维度 1536、真实 patch 总数 5,583,592、每患者 min 123 / p25 6778 / 中位 10872 / p75 16168 / max 39287。预算 256 下真实 patch 不足者仅 1/457（0.2%），其 bag 零行占比 51.95%；预算 4096 下不足者 50/457（10.9%），真实占比 min 3.0% / 中位 61.0% / max 99.4%，其 bag 零行占比 min 0.56% / 中位 38.96% / 平均 40.27% / 最大 97.00%，其中 18 人（占短袋患者 36%）的 bag 超过一半是零行。原版 third_party/SlotSPE/dataset/dataset_survival.py 第 285-292 行不传 mask，零行经 norm_input/to_k/to_v 后产生完全相同的 key/value，会分到确定且不小的注意力质量。这与已登记的 P5 缺 padding mask 是同一结构缺陷，受影响人数随预算放大 50 倍。",
-    "self_correction_in_this_record": "本记录的初稿把'真实 patch 占比'误标为'零行占比'，因此把 4096 的零行份额写成平均 59.7% / 最大 99.4%。复算后正确值为平均 40.27% / 最大 97.00%。4096 的结论方向不变：短袋患者由 1 人增至 50 人、其中 18 人过半为零；但严重程度低于初稿所写。此更正保留在记录中而非静默覆盖。",
+    "the_padding_risk_that_matters": "切换到 4096 会首次把补零问题从 1 名患者放大到 41 名患者。统计单位必须是患者而非切片：原版 third_party/SlotSPE/dataset/dataset_survival.py 的 load_wsi（第 222-236 行）先把同一患者的全部切片拼接成一个矩阵，第 285-292 行才抽样与补零；本仓库 slotspe_proof/patient.py 第 293 行同样先拼接、第 385-399 行 _sample_bag 后补零。因此训练 bag 的补零比例由患者合并后的真实 patch 总数决定。",
+    "per_patient_patch_budget_facts": {
+      "unit": "patient, after merging all of that patient's slides",
+      "slides_on_disk": 457,
+      "patients_with_resolvable_slide_list": 381,
+      "rows_with_missing_slide_file": 0,
+      "slides_per_patient": {"min": 1, "median": 1, "max": 9},
+      "feature_dim": 1536,
+      "patient_merged_patches_total": 5516258,
+      "patient_merged_patches": {"min": 123, "p25": 7441, "median": 12460, "p75": 18649, "max": 103807},
+      "budget_256": {"short_patients": 1, "short_fraction_of_patients": 0.0026, "over_half_zero": 1, "over_half_zero_fraction_of_cohort": 0.0026, "zero_share_within_short_subset_mean": 0.5195, "zero_share_over_whole_cohort_mean": 0.0014, "zero_share_over_whole_cohort_median": 0.0, "zero_share_max": 0.5195},
+      "budget_4096": {"short_patients": 41, "short_fraction_of_patients": 0.1076, "over_half_zero": 15, "over_half_zero_fraction_of_cohort": 0.0394, "zero_share_within_short_subset": {"min": 0.0056, "median": 0.4060, "mean": 0.4013, "max": 0.97}, "zero_share_over_whole_cohort_mean": 0.0432, "zero_share_over_whole_cohort_median": 0.0, "zero_share_max": 0.97}
+    },
+    "fold0_5fold_uni2h_split_breakdown": {
+      "note": "This is the split the configured queue will actually run, and it differs from the cohort-wide figures above.",
+      "train": {"patients": 304, "patch_counts_resolved": 304, "short_under_4096": 30, "short_fraction": 0.0987, "over_half_zero": 11, "merged_patches_min": 288, "merged_patches_median": 12668, "merged_patches_max": 103807},
+      "val": {"patients": 76, "patch_counts_resolved": 76, "short_under_4096": 11, "short_fraction": 0.1447, "over_half_zero": 4, "merged_patches_min": 123, "merged_patches_median": 11152, "merged_patches_max": 59876},
+      "observation": "Validation short-bag rate 14.47 percent exceeds the training rate 9.87 percent. The published loader only samples when split_key == 'train' and otherwise uses the full bag, so short-bag validation inputs still carry budget-length padding while short-bag training inputs are resampled every access. This asymmetry is a property of the original protocol and is registered, not corrected."
+    },
+    "denominator_warning": "三个比例分母不同，绝不可混用：10.76% 是真实 patch 不足 4096 的患者比例；3.94% 才是 bag 过半为零的患者比例；平均 0.4013 的分母是 41 名短袋患者，若以全部 381 人为分母则平均仅 0.0432、中位为 0。",
+    "mechanism_risk_not_predictive_harm": "原版 dataset/dataset_survival.py 第 285-292 行不传 mask，零行经 norm_input/to_k/to_v 后产生完全相同的 key/value，会分到确定且不小的注意力质量。该源码事实只证明补零确实参与计算，即存在机制风险；尚不能证明患者预测受损。这是与已登记 P5 缺 padding mask 同一结构缺陷，受影响患者数随预算放大约 41 倍。",
+    "user_decisions_recorded": {
+      "recorded_at": "2026-10-23T18:46:00+08:00",
+      "decision_1": "本轮 S0 及十一组共同保留官方训练补零行为，不新增 mask、不改成变长 bag。padding mask 另作独立修正对照，不混入当前模块比较，以避免把 mask 的作用混进 MESH、Gram 等模块的效果。",
+      "decision_2": "先做 S0 的 4096 小规模协议检查，不先跑满 30 epochs；使用独立输出与临时权重，检查结果不冒充正式训练结果。检查通过后再启动同一协议下的十一组正式队列，保持 fold0/seed3，不自动扩展。",
+      "consequence": "是否加 mask 已不再是本轮 4096 运行的前置阻塞项，它是后续独立的修正对照。本轮协议检查只需测量补零的实际影响，而不需要改变补零行为。"
+    },
     "second_order_effect_on_this_stage_measurement": "本阶段全部读取侧均匀度数字都是在 3 轮/256 patch 下测得。在 4096 下分母变为 4096，补零行会让'每槽读取的有效 patch 数等于全部 patch 数'更加显眼，但那是补零造成的而非学习结果。因此本阶段的读取冗余数字既不能代表 4096 预算下的表现，也不能代表任何一种预算下的患者结论。",
-    "risk_registration": "现在直接执行 --run 会同时首次发生三件从未实测的事：首次在 4096 patch 上训练、首次让约 11% 患者的 bag 一半以上为零行、首次让 18 名患者零行过半。配置意图本身没有错（已对齐原版），风险在于该组合从未被运行验证过。",
+    "risk_registration": "现在直接执行 --run 会同时首次发生三件从未实测的事：首次在 4096 patch 上训练、首次让 41 名患者（10.76%）拿到短袋、首次让其中 15 名（占全队列 3.94%）的 bag 过半为零。配置意图本身没有错（已对齐原版），风险在于该组合从未被运行验证过。",
+    "corrections_applied_after_user_review": [
+      "更正一：初稿把'真实 patch 占比'误标为'零行占比'，因此 4096 零行份额曾被写成平均 59.7% / 最大 99.4%。",
+      "更正二（用户指出）：初稿的统计单位是切片而非患者。原版 loader 与本仓库 patient.py 都是先把患者全部切片拼接再抽样补零，所以必须按患者合并后的真实 patch 总数重算。初稿的'457 张切片''50/457''18 人'四个数字全部作废，改为 381 名患者口径。",
+      "更正三（用户指出）：'平均 40.27%'未注明分母。正确做法是同时给出两个分母：短袋 41 人子集内平均 0.4013，全队列 381 人为分母时平均仅 0.0432、中位 0.0000。",
+      "以上更正保留在记录中而非静默覆盖。用户同时确认：源码证明补零参与计算只说明存在机制风险，尚不能证明患者预测受损。"
+    ],
     "checks": {
       "configured_intent_read_from_plan_output_not_inferred": true,
       "actual_run_budget_read_from_per_directory_json_not_inferred": true,
@@ -1611,12 +1642,8 @@
       "splits_dir_field_absence_checked_against_current_code": true,
       "patch_counts_read_from_hdf5_dataset_shapes_only": true,
       "h5_layout_observed": "[1, num_patches, 1536]",
-      "total_real_patches": 5583592,
-      "slides": 457,
-      "feature_dim": 1536,
-      "per_patient_patches": {"min": 123, "p25": 6778, "median": 10872, "p75": 16168, "max": 39287},
-      "short_patients_budget_256": {"count": 1, "fraction_of_slides": 0.002, "real_fraction": 0.4805, "zero_row_share": 0.5195},
-      "short_patients_budget_4096": {"count": 50, "fraction_of_slides": 0.109, "real_fraction_min": 0.03, "real_fraction_median": 0.6104, "real_fraction_max": 0.9944, "over_half_zero": 18, "zero_row_share_min": 0.0056, "zero_row_share_mean": 0.4027, "zero_row_share_median": 0.3896, "zero_row_share_max": 0.97},
+      "patch_count_unit": "patient after merging that patient's slides, matching dataset_survival.py lines 222-236 and patient.py line 293",
+      "superseded_slide_level_numbers": "The earlier slide-level figures (total_real_patches 5583592, 457 as a patient denominator, 50/457, 18) were withdrawn; they used slides where the loader uses patients.",
       "full_pytest_suite": "316 passed, 1 pre-existing CUDA fork_rng warning",
       "plan_imports_no_torch": true,
       "third_party_SlotSPE_modified": false,
@@ -1638,19 +1665,21 @@
     "paths": {
       "report": "docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt",
       "sharing_entrypoint": "scripts/check_slotspe_patch_slot_sharing.py",
-      "budget_probe": "local_evidence/diag_patch_budget_reality.py (ignored, metadata-only)",
+      "budget_probe": "local_evidence/diag_patch_budget_per_patient.py (ignored, metadata-only, per-patient unit)",
+      "orphan_slide_reconciliation": "457 张切片中有 452 张被 clinical/all/blca.csv 引用，5 张为孤儿（合计 67334 个 patch）。因此切片口径总数 5,583,592 = 患者口径 5,516,258 + 67334，两个数字可以完全对上。此前 latest_official_semantics_alignment 中记录的是切片口径总量，作为容量可行性事实仍然正确（该记录的用途是说明 34 GB 缓存可行），但它不是训练 bag 的口径；两者不可互换。",
       "config_of_record": "configs/slotspe_redundancy_queue.json",
       "origins_of_discrepancy": ["configs/slotspe_redundancy_queue.json", "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/resolved_config.json", "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01_FAILED_cudactx/queue_manifest.json"]
     },
     "gaps_and_reasons": [
-      "The patch-count distribution is a slide-level shape statistic with no slide-to-patient mapping applied, so zero-row share cannot be broken down by patient, by fold or by train/validation role. It also spans all 457 slides rather than only the 379 complete-case patients.",
-      "The equal-key assumption behind the zero-row attention share is an argument, not a measurement. No forward pass was run to measure how much attention actually lands on padded rows.",
-      "This stage did not decide whether to add a padding mask or to size bags per patient. Both would deviate from the published loader, so it is a user design decision, not a defect to fix in passing.",
-      "The 256-budget measurements do not predict 4096-budget behaviour. Any claim about the reading redundancy under the configured budget remains unmeasured.",
-      "Validation still draws a fixed subset rather than the original full-bag evaluation, so even a correct 4096 run would not be a byte-for-byte reproduction of the published evaluation path."
+      "The per-patient patch-count distribution now matches the loader unit, but it still spans all 381 patients with a resolvable slide list rather than only the 379 complete-case patients, and it is not broken down by fold or by train/validation role. fold0 of splits/5fold_uni2h has 304 train and 76 val rows, so the actual per-fold short-bag counts will differ from these cohort-wide figures.",
+      "No forward pass was run, so how much attention actually lands on padded rows is still unmeasured. That measurement is explicitly part of the agreed S0 4096 protocol check and is the reason the check exists.",
+      "The absence of a padding mask in the published loader is a source fact about mechanism only. It is not evidence that patient predictions are harmed, and this stage did not establish any predictive harm.",
+      "The 256-budget reading-redundancy measurements do not predict 4096-budget behaviour. Any claim about reading redundancy under the configured budget remains unmeasured.",
+      "Validation still draws a fixed subset rather than the original full-bag evaluation, so even a correct 4096 run would not be a byte-for-byte reproduction of the published evaluation path. The original only samples when split_key == 'train'.",
+      "The S0 4096 protocol check has not been written or executed. Nothing has been trained, run or intervened on since the 316-test check."
     ],
     "patient_predictive_harm_established": false,
     "correction_efficacy_established": false,
-    "next_action_user_inputs": "Two decisions are needed before any 4096 run. First: how to handle padded rows at 4096 where 50 of 457 patients are short and 18 are more than half zeros. Options are adding a padding mask, sizing each bag to the patient's own real patch count, or accepting the published behaviour knowingly. Each option deviates from or preserves third_party/SlotSPE differently and must be registered explicitly. Second: whether to first re-run a single S0 arm at 4096 as a one-arm protocol check before committing the eleven-arm queue. Nothing was trained, executed or intervened here, and this record is being pushed as evidence only."
+    "next_action_user_inputs": "Both decisions are now made and recorded above: keep the official padding behaviour for S0 and the eleven arms with the mask held out as an independent correction arm, and run a single-arm S0 4096 protocol check before the full queue. What remains is execution authorization for that check. The check must report per-patient statistics, keep whole-cohort and short-subset denominators separate, cover no/light/heavy padding plus the largest validation bag, confirm real 4096 input, finite loss and gradient, memory, cross-epoch resampling, full-bag validation, padding attention mass, and reading overlap renormalized over real patches only, and save the actual commit, resolved_config, split/cache hashes and execution receipt. Results must not be presented as formal training results. After the check passes, the eleven-arm queue runs under the same protocol at fold0/seed3 with no automatic expansion. No execution has been started."
   }
 }
