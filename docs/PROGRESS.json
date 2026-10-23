@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-24T04:08:07.087510+08:00",
+  "recorded_at": "2026-10-24T04:13:07.672178+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "User authorization is complete. Publish the validated explicit public-file list through normal main history, verify the live remote commit/tree and all inventory hashes, then record the verified payload delivery without loading patient evidence or changing active server jobs.",
+  "next_action": "The authorized public repository delivery is complete for the verified payload. Use main as the single current implementation and check DELIVERY_MANIFEST with --check --require-tracked; after future public-file edits refresh and commit the manifest with those files. Patient execution and active server adjustments remain outside this repository-delivery task.",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -3902,10 +3902,10 @@
     "next_action_user_inputs": "The current main implementation is independently runnable and has passed its tracked test suite. A claim that every local research tool/document is published still requires intentionally publishing the enumerated 12 scripts and associated local documents. Use the current audit inventory rather than the historical manifest as completeness evidence; do not delete unique supplemental tools or historical snapshots merely to make the worktree look clean."
   },
   "latest_complete_public_delivery_20261024": {
-    "recorded_at": "2026-10-24T04:08:07.087510+08:00",
+    "recorded_at": "2026-10-24T04:13:07.672178+08:00",
     "route_task": "SlotSPE / complete public research delivery and synchronize local main with origin/main",
-    "status": "validated_ready_for_publication",
-    "completed_work": "Prepared all 77 previously untracked research/source files for delivery: 12 independent scripts and 65 documentation/evidence files, including preserved historical snapshots. Added a current full-tree manifest and a pure-stdlib checker with omission/tampering/private-path tests; kept PUBLICATION_MANIFEST as an unchanged historical migration receipt. Updated live research navigation to 35 directories and clarified current versus historical execution statements in README. Canonical implementation remains slotspe_proof; the legacy package contains only its compatibility shim.",
+    "status": "complete_public_payload_pushed_and_verified",
+    "completed_work": "Prepared all 77 previously untracked research/source files for delivery: 12 independent scripts and 65 documentation/evidence files, including preserved historical snapshots. Added a current full-tree manifest and a pure-stdlib checker with omission/tampering/private-path tests; kept PUBLICATION_MANIFEST as an unchanged historical migration receipt. Updated live research navigation to 35 directories and clarified current versus historical execution statements in README. Canonical implementation remains slotspe_proof; the legacy package contains only its compatibility shim. Published the complete 403-file payload to main and verified its live remote SHA, Git tree and file set against the current manifest. All 77 formerly unpublished research/source files and three new delivery-integrity files are included. This subsequent receipt records that already-verified payload; final receipt-commit verification is retained privately after its own push to avoid a self-referential commit hash.",
     "paths_commit": {
       "base_commit": "026ed687d66cf066dc4472061b20dbe97751c5df",
       "backup": "local_evidence/delivery/20261024_035750",
@@ -3914,7 +3914,12 @@
       "manifest_checker_tests": "tests/test_delivery_manifest.py",
       "progress": "docs/PROGRESS.json",
       "target_branch": "main",
-      "new_commit_or_push_yet": false
+      "payload_commit": "bebc51db230864167c290cabe7d09355de810d7c",
+      "payload_tree": "126476c37a6aaf664c332c1fcea4f154cb3ba030",
+      "live_remote_payload_commit_verified": "bebc51db230864167c290cabe7d09355de810d7c",
+      "payload_pushed": true,
+      "publish_transport": "Existing SSH identity via ssh.github.com:443, BatchMode and strict host-key checking. One-command transport override; origin URL unchanged.",
+      "receipt_scope": "Verified public source payload; receipt and manifest metadata are published in a subsequent commit."
     },
     "checks_actual_execution_raw_receipt": {
       "new_manifest_guard_tests_passed": 14,
@@ -3946,9 +3951,25 @@
       "full_tree_privacy_new_findings": 0,
       "unchanged_upstream_documented_placeholder_hits": 4,
       "old_publication_manifest_and_historical_receipts_preserved": true,
-      "actual_test_receipt": "local_evidence/delivery/20261024_035750/pytest_summary.json"
+      "actual_test_receipt": "local_evidence/delivery/20261024_035750/pytest_summary.json",
+      "public_repository_files": 403,
+      "previously_untracked_public_files_published": 77,
+      "new_delivery_integrity_files": 3,
+      "payload_changed_paths": 83,
+      "local_remote_payload_commit_equal": true,
+      "local_remote_payload_tree_equal": true,
+      "remote_file_set_equals_manifest_plus_self": true,
+      "all_402_current_file_hashes_verified": true,
+      "working_tree_clean_after_payload_push": true,
+      "ahead_behind_after_payload_fetch": [
+        0,
+        0
+      ],
+      "staged_privacy_findings": 0,
+      "active_legacy_implementation_duplicates": 0,
+      "original_source_files_sha256_unchanged": 11
     },
-    "gaps_reasons": "The complete public snapshot has passed clean-export tests and source/privacy/navigation checks. The original migration manifest and locked historical archives are preserved; DELIVERY_MANIFEST is the current inventory. Git publication and live remote verification remain pending at this exact pre-push record.",
-    "next_action_user_inputs": "User authorization is complete. Publish the validated explicit public-file list through normal main history, verify the live remote commit/tree and all inventory hashes, then record the verified payload delivery without loading patient evidence or changing active server jobs."
+    "gaps_reasons": "No outstanding public-file omissions were found in the verified 403-file payload. Private patient evidence, backups, caches and temporary renders stay ignored locally by design. The 338 passing tests use synthetic fixtures and establish delivery/implementation contracts, not patient benefit or validity of unreceived server results. Older historical progress and manifest records retain their original time-specific statements.",
+    "next_action_user_inputs": "The authorized public repository delivery is complete for the verified payload. Use main as the single current implementation and check DELIVERY_MANIFEST with --check --require-tracked; after future public-file edits refresh and commit the manifest with those files. Patient execution and active server adjustments remain outside this repository-delivery task."
   }
 }

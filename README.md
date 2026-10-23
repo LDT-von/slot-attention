@@ -13,6 +13,8 @@
 python -B scripts/check_delivery_manifest.py --check --require-tracked
 ```
 
+本轮403文件干净交付副本的全量测试为 **338 passed，0失败、0跳过**；测试只使用合成输入。
+
 该检查只读源码和文档，不读取患者证据。维护者修改公开文件后，用 `--refresh` 更新当前清单，并将清单与对应文件一起提交。全量测试与交付核验的实际结果统一登记在[PROGRESS](docs/PROGRESS.json)。
 
 ## 从这里开始
