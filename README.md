@@ -22,7 +22,29 @@ All arms share paired initialization, cached inputs, per-example random schedule
 
 本仓库先检验槽表示、内容分配、聚合过程与学习目标，再分别研究预测后果和修正收益。表示机制的证据不必以C-index下降为前提；高相似、sanity check和人为干预的输出变化也不直接登记为预测损害。
 
-当前入口：[进度](docs/PROGRESS.json)、[本机GPU阶段登记与离散度](docs/research/slotspe_gpu_trisurv_20261022/本机GPU阶段登记与离散度.txt)、[服务器新结论复核](docs/research/slotspe_server_claims_20261020/服务器结论复核.txt)、[原始回传与对照要求](docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt)、[P5勘误](docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt)。
+当前入口：[进度](docs/PROGRESS.json)、[本机GPU阶段登记与离散度](docs/research/slotspe_gpu_trisurv_20261022/本机GPU阶段登记与离散度.txt)、[槽塌缩四环只读拆解](docs/research/slotspe_slot_ring_dissection_20261023/槽塌缩四环只读拆解.txt)、[门控配对训练报告](docs/research/slotspe_gate_pair_20261022/门控配对训练与冗余对比.txt)、[服务器新结论复核](docs/research/slotspe_server_claims_20261020/服务器结论复核.txt)、[原始回传与对照要求](docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt)、[P5勘误](docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt)。
+
+## 槽塌缩四环只读拆解（2026-10-23）
+
+用一个冻结 checkpoint 做**推理期**四环拆解，每臂只拆掉原生 `MultiHeadSlotAttention.forward` 的一个环节，其余不变。参考臂与历史 77 人 logits 的最大绝对差为 **0.0**，训练权重 `_state_digest` 前后一致，训练 0 次、优化步 0、参数更新 0。
+
+**主因是 R2（每槽 token 轴 L1 归一化）**，不是选择器。只有去掉它能让塌缩全程变慢且终值降低（WSI 逐迭代余弦第 10 次 0.9974→0.9116），终态有效秩 4.49→6.39（满分 8 槽），份额差与更新分歧上升约 47%。
+
+三点必须同时读：**R1（槽轴 softmax 竞争）不是主因**，WSI 上与参考臂逐迭代最大差约 4e-05，omic 只差约 0.004，此前把它排在自我强化链首位的定位被本轮取代；**R3（去掉 GRU 与残差）是陷阱不是解药**，余弦恒为 1.0000 实为退化——逐维跨槽标准差约 4e-8、槽0-槽1 的 L2 约 1e-6，即 float32 舍入噪声，8 槽数值完全相同；即使去掉 R2，终态余弦仍 0.9116，塌缩是多环叠加。
+
+另更正一处描述：原生 `F.normalize(..., dim=-1)` 归一化的是 **token 轴**，钉住"每个槽跨所有 token 的总质量=1"，并非"同一 token 上 8 槽的总质量"。
+
+单 fold0、单 seed3、10 名患者、只读推理；未计算 C-index，不构成预测损害或修正收益证据。主因与槽数无关，因此容量扫描的预期收益下降。详见[报告](docs/research/slotspe_slot_ring_dissection_20261023/槽塌缩四环只读拆解.txt)。
+
+## 门控配对训练与槽冗余定位（2026-10-22）
+
+同一prepared批次、同一初态、同一步骤种子下，只改原版 `MoESlotDecoder` 的数值属性 `k`/`temperature` 训练三臂：`L1_top2`（原版参考）、`L2_soft8`（放开硬选择）、`L3_uniform8`（再把门控权重置为均匀）。参考臂逐次评估 C-index 与已登记基线完全一致（delta=0），因此两处对比可归因于门控属性本身。训练总损失三臂几乎相同（2.41856/2.42701/2.43769）。
+
+**放开硬选择后槽冗余几乎不变。** 三臂全部28对槽余弦 WSI 0.99580–0.99730、OMIC 0.99230–0.99320，`>0.95` 的配对比例 WSI 三臂均为 1.0。中心化有效秩从 2.55（Top-2）升到 3.08（soft8）再回落 2.75（uniform8），最大偏移 0.53，远小于已登记折间标准差 0.06178。**冗余不是硬稀疏单独造成的**；三臂全部8个 `pred_keep_slot` 参数对融合主损失均不连通、仅辅助损失有梯度（`L3` 因温度极大降到 1e-16~1e-10），确认门控打分器只被辅助损失更新，主读出路径从不经过它。三臂 C-index 差（+0.01426、−0.00935）在离散度内，不构成性能或修正收益证据。
+
+**槽冗余的塌缩发生在注意力迭代内部。** 只读分析原始 npz 显示：初始8槽两两余弦中位仅 0.5583/0.5813（清楚分开），最终槽升至 0.9996/0.9982；逐迭代的同 token 跨槽份额差与槽间更新分歧均**单调下降**，第10次迭代比第1次小一个量级。8 个槽共用同一份 `slots_mu`/`slots_logsigma`（形状 `(1,1,dim)`），槽间初始差异只来自 `randn`；`attn = dots.softmax(dim=-2)` 在槽轴竞争、GRU 与残差混合把槽拉向共同均值，且差异越小→更新越接近→差异更小的自我强化。`temperature`/`topk_ratio` 属 decoder 选槽器，作用于"选哪些槽参与读出"，与保存的 token 读取矩阵无关，**不是本次塌缩成因**（更正此前口头说法）。
+
+本轮只读分析加三次 GPU 训练，均不改原版源码、不改默认配置，产物限于忽略的 `local_evidence/`。[观察汇总](docs/research/slotspe_mechanism_protocol_20261021/observe_结果汇总_20261021.md)、[报告](docs/research/slotspe_gate_pair_20261022/门控配对训练与冗余对比.txt)。
 
 ## 本机GPU多折与机制登记（2026-10-22）
 

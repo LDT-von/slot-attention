@@ -1,0 +1,24 @@
+{
+  "schema": "slotspe_slot_ring_dissection_v1",
+  "note": "Read-only inference-time dissection of the four slot-attention collapse rings on one frozen original fold0/seed3 checkpoint. Arms differ ONLY in which single ring of the native MultiHeadSlotAttention forward is ablated. No optimizer, no parameter update, no source edit; third_party/SlotSPE is untouched. Primary readout is per-iteration cross-slot divergence and pairwise cosine, NOT C-index. Only --run executes.",
+  "dissection_rings": [
+    "none",
+    "r1_slot_axis_softmax",
+    "r2_l1_normalize",
+    "r3_gru_residual",
+    "r4_shared_mu"
+  ],
+  "dissection_patients": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  "dissection_epochs": 1,
+  "dissection_batch_size": 8,
+  "device": "cuda:0",
+  "torch_threads": 2,
+  "input_root": "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169",
+  "observations": "local_evidence/p1_observations_gpu_trisurv_20261022",
+  "checkpoint": "results/slotspe_proof/blca_gpu_trisurv_a512169/pairs/fold_0/seed_3/original/last.pt",
+  "scope": "Mechanism localization only. Not a predictive-harm claim, not correction efficacy, not a performance comparison.",
+  "required_preconditions": [
+    "the 'none' arm must reproduce the recorded historical validation logits at eval_seed within 1e-6",
+    "the trained state digest must be identical before and after every arm"
+  ]
+}
