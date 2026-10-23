@@ -1,1692 +1,1798 @@
 {
-  "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-23T18:22:00+08:00",
-  "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
-  "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
-  "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
-  "issues": {
-    "P1": "原义：固定槽容量不适配患者复杂度。当前固定8候选/Top-2有结构依据，但patch预算改变不是槽数改变；容量不匹配及碎片化未被本次实验直接检验。",
-    "P2": "本地历史BLCA 3轮原版模型71人已逐NPZ复算：两侧全部28对均cos>0.95；选中2槽cos均值WSI0.99447/OMIC0.99862，读取重叠99.858%/99.555%，选择后表示与读取冗余仍存在。语义碎片化、去门控因果效应和预测损害未证；不是服务器77人结果。",
-    "P3": "原义：冷启动缺少患者特异线索。共享高斯初槽不读当前患者内容的结构事实成立，后续迭代读取输入；聚合质量和收敛后果未测。评估随机性单列附加问题，不能代替P3。",
-    "P4": "原义：槽语义身份不稳定。尚未直接测匹配内容后的跨抽样/种子/患者语义一致性；槽置换/编号变化不是语义漂移证明。",
-    "P5": "原义：无关内容干扰或占槽。补零无mask是相关输入处理风险，不能替代真实无关patch/通路占槽的直接证据。",
-    "P6": "原义：尺度或特征层次不足。本轮无多倍率/多编码器层匹配比较。patch顺序必须另记Q6，不再作为P6证据。",
-    "P7": "原义：槽学习目标与生存预测目标不一致。直接融合主梯度断路是选槽支路的局部证据，辅助生存监督仍连通；整体目标一致性与表示后果未被直接测全。",
-    "P8": "原义：Slot聚合与后续跨模态OT双阶段约束。原版SlotSPE没有该后续OT，故本仓库不适用。"
+ "schema": "slotspe_independent_progress_v1",
+ "recorded_at": "2026-10-23T18:22:00+08:00",
+ "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
+ "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
+ "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
+ "issues": {
+  "P1": "原义：固定槽容量不适配患者复杂度。当前固定8候选/Top-2有结构依据，但patch预算改变不是槽数改变；容量不匹配及碎片化未被本次实验直接检验。",
+  "P2": "本地历史BLCA 3轮原版模型71人已逐NPZ复算：两侧全部28对均cos>0.95；选中2槽cos均值WSI0.99447/OMIC0.99862，读取重叠99.858%/99.555%，选择后表示与读取冗余仍存在。语义碎片化、去门控因果效应和预测损害未证；不是服务器77人结果。",
+  "P3": "原义：冷启动缺少患者特异线索。共享高斯初槽不读当前患者内容的结构事实成立，后续迭代读取输入；聚合质量和收敛后果未测。评估随机性单列附加问题，不能代替P3。",
+  "P4": "原义：槽语义身份不稳定。尚未直接测匹配内容后的跨抽样/种子/患者语义一致性；槽置换/编号变化不是语义漂移证明。",
+  "P5": "原义：无关内容干扰或占槽。补零无mask是相关输入处理风险，不能替代真实无关patch/通路占槽的直接证据。",
+  "P6": "原义：尺度或特征层次不足。本轮无多倍率/多编码器层匹配比较。patch顺序必须另记Q6，不再作为P6证据。",
+  "P7": "原义：槽学习目标与生存预测目标不一致。直接融合主梯度断路是选槽支路的局部证据，辅助生存监督仍连通；整体目标一致性与表示后果未被直接测全。",
+  "P8": "原义：Slot聚合与后续跨模态OT双阶段约束。原版SlotSPE没有该后续OT，故本仓库不适用。"
+ },
+ "tasks": [
+  {
+   "id": "SPE-01",
+   "title": "实现A/B/C汇总与监督归因臂",
+   "status": "completed_local",
+   "next_action": "本地实现已完成，患者归因等待服务器产物与独立队列。"
   },
-  "tasks": [
-    {
-      "id": "SPE-01",
-      "title": "实现A/B/C汇总与监督归因臂",
-      "status": "completed_local",
-      "next_action": "本地实现已完成，患者归因等待服务器产物与独立队列。"
-    },
-    {
-      "id": "SPE-02",
-      "title": "验收归因实现与梯度隔离",
-      "status": "completed_local",
-      "next_action": "合成验收完成；按回传原始产物验收实际患者行为。"
-    },
-    {
-      "id": "SPE-03",
-      "title": "发布可独立运行的归因包",
-      "status": "completed_published",
-      "next_action": "SlotSPE源码、配置、检查证据和新旧交接包已隔离推送并核验；等待SPE-07服务器原始产物，不安排新实验。"
-    },
-    {
-      "id": "SPE-04",
-      "title": "服务器患者归因：先短程验收，再按证据扩展",
-      "status": "waiting_for_dependencies",
-      "next_action": "先验收SPE-07原始产物；A/B/C当前准备fold0/seed3、3轮、256真实patch、20次评估，30轮/4096patch仍属后续未安排阶段。"
-    },
-    {
-      "id": "SPE-05",
-      "title": "有依据后扩展五折多种子",
-      "status": "conditional",
-      "next_action": "归因和数值行为可解释后再扩大配对实验。"
-    },
-    {
-      "id": "SPE-06",
-      "title": "定位修正后能力缺口",
-      "status": "conditional",
-      "next_action": "比较两单模态、简单融合与现有跨模态融合，再判断是否需要新机制。"
-    },
-    {
-      "id": "SPE-07",
-      "title": "服务器先复现一组SlotSPE问题",
-      "status": "reported_completed_awaiting_raw_artifacts",
-      "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。"
-    },
-    {
-      "id": "SPE-08",
-      "title": "核实八类槽问题在指定原版SlotSPE中的存在性",
-      "status": "partially_completed_local",
-      "next_action": "研究核心与D0-D4阶段配置已发布并在本机拉取复核(29项合成测试+3个计划入口通过)；完整患者训练未接入，DIAS/MetaSlot未实现；服务器原始产物验收与是否启动患者对照待用户决定。"
-    },
-    {
-      "id": "SPE-09",
-      "title": "交付干净原版单臂服务器检查与严格回传验收",
-      "status": "completed_local_execution",
-      "next_action": "trisurv环境GPU已跑通并与DCT-Reg参考运行数值完全一致(1485个模型张量0差异)；下一步由用户授权对照臂与队列规模。"
-    }
-  ],
-  "patient_effect_or_abc_efficacy": "not_established",
-  "server_raw_results_received": false,
-  "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "只读机制拆解已完成并定位主因 R2；容量扫描的预期收益下降（主因与槽数无关）。下一步需用户授权训练后再动 problem_capacity.py。未启动新训练。",
-  "git_remote": "https://github.com/LDT-von/slot-attention.git",
-  "latest_source_review": {
-    "recorded_at": "2026-10-20T17:43:31+08:00",
-    "task_id": "SPE-08",
-    "status": "completed_readonly_source_review",
-    "requested_directory": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main",
-    "report": "docs/research/slotspe_target_review_20261020/指定目录八项问题核查.txt",
-    "receipt": "docs/research/slotspe_target_review_20261020/source_identity_receipt.json",
-    "registered_files_three_way_hash_matches": 11,
-    "codegraph_project": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main",
-    "new_index_created": false,
-    "patch_order_sensitivity": "not_established; prior controlled synthetic record near floating-point error",
-    "new_training_runs": 0,
-    "new_model_forward_passes": 0,
-    "new_backward_passes": 0,
-    "patient_tensors_or_checkpoints_loaded": false,
-    "new_synthetic_experiments": 0,
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false,
-    "server_execution_this_review": false,
-    "server_raw_results_received": false,
-    "historical_patient_measurements_recomputed_this_review": false,
-    "original_sources_modified": false,
-    "historical_reports_modified": false,
-    "next_action": "优先验收已有SPE09原始回传与SHA；保留P5勘误及证据边界，不新增训练或模块。"
+  {
+   "id": "SPE-02",
+   "title": "验收归因实现与梯度隔离",
+   "status": "completed_local",
+   "next_action": "合成验收完成；按回传原始产物验收实际患者行为。"
   },
-  "latest_server_report_review": {
-    "source_repo": "LDT-von/DCT-Reg",
-    "source_commit": "1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
-    "commit_verified": true,
-    "raw_results_received": false,
-    "review": "docs/research/slotspe_server_claims_20261020/claim_review.json",
-    "six_patient_harm_claim_accepted": false,
-    "new_patient_execution": false
+  {
+   "id": "SPE-03",
+   "title": "发布可独立运行的归因包",
+   "status": "completed_published",
+   "next_action": "SlotSPE源码、配置、检查证据和新旧交接包已隔离推送并核验；等待SPE-07服务器原始产物，不安排新实验。"
   },
-  "confirmed_problem_phenomena": [
-    "P3 native eval randomness affects predictions",
-    "P7 direct fused-loss selector gradient disconnect",
-    "P5 missing padding mask and synthetic zero-row sensitivity",
-    "unselected self-slot contribution despite selection mask"
-  ],
-  "latest_server_git_handoff": {
-    "recorded_at": "2026-10-20T20:05:40+08:00",
-    "route_task": "SlotSPE / SPE-08",
-    "status": "server_branch_verified_public_return_pending_acceptance",
-    "completed_work": "Verified configured origin and prepared a copyable server Git handoff prompt with tracked diagnostic scripts, public aggregate summaries, provenance, missing artifact inventory and remote SHA checks.",
-    "prompt": "docs/research/slotspe_server_connection_20261020/服务器AI_接入独立仓库并回传发现.txt",
-    "prompt_sha256": "903ae321e4d43e413c1fbaa3fdf3eb214db7c38540cc96a48ee5c6737abec0fc",
-    "local_base_commit": "a5819e40319794488609e2052d8ff5778d006e50",
-    "new_local_commit_created": false,
-    "target_repository": "https://github.com/LDT-von/slot-attention.git",
-    "proposed_branch": "codex/server-slotspe-evidence-20261020",
-    "checks": {
-      "configured_origin_matches": true,
-      "prompt_exists": true,
-      "progress_json_valid": true
-    },
-    "actual_server_execution_this_turn": false,
-    "server_push_verified": true,
-    "server_raw_results_received": false,
-    "new_training_or_model_execution": false,
-    "gaps_reasons": "Server must execute the handoff and return a real branch/commit receipt. Prompt preparation alone does not establish a remote connection or validate patient evidence.",
-    "next_action_user_input": "把服务器接入提示词交给服务器AI；从最新origin/main建分支，将实际诊断脚本、公开队列摘要及来源收据push到LDT-von/slot-attention，返回分支/完整SHA供本地验收；患者原始材料走私有回传，不新增模型执行。",
-    "verified_delivery_commit": "82582f212f5882b5beb52f081bafa3d261d6e393",
-    "verified_at": "2026-10-20T20:47:08+08:00"
+  {
+   "id": "SPE-04",
+   "title": "服务器患者归因：先短程验收，再按证据扩展",
+   "status": "waiting_for_dependencies",
+   "next_action": "先验收SPE-07原始产物；A/B/C当前准备fold0/seed3、3轮、256真实patch、20次评估，30轮/4096patch仍属后续未安排阶段。"
   },
-  "server_public_artifacts_received": true,
-  "latest_server_return_acceptance": {
-    "recorded_at": "2026-10-20T20:47:08+08:00",
-    "task_id": "SPE-08",
-    "reviewed_commit": "82582f212f5882b5beb52f081bafa3d261d6e393",
-    "branch": "codex/server-slotspe-evidence-20261020",
-    "remote_ref_verified_via_API": true,
-    "status": "public_artifacts_received_merge_blocked_raw_pending",
-    "report": "docs/research/slotspe_server_acceptance_20261020/本地验收报告.txt",
-    "receipt": "docs/research/slotspe_server_acceptance_20261020/acceptance_receipt.json",
-    "followup_prompt": "docs/research/slotspe_server_acceptance_20261020/服务器AI_修正公开交付并私有打包.txt",
-    "public_files_downloaded": 10,
-    "public_patient_identifier_affected_files": 4,
-    "public_scripts_missing_os_import": 2,
-    "manifest_hash_mismatches": 1,
-    "private_raw_package_received": false,
-    "new_model_execution": false,
-    "main_merged": false,
-    "next_action": "GitHub API已验82582f2与目标分支，main仍a5819e4；先修正4文件患者标识、两脚本缺os导入、摘要哈希及计数/配置口径，并整理已授权私有原始包；不启动P6、不合并main。"
+  {
+   "id": "SPE-05",
+   "title": "有依据后扩展五折多种子",
+   "status": "conditional",
+   "next_action": "归因和数值行为可解释后再扩大配对实验。"
   },
-  "latest_server_artifact_return": {
-    "recorded_at": "2026-10-20T20:50:00+08:00",
-    "task_id": "SPE-08",
-    "status": "public_integration_sanitized_private_raw_pending",
-    "source_repo": "LDT-von/DCT-Reg",
-    "delivery_branch": "codex/server-slotspe-evidence-20261020",
-    "base_commit": "a5819e40319794488609e2052d8ff5778d006e50",
-    "report": "docs/research/slotspe_server_return_20261020/服务器发现报告.txt",
-    "diagnostic_summary": "docs/research/slotspe_server_return_20261020/diagnostic_summary.json",
-    "provenance": "docs/research/slotspe_server_return_20261020/provenance.json",
-    "artifact_manifest": "docs/research/slotspe_server_return_20261020/artifact_manifest.json",
-    "missing_artifacts": "docs/research/slotspe_server_return_20261020/missing_artifacts.json",
-    "executed_scripts_public": "scripts/server_diagnostics/_p1246_diag.py, scripts/server_diagnostics/_spe09_viz.py",
-    "executed_scripts_originals_preserved": "Private local_evidence only; original SHA256 retained in artifact_manifest.json",
-    "mark": "SUMMARY ONLY - complete original raw results were NOT returned to public git",
-    "private_pack_produced": false,
-    "private_pack_sha256": null,
-    "new_training_runs": 0,
-    "new_model_forward_passes": 0,
-    "new_backward_passes": 0,
-    "new_patient_interventions": 0,
-    "five_fold_extension_started": false,
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false,
-    "submitted_for_local_acceptance": [
-      "actual executed diagnostic scripts (original + redacted copies)",
-      "queue-level aggregate results with original JSON keys, units and limits",
-      "execution provenance incl. checkpoint SHA, seeds, patch budget, device deps",
-      "artifact manifest and missing-material list"
-    ],
-    "still_awaiting_local_acceptance": [
-      "complete private original-return package (not authorized in this task)",
-      "P6 same-input/same-RNG zero-change control and paired Gumbel/Gaussian RNG restore",
-      "P2 per-pair distribution, slot norms and pairwise L2",
-      "P4 full-model synchronised slot permutation through the selector/keep path",
-      "risk direction validation C(risk) vs C(-risk)"
-    ],
-    "original_server_reported_patient_identifiers_published": 0,
-    "privacy_scope": "Current integrated public tree scanned; original source branch still retains historical disclosure."
+  {
+   "id": "SPE-06",
+   "title": "定位修正后能力缺口",
+   "status": "conditional",
+   "next_action": "比较两单模态、简单融合与现有跨模态融合，再判断是否需要新机制。"
   },
-  "server_aggregate_results_received": true,
-  "latest_server_merge": {
-    "recorded_at": "2026-10-20T20:58:08+08:00",
-    "task_id": "SPE-08",
-    "status": "public_evidence_integrated_raw_acceptance_pending",
-    "source_server_commit": "82582f212f5882b5beb52f081bafa3d261d6e393",
-    "base_main_commit": "a5819e40319794488609e2052d8ff5778d006e50",
-    "integration_method": "Clean squash integration; source commit referenced as provenance, not introduced as a parent.",
-    "actual_execution_originals_preserved_privately": true,
-    "literal_patient_identifiers_in_integrated_changed_files": 0,
-    "public_os_imports_fixed": 2,
-    "artifact_manifest_hashes_recomputed": true,
-    "p4_p6_count_units_corrected": true,
-    "topk_ratio_verified": false,
-    "raw_patient_results_received": false,
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false,
-    "new_model_execution": false,
-    "legacy_server_branch_history_rewritten": false,
-    "next_action": "服务器公开代码/摘要已修正整合；接收已授权私有原始包并验收数值与配置。P6补查仍待明确执行授权，不新增训练或推理。"
+  {
+   "id": "SPE-07",
+   "title": "服务器先复现一组SlotSPE问题",
+   "status": "reported_completed_awaiting_raw_artifacts",
+   "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。"
   },
-  "latest_scoped_server_sync": {
-    "recorded_at": "2026-10-21T10:56:41+08:00",
-    "task_id": "SPE-08",
-    "status": "source_files_copied_local_pending_content_audit",
-    "source_repository": "LDT-von/DCT-Reg",
-    "source_ref": "9b3a5a8815bc1283ca427d2063434ee029404e75",
-    "local_base_commit": "2c176264d2855404ecc2dd5e5eef3e1c991f569d",
-    "import_manifest": "docs/research/slotspe_scoped_sync_20261021/import_manifest.json",
-    "receipt": "docs/research/slotspe_scoped_sync_20261021/同步收据.txt",
-    "entry": "docs/research/slotspe_p6_addendum_20261020/EVIDENCE_README.md",
-    "diagnostic_scripts": 15,
-    "evidence_documents_and_json": 18,
-    "archive_files_in_ignored_local_evidence": 21,
-    "protected_source_and_configs_unchanged": true,
-    "E_DCT_Reg_modified": false,
-    "copied_bytes_verified": true,
-    "new_model_execution": false,
-    "server_raw_patient_results_received": false,
-    "source_claims_independently_validated": false,
-    "new_commit_or_push": false,
-    "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。"
+  {
+   "id": "SPE-08",
+   "title": "核实八类槽问题在指定原版SlotSPE中的存在性",
+   "status": "partially_completed_local",
+   "next_action": "研究核心与D0-D4阶段配置已发布并在本机拉取复核(29项合成测试+3个计划入口通过)；完整患者训练未接入，DIAS/MetaSlot未实现；服务器原始产物验收与是否启动患者对照待用户决定。"
   },
-  "latest_results_review": {
-    "recorded_at": "2026-10-21T11:15:18+08:00",
-    "task_id": "SPE-08",
-    "status": "aggregate_arithmetic_verified_diagnostic_claims_partially_rejected_raw_pending",
-    "report": "docs/research/slotspe_results_review_20261021/服务器结果证据复核.txt",
-    "arithmetic_receipt": "docs/research/slotspe_results_review_20261021/aggregate_verification.json",
-    "arithmetic_verifier": "docs/research/slotspe_results_review_20261021/verify_aggregates.py",
-    "source_bundle_sha256": "7751e15bf9167fdf74a27f1da20c7552d5f79dde364a9b91b4939905be957046",
-    "unique_fold_seed_pairs": 18,
-    "completed": "已复算18组20次重复C-index、30轮曲线和10000次bootstrap，并核对关键诊断源码；来源脚本/历史报告保持原样。",
-    "new_finding": "30轮协议下强烈晚期验证退化迹象；18/18组峰值至末轮降幅>0.01，平均0.12629；训练NLL下降而验证NLL上升。",
-    "eval_fix_mean_delta": 0.002687207939272277,
-    "eval_fix_bootstrap_ci95": [
-      -0.0012017681781401875,
-      0.006794907538660746
-    ],
-    "rejected_claims": [
-      "P6顺序效应已隔离或顺序无害",
-      "P4 mask变化已证明选择不等变",
-      "self干预零差证明未选槽无影响",
-      "高相似由训练造成",
-      "eval_fix已证明无性能代价或稳定提升"
-    ],
-    "checks": "独立聚合验算完成；源码静态核查发现RNG混杂、错误比较对象、空操作和错误统计字段。",
-    "new_training_or_model_execution": false,
-    "server_actual_execution_directly_observed": false,
-    "patient_raw_received": false,
-    "server_original_checkpoint_hashes_independently_verified": false,
-    "patient_cindex_reconstructed": false,
-    "gaps_reasons": "公开包缺逐患者风险/删失/时间、原始梯度、checkpoint和完整运行日志；可验算汇总，不能从原始患者预测独立重建指标。",
-    "new_commit_or_push": false,
-    "next_action_user_inputs": "先修正服务器诊断逻辑并私下回传已有原始产物；需重新模型前向的补查另获明确执行授权；不扩大训练。"
-  },
-  "additional_implementation_findings": {
-    "eval_randomness": "评估重复性缺陷已确认；固定噪声改善重复性，与P3冷启动质量不同。",
-    "Q6_patch_order": "原问题附件明确另列Q6。当前置换仍消耗模型共用RNG，order_effect_not_identified。",
-    "late_training_validation_deterioration": "18组30轮曲线支持晚期退化/过拟合迹象；训练协议风险，不归入原八项架构机制。",
-    "diagnostic_reliability": "错误比较对象、空操作及统计字段问题需修正；不当作模型机制结论。"
-  },
-  "latest_question_alignment": {
-    "recorded_at": "2026-10-21T11:40:26+08:00",
-    "task_id": "SPE-08",
-    "route": "SlotSPE原八项研究问题对齐",
-    "completed": "重读用户附件定义，纠正P3/评估随机性、P6/顺序混用；逐项标出结构事实、相关线索、直接测量缺口。",
-    "report": "docs/research/slotspe_results_review_20261021/八个原始问题对齐勘误.txt",
-    "current_entries_updated": [
-      "README.md",
-      "docs/PROGRESS.json"
-    ],
-    "historical_reports_and_source_scripts_edited": false,
-    "checks_and_receipt": "原附件与已打开原始源码对读；无新服务器执行或患者结果。此前汇总算术仍有效，但问题编号以本勘误为准。",
-    "new_model_execution": false,
-    "new_commit_or_push": false,
-    "gaps_reasons": "现有服务器实验没有原八项的完整操作定义和直接测量，不能用实现异常和最终C-index代替全部研究机制。",
-    "next_action_user_inputs": "以P2冗余/碎片化、P3冷启动质量、P7目标一致性重新组织测量要求；P4/P5需语义/相关性依据、P6需倍率/层次来源；新执行只列计划，不启动。"
-  },
-  "latest_mechanism_experiment_design": {
-    "recorded_at": "2026-10-21T12:17:01+08:00",
-    "task_id": "SPE-08",
-    "route": "original_questions_v1",
-    "status": "published_server_execution_pending",
-    "completed": "围绕原P1–P7编写直接机制测量、匹配容量训练独立入口、内容/角色/配对来源门槛和服务器执行提示词；P8不适用。",
-    "protocol": "docs/research/slotspe_mechanism_protocol_20261021/实验协议与判定.txt",
-    "server_prompt": "docs/research/slotspe_mechanism_protocol_20261021/服务器AI_原八项问题实验.txt",
-    "runner": "scripts/run_slotspe_problem_experiments.py",
-    "config": "configs/slotspe_problem_experiments.json",
-    "receipt": "docs/research/slotspe_mechanism_protocol_20261021/本地交付收据.json",
-    "delivery": "docs/deliveries/slotspe_original_questions_v1_20261021.zip",
-    "delivery_sha256": "ec8c663355d44225931397d2954e1dc80bbcea9ffbc3aef58d67f027cbcb533c",
-    "checks": {
-      "synthetic_tests_passed": 63,
-      "plan_only_phases_checked": [
-        "observe",
-        "capacity_train"
-      ],
-      "original_source_and_default_configs_unchanged": true,
-      "package_file_hashes_verified": true
-    },
-    "new_native_model_or_patient_execution": false,
-    "new_server_execution_receipt": false,
-    "primary_endpoints": [
-      "槽表示与读取冗余/内容碎片化",
-      "原生预算聚合内容读出",
-      "匹配内容后的稳定性",
-      "候选干扰竞争",
-      "真正配对尺度/层内容对照",
-      "共享参数目标梯度关系"
-    ],
-    "excluded_as_primary_results": [
-      "过拟合",
-      "评估随机波动",
-      "C-index统一问题门槛"
-    ],
-    "gaps_reasons": "63项仅为合成与接口测试；原生checkpoint逐轮重放和aux重建需服务器验收。P4/P5/P6外部依据不可虚构；P1充分训练及复杂度交互、P3训练分布外初态限制如实登记。",
-    "new_commit_or_push": true,
-    "next_action_user_input": "交付ZIP与提示词，服务器先plan和observe；不自动启动独立capacity_train，不扩大五折训练；私下回传原始产物、公开仅队列级汇总。",
-    "published_payload_commit": "abfaf11525a67371c57d2dc938912a0b819541fd"
-  },
-  "latest_git_delivery_request": {
-    "task_id": "SPE-08",
-    "route": "original_questions_v1",
-    "authorized_action": "commit and push for server pull",
-    "remote": "https://github.com/LDT-von/slot-attention.git",
-    "branch": "main",
-    "server_handoff": "docs/research/slotspe_mechanism_protocol_20261021/服务器AI_拉取本轮实验.txt",
-    "scope": "scoped server evidence imports, conservative reviews, original-question experiments, protocol, synthetic tests and sanitized delivery archive",
-    "patient_execution_started": false,
-    "private_patient_data_staged": false
-  },
-  "latest_git_delivery": {
-    "recorded_at": "2026-10-21T12:48:59+08:00",
-    "task_id": "SPE-08",
-    "route": "original_questions_v1",
-    "status": "payload_published_and_remote_verified",
-    "completed": "57个公开文件已提交并发布；包含原八项实验、协议、服务器拉取提示词、脱离私有数据的证据与复核记录。",
-    "repository": "https://github.com/LDT-von/slot-attention",
-    "branch": "main",
-    "payload_commit": "abfaf11525a67371c57d2dc938912a0b819541fd",
-    "payload_tree": "eefae532a90af573933624e447db2044bc79d617",
-    "checks": {
-      "synthetic_tests_passed": 63,
-      "staged_json_python_privacy_checks_passed": true,
-      "local_and_remote_payload_commit_identical": true,
-      "local_and_remote_payload_tree_identical": true,
-      "original_executable_source_and_default_configs_unchanged": true,
-      "private_patient_inputs_staged": false
-    },
-    "publish_method": "Git transport failed; GitHub Git Data API uploaded identical objects and updated main with force=false.",
-    "server_handoff": "docs/research/slotspe_mechanism_protocol_20261021/服务器AI_拉取本轮实验.txt",
-    "server_execution_started": false,
-    "new_server_raw_results_received": false,
-    "gaps_reasons": "只发布并核验代码；服务器尚未回传本协议原生重放或患者机制测量结果。",
-    "next_action_user_input": "服务器在LDT-von/slot-attention checkout拉取main；不得在DCT-Reg里误拉；先读取协议并检查plan。"
-  },
-  "latest_local_redundancy_check": {
-    "recorded_at": "2026-10-21T18:30:01+08:00",
-    "task_id": "SPE-08",
-    "route": "retained_native_redundancy",
-    "status": "completed_existing_arrays_only",
-    "completed": "复算历史原版71人最终槽、实际选中槽、每头读取重叠与门控有效权重；73份历史输出SHA一致。",
-    "report": "docs/research/slotspe_local_redundancy_20261021/本地槽冗余与门控实测.txt",
-    "aggregate": "docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json",
-    "script": "scripts/check_slotspe_retained_redundancy.py",
-    "patient_count": 71,
-    "historical_epochs": 3,
-    "fold": 0,
-    "seed": 3,
-    "selected_counts": {
-      "wsi": 2,
-      "omic": 2
-    },
-    "candidate_counts": {
-      "wsi": 8,
-      "omic": 8
-    },
-    "selected_pair_cosine_mean": {
-      "wsi": 0.9944680934017909,
-      "omic": 0.9986244912794483
-    },
-    "selected_pair_reading_overlap_mean": {
-      "wsi": 0.9985833998212321,
-      "omic": 0.9955457868292232
-    },
-    "historical_output_hashes_verified": 73,
-    "current_original_model_source_matches": true,
-    "existing_npz_recomputation_executed": true,
-    "new_model_forward_passes": 0,
-    "new_training_steps": 0,
-    "is_server_77_patient_result": false,
-    "private_patient_rows_public": false,
-    "new_commit_or_push": false,
-    "gaps_reasons": "单fold/seed的3轮历史checkpoint与单次保留评估；未测decoder.map后表示、槽级边际预测效用、独立生物学标签或去门控匹配训练。",
-    "next_action_user_input": "同样复核服务器原始已训练槽/keep/gate记录；不为本地既有高度重叠现象重新训练。"
-  },
-  "latest_sparsity_off_inference": {
-    "recorded_at": "2026-10-21T18:51:20+08:00",
-    "task_id": "SPE-08",
-    "route": "sparsity_off_inference",
-    "status": "completed_local_patient_readout_intervention",
-    "authorization": "用户要求把稀疏选择关掉再看差距；本轮限定原权重下读出反事实，不训练。",
-    "completed": "71名历史本地患者的5臂选择开关对照及2个读出控制已执行；原生logit/score/gate重现误差0。",
-    "report": "docs/research/slotspe_sparsity_off_20261021/关闭稀疏选择对照.txt",
-    "aggregate": "docs/research/slotspe_sparsity_off_20261021/aggregate_summary.json",
-    "script": "scripts/check_slotspe_sparsity_off.py",
-    "implementation": "survot_rank/research/slotspe_proof/sparsity_ablation.py",
-    "patient_count": 71,
-    "fold": 0,
-    "seed": 3,
-    "historical_training_epochs": 3,
-    "checkpoint_sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
-    "fused_cindex": {
-      "native_top2": 0.6866267465069861,
-      "dense_wsi": 0.687624750499002,
-      "dense_omic": 0.687624750499002,
-      "dense_both": 0.6846307385229541,
-      "uniform_both": 0.6846307385229541
-    },
-    "new_training_steps": 0,
-    "new_slot_generation": 0,
-    "new_native_downstream_readout_sweeps": 7,
-    "raw_patient_predictions_public": false,
-    "source_weights_inputs_unchanged": true,
-    "checks": {
-      "synthetic_tests_passed": 3,
-      "baseline_replay_max_abs_error": 0.0,
-      "original_gate_score_replay_max_abs_error": 0.0,
-      "all_true_vs_no_mask_max_abs_error": 0.0,
-      "cross_branch_max_abs_error": 0.0,
-      "model_state_and_external_rng_unchanged": true
-    },
-    "gaps_reasons": "冻结已训练3轮权重与单次保留槽；只回答推理时选槽读出作用，不识别训练时门控对分工的因果作用。",
-    "new_commit_or_push": false,
-    "next_action_user_inputs": "若要判断门控训练作用，另做同初态同预算开/关门控配对训练；当前没有启动。"
-  },
-  "latest_redundancy_method_review": {
-    "recorded_at": "2026-10-21T19:08:37+08:00",
-    "task_id": "SPE-08",
-    "status": "literature_review_and_synthetic_assignment_prototype_completed",
-    "report": "docs/research/slotspe_redundancy_methods_20261021/文献到模块与方法设计.txt",
-    "source_review": "docs/research/slotspe_redundancy_methods_20261021/source_review.json",
-    "synthetic_probe": "docs/research/slotspe_redundancy_methods_20261021/synthetic_probe.json",
-    "modules": [
-      "original",
-      "sinkhorn_uniform",
-      "mesh_uniform_adaptation"
-    ],
-    "new_module_synthetic_tests_passed": 12,
-    "previous_stage_synthetic_tests_passed": 3,
-    "novel_method_status": "design_only_not_implemented_or_validated",
-    "patient_tasks_this_stage": 0,
-    "training_runs_this_stage": 0,
-    "server_runs_this_stage": 0,
-    "original_download_hash_matches": 15,
-    "original_sources_modified": false,
-    "default_configs_modified": false,
-    "patient_queue_integrated": false,
-    "commit_or_push_this_stage": false
-  },
-  "latest_dct_prototype_bridge_review": {
-    "recorded_at": "2026-10-21T19:36:54+08:00",
-    "task_id": "SPE-08",
-    "status": "dct_source_review_and_two_stage_synthetic_bridge_completed",
-    "report": "docs/research/slotspe_redundancy_methods_20261021/DCT原型核查与独立版本.txt",
-    "source_receipt": "docs/research/slotspe_redundancy_methods_20261021/DCT_source_and_synthetic_check.json",
-    "external_source_root": "E:/DCT-Reg",
-    "external_source_files_modified": false,
-    "implementation": "survot_rank/research/slotspe_proof/prototype_assignment.py",
-    "stage_specs": "configs/slotspe_redundancy_variants/",
-    "stage_spec_count": 5,
-    "readiness": "core_and_stage_specs_only_full_host_training_not_integrated",
-    "synthetic_tests_passed": 26,
-    "external_native_local_replay_max_abs_error": 0.0,
-    "external_native_prototype_pool_max_abs_error": 0.0,
-    "dias_and_metaslot_readiness": "not_implemented",
-    "patient_tasks": 0,
-    "training_runs": 0,
-    "server_runs": 0,
-    "commit_or_push": false
-  },
-  "latest_research_module_publication": {
-    "recorded_at": "2026-10-21T20:10:31+08:00",
-    "task_id": "SPE-08",
-    "status": "completed_published",
-    "repository": "https://github.com/LDT-von/slot-attention",
-    "branch": "main",
-    "base_including_server_report": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
-    "handoff": "docs/research/slotspe_redundancy_methods_20261021/发布与服务器拉取.txt",
-    "tests_passed": 29,
-    "safe_cli_plans_passed": 3,
-    "independent_reviews": {
-      "module_correctness": "no_blocking_findings",
-      "privacy_provenance_guards": "no_blocking_findings"
-    },
-    "readiness": "research_cores_and_stage_specs_only; full_patient_training_not_integrated; DIAS_MetaSlot_not_implemented",
-    "new_patient_jobs_this_publication": 0,
-    "new_training_runs_this_publication": 0,
-    "server_execution_this_publication": false,
-    "new_server_report_received": true,
-    "new_server_raw_artifacts_audited": false,
-    "private_payloads_staged": false,
-    "protected_original_sources_modified": false,
-    "next_action": "服务器可拉取研究载荷并做合成检查；完整患者训练尚未接入，DIAS/MetaSlot未实现，不自动启动患者任务。",
-    "payload_commit": "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
-    "payload_tree": "9171373dac2e7f90d32c2ecbf02d3b7260750014",
-    "remote_payload_commit_verified": "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
-    "remote_payload_tree_verified": "9171373dac2e7f90d32c2ecbf02d3b7260750014",
-    "verified_payload_files": 29,
-    "publication_receipt": "docs/research/slotspe_redundancy_methods_20261021/publication_verified.json",
-    "verified_at": "2026-10-21T20:14:02+08:00"
-  },
-  "latest_research_module_pull": {
-    "recorded_at": "2026-10-21T20:40:00+08:00",
-    "task_id": "SPE-08",
-    "route": "research_module_pull_and_local_verification",
-    "status": "pulled_and_locally_verified_no_execution",
-    "completed": "在/data1/SlotSPE执行git pull --ff-only origin main，从2a806c2快进到a512169；本地与远端提交、文件树一致，工作区干净；复核29项合成测试与3个默认计划入口。",
-    "repository": "https://github.com/LDT-von/slot-attention",
-    "branch": "main",
-    "previous_local_commit": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
-    "local_head_commit": "a5121692c9cce5ef65ee75a9a821800eb1283992",
-    "local_head_tree": "c9dc1a7d55918c0bfc6b812b540bd49e63b603ba",
-    "remote_main_commit_verified": "a5121692c9cce5ef65ee75a9a821800eb1283992",
-    "remote_main_via_ls_remote": "a5121692c9cce5ef65ee75a9a821800eb1283992",
-    "incoming_commits": [
-      "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
-      "a5121692c9cce5ef65ee75a9a821800eb1283992"
-    ],
-    "fast_forward_only": true,
-    "local_remote_diff_empty": true,
-    "working_tree_clean": true,
-    "checks": {
-      "synthetic_tests_passed": 29,
-      "synthetic_test_command": "python -B -m pytest tests/test_slotspe_assignment_router.py tests/test_slotspe_prototype_assignment.py tests/test_slotspe_sparsity_off.py -q",
-      "plan_only_cli_checks_passed": 3,
-      "plan_only_cli_entries": [
-        "scripts/check_slotspe_assignment_router.py",
-        "scripts/check_slotspe_retained_redundancy.py --input-root <nonexistent>",
-        "scripts/check_slotspe_sparsity_off.py --observations-root <nonexistent> --checkpoint <nonexistent>"
-      ],
-      "patient_data_read_during_plan_checks": false,
-      "third_party_SlotSPE_modified": false,
-      "existing_default_queue_configs_modified": false,
-      "private_patient_inputs_staged": false,
-      "local_evidence_tracked_by_git": false
-    },
-    "new_patient_tasks_this_stage": 0,
-    "new_training_runs_this_stage": 0,
-    "new_model_forward_passes": 0,
-    "server_execution_this_stage": false,
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false,
-    "gaps_reasons": "本轮只做拉取与只读复核；发布载荷仍只含研究核心与D0-D4阶段配置，完整宿主/患者训练器未接入，DIAS/MetaSlot未实现，不能当作三篇论文的完整实现或患者训练版本；服务器新报告2a806c2的原始患者产物仍未在本轮验收。",
-    "next_action_user_input": "服务器可在LDT-von/slot-attention checkout执行git pull --ff-only origin main并复核；下一步由用户决定是否先完成固定宿主的单项阶段适配与匹配训练入口，患者对照实验另行授权。"
-  },
-  "latest_local_blca_run": {
-    "recorded_at": "2026-10-21T21:20:00+08:00",
-    "task_id": "SPE-09",
-    "route": "local_blca_clean_original_run",
-    "status": "completed_local_cpu_execution",
-    "authorization": "用户于2026-10-21 20:50明确要求跑BLCA看结果；仅执行既有默认原版单臂配置，未扩大队列。",
-    "completed": "在本机CPU执行默认clean-original原版单臂队列(fold0/seed3/3轮/256真实patch/batch8/20次评估)，prepare与训练、评估、汇总四阶段全部完成。",
-    "output_root": "results/slotspe_proof/blca_cpu_a512169",
-    "run_log": "local_evidence/blca_cpu_a512169_run.log",
-    "config": {
-      "study": "blca",
-      "fold": 0,
-      "seed": 3,
-      "epochs": 3,
-      "patches": 256,
-      "batch_size": 8,
-      "eval_repeats": 20,
-      "arm": "original",
-      "device": "cpu",
-      "experiment": "original_audit"
-    },
-    "data_roots": {
-      "metadata_root": "/data1/dataset_csv",
-      "features_root": "/data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files"
-    },
-    "device_deviation": "本机GPU为RTX 5090(sm_120)，已装torch 2.6.0+cu124最高仅支持sm_90，CUDA实际执行报no kernel image；改用CPU执行。模型与数据未因此改变。",
-    "harness_change": "仓库prepare阶段原只接受.pt特征，本机BLCA特征为UNI2-h的.h5，导致首跑prepare失败(No complete-case train patients)。已按DCT-Reg同源harness补入.h5回退与h5py读取；third_party/SlotSPE原版源码未改，默认配置未改。",
-    "cohort": {
-      "train": 302,
-      "val": 77,
-      "excluded": 2,
-      "unique_complete_case_patients": 379,
-      "matches_prior_gpu_run": true
-    },
-    "training_curve": [
-      {
-        "epoch": 1,
-        "loss": 2.85085,
-        "val_cindex": 0.7385103011093502
-      },
-      {
-        "epoch": 2,
-        "loss": 2.57833,
-        "val_cindex": 0.7408874801901744
-      },
-      {
-        "epoch": 3,
-        "loss": 2.48526,
-        "val_cindex": 0.7258320126782885
-      }
-    ],
-    "final_metrics": {
-      "val_cindex_mean_exploratory": 0.7278922345483361,
-      "val_cindex_std_population": 0.002434594531812554,
-      "val_cindex_min_exploratory": 0.7242472266244057,
-      "val_cindex_max_exploratory": 0.7329635499207607,
-      "repeats": 20,
-      "evaluation_randomness_observed": true,
-      "patient_risk_std_mean": 0.006621851422651604,
-      "patient_risk_range_max": 0.08941268920898438
-    },
-    "structural_observations": {
-      "selector_parameter_count": 8,
-      "main_gradient_none_parameter_count": 8,
-      "main_gradient_connected_parameter_count": 0,
-      "disconnected_selector_status": "observed",
-      "interpretation": "选槽器对融合主损失仍无梯度(P7局部结构事实在本机原版重现)"
-    },
-    "provenance": {
-      "checkpoint_sha256": "23549f7c82303d5e8eb9de4c4e6cac399a4a546daf051929e789f6ccaed9b3e5",
-      "same_initial_state_sha256": "888730935c696ec0daf18be2492c4e974e0ec498f3c8e0f94c3954d6fcb8e6f2",
-      "parameter_count": 33093390,
-      "optimizer_steps": 114,
-      "elapsed_seconds": 438.24358389992267
-    },
-    "comparison_to_prior_gpu_run": "同队列同协议；GPU run同权重20次均值0.72235(std 0.00354)，本机CPU均值0.72789(std 0.00243)。checkpoint与初始状态SHA不同，未做逐位对齐；差异来源含设备/库版本与浮点顺序，不能作为性能结论。",
-    "checks": {
-      "doctor_ready_on_cpu": true,
-      "patient_features_read": true,
-      "original_source_modified": false,
-      "default_queue_config_modified": false,
-      "patient_identifiers_staged_to_git": false
-    },
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false,
-    "gaps_reasons": "单fold单seed、3轮、20次评估的一次探索性原版运行；未测P1-P7机制干预，未比较D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot。C-index为探索性均值，不构成患者表现结论。",
-    "next_action_user_input": "如需继续，请授权具体对照(如关闭稀疏选择或匹配容量训练)与队列规模；D0-D4需先完成宿主训练接入。"
-  },
-  "latest_local_blca_gpu_run": {
-    "recorded_at": "2026-10-22T02:05:00+08:00",
-    "task_id": "SPE-09",
-    "route": "local_blca_clean_original_gpu_run",
-    "status": "completed_local_gpu_execution",
-    "authorization": "用户于2026-10-22 01:40指定使用trisurv环境与uni2-h数据集继续跑BLCA；沿用既有默认原版单臂配置，未扩大队列。",
-    "completed": "改用/home/ubuntu/.conda/envs/trisurv(torch 2.10.0+cu128, 支持sm_120)在RTX 5090上执行默认clean-original原版单臂队列，四阶段完成。",
-    "output_root": "results/slotspe_proof/blca_gpu_trisurv_a512169",
-    "run_log": "local_evidence/blca_gpu_trisurv_a512169_run.log",
-    "environment": {
-      "python": "/home/ubuntu/.conda/envs/trisurv/bin/python (3.10.20)",
-      "torch": "2.10.0+cu128",
-      "cuda_arch_list_includes_sm_120": true,
-      "gpu": "NVIDIA GeForce RTX 5090",
-      "device": "cuda:0",
-      "numpy": "2.2.6",
-      "pandas": "2.3.3",
-      "einops": "0.8.2",
-      "scikit-survival": "0.25.0"
-    },
-    "features": "uni2-h (.h5), /data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files",
-    "config": {
-      "study": "blca",
-      "fold": 0,
-      "seed": 3,
-      "epochs": 3,
-      "patches": 256,
-      "batch_size": 8,
-      "eval_repeats": 20,
-      "arm": "original",
-      "experiment": "original_audit"
-    },
-    "cohort": {
-      "train": 302,
-      "val": 77,
-      "excluded": 2,
-      "unique_complete_case_patients": 379
-    },
-    "training_curve": [
-      {
-        "epoch": 1,
-        "loss": 2.85843,
-        "val_cindex": 0.7258320126782885
-      },
-      {
-        "epoch": 2,
-        "loss": 2.5802,
-        "val_cindex": 0.742472266244057
-      },
-      {
-        "epoch": 3,
-        "loss": 2.41856,
-        "val_cindex": 0.722662440570523
-      }
-    ],
-    "final_metrics": {
-      "val_cindex_mean_exploratory": 0.7223454833597466,
-      "val_cindex_std_population": 0.00353836981961428,
-      "val_cindex_min_exploratory": 0.7131537242472267,
-      "val_cindex_max_exploratory": 0.7297939778129953
-    },
-    "reference_match_dct_reg_gpu_run": {
-      "all_20_repeat_metrics_identical": true,
-      "same_initial_state_sha256": true,
-      "epoch_loss_and_val_cindex_identical": true,
-      "model_tensors_compared": 1485,
-      "model_tensors_mismatching": 0,
-      "checkpoint_sha256_differs_only_in": [
-        "protocol/python",
-        "protocol/started_utc",
-        "protocol/runner_sha256",
-        "protocol/source_hashes_before",
-        "protocol/manifest_sha256"
-      ],
-      "checkpoint_model_weights_identical": true,
-      "verdict": "本机trisurv环境GPU运行与DCT-Reg参考GPU运行数值完全一致，可作为可信基线；checkpoint文件SHA不同仅因内嵌运行环境与时间戳元数据"
-    },
-    "structural_observations": {
-      "selector_parameter_count": 8,
-      "main_gradient_none_parameter_count": 8,
-      "main_gradient_connected_parameter_count": 0,
-      "disconnected_selector_status": "observed",
-      "evaluation_randomness_observed": true
-    },
-    "provenance": {
-      "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
-      "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
-      "parameter_count": 33093390,
-      "optimizer_steps": 114,
-      "elapsed_seconds": 129.2282225158997,
-      "peak_allocated_cuda_bytes": 1064786432
-    },
-    "device_comparison_cpu_vs_gpu": "同一协议CPU运行C-index均值0.72789(std 0.00243) vs GPU均值0.72235(std 0.00354)。两者初始状态SHA不同，差异含设备/库版本/浮点顺序，只能作为可重复性量级参考，不能作性能结论。",
-    "checks": {
-      "doctor_ready_on_gpu": true,
-      "original_source_modified": false,
-      "default_queue_config_modified": false,
-      "patient_identifiers_staged_to_git": false,
-      "queue_status": "completed/4 stages"
-    },
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false,
-    "gaps_reasons": "单fold单seed、3轮、20次评估的一次原版基线；未测P1-P7机制干预，未跑D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot。C-index为探索性均值。",
-    "next_action_user_input": "GPU已可用且与参考运行数值一致；下一步由用户授权具体对照臂(如关闭稀疏选择、匹配容量训练)与队列规模。"
-  },
-  "latest_local_five_fold_three_seed_and_mechanism_records": {
-    "recorded_at": "2026-10-22T10:05:00+08:00",
-    "task_id": "SPE-09",
-    "route": "local_blca_five_fold_three_seed_and_read_only_mechanism_records",
-    "status": "completed_local_record_only_registration",
-    "authorization": "用户于2026-10-22询问当前情况，并在选择record_only后授权一并推送；本轮只登记已完成的本机GPU结果。",
-    "completed": "把本机已完成的五折、五折三种子、稀疏关闭、保留冗余、P1观察导出与observe阶段六项结果写入单一进度入口；未新增任何训练、推理或患者干预。",
-    "public_record": "docs/research/slotspe_gpu_trisurv_20261022/five_fold_and_mechanism_records.json",
-    "public_record_sha256": "db469daea77e50e6a40bcdcf4ca9021229df952c3574ed6bb5710f76dc830ef5",
-    "report": "docs/research/slotspe_gpu_trisurv_20261022/本机GPU阶段登记与离散度.txt",
-    "generator": "scripts/record_slotspe_gpu_trisurv_20261022.py",
-    "environment": {
-      "torch": "2.10.0+cu128",
-      "cuda_runtime": "12.8",
-      "gpu": "NVIDIA GeForce RTX 5090"
-    },
-    "shared_queue_protocol": {
-      "experiment": "original_audit",
-      "arms": [
-        "original"
-      ],
-      "epochs": 3,
-      "patches": 256,
-      "batch_size": 8,
-      "eval_repeats": 20,
-      "lr": 0.0005,
-      "torch_threads": 2,
-      "parameter_count": 33093390,
-      "optimizer_steps_per_pair": 114,
-      "transport_added": false,
-      "repaired_models_constructed": false,
-      "feature_set": "uni2-h"
-    },
-    "five_fold_seed3": {
-      "output_root": "results/slotspe_proof/blca_5fold_gpu_trisurv_a512169",
-      "status": "completed",
-      "pairs_completed": 5,
-      "pairs_expected": 5,
-      "missing_pairs": [],
-      "cohort_unique_complete_case_patients": 379,
-      "per_fold_counts": {
-        "0": {
-          "train": 302,
-          "val": 77,
-          "excluded": 2,
-          "overlap": 0
-        },
-        "1": {
-          "train": 304,
-          "val": 75,
-          "excluded": 2,
-          "overlap": 0
-        },
-        "2": {
-          "train": 304,
-          "val": 75,
-          "excluded": 2,
-          "overlap": 0
-        },
-        "3": {
-          "train": 303,
-          "val": 76,
-          "excluded": 2,
-          "overlap": 0
-        },
-        "4": {
-          "train": 303,
-          "val": 76,
-          "excluded": 2,
-          "overlap": 0
-        }
-      },
-      "mean_validation_cindex_exploratory": 0.6658030852670128,
-      "cross_run_sample_std": 0.05365907687387666,
-      "min": 0.6206882591093118,
-      "max": 0.7264382402707276,
-      "per_pair": {
-        "fold_0_seed_3": 0.7223454833597466,
-        "fold_1_seed_3": 0.7264382402707276,
-        "fold_2_seed_3": 0.6206882591093118,
-        "fold_3_seed_3": 0.6321857923497267,
-        "fold_4_seed_3": 0.6273576512455517
-      },
-      "structural_checks": {
-        "original_disconnection_observed_pairs": 5,
-        "evaluation_randomness_observed_pairs": 5,
-        "self_interference_observed_pairs": 5,
-        "padding_sensitivity_observed_pairs": 5,
-        "natural_gate_near_zero_observed_pairs": 1
-      }
-    },
-    "five_fold_three_seed": {
-      "output_root": "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169",
-      "status": "completed",
-      "pairs_completed": 15,
-      "pairs_expected": 15,
-      "missing_pairs": [],
-      "mean_validation_cindex_exploratory": 0.6631942390042329,
-      "cross_run_sample_std": 0.060593216005657105,
-      "min": 0.5809716599190283,
-      "max": 0.7583597464342313,
-      "per_fold_mean_over_seeds": {
-        "0": 0.7409931325937665,
-        "1": 0.712112239142696,
-        "2": 0.5961538461538461,
-        "3": 0.6168306010928962,
-        "4": 0.6498813760379597
-      },
-      "per_seed_mean_over_folds": {
-        "3": 0.6658030852670128,
-        "17": 0.6569167897801003,
-        "29": 0.6668628419655855
-      },
-      "between_fold_std_of_fold_means": 0.06177959229302331,
-      "per_repeat_std_population_min": 0.0011668937980361996,
-      "per_repeat_std_population_max": 0.005469664703983282,
-      "unique_initial_state_sha256": 3,
-      "unique_checkpoint_sha256": 15,
-      "elapsed_seconds_total": 1934.6872677674983,
-      "peak_allocated_cuda_bytes_max": 1068785152,
-      "per_pair": {
-        "fold_0_seed_3": 0.7223454833597466,
-        "fold_0_seed_17": 0.7583597464342313,
-        "fold_0_seed_29": 0.7422741679873217,
-        "fold_1_seed_3": 0.7264382402707276,
-        "fold_1_seed_17": 0.6720812182741117,
-        "fold_1_seed_29": 0.7378172588832486,
-        "fold_2_seed_3": 0.6206882591093118,
-        "fold_2_seed_17": 0.5868016194331984,
-        "fold_2_seed_29": 0.5809716599190283,
-        "fold_3_seed_3": 0.6321857923497267,
-        "fold_3_seed_17": 0.6181420765027322,
-        "fold_3_seed_29": 0.6001639344262296,
-        "fold_4_seed_3": 0.6273576512455517,
-        "fold_4_seed_17": 0.6491992882562277,
-        "fold_4_seed_29": 0.6730871886120996
-      },
-      "structural_checks": {
-        "original_disconnection_observed_pairs": 15,
-        "evaluation_randomness_observed_pairs": 15,
-        "self_interference_observed_pairs": 15,
-        "padding_sensitivity_observed_pairs": 15,
-        "natural_gate_near_zero_observed_pairs": 6
-      },
-      "source_warning": "Cross-fold/seed mean is descriptive; pairs share patients and are not independent evidence units"
-    },
-    "structural_observations": {
-      "pairs_with_disconnected_selector": 20,
-      "pairs_total": 20,
-      "selector_parameter_count": 8,
-      "main_gradient_connected_parameter_count": 0,
-      "interpretation": "选槽支路对融合主损失无梯度在全部20个已训练对中一致重现；这是P7的局部结构事实，不等于整个Slot Attention缺少生存监督，也不构成患者预测损害。"
-    },
-    "retained_native_redundancy": {
-      "route": "retained_native_redundancy",
-      "recorded_utc": "2026-10-21T20:08:08.470234+00:00",
-      "patient_count": 77,
-      "fold": 0,
-      "seed": 3,
-      "new_training_steps": 0,
-      "new_model_forward_passes": 0,
-      "verified_historical_output_files": 79,
-      "modalities": {
-        "wsi": {
-          "candidate_counts": {
-            "8": 77
-          },
-          "selected_counts": {
-            "2": 77
-          },
-          "patients_all_unique_pairs_above_0_95": 77,
-          "patients_selected_pair_above_0_95": 77,
-          "patients_zero_gate_weight_sum": 0,
-          "distribution_means": {
-            "all_pair_cosine_mean": 0.9971665810223995,
-            "all_pair_cosine_min": 0.9910296738231283,
-            "selected_pair_cosine": 0.9970702848068772,
-            "pairs_cosine_above_0_95": 28.0,
-            "all_pair_reading_overlap_mean": 0.9989444370081286,
-            "selected_pair_reading_overlap": 0.9989177387467753,
-            "selected_minus_all_pair_cosine": -9.629621552226314e-05,
-            "selected_minus_all_pair_reading_overlap": -2.6698261353190497e-05,
-            "centered_energy_fraction": 0.00312179134599639,
-            "centered_effective_rank": 2.54649748585428,
-            "gate_weight_sum": 0.9999993446675259,
-            "nonzero_gate_weights": 2.0,
-            "gate_weight_effective_slots": 1.3199614904492225
-          }
-        },
-        "omic": {
-          "candidate_counts": {
-            "8": 77
-          },
-          "selected_counts": {
-            "2": 77
-          },
-          "patients_all_unique_pairs_above_0_95": 73,
-          "patients_selected_pair_above_0_95": 76,
-          "patients_zero_gate_weight_sum": 0,
-          "distribution_means": {
-            "all_pair_cosine_mean": 0.9931348208830303,
-            "all_pair_cosine_min": 0.9846111992799362,
-            "selected_pair_cosine": 0.9932512312211002,
-            "pairs_cosine_above_0_95": 27.77922077922078,
-            "all_pair_reading_overlap_mean": 0.9916068818152846,
-            "selected_pair_reading_overlap": 0.9915839848724429,
-            "selected_minus_all_pair_cosine": 0.00011641033806961744,
-            "selected_minus_all_pair_reading_overlap": -2.2896942841858944e-05,
-            "centered_energy_fraction": 0.006325469859882902,
-            "centered_effective_rank": 4.5904669075227575,
-            "gate_weight_sum": 0.9999995579362496,
-            "nonzero_gate_weights": 2.0,
-            "gate_weight_effective_slots": 1.5617833367748133
-          }
-        }
-      },
-      "cosine_0_95_is_descriptive_not_clinical_threshold": true,
-      "conclusion_boundary": [
-        "Native retained final-slot and reading-distribution redundancy persists after this checkpoint's selection.",
-        "These are 71 historical local BLCA cases at one 3-epoch checkpoint and one retained eval draw, not the 77-case server run.",
-        "No new inference; decoder.map outputs, biological event labels and per-slot marginal predictive utility were not recomputed.",
-        "No without-gating matched training control: this does not identify the gate's causal training effect or predictive harm."
-      ],
-      "private_artifacts_not_published": [
-        "patient_metrics.json"
-      ]
-    },
-    "sparsity_off_frozen_checkpoint": {
-      "route": "sparsity_off_frozen_checkpoint_inference",
-      "patients": 77,
-      "fold": 0,
-      "seed": 3,
-      "new_training_steps": 0,
-      "new_slot_generation": 0,
-      "new_native_downstream_readout_sweeps": 7,
-      "fused_cindex": {
-        "native_top2": 0.7194928684627575,
-        "dense_wsi": 0.7187004754358162,
-        "dense_omic": 0.7187004754358162,
-        "dense_both": 0.7194928684627575,
-        "uniform_both": 0.7194928684627575
-      },
-      "aux_cindex": {
-        "native_top2": {
-          "aux_wsi": 0.5903328050713154,
-          "aux_omic": 0.7234548335974643
-        },
-        "dense_wsi": {
-          "aux_wsi": 0.606973058637084,
-          "aux_omic": 0.7234548335974643
-        },
-        "dense_omic": {
-          "aux_wsi": 0.5903328050713154,
-          "aux_omic": 0.7218700475435816
-        },
-        "dense_both": {
-          "aux_wsi": 0.606973058637084,
-          "aux_omic": 0.7218700475435816
-        },
-        "uniform_both": {
-          "aux_wsi": 0.6014263074484945,
-          "aux_omic": 0.7234548335974643
-        }
-      },
-      "controls_max_abs_errors": {
-        "historical_logits": 0.0,
-        "original_gate": 0.0,
-        "original_scores": 0.0,
-        "identical_input": 0.0,
-        "dense_all_true_vs_none_mask": 0.0,
-        "cross_branch": 0.0,
-        "dense_decoder_different_rng": 4.76837158203125e-07
-      },
-      "conclusion_boundary": [
-        "Frozen weights and exact same retained slots; effects concern reading/prediction only.",
-        "Does not estimate how training without sparse selection changes learned slots.",
-        "One 3-epoch local checkpoint, 71 BLCA patients, one retained draw; no independent test or efficacy claim.",
-        "Cross branch remains dense as designed; dense learned versus uniform gates only differ in auxiliary modal predictions."
-      ],
-      "private_artifacts_not_published": [
-        "predictions.npz",
-        "patient_order.json"
-      ]
-    },
-    "p1_native_slot_observations": {
-      "route": "p1_native_slot_observation_export",
-      "output_file_count": 79,
-      "new_optimizer_steps": 0,
-      "original_artifacts_unchanged": true,
-      "input_scope": "local_trisurv_gpu_current_training_run_real_BLCA_cached_validation",
-      "private_artifacts_not_published": [
-        "observations.json",
-        "patient_provenance.json",
-        "raw/*.npz"
-      ]
-    },
-    "original_questions_observe": {
-      "route": "original_questions_observe_phase",
-      "status": "completed",
-      "phase": "observe",
-      "started_utc": "2026-10-21T19:37:47.484530+00:00",
-      "finished_utc": "2026-10-21T21:32:06.006763+00:00",
-      "result": {
-        "patients": 77,
-        "repeat_rows_are_not_independent_patients": true,
-        "native_replay_error": {
-          "n": 770,
-          "median": 0.0,
-          "q25": 0.0,
-          "q75": 0.0,
-          "min": 0.0,
-          "max": 0.0
-        },
-        "question_status": {
-          "P1": "frozen_sensitivity_only_use_separate_matched_training_for_capacity",
-          "P2": "representation_and_input_reading_measured",
-          "P3": "aggregation_trajectories_measured_causal_scope_limited",
-          "P4": "external_content_scoring_when_labels_present_else_computational_only",
-          "P5": "see_patient_specific_role_prerequisites",
-          "P6": "see_patient_specific_aligned_features_and_content_targets",
-          "P7": "exact_native_objective_gradient_geometry_measured",
-          "P8": "not_applicable"
-        },
-        "main_endpoint_is_not_cindex": true
-      },
-      "observation_settings": {
-        "fold": 0,
-        "seed": 3,
-        "repeats": 5,
-        "reference_iterations": 30,
-        "capacity_counts": [
-          4,
-          8,
-          16
-        ],
-        "capacity_modality": "wsi",
-        "dictionary_train_patients": 32,
-        "replay_atol": 1e-06
-      },
-      "patient_outputs_private": true,
-      "private_artifacts_not_published": [
-        "patient_records.json",
-        "objective_gradients.json",
-        "patient_*_native.npz"
-      ]
-    },
-    "measurement_spread_note": {
-      "five_fold_seed3_mean": 0.6658030852670128,
-      "five_fold_seed3_cross_run_std": 0.05365907687387666,
-      "five_fold_3seed_mean": 0.6631942390042329,
-      "five_fold_3seed_cross_run_std": 0.060593216005657105,
-      "five_fold_3seed_between_fold_std": 0.06177959229302331,
-      "five_fold_3seed_per_seed_means": {
-        "3": 0.6658030852670128,
-        "17": 0.6569167897801003,
-        "29": 0.6668628419655855
-      },
-      "classification": "descriptive_measurement_spread_not_a_patient_performance_conclusion",
-      "detail": "跨折跨种子离散度远大于此前单点fold0/seed3上登记的对照效应量量级，且折间差异远大于种子间差异；说明主要差异来自数据划分。以往单折单种子差值需在该分布内重新判断，不应继续在单折上叠加对照。",
-      "does_not_override_prior_records": true
-    },
-    "checks": {
-      "new_training_runs_this_stage": 0,
-      "new_model_forward_passes_this_stage": 0,
-      "new_patient_interventions_this_stage": 0,
-      "server_execution_this_stage": false,
-      "original_source_modified": false,
-      "default_queue_config_modified": false,
-      "results_directory_git_ignored": true,
-      "local_evidence_git_ignored": true,
-      "patient_identifiers_staged_to_git": false,
-      "host_absolute_paths_staged_to_git": false,
-      "historical_reports_modified": false,
-      "private_patient_inputs_staged": false
-    },
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false,
-    "gaps_reasons": "3轮探索性验证C-index；跨折跨种子各对共享同一379名完全病例患者，不是独立证据单位，均值仅描述性；未测P1-P7机制干预，未跑D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot；本轮为只读登记，未启动任何新执行。",
-    "next_action_user_input": "由用户决定是否授权具体对照臂(关闭稀疏选择、匹配容量训练或A/B/C)与队列规模；D0-D4需先完成宿主训练接入。未获明确执行授权前不启动训练或推理。"
-  },
-  "latest_d0_d4_execution_audit": {
-    "recorded_at": "2026-10-22T11:07:00+08:00",
-    "task_id": "SPE-08",
-    "route": "d0_d4_execution_status_audit",
-    "status": "audited_not_executed_d0_d4_arms_never_run",
-    "completed": "核查D0-D4五臂的真实执行状态：逐臂追踪配置、模块消费方、宿主接线、结果目录与全盘产物扫描。结论：D0-D4从未被实际运行；已发布的只是阶段核心与声明式配置。",
-    "question_asked": "用户询问表中D0-D4各版本是否已跑过。",
-    "arm_execution_evidence": {
-      "stage_specs_present": [
-        "D0_native",
-        "D1_sa_sinkhorn",
-        "D2_sa_mesh",
-        "D3_coordinate_mesh",
-        "D4_both_mesh"
-      ],
-      "stage_specs_path": "configs/slotspe_redundancy_variants/",
-      "each_spec_declares_patient_execution_false": true,
-      "each_spec_declares_readiness": "stage_core_tested_not_patient_training_ready",
-      "specs_consumed_by_any_runner": false,
-      "specs_referenced_only_in": [
-        "tests/test_slotspe_prototype_assignment.py",
-        "docs/PROGRESS.json",
-        "docs/research/slotspe_redundancy_methods_20261021/"
-      ],
-      "d0_d4_result_directories_found": 0,
-      "d0_d4_output_artifacts_found_anywhere_under_data1": 0,
-      "dct_host_contains_mesh_uniform_or_arm_specs": false,
-      "existing_runs_are_original_arm_only": true,
-      "existing_run_dirs": [
-        "results/slotspe_proof/blca_cpu_a512169",
-        "results/slotspe_proof/blca_gpu_trisurv_a512169",
-        "results/slotspe_proof/blca_5fold_gpu_trisurv_a512169",
-        "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169"
-      ],
-      "existing_runs_config": {
-        "folds": [
-          0,
-          1,
-          2,
-          3,
-          4
-        ],
-        "seeds": [
-          3,
-          17,
-          29
-        ],
-        "epochs": 3,
-        "patches": 256,
-        "experiment": "original_audit"
-      },
-      "new_patient_tasks_this_stage": 0,
-      "new_training_runs_this_stage": 0,
-      "new_model_forward_passes": 0,
-      "server_execution_this_stage": false
-    },
-    "why_not_runnable_yet": {
-      "stage1_slot_reading": "SlotAssignmentRouter 已实现，但它是独立重放器(replay_with_assignment)，需替换宿主 SA 内部注意力；原版 third_party/SlotSPE 未被修改，默认模型不导入该模块。",
-      "stage2_prototype_pooling": "原型汇总属于 DCT 宿主(DCT-Reg /data1/DCT-Reg)，而原版 SlotSPE 本身没有原型池化(third_party/SlotSPE 中 prototype 命中为0)；因此D3/D4的②在 SlotSPE 仓库内无宿主可挂载。",
-      "host_reference_in_configs": "DCT-RG v2.3 (configs 自述)；DCT-Reg 本机 HEAD 为 8c3dfa0 (E053, v3.13 同口径三臂复刻)。",
-      "prototype_semantics_match_verified": true,
-      "prototype_semantics_check": "SlotSPE 侧 dct_soft 与 DCT 宿主 model.py 的 softmax(scores/temperature, dim=1) 再按行 clamp_min(1e-8) 归一化一致。",
-      "sa_api_compatibility_verified": true,
-      "sa_api_check": "SlotSPE 重放用 SA 与 DCT 宿主 components/slot_attention.py 暴露相同接口(norm_input/split_heads/to_q/to_k/to_v/norm_slots/merge_heads/combine_heads/gru/norm_pre_ff/mlp, eps/scale/iters/dim)，router 可作为宿主 SA 的即插替换件。",
-      "di_and_metaslot_status": "not_implemented"
-    },
-    "checks": {
-      "assignment_and_prototype_tests_passed": 26,
-      "assignment_and_prototype_test_command": "python3 -m pytest tests/test_slotspe_prototype_assignment.py tests/test_slotspe_assignment_router.py -q",
-      "full_test_suite_result": "160 passed, 0 failed (2026-10-22T11:40+08:00, after fixing the stale expectation; previously 159 passed, 1 failed)",
-      "failing_test": "none",
-      "failing_test_cause": "已修复：陈旧测试期望断言 plan['training_runs']==30，但默认 configs/slotspe_proof_server.json 为 experiment=original_audit/folds=[0]/seeds=[3]/epochs=3/patches=256，实际 training_runs=1。属期望值未同步，非执行回归；现已改为从发布的默认配置推导期望值(1)，未改动任何队列默认或执行逻辑。",
-      "plan_only_default_prints_training_runs": 1,
-      "patient_data_read_during_audit": false,
-      "third_party_SlotSPE_modified": false,
-      "private_patient_inputs_staged": false,
-      "no_new_commit_or_push_this_audit": false,
-      "new_commit_this_stage": "fix stale default-plan expectation in tests/test_slotspe_proof_queue.py; record in PROGRESS.json",
-      "push_this_stage": false,
-      "queue_defaults_or_execution_logic_changed": false,
-      "server_execution_this_stage": false
-    },
-    "interpretability_caveats": {
-      "measurement_spread_between_fold_std": 0.06177959229302331,
-      "measurement_spread_3seed_cross_run_std": 0.060593216005657105,
-      "note": "即使接通宿主训练，D0-D4 的单折单种子差值也需在该跨折离散度内重新判断；本审计不判定任何臂优劣。",
-      "single_fold_single_seed_comparison_recommended": false
-    },
-    "gaps_reasons": "D0-D4 五臂均无实际运行；宿主训练接入未完成；DIAS/MetaSlot 未实现；原版 SlotSPE 无原型池化阶段，② 只能落到 DCT 宿主；队列默认与陈旧测试期望已一致(本轮仅修测试期望，未改队列默认)。",
-    "next_action_user_input": "由用户决定是否授权：(1)接通 DCT 宿主训练以运行 D0-D4；(2)D0-D4 应在 DCT 宿主(有②原型汇总)还是原版 SlotSPE(无②)上评估。未获明确执行授权前不启动训练或推理。",
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false
-  },
-  "latest_eleven_arm_execution_delivery": {
-    "recorded_at": "2026-10-22T23:23:00+08:00",
-    "route_task": "SlotSPE / SPE-08 / eleven-arm executable patient diagnostic delivery",
-    "status": "implemented_generated_validation_passed_no_patient_or_server_execution",
-    "completed_work": {
-      "variants": [
-        "S0",
-        "S4",
-        "R1",
-        "R2",
-        "R3",
-        "R4",
-        "R5",
-        "S1",
-        "S2",
-        "S3",
-        "S5"
-      ],
-      "scope": "BLCA / existing UNI2-h / fold0 / seed3 only",
-      "default_budget": {
-        "epochs": 3,
-        "real_patches": 256,
-        "logical_batch": 8,
-        "eval_repeats": 20
-      },
-      "implemented": [
-        "matched per-example forwarding, native objectives and one core/probe update per logical batch",
-        "train-only frozen heterogeneous reference and query-free content heads",
-        "variable-cardinality coverage-aware matching, own/donor/static and input/noise sensitivity diagnostics",
-        "separate main/auxiliary/added-loss gradient scales, geometry, reading, survival and resource records",
-        "fixed final-epoch checkpoint, isolated stages, hash-verified complete-stage resume and preserved failures",
-        "HDF5 [N,D] and [1,N,D] input layout validation"
-      ]
-    },
-    "paths_commit": {
-      "config": "configs/slotspe_redundancy_queue.json",
-      "entrypoint": "scripts/run_slotspe_redundancy.py",
-      "validation_receipt": "docs/research/slotspe_native_assignment_training_20261022/eleven_arm_delivery_validation.json",
-      "server_handoff": "docs/research/slotspe_native_assignment_training_20261022/十一组可执行队列与服务器交接.md",
-      "publication_scope": "isolated delivery based on latest origin/main, preserving unrelated shared-workspace changes; exact commit identity supplied after push"
-    },
-    "checks_actual_execution_raw_receipt": {
-      "focused_tests_passed": 152,
-      "full_generated_queue_stages": 14,
-      "full_generated_training_arms": 11,
-      "invented_cases": 7,
-      "generated_budget": {
-        "epochs": 1,
-        "patches": 8,
-        "eval_repeats": 2,
-        "native_dim": 256,
-        "native_slots": 8,
-        "native_iterations": 10
-      },
-      "generated_counts": {
-        "root_forwards": 121,
-        "slot_attention_calls": 297,
-        "slot_attention_iterations": 2970,
-        "core_optimizer_steps": 33,
-        "probe_optimizer_steps": 33,
-        "core_backward_calls": 33,
-        "probe_backward_calls": 33,
-        "component_autograd_grad_calls": 27
-      },
-      "completed_resume_retrained": false,
-      "third_party_original_files_unchanged": 11,
-      "existing_default_configs_and_A_B_C_unchanged": true,
-      "new_patient_training_runs": 0,
-      "new_patient_model_forwards": 0,
-      "patient_inputs_loaded": false,
-      "actual_server_runs": 0,
-      "new_server_raw_receipt": false
-    },
-    "gaps_reasons": "Generated integration tests prove interfaces and execution only. Invented random 8-D inputs are not real UNI2-h. Actual server CUDA/runtime/data provenance requires doctor and server verification. No eleven-arm BLCA patient results, predictive harm, correction efficacy or generalization established. Fixed R weights are diagnostic candidates, not tuned patient optima; S5 implements DIAS section3.2 core, S6 held.",
-    "next_action_user_inputs": "User requested implementation, push and a handoff prompt. Server AI should pull the verified delivery commit, verify existing UNI2-h inputs/environment, then explicitly run the fixed eleven-arm single-fold 3-epoch diagnostic. No automatic fold/seed/budget expansion."
-  },
-  "latest_slot_ring_dissection": {
-    "recorded_at": "2026-10-23T13:32:00+08:00",
-    "task_id": "SPE-08",
-    "route": "SlotSPE original / read-only inference-time dissection of the four collapse rings",
-    "question": "Is the collapse generated by the selector, or by a specific ring inside MultiHeadSlotAttention?",
-    "completed_work": "Built survot_rank/research/slotspe_proof/slot_ring_dissection.py, a read-only inference intervention that ablates exactly one of four rings of the native MultiHeadSlotAttention forward while binding the real trained weights. Arms: none, r1_slot_axis_softmax, r2_l1_normalize, r3_gru_residual, r4_shared_mu. 13/13 synthetic checks pass, including that the 'none' arm is BITWISE identical to the untouched native forward (max abs difference 0.0).",
-    "execution_receipt": {
-      "artifact": "local_evidence/slot_ring_dissection_20261023/",
-      "ignored_by_git": true,
-      "status": "completed",
-      "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
-      "prepared_manifest_sha256": "8659f952d0c09b08dbf7366ad5624c2b7cbd476ee3432e84f38732a2f5fb63f7",
-      "observations_sha256": "06c4155a26b1eec560c80fe36303d63b93e7416209ca00dab0efa4f9e26a9f19",
-      "runner_sha256": "e39b431774e97ecc2cdf751f43c58c0bb403543ddce70c82cb0b4e5d79f20073",
-      "source_root": "/data1/SlotSPE/third_party/SlotSPE",
-      "third_party_slot_attention_sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
-      "third_party_SlotSPE_sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
-      "third_party_unchanged": true,
-      "gpu": "NVIDIA GeForce RTX 5090",
-      "torch": "2.10.0+cu128",
-      "cuda_runtime": "12.8",
-      "device": "cuda:0",
-      "started_utc": "2026-10-23T05:49:49.162270+00:00",
-      "finished_utc": "2026-10-23T05:49:49.162297+00:00",
-      "replay_none_max_abs_logit_difference": 0.0,
-      "replay_tolerance": 1e-06,
-      "state_unchanged": true,
-      "training_runs": 0,
-      "optimizer_steps": 0,
-      "parameters_updated": 0,
-      "new_training_runs": 0,
-      "new_model_forward_passes": "inference only, patient slots regenerated per arm",
-      "new_backward_passes": 0,
-      "superseded_first_run": "local_evidence/slot_ring_dissection_20261023_superseded_mixed_initial",
-      "superseded_reason": "first run averaged the pre-iteration initial state together with the ten post-iteration states; retained, not deleted"
-    },
-    "fidelity_anchor": "The 'none' arm reproduced the recorded historical fold0/seed3 validation logits for all 77 patients with maximum absolute logit difference exactly 0.0, and the trained state digest was identical before and after every arm. Any measured difference is therefore attributable to the ablated ring alone.",
-    "measured_wsi": {
-      "none": {
-        "initial_cosine": 0.477,
-        "final_cosine": 0.9233,
-        "final_effective_rank": 4.492,
-        "share_spread": 7.341036094050814e-05,
-        "update_divergence": 0.007462246379294925
-      },
-      "r1_slot_axis_softmax": {
-        "initial_cosine": 0.477,
-        "final_cosine": 0.9233,
-        "final_effective_rank": 4.492,
-        "share_spread": 7.340456796664244e-05,
-        "update_divergence": 0.007461855296065634
-      },
-      "r2_l1_normalize": {
-        "initial_cosine": 0.477,
-        "final_cosine": 0.8613,
-        "final_effective_rank": 6.385,
-        "share_spread": 0.00010803131615184949,
-        "update_divergence": 0.010971504176660063
-      },
-      "r3_gru_residual": {
-        "initial_cosine": 0.477,
-        "final_cosine": 1.0,
-        "final_effective_rank": 5.335,
-        "share_spread": 1.8707441428383635e-05,
-        "update_divergence": 0.0019023620977723897
-      },
-      "r4_shared_mu": {
-        "initial_cosine": 0.3721,
-        "final_cosine": 0.9014,
-        "final_effective_rank": 4.252,
-        "share_spread": 7.861247980304616e-05,
-        "update_divergence": 0.00800176280930136
-      }
-    },
-    "measured_omic": {
-      "none": {
-        "initial_cosine": 0.499,
-        "final_cosine": 0.8924,
-        "final_effective_rank": 5.998,
-        "share_spread": 0.0004593740159568745,
-        "update_divergence": 0.05981658080869391
-      },
-      "r1_slot_axis_softmax": {
-        "initial_cosine": 0.499,
-        "final_cosine": 0.8883,
-        "final_effective_rank": 5.962,
-        "share_spread": 0.0004719975487811107,
-        "update_divergence": 0.061458213634023304
-      },
-      "r2_l1_normalize": {
-        "initial_cosine": 0.499,
-        "final_cosine": 0.7827,
-        "final_effective_rank": 6.628,
-        "share_spread": 0.000732645300710312,
-        "update_divergence": 0.09535336271124177
-      },
-      "r3_gru_residual": {
-        "initial_cosine": 0.499,
-        "final_cosine": 0.9996,
-        "final_effective_rank": 3.616,
-        "share_spread": 0.00011130610516093574,
-        "update_divergence": 0.014484779162270875
-      },
-      "r4_shared_mu": {
-        "initial_cosine": 0.3944,
-        "final_cosine": 0.8638,
-        "final_effective_rank": 5.39,
-        "share_spread": 0.0004940976546718011,
-        "update_divergence": 0.06431646331163458
-      }
-    },
-    "conclusion": {
-      "primary_ring": "r2_l1_normalize",
-      "primary_evidence": "R2 is the only ring whose removal both slows the collapse at every iteration and lowers the terminal value. WSI pairwise cosine by iteration for none = 0.5890/0.9295/0.9851/0.9974 (iterations 1/3/5/10) versus R2 = 0.7911/0.8402/0.8654/0.9116. WSI final effective rank rises 4.49 -> 6.39 of 8 slots, share spread 0.000073 -> 0.000108, update divergence 0.00746 -> 0.01097.",
-      "corrected_axis_description": "The native F.normalize(attn + eps, p=1, dim=-1) runs over the TOKEN axis: it pins each slot's total attention mass across tokens to 1. It does NOT pin the cross-slot mass at a token, which is left unconstrained by the dim=-2 softmax (measured mean num_slots/num_tokens). An earlier verbal description of R2 as pinning cross-slot mass at a token was corrected.",
-      "r1_downgraded": "R1 (slot-axis softmax) is NOT the main cause. On WSI the R1 curve is numerically indistinguishable from 'none' at every iteration (0.9974 versus 0.9974 at iteration 10); only omic moves, by about 0.004. This contradicts the earlier localization that placed slot-axis competition at the head of the self-reinforcing chain, and that ranking must be treated as superseded.",
-      "r3_is_a_trap_not_a_fix": "R3 makes cosine exactly 1.0000 from iteration 1, which must NOT be read as restored diversity. With the GRU and residual MLP removed the slots become numerically identical: per-dimension standard deviation across slots ~4e-8 and slot0-slot1 L2 ~1e-6, i.e. float32 round-off. Removing the GRU/residual forces a degenerate collapse; any claim that it relieves collapse is refuted.",
-      "r4_minor": "R4 (per-slot mu) lowers the initial cosine 0.4770 -> 0.3721 and slightly slows the early curve, but by iteration 10 the terminals are 0.9970 versus 0.9974, essentially unchanged. Shared initialization is not the dominant ring.",
-      "residual_collapse": "Even with R2 removed the terminal cosine is 0.9116, still high redundancy. The collapse is a multi-ring effect and removing the strongest single ring only mitigates it."
-    },
-    "gaps_and_reasons": [
-      "Single fold0, single seed3, single frozen checkpoint, 10 validation patients. Not cross-fold robustness evidence.",
-      "Read-only inference on an already collapsed checkpoint. It does not show what the rings would learn if trained from scratch with a ring removed.",
-      "No C-index is computed. This is mechanism localization only.",
-      "R2 relief is partial, so no correction-efficacy claim is supported.",
-      "Not a predictive-harm claim: the collapse is measured as a representation fact, and its patient consequence remains unestablished."
-    ],
-    "next_action": "Capacity scan remains, but its expected value is reduced: the dominant ring R2 is a normalization operator and is independent of slot count, so changing slot capacity may not relieve the collapse. Loose the problem_capacity.py state contract and run 4/8/16 slots as independent-initialization arms to test that prediction. Any training requires fresh explicit user authorization; the earlier authorization covered the read-only dissection only."
-  },
-  "latest_package_relocation": {
-    "recorded_at": "2026-10-23T15:55:00+08:00",
-    "task_id": "SPE-RELOCATE",
-    "route": "SlotSPE repository layout / import-path relocation only; no training, no inference, no patient work",
-    "question": "Can the SlotSPE research harness live at the top level under its own name while every historical import path keeps working unchanged?",
-    "completed_work": "Moved all 33 implementation modules from survot_rank/research/slotspe_proof/ to the top-level slotspe_proof/ package. survot_rank/research/slotspe_proof/__init__.py is now a compatibility shim that holds no implementation code: a meta path finder resolves each legacy dotted name onto the canonical module and binds that SAME module object, so both paths share one module identity. The shim is lazy on purpose, because several harness modules import torch/pandas at module scope and this repository treats 'plan must not import torch' as a hard contract. Updated the three hardcoded legacy imports inside the harness (slot_ring_dissection, redundancy_queue -m target, queue PACKAGE), the 7 module-level repository-root constants from parents[3] to parents[1], the delivery builder glob, the 11 anti-tamper path pins plus their hashes in configs/slotspe_redundancy_queue.json, and the 17 survot_rank entries in PUBLICATION_MANIFEST.json. acceptance.py now accepts either the new or the historical delivery prefix and rejects an ambiguous match.",
-    "paths": {
-      "new_package": "slotspe_proof/ (33 modules)",
-      "compat_shim": "survot_rank/research/slotspe_proof/__init__.py",
-      "third_party_untouched": "third_party/SlotSPE/ (byte-for-byte unchanged)"
-    },
-    "checks": {
-      "pytest_tests": "312 passed, 0 failed, 2 pre-existing CUDA capability warnings (RTX 5090 / sm_120 vs installed torch build)",
-      "module_identity": "slotspe_proof.model is survot_rank.research.slotspe_proof.model -> True; __name__ stays 'slotspe_proof.model'",
-      "package_spec_consistency": "__package__ == __spec__.parent == 'slotspe_proof' under the legacy path; zero DeprecationWarnings (was 37)",
-      "plan_import_purity": "--plan still loads neither torch nor pandas on all three entrypoints",
-      "entrypoints": [
-        "run_slotspe_proof.sh --plan",
-        "python -B scripts/run_slotspe_redundancy.py --plan",
-        "python -B scripts/run_slotspe_problem_experiments.py --plan"
-      ],
-      "script_import_smoke": "all scripts/check_slotspe_*.py, run_slotspe_*.py, export_slotspe_*.py, audit/pack_slotspe_return import cleanly",
-      "new_deprecation_warnings": 0,
-      "training_runs": 0,
-      "inference_passes": 0,
-      "patient_arrays_read": 0,
-      "parameters_updated": 0
-    },
-    "gaps_and_reasons": [
-      "evidence/code_snapshots/* still reference survot_rank/research/slotspe_proof/. Those files are frozen archives whose sha256 values are registered in PUBLICATION_MANIFEST.json; AGENTS.md requires their historical bytes and hashes be preserved, so they were deliberately NOT edited. Relocating code does not make old-path auditors portable, exactly as the local migration note already warned for the E:/DCT-Reg -> /data1/SlotSPE move.",
-      "docs/research/** still cite the old path in historical reports. Those citations are left verbatim so that recorded hashes and measurement reports stay intact; only README.md's live 'file locations' entry was updated to describe the new package and the shim.",
-      "Historical scripts and tests still import the old path. That is intentional and is the compatibility guarantee; they were not rewritten.",
-      "No SlotSPE behavior changed. The relocation fixes no clinical or predictive question, and proves nothing about patient performance."
-    ],
-    "next_action": "Return to the pending user-authorized task: implement best-validation-C-index checkpoint selection in slotspe_proof/patient.py (train 30 epochs, keep the peak per fold, reload best weights, report the exploratory peak as the main C-index, and reset max_cindex per fold to avoid the original cross-fold threshold bug), then run 5 folds x 1 seed, arm A only. Nothing has been trained or executed here."
-  },
-  "latest_official_semantics_alignment": {
-    "recorded_at": "2026-10-23T17:35:00+08:00",
-    "task_id": "SPE-ALIGN-OFFICIAL",
-    "route": "SlotSPE harness semantics alignment with the original published code; no training, no inference, no patient work",
-    "question": "Does the research harness reproduce the original SlotSPE data semantics, and if not, where did it deviate and can the deviations be removed without touching the original source?",
-    "source_facts": "Read directly from third_party/SlotSPE/. dataset/dataset_survival.py lines 285-292 draw n_samples = min(num_patches, wsi.size(0)) patches without replacement and then ZERO-PAD up to num_patches; no patient is ever removed for owning fewer patches. The sampling happens inside __getitem__, so every epoch draws a fresh subset; the condition is split_key == 'train', so validation uses the full bag. utils/process_args.py defaults --num_patches 4096, --max_epochs 30, --lr 5e-4, --seed 3, --slot_num_wsi 8, --slot_iters 10, --topk_ratio 0.25, --temperature 0.01. scripts/SlotSPE.sh confirms --num_patches 4096 --max_epochs 30 --encoding_dim 1024. dataset/dataset_survival.py line 203 hardcodes the split directory as splits/5fold; the --which_splits argument declared in process_args.py line 46 is never read anywhere in the published package. The published package also omits survival.py, the entrypoint that both README.md and scripts/SlotSPE.sh invoke, which is why a local harness must exist at all. models/SlotSPE.py takes the feature width from args.encoding_dim and contains no hardcoded 1024, so 1536-dimensional UNI2-h features need no change to the original source.",
-    "deviations_found": "The harness had two real deviations. First, slotspe_proof/patient.py returned the reason 'fewer_real_patches_than_configured_no_padding' and dropped the whole patient whenever the patient owned fewer patches than the configured budget; at 4096 that removed 41 of 380 cohort patients (10.8 percent), and the removed patients had shorter follow-up (median DSS 13.0 versus 17.0 months), so the exclusion introduced a cohort bias. Second, the harness cached one fixed seeded bag per patient and reused it for every epoch and every arm, so 30 epochs would have trained on one identical patch subset. An earlier report in this workspace asserted that the original loader also excluded such patients; that assertion was wrong and is withdrawn: the original pads with zeros.",
-    "completed_work": "patient.py now caches EVERY real patch per patient in concatenated slide order and derives the fixed-length bag at access time. _sample_bag reproduces the original draw exactly: min(budget, available) patches without replacement, sorted, then zero-padded to the budget. Training batches resample on every access, so each epoch sees a fresh subset; the matched-state B/C check, the slot-intervention probe and the selector-gradient probe keep a fixed draw so their cross-held contracts stay meaningful. The prepared manifest now records a zero-padding exclusion policy and a per-epoch resampling patch policy, and the schema version was raised from 1 to 2. The split directory became a configurable splits_dir (default 5fold) in patient.py, queue.py and redundancy_queue.py, with a name-only pattern so it cannot be used as a path. The queue configuration was moved from 3 epochs / 256 patches to 30 epochs / 4096 patches with splits_dir 5fold_uni2h, matching the original defaults. A new scripts/refresh_slotspe_queue_pins.py recomputes the anti-tamper path pins after an intentional change and refuses to rewrite evidence pins.",
-    "measured_facts": "Measured on this machine, not assumed. Real features are h5 'features' arrays of 1536 float32 dimensions; the earlier 1024 figure came from the original ResNet50-era configuration, not from this data. Total real patches across the 457 BLCA slides are 5,583,592, which is 34.31 GB as float32 and 17.15 GB as float16; the machine has 62 GB RAM with 56 GB available, so caching every patch is feasible. An earlier estimate in this workspace put the same cache at 31 TB; that estimate was wrong by roughly three orders of magnitude and is withdrawn. h5 random single-patch read latency is 0.015 ms and a contiguous 4096-patch read takes 6.8 ms (3688 MB/s), so per-epoch resampling from the original files is also cheap. The two available split directories differ substantially at fold 0: 5fold has 304 train / 77 val and 5fold_uni2h has 304 train / 76 val, but their train sets intersect in only 242 patients, with 62 patients unique to each. Switching splits therefore changes the training cohort and is not a neutral relabelling.",
-    "paths": {
-      "changed_implementation": ["slotspe_proof/patient.py", "slotspe_proof/queue.py", "slotspe_proof/redundancy_queue.py", "slotspe_proof/problem_experiments.py"],
-      "changed_config": ["configs/slotspe_redundancy_queue.json"],
-      "new_helper": "scripts/refresh_slotspe_queue_pins.py",
-      "changed_tests": "tests/test_slotspe_redundancy_engine.py (cache key 'wsi' -> 'patches')",
-      "changed_docs": ["AGENTS.md", "README.md"],
-      "original_source": "third_party/SlotSPE/ untouched; every byte preserved"
-    },
-    "checks": "The pytest suite passes with 312 tests and no failures after the alignment; this run exercised the generated synthetic path only. The anti-tamper pins in configs/slotspe_redundancy_queue.json were refreshed for the three changed implementation files and verify_config_pins passes. --plan still reproduces the 11 arms and 14 stages and imports no torch or data package.",
-    "gaps_and_reasons": [
-      "No patient training was run, so nothing here is evidence about patient performance. The alignment proves semantic equivalence with the published loader, not efficacy.",
-      "The zero-padding change restores all 380 cohort patients, but 41 of them now contribute bags that are more than half zeros, because the minimum patient owns only 123 real patches against a 4096 budget. The original loader has exactly this property; it is faithful, but the resulting signal for those patients is diluted, and that dilution is a property of the original method rather than of this harness.",
-      "Switching to splits/5fold_uni2h replaces 62 training patients relative to splits/5fold, so any historical numbers computed on 5fold are not comparable to future numbers on 5fold_uni2h, and the direction of the difference is unknown.",
-      "The 30-epoch schedule was previously measured to degrade late: 18 of 18 groups showed a final-epoch validation C-index drop greater than 0.01, averaging 0.12629. The queue keeps the fixed final-epoch checkpoint rule rather than best-validation selection, so the degradation remains expected and is a documented property of the configuration, not a fixed defect.",
-      "Per-epoch resampling makes the cached full patch tensor the only preparation artifact, so the prepared cache is about 34 GB and each arm reloads patient tensors from disk; the per-epoch IO cost was measured but the end-to-end wall time of a full 11-arm 30-epoch run was not measured.",
-      "The prepared manifest schema moved from version 1 to version 2, so previously prepared batches cannot be resumed and a fresh output directory is required.",
-      "Validation still draws a fixed 4096-patch subset rather than the original loader's full-bag evaluation. The original evaluates with batch_size 1 over the complete bag, while this harness keeps one fixed-length bag so that arms and folds stay comparable and so the repeated evaluations keep their existing contract that patient risks are identical across repeats. Training now matches the original per-epoch resampling, but evaluation is deliberately not a byte-for-byte reproduction of the original validation path, and that difference is stated rather than hidden."
-    ],
-    "next_action": "Commit the alignment, then obtain explicit execution authorization before running --run on the server. Do not report any C-index from that run as a patient-performance conclusion: the recorded cross-fold cross-seed C-index standard deviation is 0.0606, so 11 arms on one fold and one seed are only interpretable as within-batch paired differences, not as absolute performance. User inputs still wanted: whether to keep the fixed final-epoch checkpoint rule in the presence of the measured late-epoch degradation, and whether the 5fold_uni2h split switch should be accompanied by a re-baseline of the historical numbers."
-  },
-  "latest_patch_to_slot_sharing_readonly": {
-    "recorded_at": "2026-10-23T17:52:00+08:00",
-    "task_id": "SPE-08",
-    "route": "SlotSPE original / read-only patch-to-slot sharing recomputation over already saved native attention arrays",
-    "question": "A patch can be read by several slots and is not hard-assigned to one. Are the patches inside the current slots too similar, and do so many patches enter many slots at once that the slots are redundant?",
-    "completed_work": "Recomputed, per patient, how the 8 slots share the 256 WSI / 329 OMIC patches, using only the already saved native attention, competition, per-iteration attention and final slot arrays from the P1 observation export. No model was imported, no forward or backward pass ran, no parameter was updated. New read-only entry point scripts/check_slotspe_patch_slot_sharing.py with a plan-only default and --run reading existing NPZ files only.",
-    "answer_to_the_asked_question": "Yes, the reading side is redundant, and more severely than the already registered slot-vector redundancy. But the mechanism is a near-uniform split of every patch across all 8 slots, not a competition in which many patches are fought over by many slots.",
-    "measured_wsi": {
-      "patches": 256,
-      "slots": 8,
-      "effective_slots_reading_each_patch_mean": 7.9999886,
-      "effective_slots_reading_each_patch_min": 7.99940471,
-      "cross_slot_share_deviation_from_uniform_1_over_8": 0.00013448,
-      "raw_slot_axis_softmax_max_min_ratio_mean": 1.03094183,
-      "raw_slot_axis_softmax_max_min_ratio_min": 1.01877892,
-      "raw_slot_axis_softmax_deviation_from_uniform": 0.0009979,
-      "max_pairwise_weight_gap_at_one_patch_mean": 5.78e-05,
-      "typical_patch_weight_1_over_256": 0.00390625,
-      "effective_patches_read_per_slot": 255.99963512,
-      "top_decile_share_of_slot_mass": 0.09787932,
-      "uniform_top_decile_mass_share": 0.10,
-      "rank_one_separable_energy_fraction": 0.99999715,
-      "per_slot_gain_relative_spread": 5.07e-08,
-      "pairwise_reading_overlap": 0.99917969,
-      "slot_vector_cosine_mean": 0.99716658,
-      "reading_uniform_deviation_by_iteration": [0.00571, 0.00583, 0.00492, 0.00383, 0.00309, 0.00261, 0.00225, 0.00198, 0.00176, 0.00157]
-    },
-    "measured_omic": {
-      "patches": 329,
-      "slots": 8,
-      "effective_slots_reading_each_patch_mean": 7.9998439,
-      "effective_slots_reading_each_patch_min": 7.99931929,
-      "cross_slot_share_deviation_from_uniform_1_over_8": 0.00055,
-      "raw_slot_axis_softmax_max_min_ratio_mean": 1.04490899,
-      "max_pairwise_weight_gap_at_one_patch_mean": 1.222e-04,
-      "effective_patches_read_per_slot": 328.99358023,
-      "top_decile_share_of_slot_mass": 0.0982029,
-      "rank_one_separable_energy_fraction": 0.99996097,
-      "pairwise_reading_overlap": 0.99666994,
-      "slot_vector_cosine_mean": 0.99313482,
-      "reading_uniform_deviation_by_iteration": [0.04336, 0.0435, 0.03553, 0.0256, 0.01817, 0.01336, 0.01025, 0.00817, 0.00673, 0.0057]
-    },
-    "mechanism_reading": "The slot-axis softmax is not what flattens the reading. The raw softmax before the token-axis L1 normalization is itself flat: the max/min ratio across the 8 slots at one patch is only 1.031 on WSI and 1.045 on OMIC. This independently reproduces the 2026-10-23 four-ring dissection conclusion that R1 (slot-axis softmax) is not the primary cause. The near-uniform state already exists at iteration 1 and tightens at every later iteration, so the cause sits upstream of the softmax, in the fact that the 8 slots are already almost identical when the first query is formed. R2 only pins each slot's total mass over tokens to 1 and does not decide which tokens a slot reads; by the patch distribution the attention matrix was already near-uniform over patches before that normalization, so the reading flatness is not manufactured by R2 either. The multi-ring superposition conclusion of the dissection is unchanged.",
-    "relation_to_registered_slot_vector_redundancy": "The reading-side redundancy is worse than the already registered slot-vector redundancy (reading overlap 0.99918 vs slot cosine 0.99717 on WSI; 0.99667 vs 0.99313 on OMIC). Both hold, but they are different quantities and neither is the other.",
-    "paths": {
-      "entrypoint": "scripts/check_slotspe_patch_slot_sharing.py",
-      "report": "docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt",
-      "ignored_output": "local_evidence/patch_slot_sharing_20261023/",
-      "input": "local_evidence/p1_observations_gpu_trisurv_20261022/ (77 patients, already saved arrays)",
-      "third_party_SlotSPE": "untouched; byte for byte"
-    },
-    "checks_and_receipt": {
-      "plan_only_default_imports_no_torch": true,
-      "verified_historical_output_files": 79,
-      "historical_receipt_and_observations_sha256_verified": true,
-      "historical_native_source_hashes_verified": true,
-      "per_patient_raw_sha256_verified": 77,
-      "duplicate_patients": 0,
-      "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
-      "new_training_runs": 0,
-      "new_model_forward_passes": 0,
-      "new_backward_passes": 0,
-      "parameters_updated": 0,
-      "actual_server_execution_this_stage": false,
-      "new_server_raw_results_received": false
-    },
-    "gaps_and_reasons": [
-      "Single fold0, single seed3, single frozen 3-epoch checkpoint, 77 validation patients. Not cross-fold robustness evidence.",
-      "Sharing geometry is a representation fact. It is not predictive harm and not a proof that a slot carries no unique information.",
-      "No causal intervention was run, so this cannot attribute the reading flatness to any single ring, and it cannot say what slots would be learned if trained from scratch with a ring removed.",
-      "The 77-patient cohort is the native validation split of this checkpoint and differs from the historical 71-patient local records; the two must not be pooled.",
-      "Attention was head-averaged before measuring sharing, so head-specific specialization, if any, is not visible here.",
-      "Slot cosine above 0.95 remains a descriptive threshold, not a clinical threshold."
-    ],
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false,
-    "next_action_user_inputs": "This measurement answers the asked question and needs no training authorization. Whether to act on it does: removing the input-side collapse requires either an intervention arm (already covered by the R-series in the eleven-arm queue) or a fresh training protocol, and both need explicit user authorization. No training, inference or patient intervention was started here."
-  },
-  "latest_patch_budget_truth_and_padding_risk": {
-    "recorded_at": "2026-10-23T18:22:00+08:00",
-    "task_id": "SPE-08",
-    "route": "SlotSPE / patch budget reconciliation, read-only; no training, no inference, no patient intervention",
-    "question_asked": "用户怀疑出了问题，并直接问：目前是 256 patch 还是 4096 patch？记录这个风险并推送。",
-    "verdict": "用户的怀疑成立，但真实情况比二选一更糟：配置意图是 4096/30 轮，而至今每一次患者运行都仍然是 3 轮/256 patch；两者从未同时成立过。",
-    "fact_a_configured_intent": "configs/slotspe_redundancy_queue.json 的 real_data_diagnostic 阶段当前为 epochs 30、real_patches 4096、splits_dir 5fold_uni2h。python -B scripts/run_slotspe_redundancy.py --plan 实测输出 epochs=30 patches=4096 splits_dir=5fold_uni2h，且 --plan 不导入 torch。此与原版一致：third_party/SlotSPE/utils/process_args.py 第 35 行 --num_patches 默认 4096，第 49 行 --max_epochs 默认 30。commit 24dedca（2026-10-23 09:42）把配置从 3 轮/256 patch 改为 30 轮/4096 patch。",
-    "fact_b_what_actually_ran": "所有已完成的患者运行都是 3 轮/256 patch：results/slotspe_proof/blca_cpu_a512169、blca_gpu_trisurv_a512169、blca_5fold_gpu_trisurv_a512169（5 对）、blca_5fold_3seed_gpu_trisurv_a512169（15 对），以及两次失败的十一臂尝试 local_evidence/redundancy_blca_uni2h_fold0_seed3_run01_FAILED_cudactx（arm_S0 因 CUDA 上下文失败）与 redundancy_blca_uni2h_fold0_seed3_run01（arm_S4 失败）。每个目录内的 resolved_config.json / queue_manifest.json / summary.json 都记录 epochs=3 patches=256。4096 预算下的患者运行次数为 0。",
-    "why_the_discrepancy_exists": "按文件时间戳而非推测：两次十一臂尝试的 resolved_config.json 写于 2026-10-23 08:53 与 09:57 UTC，而把配置改为 30/4096 的 commit 24dedca 时间是 09:42 UTC，因此最后一次尝试启动时配置仍是 3 轮/256 patch。更关键的是这两份 resolved_config.json 中没有 splits_dir 字段，而当前 slotspe_proof/redundancy_queue.py 第 72 行必定写入 stage.get('splits_dir','5fold')。字段缺失说明这两次运行是用 09:42 之前的旧代码执行的，而不是新代码读了旧配置。因此运行落后的原因包含旧代码，而不只是旧配置。",
-    "the_padding_risk_that_matters": "切换到 4096 会首次把补零问题从 1 名患者放大到 41 名患者。统计单位必须是患者而非切片：原版 third_party/SlotSPE/dataset/dataset_survival.py 的 load_wsi（第 222-236 行）先把同一患者的全部切片拼接成一个矩阵，第 285-292 行才抽样与补零；本仓库 slotspe_proof/patient.py 第 293 行同样先拼接、第 385-399 行 _sample_bag 后补零。因此训练 bag 的补零比例由患者合并后的真实 patch 总数决定。",
-    "per_patient_patch_budget_facts": {
-      "unit": "patient, after merging all of that patient's slides",
-      "slides_on_disk": 457,
-      "patients_with_resolvable_slide_list": 381,
-      "rows_with_missing_slide_file": 0,
-      "slides_per_patient": {"min": 1, "median": 1, "max": 9},
-      "feature_dim": 1536,
-      "patient_merged_patches_total": 5516258,
-      "patient_merged_patches": {"min": 123, "p25": 7441, "median": 12460, "p75": 18649, "max": 103807},
-      "budget_256": {"short_patients": 1, "short_fraction_of_patients": 0.0026, "over_half_zero": 1, "over_half_zero_fraction_of_cohort": 0.0026, "zero_share_within_short_subset_mean": 0.5195, "zero_share_over_whole_cohort_mean": 0.0014, "zero_share_over_whole_cohort_median": 0.0, "zero_share_max": 0.5195},
-      "budget_4096": {"short_patients": 41, "short_fraction_of_patients": 0.1076, "over_half_zero": 15, "over_half_zero_fraction_of_cohort": 0.0394, "zero_share_within_short_subset": {"min": 0.0056, "median": 0.4060, "mean": 0.4013, "max": 0.97}, "zero_share_over_whole_cohort_mean": 0.0432, "zero_share_over_whole_cohort_median": 0.0, "zero_share_max": 0.97}
-    },
-    "fold0_5fold_uni2h_split_breakdown": {
-      "note": "This is the split the configured queue will actually run, and it differs from the cohort-wide figures above.",
-      "train": {"patients": 304, "patch_counts_resolved": 304, "short_under_4096": 30, "short_fraction": 0.0987, "over_half_zero": 11, "merged_patches_min": 288, "merged_patches_median": 12668, "merged_patches_max": 103807},
-      "val": {"patients": 76, "patch_counts_resolved": 76, "short_under_4096": 11, "short_fraction": 0.1447, "over_half_zero": 4, "merged_patches_min": 123, "merged_patches_median": 11152, "merged_patches_max": 59876},
-      "observation": "Validation short-bag rate 14.47 percent exceeds the training rate 9.87 percent. The published loader only samples when split_key == 'train' and otherwise uses the full bag, so short-bag validation inputs still carry budget-length padding while short-bag training inputs are resampled every access. This asymmetry is a property of the original protocol and is registered, not corrected."
-    },
-    "denominator_warning": "三个比例分母不同，绝不可混用：10.76% 是真实 patch 不足 4096 的患者比例；3.94% 才是 bag 过半为零的患者比例；平均 0.4013 的分母是 41 名短袋患者，若以全部 381 人为分母则平均仅 0.0432、中位为 0。",
-    "mechanism_risk_not_predictive_harm": "原版 dataset/dataset_survival.py 第 285-292 行不传 mask，零行经 norm_input/to_k/to_v 后产生完全相同的 key/value，会分到确定且不小的注意力质量。该源码事实只证明补零确实参与计算，即存在机制风险；尚不能证明患者预测受损。这是与已登记 P5 缺 padding mask 同一结构缺陷，受影响患者数随预算放大约 41 倍。",
-    "user_decisions_recorded": {
-      "recorded_at": "2026-10-23T18:46:00+08:00",
-      "decision_1": "本轮 S0 及十一组共同保留官方训练补零行为，不新增 mask、不改成变长 bag。padding mask 另作独立修正对照，不混入当前模块比较，以避免把 mask 的作用混进 MESH、Gram 等模块的效果。",
-      "decision_2": "先做 S0 的 4096 小规模协议检查，不先跑满 30 epochs；使用独立输出与临时权重，检查结果不冒充正式训练结果。检查通过后再启动同一协议下的十一组正式队列，保持 fold0/seed3，不自动扩展。",
-      "consequence": "是否加 mask 已不再是本轮 4096 运行的前置阻塞项，它是后续独立的修正对照。本轮协议检查只需测量补零的实际影响，而不需要改变补零行为。",
-      "made_enforceable_not_merely_documented": "该决定原先只以文字登记，现已由 scripts/check_slotspe_padding_policy_guard.py 变成可强制检查的守卫，并在 tests/test_slotspe_padding_policy_guard.py 中以 8 项回归测试锁定双向行为：干净仓库必须通过，且每种违规必须被抓到。守卫校验四件事：(a) 运行时配置中不存在任何 padding 模式开关；(b) 十一臂执行路径上任何 replay_with_assignment 调用都不传 token_mask，按完整调用表达式检查而非单行，因此续行注入也会被抓到；(c) 队列成分仍是那十一臂，任何 mask 臂不得混入；(d) patient.py 的 _sample_bag 仍然用 torch.zeros 纯零补齐、无 mask、仍按 min(budget, available) 无放回抽样，并且不会退回已撤回的患者排除逻辑。已注入并确认被抓到的五类违规：native_allocation 臂路径传 mask、native_pruning（S5 臂路径）传 mask、非零补齐、mask 臂进入队列、患者排除原因复活。守卫自身在编写中被发现并修好了一处真实缺陷：初版按行扫描调用点，续行上的 token_mask 会被漏掉。",
-      "scope_boundary_found_by_the_guard": "守卫首次运行时发现 slotspe_proof/prototype_assignment.py 确实会向共享 replay 传 token_mask。经核查它是 DCT 宿主桥，只经 replay_assignment_variant 到达，而该函数要求 dct_prototype_assignment_stage_spec_v1 版本化宿主规格；十一臂引擎 redundancy_engine.py 只触及 native_allocation 与 native_pruning，不导入它。它因此被列为唯一豁免模块，且豁免必须写明理由，并由测试断言 redundancy_engine.py 不含 prototype_assignment。豁免的含义是'不在十一臂执行路径上'，不是'不受该决定约束'。"
-    },
-    "second_order_effect_on_this_stage_measurement": "本阶段全部读取侧均匀度数字都是在 3 轮/256 patch 下测得。在 4096 下分母变为 4096，补零行会让'每槽读取的有效 patch 数等于全部 patch 数'更加显眼，但那是补零造成的而非学习结果。因此本阶段的读取冗余数字既不能代表 4096 预算下的表现，也不能代表任何一种预算下的患者结论。",
-    "risk_registration": "现在直接执行 --run 会同时首次发生三件从未实测的事：首次在 4096 patch 上训练、首次让 41 名患者（10.76%）拿到短袋、首次让其中 15 名（占全队列 3.94%）的 bag 过半为零。配置意图本身没有错（已对齐原版），风险在于该组合从未被运行验证过。",
-    "corrections_applied_after_user_review": [
-      "更正一：初稿把'真实 patch 占比'误标为'零行占比'，因此 4096 零行份额曾被写成平均 59.7% / 最大 99.4%。",
-      "更正二（用户指出）：初稿的统计单位是切片而非患者。原版 loader 与本仓库 patient.py 都是先把患者全部切片拼接再抽样补零，所以必须按患者合并后的真实 patch 总数重算。初稿的'457 张切片''50/457''18 人'四个数字全部作废，改为 381 名患者口径。",
-      "更正三（用户指出）：'平均 40.27%'未注明分母。正确做法是同时给出两个分母：短袋 41 人子集内平均 0.4013，全队列 381 人为分母时平均仅 0.0432、中位 0.0000。",
-      "以上更正保留在记录中而非静默覆盖。用户同时确认：源码证明补零参与计算只说明存在机制风险，尚不能证明患者预测受损。"
-    ],
-    "checks": {
-      "configured_intent_read_from_plan_output_not_inferred": true,
-      "actual_run_budget_read_from_per_directory_json_not_inferred": true,
-      "timestamp_evidence_used_for_causal_ordering": true,
-      "splits_dir_field_absence_checked_against_current_code": true,
-      "patch_counts_read_from_hdf5_dataset_shapes_only": true,
-      "h5_layout_observed": "[1, num_patches, 1536]",
-      "patch_count_unit": "patient after merging that patient's slides, matching dataset_survival.py lines 222-236 and patient.py line 293",
-      "superseded_slide_level_numbers": "The earlier slide-level figures (total_real_patches 5583592, 457 as a patient denominator, 50/457, 18) were withdrawn; they used slides where the loader uses patients.",
-      "full_pytest_suite": "316 passed, 1 pre-existing CUDA fork_rng warning",
-      "full_pytest_suite_after_padding_guard": "324 passed (316 pre-existing + 8 new regression tests), 1 pre-existing CUDA fork_rng warning",
-      "padding_guard_result": "passed, 0 findings on the clean tree",
-      "padding_guard_violations_verified_caught": ["native_allocation arm path passes token_mask", "native_pruning S5 arm path passes token_mask", "non-zero padding instead of plain zeros", "mask arm added to the selected queue", "withdrawn patient-exclusion reason reintroduced"],
-      "plan_imports_no_torch": true,
-      "third_party_SlotSPE_modified": false,
-      "default_configs_modified_this_stage": false,
-      "new_training_runs": 0,
-      "new_model_forward_passes": 0,
-      "new_backward_passes": 0,
-      "patient_feature_arrays_loaded": false,
-      "actual_server_execution_this_stage": false,
-      "new_server_raw_results_received": false,
-      "published_commit": "99f457428bc3409b22c1ff7d1ed168883cee44d4",
-      "published_branch": "main",
-      "remote_main_verified_equal_to_local_head": true,
-      "published_files": 4,
-      "patient_identifiers_staged": false,
-      "private_patient_inputs_staged": false
-    },
-    "publication_note": "本地工作分支名为 master，而远端跟踪分支是 main。第一次 push 因此意外新建了远端 master 分支，随后已把同样内容以 fast-forward 推送到 main，并删除了远端 master，随后把本地分支重命名为 main。推送到 main 的范围包含三个先前未推送的提交：93a83e9（迁移 slotspe_proof 顶层包）、24dedca（对齐原版 patch 语义）、99f4574（本轮）。远端 main 与本地 HEAD 已核验一致。",
-    "paths": {
-      "report": "docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt",
-      "sharing_entrypoint": "scripts/check_slotspe_patch_slot_sharing.py",
-      "budget_probe": "local_evidence/diag_patch_budget_per_patient.py (ignored, metadata-only, per-patient unit)",
-      "padding_policy_guard": "scripts/check_slotspe_padding_policy_guard.py",
-      "padding_policy_guard_tests": "tests/test_slotspe_padding_policy_guard.py",
-      "orphan_slide_reconciliation": "457 张切片中有 452 张被 clinical/all/blca.csv 引用，5 张为孤儿（合计 67334 个 patch）。因此切片口径总数 5,583,592 = 患者口径 5,516,258 + 67334，两个数字可以完全对上。此前 latest_official_semantics_alignment 中记录的是切片口径总量，作为容量可行性事实仍然正确（该记录的用途是说明 34 GB 缓存可行），但它不是训练 bag 的口径；两者不可互换。",
-      "config_of_record": "configs/slotspe_redundancy_queue.json",
-      "origins_of_discrepancy": ["configs/slotspe_redundancy_queue.json", "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/resolved_config.json", "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01_FAILED_cudactx/queue_manifest.json"]
-    },
-    "gaps_and_reasons": [
-      "The per-patient patch-count distribution now matches the loader unit, but it still spans all 381 patients with a resolvable slide list rather than only the 379 complete-case patients, and it is not broken down by fold or by train/validation role. fold0 of splits/5fold_uni2h has 304 train and 76 val rows, so the actual per-fold short-bag counts will differ from these cohort-wide figures.",
-      "No forward pass was run, so how much attention actually lands on padded rows is still unmeasured. That measurement is explicitly part of the agreed S0 4096 protocol check and is the reason the check exists.",
-      "The absence of a padding mask in the published loader is a source fact about mechanism only. It is not evidence that patient predictions are harmed, and this stage did not establish any predictive harm.",
-      "The 256-budget reading-redundancy measurements do not predict 4096-budget behaviour. Any claim about reading redundancy under the configured budget remains unmeasured.",
-      "Validation still draws a fixed subset rather than the original full-bag evaluation, so even a correct 4096 run would not be a byte-for-byte reproduction of the published evaluation path. The original only samples when split_key == 'train'.",
-      "The S0 4096 protocol check has not been written or executed. Nothing has been trained, run or intervened on since the 316-test check."
-    ],
-    "patient_predictive_harm_established": false,
-    "correction_efficacy_established": false,
-    "next_action_user_inputs": "Both decisions are now made and recorded above: keep the official padding behaviour for S0 and the eleven arms with the mask held out as an independent correction arm, and run a single-arm S0 4096 protocol check before the full queue. What remains is execution authorization for that check. The check must report per-patient statistics, keep whole-cohort and short-subset denominators separate, cover no/light/heavy padding plus the largest validation bag, confirm real 4096 input, finite loss and gradient, memory, cross-epoch resampling, full-bag validation, padding attention mass, and reading overlap renormalized over real patches only, and save the actual commit, resolved_config, split/cache hashes and execution receipt. Results must not be presented as formal training results. After the check passes, the eleven-arm queue runs under the same protocol at fold0/seed3 with no automatic expansion. No execution has been started."
+  {
+   "id": "SPE-09",
+   "title": "交付干净原版单臂服务器检查与严格回传验收",
+   "status": "completed_local_execution",
+   "next_action": "trisurv环境GPU已跑通并与DCT-Reg参考运行数值完全一致(1485个模型张量0差异)；下一步由用户授权对照臂与队列规模。"
   }
+ ],
+ "patient_effect_or_abc_efficacy": "not_established",
+ "server_raw_results_received": false,
+ "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
+ "next_action": "只读机制拆解已完成并定位主因 R2；容量扫描的预期收益下降（主因与槽数无关）。下一步需用户授权训练后再动 problem_capacity.py。未启动新训练。",
+ "git_remote": "https://github.com/LDT-von/slot-attention.git",
+ "latest_source_review": {
+  "recorded_at": "2026-10-20T17:43:31+08:00",
+  "task_id": "SPE-08",
+  "status": "completed_readonly_source_review",
+  "requested_directory": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main",
+  "report": "docs/research/slotspe_target_review_20261020/指定目录八项问题核查.txt",
+  "receipt": "docs/research/slotspe_target_review_20261020/source_identity_receipt.json",
+  "registered_files_three_way_hash_matches": 11,
+  "codegraph_project": "C:\\Users\\栋栋\\Desktop\\slot attention\\SlotSPE-main",
+  "new_index_created": false,
+  "patch_order_sensitivity": "not_established; prior controlled synthetic record near floating-point error",
+  "new_training_runs": 0,
+  "new_model_forward_passes": 0,
+  "new_backward_passes": 0,
+  "patient_tensors_or_checkpoints_loaded": false,
+  "new_synthetic_experiments": 0,
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "server_execution_this_review": false,
+  "server_raw_results_received": false,
+  "historical_patient_measurements_recomputed_this_review": false,
+  "original_sources_modified": false,
+  "historical_reports_modified": false,
+  "next_action": "优先验收已有SPE09原始回传与SHA；保留P5勘误及证据边界，不新增训练或模块。"
+ },
+ "latest_server_report_review": {
+  "source_repo": "LDT-von/DCT-Reg",
+  "source_commit": "1de42c777054b061ed278eb3ecb02d0bfbd2cca3",
+  "commit_verified": true,
+  "raw_results_received": false,
+  "review": "docs/research/slotspe_server_claims_20261020/claim_review.json",
+  "six_patient_harm_claim_accepted": false,
+  "new_patient_execution": false
+ },
+ "confirmed_problem_phenomena": [
+  "P3 native eval randomness affects predictions",
+  "P7 direct fused-loss selector gradient disconnect",
+  "P5 missing padding mask and synthetic zero-row sensitivity",
+  "unselected self-slot contribution despite selection mask"
+ ],
+ "latest_server_git_handoff": {
+  "recorded_at": "2026-10-20T20:05:40+08:00",
+  "route_task": "SlotSPE / SPE-08",
+  "status": "server_branch_verified_public_return_pending_acceptance",
+  "completed_work": "Verified configured origin and prepared a copyable server Git handoff prompt with tracked diagnostic scripts, public aggregate summaries, provenance, missing artifact inventory and remote SHA checks.",
+  "prompt": "docs/research/slotspe_server_connection_20261020/服务器AI_接入独立仓库并回传发现.txt",
+  "prompt_sha256": "903ae321e4d43e413c1fbaa3fdf3eb214db7c38540cc96a48ee5c6737abec0fc",
+  "local_base_commit": "a5819e40319794488609e2052d8ff5778d006e50",
+  "new_local_commit_created": false,
+  "target_repository": "https://github.com/LDT-von/slot-attention.git",
+  "proposed_branch": "codex/server-slotspe-evidence-20261020",
+  "checks": {
+   "configured_origin_matches": true,
+   "prompt_exists": true,
+   "progress_json_valid": true
+  },
+  "actual_server_execution_this_turn": false,
+  "server_push_verified": true,
+  "server_raw_results_received": false,
+  "new_training_or_model_execution": false,
+  "gaps_reasons": "Server must execute the handoff and return a real branch/commit receipt. Prompt preparation alone does not establish a remote connection or validate patient evidence.",
+  "next_action_user_input": "把服务器接入提示词交给服务器AI；从最新origin/main建分支，将实际诊断脚本、公开队列摘要及来源收据push到LDT-von/slot-attention，返回分支/完整SHA供本地验收；患者原始材料走私有回传，不新增模型执行。",
+  "verified_delivery_commit": "82582f212f5882b5beb52f081bafa3d261d6e393",
+  "verified_at": "2026-10-20T20:47:08+08:00"
+ },
+ "server_public_artifacts_received": true,
+ "latest_server_return_acceptance": {
+  "recorded_at": "2026-10-20T20:47:08+08:00",
+  "task_id": "SPE-08",
+  "reviewed_commit": "82582f212f5882b5beb52f081bafa3d261d6e393",
+  "branch": "codex/server-slotspe-evidence-20261020",
+  "remote_ref_verified_via_API": true,
+  "status": "public_artifacts_received_merge_blocked_raw_pending",
+  "report": "docs/research/slotspe_server_acceptance_20261020/本地验收报告.txt",
+  "receipt": "docs/research/slotspe_server_acceptance_20261020/acceptance_receipt.json",
+  "followup_prompt": "docs/research/slotspe_server_acceptance_20261020/服务器AI_修正公开交付并私有打包.txt",
+  "public_files_downloaded": 10,
+  "public_patient_identifier_affected_files": 4,
+  "public_scripts_missing_os_import": 2,
+  "manifest_hash_mismatches": 1,
+  "private_raw_package_received": false,
+  "new_model_execution": false,
+  "main_merged": false,
+  "next_action": "GitHub API已验82582f2与目标分支，main仍a5819e4；先修正4文件患者标识、两脚本缺os导入、摘要哈希及计数/配置口径，并整理已授权私有原始包；不启动P6、不合并main。"
+ },
+ "latest_server_artifact_return": {
+  "recorded_at": "2026-10-20T20:50:00+08:00",
+  "task_id": "SPE-08",
+  "status": "public_integration_sanitized_private_raw_pending",
+  "source_repo": "LDT-von/DCT-Reg",
+  "delivery_branch": "codex/server-slotspe-evidence-20261020",
+  "base_commit": "a5819e40319794488609e2052d8ff5778d006e50",
+  "report": "docs/research/slotspe_server_return_20261020/服务器发现报告.txt",
+  "diagnostic_summary": "docs/research/slotspe_server_return_20261020/diagnostic_summary.json",
+  "provenance": "docs/research/slotspe_server_return_20261020/provenance.json",
+  "artifact_manifest": "docs/research/slotspe_server_return_20261020/artifact_manifest.json",
+  "missing_artifacts": "docs/research/slotspe_server_return_20261020/missing_artifacts.json",
+  "executed_scripts_public": "scripts/server_diagnostics/_p1246_diag.py, scripts/server_diagnostics/_spe09_viz.py",
+  "executed_scripts_originals_preserved": "Private local_evidence only; original SHA256 retained in artifact_manifest.json",
+  "mark": "SUMMARY ONLY - complete original raw results were NOT returned to public git",
+  "private_pack_produced": false,
+  "private_pack_sha256": null,
+  "new_training_runs": 0,
+  "new_model_forward_passes": 0,
+  "new_backward_passes": 0,
+  "new_patient_interventions": 0,
+  "five_fold_extension_started": false,
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "submitted_for_local_acceptance": [
+   "actual executed diagnostic scripts (original + redacted copies)",
+   "queue-level aggregate results with original JSON keys, units and limits",
+   "execution provenance incl. checkpoint SHA, seeds, patch budget, device deps",
+   "artifact manifest and missing-material list"
+  ],
+  "still_awaiting_local_acceptance": [
+   "complete private original-return package (not authorized in this task)",
+   "P6 same-input/same-RNG zero-change control and paired Gumbel/Gaussian RNG restore",
+   "P2 per-pair distribution, slot norms and pairwise L2",
+   "P4 full-model synchronised slot permutation through the selector/keep path",
+   "risk direction validation C(risk) vs C(-risk)"
+  ],
+  "original_server_reported_patient_identifiers_published": 0,
+  "privacy_scope": "Current integrated public tree scanned; original source branch still retains historical disclosure."
+ },
+ "server_aggregate_results_received": true,
+ "latest_server_merge": {
+  "recorded_at": "2026-10-20T20:58:08+08:00",
+  "task_id": "SPE-08",
+  "status": "public_evidence_integrated_raw_acceptance_pending",
+  "source_server_commit": "82582f212f5882b5beb52f081bafa3d261d6e393",
+  "base_main_commit": "a5819e40319794488609e2052d8ff5778d006e50",
+  "integration_method": "Clean squash integration; source commit referenced as provenance, not introduced as a parent.",
+  "actual_execution_originals_preserved_privately": true,
+  "literal_patient_identifiers_in_integrated_changed_files": 0,
+  "public_os_imports_fixed": 2,
+  "artifact_manifest_hashes_recomputed": true,
+  "p4_p6_count_units_corrected": true,
+  "topk_ratio_verified": false,
+  "raw_patient_results_received": false,
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "new_model_execution": false,
+  "legacy_server_branch_history_rewritten": false,
+  "next_action": "服务器公开代码/摘要已修正整合；接收已授权私有原始包并验收数值与配置。P6补查仍待明确执行授权，不新增训练或推理。"
+ },
+ "latest_scoped_server_sync": {
+  "recorded_at": "2026-10-21T10:56:41+08:00",
+  "task_id": "SPE-08",
+  "status": "source_files_copied_local_pending_content_audit",
+  "source_repository": "LDT-von/DCT-Reg",
+  "source_ref": "9b3a5a8815bc1283ca427d2063434ee029404e75",
+  "local_base_commit": "2c176264d2855404ecc2dd5e5eef3e1c991f569d",
+  "import_manifest": "docs/research/slotspe_scoped_sync_20261021/import_manifest.json",
+  "receipt": "docs/research/slotspe_scoped_sync_20261021/同步收据.txt",
+  "entry": "docs/research/slotspe_p6_addendum_20261020/EVIDENCE_README.md",
+  "diagnostic_scripts": 15,
+  "evidence_documents_and_json": 18,
+  "archive_files_in_ignored_local_evidence": 21,
+  "protected_source_and_configs_unchanged": true,
+  "E_DCT_Reg_modified": false,
+  "copied_bytes_verified": true,
+  "new_model_execution": false,
+  "server_raw_patient_results_received": false,
+  "source_claims_independently_validated": false,
+  "new_commit_or_push": false,
+  "next_action": "已将DCT-Reg指定3提交中的15诊断脚本和18证据文件同步到本独立库本地；下一步只读核对eval_fix证据包及协议，不启动模型任务；E盘仓库未修改，独立库尚未提交/推送。"
+ },
+ "latest_results_review": {
+  "recorded_at": "2026-10-21T11:15:18+08:00",
+  "task_id": "SPE-08",
+  "status": "aggregate_arithmetic_verified_diagnostic_claims_partially_rejected_raw_pending",
+  "report": "docs/research/slotspe_results_review_20261021/服务器结果证据复核.txt",
+  "arithmetic_receipt": "docs/research/slotspe_results_review_20261021/aggregate_verification.json",
+  "arithmetic_verifier": "docs/research/slotspe_results_review_20261021/verify_aggregates.py",
+  "source_bundle_sha256": "7751e15bf9167fdf74a27f1da20c7552d5f79dde364a9b91b4939905be957046",
+  "unique_fold_seed_pairs": 18,
+  "completed": "已复算18组20次重复C-index、30轮曲线和10000次bootstrap，并核对关键诊断源码；来源脚本/历史报告保持原样。",
+  "new_finding": "30轮协议下强烈晚期验证退化迹象；18/18组峰值至末轮降幅>0.01，平均0.12629；训练NLL下降而验证NLL上升。",
+  "eval_fix_mean_delta": 0.002687207939272277,
+  "eval_fix_bootstrap_ci95": [
+   -0.0012017681781401875,
+   0.006794907538660746
+  ],
+  "rejected_claims": [
+   "P6顺序效应已隔离或顺序无害",
+   "P4 mask变化已证明选择不等变",
+   "self干预零差证明未选槽无影响",
+   "高相似由训练造成",
+   "eval_fix已证明无性能代价或稳定提升"
+  ],
+  "checks": "独立聚合验算完成；源码静态核查发现RNG混杂、错误比较对象、空操作和错误统计字段。",
+  "new_training_or_model_execution": false,
+  "server_actual_execution_directly_observed": false,
+  "patient_raw_received": false,
+  "server_original_checkpoint_hashes_independently_verified": false,
+  "patient_cindex_reconstructed": false,
+  "gaps_reasons": "公开包缺逐患者风险/删失/时间、原始梯度、checkpoint和完整运行日志；可验算汇总，不能从原始患者预测独立重建指标。",
+  "new_commit_or_push": false,
+  "next_action_user_inputs": "先修正服务器诊断逻辑并私下回传已有原始产物；需重新模型前向的补查另获明确执行授权；不扩大训练。"
+ },
+ "additional_implementation_findings": {
+  "eval_randomness": "评估重复性缺陷已确认；固定噪声改善重复性，与P3冷启动质量不同。",
+  "Q6_patch_order": "原问题附件明确另列Q6。当前置换仍消耗模型共用RNG，order_effect_not_identified。",
+  "late_training_validation_deterioration": "18组30轮曲线支持晚期退化/过拟合迹象；训练协议风险，不归入原八项架构机制。",
+  "diagnostic_reliability": "错误比较对象、空操作及统计字段问题需修正；不当作模型机制结论。"
+ },
+ "latest_question_alignment": {
+  "recorded_at": "2026-10-21T11:40:26+08:00",
+  "task_id": "SPE-08",
+  "route": "SlotSPE原八项研究问题对齐",
+  "completed": "重读用户附件定义，纠正P3/评估随机性、P6/顺序混用；逐项标出结构事实、相关线索、直接测量缺口。",
+  "report": "docs/research/slotspe_results_review_20261021/八个原始问题对齐勘误.txt",
+  "current_entries_updated": [
+   "README.md",
+   "docs/PROGRESS.json"
+  ],
+  "historical_reports_and_source_scripts_edited": false,
+  "checks_and_receipt": "原附件与已打开原始源码对读；无新服务器执行或患者结果。此前汇总算术仍有效，但问题编号以本勘误为准。",
+  "new_model_execution": false,
+  "new_commit_or_push": false,
+  "gaps_reasons": "现有服务器实验没有原八项的完整操作定义和直接测量，不能用实现异常和最终C-index代替全部研究机制。",
+  "next_action_user_inputs": "以P2冗余/碎片化、P3冷启动质量、P7目标一致性重新组织测量要求；P4/P5需语义/相关性依据、P6需倍率/层次来源；新执行只列计划，不启动。"
+ },
+ "latest_mechanism_experiment_design": {
+  "recorded_at": "2026-10-21T12:17:01+08:00",
+  "task_id": "SPE-08",
+  "route": "original_questions_v1",
+  "status": "published_server_execution_pending",
+  "completed": "围绕原P1–P7编写直接机制测量、匹配容量训练独立入口、内容/角色/配对来源门槛和服务器执行提示词；P8不适用。",
+  "protocol": "docs/research/slotspe_mechanism_protocol_20261021/实验协议与判定.txt",
+  "server_prompt": "docs/research/slotspe_mechanism_protocol_20261021/服务器AI_原八项问题实验.txt",
+  "runner": "scripts/run_slotspe_problem_experiments.py",
+  "config": "configs/slotspe_problem_experiments.json",
+  "receipt": "docs/research/slotspe_mechanism_protocol_20261021/本地交付收据.json",
+  "delivery": "docs/deliveries/slotspe_original_questions_v1_20261021.zip",
+  "delivery_sha256": "ec8c663355d44225931397d2954e1dc80bbcea9ffbc3aef58d67f027cbcb533c",
+  "checks": {
+   "synthetic_tests_passed": 63,
+   "plan_only_phases_checked": [
+    "observe",
+    "capacity_train"
+   ],
+   "original_source_and_default_configs_unchanged": true,
+   "package_file_hashes_verified": true
+  },
+  "new_native_model_or_patient_execution": false,
+  "new_server_execution_receipt": false,
+  "primary_endpoints": [
+   "槽表示与读取冗余/内容碎片化",
+   "原生预算聚合内容读出",
+   "匹配内容后的稳定性",
+   "候选干扰竞争",
+   "真正配对尺度/层内容对照",
+   "共享参数目标梯度关系"
+  ],
+  "excluded_as_primary_results": [
+   "过拟合",
+   "评估随机波动",
+   "C-index统一问题门槛"
+  ],
+  "gaps_reasons": "63项仅为合成与接口测试；原生checkpoint逐轮重放和aux重建需服务器验收。P4/P5/P6外部依据不可虚构；P1充分训练及复杂度交互、P3训练分布外初态限制如实登记。",
+  "new_commit_or_push": true,
+  "next_action_user_input": "交付ZIP与提示词，服务器先plan和observe；不自动启动独立capacity_train，不扩大五折训练；私下回传原始产物、公开仅队列级汇总。",
+  "published_payload_commit": "abfaf11525a67371c57d2dc938912a0b819541fd"
+ },
+ "latest_git_delivery_request": {
+  "task_id": "SPE-08",
+  "route": "original_questions_v1",
+  "authorized_action": "commit and push for server pull",
+  "remote": "https://github.com/LDT-von/slot-attention.git",
+  "branch": "main",
+  "server_handoff": "docs/research/slotspe_mechanism_protocol_20261021/服务器AI_拉取本轮实验.txt",
+  "scope": "scoped server evidence imports, conservative reviews, original-question experiments, protocol, synthetic tests and sanitized delivery archive",
+  "patient_execution_started": false,
+  "private_patient_data_staged": false
+ },
+ "latest_git_delivery": {
+  "recorded_at": "2026-10-23T19:45:00+08:00",
+  "task_id": "SPE-08",
+  "route": "original_questions_v1",
+  "status": "local_untracked_work_published_remote_verified",
+  "completed": "把本地剩余9个未跟踪文件提交并推送到main，供那边统一融合成唯一正确版本：2个配对配置、6个检查脚本、1份门控配对研究文档。纯源码、配置与文字，无任何患者数据。",
+  "repository": "https://github.com/LDT-von/slot-attention",
+  "branch": "main",
+  "payload_commit": "f18b1062ff7285242f509239408e426cd734c0ce",
+  "payload_tree": "daf6aee460e370947c44b2119e537128fcd5cf21",
+  "published_files": [
+   "configs/slotspe_gate_pair_fold0_seed3.json",
+   "configs/slotspe_fixed_slot_pair_fold0_seed3.json",
+   "scripts/check_slotspe_gate_pair.py",
+   "scripts/check_slotspe_fixed_slot_pair.py",
+   "scripts/check_slotspe_joint_redundancy_gate.py",
+   "scripts/check_slotspe_slot_utility.py",
+   "scripts/check_slotspe_slot_attribution.py",
+   "scripts/check_slotspe_slot_iters_counterfactual.py",
+   "docs/research/slotspe_gate_pair_20261022/门控配对训练与冗余对比.txt"
+  ],
+  "checks": {
+   "local_and_remote_commit_identical": true,
+   "local_and_remote_tree_identical": true,
+   "working_tree_clean_after_push": true,
+   "staged_privacy_scan_identifier_hits": 3,
+   "staged_privacy_scan_hits_are_field_names_only": true,
+   "checker_outputs_confined_to_ignored_local_evidence": true,
+   "private_patient_inputs_staged": false,
+   "original_executable_source_unchanged": true,
+   "third_party_slotspe_byte_for_byte_preserved": true
+  },
+  "publish_method": "Git SSH transport succeeded; plain git push origin main.",
+  "server_execution_started": false,
+  "new_server_raw_results_received": false,
+  "gaps_reasons": "只发布并核验本地源码/配置/文档。11臂BLCA队列(run03, 30轮/4096 patch)仍在本地执行中，尚未产出任何臂的评估结果，也无患者机制测量结果，故不能声明任何患者性能或A/B/C纠正效力。",
+  "next_action_user_input": "那边统一融合成唯一版本时，以main@f18b106为准；S0训练观测到槽塌缩伴随偶发梯度爆炸(harness与原版均无梯度裁剪)，是否让队列跑完待定。"
+ },
+ "latest_local_redundancy_check": {
+  "recorded_at": "2026-10-21T18:30:01+08:00",
+  "task_id": "SPE-08",
+  "route": "retained_native_redundancy",
+  "status": "completed_existing_arrays_only",
+  "completed": "复算历史原版71人最终槽、实际选中槽、每头读取重叠与门控有效权重；73份历史输出SHA一致。",
+  "report": "docs/research/slotspe_local_redundancy_20261021/本地槽冗余与门控实测.txt",
+  "aggregate": "docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json",
+  "script": "scripts/check_slotspe_retained_redundancy.py",
+  "patient_count": 71,
+  "historical_epochs": 3,
+  "fold": 0,
+  "seed": 3,
+  "selected_counts": {
+   "wsi": 2,
+   "omic": 2
+  },
+  "candidate_counts": {
+   "wsi": 8,
+   "omic": 8
+  },
+  "selected_pair_cosine_mean": {
+   "wsi": 0.9944680934017909,
+   "omic": 0.9986244912794483
+  },
+  "selected_pair_reading_overlap_mean": {
+   "wsi": 0.9985833998212321,
+   "omic": 0.9955457868292232
+  },
+  "historical_output_hashes_verified": 73,
+  "current_original_model_source_matches": true,
+  "existing_npz_recomputation_executed": true,
+  "new_model_forward_passes": 0,
+  "new_training_steps": 0,
+  "is_server_77_patient_result": false,
+  "private_patient_rows_public": false,
+  "new_commit_or_push": false,
+  "gaps_reasons": "单fold/seed的3轮历史checkpoint与单次保留评估；未测decoder.map后表示、槽级边际预测效用、独立生物学标签或去门控匹配训练。",
+  "next_action_user_input": "同样复核服务器原始已训练槽/keep/gate记录；不为本地既有高度重叠现象重新训练。"
+ },
+ "latest_sparsity_off_inference": {
+  "recorded_at": "2026-10-21T18:51:20+08:00",
+  "task_id": "SPE-08",
+  "route": "sparsity_off_inference",
+  "status": "completed_local_patient_readout_intervention",
+  "authorization": "用户要求把稀疏选择关掉再看差距；本轮限定原权重下读出反事实，不训练。",
+  "completed": "71名历史本地患者的5臂选择开关对照及2个读出控制已执行；原生logit/score/gate重现误差0。",
+  "report": "docs/research/slotspe_sparsity_off_20261021/关闭稀疏选择对照.txt",
+  "aggregate": "docs/research/slotspe_sparsity_off_20261021/aggregate_summary.json",
+  "script": "scripts/check_slotspe_sparsity_off.py",
+  "implementation": "survot_rank/research/slotspe_proof/sparsity_ablation.py",
+  "patient_count": 71,
+  "fold": 0,
+  "seed": 3,
+  "historical_training_epochs": 3,
+  "checkpoint_sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
+  "fused_cindex": {
+   "native_top2": 0.6866267465069861,
+   "dense_wsi": 0.687624750499002,
+   "dense_omic": 0.687624750499002,
+   "dense_both": 0.6846307385229541,
+   "uniform_both": 0.6846307385229541
+  },
+  "new_training_steps": 0,
+  "new_slot_generation": 0,
+  "new_native_downstream_readout_sweeps": 7,
+  "raw_patient_predictions_public": false,
+  "source_weights_inputs_unchanged": true,
+  "checks": {
+   "synthetic_tests_passed": 3,
+   "baseline_replay_max_abs_error": 0.0,
+   "original_gate_score_replay_max_abs_error": 0.0,
+   "all_true_vs_no_mask_max_abs_error": 0.0,
+   "cross_branch_max_abs_error": 0.0,
+   "model_state_and_external_rng_unchanged": true
+  },
+  "gaps_reasons": "冻结已训练3轮权重与单次保留槽；只回答推理时选槽读出作用，不识别训练时门控对分工的因果作用。",
+  "new_commit_or_push": false,
+  "next_action_user_inputs": "若要判断门控训练作用，另做同初态同预算开/关门控配对训练；当前没有启动。"
+ },
+ "latest_redundancy_method_review": {
+  "recorded_at": "2026-10-21T19:08:37+08:00",
+  "task_id": "SPE-08",
+  "status": "literature_review_and_synthetic_assignment_prototype_completed",
+  "report": "docs/research/slotspe_redundancy_methods_20261021/文献到模块与方法设计.txt",
+  "source_review": "docs/research/slotspe_redundancy_methods_20261021/source_review.json",
+  "synthetic_probe": "docs/research/slotspe_redundancy_methods_20261021/synthetic_probe.json",
+  "modules": [
+   "original",
+   "sinkhorn_uniform",
+   "mesh_uniform_adaptation"
+  ],
+  "new_module_synthetic_tests_passed": 12,
+  "previous_stage_synthetic_tests_passed": 3,
+  "novel_method_status": "design_only_not_implemented_or_validated",
+  "patient_tasks_this_stage": 0,
+  "training_runs_this_stage": 0,
+  "server_runs_this_stage": 0,
+  "original_download_hash_matches": 15,
+  "original_sources_modified": false,
+  "default_configs_modified": false,
+  "patient_queue_integrated": false,
+  "commit_or_push_this_stage": false
+ },
+ "latest_dct_prototype_bridge_review": {
+  "recorded_at": "2026-10-21T19:36:54+08:00",
+  "task_id": "SPE-08",
+  "status": "dct_source_review_and_two_stage_synthetic_bridge_completed",
+  "report": "docs/research/slotspe_redundancy_methods_20261021/DCT原型核查与独立版本.txt",
+  "source_receipt": "docs/research/slotspe_redundancy_methods_20261021/DCT_source_and_synthetic_check.json",
+  "external_source_root": "E:/DCT-Reg",
+  "external_source_files_modified": false,
+  "implementation": "survot_rank/research/slotspe_proof/prototype_assignment.py",
+  "stage_specs": "configs/slotspe_redundancy_variants/",
+  "stage_spec_count": 5,
+  "readiness": "core_and_stage_specs_only_full_host_training_not_integrated",
+  "synthetic_tests_passed": 26,
+  "external_native_local_replay_max_abs_error": 0.0,
+  "external_native_prototype_pool_max_abs_error": 0.0,
+  "dias_and_metaslot_readiness": "not_implemented",
+  "patient_tasks": 0,
+  "training_runs": 0,
+  "server_runs": 0,
+  "commit_or_push": false
+ },
+ "latest_research_module_publication": {
+  "recorded_at": "2026-10-21T20:10:31+08:00",
+  "task_id": "SPE-08",
+  "status": "completed_published",
+  "repository": "https://github.com/LDT-von/slot-attention",
+  "branch": "main",
+  "base_including_server_report": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
+  "handoff": "docs/research/slotspe_redundancy_methods_20261021/发布与服务器拉取.txt",
+  "tests_passed": 29,
+  "safe_cli_plans_passed": 3,
+  "independent_reviews": {
+   "module_correctness": "no_blocking_findings",
+   "privacy_provenance_guards": "no_blocking_findings"
+  },
+  "readiness": "research_cores_and_stage_specs_only; full_patient_training_not_integrated; DIAS_MetaSlot_not_implemented",
+  "new_patient_jobs_this_publication": 0,
+  "new_training_runs_this_publication": 0,
+  "server_execution_this_publication": false,
+  "new_server_report_received": true,
+  "new_server_raw_artifacts_audited": false,
+  "private_payloads_staged": false,
+  "protected_original_sources_modified": false,
+  "next_action": "服务器可拉取研究载荷并做合成检查；完整患者训练尚未接入，DIAS/MetaSlot未实现，不自动启动患者任务。",
+  "payload_commit": "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
+  "payload_tree": "9171373dac2e7f90d32c2ecbf02d3b7260750014",
+  "remote_payload_commit_verified": "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
+  "remote_payload_tree_verified": "9171373dac2e7f90d32c2ecbf02d3b7260750014",
+  "verified_payload_files": 29,
+  "publication_receipt": "docs/research/slotspe_redundancy_methods_20261021/publication_verified.json",
+  "verified_at": "2026-10-21T20:14:02+08:00"
+ },
+ "latest_research_module_pull": {
+  "recorded_at": "2026-10-21T20:40:00+08:00",
+  "task_id": "SPE-08",
+  "route": "research_module_pull_and_local_verification",
+  "status": "pulled_and_locally_verified_no_execution",
+  "completed": "在/data1/SlotSPE执行git pull --ff-only origin main，从2a806c2快进到a512169；本地与远端提交、文件树一致，工作区干净；复核29项合成测试与3个默认计划入口。",
+  "repository": "https://github.com/LDT-von/slot-attention",
+  "branch": "main",
+  "previous_local_commit": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
+  "local_head_commit": "a5121692c9cce5ef65ee75a9a821800eb1283992",
+  "local_head_tree": "c9dc1a7d55918c0bfc6b812b540bd49e63b603ba",
+  "remote_main_commit_verified": "a5121692c9cce5ef65ee75a9a821800eb1283992",
+  "remote_main_via_ls_remote": "a5121692c9cce5ef65ee75a9a821800eb1283992",
+  "incoming_commits": [
+   "41e33e5d55959c3ddaf3271d3046db1e9ba6f008",
+   "a5121692c9cce5ef65ee75a9a821800eb1283992"
+  ],
+  "fast_forward_only": true,
+  "local_remote_diff_empty": true,
+  "working_tree_clean": true,
+  "checks": {
+   "synthetic_tests_passed": 29,
+   "synthetic_test_command": "python -B -m pytest tests/test_slotspe_assignment_router.py tests/test_slotspe_prototype_assignment.py tests/test_slotspe_sparsity_off.py -q",
+   "plan_only_cli_checks_passed": 3,
+   "plan_only_cli_entries": [
+    "scripts/check_slotspe_assignment_router.py",
+    "scripts/check_slotspe_retained_redundancy.py --input-root <nonexistent>",
+    "scripts/check_slotspe_sparsity_off.py --observations-root <nonexistent> --checkpoint <nonexistent>"
+   ],
+   "patient_data_read_during_plan_checks": false,
+   "third_party_SlotSPE_modified": false,
+   "existing_default_queue_configs_modified": false,
+   "private_patient_inputs_staged": false,
+   "local_evidence_tracked_by_git": false
+  },
+  "new_patient_tasks_this_stage": 0,
+  "new_training_runs_this_stage": 0,
+  "new_model_forward_passes": 0,
+  "server_execution_this_stage": false,
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "gaps_reasons": "本轮只做拉取与只读复核；发布载荷仍只含研究核心与D0-D4阶段配置，完整宿主/患者训练器未接入，DIAS/MetaSlot未实现，不能当作三篇论文的完整实现或患者训练版本；服务器新报告2a806c2的原始患者产物仍未在本轮验收。",
+  "next_action_user_input": "服务器可在LDT-von/slot-attention checkout执行git pull --ff-only origin main并复核；下一步由用户决定是否先完成固定宿主的单项阶段适配与匹配训练入口，患者对照实验另行授权。"
+ },
+ "latest_local_blca_run": {
+  "recorded_at": "2026-10-21T21:20:00+08:00",
+  "task_id": "SPE-09",
+  "route": "local_blca_clean_original_run",
+  "status": "completed_local_cpu_execution",
+  "authorization": "用户于2026-10-21 20:50明确要求跑BLCA看结果；仅执行既有默认原版单臂配置，未扩大队列。",
+  "completed": "在本机CPU执行默认clean-original原版单臂队列(fold0/seed3/3轮/256真实patch/batch8/20次评估)，prepare与训练、评估、汇总四阶段全部完成。",
+  "output_root": "results/slotspe_proof/blca_cpu_a512169",
+  "run_log": "local_evidence/blca_cpu_a512169_run.log",
+  "config": {
+   "study": "blca",
+   "fold": 0,
+   "seed": 3,
+   "epochs": 3,
+   "patches": 256,
+   "batch_size": 8,
+   "eval_repeats": 20,
+   "arm": "original",
+   "device": "cpu",
+   "experiment": "original_audit"
+  },
+  "data_roots": {
+   "metadata_root": "/data1/dataset_csv",
+   "features_root": "/data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files"
+  },
+  "device_deviation": "本机GPU为RTX 5090(sm_120)，已装torch 2.6.0+cu124最高仅支持sm_90，CUDA实际执行报no kernel image；改用CPU执行。模型与数据未因此改变。",
+  "harness_change": "仓库prepare阶段原只接受.pt特征，本机BLCA特征为UNI2-h的.h5，导致首跑prepare失败(No complete-case train patients)。已按DCT-Reg同源harness补入.h5回退与h5py读取；third_party/SlotSPE原版源码未改，默认配置未改。",
+  "cohort": {
+   "train": 302,
+   "val": 77,
+   "excluded": 2,
+   "unique_complete_case_patients": 379,
+   "matches_prior_gpu_run": true
+  },
+  "training_curve": [
+   {
+    "epoch": 1,
+    "loss": 2.85085,
+    "val_cindex": 0.7385103011093502
+   },
+   {
+    "epoch": 2,
+    "loss": 2.57833,
+    "val_cindex": 0.7408874801901744
+   },
+   {
+    "epoch": 3,
+    "loss": 2.48526,
+    "val_cindex": 0.7258320126782885
+   }
+  ],
+  "final_metrics": {
+   "val_cindex_mean_exploratory": 0.7278922345483361,
+   "val_cindex_std_population": 0.002434594531812554,
+   "val_cindex_min_exploratory": 0.7242472266244057,
+   "val_cindex_max_exploratory": 0.7329635499207607,
+   "repeats": 20,
+   "evaluation_randomness_observed": true,
+   "patient_risk_std_mean": 0.006621851422651604,
+   "patient_risk_range_max": 0.08941268920898438
+  },
+  "structural_observations": {
+   "selector_parameter_count": 8,
+   "main_gradient_none_parameter_count": 8,
+   "main_gradient_connected_parameter_count": 0,
+   "disconnected_selector_status": "observed",
+   "interpretation": "选槽器对融合主损失仍无梯度(P7局部结构事实在本机原版重现)"
+  },
+  "provenance": {
+   "checkpoint_sha256": "23549f7c82303d5e8eb9de4c4e6cac399a4a546daf051929e789f6ccaed9b3e5",
+   "same_initial_state_sha256": "888730935c696ec0daf18be2492c4e974e0ec498f3c8e0f94c3954d6fcb8e6f2",
+   "parameter_count": 33093390,
+   "optimizer_steps": 114,
+   "elapsed_seconds": 438.24358389992267
+  },
+  "comparison_to_prior_gpu_run": "同队列同协议；GPU run同权重20次均值0.72235(std 0.00354)，本机CPU均值0.72789(std 0.00243)。checkpoint与初始状态SHA不同，未做逐位对齐；差异来源含设备/库版本与浮点顺序，不能作为性能结论。",
+  "checks": {
+   "doctor_ready_on_cpu": true,
+   "patient_features_read": true,
+   "original_source_modified": false,
+   "default_queue_config_modified": false,
+   "patient_identifiers_staged_to_git": false
+  },
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "gaps_reasons": "单fold单seed、3轮、20次评估的一次探索性原版运行；未测P1-P7机制干预，未比较D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot。C-index为探索性均值，不构成患者表现结论。",
+  "next_action_user_input": "如需继续，请授权具体对照(如关闭稀疏选择或匹配容量训练)与队列规模；D0-D4需先完成宿主训练接入。"
+ },
+ "latest_local_blca_gpu_run": {
+  "recorded_at": "2026-10-22T02:05:00+08:00",
+  "task_id": "SPE-09",
+  "route": "local_blca_clean_original_gpu_run",
+  "status": "completed_local_gpu_execution",
+  "authorization": "用户于2026-10-22 01:40指定使用trisurv环境与uni2-h数据集继续跑BLCA；沿用既有默认原版单臂配置，未扩大队列。",
+  "completed": "改用/home/ubuntu/.conda/envs/trisurv(torch 2.10.0+cu128, 支持sm_120)在RTX 5090上执行默认clean-original原版单臂队列，四阶段完成。",
+  "output_root": "results/slotspe_proof/blca_gpu_trisurv_a512169",
+  "run_log": "local_evidence/blca_gpu_trisurv_a512169_run.log",
+  "environment": {
+   "python": "/home/ubuntu/.conda/envs/trisurv/bin/python (3.10.20)",
+   "torch": "2.10.0+cu128",
+   "cuda_arch_list_includes_sm_120": true,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "device": "cuda:0",
+   "numpy": "2.2.6",
+   "pandas": "2.3.3",
+   "einops": "0.8.2",
+   "scikit-survival": "0.25.0"
+  },
+  "features": "uni2-h (.h5), /data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files",
+  "config": {
+   "study": "blca",
+   "fold": 0,
+   "seed": 3,
+   "epochs": 3,
+   "patches": 256,
+   "batch_size": 8,
+   "eval_repeats": 20,
+   "arm": "original",
+   "experiment": "original_audit"
+  },
+  "cohort": {
+   "train": 302,
+   "val": 77,
+   "excluded": 2,
+   "unique_complete_case_patients": 379
+  },
+  "training_curve": [
+   {
+    "epoch": 1,
+    "loss": 2.85843,
+    "val_cindex": 0.7258320126782885
+   },
+   {
+    "epoch": 2,
+    "loss": 2.5802,
+    "val_cindex": 0.742472266244057
+   },
+   {
+    "epoch": 3,
+    "loss": 2.41856,
+    "val_cindex": 0.722662440570523
+   }
+  ],
+  "final_metrics": {
+   "val_cindex_mean_exploratory": 0.7223454833597466,
+   "val_cindex_std_population": 0.00353836981961428,
+   "val_cindex_min_exploratory": 0.7131537242472267,
+   "val_cindex_max_exploratory": 0.7297939778129953
+  },
+  "reference_match_dct_reg_gpu_run": {
+   "all_20_repeat_metrics_identical": true,
+   "same_initial_state_sha256": true,
+   "epoch_loss_and_val_cindex_identical": true,
+   "model_tensors_compared": 1485,
+   "model_tensors_mismatching": 0,
+   "checkpoint_sha256_differs_only_in": [
+    "protocol/python",
+    "protocol/started_utc",
+    "protocol/runner_sha256",
+    "protocol/source_hashes_before",
+    "protocol/manifest_sha256"
+   ],
+   "checkpoint_model_weights_identical": true,
+   "verdict": "本机trisurv环境GPU运行与DCT-Reg参考GPU运行数值完全一致，可作为可信基线；checkpoint文件SHA不同仅因内嵌运行环境与时间戳元数据"
+  },
+  "structural_observations": {
+   "selector_parameter_count": 8,
+   "main_gradient_none_parameter_count": 8,
+   "main_gradient_connected_parameter_count": 0,
+   "disconnected_selector_status": "observed",
+   "evaluation_randomness_observed": true
+  },
+  "provenance": {
+   "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
+   "same_initial_state_sha256": "109d31ccac93ec39e1e5ffdaaadccaa4a1cb0be051361f227cf52e1095b2ca76",
+   "parameter_count": 33093390,
+   "optimizer_steps": 114,
+   "elapsed_seconds": 129.2282225158997,
+   "peak_allocated_cuda_bytes": 1064786432
+  },
+  "device_comparison_cpu_vs_gpu": "同一协议CPU运行C-index均值0.72789(std 0.00243) vs GPU均值0.72235(std 0.00354)。两者初始状态SHA不同，差异含设备/库版本/浮点顺序，只能作为可重复性量级参考，不能作性能结论。",
+  "checks": {
+   "doctor_ready_on_gpu": true,
+   "original_source_modified": false,
+   "default_queue_config_modified": false,
+   "patient_identifiers_staged_to_git": false,
+   "queue_status": "completed/4 stages"
+  },
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "gaps_reasons": "单fold单seed、3轮、20次评估的一次原版基线；未测P1-P7机制干预，未跑D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot。C-index为探索性均值。",
+  "next_action_user_input": "GPU已可用且与参考运行数值一致；下一步由用户授权具体对照臂(如关闭稀疏选择、匹配容量训练)与队列规模。"
+ },
+ "latest_local_five_fold_three_seed_and_mechanism_records": {
+  "recorded_at": "2026-10-22T10:05:00+08:00",
+  "task_id": "SPE-09",
+  "route": "local_blca_five_fold_three_seed_and_read_only_mechanism_records",
+  "status": "completed_local_record_only_registration",
+  "authorization": "用户于2026-10-22询问当前情况，并在选择record_only后授权一并推送；本轮只登记已完成的本机GPU结果。",
+  "completed": "把本机已完成的五折、五折三种子、稀疏关闭、保留冗余、P1观察导出与observe阶段六项结果写入单一进度入口；未新增任何训练、推理或患者干预。",
+  "public_record": "docs/research/slotspe_gpu_trisurv_20261022/five_fold_and_mechanism_records.json",
+  "public_record_sha256": "db469daea77e50e6a40bcdcf4ca9021229df952c3574ed6bb5710f76dc830ef5",
+  "report": "docs/research/slotspe_gpu_trisurv_20261022/本机GPU阶段登记与离散度.txt",
+  "generator": "scripts/record_slotspe_gpu_trisurv_20261022.py",
+  "environment": {
+   "torch": "2.10.0+cu128",
+   "cuda_runtime": "12.8",
+   "gpu": "NVIDIA GeForce RTX 5090"
+  },
+  "shared_queue_protocol": {
+   "experiment": "original_audit",
+   "arms": [
+    "original"
+   ],
+   "epochs": 3,
+   "patches": 256,
+   "batch_size": 8,
+   "eval_repeats": 20,
+   "lr": 0.0005,
+   "torch_threads": 2,
+   "parameter_count": 33093390,
+   "optimizer_steps_per_pair": 114,
+   "transport_added": false,
+   "repaired_models_constructed": false,
+   "feature_set": "uni2-h"
+  },
+  "five_fold_seed3": {
+   "output_root": "results/slotspe_proof/blca_5fold_gpu_trisurv_a512169",
+   "status": "completed",
+   "pairs_completed": 5,
+   "pairs_expected": 5,
+   "missing_pairs": [],
+   "cohort_unique_complete_case_patients": 379,
+   "per_fold_counts": {
+    "0": {
+     "train": 302,
+     "val": 77,
+     "excluded": 2,
+     "overlap": 0
+    },
+    "1": {
+     "train": 304,
+     "val": 75,
+     "excluded": 2,
+     "overlap": 0
+    },
+    "2": {
+     "train": 304,
+     "val": 75,
+     "excluded": 2,
+     "overlap": 0
+    },
+    "3": {
+     "train": 303,
+     "val": 76,
+     "excluded": 2,
+     "overlap": 0
+    },
+    "4": {
+     "train": 303,
+     "val": 76,
+     "excluded": 2,
+     "overlap": 0
+    }
+   },
+   "mean_validation_cindex_exploratory": 0.6658030852670128,
+   "cross_run_sample_std": 0.05365907687387666,
+   "min": 0.6206882591093118,
+   "max": 0.7264382402707276,
+   "per_pair": {
+    "fold_0_seed_3": 0.7223454833597466,
+    "fold_1_seed_3": 0.7264382402707276,
+    "fold_2_seed_3": 0.6206882591093118,
+    "fold_3_seed_3": 0.6321857923497267,
+    "fold_4_seed_3": 0.6273576512455517
+   },
+   "structural_checks": {
+    "original_disconnection_observed_pairs": 5,
+    "evaluation_randomness_observed_pairs": 5,
+    "self_interference_observed_pairs": 5,
+    "padding_sensitivity_observed_pairs": 5,
+    "natural_gate_near_zero_observed_pairs": 1
+   }
+  },
+  "five_fold_three_seed": {
+   "output_root": "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169",
+   "status": "completed",
+   "pairs_completed": 15,
+   "pairs_expected": 15,
+   "missing_pairs": [],
+   "mean_validation_cindex_exploratory": 0.6631942390042329,
+   "cross_run_sample_std": 0.060593216005657105,
+   "min": 0.5809716599190283,
+   "max": 0.7583597464342313,
+   "per_fold_mean_over_seeds": {
+    "0": 0.7409931325937665,
+    "1": 0.712112239142696,
+    "2": 0.5961538461538461,
+    "3": 0.6168306010928962,
+    "4": 0.6498813760379597
+   },
+   "per_seed_mean_over_folds": {
+    "3": 0.6658030852670128,
+    "17": 0.6569167897801003,
+    "29": 0.6668628419655855
+   },
+   "between_fold_std_of_fold_means": 0.06177959229302331,
+   "per_repeat_std_population_min": 0.0011668937980361996,
+   "per_repeat_std_population_max": 0.005469664703983282,
+   "unique_initial_state_sha256": 3,
+   "unique_checkpoint_sha256": 15,
+   "elapsed_seconds_total": 1934.6872677674983,
+   "peak_allocated_cuda_bytes_max": 1068785152,
+   "per_pair": {
+    "fold_0_seed_3": 0.7223454833597466,
+    "fold_0_seed_17": 0.7583597464342313,
+    "fold_0_seed_29": 0.7422741679873217,
+    "fold_1_seed_3": 0.7264382402707276,
+    "fold_1_seed_17": 0.6720812182741117,
+    "fold_1_seed_29": 0.7378172588832486,
+    "fold_2_seed_3": 0.6206882591093118,
+    "fold_2_seed_17": 0.5868016194331984,
+    "fold_2_seed_29": 0.5809716599190283,
+    "fold_3_seed_3": 0.6321857923497267,
+    "fold_3_seed_17": 0.6181420765027322,
+    "fold_3_seed_29": 0.6001639344262296,
+    "fold_4_seed_3": 0.6273576512455517,
+    "fold_4_seed_17": 0.6491992882562277,
+    "fold_4_seed_29": 0.6730871886120996
+   },
+   "structural_checks": {
+    "original_disconnection_observed_pairs": 15,
+    "evaluation_randomness_observed_pairs": 15,
+    "self_interference_observed_pairs": 15,
+    "padding_sensitivity_observed_pairs": 15,
+    "natural_gate_near_zero_observed_pairs": 6
+   },
+   "source_warning": "Cross-fold/seed mean is descriptive; pairs share patients and are not independent evidence units"
+  },
+  "structural_observations": {
+   "pairs_with_disconnected_selector": 20,
+   "pairs_total": 20,
+   "selector_parameter_count": 8,
+   "main_gradient_connected_parameter_count": 0,
+   "interpretation": "选槽支路对融合主损失无梯度在全部20个已训练对中一致重现；这是P7的局部结构事实，不等于整个Slot Attention缺少生存监督，也不构成患者预测损害。"
+  },
+  "retained_native_redundancy": {
+   "route": "retained_native_redundancy",
+   "recorded_utc": "2026-10-21T20:08:08.470234+00:00",
+   "patient_count": 77,
+   "fold": 0,
+   "seed": 3,
+   "new_training_steps": 0,
+   "new_model_forward_passes": 0,
+   "verified_historical_output_files": 79,
+   "modalities": {
+    "wsi": {
+     "candidate_counts": {
+      "8": 77
+     },
+     "selected_counts": {
+      "2": 77
+     },
+     "patients_all_unique_pairs_above_0_95": 77,
+     "patients_selected_pair_above_0_95": 77,
+     "patients_zero_gate_weight_sum": 0,
+     "distribution_means": {
+      "all_pair_cosine_mean": 0.9971665810223995,
+      "all_pair_cosine_min": 0.9910296738231283,
+      "selected_pair_cosine": 0.9970702848068772,
+      "pairs_cosine_above_0_95": 28.0,
+      "all_pair_reading_overlap_mean": 0.9989444370081286,
+      "selected_pair_reading_overlap": 0.9989177387467753,
+      "selected_minus_all_pair_cosine": -9.629621552226314e-05,
+      "selected_minus_all_pair_reading_overlap": -2.6698261353190497e-05,
+      "centered_energy_fraction": 0.00312179134599639,
+      "centered_effective_rank": 2.54649748585428,
+      "gate_weight_sum": 0.9999993446675259,
+      "nonzero_gate_weights": 2.0,
+      "gate_weight_effective_slots": 1.3199614904492225
+     }
+    },
+    "omic": {
+     "candidate_counts": {
+      "8": 77
+     },
+     "selected_counts": {
+      "2": 77
+     },
+     "patients_all_unique_pairs_above_0_95": 73,
+     "patients_selected_pair_above_0_95": 76,
+     "patients_zero_gate_weight_sum": 0,
+     "distribution_means": {
+      "all_pair_cosine_mean": 0.9931348208830303,
+      "all_pair_cosine_min": 0.9846111992799362,
+      "selected_pair_cosine": 0.9932512312211002,
+      "pairs_cosine_above_0_95": 27.77922077922078,
+      "all_pair_reading_overlap_mean": 0.9916068818152846,
+      "selected_pair_reading_overlap": 0.9915839848724429,
+      "selected_minus_all_pair_cosine": 0.00011641033806961744,
+      "selected_minus_all_pair_reading_overlap": -2.2896942841858944e-05,
+      "centered_energy_fraction": 0.006325469859882902,
+      "centered_effective_rank": 4.5904669075227575,
+      "gate_weight_sum": 0.9999995579362496,
+      "nonzero_gate_weights": 2.0,
+      "gate_weight_effective_slots": 1.5617833367748133
+     }
+    }
+   },
+   "cosine_0_95_is_descriptive_not_clinical_threshold": true,
+   "conclusion_boundary": [
+    "Native retained final-slot and reading-distribution redundancy persists after this checkpoint's selection.",
+    "These are 71 historical local BLCA cases at one 3-epoch checkpoint and one retained eval draw, not the 77-case server run.",
+    "No new inference; decoder.map outputs, biological event labels and per-slot marginal predictive utility were not recomputed.",
+    "No without-gating matched training control: this does not identify the gate's causal training effect or predictive harm."
+   ],
+   "private_artifacts_not_published": [
+    "patient_metrics.json"
+   ]
+  },
+  "sparsity_off_frozen_checkpoint": {
+   "route": "sparsity_off_frozen_checkpoint_inference",
+   "patients": 77,
+   "fold": 0,
+   "seed": 3,
+   "new_training_steps": 0,
+   "new_slot_generation": 0,
+   "new_native_downstream_readout_sweeps": 7,
+   "fused_cindex": {
+    "native_top2": 0.7194928684627575,
+    "dense_wsi": 0.7187004754358162,
+    "dense_omic": 0.7187004754358162,
+    "dense_both": 0.7194928684627575,
+    "uniform_both": 0.7194928684627575
+   },
+   "aux_cindex": {
+    "native_top2": {
+     "aux_wsi": 0.5903328050713154,
+     "aux_omic": 0.7234548335974643
+    },
+    "dense_wsi": {
+     "aux_wsi": 0.606973058637084,
+     "aux_omic": 0.7234548335974643
+    },
+    "dense_omic": {
+     "aux_wsi": 0.5903328050713154,
+     "aux_omic": 0.7218700475435816
+    },
+    "dense_both": {
+     "aux_wsi": 0.606973058637084,
+     "aux_omic": 0.7218700475435816
+    },
+    "uniform_both": {
+     "aux_wsi": 0.6014263074484945,
+     "aux_omic": 0.7234548335974643
+    }
+   },
+   "controls_max_abs_errors": {
+    "historical_logits": 0.0,
+    "original_gate": 0.0,
+    "original_scores": 0.0,
+    "identical_input": 0.0,
+    "dense_all_true_vs_none_mask": 0.0,
+    "cross_branch": 0.0,
+    "dense_decoder_different_rng": 4.76837158203125e-07
+   },
+   "conclusion_boundary": [
+    "Frozen weights and exact same retained slots; effects concern reading/prediction only.",
+    "Does not estimate how training without sparse selection changes learned slots.",
+    "One 3-epoch local checkpoint, 71 BLCA patients, one retained draw; no independent test or efficacy claim.",
+    "Cross branch remains dense as designed; dense learned versus uniform gates only differ in auxiliary modal predictions."
+   ],
+   "private_artifacts_not_published": [
+    "predictions.npz",
+    "patient_order.json"
+   ]
+  },
+  "p1_native_slot_observations": {
+   "route": "p1_native_slot_observation_export",
+   "output_file_count": 79,
+   "new_optimizer_steps": 0,
+   "original_artifacts_unchanged": true,
+   "input_scope": "local_trisurv_gpu_current_training_run_real_BLCA_cached_validation",
+   "private_artifacts_not_published": [
+    "observations.json",
+    "patient_provenance.json",
+    "raw/*.npz"
+   ]
+  },
+  "original_questions_observe": {
+   "route": "original_questions_observe_phase",
+   "status": "completed",
+   "phase": "observe",
+   "started_utc": "2026-10-21T19:37:47.484530+00:00",
+   "finished_utc": "2026-10-21T21:32:06.006763+00:00",
+   "result": {
+    "patients": 77,
+    "repeat_rows_are_not_independent_patients": true,
+    "native_replay_error": {
+     "n": 770,
+     "median": 0.0,
+     "q25": 0.0,
+     "q75": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    },
+    "question_status": {
+     "P1": "frozen_sensitivity_only_use_separate_matched_training_for_capacity",
+     "P2": "representation_and_input_reading_measured",
+     "P3": "aggregation_trajectories_measured_causal_scope_limited",
+     "P4": "external_content_scoring_when_labels_present_else_computational_only",
+     "P5": "see_patient_specific_role_prerequisites",
+     "P6": "see_patient_specific_aligned_features_and_content_targets",
+     "P7": "exact_native_objective_gradient_geometry_measured",
+     "P8": "not_applicable"
+    },
+    "main_endpoint_is_not_cindex": true
+   },
+   "observation_settings": {
+    "fold": 0,
+    "seed": 3,
+    "repeats": 5,
+    "reference_iterations": 30,
+    "capacity_counts": [
+     4,
+     8,
+     16
+    ],
+    "capacity_modality": "wsi",
+    "dictionary_train_patients": 32,
+    "replay_atol": 1e-06
+   },
+   "patient_outputs_private": true,
+   "private_artifacts_not_published": [
+    "patient_records.json",
+    "objective_gradients.json",
+    "patient_*_native.npz"
+   ]
+  },
+  "measurement_spread_note": {
+   "five_fold_seed3_mean": 0.6658030852670128,
+   "five_fold_seed3_cross_run_std": 0.05365907687387666,
+   "five_fold_3seed_mean": 0.6631942390042329,
+   "five_fold_3seed_cross_run_std": 0.060593216005657105,
+   "five_fold_3seed_between_fold_std": 0.06177959229302331,
+   "five_fold_3seed_per_seed_means": {
+    "3": 0.6658030852670128,
+    "17": 0.6569167897801003,
+    "29": 0.6668628419655855
+   },
+   "classification": "descriptive_measurement_spread_not_a_patient_performance_conclusion",
+   "detail": "跨折跨种子离散度远大于此前单点fold0/seed3上登记的对照效应量量级，且折间差异远大于种子间差异；说明主要差异来自数据划分。以往单折单种子差值需在该分布内重新判断，不应继续在单折上叠加对照。",
+   "does_not_override_prior_records": true
+  },
+  "checks": {
+   "new_training_runs_this_stage": 0,
+   "new_model_forward_passes_this_stage": 0,
+   "new_patient_interventions_this_stage": 0,
+   "server_execution_this_stage": false,
+   "original_source_modified": false,
+   "default_queue_config_modified": false,
+   "results_directory_git_ignored": true,
+   "local_evidence_git_ignored": true,
+   "patient_identifiers_staged_to_git": false,
+   "host_absolute_paths_staged_to_git": false,
+   "historical_reports_modified": false,
+   "private_patient_inputs_staged": false
+  },
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "gaps_reasons": "3轮探索性验证C-index；跨折跨种子各对共享同一379名完全病例患者，不是独立证据单位，均值仅描述性；未测P1-P7机制干预，未跑D0-D4阶段配置(完整宿主训练未接入)，未接DIAS/MetaSlot；本轮为只读登记，未启动任何新执行。",
+  "next_action_user_input": "由用户决定是否授权具体对照臂(关闭稀疏选择、匹配容量训练或A/B/C)与队列规模；D0-D4需先完成宿主训练接入。未获明确执行授权前不启动训练或推理。"
+ },
+ "latest_d0_d4_execution_audit": {
+  "recorded_at": "2026-10-22T11:07:00+08:00",
+  "task_id": "SPE-08",
+  "route": "d0_d4_execution_status_audit",
+  "status": "audited_not_executed_d0_d4_arms_never_run",
+  "completed": "核查D0-D4五臂的真实执行状态：逐臂追踪配置、模块消费方、宿主接线、结果目录与全盘产物扫描。结论：D0-D4从未被实际运行；已发布的只是阶段核心与声明式配置。",
+  "question_asked": "用户询问表中D0-D4各版本是否已跑过。",
+  "arm_execution_evidence": {
+   "stage_specs_present": [
+    "D0_native",
+    "D1_sa_sinkhorn",
+    "D2_sa_mesh",
+    "D3_coordinate_mesh",
+    "D4_both_mesh"
+   ],
+   "stage_specs_path": "configs/slotspe_redundancy_variants/",
+   "each_spec_declares_patient_execution_false": true,
+   "each_spec_declares_readiness": "stage_core_tested_not_patient_training_ready",
+   "specs_consumed_by_any_runner": false,
+   "specs_referenced_only_in": [
+    "tests/test_slotspe_prototype_assignment.py",
+    "docs/PROGRESS.json",
+    "docs/research/slotspe_redundancy_methods_20261021/"
+   ],
+   "d0_d4_result_directories_found": 0,
+   "d0_d4_output_artifacts_found_anywhere_under_data1": 0,
+   "dct_host_contains_mesh_uniform_or_arm_specs": false,
+   "existing_runs_are_original_arm_only": true,
+   "existing_run_dirs": [
+    "results/slotspe_proof/blca_cpu_a512169",
+    "results/slotspe_proof/blca_gpu_trisurv_a512169",
+    "results/slotspe_proof/blca_5fold_gpu_trisurv_a512169",
+    "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169"
+   ],
+   "existing_runs_config": {
+    "folds": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "seeds": [
+     3,
+     17,
+     29
+    ],
+    "epochs": 3,
+    "patches": 256,
+    "experiment": "original_audit"
+   },
+   "new_patient_tasks_this_stage": 0,
+   "new_training_runs_this_stage": 0,
+   "new_model_forward_passes": 0,
+   "server_execution_this_stage": false
+  },
+  "why_not_runnable_yet": {
+   "stage1_slot_reading": "SlotAssignmentRouter 已实现，但它是独立重放器(replay_with_assignment)，需替换宿主 SA 内部注意力；原版 third_party/SlotSPE 未被修改，默认模型不导入该模块。",
+   "stage2_prototype_pooling": "原型汇总属于 DCT 宿主(DCT-Reg /data1/DCT-Reg)，而原版 SlotSPE 本身没有原型池化(third_party/SlotSPE 中 prototype 命中为0)；因此D3/D4的②在 SlotSPE 仓库内无宿主可挂载。",
+   "host_reference_in_configs": "DCT-RG v2.3 (configs 自述)；DCT-Reg 本机 HEAD 为 8c3dfa0 (E053, v3.13 同口径三臂复刻)。",
+   "prototype_semantics_match_verified": true,
+   "prototype_semantics_check": "SlotSPE 侧 dct_soft 与 DCT 宿主 model.py 的 softmax(scores/temperature, dim=1) 再按行 clamp_min(1e-8) 归一化一致。",
+   "sa_api_compatibility_verified": true,
+   "sa_api_check": "SlotSPE 重放用 SA 与 DCT 宿主 components/slot_attention.py 暴露相同接口(norm_input/split_heads/to_q/to_k/to_v/norm_slots/merge_heads/combine_heads/gru/norm_pre_ff/mlp, eps/scale/iters/dim)，router 可作为宿主 SA 的即插替换件。",
+   "di_and_metaslot_status": "not_implemented"
+  },
+  "checks": {
+   "assignment_and_prototype_tests_passed": 26,
+   "assignment_and_prototype_test_command": "python3 -m pytest tests/test_slotspe_prototype_assignment.py tests/test_slotspe_assignment_router.py -q",
+   "full_test_suite_result": "160 passed, 0 failed (2026-10-22T11:40+08:00, after fixing the stale expectation; previously 159 passed, 1 failed)",
+   "failing_test": "none",
+   "failing_test_cause": "已修复：陈旧测试期望断言 plan['training_runs']==30，但默认 configs/slotspe_proof_server.json 为 experiment=original_audit/folds=[0]/seeds=[3]/epochs=3/patches=256，实际 training_runs=1。属期望值未同步，非执行回归；现已改为从发布的默认配置推导期望值(1)，未改动任何队列默认或执行逻辑。",
+   "plan_only_default_prints_training_runs": 1,
+   "patient_data_read_during_audit": false,
+   "third_party_SlotSPE_modified": false,
+   "private_patient_inputs_staged": false,
+   "no_new_commit_or_push_this_audit": false,
+   "new_commit_this_stage": "fix stale default-plan expectation in tests/test_slotspe_proof_queue.py; record in PROGRESS.json",
+   "push_this_stage": false,
+   "queue_defaults_or_execution_logic_changed": false,
+   "server_execution_this_stage": false
+  },
+  "interpretability_caveats": {
+   "measurement_spread_between_fold_std": 0.06177959229302331,
+   "measurement_spread_3seed_cross_run_std": 0.060593216005657105,
+   "note": "即使接通宿主训练，D0-D4 的单折单种子差值也需在该跨折离散度内重新判断；本审计不判定任何臂优劣。",
+   "single_fold_single_seed_comparison_recommended": false
+  },
+  "gaps_reasons": "D0-D4 五臂均无实际运行；宿主训练接入未完成；DIAS/MetaSlot 未实现；原版 SlotSPE 无原型池化阶段，② 只能落到 DCT 宿主；队列默认与陈旧测试期望已一致(本轮仅修测试期望，未改队列默认)。",
+  "next_action_user_input": "由用户决定是否授权：(1)接通 DCT 宿主训练以运行 D0-D4；(2)D0-D4 应在 DCT 宿主(有②原型汇总)还是原版 SlotSPE(无②)上评估。未获明确执行授权前不启动训练或推理。",
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false
+ },
+ "latest_eleven_arm_execution_delivery": {
+  "recorded_at": "2026-10-22T23:23:00+08:00",
+  "route_task": "SlotSPE / SPE-08 / eleven-arm executable patient diagnostic delivery",
+  "status": "implemented_generated_validation_passed_no_patient_or_server_execution",
+  "completed_work": {
+   "variants": [
+    "S0",
+    "S4",
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "R5",
+    "S1",
+    "S2",
+    "S3",
+    "S5"
+   ],
+   "scope": "BLCA / existing UNI2-h / fold0 / seed3 only",
+   "default_budget": {
+    "epochs": 3,
+    "real_patches": 256,
+    "logical_batch": 8,
+    "eval_repeats": 20
+   },
+   "implemented": [
+    "matched per-example forwarding, native objectives and one core/probe update per logical batch",
+    "train-only frozen heterogeneous reference and query-free content heads",
+    "variable-cardinality coverage-aware matching, own/donor/static and input/noise sensitivity diagnostics",
+    "separate main/auxiliary/added-loss gradient scales, geometry, reading, survival and resource records",
+    "fixed final-epoch checkpoint, isolated stages, hash-verified complete-stage resume and preserved failures",
+    "HDF5 [N,D] and [1,N,D] input layout validation"
+   ]
+  },
+  "paths_commit": {
+   "config": "configs/slotspe_redundancy_queue.json",
+   "entrypoint": "scripts/run_slotspe_redundancy.py",
+   "validation_receipt": "docs/research/slotspe_native_assignment_training_20261022/eleven_arm_delivery_validation.json",
+   "server_handoff": "docs/research/slotspe_native_assignment_training_20261022/十一组可执行队列与服务器交接.md",
+   "publication_scope": "isolated delivery based on latest origin/main, preserving unrelated shared-workspace changes; exact commit identity supplied after push"
+  },
+  "checks_actual_execution_raw_receipt": {
+   "focused_tests_passed": 152,
+   "full_generated_queue_stages": 14,
+   "full_generated_training_arms": 11,
+   "invented_cases": 7,
+   "generated_budget": {
+    "epochs": 1,
+    "patches": 8,
+    "eval_repeats": 2,
+    "native_dim": 256,
+    "native_slots": 8,
+    "native_iterations": 10
+   },
+   "generated_counts": {
+    "root_forwards": 121,
+    "slot_attention_calls": 297,
+    "slot_attention_iterations": 2970,
+    "core_optimizer_steps": 33,
+    "probe_optimizer_steps": 33,
+    "core_backward_calls": 33,
+    "probe_backward_calls": 33,
+    "component_autograd_grad_calls": 27
+   },
+   "completed_resume_retrained": false,
+   "third_party_original_files_unchanged": 11,
+   "existing_default_configs_and_A_B_C_unchanged": true,
+   "new_patient_training_runs": 0,
+   "new_patient_model_forwards": 0,
+   "patient_inputs_loaded": false,
+   "actual_server_runs": 0,
+   "new_server_raw_receipt": false
+  },
+  "gaps_reasons": "Generated integration tests prove interfaces and execution only. Invented random 8-D inputs are not real UNI2-h. Actual server CUDA/runtime/data provenance requires doctor and server verification. No eleven-arm BLCA patient results, predictive harm, correction efficacy or generalization established. Fixed R weights are diagnostic candidates, not tuned patient optima; S5 implements DIAS section3.2 core, S6 held.",
+  "next_action_user_inputs": "User requested implementation, push and a handoff prompt. Server AI should pull the verified delivery commit, verify existing UNI2-h inputs/environment, then explicitly run the fixed eleven-arm single-fold 3-epoch diagnostic. No automatic fold/seed/budget expansion."
+ },
+ "latest_slot_ring_dissection": {
+  "recorded_at": "2026-10-23T13:32:00+08:00",
+  "task_id": "SPE-08",
+  "route": "SlotSPE original / read-only inference-time dissection of the four collapse rings",
+  "question": "Is the collapse generated by the selector, or by a specific ring inside MultiHeadSlotAttention?",
+  "completed_work": "Built survot_rank/research/slotspe_proof/slot_ring_dissection.py, a read-only inference intervention that ablates exactly one of four rings of the native MultiHeadSlotAttention forward while binding the real trained weights. Arms: none, r1_slot_axis_softmax, r2_l1_normalize, r3_gru_residual, r4_shared_mu. 13/13 synthetic checks pass, including that the 'none' arm is BITWISE identical to the untouched native forward (max abs difference 0.0).",
+  "execution_receipt": {
+   "artifact": "local_evidence/slot_ring_dissection_20261023/",
+   "ignored_by_git": true,
+   "status": "completed",
+   "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
+   "prepared_manifest_sha256": "8659f952d0c09b08dbf7366ad5624c2b7cbd476ee3432e84f38732a2f5fb63f7",
+   "observations_sha256": "06c4155a26b1eec560c80fe36303d63b93e7416209ca00dab0efa4f9e26a9f19",
+   "runner_sha256": "e39b431774e97ecc2cdf751f43c58c0bb403543ddce70c82cb0b4e5d79f20073",
+   "source_root": "/data1/SlotSPE/third_party/SlotSPE",
+   "third_party_slot_attention_sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+   "third_party_SlotSPE_sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+   "third_party_unchanged": true,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "torch": "2.10.0+cu128",
+   "cuda_runtime": "12.8",
+   "device": "cuda:0",
+   "started_utc": "2026-10-23T05:49:49.162270+00:00",
+   "finished_utc": "2026-10-23T05:49:49.162297+00:00",
+   "replay_none_max_abs_logit_difference": 0.0,
+   "replay_tolerance": 1e-06,
+   "state_unchanged": true,
+   "training_runs": 0,
+   "optimizer_steps": 0,
+   "parameters_updated": 0,
+   "new_training_runs": 0,
+   "new_model_forward_passes": "inference only, patient slots regenerated per arm",
+   "new_backward_passes": 0,
+   "superseded_first_run": "local_evidence/slot_ring_dissection_20261023_superseded_mixed_initial",
+   "superseded_reason": "first run averaged the pre-iteration initial state together with the ten post-iteration states; retained, not deleted"
+  },
+  "fidelity_anchor": "The 'none' arm reproduced the recorded historical fold0/seed3 validation logits for all 77 patients with maximum absolute logit difference exactly 0.0, and the trained state digest was identical before and after every arm. Any measured difference is therefore attributable to the ablated ring alone.",
+  "measured_wsi": {
+   "none": {
+    "initial_cosine": 0.477,
+    "final_cosine": 0.9233,
+    "final_effective_rank": 4.492,
+    "share_spread": 7.341036094050814e-05,
+    "update_divergence": 0.007462246379294925
+   },
+   "r1_slot_axis_softmax": {
+    "initial_cosine": 0.477,
+    "final_cosine": 0.9233,
+    "final_effective_rank": 4.492,
+    "share_spread": 7.340456796664244e-05,
+    "update_divergence": 0.007461855296065634
+   },
+   "r2_l1_normalize": {
+    "initial_cosine": 0.477,
+    "final_cosine": 0.8613,
+    "final_effective_rank": 6.385,
+    "share_spread": 0.00010803131615184949,
+    "update_divergence": 0.010971504176660063
+   },
+   "r3_gru_residual": {
+    "initial_cosine": 0.477,
+    "final_cosine": 1.0,
+    "final_effective_rank": 5.335,
+    "share_spread": 1.8707441428383635e-05,
+    "update_divergence": 0.0019023620977723897
+   },
+   "r4_shared_mu": {
+    "initial_cosine": 0.3721,
+    "final_cosine": 0.9014,
+    "final_effective_rank": 4.252,
+    "share_spread": 7.861247980304616e-05,
+    "update_divergence": 0.00800176280930136
+   }
+  },
+  "measured_omic": {
+   "none": {
+    "initial_cosine": 0.499,
+    "final_cosine": 0.8924,
+    "final_effective_rank": 5.998,
+    "share_spread": 0.0004593740159568745,
+    "update_divergence": 0.05981658080869391
+   },
+   "r1_slot_axis_softmax": {
+    "initial_cosine": 0.499,
+    "final_cosine": 0.8883,
+    "final_effective_rank": 5.962,
+    "share_spread": 0.0004719975487811107,
+    "update_divergence": 0.061458213634023304
+   },
+   "r2_l1_normalize": {
+    "initial_cosine": 0.499,
+    "final_cosine": 0.7827,
+    "final_effective_rank": 6.628,
+    "share_spread": 0.000732645300710312,
+    "update_divergence": 0.09535336271124177
+   },
+   "r3_gru_residual": {
+    "initial_cosine": 0.499,
+    "final_cosine": 0.9996,
+    "final_effective_rank": 3.616,
+    "share_spread": 0.00011130610516093574,
+    "update_divergence": 0.014484779162270875
+   },
+   "r4_shared_mu": {
+    "initial_cosine": 0.3944,
+    "final_cosine": 0.8638,
+    "final_effective_rank": 5.39,
+    "share_spread": 0.0004940976546718011,
+    "update_divergence": 0.06431646331163458
+   }
+  },
+  "conclusion": {
+   "primary_ring": "r2_l1_normalize",
+   "primary_evidence": "R2 is the only ring whose removal both slows the collapse at every iteration and lowers the terminal value. WSI pairwise cosine by iteration for none = 0.5890/0.9295/0.9851/0.9974 (iterations 1/3/5/10) versus R2 = 0.7911/0.8402/0.8654/0.9116. WSI final effective rank rises 4.49 -> 6.39 of 8 slots, share spread 0.000073 -> 0.000108, update divergence 0.00746 -> 0.01097.",
+   "corrected_axis_description": "The native F.normalize(attn + eps, p=1, dim=-1) runs over the TOKEN axis: it pins each slot's total attention mass across tokens to 1. It does NOT pin the cross-slot mass at a token, which is left unconstrained by the dim=-2 softmax (measured mean num_slots/num_tokens). An earlier verbal description of R2 as pinning cross-slot mass at a token was corrected.",
+   "r1_downgraded": "R1 (slot-axis softmax) is NOT the main cause. On WSI the R1 curve is numerically indistinguishable from 'none' at every iteration (0.9974 versus 0.9974 at iteration 10); only omic moves, by about 0.004. This contradicts the earlier localization that placed slot-axis competition at the head of the self-reinforcing chain, and that ranking must be treated as superseded.",
+   "r3_is_a_trap_not_a_fix": "R3 makes cosine exactly 1.0000 from iteration 1, which must NOT be read as restored diversity. With the GRU and residual MLP removed the slots become numerically identical: per-dimension standard deviation across slots ~4e-8 and slot0-slot1 L2 ~1e-6, i.e. float32 round-off. Removing the GRU/residual forces a degenerate collapse; any claim that it relieves collapse is refuted.",
+   "r4_minor": "R4 (per-slot mu) lowers the initial cosine 0.4770 -> 0.3721 and slightly slows the early curve, but by iteration 10 the terminals are 0.9970 versus 0.9974, essentially unchanged. Shared initialization is not the dominant ring.",
+   "residual_collapse": "Even with R2 removed the terminal cosine is 0.9116, still high redundancy. The collapse is a multi-ring effect and removing the strongest single ring only mitigates it."
+  },
+  "gaps_and_reasons": [
+   "Single fold0, single seed3, single frozen checkpoint, 10 validation patients. Not cross-fold robustness evidence.",
+   "Read-only inference on an already collapsed checkpoint. It does not show what the rings would learn if trained from scratch with a ring removed.",
+   "No C-index is computed. This is mechanism localization only.",
+   "R2 relief is partial, so no correction-efficacy claim is supported.",
+   "Not a predictive-harm claim: the collapse is measured as a representation fact, and its patient consequence remains unestablished."
+  ],
+  "next_action": "Capacity scan remains, but its expected value is reduced: the dominant ring R2 is a normalization operator and is independent of slot count, so changing slot capacity may not relieve the collapse. Loose the problem_capacity.py state contract and run 4/8/16 slots as independent-initialization arms to test that prediction. Any training requires fresh explicit user authorization; the earlier authorization covered the read-only dissection only."
+ },
+ "latest_package_relocation": {
+  "recorded_at": "2026-10-23T15:55:00+08:00",
+  "task_id": "SPE-RELOCATE",
+  "route": "SlotSPE repository layout / import-path relocation only; no training, no inference, no patient work",
+  "question": "Can the SlotSPE research harness live at the top level under its own name while every historical import path keeps working unchanged?",
+  "completed_work": "Moved all 33 implementation modules from survot_rank/research/slotspe_proof/ to the top-level slotspe_proof/ package. survot_rank/research/slotspe_proof/__init__.py is now a compatibility shim that holds no implementation code: a meta path finder resolves each legacy dotted name onto the canonical module and binds that SAME module object, so both paths share one module identity. The shim is lazy on purpose, because several harness modules import torch/pandas at module scope and this repository treats 'plan must not import torch' as a hard contract. Updated the three hardcoded legacy imports inside the harness (slot_ring_dissection, redundancy_queue -m target, queue PACKAGE), the 7 module-level repository-root constants from parents[3] to parents[1], the delivery builder glob, the 11 anti-tamper path pins plus their hashes in configs/slotspe_redundancy_queue.json, and the 17 survot_rank entries in PUBLICATION_MANIFEST.json. acceptance.py now accepts either the new or the historical delivery prefix and rejects an ambiguous match.",
+  "paths": {
+   "new_package": "slotspe_proof/ (33 modules)",
+   "compat_shim": "survot_rank/research/slotspe_proof/__init__.py",
+   "third_party_untouched": "third_party/SlotSPE/ (byte-for-byte unchanged)"
+  },
+  "checks": {
+   "pytest_tests": "312 passed, 0 failed, 2 pre-existing CUDA capability warnings (RTX 5090 / sm_120 vs installed torch build)",
+   "module_identity": "slotspe_proof.model is survot_rank.research.slotspe_proof.model -> True; __name__ stays 'slotspe_proof.model'",
+   "package_spec_consistency": "__package__ == __spec__.parent == 'slotspe_proof' under the legacy path; zero DeprecationWarnings (was 37)",
+   "plan_import_purity": "--plan still loads neither torch nor pandas on all three entrypoints",
+   "entrypoints": [
+    "run_slotspe_proof.sh --plan",
+    "python -B scripts/run_slotspe_redundancy.py --plan",
+    "python -B scripts/run_slotspe_problem_experiments.py --plan"
+   ],
+   "script_import_smoke": "all scripts/check_slotspe_*.py, run_slotspe_*.py, export_slotspe_*.py, audit/pack_slotspe_return import cleanly",
+   "new_deprecation_warnings": 0,
+   "training_runs": 0,
+   "inference_passes": 0,
+   "patient_arrays_read": 0,
+   "parameters_updated": 0
+  },
+  "gaps_and_reasons": [
+   "evidence/code_snapshots/* still reference survot_rank/research/slotspe_proof/. Those files are frozen archives whose sha256 values are registered in PUBLICATION_MANIFEST.json; AGENTS.md requires their historical bytes and hashes be preserved, so they were deliberately NOT edited. Relocating code does not make old-path auditors portable, exactly as the local migration note already warned for the E:/DCT-Reg -> /data1/SlotSPE move.",
+   "docs/research/** still cite the old path in historical reports. Those citations are left verbatim so that recorded hashes and measurement reports stay intact; only README.md's live 'file locations' entry was updated to describe the new package and the shim.",
+   "Historical scripts and tests still import the old path. That is intentional and is the compatibility guarantee; they were not rewritten.",
+   "No SlotSPE behavior changed. The relocation fixes no clinical or predictive question, and proves nothing about patient performance."
+  ],
+  "next_action": "Return to the pending user-authorized task: implement best-validation-C-index checkpoint selection in slotspe_proof/patient.py (train 30 epochs, keep the peak per fold, reload best weights, report the exploratory peak as the main C-index, and reset max_cindex per fold to avoid the original cross-fold threshold bug), then run 5 folds x 1 seed, arm A only. Nothing has been trained or executed here."
+ },
+ "latest_official_semantics_alignment": {
+  "recorded_at": "2026-10-23T17:35:00+08:00",
+  "task_id": "SPE-ALIGN-OFFICIAL",
+  "route": "SlotSPE harness semantics alignment with the original published code; no training, no inference, no patient work",
+  "question": "Does the research harness reproduce the original SlotSPE data semantics, and if not, where did it deviate and can the deviations be removed without touching the original source?",
+  "source_facts": "Read directly from third_party/SlotSPE/. dataset/dataset_survival.py lines 285-292 draw n_samples = min(num_patches, wsi.size(0)) patches without replacement and then ZERO-PAD up to num_patches; no patient is ever removed for owning fewer patches. The sampling happens inside __getitem__, so every epoch draws a fresh subset; the condition is split_key == 'train', so validation uses the full bag. utils/process_args.py defaults --num_patches 4096, --max_epochs 30, --lr 5e-4, --seed 3, --slot_num_wsi 8, --slot_iters 10, --topk_ratio 0.25, --temperature 0.01. scripts/SlotSPE.sh confirms --num_patches 4096 --max_epochs 30 --encoding_dim 1024. dataset/dataset_survival.py line 203 hardcodes the split directory as splits/5fold; the --which_splits argument declared in process_args.py line 46 is never read anywhere in the published package. The published package also omits survival.py, the entrypoint that both README.md and scripts/SlotSPE.sh invoke, which is why a local harness must exist at all. models/SlotSPE.py takes the feature width from args.encoding_dim and contains no hardcoded 1024, so 1536-dimensional UNI2-h features need no change to the original source.",
+  "deviations_found": "The harness had two real deviations. First, slotspe_proof/patient.py returned the reason 'fewer_real_patches_than_configured_no_padding' and dropped the whole patient whenever the patient owned fewer patches than the configured budget; at 4096 that removed 41 of 380 cohort patients (10.8 percent), and the removed patients had shorter follow-up (median DSS 13.0 versus 17.0 months), so the exclusion introduced a cohort bias. Second, the harness cached one fixed seeded bag per patient and reused it for every epoch and every arm, so 30 epochs would have trained on one identical patch subset. An earlier report in this workspace asserted that the original loader also excluded such patients; that assertion was wrong and is withdrawn: the original pads with zeros.",
+  "completed_work": "patient.py now caches EVERY real patch per patient in concatenated slide order and derives the fixed-length bag at access time. _sample_bag reproduces the original draw exactly: min(budget, available) patches without replacement, sorted, then zero-padded to the budget. Training batches resample on every access, so each epoch sees a fresh subset; the matched-state B/C check, the slot-intervention probe and the selector-gradient probe keep a fixed draw so their cross-held contracts stay meaningful. The prepared manifest now records a zero-padding exclusion policy and a per-epoch resampling patch policy, and the schema version was raised from 1 to 2. The split directory became a configurable splits_dir (default 5fold) in patient.py, queue.py and redundancy_queue.py, with a name-only pattern so it cannot be used as a path. The queue configuration was moved from 3 epochs / 256 patches to 30 epochs / 4096 patches with splits_dir 5fold_uni2h, matching the original defaults. A new scripts/refresh_slotspe_queue_pins.py recomputes the anti-tamper path pins after an intentional change and refuses to rewrite evidence pins.",
+  "measured_facts": "Measured on this machine, not assumed. Real features are h5 'features' arrays of 1536 float32 dimensions; the earlier 1024 figure came from the original ResNet50-era configuration, not from this data. Total real patches across the 457 BLCA slides are 5,583,592, which is 34.31 GB as float32 and 17.15 GB as float16; the machine has 62 GB RAM with 56 GB available, so caching every patch is feasible. An earlier estimate in this workspace put the same cache at 31 TB; that estimate was wrong by roughly three orders of magnitude and is withdrawn. h5 random single-patch read latency is 0.015 ms and a contiguous 4096-patch read takes 6.8 ms (3688 MB/s), so per-epoch resampling from the original files is also cheap. The two available split directories differ substantially at fold 0: 5fold has 304 train / 77 val and 5fold_uni2h has 304 train / 76 val, but their train sets intersect in only 242 patients, with 62 patients unique to each. Switching splits therefore changes the training cohort and is not a neutral relabelling.",
+  "paths": {
+   "changed_implementation": [
+    "slotspe_proof/patient.py",
+    "slotspe_proof/queue.py",
+    "slotspe_proof/redundancy_queue.py",
+    "slotspe_proof/problem_experiments.py"
+   ],
+   "changed_config": [
+    "configs/slotspe_redundancy_queue.json"
+   ],
+   "new_helper": "scripts/refresh_slotspe_queue_pins.py",
+   "changed_tests": "tests/test_slotspe_redundancy_engine.py (cache key 'wsi' -> 'patches')",
+   "changed_docs": [
+    "AGENTS.md",
+    "README.md"
+   ],
+   "original_source": "third_party/SlotSPE/ untouched; every byte preserved"
+  },
+  "checks": "The pytest suite passes with 312 tests and no failures after the alignment; this run exercised the generated synthetic path only. The anti-tamper pins in configs/slotspe_redundancy_queue.json were refreshed for the three changed implementation files and verify_config_pins passes. --plan still reproduces the 11 arms and 14 stages and imports no torch or data package.",
+  "gaps_and_reasons": [
+   "No patient training was run, so nothing here is evidence about patient performance. The alignment proves semantic equivalence with the published loader, not efficacy.",
+   "The zero-padding change restores all 380 cohort patients, but 41 of them now contribute bags that are more than half zeros, because the minimum patient owns only 123 real patches against a 4096 budget. The original loader has exactly this property; it is faithful, but the resulting signal for those patients is diluted, and that dilution is a property of the original method rather than of this harness.",
+   "Switching to splits/5fold_uni2h replaces 62 training patients relative to splits/5fold, so any historical numbers computed on 5fold are not comparable to future numbers on 5fold_uni2h, and the direction of the difference is unknown.",
+   "The 30-epoch schedule was previously measured to degrade late: 18 of 18 groups showed a final-epoch validation C-index drop greater than 0.01, averaging 0.12629. The queue keeps the fixed final-epoch checkpoint rule rather than best-validation selection, so the degradation remains expected and is a documented property of the configuration, not a fixed defect.",
+   "Per-epoch resampling makes the cached full patch tensor the only preparation artifact, so the prepared cache is about 34 GB and each arm reloads patient tensors from disk; the per-epoch IO cost was measured but the end-to-end wall time of a full 11-arm 30-epoch run was not measured.",
+   "The prepared manifest schema moved from version 1 to version 2, so previously prepared batches cannot be resumed and a fresh output directory is required.",
+   "Validation still draws a fixed 4096-patch subset rather than the original loader's full-bag evaluation. The original evaluates with batch_size 1 over the complete bag, while this harness keeps one fixed-length bag so that arms and folds stay comparable and so the repeated evaluations keep their existing contract that patient risks are identical across repeats. Training now matches the original per-epoch resampling, but evaluation is deliberately not a byte-for-byte reproduction of the original validation path, and that difference is stated rather than hidden."
+  ],
+  "next_action": "Commit the alignment, then obtain explicit execution authorization before running --run on the server. Do not report any C-index from that run as a patient-performance conclusion: the recorded cross-fold cross-seed C-index standard deviation is 0.0606, so 11 arms on one fold and one seed are only interpretable as within-batch paired differences, not as absolute performance. User inputs still wanted: whether to keep the fixed final-epoch checkpoint rule in the presence of the measured late-epoch degradation, and whether the 5fold_uni2h split switch should be accompanied by a re-baseline of the historical numbers."
+ },
+ "latest_patch_to_slot_sharing_readonly": {
+  "recorded_at": "2026-10-23T17:52:00+08:00",
+  "task_id": "SPE-08",
+  "route": "SlotSPE original / read-only patch-to-slot sharing recomputation over already saved native attention arrays",
+  "question": "A patch can be read by several slots and is not hard-assigned to one. Are the patches inside the current slots too similar, and do so many patches enter many slots at once that the slots are redundant?",
+  "completed_work": "Recomputed, per patient, how the 8 slots share the 256 WSI / 329 OMIC patches, using only the already saved native attention, competition, per-iteration attention and final slot arrays from the P1 observation export. No model was imported, no forward or backward pass ran, no parameter was updated. New read-only entry point scripts/check_slotspe_patch_slot_sharing.py with a plan-only default and --run reading existing NPZ files only.",
+  "answer_to_the_asked_question": "Yes, the reading side is redundant, and more severely than the already registered slot-vector redundancy. But the mechanism is a near-uniform split of every patch across all 8 slots, not a competition in which many patches are fought over by many slots.",
+  "measured_wsi": {
+   "patches": 256,
+   "slots": 8,
+   "effective_slots_reading_each_patch_mean": 7.9999886,
+   "effective_slots_reading_each_patch_min": 7.99940471,
+   "cross_slot_share_deviation_from_uniform_1_over_8": 0.00013448,
+   "raw_slot_axis_softmax_max_min_ratio_mean": 1.03094183,
+   "raw_slot_axis_softmax_max_min_ratio_min": 1.01877892,
+   "raw_slot_axis_softmax_deviation_from_uniform": 0.0009979,
+   "max_pairwise_weight_gap_at_one_patch_mean": 5.78e-05,
+   "typical_patch_weight_1_over_256": 0.00390625,
+   "effective_patches_read_per_slot": 255.99963512,
+   "top_decile_share_of_slot_mass": 0.09787932,
+   "uniform_top_decile_mass_share": 0.1,
+   "rank_one_separable_energy_fraction": 0.99999715,
+   "per_slot_gain_relative_spread": 5.07e-08,
+   "pairwise_reading_overlap": 0.99917969,
+   "slot_vector_cosine_mean": 0.99716658,
+   "reading_uniform_deviation_by_iteration": [
+    0.00571,
+    0.00583,
+    0.00492,
+    0.00383,
+    0.00309,
+    0.00261,
+    0.00225,
+    0.00198,
+    0.00176,
+    0.00157
+   ]
+  },
+  "measured_omic": {
+   "patches": 329,
+   "slots": 8,
+   "effective_slots_reading_each_patch_mean": 7.9998439,
+   "effective_slots_reading_each_patch_min": 7.99931929,
+   "cross_slot_share_deviation_from_uniform_1_over_8": 0.00055,
+   "raw_slot_axis_softmax_max_min_ratio_mean": 1.04490899,
+   "max_pairwise_weight_gap_at_one_patch_mean": 0.0001222,
+   "effective_patches_read_per_slot": 328.99358023,
+   "top_decile_share_of_slot_mass": 0.0982029,
+   "rank_one_separable_energy_fraction": 0.99996097,
+   "pairwise_reading_overlap": 0.99666994,
+   "slot_vector_cosine_mean": 0.99313482,
+   "reading_uniform_deviation_by_iteration": [
+    0.04336,
+    0.0435,
+    0.03553,
+    0.0256,
+    0.01817,
+    0.01336,
+    0.01025,
+    0.00817,
+    0.00673,
+    0.0057
+   ]
+  },
+  "mechanism_reading": "The slot-axis softmax is not what flattens the reading. The raw softmax before the token-axis L1 normalization is itself flat: the max/min ratio across the 8 slots at one patch is only 1.031 on WSI and 1.045 on OMIC. This independently reproduces the 2026-10-23 four-ring dissection conclusion that R1 (slot-axis softmax) is not the primary cause. The near-uniform state already exists at iteration 1 and tightens at every later iteration, so the cause sits upstream of the softmax, in the fact that the 8 slots are already almost identical when the first query is formed. R2 only pins each slot's total mass over tokens to 1 and does not decide which tokens a slot reads; by the patch distribution the attention matrix was already near-uniform over patches before that normalization, so the reading flatness is not manufactured by R2 either. The multi-ring superposition conclusion of the dissection is unchanged.",
+  "relation_to_registered_slot_vector_redundancy": "The reading-side redundancy is worse than the already registered slot-vector redundancy (reading overlap 0.99918 vs slot cosine 0.99717 on WSI; 0.99667 vs 0.99313 on OMIC). Both hold, but they are different quantities and neither is the other.",
+  "paths": {
+   "entrypoint": "scripts/check_slotspe_patch_slot_sharing.py",
+   "report": "docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt",
+   "ignored_output": "local_evidence/patch_slot_sharing_20261023/",
+   "input": "local_evidence/p1_observations_gpu_trisurv_20261022/ (77 patients, already saved arrays)",
+   "third_party_SlotSPE": "untouched; byte for byte"
+  },
+  "checks_and_receipt": {
+   "plan_only_default_imports_no_torch": true,
+   "verified_historical_output_files": 79,
+   "historical_receipt_and_observations_sha256_verified": true,
+   "historical_native_source_hashes_verified": true,
+   "per_patient_raw_sha256_verified": 77,
+   "duplicate_patients": 0,
+   "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
+   "new_training_runs": 0,
+   "new_model_forward_passes": 0,
+   "new_backward_passes": 0,
+   "parameters_updated": 0,
+   "actual_server_execution_this_stage": false,
+   "new_server_raw_results_received": false
+  },
+  "gaps_and_reasons": [
+   "Single fold0, single seed3, single frozen 3-epoch checkpoint, 77 validation patients. Not cross-fold robustness evidence.",
+   "Sharing geometry is a representation fact. It is not predictive harm and not a proof that a slot carries no unique information.",
+   "No causal intervention was run, so this cannot attribute the reading flatness to any single ring, and it cannot say what slots would be learned if trained from scratch with a ring removed.",
+   "The 77-patient cohort is the native validation split of this checkpoint and differs from the historical 71-patient local records; the two must not be pooled.",
+   "Attention was head-averaged before measuring sharing, so head-specific specialization, if any, is not visible here.",
+   "Slot cosine above 0.95 remains a descriptive threshold, not a clinical threshold."
+  ],
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "next_action_user_inputs": "This measurement answers the asked question and needs no training authorization. Whether to act on it does: removing the input-side collapse requires either an intervention arm (already covered by the R-series in the eleven-arm queue) or a fresh training protocol, and both need explicit user authorization. No training, inference or patient intervention was started here."
+ },
+ "latest_patch_budget_truth_and_padding_risk": {
+  "recorded_at": "2026-10-23T18:22:00+08:00",
+  "task_id": "SPE-08",
+  "route": "SlotSPE / patch budget reconciliation, read-only; no training, no inference, no patient intervention",
+  "question_asked": "用户怀疑出了问题，并直接问：目前是 256 patch 还是 4096 patch？记录这个风险并推送。",
+  "verdict": "用户的怀疑成立，但真实情况比二选一更糟：配置意图是 4096/30 轮，而至今每一次患者运行都仍然是 3 轮/256 patch；两者从未同时成立过。",
+  "fact_a_configured_intent": "configs/slotspe_redundancy_queue.json 的 real_data_diagnostic 阶段当前为 epochs 30、real_patches 4096、splits_dir 5fold_uni2h。python -B scripts/run_slotspe_redundancy.py --plan 实测输出 epochs=30 patches=4096 splits_dir=5fold_uni2h，且 --plan 不导入 torch。此与原版一致：third_party/SlotSPE/utils/process_args.py 第 35 行 --num_patches 默认 4096，第 49 行 --max_epochs 默认 30。commit 24dedca（2026-10-23 09:42）把配置从 3 轮/256 patch 改为 30 轮/4096 patch。",
+  "fact_b_what_actually_ran": "所有已完成的患者运行都是 3 轮/256 patch：results/slotspe_proof/blca_cpu_a512169、blca_gpu_trisurv_a512169、blca_5fold_gpu_trisurv_a512169（5 对）、blca_5fold_3seed_gpu_trisurv_a512169（15 对），以及两次失败的十一臂尝试 local_evidence/redundancy_blca_uni2h_fold0_seed3_run01_FAILED_cudactx（arm_S0 因 CUDA 上下文失败）与 redundancy_blca_uni2h_fold0_seed3_run01（arm_S4 失败）。每个目录内的 resolved_config.json / queue_manifest.json / summary.json 都记录 epochs=3 patches=256。4096 预算下的患者运行次数为 0。",
+  "why_the_discrepancy_exists": "按文件时间戳而非推测：两次十一臂尝试的 resolved_config.json 写于 2026-10-23 08:53 与 09:57 UTC，而把配置改为 30/4096 的 commit 24dedca 时间是 09:42 UTC，因此最后一次尝试启动时配置仍是 3 轮/256 patch。更关键的是这两份 resolved_config.json 中没有 splits_dir 字段，而当前 slotspe_proof/redundancy_queue.py 第 72 行必定写入 stage.get('splits_dir','5fold')。字段缺失说明这两次运行是用 09:42 之前的旧代码执行的，而不是新代码读了旧配置。因此运行落后的原因包含旧代码，而不只是旧配置。",
+  "the_padding_risk_that_matters": "切换到 4096 会首次把补零问题从 1 名患者放大到 41 名患者。统计单位必须是患者而非切片：原版 third_party/SlotSPE/dataset/dataset_survival.py 的 load_wsi（第 222-236 行）先把同一患者的全部切片拼接成一个矩阵，第 285-292 行才抽样与补零；本仓库 slotspe_proof/patient.py 第 293 行同样先拼接、第 385-399 行 _sample_bag 后补零。因此训练 bag 的补零比例由患者合并后的真实 patch 总数决定。",
+  "per_patient_patch_budget_facts": {
+   "unit": "patient, after merging all of that patient's slides",
+   "slides_on_disk": 457,
+   "patients_with_resolvable_slide_list": 381,
+   "rows_with_missing_slide_file": 0,
+   "slides_per_patient": {
+    "min": 1,
+    "median": 1,
+    "max": 9
+   },
+   "feature_dim": 1536,
+   "patient_merged_patches_total": 5516258,
+   "patient_merged_patches": {
+    "min": 123,
+    "p25": 7441,
+    "median": 12460,
+    "p75": 18649,
+    "max": 103807
+   },
+   "budget_256": {
+    "short_patients": 1,
+    "short_fraction_of_patients": 0.0026,
+    "over_half_zero": 1,
+    "over_half_zero_fraction_of_cohort": 0.0026,
+    "zero_share_within_short_subset_mean": 0.5195,
+    "zero_share_over_whole_cohort_mean": 0.0014,
+    "zero_share_over_whole_cohort_median": 0.0,
+    "zero_share_max": 0.5195
+   },
+   "budget_4096": {
+    "short_patients": 41,
+    "short_fraction_of_patients": 0.1076,
+    "over_half_zero": 15,
+    "over_half_zero_fraction_of_cohort": 0.0394,
+    "zero_share_within_short_subset": {
+     "min": 0.0056,
+     "median": 0.406,
+     "mean": 0.4013,
+     "max": 0.97
+    },
+    "zero_share_over_whole_cohort_mean": 0.0432,
+    "zero_share_over_whole_cohort_median": 0.0,
+    "zero_share_max": 0.97
+   }
+  },
+  "fold0_5fold_uni2h_split_breakdown": {
+   "note": "This is the split the configured queue will actually run, and it differs from the cohort-wide figures above.",
+   "train": {
+    "patients": 304,
+    "patch_counts_resolved": 304,
+    "short_under_4096": 30,
+    "short_fraction": 0.0987,
+    "over_half_zero": 11,
+    "merged_patches_min": 288,
+    "merged_patches_median": 12668,
+    "merged_patches_max": 103807
+   },
+   "val": {
+    "patients": 76,
+    "patch_counts_resolved": 76,
+    "short_under_4096": 11,
+    "short_fraction": 0.1447,
+    "over_half_zero": 4,
+    "merged_patches_min": 123,
+    "merged_patches_median": 11152,
+    "merged_patches_max": 59876
+   },
+   "observation": "Validation short-bag rate 14.47 percent exceeds the training rate 9.87 percent. The published loader only samples when split_key == 'train' and otherwise uses the full bag, so short-bag validation inputs still carry budget-length padding while short-bag training inputs are resampled every access. This asymmetry is a property of the original protocol and is registered, not corrected."
+  },
+  "denominator_warning": "三个比例分母不同，绝不可混用：10.76% 是真实 patch 不足 4096 的患者比例；3.94% 才是 bag 过半为零的患者比例；平均 0.4013 的分母是 41 名短袋患者，若以全部 381 人为分母则平均仅 0.0432、中位为 0。",
+  "mechanism_risk_not_predictive_harm": "原版 dataset/dataset_survival.py 第 285-292 行不传 mask，零行经 norm_input/to_k/to_v 后产生完全相同的 key/value，会分到确定且不小的注意力质量。该源码事实只证明补零确实参与计算，即存在机制风险；尚不能证明患者预测受损。这是与已登记 P5 缺 padding mask 同一结构缺陷，受影响患者数随预算放大约 41 倍。",
+  "user_decisions_recorded": {
+   "recorded_at": "2026-10-23T18:46:00+08:00",
+   "decision_1": "本轮 S0 及十一组共同保留官方训练补零行为，不新增 mask、不改成变长 bag。padding mask 另作独立修正对照，不混入当前模块比较，以避免把 mask 的作用混进 MESH、Gram 等模块的效果。",
+   "decision_2": "先做 S0 的 4096 小规模协议检查，不先跑满 30 epochs；使用独立输出与临时权重，检查结果不冒充正式训练结果。检查通过后再启动同一协议下的十一组正式队列，保持 fold0/seed3，不自动扩展。",
+   "consequence": "是否加 mask 已不再是本轮 4096 运行的前置阻塞项，它是后续独立的修正对照。本轮协议检查只需测量补零的实际影响，而不需要改变补零行为。",
+   "made_enforceable_not_merely_documented": "该决定原先只以文字登记，现已由 scripts/check_slotspe_padding_policy_guard.py 变成可强制检查的守卫，并在 tests/test_slotspe_padding_policy_guard.py 中以 8 项回归测试锁定双向行为：干净仓库必须通过，且每种违规必须被抓到。守卫校验四件事：(a) 运行时配置中不存在任何 padding 模式开关；(b) 十一臂执行路径上任何 replay_with_assignment 调用都不传 token_mask，按完整调用表达式检查而非单行，因此续行注入也会被抓到；(c) 队列成分仍是那十一臂，任何 mask 臂不得混入；(d) patient.py 的 _sample_bag 仍然用 torch.zeros 纯零补齐、无 mask、仍按 min(budget, available) 无放回抽样，并且不会退回已撤回的患者排除逻辑。已注入并确认被抓到的五类违规：native_allocation 臂路径传 mask、native_pruning（S5 臂路径）传 mask、非零补齐、mask 臂进入队列、患者排除原因复活。守卫自身在编写中被发现并修好了一处真实缺陷：初版按行扫描调用点，续行上的 token_mask 会被漏掉。",
+   "scope_boundary_found_by_the_guard": "守卫首次运行时发现 slotspe_proof/prototype_assignment.py 确实会向共享 replay 传 token_mask。经核查它是 DCT 宿主桥，只经 replay_assignment_variant 到达，而该函数要求 dct_prototype_assignment_stage_spec_v1 版本化宿主规格；十一臂引擎 redundancy_engine.py 只触及 native_allocation 与 native_pruning，不导入它。它因此被列为唯一豁免模块，且豁免必须写明理由，并由测试断言 redundancy_engine.py 不含 prototype_assignment。豁免的含义是'不在十一臂执行路径上'，不是'不受该决定约束'。"
+  },
+  "second_order_effect_on_this_stage_measurement": "本阶段全部读取侧均匀度数字都是在 3 轮/256 patch 下测得。在 4096 下分母变为 4096，补零行会让'每槽读取的有效 patch 数等于全部 patch 数'更加显眼，但那是补零造成的而非学习结果。因此本阶段的读取冗余数字既不能代表 4096 预算下的表现，也不能代表任何一种预算下的患者结论。",
+  "risk_registration": "现在直接执行 --run 会同时首次发生三件从未实测的事：首次在 4096 patch 上训练、首次让 41 名患者（10.76%）拿到短袋、首次让其中 15 名（占全队列 3.94%）的 bag 过半为零。配置意图本身没有错（已对齐原版），风险在于该组合从未被运行验证过。",
+  "corrections_applied_after_user_review": [
+   "更正一：初稿把'真实 patch 占比'误标为'零行占比'，因此 4096 零行份额曾被写成平均 59.7% / 最大 99.4%。",
+   "更正二（用户指出）：初稿的统计单位是切片而非患者。原版 loader 与本仓库 patient.py 都是先把患者全部切片拼接再抽样补零，所以必须按患者合并后的真实 patch 总数重算。初稿的'457 张切片''50/457''18 人'四个数字全部作废，改为 381 名患者口径。",
+   "更正三（用户指出）：'平均 40.27%'未注明分母。正确做法是同时给出两个分母：短袋 41 人子集内平均 0.4013，全队列 381 人为分母时平均仅 0.0432、中位 0.0000。",
+   "以上更正保留在记录中而非静默覆盖。用户同时确认：源码证明补零参与计算只说明存在机制风险，尚不能证明患者预测受损。"
+  ],
+  "checks": {
+   "configured_intent_read_from_plan_output_not_inferred": true,
+   "actual_run_budget_read_from_per_directory_json_not_inferred": true,
+   "timestamp_evidence_used_for_causal_ordering": true,
+   "splits_dir_field_absence_checked_against_current_code": true,
+   "patch_counts_read_from_hdf5_dataset_shapes_only": true,
+   "h5_layout_observed": "[1, num_patches, 1536]",
+   "patch_count_unit": "patient after merging that patient's slides, matching dataset_survival.py lines 222-236 and patient.py line 293",
+   "superseded_slide_level_numbers": "The earlier slide-level figures (total_real_patches 5583592, 457 as a patient denominator, 50/457, 18) were withdrawn; they used slides where the loader uses patients.",
+   "full_pytest_suite": "316 passed, 1 pre-existing CUDA fork_rng warning",
+   "full_pytest_suite_after_padding_guard": "324 passed (316 pre-existing + 8 new regression tests), 1 pre-existing CUDA fork_rng warning",
+   "padding_guard_result": "passed, 0 findings on the clean tree",
+   "padding_guard_violations_verified_caught": [
+    "native_allocation arm path passes token_mask",
+    "native_pruning S5 arm path passes token_mask",
+    "non-zero padding instead of plain zeros",
+    "mask arm added to the selected queue",
+    "withdrawn patient-exclusion reason reintroduced"
+   ],
+   "plan_imports_no_torch": true,
+   "third_party_SlotSPE_modified": false,
+   "default_configs_modified_this_stage": false,
+   "new_training_runs": 0,
+   "new_model_forward_passes": 0,
+   "new_backward_passes": 0,
+   "patient_feature_arrays_loaded": false,
+   "actual_server_execution_this_stage": false,
+   "new_server_raw_results_received": false,
+   "published_commit": "99f457428bc3409b22c1ff7d1ed168883cee44d4",
+   "published_branch": "main",
+   "remote_main_verified_equal_to_local_head": true,
+   "published_files": 4,
+   "patient_identifiers_staged": false,
+   "private_patient_inputs_staged": false
+  },
+  "publication_note": "本地工作分支名为 master，而远端跟踪分支是 main。第一次 push 因此意外新建了远端 master 分支，随后已把同样内容以 fast-forward 推送到 main，并删除了远端 master，随后把本地分支重命名为 main。推送到 main 的范围包含三个先前未推送的提交：93a83e9（迁移 slotspe_proof 顶层包）、24dedca（对齐原版 patch 语义）、99f4574（本轮）。远端 main 与本地 HEAD 已核验一致。",
+  "paths": {
+   "report": "docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt",
+   "sharing_entrypoint": "scripts/check_slotspe_patch_slot_sharing.py",
+   "budget_probe": "local_evidence/diag_patch_budget_per_patient.py (ignored, metadata-only, per-patient unit)",
+   "padding_policy_guard": "scripts/check_slotspe_padding_policy_guard.py",
+   "padding_policy_guard_tests": "tests/test_slotspe_padding_policy_guard.py",
+   "orphan_slide_reconciliation": "457 张切片中有 452 张被 clinical/all/blca.csv 引用，5 张为孤儿（合计 67334 个 patch）。因此切片口径总数 5,583,592 = 患者口径 5,516,258 + 67334，两个数字可以完全对上。此前 latest_official_semantics_alignment 中记录的是切片口径总量，作为容量可行性事实仍然正确（该记录的用途是说明 34 GB 缓存可行），但它不是训练 bag 的口径；两者不可互换。",
+   "config_of_record": "configs/slotspe_redundancy_queue.json",
+   "origins_of_discrepancy": [
+    "configs/slotspe_redundancy_queue.json",
+    "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/resolved_config.json",
+    "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01_FAILED_cudactx/queue_manifest.json"
+   ]
+  },
+  "gaps_and_reasons": [
+   "The per-patient patch-count distribution now matches the loader unit, but it still spans all 381 patients with a resolvable slide list rather than only the 379 complete-case patients, and it is not broken down by fold or by train/validation role. fold0 of splits/5fold_uni2h has 304 train and 76 val rows, so the actual per-fold short-bag counts will differ from these cohort-wide figures.",
+   "No forward pass was run, so how much attention actually lands on padded rows is still unmeasured. That measurement is explicitly part of the agreed S0 4096 protocol check and is the reason the check exists.",
+   "The absence of a padding mask in the published loader is a source fact about mechanism only. It is not evidence that patient predictions are harmed, and this stage did not establish any predictive harm.",
+   "The 256-budget reading-redundancy measurements do not predict 4096-budget behaviour. Any claim about reading redundancy under the configured budget remains unmeasured.",
+   "Validation still draws a fixed subset rather than the original full-bag evaluation, so even a correct 4096 run would not be a byte-for-byte reproduction of the published evaluation path. The original only samples when split_key == 'train'.",
+   "The S0 4096 protocol check has not been written or executed. Nothing has been trained, run or intervened on since the 316-test check."
+  ],
+  "patient_predictive_harm_established": false,
+  "correction_efficacy_established": false,
+  "next_action_user_inputs": "Both decisions are now made and recorded above: keep the official padding behaviour for S0 and the eleven arms with the mask held out as an independent correction arm, and run a single-arm S0 4096 protocol check before the full queue. What remains is execution authorization for that check. The check must report per-patient statistics, keep whole-cohort and short-subset denominators separate, cover no/light/heavy padding plus the largest validation bag, confirm real 4096 input, finite loss and gradient, memory, cross-epoch resampling, full-bag validation, padding attention mass, and reading overlap renormalized over real patches only, and save the actual commit, resolved_config, split/cache hashes and execution receipt. Results must not be presented as formal training results. After the check passes, the eleven-arm queue runs under the same protocol at fold0/seed3 with no automatic expansion. No execution has been started."
+ }
 }
