@@ -1,0 +1,55 @@
+补充精读：归一化、动力学与病理语义
+日期：2026-10-22；任务：SPE-08。只读公开论文与既有源码，不运行模型。
+
+N1. Attention Normalization Impacts Cardinality Generalization in Slot Attention
+Markus Krimmel, Jan Achterhold, Joerg Stueckler；TMLR 2024。
+全文：https://arxiv.org/html/2407.04170v2
+PDF：https://arxiv.org/pdf/2407.04170v2
+正式记录：https://openreview.net/forum?id=llQXLfbGOq
+作者代码：https://github.com/EmbodiedVision/slot_attention_normalization
+阅读：正文§2–5、§7；§3.2 Proposition 1/2及§4归一化公式；PDF第4–5页。
+作者问题：每槽weighted mean消去其分配总量（attention mass），限制跨槽数/对象数泛化；此处“总量”不是分配好坏。
+机制：以有尺度的weighted sum或共享标量batch统计替代按槽归一化。
+边界：命题有维数/投影等条件；实验主要支持前景分割和数量迁移，整体ARI并非处处占优。
+SlotSPE映射：原生slot_attention.py:97–100确实逐头归一化token轴，直接消去该步更新的分配总量；但论文定理不是对多头、GRU历史及整个生存模型的不可辨识性定理。可检验“内容均值+占用比例”或论文scaled-sum对照；两者不应混称同一个论文实现。病理占用量受采样/面积定义影响，通路token数也不是细胞丰度。患者收益未测。
+
+N2. Understanding Clustering in Slot Attention via Particle Dynamics
+Vasudev Joy, Rajat R Rasal, Avinash Kori, Anthea Monod, Ben Glocker；2026-10预印本。
+全文：https://arxiv.org/html/2610.04493v1
+阅读：§2–5；附录A.2的能量推导与A.3相关段落。未登记全部附录证明审计。
+作者问题：学习投影、GRU等掩盖竞争机制本身的聚类作用。
+机制：SSA移除学习组件，保留竞争式点积与weighted mean；USSA进一步移除第二归一化用于理论分析。
+证据范围：单一Pascal VOC、冻结DINO、6槽；能量分析针对USSA，并未证明完整SA/SSA收敛。
+迁移边界：适合作机制拆解参照，不是已经验证的SlotSPE修正。USSA出现活槽减少；因此不能把上一论文理解成“删掉归一化总是更好”。最高FG-ARI还可能掩盖背景/占槽退化，指标必须组合解释。
+
+N3. Joint Biomarker and Survival Prediction via Concept-Conditioned Multimodal Slot Factorization（PathoSlot）
+Zuqi Huang等；MICCAI 2026。
+正式入口：https://papers.miccai.org/miccai-2026/0517-Paper1567.html
+全文：https://papers.miccai.org/miccai-2026/paper/1567_paper.pdf
+阅读：PDF第2–8页，重点第4–5页公式2–7及第8页消融。
+作者问题：共享证据分配缺端点语义，局部标志物任务与全局生存任务的粒度不同。
+机制：TITAN的WSI/报告token、token reweighting、概念调制初槽及槽-概念一致性、每端点监督，另对生存槽注入全局上下文。
+迁移边界：正文第4页明确是预定义临床端点的监督分配，不是独立临床因子发现；和SlotSPE潜在事件设定不同。原项目没有同样的报告、端点标签及概念对齐空间。可借鉴“任务要求槽承载什么”，不能把所有随机槽改成固定疾病名称就称发现了生物事件。论文数据/任务不匹配，不能横比C-index。
+
+N4. Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning（SlotCurri）
+WonJun Moon, Hyun Seok Seong, Jae-Pil Heo；CVPR 2026。
+正式入口：https://openaccess.thecvf.com/content/CVPR2026/html/Moon_Reconstruction-Guided_Slot_Curriculum_Addressing_Object_Over-Fragmentation_in_Video_Object-Centric_Learning_CVPR_2026_paper.html
+已读全文：https://arxiv.org/html/2603.22758v1
+阅读：§3.2–3.5、§4；附录B–D（检测/过分割/欠分割）、G（分裂标准）、I–M（损失/容量/局限/静态图像）。
+问题与改法：高预算重建可把同一对象切成多槽；从少槽开始，按重建误差总量复制并扰动槽，结合结构损失。训练阶段的全局槽数日程不同于每患者自适应有效槽数。
+边界：作者承认小对象仍可能混合，日程须手调；SSIM依赖真实空间/时间网格。静态COCO附录去除时间循环，不应说只能用于视频。总重建误差指导容量不等于预后相关性指导容量。
+对本研究更直接的启发：分别测内容召回、一个内容分到几槽、一个槽混了几种内容；其指标依赖真实对象mask，不能直接给无标签病理事件伪造真值。此文支持“去重复与防碎片化需要同时验收”，未证明SlotSPE已经碎片化。
+
+本轮源码事实（只读指定原件）
+1. third_party/SlotSPE/models/slot_attention.py:77–80：共享高斯先验随机初始化，不读本患者特征。
+2. 同文件:95–110：槽轴softmax → token轴L1归一化 → 多头value更新 → GRU/MLP。
+3. third_party/SlotSPE/models/SlotSPE.py:283–291：先完整聚合两模态，再计算选择；decoder的k在构造时固定。
+4. 同文件:294–300：已有跨模态和模态内槽交互；主预测不重新调用输入聚合。
+5. 同文件:309：另有WSI到OMIC辅助重建的SA调用，但不接收keep mask；不能把它当“选择后重聚合”。
+6. 同文件forward不消费全局patch坐标/邻接；不能据此否定patch特征中的局部形态。
+7. 当前两个核心源文件SHA256与既有source_review一致：
+   slot_attention.py 200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109
+   SlotSPE.py eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e
+
+工具边界：HF检索工具不可用，回退官方全文；CodeGraph指定项目路径后报告未初始化，已询问是否建索引，未自行执行。源码按已有source_review给定精确路径只读。网页PDF截图服务报错，本文件不宣称完成PDF视觉审查；公式使用官方可读全文/PDF文本交叉核对。
+本文件不包含患者输入、权重、标识或原始数组；没有训练、推理、反向传播或服务器任务。

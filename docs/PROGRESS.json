@@ -1,17 +1,17 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-23T18:22:00+08:00",
+  "recorded_at": "2026-10-24T04:08:07.087510+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
   "issues": {
-    "P1": "原义：固定槽容量不适配患者复杂度。当前固定8候选/Top-2有结构依据，但patch预算改变不是槽数改变；容量不匹配及碎片化未被本次实验直接检验。",
-    "P2": "本地历史BLCA 3轮原版模型71人已逐NPZ复算：两侧全部28对均cos>0.95；选中2槽cos均值WSI0.99447/OMIC0.99862，读取重叠99.858%/99.555%，选择后表示与读取冗余仍存在。语义碎片化、去门控因果效应和预测损害未证；不是服务器77人结果。",
-    "P3": "原义：冷启动缺少患者特异线索。共享高斯初槽不读当前患者内容的结构事实成立，后续迭代读取输入；聚合质量和收敛后果未测。评估随机性单列附加问题，不能代替P3。",
-    "P4": "原义：槽语义身份不稳定。尚未直接测匹配内容后的跨抽样/种子/患者语义一致性；槽置换/编号变化不是语义漂移证明。",
+    "P1": "原义：固定槽容量不适配患者复杂度。服务器observe已报告K4/8/16冻结槽模块探针；中心化秩上限为3/7/15。容量×独立复杂度的训练因果未检验；capacity_train未启动。",
+    "P2": "本地历史BLCA 3轮原版71人已复算：选中2槽cos均值WSI0.99447/OMIC0.99862，读取重叠99.858%/99.555%。另收到服务器77人observe汇总，支持高度表示/读取冗余；其熵来自头平均后的归一化读取权重，不能推出原始竞争精确均分。服务器原始产物待独立验收；碎片化与预测损害未证。",
+    "P3": "原义：冷启动缺少患者特异线索。共享高斯初槽不读当前输入。服务器报告own优于随机77/77，优于三个供体40/77、31/77、72/77，未稳定胜过全部供体；独立内容质量证据缺失。长迭代参照非真值，不能称所有错配供体均无差别。",
+    "P4": "原义：槽语义身份不稳定。服务器仅报告同输入整体读取稳定；高度重复槽的低Hungarian匹配距离与数值非平局标记不证明槽身份可辨识。跨患者语义一致性仍缺独立标签。",
     "P5": "原义：无关内容干扰或占槽。补零无mask是相关输入处理风险，不能替代真实无关patch/通路占槽的直接证据。",
     "P6": "原义：尺度或特征层次不足。本轮无多倍率/多编码器层匹配比较。patch顺序必须另记Q6，不再作为P6证据。",
-    "P7": "原义：槽学习目标与生存预测目标不一致。直接融合主梯度断路是选槽支路的局部证据，辅助生存监督仍连通；整体目标一致性与表示后果未被直接测全。",
+    "P7": "原义：槽学习目标与生存预测目标不一致。服务器observe不支持主/辅生存普遍对抗的强假设；加权重建有较小局部反向关系，报告范数中位数之比约为主梯度的1/2985(WSI)、1/620(OMIC)，非逐患者比值。选槽器主梯度断路仍为支路结论；原始梯度产物及长期表示后果待验。",
     "P8": "原义：Slot聚合与后续跨模态OT双阶段约束。原版SlotSPE没有该后续OT，故本仓库不适用。"
   },
   "tasks": [
@@ -41,9 +41,9 @@
     },
     {
       "id": "SPE-05",
-      "title": "有依据后扩展五折多种子",
+      "title": "Conditional five-fold multi-seed extension of A/B/C attribution",
       "status": "conditional",
-      "next_action": "归因和数值行为可解释后再扩大配对实验。"
+      "next_action": "Conditional A/B/C extension after mechanism attribution; original-only five-fold three-seed public records already exist and are a different evidence line."
     },
     {
       "id": "SPE-06",
@@ -61,7 +61,7 @@
       "id": "SPE-08",
       "title": "核实八类槽问题在指定原版SlotSPE中的存在性",
       "status": "partially_completed_local",
-      "next_action": "研究核心与D0-D4阶段配置已发布并在本机拉取复核(29项合成测试+3个计划入口通过)；完整患者训练未接入，DIAS/MetaSlot未实现；服务器原始产物验收与是否启动患者对照待用户决定。"
+      "next_action": "当前原生SlotSPE S0–S4适配器及32项检查完成；15组合成短程训练结果已登记。真实患者五臂训练尚未执行，需匹配队列与原始产物验收。"
     },
     {
       "id": "SPE-09",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "只读机制拆解已完成并定位主因 R2；容量扫描的预期收益下降（主因与槽数无关）。下一步需用户授权训练后再动 problem_capacity.py。未启动新训练。",
+  "next_action": "User authorization is complete. Publish the validated explicit public-file list through normal main history, verify the live remote commit/tree and all inventory hashes, then record the verified payload delivery without loading patient evidence or changing active server jobs.",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -110,7 +110,7 @@
     "new_patient_execution": false
   },
   "confirmed_problem_phenomena": [
-    "P3 native eval randomness affects predictions",
+    "Q1 native eval randomness affects predictions",
     "P7 direct fused-loss selector gradient disconnect",
     "P5 missing padding mask and synthetic zero-row sensitivity",
     "unselected self-slot contribution despite selection mask"
@@ -278,7 +278,7 @@
   },
   "additional_implementation_findings": {
     "eval_randomness": "评估重复性缺陷已确认；固定噪声改善重复性，与P3冷启动质量不同。",
-    "Q6_patch_order": "原问题附件明确另列Q6。当前置换仍消耗模型共用RNG，order_effect_not_identified。",
+    "Q6_patch_order": "Old patient permutation diagnostics did not pair the model RNG and cannot identify order causality. New generated-input full-model checks pair RNG and observe bag-permutation differences at numerical roundoff; this does not retroactively validate the old patient controls.",
     "late_training_validation_deterioration": "18组30轮曲线支持晚期退化/过拟合迹象；训练协议风险，不归入原八项架构机制。",
     "diagnostic_reliability": "错误比较对象、空操作及统计字段问题需修正；不当作模型机制结论。"
   },
@@ -1794,5 +1794,2161 @@
     "patient_predictive_harm_established": false,
     "correction_efficacy_established": false,
     "next_action_user_inputs": "Both decisions are now made and recorded above: keep the official padding behaviour for S0 and the eleven arms with the mask held out as an independent correction arm, and run a single-arm S0 4096 protocol check before the full queue. What remains is execution authorization for that check. The check must report per-patient statistics, keep whole-cohort and short-subset denominators separate, cover no/light/heavy padding plus the largest validation bag, confirm real 4096 input, finite loss and gradient, memory, cross-epoch resampling, full-bag validation, padding attention mass, and reading overlap renormalized over real patches only, and save the actual commit, resolved_config, split/cache hashes and execution receipt. Results must not be presented as formal training results. After the check passes, the eleven-arm queue runs under the same protocol at fold0/seed3 with no automatic expansion. No execution has been started."
+  },
+  "latest_pull_sync_20261023": {
+    "recorded_at": "2026-10-23T19:08:31.001944+08:00",
+    "route_task": "SlotSPE / pull origin main with preservation and reconciliation of existing local work",
+    "completed_work": "Fetched origin/main successfully, confirmed requested 0d33389 is its ancestor, backed up and SHA256-verified 117 local files, saved five tracked modifications in a retained stash, held 16 overlapping untracked files, fast-forwarded main to cc39c74, reconciled local research navigation with remote README additions and merged progress entries by key. Both conflicting progress summary values are preserved. Local HDF5 layout fix is already included verbatim in canonical remote patient.py. Final remote verification found a concurrent upstream bf07e30; fetched and fast-forwarded that additional commit too, preserving its padding-policy guard, README paragraph and updated progress record, with a second backup and retained stash.",
+    "paths_commit": {
+      "HEAD_before": "d8dd0518712f99f518df90ee78e94a4072d08810",
+      "HEAD_after": "bf07e305776b78fb0cfc63e02434d6a5fe948f0f",
+      "backup": "local_evidence/pull_sync/20261023_190410_success",
+      "stash_sha": "7f6f6bb0258f5f96c1a0c3d5c95cca39e4e5e1cf",
+      "progress": "docs/PROGRESS.json",
+      "new_commit_or_push": false,
+      "intermediate_HEAD": "cc39c742a8e3f295ab3b6971708ec4ea36017e36",
+      "incremental_backup": "local_evidence/pull_sync/20261023_190410_success/incremental_before_bf07e30",
+      "incremental_stash_sha": "01f0c32cb58df880921e7c1166917bf333bd0ed0"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "HEAD_matches_fetched_origin_main": true,
+      "original_source_files_sha256_unchanged": 11,
+      "backup_files_sha256_verified": 117,
+      "untouched_nonoverlapping_untracked_files": 96,
+      "staged_changes": false,
+      "unmerged_index_entries": false,
+      "new_training_runs": 0,
+      "new_model_forwards": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "user_reported_316_tests_rerun": false,
+      "post_pull_checks_receipt": "local_evidence/pull_sync/20261023_190410_success/post_pull_checks.json",
+      "plans_passed": [
+        "run_slotspe_redundancy --plan",
+        "run_slotspe_proof --plan"
+      ],
+      "pinned_files_sha256_matching": 18,
+      "legacy_queue_is_canonical_module": true,
+      "git_diff_check_passed": true,
+      "changed_python_files_ast_valid": 53
+    },
+    "gaps_reasons": "Fetched source and aggregate reports only. No ignored server patient arrays or checkpoints were received, and reported patient measurements and the 316-test run were not independently reproduced. Older local files under the legacy package path remain preserved as untracked files; the upstream compatibility shim routes legacy imports to the canonical package.",
+    "next_action_user_inputs": "Review the synchronized per-patient patch-budget correction and upstream protocol records. No --run is authorized by the pull request; any patient execution still requires explicit authorization. Keep backups and stash until the preserved local work is intentionally committed or archived."
+  },
+  "latest_paper_semantics_mechanism_explanation": {
+    "recorded_at": "2026-10-23T18:05:41.0440173+08:00",
+    "route_task": "SlotSPE / paper semantic-specialization claims and five mechanism explanations",
+    "completed_work": "Read supplied 36-page ICLR 2026 paper, including abstract/introduction, sections 3.1-3.3, 4.7 and appendices B.2-B.5 and I. Extracted full text, rendered ten relevant pages and visually inspected pages 4,6,19,33. Confirmed explicit mutually distinctive semantic/event slots and redundancy-reduction/specialization claims; distinguished design claim and illustrative semantic evidence from guaranteed per-slot distinctness, independent information and fixed cross-patient identities. Confirmed all-slot inter-modal attention is explicitly intended in section 3.2, rather than an accidental TopK bypass. Prepared plain-language examples of changing attention summaries over the same inputs, GRU/residual refinement, Gumbel stochastic selection versus ST surrogate gradients, and auxiliary versus fused survival paths.",
+    "paths_commit": {
+      "new_commit_or_push": false,
+      "backup": "local_evidence/documentation_backups/paper_semantics_teaching_20261023_180541/PROGRESS.before.json",
+      "sources": [
+        "third_party/SlotSPE/models/SlotSPE.py:253-332",
+        "third_party/SlotSPE/models/slot_attention.py:69-185",
+        "third_party/SlotSPE/models/transformer.py:77-132"
+      ],
+      "paper": "C:/Users/栋栋/Desktop/研一/多模态癌症生存预测论文清单/03_槽注意力与结构化事件/STRUCTURAL PROGNOSTIC EVENT MODELING FOR.pdf",
+      "progress": "docs/PROGRESS.json"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "visually_inspected_pages": [
+        4,
+        6,
+        19,
+        33
+      ],
+      "new_server_raw_receipt": false,
+      "new_backward_passes": 0,
+      "patient_arrays_or_weights_loaded": false,
+      "original_source_modified": false,
+      "server_execution": false,
+      "rendered_pages": 10,
+      "codegraph_source_review": true,
+      "supplied_paper_modified": false,
+      "new_training_runs": 0,
+      "new_model_forwards": 0,
+      "pdf_pages": 36
+    },
+    "gaps_reasons": "Paper qualitative assignment/patch/pathway examples and pathologist annotations support interpretability, but do not establish every slot has nonredundant information or a fixed named biological identity. No new patient or synthetic model experiments; teaching numbers are hand-written illustrations.",
+    "next_action_user_inputs": "Answer all five questions directly, distinguish paper intent, computational behavior and empirical guarantees, and correct any impression that the paper never claims semantic specialization or that all-slot cross attention is unintended."
+  },
+  "latest_architecture_improvement_review": {
+    "recorded_at": "2026-10-23T17:18:16.6920075+08:00",
+    "route_task": "SlotSPE / original architecture / source-grounded improvement priorities",
+    "completed_work": {
+      "scope": "Advisory review of the seven functional blocks; no implementation changes.",
+      "first_priority": "Clarify selection-to-fusion closure and direct selector supervision using existing A/B/C; original cross path uses all slots, bool masks disconnect the direct selector surrogate gradient, and self outputs are averaged across all positions.",
+      "second_priority": "Make reconstruction require sample-specific slot information; existing WSI content-query fixed-dictionary counterexample is an existence result, not verified natural patient behavior.",
+      "further_hypotheses": [
+        "Measure distinct content coverage rather than optimize cosine alone.",
+        "Test whether unimodal selection before interaction misses jointly useful complementary content; source order alone does not prove this occurs.",
+        "Compare current mean pooling and concatenation with task-dependent slot/branch readout; learned final weights already allow unequal branch influence."
+      ],
+      "conditional_spatial_branch": "Only pursue explicit geometry when aligned coordinates and a task requiring spatial relationships are available."
+    },
+    "paths_commit": {
+      "source": "third_party/SlotSPE/models/SlotSPE.py:43-70,253-332; third_party/SlotSPE/models/transformer.py:77-132",
+      "existing_evidence": "docs/RESEARCH_OVERVIEW.md; docs/research/slotspe_mechanism_deepcheck_20261022/检查结果与问题优先级.txt; docs/research/slotspe_eight_issues_20261019/slot_quality_contribution_claim_review_20261023.json",
+      "progress": "docs/PROGRESS.json",
+      "backup": "local_evidence/documentation_backups/architecture_improvement_review_20261023_171816/PROGRESS.before.json",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "codegraph_source_review": true,
+      "new_training_runs": 0,
+      "new_model_forwards": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "original_source_modified": false,
+      "queue_changed": false
+    },
+    "gaps_reasons": "Architectural hypotheses and source facts do not establish patient harm or correction efficacy. Existing redundancy and reconstruction evidence retains its original evidence tier; no new performance measurement.",
+    "next_action_user_inputs": "Discuss selection/fusion and reconstruction as the first two candidate changes. Any patient execution requires a separate specific authorization; no execution is implied by this advisory request."
+  },
+  "latest_slot_generation_selection_explanation": {
+    "recorded_at": "2026-10-23T17:07:15.0400000+08:00",
+    "route_task": "SlotSPE / original slot generation and slot-selection explanation",
+    "completed_work": "Reviewed current MultiHeadSlotAttention, both Gumbel TopK variants, MoESlotDecoder, original forward and parser defaults. Explained shared Gaussian initialization, per-head slot competition then per-slot input normalization, GRU/residual MLP iterations, independent modality parameters, slot logits versus keep scores, stochastic hard mask and differentiable surrogate, gated unimodal prediction and auxiliary supervision. Distinguished selector masks from exclusion in final fused prediction.",
+    "paths_commit": {
+      "backup": "local_evidence/documentation_backups/slot_generation_selection_20261023_170715/PROGRESS.before.json",
+      "progress": "docs/PROGRESS.json",
+      "new_commit_or_push": false,
+      "source": "third_party/SlotSPE/models/slot_attention.py:20-185; third_party/SlotSPE/models/SlotSPE.py:11-70,173-199,283-328; third_party/SlotSPE/utils/process_args.py:82-90"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "original_source_modified": false,
+      "new_backward_passes": 0,
+      "new_training_runs": 0,
+      "defaults_read": true,
+      "codegraph_source_review": true,
+      "new_server_raw_receipt": false,
+      "patient_inputs_loaded": false,
+      "server_execution": false,
+      "new_model_forwards": 0
+    },
+    "gaps_reasons": "Illustrative slot contents and numerical weights explain computation only; source does not guarantee named biological concepts, independent slot quality or survival benefit. No new measurements were run.",
+    "next_action_user_inputs": "Explain the two mechanisms with tensor shapes, equations and a hand-worked selection example; no execution required."
+  },
+  "latest_original_module_count_review": {
+    "recorded_at": "2026-10-23T17:04:36.3044591+08:00",
+    "route_task": "SlotSPE / original architecture / functional module count",
+    "completed_work": "Read README and progress; reviewed original SlotSPE constructor, forward and MoESlotDecoder using CodeGraph. Grouped complete model into seven functional blocks: input encoding, slot formation, slot selection with unimodal heads, intra-modal interaction, cross-modal interaction, fused survival readout, reconstruction. Core mechanism can be summarized as slot formation, selection and interaction/fusion; count is explanatory rather than an official fixed module number.",
+    "paths_commit": {
+      "backup": "local_evidence/documentation_backups/module_count_20261023_170436/PROGRESS.before.json",
+      "progress": "docs/PROGRESS.json",
+      "source": "third_party/SlotSPE/models/SlotSPE.py:137-332",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "original_source_modified": false,
+      "new_server_raw_receipt": false,
+      "new_training_runs": 0,
+      "codegraph_source_review": true,
+      "patient_inputs_loaded": false,
+      "new_model_forwards": 0,
+      "server_execution": false
+    },
+    "gaps_reasons": "Module count depends on functional granularity; paired WSI/OMIC instances are grouped. External patch feature extractor is outside the shown SlotSPE model.",
+    "next_action_user_inputs": "Explain the seven functional blocks and the three core mechanism stages; no execution needed."
+  },
+  "latest_mesh_paper_explanation": {
+    "recorded_at": "2026-10-23T16:18:42.9974663+08:00",
+    "route_task": "SlotSPE / P2 / MESH paper explanation and native mechanism mapping",
+    "completed_work": "Read MESH sections 2-5 and Table 5; mapped tie preservation and assignment replacement to original multi-head SlotAttention; distinguished assignment entropy, slot cosine, content binding and survival benefit. Reviewed existing S0-S4 adapter definitions without executing them.",
+    "paths_commit": {
+      "progress": "docs/PROGRESS.json",
+      "host_source": "third_party/SlotSPE/models/SlotSPE.py:283-301",
+      "backup": "C:\\Users\\栋栋\\Desktop\\slot attention\\local_evidence\\documentation_backups\\mesh_explanation_20261023_161842\\PROGRESS.before.json",
+      "original_source": "third_party/SlotSPE/models/slot_attention.py:69-112",
+      "existing_adapter": "survot_rank/research/slotspe_proof/native_allocation.py",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "new_training_runs": 0,
+      "paper_table5_values_verified": true,
+      "new_model_forwards": 0,
+      "new_patient_raw_receipt": false,
+      "source_review": true,
+      "server_execution": false,
+      "new_inference_runs": 0
+    },
+    "gaps_reasons": "Exact equal slots preserve equality under shared deterministic updates; near equality alone does not prove unrecoverable collapse. CLEVRER object discovery results do not establish SlotSPE pathology binding failure or survival harm. Existing mesh_uniform is an adaptation, not full author-method reproduction.",
+    "next_action_user_inputs": "Explain the mechanism with a two-slot toy assignment. Any future matched patient comparison still requires explicit execution authorization; existing queue unchanged."
+  },
+  "latest_slot_quality_contribution_claim_review": {
+    "recorded_at": "2026-10-23T13:21:18+08:00",
+    "route_task": "SlotSPE / SPE-08 / readonly slot-quality and contribution claim review",
+    "status": "structural_bypass_confirmed_quoted_measurements_unverified_interpretation_corrected",
+    "completed_work": "核对原版Gumbel TopK、self-mask整行均匀softmax、残差与全槽池化；计算均匀8选2基线。确认未选槽未被严格排除；纠正三路等于各占1/3、贡献表混分母、全队列槽C-index充当患者槽质量、logit分解等同风险/因果分解和迭代不可能改变选择等强推断。",
+    "paths_commit": {
+      "receipt": "docs/research/slotspe_eight_issues_20261019/slot_quality_contribution_claim_review_20261023.json",
+      "backup": "local_evidence/documentation_backups/slot_quality_claim_review_20261023_132118/PROGRESS.before.json",
+      "current_HEAD": "d8dd0518712f99f518df90ee78e94a4072d08810",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "source_hashes_matching_existing_provenance": 10,
+      "new_training_runs": 0,
+      "new_model_forwards": 0,
+      "new_backward_passes": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "server_execution": false,
+      "new_patient_raw_receipt": false,
+      "original_sources_modified": false,
+      "historical_reports_modified": false,
+      "existing_queue_changed": false
+    },
+    "gaps_reasons": "本地未找到这轮77人槽质量/贡献诊断的脚本和原始产物；两项fixed_slot_pair路径当前不存在、当前本地all-ref路径历史无记录，来源不能凭转述创建时间归因。新数值仍为用户转述，未独立验收；患者损害和修正收益未建立。",
+    "next_action_user_inputs": "等待完整运行/脚本路径或服务器分支commit及私有回执，先审指标定义与已有产物；不自动执行迭代扫描、推理或训练。"
+  },
+  "latest_literature_severity_reassessment": {
+    "recorded_at": "2026-10-22T23:22:44.000+08:00",
+    "route_task": "SlotSPE / SPE-08 / literature_severity_reassessment",
+    "status": "completed_readonly_literature_source_and_public_summary_review",
+    "completed_work": "以包括原版SlotSPE在内的14篇一手文献相应章节重评槽相似、内容分组、监督充分性、事件语义和空间边界；高cos不等同患者损害，未证损害也不排除研究价值。首选P7.3与P2内容覆盖，X2为条件支线。",
+    "paths_commit": {
+      "report": "docs/research/slotspe_extended_literature_20261022/严重问题与槽相似性_证据再评估_20261022.txt",
+      "receipt": "docs/research/slotspe_extended_literature_20261022/literature_severity_reassessment_20261022.json",
+      "backup": "local_evidence/documentation_backups/literature_severity_20261022_231813",
+      "current_HEAD": "d8dd0518712f99f518df90ee78e94a4072d08810",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "codegraph_original_source_review": true,
+      "public_paper_sections_and_existing_aggregate_review": true,
+      "new_model_forwards": 0,
+      "new_backward_passes": 0,
+      "new_training_runs": 0,
+      "new_inference_runs": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "new_synthetic_model_experiments": 0,
+      "server_execution": false,
+      "new_patient_raw_receipt": false,
+      "original_sources_modified": false,
+      "historical_reports_modified": false,
+      "existing_queue_changed": false
+    },
+    "gaps_reasons": "缺独立患者内容标签/空间任务依据，以及自然训练采用捷径和修正收益的匹配证据；物体发现论文不能直接证明SlotSPE患者损害。",
+    "next_action_user_inputs": "以内容承载与监督充分性提出可证伪问题，先明确独立内容依据；保留现有11组单折队列与A/B/C合同，不自动执行或扩组。"
+  },
+  "latest_server_observe_review": {
+    "recorded_on": "2026-10-21",
+    "route": "original_questions_v1/server_observe_summary_review",
+    "task_id": "SPE-08",
+    "status": "public_summary_source_and_math_reviewed_raw_patient_audit_pending",
+    "source_commit": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
+    "source_report": "docs/research/slotspe_mechanism_protocol_20261021/observe_结果汇总_20261021.md",
+    "review_report": "docs/research/slotspe_observe_review_20261021/服务器observe复核.txt",
+    "verification_script": "docs/research/slotspe_observe_review_20261021/verify_summary.py",
+    "verification_receipt": "docs/research/slotspe_observe_review_20261021/summary_verification.json",
+    "handoff": "docs/research/slotspe_observe_review_20261021/服务器AI_仅补交现有验收材料.txt",
+    "server_reported_execution": {
+      "phase": "observe",
+      "fold": 0,
+      "seed": 3,
+      "validation_patients": 77,
+      "repeats_per_patient": 5,
+      "forward_groups_not_total_forward_calls": 385,
+      "optimizer_steps": 0
+    },
+    "completed_work": "公开测量源码与数字复核、独立数学复核、归一化熵/头平均生成反例、中心化秩上限验证及源码哈希比较；保留服务器历史报告。",
+    "checks": {
+      "verification_script_passed": true,
+      "patient_model_execution": false,
+      "torch_imported": false,
+      "runner_byte_sha_matches_server_report": true,
+      "automatic_source_gate_file_count": 5,
+      "server_reported_manual_eleven_hash_check_independently_verified": false,
+      "original_source_modified": false,
+      "external_dct_source_modified": false,
+      "source_report_modified": false
+    },
+    "raw_server_artifacts_received_and_audited": false,
+    "new_patient_jobs": 0,
+    "new_training_runs": 0,
+    "server_actions_this_review": 0,
+    "commit_or_push_this_review": false,
+    "gaps_reasons": "完整执行收据、11项源码哈希、实际聚合脚本与私有患者原始产物未收到；当前trace未保存原始竞争softmax，已有头平均汇总不能识别每头退化。",
+    "next_action_user_input": "先补交现有执行元数据与清单；另列已有NPZ头级统计和最小softmax探针预算，未授权不执行新患者任务；不启动capacity_train。"
+  },
+  "latest_paper_problem_mapping": {
+    "recorded_on": "2026-10-21",
+    "route": "local_paper_problem_coverage_review",
+    "task_id": "SPE-08",
+    "status": "completed_local_literature_review_only",
+    "report": "docs/research/slotspe_paper_problem_map_20261021/逐篇论文问题与八项覆盖核查.txt",
+    "evidence_map": "docs/research/slotspe_paper_problem_map_20261021/paper_problem_map.json",
+    "completed_work": "重新精读本地8篇PDF的正文/方法动机/局限；对照用户原P1-P8；细分P2/P3/P4/P7并提出输入可分性、几何、关系/组合三个补充维度。",
+    "original_p1_p8_numbering_changed": false,
+    "verified_original_pdf_hashes": 8,
+    "checks": "PDF页码和原件哈希登记；原始SA附录与MESH问题页渲染复核；8篇作者问题陈述与迁移推导分开。",
+    "patient_data_read": false,
+    "new_model_runs": 0,
+    "new_training_runs": 0,
+    "server_execution": false,
+    "papers_and_original_sources_modified": false,
+    "commit_or_push_this_stage": false,
+    "gaps_reasons": "仅本地8篇全文精读；其余附件引用的全文不在本目录。文献问题不等于SlotSPE已出现，更不证明患者损害或修正收益。",
+    "next_action_user_input": "保留主编号，先定义槽对应的内容单位并细化P2等操作定义；新维度只登记待检验，不自动扩大患者实验。"
+  },
+  "latest_extended_mechanism_audit": {
+    "recorded_on": "2026-10-22",
+    "task_id": "SPE-08",
+    "route": "extended_mechanism_audit",
+    "status": "completed_source_synthetic_and_existing_evidence_audit_patient_gaps_preserved",
+    "report": "docs/research/slotspe_extended_audit_20261022/SlotSPE扩展问题逐项核查.txt",
+    "issue_matrix": "docs/research/slotspe_extended_audit_20261022/issue_matrix.json",
+    "source_review": "docs/research/slotspe_extended_audit_20261022/source_review.json",
+    "synthetic_receipt": "docs/research/slotspe_extended_audit_20261022/synthetic_checks.json",
+    "reproducer": "scripts/check_slotspe_extended_mechanisms.py",
+    "completed_work": "确认重复表示/读取的既有实测；确认无选槽反馈再聚合、精确同初态不能分开、显式coords不消费；查到self/cross实际交互，否定完全没有通信的指控；逐项保留真实混槽/碎片化/语义等缺口。",
+    "checks": "3类生成张量原版核查；3种子8头10轮逐状态差0且原生重放误差0；coords对照差0、特征正控制非0；源码哈希不变。",
+    "latest_receipt_full_model_forward_calls": 6,
+    "latest_receipt_standalone_native_sa_calls": 3,
+    "latest_receipt_total_native_sa_calls": 16,
+    "latest_receipt_deterministic_replay_calls": 3,
+    "counts_are_latest_successful_run_not_independent_experiments": true,
+    "new_patient_data_reads": 0,
+    "new_patient_forward_or_backward_calls": 0,
+    "new_optimizer_steps": 0,
+    "server_execution": false,
+    "server_raw_artifacts_audited_locally": false,
+    "historical_71_public_aggregates_reused": true,
+    "protected_originals_modified": false,
+    "commit_or_push_this_stage": false,
+    "gaps_reasons": "缺独立内容/实例边界、几何关系配对和服务器原始包；源码缺显式保证不等于真实问题成立。",
+    "next_action_user_input": "先验现有每头/逐轮产物、定义需分解单位；必要患者补查另列预算，不启动capacity_train。"
+  },
+  "latest_extended_literature_review": {
+    "recorded_at": "2026-10-22T02:00:45+08:00",
+    "task_id": "SPE-08",
+    "route": "extended_literature_mechanism_mapping",
+    "status": "completed_literature_and_source_mapping_no_patient_execution",
+    "report": "docs/research/slotspe_extended_literature_20261022/扩展文献研读与SlotSPE迁移判断.txt",
+    "evidence_map": "docs/research/slotspe_extended_literature_20261022/literature_index.json",
+    "validation_receipt": "docs/research/slotspe_extended_literature_20261022/validation_receipt.json",
+    "additional_papers_read": 16,
+    "read_scope": "正文相关方法、关键实验/局限与指定附录；不宣称逐页审计全部图表或复现论文实验",
+    "completed_work": "按作用层区分初始化/迭代梯度/动态容量/课程/归一化总量/语义监督/几何/多层/槽后关系；映射到原版聚合-选择-交互，优先P2内容分配与选择后恢复。",
+    "problem_dimensions": [
+      "重复覆盖",
+      "碎片化",
+      "混槽",
+      "内容遗漏",
+      "趋同后的恢复",
+      "输入可分性",
+      "空间几何",
+      "关系与组合",
+      "分配总量而非仅均值",
+      "迭代优化"
+    ],
+    "original_p1_p8_numbering_changed": false,
+    "p8_applies_to_original": false,
+    "public_pdf_hashes_recomputed": 8,
+    "protected_core_source_hashes_matched": 2,
+    "model_runs_this_stage": 0,
+    "patient_array_processing_this_stage": 0,
+    "training_runs_this_stage": 0,
+    "server_execution_this_stage": false,
+    "new_server_raw_patient_receipt": false,
+    "protected_original_modified": false,
+    "default_queue_modified": false,
+    "new_modules_implemented": 0,
+    "commit_or_push_this_stage": false,
+    "gaps_reasons": "新方法均无SlotSPE患者纠正效果；真实混槽/碎片化/遗漏缺独立内容依据；几何/多层迁移缺坐标或同patch特征；原服务器私有产物仍待独立验收。",
+    "next_action_user_input": "先定义槽的内容单位与可用独立依据，细分P2并定位逐头逐轮重复出现的位置，再确定一个同预算比较；此研读不启动患者实验。"
+  },
+  "latest_codegraph_initialization": {
+    "recorded_at": "2026-10-22T10:00:26+08:00",
+    "task_id": "SPE-08",
+    "route": "codegraph_local_index_setup",
+    "authorization": "用户明确回复允许建立代码索引",
+    "completed_work": "执行codegraph init -i；MCP状态与原版MultiHeadSlotAttention定位查询均成功。",
+    "paths": [
+      ".codegraph/",
+      ".gitignore",
+      "docs/PROGRESS.json"
+    ],
+    "status": "completed_and_query_verified",
+    "files_indexed": 128,
+    "nodes": 2611,
+    "edges_from_mcp_status": 5001,
+    "checks": [
+      "MCP codegraph_status成功",
+      "原版符号定位成功",
+      "两个核心原件SHA256与先前收据一致",
+      "本地索引目录加入Git忽略"
+    ],
+    "new_model_runs": 0,
+    "new_training_runs": 0,
+    "new_patient_interventions": 0,
+    "server_execution": false,
+    "new_server_raw_receipt": false,
+    "protected_original_sources_modified": false,
+    "commit_or_push": false,
+    "gaps_reasons": "索引仅用于结构查询，不构成模型正确性或患者效果证据。",
+    "next_action_user_input": "后续结构问题优先使用CodeGraph；无需用户补充。"
+  },
+  "latest_new_problem_distillation": {
+    "recorded_at": "2026-10-22T10:42:59+08:00",
+    "task_id": "SPE-08",
+    "route": "new_problem_distillation_after_user_clarification",
+    "completed_work": "明确区分既有冗余、新增全局布局结构局限和分配总量风险；以非重复value更新的生成注意力矩阵核对总量歧义。",
+    "record": "docs/research/slotspe_extended_literature_20261022/new_problem_distillation.json",
+    "checks": "CodeGraph源码；官方归一化论文；仅标准库算术。生成例子的value更新最大差2.220446049250313e-16，三对cos最大0.8574929257125441。",
+    "new_patient_confirmed_problems": 0,
+    "new_independent_structural_limitations": 1,
+    "new_mechanism_risks": 1,
+    "new_model_calls": 0,
+    "new_patient_reads": 0,
+    "new_training_runs": 0,
+    "server_execution": false,
+    "new_raw_server_receipt": false,
+    "commit_or_push": false,
+    "original_source_modified": false,
+    "gaps_reasons": "总量歧义只在单次更新层证实；完整模型丰度敏感性及空间布局对患者预测的后果未测。",
+    "next_action_user_input": "先把这两条作为独立研究检验目标；不把选后重聚合另凑新问题，不自动执行患者任务。"
+  },
+  "latest_windows_pull": {
+    "recorded_at": "2026-10-22T10:57:16+08:00",
+    "task_id": "SPE-08 / SPE-09",
+    "route": "windows_pull_preserving_local_work",
+    "status": "completed_fast_forward_local_work_preserved",
+    "completed_work": "Fast-forwarded four incoming commits and combined local literature/audit records with incoming GPU records; all existing untracked research files preserved.",
+    "previous_head": "a5121692c9cce5ef65ee75a9a821800eb1283992",
+    "target_head": "d8dd0518712f99f518df90ee78e94a4072d08810",
+    "local_branch": "main",
+    "backup": "local_evidence/pull_backup_20261022_105702",
+    "checks": {
+      "head_equals_origin_main": true,
+      "progress_json_parsed": true,
+      "all_local_and_incoming_progress_entries_preserved": true,
+      "protected_source_and_config_hashes_matched": 20,
+      "other_local_file_hashes_matched": true,
+      "index_empty": true
+    },
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_patient_interventions": 0,
+    "actual_server_execution": false,
+    "new_server_raw_receipt": false,
+    "new_commit_or_push": false,
+    "gaps_reasons": "Existing local changes remain uncommitted. Pulling public records does not independently audit private patient arrays or establish predictive harm/correction efficacy.",
+    "next_action_user_input": "No further input needed for this pull; any new patient experiments require separate explicit execution authorization."
+  },
+  "latest_native_slotspe_scope_correction": {
+    "recorded_at": "2026-10-22T16:15:03+08:00",
+    "task_id": "SPE-08",
+    "route": "native_SlotSPE_S0_S4_matched_allocation_training_design",
+    "status": "design_corrected_followed_by_native_local_smoke",
+    "authorization": "用户明确要求对当前SlotSPE模型做对比实验，纠正此前错误切换到DCT的宿主。",
+    "host": "original SlotSPE",
+    "completed_work": "将两列改为原生病理SA模块与组学SA模块，给出五臂及各比较能回答的问题；明确组学SA在WSI到组学重建中复用。",
+    "plan": "docs/research/slotspe_native_assignment_training_20261022/对照设计.txt",
+    "variants": {
+      "S0": [
+        "original",
+        "original"
+      ],
+      "S1": [
+        "sinkhorn",
+        "sinkhorn"
+      ],
+      "S2": [
+        "mesh_uniform",
+        "original"
+      ],
+      "S3": [
+        "original",
+        "mesh_uniform"
+      ],
+      "S4": [
+        "mesh_uniform",
+        "mesh_uniform"
+      ]
+    },
+    "variant_columns": [
+      "slot_attention_wsi",
+      "slot_attention_omic"
+    ],
+    "patient_training_adapter_ready": false,
+    "new_model_runs": 0,
+    "new_training_runs": 0,
+    "actual_server_execution": false,
+    "new_server_raw_receipt": false,
+    "original_source_modified": false,
+    "default_queue_modified": false,
+    "new_commit_or_push": false,
+    "gaps_reasons": "原生SlotSPE五臂适配与生成数据短程训练见latest_native_slotspe_local_smoke；完整患者训练队列仍待接入。",
+    "next_action_user_input": "按当前原生SlotSPE五臂及本地测试结果继续，不使用其他宿主。"
+  },
+  "latest_mechanism_deepcheck": {
+    "recorded_at": "2026-10-22T16:28:53+08:00",
+    "route_task": "SlotSPE / SPE-08",
+    "status": "completed_source_generated_input_and_public_summary_review",
+    "completed_work": "Native WSI target-query/shared-dictionary counterexample; full-model geometry/proportion/replication controls; near-state scan; independent review; conservative corrections of public record counts and interpretations.",
+    "report": "docs/research/slotspe_mechanism_deepcheck_20261022/检查结果与问题优先级.txt",
+    "issue_evidence": "docs/research/slotspe_mechanism_deepcheck_20261022/issue_evidence.json",
+    "latest_synthetic_receipt": "docs/research/slotspe_mechanism_deepcheck_20261022/synthetic_receipt_03.json",
+    "independent_review": "docs/research/slotspe_mechanism_deepcheck_20261022/independent_review.txt",
+    "validation_receipt": "docs/research/slotspe_mechanism_deepcheck_20261022/validation_receipt.json",
+    "reproducer": "scripts/check_slotspe_mechanism_deepcheck.py",
+    "new_patient_confirmed_problem_count": 0,
+    "latest_successful_run_calls": {
+      "full_model": 24,
+      "native_sa_inside_full_model": 48,
+      "standalone_native_sa": 15,
+      "standalone_native_reconstruction_head": 4
+    },
+    "whole_stage_calls_including_early_attempts": {
+      "full_model": 66,
+      "native_sa_inside_full_model": 132,
+      "standalone_native_sa": 30,
+      "standalone_native_reconstruction_head": 8
+    },
+    "attempts": [
+      {
+        "receipt": "synthetic_receipt_01.json",
+        "status": "failed_wrapper_attribute_name_after_full_model_controls"
+      },
+      {
+        "receipt": "synthetic_receipt_02.json",
+        "status": "completed_early_version_zero_state_ratio_superseded"
+      },
+      {
+        "receipt": "synthetic_receipt_03.json",
+        "status": "completed_latest_geometry_control_and_zero_ratio_fix"
+      }
+    ],
+    "old_receipts_and_matching_script_snapshots_retained": true,
+    "original_five_source_files_hash_unchanged": true,
+    "patient_records_read": 0,
+    "checkpoints_loaded": 0,
+    "backward_calls": 0,
+    "optimizer_steps": 0,
+    "training_runs": 0,
+    "server_execution": false,
+    "new_raw_patient_receipt": false,
+    "new_innovation_modules": 0,
+    "new_commit_or_push": false,
+    "existing_public_record_corrections": {
+      "completed_records": 20,
+      "unique_fold_seed_arm_configs": 15,
+      "GPU77_stale_71_boundary_text": true,
+      "zero_C_index_difference_does_not_mean_same_risks": true
+    },
+    "gaps_reasons": "WSI result is a head-only existence construction, not trained native-SA occurrence. Geometry is an independent feature-bag interface boundary. Mixing, fragmentation, omissions, predictive harm and correction efficacy remain unestablished.",
+    "next_action_user_input": "Prioritize slot content-carrying validation using already-existing artifacts. Any new patient checkpoint intervention needs a scoped execution authorization; no patient run started here."
+  },
+  "latest_native_slotspe_local_smoke": {
+    "recorded_at": "2026-10-22T16:38:04.190923+08:00",
+    "route_task": "SlotSPE / SPE-08",
+    "status": "completed_cleanup_native_adapter_and_generated_data_short_learning",
+    "authorization": "用户明确要求删除原误会并在本地测试效果；本轮限定生成张量与新建权重。",
+    "completed_work": "移除本轮误切DCT产生的13个未跟踪文件及两条错误进度入口；原版宿主S0–S4独立适配、完整前后向与配对短程模拟训练。",
+    "report": "docs/research/slotspe_native_assignment_training_20261022/本地五组测试与清理报告.txt",
+    "aggregate_summary": "docs/research/slotspe_native_assignment_training_20261022/aggregate_summary.json",
+    "cleanup_receipt": "docs/research/slotspe_native_assignment_training_20261022/cleanup_receipt.json",
+    "validation_receipt": "docs/research/slotspe_native_assignment_training_20261022/validation_receipt.json",
+    "adapter": "survot_rank/research/slotspe_proof/native_allocation.py",
+    "reproducer": "scripts/check_slotspe_native_allocation.py",
+    "source": "original SlotSPE, byte-preserved",
+    "variants": {
+      "S0": {
+        "wsi": "original",
+        "omic": "original"
+      },
+      "S1": {
+        "wsi": "sinkhorn",
+        "omic": "sinkhorn"
+      },
+      "S2": {
+        "wsi": "mesh_uniform",
+        "omic": "original"
+      },
+      "S3": {
+        "wsi": "original",
+        "omic": "mesh_uniform"
+      },
+      "S4": {
+        "wsi": "mesh_uniform",
+        "omic": "mesh_uniform"
+      }
+    },
+    "checks": {
+      "adapter_tests": 20,
+      "existing_assignment_tests": 12,
+      "combined_passed": 32,
+      "native_dimension_full_backward_arms": 5,
+      "default_plan_model_execution": 0
+    },
+    "actual_execution": {
+      "synthetic_training_runs": 15,
+      "optimizer_steps": 360,
+      "native_shape_full_forwards": 5,
+      "native_shape_full_backwards": 5,
+      "toy_full_forwards": 450,
+      "toy_full_backwards": 360,
+      "patient_runs": 0,
+      "server_runs": 0
+    },
+    "synthetic_results": [
+      {
+        "variant": "S0",
+        "final_nll": 1.3174335691663954,
+        "paired_nll_delta_mean": 0.0
+      },
+      {
+        "variant": "S1",
+        "final_nll": 1.3151587115393746,
+        "paired_nll_delta_mean": -0.0022748576270209173
+      },
+      {
+        "variant": "S2",
+        "final_nll": 1.3262327247195773,
+        "paired_nll_delta_mean": 0.008799155553181967
+      },
+      {
+        "variant": "S3",
+        "final_nll": 1.3170574241214328,
+        "paired_nll_delta_mean": -0.0003761450449625651
+      },
+      {
+        "variant": "S4",
+        "final_nll": 1.3260944022072685,
+        "paired_nll_delta_mean": 0.008660833040873136
+      }
+    ],
+    "interpretation": "MESH降低生成数据的读取重叠，槽cos变化较小；S2/S4平均留出NLL更高，未建立稳定预测收益。S1在3/3配对合成场景略低，不能作为患者收益结论。",
+    "omic_module_scope": "全部调用，包括组学输入与WSI到组学重建；不是纯组学编码单位置干预。",
+    "cleanup": {
+      "new_erroneous_untracked_files_removed": 13,
+      "erroneous_progress_keys_removed": [
+        "latest_d0_d4_synthetic_smoke",
+        "latest_d0_d4_real_server_package"
+      ],
+      "verified_backups_retained": true,
+      "historical_tracked_archives_deleted": 0
+    },
+    "original_source_modified": false,
+    "default_queue_modified": false,
+    "patient_training_queue_ready": false,
+    "actual_server_execution": false,
+    "new_server_raw_receipt": false,
+    "patient_predictive_harm_established": false,
+    "correction_efficacy_established": false,
+    "new_commit_or_push": false,
+    "gaps_reasons": "生成数据、32维/3迭代短程学习；默认SA维度门检也用缩小输入。尚无真实患者五臂训练，不能把机制变化当泛化改善。",
+    "next_action_user_inputs": "保留原生SlotSPE五臂；按同折同种子配对差设计真实数据短程训练并接入服务器交接，本轮不自动启动患者任务。"
+  },
+  "documentation_entrypoints": {
+    "research_conclusions": "docs/RESEARCH_OVERVIEW.md",
+    "evidence_catalog": "docs/research/README.md",
+    "machine_catalog": "docs/research/INDEX.json",
+    "independent_task_progress": "docs/PROGRESS.json",
+    "organization_receipt": "docs/RESEARCH_ORGANIZATION.json"
+  },
+  "latest_document_organization": {
+    "recorded_at": "2026-10-22T16:48:08+08:00",
+    "route_task": "SlotSPE / SPE-08 documentation organization",
+    "status": "completed_validated",
+    "completed_work": "Shortened README to three stable entrypoints; consolidated original P1-P8 with evidence levels, additional dimensions and implementation findings; catalogued all 32 existing research folders in five groups; reconciled superseded claims and the native S0-S4 route.",
+    "paths": [
+      "docs/RESEARCH_OVERVIEW.md",
+      "docs/research/README.md",
+      "docs/research/INDEX.json",
+      "docs/PROGRESS.json",
+      "docs/RESEARCH_ORGANIZATION.json"
+    ],
+    "backup_root": "local_evidence/organization_backups/20261022T083943Z",
+    "progress_before_write_sha256": "63c94bd7c62349b3b3c8d7cddaa56c1e80dfc1e255be9c5997e0ca4a7ca9fa27",
+    "old_research_directories_moved_or_deleted": 0,
+    "history_reports_or_original_data_edited": false,
+    "new_model_forward_or_backward_calls": 0,
+    "patient_data_reads": 0,
+    "training_runs": 0,
+    "server_execution": false,
+    "new_raw_server_receipt": false,
+    "new_commit_or_push": false,
+    "gaps_reasons": "Organization reconciles existing records; raw patient acceptance and research hypotheses remain at their recorded evidence levels. Historical absolute paths and hashes are preserved.",
+    "next_action_user_input": "Read docs/RESEARCH_OVERVIEW.md for conclusions; use the classified evidence catalog only when checking a claim. No extra user input is needed to complete organization.",
+    "checks": {
+      "all_32_folders_classified_once": true,
+      "protected_snapshot_files_unchanged": 216,
+      "concurrent_existing_evidence_updates_preserved": 3,
+      "concurrent_added_evidence_files_preserved": 2,
+      "old_backups_hash_match": true,
+      "unrelated_progress_fields_preserved_from_fresh_read": true,
+      "independent_document_review": "passed_with_precision_fixes",
+      "no_new_dated_research_directory": true
+    }
+  },
+  "latest_native_slotspe_similarity_replay": {
+    "recorded_at": "2026-10-22T16:56:03.080664+08:00",
+    "route_task": "SlotSPE / SPE-08 / P2.1",
+    "status": "completed_generated_slot_similarity_replay_and_paper_metric_audit",
+    "authorization": "用户明确本地测试目标为各方法的病理槽/基因槽相似度，并要求核对MESH原文。",
+    "completed_work": "重放上轮15组纯生成模型的3次评估，共45前向；核对全部8槽/选2槽/最终value更新cos；核对MESH正文附录及作者实现；澄清DIAS/MetaSlot未接入。",
+    "report": "docs/research/slotspe_native_assignment_training_20261022/病理与组学槽相似度复核.txt",
+    "summary": "docs/research/slotspe_native_assignment_training_20261022/slot_similarity_replay.json",
+    "script": "scripts/check_slotspe_native_similarity.py",
+    "metrics": [
+      {
+        "variant": "S0",
+        "wsi_cos": 0.9399602015813192,
+        "omic_cos": 0.8662396801842583,
+        "wsi_delta": 0.0,
+        "omic_delta": 0.0
+      },
+      {
+        "variant": "S1",
+        "wsi_cos": 0.939228978421953,
+        "omic_cos": 0.8666368656688266,
+        "wsi_delta": -0.0007312231593661714,
+        "omic_delta": 0.000397185484568241
+      },
+      {
+        "variant": "S2",
+        "wsi_cos": 0.9401861826578776,
+        "omic_cos": 0.8664014471901788,
+        "wsi_delta": 0.000225981076558431,
+        "omic_delta": 0.00016176700592037316
+      },
+      {
+        "variant": "S3",
+        "wsi_cos": 0.9393316639794244,
+        "omic_cos": 0.8584158089425828,
+        "wsi_delta": -0.0006285376018948149,
+        "omic_delta": -0.007823871241675495
+      },
+      {
+        "variant": "S4",
+        "wsi_cos": 0.9396123753653632,
+        "omic_cos": 0.856851405567593,
+        "wsi_delta": -0.0003478262159559338,
+        "omic_delta": -0.00938827461666536
+      }
+    ],
+    "actual_execution": {
+      "model_forwards": 45,
+      "full_loss_backwards": 0,
+      "optimizer_steps": 0,
+      "patient_runs": 0,
+      "server_runs": 0
+    },
+    "local_cost_autograd_present": true,
+    "all_replays_match_saved_generated_logits": true,
+    "slot_cos_replay_max_abs_error_to_prior": 7.947285973752827e-08,
+    "MESH_original_slot_cosine_drop_report_found": false,
+    "DIAS_native_similarity_results": null,
+    "MetaSlot_native_similarity_results": null,
+    "original_source_modified": false,
+    "default_queue_modified": false,
+    "actual_server_execution": false,
+    "new_server_raw_receipt": false,
+    "commit_or_push": false,
+    "gaps_reasons": "纯生成数据、缩小规格；当前mesh_uniform不是作者完整模型，DIAS/MetaSlot没有执行结果。WSI几乎未改善、OMIC小幅不稳定，不等于患者或全方法结论。",
+    "next_action_user_inputs": "按病理/组学槽cos及配对变化评价当前方法；接其他候选时分别验收有效mask与再聚合，并排除置零/槽数机械效应。"
+  },
+  "latest_official_source_verification": {
+    "recorded_at": "2026-10-22T17:47:27+08:00",
+    "route_task": "SlotSPE / SPE-08 / official-source provenance verification",
+    "status": "verified_runtime_source_match_readme_only_difference",
+    "completed_work": "Official repository cloned in ignored isolated storage; 14 full-runtime files and all 10 registered non-README vendor files match official bytes. README differs only by 6 official RNA-preprocessing lines. The full 15-file local set matches earlier official commits.",
+    "paths_commit": {
+      "receipt": "docs/research/slotspe_target_review_20261020/official_comparison_20261022.json",
+      "receipt_sha256": "d29a9a3e7d9e03caad0aa1f1a1003b6c3e9207205b44f63cef4db0a989b837b4",
+      "report": "docs/research/slotspe_target_review_20261020/官方来源核验_20261022.txt",
+      "report_sha256": "06aa739e02fd9eabe7fa8e4002f6dbbc3b93728059191e16080456a2c29a5cce",
+      "local_base_commit": "d8dd0518712f99f518df90ee78e94a4072d08810",
+      "official_commit": "02051a2083add7b427727e0200e4263516903561",
+      "new_commit_created": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "new_training_runs": 0,
+      "new_model_forward_passes": 0,
+      "new_backward_passes": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "server_execution": false,
+      "server_patient_raw_results_received": false,
+      "official_source_received_locally": true,
+      "original_sources_modified": false,
+      "historical_reports_modified": false,
+      "new_git_commit_or_push": false
+    },
+    "gaps_reasons": "Runtime source identity is verified for the stated file set. This does not verify patient harm, correction efficacy, the 29/7.7% count, or the full preprocessing/data tree.",
+    "next_action_user_input": "No second internet-connected machine is needed to repeat this runtime-source check. For a separate 29/7.7% audit, identify its original receipt and protocol first; patient recomputation remains separately authorized."
+  },
+  "latest_native_slotspe_S5_S6": {
+    "recorded_at": "2026-10-22T17:53:30.809809+08:00",
+    "route_task": "SlotSPE / SPE-08 / P2",
+    "status": "completed_core_adapters_matched_synthetic_checks",
+    "authorization": "用户明确要求DIAS和MetaSlot做成S5/S6，延续本地模拟相似度测试目标。",
+    "completed_work": "S5 DIAS3.2去冗余再聚合核心；S6原型量化/去重/共享细化/退火噪声/最后步梯度与EMA；紧凑槽贯通原生下游，七组配置工厂，训练失败队列与配置门禁。",
+    "config": "configs/slotspe_native_variants.json",
+    "registry": "survot_rank/research/slotspe_proof/native_variants.py",
+    "design": "docs/research/slotspe_native_assignment_training_20261022/S0-S6对照定义与接入说明.txt",
+    "report": "docs/research/slotspe_native_assignment_training_20261022/S5-S6本地有效槽相似度.txt",
+    "summary": "docs/research/slotspe_native_assignment_training_20261022/s5_s6_synthetic_summary.json",
+    "tests": {
+      "combined_tests_passed": 55,
+      "failed_tests": 0,
+      "elapsed_seconds": 7.26,
+      "native_dimension_S5_S6_full_forward_backward_gates": 2,
+      "new_synthetic_training_runs": 9,
+      "optimizer_steps": 216,
+      "full_model_train_forwards": 1728,
+      "full_model_eval_forwards": 1728,
+      "loss_backwards_logical_batches": 216,
+      "extra_calibration_SA_calls": 9,
+      "independent_final_slot_array_recalculation": true,
+      "case_draw_modality_rows_recomputed": 1728,
+      "max_cos_abs_error": 0.0,
+      "minimum_effective_slot_norm": 3.1851489543914795,
+      "undefined_single_slot_rows_not_filled_zero": 385
+    },
+    "current_matched_training_arms": [
+      "S0",
+      "S5",
+      "S6"
+    ],
+    "current_matched_aggregate": {
+      "S0": {
+        "wsi": {
+          "case_draws": 288,
+          "cos_coverage": 1.0,
+          "single_slot_fraction": 0.0,
+          "active_count_mean": 8.0,
+          "active_count_min": 8,
+          "active_count_max": 8,
+          "slot_cosine": 0.9467508408670492,
+          "pre_prune_cosine": 0.9467508408670492,
+          "retained_before_refine_cosine": 0.9467508408670492,
+          "selected_cosine": 0.948357654622729,
+          "read_overlap": 0.9666782536854347,
+          "selected_cos_coverage": 1.0
+        },
+        "omic": {
+          "case_draws": 288,
+          "cos_coverage": 1.0,
+          "single_slot_fraction": 0.0,
+          "active_count_mean": 8.0,
+          "active_count_min": 8,
+          "active_count_max": 8,
+          "slot_cosine": 0.8783337081386906,
+          "pre_prune_cosine": 0.8783337081386906,
+          "retained_before_refine_cosine": 0.8783337081386906,
+          "selected_cosine": 0.8829542441432592,
+          "read_overlap": 0.8913860087179475,
+          "selected_cos_coverage": 1.0
+        }
+      },
+      "S5": {
+        "wsi": {
+          "case_draws": 288,
+          "cos_coverage": 1.0,
+          "single_slot_fraction": 0.0,
+          "active_count_mean": 6.298611111111111,
+          "active_count_min": 3,
+          "active_count_max": 8,
+          "slot_cosine": 0.9433026318632898,
+          "pre_prune_cosine": 0.8980561131514404,
+          "retained_before_refine_cosine": 0.8938734187170593,
+          "selected_cosine": 0.9449659841765699,
+          "read_overlap": 0.9650349970906973,
+          "selected_cos_coverage": 1.0
+        },
+        "omic": {
+          "case_draws": 288,
+          "cos_coverage": 1.0,
+          "single_slot_fraction": 0.0,
+          "active_count_mean": 7.979166666666667,
+          "active_count_min": 7,
+          "active_count_max": 8,
+          "slot_cosine": 0.8770917523738055,
+          "pre_prune_cosine": 0.7536767742648511,
+          "retained_before_refine_cosine": 0.7535986717677594,
+          "selected_cosine": 0.8760847458509158,
+          "read_overlap": 0.8911804738971922,
+          "selected_cos_coverage": 1.0
+        }
+      },
+      "S6": {
+        "wsi": {
+          "case_draws": 288,
+          "cos_coverage": 0.003472222222222222,
+          "single_slot_fraction": 0.9965277777777778,
+          "active_count_mean": 1.0034722222222223,
+          "active_count_min": 1,
+          "active_count_max": 2,
+          "slot_cosine": 0.9843490688890946,
+          "pre_prune_cosine": 0.9179572889546108,
+          "retained_before_refine_cosine": 0.5241660218387085,
+          "selected_cosine": 0.9843490688890946,
+          "read_overlap": 0.9935767650604248,
+          "selected_cos_coverage": 0.003472222222222222
+        },
+        "omic": {
+          "case_draws": 288,
+          "cos_coverage": 0.6597222222222222,
+          "single_slot_fraction": 0.3402777777777778,
+          "active_count_mean": 2.3055555555555554,
+          "active_count_min": 1,
+          "active_count_max": 6,
+          "slot_cosine": 0.936620948822594,
+          "pre_prune_cosine": 0.8254570333138989,
+          "retained_before_refine_cosine": 0.721587214069208,
+          "selected_cosine": 0.9320063456893564,
+          "read_overlap": 0.9380355797315899,
+          "selected_cos_coverage": 0.6597222222222222
+        }
+      }
+    },
+    "paired_final_vs_S0": {
+      "S5": {
+        "wsi": {
+          "paired_case_draws": 288,
+          "coverage": 1.0,
+          "candidate_cosine": 0.9433026318632898,
+          "S0_same_subset_cosine": 0.9467508408670492,
+          "mean_paired_delta": -0.0034482090037598312,
+          "per_seed": [
+            {
+              "seed": 3,
+              "paired_case_draws": 96,
+              "mean_paired_delta": -0.0029597886553483165
+            },
+            {
+              "seed": 17,
+              "paired_case_draws": 96,
+              "mean_paired_delta": -0.0020483508370758414
+            },
+            {
+              "seed": 29,
+              "paired_case_draws": 96,
+              "mean_paired_delta": -0.0053364875188553354
+            }
+          ]
+        },
+        "omic": {
+          "paired_case_draws": 288,
+          "coverage": 1.0,
+          "candidate_cosine": 0.8770917523738055,
+          "S0_same_subset_cosine": 0.8783337081386906,
+          "mean_paired_delta": -0.0012419557648843393,
+          "per_seed": [
+            {
+              "seed": 3,
+              "paired_case_draws": 96,
+              "mean_paired_delta": 0.0005935848410369716
+            },
+            {
+              "seed": 17,
+              "paired_case_draws": 96,
+              "mean_paired_delta": -0.0012900696724536542
+            },
+            {
+              "seed": 29,
+              "paired_case_draws": 96,
+              "mean_paired_delta": -0.0030293824632363353
+            }
+          ]
+        }
+      },
+      "S6": {
+        "wsi": {
+          "paired_case_draws": 1,
+          "coverage": 0.003472222222222222,
+          "candidate_cosine": 0.9843490688890946,
+          "S0_same_subset_cosine": 0.9281401562206396,
+          "mean_paired_delta": 0.05620891266845496,
+          "per_seed": [
+            {
+              "seed": 3,
+              "paired_case_draws": 0,
+              "mean_paired_delta": null
+            },
+            {
+              "seed": 17,
+              "paired_case_draws": 0,
+              "mean_paired_delta": null
+            },
+            {
+              "seed": 29,
+              "paired_case_draws": 1,
+              "mean_paired_delta": 0.05620891266845496
+            }
+          ]
+        },
+        "omic": {
+          "paired_case_draws": 190,
+          "coverage": 0.6597222222222222,
+          "candidate_cosine": 0.936620948822594,
+          "S0_same_subset_cosine": 0.8721770140740666,
+          "mean_paired_delta": 0.06444393474852637,
+          "per_seed": [
+            {
+              "seed": 3,
+              "paired_case_draws": 11,
+              "mean_paired_delta": 0.14614673318842766
+            },
+            {
+              "seed": 17,
+              "paired_case_draws": 83,
+              "mean_paired_delta": 0.08188086356800797
+            },
+            {
+              "seed": 29,
+              "paired_case_draws": 96,
+              "mean_paired_delta": 0.04000647771877758
+            }
+          ]
+        }
+      }
+    },
+    "actual_script_execution": {
+      "root_train_forwards": 1728,
+      "root_eval_forwards": 1728,
+      "train_SA_calls": 5184,
+      "eval_SA_calls": 3456,
+      "calibration_SA_calls": 9,
+      "optimizer_steps": 216
+    },
+    "extra_native_shape_gates": {
+      "full_model_forwards": 2,
+      "full_loss_backwards": 2,
+      "optimizer_steps": 0
+    },
+    "S5_scope": "DIAS section3.2 core only; no self-distillation/image decoder",
+    "S6_scope": "MetaSlot paper-guided small-codebook core, not author full image framework",
+    "interpretation": "S5病理cos小幅下降、组学很小且不稳定；S6病理287/288次单槽，组学同有效子集cos反升，不登记去冗余收益。",
+    "code_snapshot_preserved": true,
+    "post_run_guards_not_numerical_algorithm_changes": true,
+    "original_source_modified": false,
+    "default_patient_queue_modified": false,
+    "patient_execution": false,
+    "server_execution": false,
+    "new_raw_patient_receipt": false,
+    "new_commit_or_push": false,
+    "gaps_reasons": "局部生成输入、32维3轮24步；S5非完整DIAS，S6小码本且去重过强；完整患者七臂队列未接入，预测/内容改善未建立。",
+    "next_action_user_inputs": "S5/S6已完成本地核心接入与验证。后续先分解有效槽数、码本与再聚合；患者协议另行安排。"
+  },
+  "latest_gate_claim_review": {
+    "recorded_at": "2026-10-22T17:57:54+08:00",
+    "route_task": "SlotSPE / SPE-08 / truth audit of near-zero gating and 29-patient claim",
+    "status": "numerical_defect_confirmed_count_unverified_patient_harm_not_established",
+    "paths_commit": {
+      "receipt": "docs/research/slotspe_eight_issues_20261019/gate_claim_review_20261022.json",
+      "source_references": [
+        "third_party/SlotSPE/models/slot_attention.py:164-185",
+        "third_party/SlotSPE/models/SlotSPE.py:54-68",
+        "third_party/SlotSPE/models/SlotSPE.py:287-301",
+        "third_party/SlotSPE/models/SlotSPE.py:321-332",
+        "survot_rank/research/slotspe_proof/native_audit.py:31-76"
+      ],
+      "official_commit": "02051a2083add7b427727e0200e4263516903561",
+      "new_commit_created": false,
+      "receipt_sha256": "e4406bf977eeb36c8c3303154b19b933a04d2e39189a51348a53bbf8f9b43909"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "new_training_runs": 0,
+      "new_model_forward_passes": 0,
+      "new_backward_passes": 0,
+      "patient_array_or_checkpoint_loads": 0,
+      "patient_gate_record_files_loaded": 0,
+      "new_scalar_arithmetic_examples": 1,
+      "server_execution": false,
+      "server_patient_raw_results_received": false,
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "real_patient_gate_json_found_locally": false,
+      "metadata_inventory_found_only_three_pytest_gate_jsons_excluded_as_patient_evidence": true
+    },
+    "gaps_reasons": "The genuine numerical failure is established by official source and an existing constructed observation. The specific 29/7.7% statistic has no located original receipt. Public GPU summaries report natural near-zero gates in some configurations, but their raw patient evidence is unavailable in this checkout. Patient fused-performance harm and correction efficacy remain unestablished.",
+    "next_action_user_input": "To verify 29/7.7%, locate the original natural_gate_observations.json and execution protocol, distinguish record rows from unique patients and repeats, and check source/checkpoint hashes. Do not start inference. A deterministic-top2 sweep is a selection-policy intervention rather than an isolated normalization repair.",
+    "completed_work": "Confirmed the official near-zero soft-gate numerical failure; established its direct auxiliary-head scope and final-fusion invariance for identical masks. The 29/7.7% count remains unverified. Deterministic top-2 alone cannot isolate normalization harm."
+  },
+  "latest_direct_slot_diversity": {
+    "recorded_at": "2026-10-22T20:49:21.924766+08:00",
+    "route_task": "SlotSPE / SPE-08 / generated-only direct representation diversity",
+    "status": "completed_generated_metric_reduction_content_benefit_not_established",
+    "completed_work": "原生输出直接Gram、Slot-BERT Eq11移植、集合内容重构与组合六组×三种子，各128步；保留双侧8槽；原始数组独立复算通过。",
+    "paths_commit": {
+      "report": "docs/research/slotspe_native_assignment_training_20261022/直接去冗余本地结果.txt",
+      "summary": "docs/research/slotspe_native_assignment_training_20261022/direct_diversity_summary.json",
+      "implementation": [
+        "survot_rank/research/slotspe_proof/slot_regularization.py",
+        "scripts/check_slotspe_direct_diversity.py",
+        "scripts/summarize_slotspe_direct_diversity.py",
+        "tests/test_slotspe_slot_regularization.py"
+      ],
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "analytic_tests": 26,
+      "independent_raw_modality_draw_checks": 216,
+      "matched_generated_runs": 18,
+      "actual_experiment": {
+        "root_train_forwards": 2304,
+        "root_eval_forwards": 216,
+        "train_SA_calls": 6912,
+        "eval_SA_calls": 432,
+        "core_optimizer_steps": 2304,
+        "probe_optimizer_steps": 2304
+      },
+      "extra_native_test_forwards": 4,
+      "extra_native_regularizer_backwards": 2,
+      "extra_native_test_optimizer_steps": 0,
+      "patient_execution": false,
+      "server_execution": false,
+      "new_patient_raw_receipt": false,
+      "original_source_and_default_configs_unchanged": true
+    },
+    "aggregate_final": {
+      "R0": {
+        "native_main_nll": 1.3944454855389063,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.8770953162643162,
+            "absolute_cosine": 0.8776365266434377,
+            "rms_cosine": 0.8895087019326485,
+            "max_cosine": 0.996343404433617,
+            "fraction_cosine_above_09": 0.6491815476190478,
+            "effective_rank": 1.2672634367759255,
+            "min_norm": 2.3323187608742897,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.2359220733245214,
+            "donor_set_mse": 0.23781988355848524,
+            "donor_to_own_ratio": 1.008011261622111,
+            "static_dictionary_set_mse": 0.04427962750196457,
+            "own_to_static_ratio": 5.329375478956435,
+            "same_noise_input_change_angular_distance": 0.3916426928650247
+          },
+          "omic": {
+            "cosine": 0.9436273991594767,
+            "absolute_cosine": 0.9436273991594767,
+            "rms_cosine": 0.9442096176407045,
+            "max_cosine": 0.9937405758241031,
+            "fraction_cosine_above_09": 0.8937251984126985,
+            "effective_rank": 1.1060799783950577,
+            "min_norm": 4.624934639272497,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.22501754264036813,
+            "donor_set_mse": 0.22497684425777856,
+            "donor_to_own_ratio": 0.9998191793759664,
+            "static_dictionary_set_mse": 0.04236374547084173,
+            "own_to_static_ratio": 5.311243428124322,
+            "same_noise_input_change_angular_distance": 0.003762298717954188
+          }
+        }
+      },
+      "R1": {
+        "native_main_nll": 1.412511666615804,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.11451650095268834,
+            "absolute_cosine": 0.2136984582587151,
+            "rms_cosine": 0.26423267310050264,
+            "max_cosine": 0.8920970456933822,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.420588826546225,
+            "min_norm": 2.9200008052224304,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.2082049929433399,
+            "donor_set_mse": 0.20892533991071915,
+            "donor_to_own_ratio": 1.003467473718855,
+            "static_dictionary_set_mse": 0.04427962750196457,
+            "own_to_static_ratio": 4.705295085906982,
+            "same_noise_input_change_angular_distance": 0.052058414472653546
+          },
+          "omic": {
+            "cosine": 0.04841890381593004,
+            "absolute_cosine": 0.17769974909234143,
+            "rms_cosine": 0.2218359707053703,
+            "max_cosine": 0.7908427753388421,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.980265903255401,
+            "min_norm": 2.0167680936975803,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.20737104780144164,
+            "donor_set_mse": 0.20742167201307085,
+            "donor_to_own_ratio": 1.000275777445899,
+            "static_dictionary_set_mse": 0.04236374547084173,
+            "own_to_static_ratio": 4.896892971462673,
+            "same_noise_input_change_angular_distance": 0.0028035555852186545
+          }
+        }
+      },
+      "R2": {
+        "native_main_nll": 1.4273247321446736,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.5597454423281082,
+            "absolute_cosine": 0.5631543068884656,
+            "rms_cosine": 0.5971242352268267,
+            "max_cosine": 0.9652898244607763,
+            "fraction_cosine_above_09": 0.009796626984126984,
+            "effective_rank": 2.3426432709331575,
+            "min_norm": 4.064312877553411,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.21276834110418955,
+            "donor_set_mse": 0.21310178935527802,
+            "donor_to_own_ratio": 1.001603431171841,
+            "static_dictionary_set_mse": 0.04427962750196457,
+            "own_to_static_ratio": 4.808931986490886,
+            "same_noise_input_change_angular_distance": 0.006510906129215244
+          },
+          "omic": {
+            "cosine": 0.4951138179818682,
+            "absolute_cosine": 0.49665570963442107,
+            "rms_cosine": 0.5338403474518437,
+            "max_cosine": 0.9629402833363125,
+            "fraction_cosine_above_09": 0.0021081349206349205,
+            "effective_rank": 2.7175468541640107,
+            "min_norm": 3.216533530297305,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.21104147202438775,
+            "donor_set_mse": 0.21083504789405402,
+            "donor_to_own_ratio": 0.9990530742539301,
+            "static_dictionary_set_mse": 0.04236374547084173,
+            "own_to_static_ratio": 4.982383198208279,
+            "same_noise_input_change_angular_distance": 0.006875497510272391
+          }
+        }
+      },
+      "R3": {
+        "native_main_nll": 1.3822561237547133,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.5692558520691348,
+            "absolute_cosine": 0.577030143123508,
+            "rms_cosine": 0.6197786421690186,
+            "max_cosine": 0.9766380916427078,
+            "fraction_cosine_above_09": 0.020089285714285712,
+            "effective_rank": 2.341299332235477,
+            "min_norm": 3.1695021414318387,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.20814938512113357,
+            "donor_set_mse": 0.20988692508803475,
+            "donor_to_own_ratio": 1.0083847178353205,
+            "static_dictionary_set_mse": 0.04427962750196457,
+            "own_to_static_ratio": 4.70582299762302,
+            "same_noise_input_change_angular_distance": 0.34222011437188044
+          },
+          "omic": {
+            "cosine": 0.4647138455634287,
+            "absolute_cosine": 0.4684501015513449,
+            "rms_cosine": 0.5139837641045956,
+            "max_cosine": 0.9394031366398538,
+            "fraction_cosine_above_09": 0.0034722222222222225,
+            "effective_rank": 2.8526749165089647,
+            "min_norm": 3.4280508235547207,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.20002512137095133,
+            "donor_set_mse": 0.19999061856004927,
+            "donor_to_own_ratio": 0.9998328023486668,
+            "static_dictionary_set_mse": 0.04236374547084173,
+            "own_to_static_ratio": 4.723263740539551,
+            "same_noise_input_change_angular_distance": 0.006125114624280414
+          }
+        }
+      },
+      "R4": {
+        "native_main_nll": 1.4471866819593642,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.7984523835824845,
+            "absolute_cosine": 0.8007406304443999,
+            "rms_cosine": 0.8166596722455255,
+            "max_cosine": 0.9958045304108001,
+            "fraction_cosine_above_09": 0.31250000000000006,
+            "effective_rank": 1.4680461654258574,
+            "min_norm": 2.9956778795336154,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.21956311828560296,
+            "donor_set_mse": 0.22016331719027626,
+            "donor_to_own_ratio": 1.00273953543769,
+            "static_dictionary_set_mse": 0.04427962750196457,
+            "own_to_static_ratio": 4.958433628082275,
+            "same_noise_input_change_angular_distance": 0.2893745058768526
+          },
+          "omic": {
+            "cosine": 0.8290128997732724,
+            "absolute_cosine": 0.8290128997732724,
+            "rms_cosine": 0.8353582736941264,
+            "max_cosine": 0.9888987498218161,
+            "fraction_cosine_above_09": 0.2961309523809524,
+            "effective_rank": 1.3701171956602198,
+            "min_norm": 4.535656221633133,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.2077054894632763,
+            "donor_set_mse": 0.20777563419606948,
+            "donor_to_own_ratio": 1.0003478791978624,
+            "static_dictionary_set_mse": 0.04236374547084173,
+            "own_to_static_ratio": 4.9052886433071565,
+            "same_noise_input_change_angular_distance": 0.0023540033883505626
+          }
+        }
+      },
+      "R5": {
+        "native_main_nll": 1.4042139053344727,
+        "native_auxiliary": 0.0,
+        "modalities": {
+          "wsi": {
+            "cosine": 0.16377341714810337,
+            "absolute_cosine": 0.25035760757779596,
+            "rms_cosine": 0.29982121242666765,
+            "max_cosine": 0.8527676980481198,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.010205302352413,
+            "min_norm": 3.0906983114899327,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.20909914374351501,
+            "donor_set_mse": 0.20954491198062897,
+            "donor_to_own_ratio": 1.0021456413798864,
+            "static_dictionary_set_mse": 0.04427962750196457,
+            "own_to_static_ratio": 4.725423283047147,
+            "same_noise_input_change_angular_distance": 0.05277009904859565
+          },
+          "omic": {
+            "cosine": 0.05598547067417977,
+            "absolute_cosine": 0.18094248995106302,
+            "rms_cosine": 0.22544049972023597,
+            "max_cosine": 0.8319069198219975,
+            "fraction_cosine_above_09": 0.0,
+            "effective_rank": 5.933916969927424,
+            "min_norm": 1.9653080478903155,
+            "slot_count": 8,
+            "case_count": 288,
+            "own_set_mse": 0.2036263760593202,
+            "donor_set_mse": 0.20359213650226593,
+            "donor_to_own_ratio": 0.999844253063202,
+            "static_dictionary_set_mse": 0.04236374547084173,
+            "own_to_static_ratio": 4.808063983917236,
+            "same_noise_input_change_angular_distance": 0.002103347050980891
+          }
+        }
+      }
+    },
+    "sample_units": {
+      "unique_generated_holdout_examples": 96,
+      "case_draws_per_arm_modality": 288,
+      "repeats_are_independent_examples": false
+    },
+    "gaps_reasons": "8可分成分的32维3迭代生成任务；原生cos和绝对cos均显著下降，保留8槽。六组两侧内容探针均不及生成类型信息构建的静态字典，错配重构近乎无差；不能证明内容分工或预测收益，也不能推断完全无输入信息。新协议不与历史S0–S6数值混比。",
+    "next_action_user_inputs": "以低相似度、内容保留和预测三者共同选方案；本轮本地模拟已完成，不自动启动患者/服务器队列。"
+  },
+  "latest_redundancy_queue_refresh": {
+    "recorded_at": "2026-10-22T21:00:13.811851+08:00",
+    "route_task": "SlotSPE / SPE-08 / candidate queue refresh",
+    "status": "completed_plan_only_patient_integration_pending",
+    "completed_work": {
+      "unique_catalog_methods": 12,
+      "alias": {
+        "R0": "S0"
+      },
+      "proposed_first_stage": [
+        "S0",
+        "S4",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5"
+      ],
+      "secondary": [
+        "S1",
+        "S2",
+        "S3",
+        "S5"
+      ],
+      "held_for_revision": [
+        "S6"
+      ]
+    },
+    "paths_commit": {
+      "config": "configs/slotspe_redundancy_queue.json",
+      "planner": "scripts/plan_slotspe_redundancy_queue.py",
+      "report": "docs/research/slotspe_native_assignment_training_20261022/队列更新与分阶段执行说明.txt",
+      "validation": "docs/research/slotspe_native_assignment_training_20261022/redundancy_queue_validation.json",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "catalog_partition_checked": true,
+      "proposed_first_stage_jobs": 7,
+      "R0_duplicate_excluded": true,
+      "pinned_old_queue_config_and_candidate_hashes_checked": true,
+      "torch_imported": false,
+      "run_flag_rejected": true,
+      "new_training_runs": 0,
+      "new_model_forwards": 0,
+      "patient_inputs_read": false,
+      "server_execution": false,
+      "new_patient_raw_receipt": false
+    },
+    "gaps_reasons": "候选计划已更新；真实训练循环、异构通路内容目标、原生维度检查及产物/恢复合同未接入。模拟权重不是患者默认；低cos不等于内容或预测收益。",
+    "next_action_user_inputs": "实现并验收首批七组独立患者执行包；之后按明确队列/数据/预算授权执行。当前仅只读计划，不启动任务。"
+  },
+  "latest_readonly_gate_collapse_diagnostic": {
+    "recorded_at": "2026-10-22T22:19:06.656435+08:00",
+    "route_task": "SlotSPE / SPE-08 / read-only gate collapse diagnosis",
+    "status": "completed_no_gate_sum_collapse_observed_in_71_patient_fixed_slot_protocol",
+    "authorization": "用户明确要求只读门控诊断、患者统计、N>=8跨RNG重放及升温/去噪声对照，后续说继续。",
+    "completed_work": "本轮核对官方main和10个运行文件；匹配历史checkpoint和71人保存槽；20次原生门控、同噪声升温、去噪声、同mask稳定归一化对照；独立统计复算并枚举每人全部28种mask。",
+    "paths_commit": {
+      "public_summary": "docs/research/slotspe_eight_issues_20261019/gate_collapse_summary_20261022.json",
+      "private_json": "local_evidence/gate_collapse_audit_20261022/gate_collapse_diagnostic.json",
+      "private_json_sha256": "064b239b102f1ead15aa163952b68003e3c4d85b3c5c148bd87e22a14c2b3b70",
+      "script": "scripts/check_slotspe_gate_collapse.py",
+      "audit_script": "scripts/audit_slotspe_gate_result.py",
+      "new_commit_or_push": false
+    },
+    "protocol": {
+      "patients": 71,
+      "cohort": "historical local BLCA validation",
+      "fold": 0,
+      "seed": 3,
+      "training_epochs": 3,
+      "fixed_retained_slots": true,
+      "repeats": 20,
+      "patient_rng_draws_per_modality": 1420,
+      "candidate_slots": 8,
+      "retained_slots": 2,
+      "temperature": 0.01,
+      "checkpoint_sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c"
+    },
+    "results": {
+      "wsi": {
+        "gate_sum": {
+          "n": 71,
+          "median": 0.9999998807907104,
+          "mean": 0.9999995609404335,
+          "min": 0.9999947547912598,
+          "max": 1.0,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "all_rng_gate_sum": {
+          "n": 1420,
+          "median": 0.9999999403953552,
+          "mean": 0.9999997397123928,
+          "min": 0.9999860525131226,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "patients_ever_below_0_5": 0,
+        "patients_ever_below_0_01": 0,
+        "severity": "not_observed"
+      },
+      "omic": {
+        "gate_sum": {
+          "n": 71,
+          "median": 0.9999999403953552,
+          "mean": 0.9999999529878858,
+          "min": 0.9999998807907104,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "all_rng_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999568495952,
+          "min": 0.9999998211860657,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "patients_ever_below_0_5": 0,
+        "patients_ever_below_0_01": 0,
+        "severity": "not_observed"
+      }
+    },
+    "checks_actual_execution_raw_receipt": {
+      "error_maxima": {
+        "historical_score_max_abs": 0,
+        "hard_mask_max_deviation": 1.1920928955078125e-07,
+        "native_formula_max_abs": 0,
+        "historical_gate_max_abs": 0,
+        "same_seed_replay_max_abs": 0
+      },
+      "verified_unchanged_input_files": 80,
+      "native_model_purity": {
+        "native_model_class": true,
+        "native_forward": true,
+        "native_slot_classes": true,
+        "native_decoder_classes": true,
+        "no_repaired_eval_buffers": true
+      },
+      "native_source_sha256": {
+        "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+      },
+      "model_state_sha256_before": "2f8d40a7b5794ccf516daa3792a9231ef5d46f20351fc7150dce5cf777684b80",
+      "model_state_sha256_after": "2f8d40a7b5794ccf516daa3792a9231ef5d46f20351fc7150dce5cf777684b80",
+      "model_sources_weights_inputs_unchanged": true,
+      "control_settings_restored": true,
+      "new_training_runs": 0,
+      "optimizer_steps": 0,
+      "new_slot_generation": 0,
+      "new_full_model_forward_passes": 0,
+      "native_decoder_batch_forward_passes": 1098,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "runner_sha256": "e744528e6ac9f2f0db0c659ce81467426768ca460fb0a7d2acb27ed483fb59f7"
+    },
+    "new_local_diagnostic_json_produced": true,
+    "gaps_reasons": "仅适用于此71人历史本地BLCA fold0/seed3、3轮权重与单次保留槽表示；不是77人运行、完整队列、其他checkpoint或重新随机生成槽的结论。 未评估患者预测损害或训练修正收益；原生门控也未坍缩，不能通过恢复对照断言患者坍缩成因。旧29人/7.7%仍无原始收据。",
+    "next_action_user_inputs": "本次诊断完成。若要对指定成熟checkpoint、77人协议或全模型RNG作结论，需其匹配权重/输入；不自动扩大执行或训练。"
+  },
+  "latest_unified_single_fold_queue": {
+    "recorded_at": "2026-10-22T22:25:48.620499+08:00",
+    "route_task": "SlotSPE / SPE-08 / user-selected eleven-arm BLCA single-fold queue",
+    "status": "completed_plan_only_patient_integration_pending",
+    "completed_work": {
+      "selected_variants": [
+        "S0",
+        "S4",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "S1",
+        "S2",
+        "S3",
+        "S5"
+      ],
+      "study": "blca",
+      "folds": [
+        0
+      ],
+      "seeds": [
+        3
+      ],
+      "planned_training_jobs": 11,
+      "automatic_cross_fold_expansion": false,
+      "S0_shared_within_this_compact_protocol": true,
+      "S6_not_selected": true
+    },
+    "paths_commit": {
+      "config": "configs/slotspe_redundancy_queue.json",
+      "planner": "scripts/plan_slotspe_redundancy_queue.py",
+      "report": "docs/research/slotspe_native_assignment_training_20261022/统一十一组单折队列说明.txt",
+      "validation": "docs/research/slotspe_native_assignment_training_20261022/unified_single_fold_queue_validation.json",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "metadata_checks": {
+        "priority_partition_valid": true,
+        "single_S0_with_shared_batching_protocol": true,
+        "source_evidence_and_old_queue_pins_valid": true,
+        "torch_imported": false,
+        "plan_cli_passed": true,
+        "run_flag_rejected": true,
+        "run_flag_exit_code": 2
+      },
+      "new_training_runs": 0,
+      "new_model_forwards": 0,
+      "patient_inputs_read": false,
+      "server_runs": 0,
+      "new_patient_raw_receipt": false,
+      "historical_results_and_original_queues_preserved": true
+    },
+    "gaps_reasons": "训练器、异构通路内容目标、S5变长探针尚未接入。3轮/256patch为沿用短程预算，不是完整训练结果。模块行数有共享与核心两种口径，不证明首创。",
+    "next_action_user_inputs": "在用户指定的11组单fold范围内完成实现和验收；不自动扩展到5折。当前不启动患者模型任务。"
+  },
+  "latest_readonly_gate_full_model_rng": {
+    "recorded_at": "2026-10-22T22:35:06.577828+08:00",
+    "route_task": "SlotSPE / SPE-08 / read-only full-model gate RNG diagnosis",
+    "status": "completed_no_collapse_observed",
+    "authorization": "用户原始请求包含固定权重与患者、跨RNG重复及退化对照，并再次要求继续；本轮补足完整forward重生成槽的只读诊断。",
+    "completed_work": "核对官方clone/运行源码、checkpoint和患者缓存；完整原版模型71人×20次；升温和零Gumbel同槽对照；与全部20次历史融合logits逐值复现；独立重算数值和收据。",
+    "paths_commit": {
+      "public_summary": "docs/research/slotspe_eight_issues_20261019/gate_collapse_full_rng_summary_20261022.json",
+      "private_json": "local_evidence/gate_collapse_audit_20261022/gate_collapse_diagnostic_full_rng.json",
+      "private_json_sha256": "16303e639f8966ceef784c25d68a89a75b47566a3c34cae612337db21bba00f3",
+      "runner": "scripts/check_slotspe_gate_full_rng.py",
+      "audit_runner": "scripts/audit_slotspe_gate_full_result.py",
+      "new_commit_or_push": false
+    },
+    "protocol": {
+      "cohort": "historical local BLCA validation",
+      "patients": 71,
+      "fold": 0,
+      "training_seed": 3,
+      "epochs": 3,
+      "training_patients": 289,
+      "validation_patients": 71,
+      "excluded": 21,
+      "patches": 256,
+      "slots": 8,
+      "k": 2,
+      "temperature": 0.01,
+      "epsilon": 1e-08,
+      "repeats": 20,
+      "eval_seeds": [
+        3080000,
+        3080001,
+        3080002,
+        3080003,
+        3080004,
+        3080005,
+        3080006,
+        3080007,
+        3080008,
+        3080009,
+        3080010,
+        3080011,
+        3080012,
+        3080013,
+        3080014,
+        3080015,
+        3080016,
+        3080017,
+        3080018,
+        3080019
+      ],
+      "batch_size": 8,
+      "device": "cuda:0",
+      "torch": "2.6.0+cu124",
+      "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+      "scope": "Full original forward; fixed raw patient inputs and weights; regenerate Gaussian slots and Gumbel gates each repeat.",
+      "controls": "Native decoder on each freshly generated slot tensor; restore pre-decoder RNG for paired temperature=1; scoped zero Gumbel noise control.",
+      "set_stability_limit": "Slot identities are reinitialized per full-model repeat; index-set diversity combines Gaussian slot and Gumbel selection variation.",
+      "gate_sum": "Sum of actual returned weights AFTER epsilon normalization.",
+      "temperature_mass": "Softmax(score/.01) mass inside actual hard mask; float64 logsumexp reference.",
+      "raw_mass": "Softmax(unscaled score) mass inside actual hard mask; separate from temperature mass.",
+      "primary_unit": "Unique patient at repeat=0; all draws and ever-affected patient counts reported separately."
+    },
+    "results": {
+      "wsi": {
+        "primary_gate_sum": {
+          "n": 71,
+          "median": 0.9999999403953552,
+          "mean": 0.9999997783714617,
+          "min": 0.9999970197677612,
+          "max": 1.0,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "all_rng_gate_sum": {
+          "n": 1420,
+          "median": 0.9999999403953552,
+          "mean": 0.9999997745097523,
+          "min": 0.9999783635139465,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "affected_unique_patients_below_0_5": 0,
+        "affected_unique_patients_below_0_01": 0,
+        "severity": "not_observed"
+      },
+      "omic": {
+        "primary_gate_sum": {
+          "n": 71,
+          "median": 0.9999999403953552,
+          "mean": 0.9999999546668898,
+          "min": 0.9999998807907104,
+          "max": 1.0,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "all_rng_gate_sum": {
+          "n": 1420,
+          "median": 0.9999999701976776,
+          "mean": 0.9999999549187405,
+          "min": 0.9999998211860657,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "affected_unique_patients_below_0_5": 0,
+        "affected_unique_patients_below_0_01": 0,
+        "severity": "not_observed"
+      }
+    },
+    "checks_actual_execution_raw_receipt": {
+      "error_maxima": {
+        "historical_full_logits_max_abs": 0,
+        "native_gate_formula_max_abs": 0
+      },
+      "historical_full_logits_replay_passed": true,
+      "model_purity": {
+        "native_model_class": true,
+        "native_forward": true,
+        "native_slot_classes": true,
+        "native_decoder_classes": true,
+        "no_repaired_eval_buffers": true
+      },
+      "model_state_sha256_before": "2f8d40a7b5794ccf516daa3792a9231ef5d46f20351fc7150dce5cf777684b80",
+      "model_state_sha256_after": "2f8d40a7b5794ccf516daa3792a9231ef5d46f20351fc7150dce5cf777684b80",
+      "sources_weights_inputs_unchanged": true,
+      "hooks_removed_and_settings_restored": true,
+      "training_runs": 0,
+      "optimizer_steps": 0,
+      "full_model_batch_forwards": 180,
+      "full_model_patient_forwards": 1420,
+      "new_slot_generation_patient_pairs": 1420,
+      "paired_control_decoder_batch_forwards": 720,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "runner_sha256": "6eb0ce7370caa2ac67d9167271542fa37e1cd0eddc2174128d2724cff9495dfe"
+    },
+    "new_local_diagnostic_json_produced": true,
+    "gaps_reasons": "单个历史本地BLCA fold0/seed3、3轮checkpoint；不等于77人运行或成熟权重，也未评估生存性能损害和修正训练收益。",
+    "next_action_user_inputs": "本次固定槽与完整模型RNG两种只读诊断均完成。不自动新增队列或训练；要扩大到其他权重或77人协议，需匹配其checkpoint与输入。"
+  },
+  "latest_redundancy_exclusion_claim_review": {
+    "recorded_at": "2026-10-22T22:38:37.592667+08:00",
+    "route_task": "SlotSPE / SPE-08 / read-only review of no-meaning and excluded-design claims",
+    "status": "no_harm_not_established_is_valid_exclusion_and_randomness_claims_overstated",
+    "completed_work": "核对原论文设计、原版Top-k与gate_sum公式及历史稀疏关闭结果。未证损害成立；正常冗余设计、无因果、0.125证明随机、已排除设计方向均推断过头。0.6866/0.6876属于71人旧权重且为单侧关闭，不能混成77人新诊断。",
+    "paths_commit": {
+      "receipt": "docs/research/slotspe_eight_issues_20261019/redundancy_exclusion_claim_review_20261022.json",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "original_source_and_public_aggregates_read": true,
+      "primary_paper_and_ASA_statement_read": true,
+      "new_training_runs": 0,
+      "new_model_forwards": 0,
+      "new_backward_passes": 0,
+      "patient_array_or_checkpoint_loads": 0,
+      "server_execution": false,
+      "new_patient_raw_receipt": false,
+      "historical_reports_modified": false,
+      "existing_queue_changed": false
+    },
+    "gaps_reasons": "The quoted joint-diagnosis raw receipt and metric implementation were not located in the searched public evidence. Even if its numbers are accurate, no-causality, random-selection and excluded-design conclusions do not follow from those summaries.",
+    "next_action_user_input": "先核对原始指标定义/联合诊断回执；维持现有11组单fold候选计划及其待接入状态，不启动模型。"
+  },
+  "latest_uni2h_scope_confirmation": {
+    "recorded_at": "2026-10-22T22:48:59.311394+08:00",
+    "route_task": "SlotSPE / SPE-08 / explicit UNI2-h single-fold scope confirmation",
+    "status": "scope_locked_plan_only_patient_integration_pending",
+    "completed_work": {
+      "one_queue": true,
+      "methods": 11,
+      "study": "blca",
+      "feature_encoder": "UNI2-h",
+      "folds": [
+        0
+      ],
+      "seeds": [
+        3
+      ],
+      "new_feature_extraction": false
+    },
+    "paths_commit": {
+      "config": "configs/slotspe_redundancy_queue.json",
+      "planner": "scripts/plan_slotspe_redundancy_queue.py",
+      "receipt": "docs/research/slotspe_native_assignment_training_20261022/uni2h_scope_validation.json",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "metadata_plan_passed": true,
+      "new_model_forwards": 0,
+      "new_training_runs": 0,
+      "patient_features_loaded": false,
+      "server_execution": false,
+      "new_patient_raw_receipt": false
+    },
+    "gaps_reasons": "本次把UNI2-h从既有基线特征来源提升为新队列显式约束；未加载特征验证缓存。患者训练循环、异构通路目标与S5变长探针仍未接通。",
+    "next_action_user_inputs": "完成11组真实训练接入与验收；保持单BLCA/UNI2-h/单fold范围，当前3轮256patch仅为短程诊断预算。"
+  },
+  "latest_gating_design_intent_readonly_review": {
+    "recorded_at": "2026-10-22T23:01:41.375955+08:00",
+    "route_task": "SlotSPE / SPE-08 / original design, forward effect and gradient attribution",
+    "status": "design_intent_located_exclusion_claims_not_supported",
+    "completed_work": "核对原论文v3的选槽动机、ST及B.5三项生存监督，对照原版bool mask和单模态decoder loss；区分前向参与、主梯度断开、设计目标和患者效果。",
+    "paths_commit": {
+      "receipt": "docs/research/slotspe_eight_issues_20261019/gating_design_intent_review_20261022.json",
+      "receipt_sha256": "70b669d3668abb970881dc3264e457511a6051615301d8fb58b5edd22ea7ff65",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "new_training_runs": 0,
+      "new_model_forwards": 0,
+      "new_backward_passes": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "gpu_execution": false,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "original_sources_modified": false,
+      "historical_reports_modified": false,
+      "existing_queue_changed": false,
+      "new_commit_or_push": false
+    },
+    "gaps_reasons": "The cited joint-diagnosis and L3 paired-training raw receipts and full arm contracts are unavailable in the reviewed public evidence. No new patient experiment was authorized or run.",
+    "next_action_user_inputs": "Design-document question is resolved. If the new L3 or correlation claims need acceptance, obtain their exact run receipt and arm definition; do not automatically launch another experiment."
+  },
+  "latest_official_epoch_selection_review": {
+    "recorded_at": "2026-10-23T15:20:11+08:00",
+    "route_task": "SlotSPE / SPE-08 / official score and checkpoint selection source review",
+    "status": "completed_readonly_source_review",
+    "paths_commit": {
+      "receipt": "docs/research/slotspe_target_review_20261020/epoch_selection_review_20261023.json",
+      "official_commit": "02051a2083add7b427727e0200e4263516903561",
+      "local_base_commit": "d8dd0518712f99f518df90ee78e94a4072d08810",
+      "source_references": {
+        "split_definition": "third_party/SlotSPE/utils/core_utils.py:38-53",
+        "risk_definition": "third_party/SlotSPE/utils/core_utils.py:200-204",
+        "cindex_definition": "third_party/SlotSPE/utils/core_utils.py:303-304",
+        "per_epoch_evaluation_and_best_save": "third_party/SlotSPE/utils/core_utils.py:421-445",
+        "final_and_best_reevaluation": "third_party/SlotSPE/utils/core_utils.py:447-491",
+        "fold_reset_and_summary": "SlotSPE-main/survival.py:62-108",
+        "defaults": "third_party/SlotSPE/utils/process_args.py:43-51"
+      },
+      "new_commit_created": false,
+      "receipt_sha256": "6b8b470c54ab04736dcea065cd017669295b42968fcd2afde3254692dada2e1c"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "new_training_runs": 0,
+      "new_model_forward_passes": 0,
+      "new_backward_passes": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "server_execution": false,
+      "server_patient_raw_results_received": false,
+      "paper_experiment_raw_results_received": false,
+      "original_sources_modified": false,
+      "historical_reports_modified": false,
+      "official_source_live_hash_checks_passed": 6
+    },
+    "gaps_reasons": "This confirms behavior of the fixed official public source snapshot, not which artifacts were used for every published paper-table value. Paper table provenance needs the matching configs/logs/checkpoints. A validation-selected peak is not an independently tested generalization result.",
+    "next_action_user_input": "No patient execution is needed to answer this source question. Any score comparison must state the epoch selection rule, fold/split, training budget, patch count, seed and evaluation repetitions; do not equate the current short final-checkpoint audit with official validation-peak scores.",
+    "completed_work": "Verified official 30-epoch loop, per-fold best-validation-C-index checkpoint selection, historical-peak return to summary.csv, final-versus-best artifact distinction, and no independent test split or 20-repeat averaging in the shown official loop."
+  },
+  "latest_official_patch_sampling_review": {
+    "recorded_at": "2026-10-23T15:44:20+08:00",
+    "route_task": "SlotSPE / SPE-08 / official training patch-resampling protocol review",
+    "status": "completed_readonly_source_review",
+    "completed_work": {
+      "ui_recommendation": "Choose B for a run intended to follow official training sampling; A preserves the historical fixed-patch diagnostic cache.",
+      "official_training_sampling": "On every training __getitem__, np.random.choice selects min(num_patches,available_rows) without replacement, then sorts the indices. It is not cached once per patient; when available rows exceed the budget, the subset is re-sampled on subsequent visits/epochs.",
+      "official_training_budget_default": 4096,
+      "official_insufficient_rows": "Original training loader zero-pads if available rows are below num_patches; protected diagnostic queues have a different fail-closed insufficient-real-patches rule.",
+      "official_validation_sampling": "The sampling condition explicitly checks split_key == train. Validation uses all loaded WSI rows at this point; 4096 is not a validation subsampling limit.",
+      "previous_answer_precision_correction": "The prior table label patch budget per patient must be read as official training input budget, not a shared train/validation cap.",
+      "matched_arm_advice": "For paired mechanism comparisons, keep the same patient/epoch patch draw across arms and declare the validation sampling protocol separately."
+    },
+    "paths_commit": {
+      "source": "third_party/SlotSPE/dataset/dataset_survival.py:278-292",
+      "source_sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+      "official_commit": "02051a2083add7b427727e0200e4263516903561",
+      "progress_entry": "docs/PROGRESS.json:latest_official_patch_sampling_review",
+      "new_commit_created": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "source_hash_matches_official": true,
+      "new_training_runs": 0,
+      "new_model_forward_passes": 0,
+      "new_backward_passes": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "source_or_sampling_code_modified": false,
+      "server_execution": false,
+      "server_raw_results_received": false
+    },
+    "gaps_reasons": "This identifies the fixed official public implementation, not every paper run. Historical fixed-cache diagnostic results use a different sampling protocol and cannot silently become official full-protocol results.",
+    "next_action_user_input": "Select B in the displayed question if proceeding with the official-style training protocol; apply it consistently across arms and record validation sampling separately. This advisory review does not start a training job."
+  },
+  "latest_patch_budget_exclusion_claim_review": {
+    "recorded_at": "2026-10-23T16:36:54+08:00",
+    "route_task": "SlotSPE / SPE-08 / readonly patch-budget exclusion and statistical-interpretation claim review",
+    "status": "local_exclusion_rule_confirmed_official_behavior_distinguished_patient_counts_unverified",
+    "completed_work": {
+      "local_wrapper": "patient.py cache_patient excludes total real patch count below configured patches, then caches a fixed per-patient sample without replacement. This is a local diagnostic policy, not the original official loader.",
+      "official_loader": "Training samples min(available_rows,num_patches) without replacement on each item visit and zero-pads a shortage; validation does not enter this sampling branch. The budget alone does not require excluding short bags.",
+      "unique_honest_choice_rejected": "Exclusion is not mathematically inevitable. Variable-length real-patch bags with an adapted batching protocol are another option; they would be a separately declared protocol. No implementation was changed.",
+      "patient_count_claim_status": "The quoted 41 excluded/339 retained, patch quantiles, 104/276, follow-up 13/17 and censoring 0.71/0.66 have no located public aggregate receipt in this review. They remain user-reported, not independently verified.",
+      "denominator_caution": "Quoted 256-patch 1 excluded/379 retained and 4096-patch 41 excluded/339 retained imply 380 candidates and 40 additional exclusions, if identical eligibility rules and candidate set are used. Historical retained count 379 alone does not establish identical cohort provenance.",
+      "survival_interpretation": "Shorter observed follow-up under censoring does not establish shorter true survival. Patch-count filtering selects a different population; its impact on survival distribution, C-index and arm ranking is not established by the quoted medians or censoring rates.",
+      "paired_arm_scope": "A common retained cohort supports within-protocol paired comparisons when splits, inputs, sampling, training and evaluation match. It does not establish that filtering is harmless or that effects generalize to excluded patients.",
+      "historical_standard_deviation": "0.060593216005657105 is a descriptive cross-run sample SD across 15 fold/seed results under a 3-epoch/256-patch protocol. It is not the standard error or significance threshold for an arm-paired difference.",
+      "historical_late_decline": "Existing 18-pair aggregate receipt records peak-to-epoch30 mean drop 0.12629084643601496 and increasing validation NLL. It is evidence within that historical protocol; stochastic evaluation and choosing the maximum affect the peak gap. It is not a new 11-arm result or proof that all 30-epoch runs are invalid.",
+      "official_score_selection": "Verified official code reports historical per-fold maximum validation C-index across epochs. A new comparison must predeclare selection/evaluation, report absolute scores with cohort/protocol and paired differences, and avoid equating them to historical scores under unmatched protocols."
+    },
+    "paths_commit": {
+      "local_wrapper": "survot_rank/research/slotspe_proof/patient.py:281-286",
+      "official_loader": "third_party/SlotSPE/dataset/dataset_survival.py:278-301",
+      "official_commit": "02051a2083add7b427727e0200e4263516903561",
+      "official_loader_sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+      "historical_sd": "docs/research/slotspe_gpu_trisurv_20261022/five_fold_and_mechanism_records.json:706-731",
+      "historical_curves": "docs/research/slotspe_results_review_20261021/aggregate_verification.json:40-56",
+      "official_scoring_review": "docs/research/slotspe_target_review_20261020/epoch_selection_review_20261023.json",
+      "backup": "local_evidence/documentation_backups/patch_budget_claim_review_20261023_163654/PROGRESS.before.json",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "source_and_existing_public_aggregate_review": true,
+      "official_loader_matches_existing_official_clone_sha256": true,
+      "new_training_runs": 0,
+      "new_model_forwards": 0,
+      "new_inference_runs": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "server_execution": false,
+      "new_patient_raw_receipt": false,
+      "source_or_sampling_code_modified": false
+    },
+    "gaps_reasons": "No original run receipt or identified preparation manifest for the quoted 41-patient exclusion and follow-up summary was supplied. Existing public aggregates cannot establish survival-selection effects or the prospective 11-arm outcome.",
+    "next_action_user_inputs": "For official reproduction, retain the official short-bag padding and validation behavior and declare validation-peak scoring; a no-padding variable-length comparison would require a separate agreed protocol. Do not change the queue or execute patient preparation/training from this advisory review. Audit the existing preparation receipt when its path is supplied."
+  },
+  "latest_pull_preserved_progress_metadata": {
+    "route_task": "Pull reconciliation / preserve competing progress metadata",
+    "completed_work": "Both sides of the two conflicting summary fields are retained here; detailed stage entries were merged by key.",
+    "values": {
+      "recorded_at": {
+        "local": "2026-10-22T23:23:00+08:00",
+        "remote": "2026-10-23T18:22:00+08:00",
+        "base": "2026-10-22T10:05:00+08:00"
+      },
+      "next_action": {
+        "local": "当前统一队列明确限定BLCA、UNI2-h预提取特征、fold0/seed3，共11组，不扩fold或seed、不重新提特征。方法核心/生成测试已有结果；真实训练器、异构通路目标和S5变长探针尚未接入，11组患者训练尚未执行。",
+        "remote": "只读机制拆解已完成并定位主因 R2；容量扫描的预期收益下降（主因与槽数无关）。下一步需用户授权训练后再动 problem_capacity.py。未启动新训练。",
+        "base": "由用户决定是否授权具体对照臂(关闭稀疏选择、匹配容量训练或A/B/C)与队列规模；D0-D4需先完成宿主训练接入。未获明确执行授权前不启动训练或推理。"
+      }
+    }
+  },
+  "latest_pull_recheck_20261023": {
+    "recorded_at": "2026-10-23T19:13:38.746529+08:00",
+    "route_task": "SlotSPE / repeated user request to pull origin main",
+    "completed_work": "Fetched origin successfully; independently checked live remote main via ls-remote. HEAD, origin/main and live remote main are all bf07e30; no new commits to merge. The padding-policy guard script and its tests are already tracked locally. Existing local changes and retained backups/stashes were preserved.",
+    "paths_commit": {
+      "HEAD": "bf07e305776b78fb0cfc63e02434d6a5fe948f0f",
+      "live_remote_main": "bf07e305776b78fb0cfc63e02434d6a5fe948f0f",
+      "progress": "docs/PROGRESS.json",
+      "backup": "local_evidence/pull_sync/20261023_191338_recheck",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "fetch_succeeded": true,
+      "live_remote_SHA_verified": true,
+      "guard_script_and_tests_present": true,
+      "git_diff_check_passed": true,
+      "original_source_files_SHA256_unchanged": 11,
+      "new_training_runs": 0,
+      "new_inference_runs": 0,
+      "new_model_forwards": 0,
+      "guard_run_executed": false,
+      "user_reported_324_tests_rerun": false,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false
+    },
+    "gaps_reasons": "No new upstream commit was available. The user-reported 324-test execution and patient measurements were not rerun or independently audited by this pull verification.",
+    "next_action_user_inputs": "Repository is synchronized to the reported bf07e30. No patient task is authorized by this pull request; retain local uncommitted work, backups and stashes."
+  },
+  "latest_pull_and_code_unification_20261023": {
+    "recorded_at": "2026-10-23T20:34:59.066360+08:00",
+    "route_task": "SlotSPE / pull main and retain one canonical implementation; clarify official checkpoint selection",
+    "completed_work": "Fast-forwarded main from bf07e30 to 026ed68, adopting upstream latest_git_delivery while retaining all independent local progress entries. Backed up and SHA256-verified 99 local modified/untracked files. Deleted exactly eight obsolete untracked implementation files from the legacy package: six exact duplicates and two superseded older implementations. Kept the tracked lazy compatibility shim and the sole canonical implementation under slotspe_proof. Added current protocol clarification to README; historical reports and source snapshots were preserved.",
+    "paths_commit": {
+      "HEAD_before": "bf07e305776b78fb0cfc63e02434d6a5fe948f0f",
+      "HEAD_after": "026ed687d66cf066dc4472061b20dbe97751c5df",
+      "backup": "local_evidence/pull_sync/20261023_203313_unify_026ed68",
+      "retained_stash_sha": "21959c7157faf7a49408a1749f71de8c1b0bc1fa",
+      "canonical_package": "slotspe_proof/",
+      "compatibility_only_package": "survot_rank/research/slotspe_proof/__init__.py",
+      "progress": "docs/PROGRESS.json",
+      "new_commit_or_push": false
+    },
+    "checkpoint_protocol_clarification": {
+      "official_behavior": "The original SlotSPE selects the epoch with maximum validation C-index and replaces a tied checkpoint on >=. The validation selection bias belongs to that official protocol; following it is not a newly introduced bias or, by itself, evidence of hiding late degradation.",
+      "current_harness_behavior": "The fetched diagnostic harness still declares fixed final-epoch weights with repeated evaluation. Pulling and removing duplicate code did not switch that protocol or alter the running server task.",
+      "source_review": "docs/research/slotspe_target_review_20261020/epoch_selection_review_20261023.json",
+      "original_source": "third_party/SlotSPE/utils/core_utils.py:421-491"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "backup_files_sha256_verified": 99,
+      "obsolete_implementation_files_deleted": 8,
+      "duplicate_implementations_identical": 6,
+      "older_implementations_superseded": 2,
+      "legacy_package_python_files_remaining": [
+        "__init__.py"
+      ],
+      "original_source_files_sha256_unchanged": 11,
+      "new_training_runs": 0,
+      "new_inference_runs": 0,
+      "new_model_forwards": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "server_training_adjusted": false,
+      "full_test_suite_rerun": false,
+      "HEAD_matches_live_remote_main": true,
+      "live_remote_main": "026ed687d66cf066dc4472061b20dbe97751c5df",
+      "plans_passed": [
+        "scripts/run_slotspe_redundancy.py",
+        "scripts/run_slotspe_proof.py"
+      ],
+      "legacy_queue_same_module": true,
+      "legacy_duplicate_modules_routed_to_canonical": 8,
+      "new_python_scripts_syntax_valid": 6,
+      "pinned_files_sha256_matching": 18,
+      "canonical_files_equal_fetched_remote": true,
+      "upstream_latest_git_delivery_preserved": true,
+      "git_diff_check_passed": true,
+      "verification_receipt": "local_evidence/pull_sync/20261023_203313_unify_026ed68/verification.json"
+    },
+    "gaps_reasons": "This establishes a single current implementation and successful repository integration, not a best-performing patient model. Current server S0 progress was user-reported and was not independently inspected. Historical evidence snapshots and independent unreplaced diagnostic scripts are deliberately retained.",
+    "next_action_user_inputs": "Use slotspe_proof as the sole current implementation. Keep each reported result tied to its actual checkpoint selection, budget, split and evaluation protocol; do not re-label historical final-checkpoint runs as official validation-best runs. Patient execution and active server changes require separate authorization."
+  },
+  "latest_code_completeness_audit_20261023": {
+    "recorded_at": "2026-10-23T20:46:59.886444+08:00",
+    "route_task": "SlotSPE / post-cleanup completeness verification from a clean tracked-only export",
+    "completed_work": "Exported HEAD with git archive without untracked files or ignored patient evidence. The complete existing test suite passed on that export: 324 passed, zero failures/errors/skips. Imported all 32 canonical implementation modules and verified that all 32 legacy imports refer to the same objects inside the clean export. All 323 tracked paths exist; all tracked Python files match HEAD. Separately enumerated unpublished local supplemental scripts and historical material; preserved them rather than misclassifying them as obsolete implementations.",
+    "paths_commit": {
+      "audited_HEAD": "026ed687d66cf066dc4472061b20dbe97751c5df",
+      "source_commit_changed": false,
+      "new_commit_or_push": false,
+      "progress": "docs/PROGRESS.json",
+      "audit_receipts": "local_evidence/completeness_audit/20261023_204127",
+      "inventory": "local_evidence/completeness_audit/20261023_204127/completeness_inventory.json",
+      "tests_log": "local_evidence/completeness_audit/20261023_204127/pytest.log"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "tracked_files_present": 323,
+      "tracked_files_missing": 0,
+      "tracked_python_files_syntax_valid": 148,
+      "tracked_python_files_changed_from_HEAD": 0,
+      "clean_export_tests_passed": 324,
+      "clean_export_tests_failed": 0,
+      "clean_export_tests_skipped": 0,
+      "canonical_modules_imported_from_export": 32,
+      "legacy_imports_same_module_objects": 32,
+      "synthetic_fixture_tests_executed": true,
+      "synthetic_forward_backward_and_optimizer_fixtures_executed": true,
+      "patient_arrays_or_checkpoints_read": 0,
+      "new_patient_training_runs": 0,
+      "new_patient_inference_runs": 0,
+      "server_execution": false,
+      "active_server_training_adjusted": false,
+      "new_server_raw_receipt": false
+    },
+    "gaps_reasons": {
+      "core_runtime_completeness": "Verified at audited HEAD by tracked-only clean-export suite and module imports; this is not a mathematical guarantee of absence of all bugs or patient benefit.",
+      "not_all_local_work_is_published": {
+        "supplemental_scripts": [
+          "scripts/audit_slotspe_gate_full_result.py",
+          "scripts/audit_slotspe_gate_result.py",
+          "scripts/check_slotspe_direct_diversity.py",
+          "scripts/check_slotspe_extended_mechanisms.py",
+          "scripts/check_slotspe_gate_collapse.py",
+          "scripts/check_slotspe_gate_full_rng.py",
+          "scripts/check_slotspe_mechanism_deepcheck.py",
+          "scripts/check_slotspe_native_allocation.py",
+          "scripts/check_slotspe_native_similarity.py",
+          "scripts/check_slotspe_s5_s6.py",
+          "scripts/summarize_slotspe_direct_diversity.py",
+          "scripts/summarize_slotspe_native_allocation.py"
+        ],
+        "additional_documentation_python": [
+          "docs/research/slotspe_mechanism_deepcheck_20261022/script_snapshots/check_slotspe_mechanism_deepcheck_v01.py",
+          "docs/research/slotspe_mechanism_deepcheck_20261022/script_snapshots/check_slotspe_mechanism_deepcheck_v02.py",
+          "docs/research/slotspe_mechanism_deepcheck_20261022/script_snapshots/check_slotspe_mechanism_deepcheck_v03.py",
+          "docs/research/slotspe_observe_review_20261021/verify_summary.py"
+        ],
+        "untracked_files_total_before_audit_record": 88
+      },
+      "historical_publication_manifest": {
+        "paths_listed": 192,
+        "paths_missing": [],
+        "current_hashes_outdated": 13,
+        "tracked_paths_not_covered": 131,
+        "interpretation": "This older export/migration manifest is not a current full-tree integrity certificate. It was preserved unchanged; the fresh completeness inventory records current source hashes and explicit publication status."
+      },
+      "git_state": "Only ignore and documentation/progress tracked changes remain local; no runtime source divergence from the audited commit."
+    },
+    "next_action_user_inputs": "The current main implementation is independently runnable and has passed its tracked test suite. A claim that every local research tool/document is published still requires intentionally publishing the enumerated 12 scripts and associated local documents. Use the current audit inventory rather than the historical manifest as completeness evidence; do not delete unique supplemental tools or historical snapshots merely to make the worktree look clean."
+  },
+  "latest_complete_public_delivery_20261024": {
+    "recorded_at": "2026-10-24T04:08:07.087510+08:00",
+    "route_task": "SlotSPE / complete public research delivery and synchronize local main with origin/main",
+    "status": "validated_ready_for_publication",
+    "completed_work": "Prepared all 77 previously untracked research/source files for delivery: 12 independent scripts and 65 documentation/evidence files, including preserved historical snapshots. Added a current full-tree manifest and a pure-stdlib checker with omission/tampering/private-path tests; kept PUBLICATION_MANIFEST as an unchanged historical migration receipt. Updated live research navigation to 35 directories and clarified current versus historical execution statements in README. Canonical implementation remains slotspe_proof; the legacy package contains only its compatibility shim.",
+    "paths_commit": {
+      "base_commit": "026ed687d66cf066dc4472061b20dbe97751c5df",
+      "backup": "local_evidence/delivery/20261024_035750",
+      "current_manifest": "DELIVERY_MANIFEST.json",
+      "manifest_checker": "scripts/check_delivery_manifest.py",
+      "manifest_checker_tests": "tests/test_delivery_manifest.py",
+      "progress": "docs/PROGRESS.json",
+      "target_branch": "main",
+      "new_commit_or_push_yet": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "new_manifest_guard_tests_passed": 14,
+      "privacy_review_candidate_text_files": 80,
+      "real_patient_identifier_findings": 0,
+      "raw_patient_arrays_or_predictions_found": 0,
+      "secret_findings": 0,
+      "current_research_directories": 35,
+      "historical_reports_or_hashes_rewritten": false,
+      "full_candidate_suite": "338 passed; zero failures, errors or skips; CPU synthetic fixtures only",
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "new_patient_training_runs": 0,
+      "new_patient_inference_runs": 0,
+      "synthetic_fixture_tests_authorized_for_integrity": true,
+      "server_execution": false,
+      "server_training_adjusted": false,
+      "new_server_raw_receipt": false,
+      "historical_source_archives_metadata_checked_and_sha256_pinned": 4,
+      "clean_complete_export_files": 403,
+      "full_candidate_suite_tests_passed": 338,
+      "full_candidate_suite_failures": 0,
+      "full_candidate_suite_skips": 0,
+      "all_python_files_syntax_valid": 166,
+      "all_json_files_valid": 130,
+      "protected_existing_files_sha256_unchanged": 395,
+      "current_navigation_links_valid": 87,
+      "current_manifest_covered_files": 402,
+      "current_manifest_self_excluded_files": 1,
+      "full_tree_privacy_new_findings": 0,
+      "unchanged_upstream_documented_placeholder_hits": 4,
+      "old_publication_manifest_and_historical_receipts_preserved": true,
+      "actual_test_receipt": "local_evidence/delivery/20261024_035750/pytest_summary.json"
+    },
+    "gaps_reasons": "The complete public snapshot has passed clean-export tests and source/privacy/navigation checks. The original migration manifest and locked historical archives are preserved; DELIVERY_MANIFEST is the current inventory. Git publication and live remote verification remain pending at this exact pre-push record.",
+    "next_action_user_inputs": "User authorization is complete. Publish the validated explicit public-file list through normal main history, verify the live remote commit/tree and all inventory hashes, then record the verified payload delivery without loading patient evidence or changing active server jobs."
   }
 }

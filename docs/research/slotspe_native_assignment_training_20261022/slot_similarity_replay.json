@@ -1,0 +1,387 @@
+{
+  "schema": "native_slotspe_generated_slot_similarity_replay_v1",
+  "recorded_at": "2026-10-22T16:51:22.131313+08:00",
+  "source_summary_sha256": "937da30159ad964a4eed8abac2d29d974951d5fea5398e418f0bb520d3a9f751",
+  "script_sha256": "4cc737b8c22b0b2e45a2d928b06566af18b217c919977d0847fdcbe1f69e0247",
+  "definition": "Within each generated example, cosine of all unordered SA output slot pairs; average examples, draws, then three seeds. No cross-modal cosine.",
+  "selected_definition": "Same raw SA slots indexed by the actual native decoder hard_keep Top2; not decoder.map outputs. Sampled selection may differ across arms.",
+  "update_definition": "Last-iteration attention-weighted native V, after combine_heads, before GRU/MLP. Descriptive location probe, not causal attribution.",
+  "scope": "32-dim, 8slots, 3iterations, existing 24-update generated-data models; no new training",
+  "per_seed": [
+    {
+      "seed": 3,
+      "variant": "S0",
+      "metrics": {
+        "wsi_all8_cos": 0.9273603955904642,
+        "wsi_selected2_cos": 0.9302127758661906,
+        "wsi_value_update_cos": 0.9999433358510336,
+        "omic_all8_cos": 0.8987912138303121,
+        "omic_selected2_cos": 0.9022748668988546,
+        "omic_value_update_cos": 0.9969666600227356
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 3,
+      "variant": "S1",
+      "metrics": {
+        "wsi_all8_cos": 0.9269237716992696,
+        "wsi_selected2_cos": 0.9298736651738485,
+        "wsi_value_update_cos": 0.9999317725499471,
+        "omic_all8_cos": 0.8984371821085612,
+        "omic_selected2_cos": 0.9017794529596964,
+        "omic_value_update_cos": 0.9969182809193929
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 3,
+      "variant": "S2",
+      "metrics": {
+        "wsi_all8_cos": 0.9276566704114279,
+        "wsi_selected2_cos": 0.9308909376462301,
+        "wsi_value_update_cos": 0.9983417193094889,
+        "omic_all8_cos": 0.8979312380154928,
+        "omic_selected2_cos": 0.9012898405392965,
+        "omic_value_update_cos": 0.9969518780708313
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 3,
+      "variant": "S3",
+      "metrics": {
+        "wsi_all8_cos": 0.9268168210983276,
+        "wsi_selected2_cos": 0.9297117590904236,
+        "wsi_value_update_cos": 0.9999391436576843,
+        "omic_all8_cos": 0.8823277552922567,
+        "omic_selected2_cos": 0.8875746726989746,
+        "omic_value_update_cos": 0.9226231773694357
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 3,
+      "variant": "S4",
+      "metrics": {
+        "wsi_all8_cos": 0.9258996446927389,
+        "wsi_selected2_cos": 0.9295576016108195,
+        "wsi_value_update_cos": 0.9983135859171549,
+        "omic_all8_cos": 0.8831949631373087,
+        "omic_selected2_cos": 0.8884063363075256,
+        "omic_value_update_cos": 0.9228860934575399
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 17,
+      "variant": "S0",
+      "metrics": {
+        "wsi_all8_cos": 0.9555947780609131,
+        "wsi_selected2_cos": 0.9589560429255167,
+        "wsi_value_update_cos": 0.9999755422274271,
+        "omic_all8_cos": 0.8492786486943563,
+        "omic_selected2_cos": 0.852613608042399,
+        "omic_value_update_cos": 0.9959495464960734
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 17,
+      "variant": "S1",
+      "metrics": {
+        "wsi_all8_cos": 0.955698033173879,
+        "wsi_selected2_cos": 0.9591900706291199,
+        "wsi_value_update_cos": 0.9999626874923706,
+        "omic_all8_cos": 0.8482896685600281,
+        "omic_selected2_cos": 0.8514181772867838,
+        "omic_value_update_cos": 0.9959116578102112
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 17,
+      "variant": "S2",
+      "metrics": {
+        "wsi_all8_cos": 0.9546034336090088,
+        "wsi_selected2_cos": 0.9580011566480001,
+        "wsi_value_update_cos": 0.9991229772567749,
+        "omic_all8_cos": 0.8499834934870402,
+        "omic_selected2_cos": 0.853416641553243,
+        "omic_value_update_cos": 0.9959794084231058
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 17,
+      "variant": "S3",
+      "metrics": {
+        "wsi_all8_cos": 0.9556821584701538,
+        "wsi_selected2_cos": 0.9591476122538248,
+        "wsi_value_update_cos": 0.9999754031499227,
+        "omic_all8_cos": 0.8340903123219808,
+        "omic_selected2_cos": 0.8376504977544149,
+        "omic_value_update_cos": 0.908579965432485
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 17,
+      "variant": "S4",
+      "metrics": {
+        "wsi_all8_cos": 0.9547191659609476,
+        "wsi_selected2_cos": 0.9580901662508646,
+        "wsi_value_update_cos": 0.9991155465443929,
+        "omic_all8_cos": 0.835786501566569,
+        "omic_selected2_cos": 0.8393024603525797,
+        "omic_value_update_cos": 0.9084848364194235
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 29,
+      "variant": "S0",
+      "metrics": {
+        "wsi_all8_cos": 0.9369254310925802,
+        "wsi_selected2_cos": 0.9409241875012716,
+        "wsi_value_update_cos": 0.9995207985242208,
+        "omic_all8_cos": 0.8506491780281067,
+        "omic_selected2_cos": 0.847386916478475,
+        "omic_value_update_cos": 0.983827809492747
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 29,
+      "variant": "S1",
+      "metrics": {
+        "wsi_all8_cos": 0.9350651303927103,
+        "wsi_selected2_cos": 0.9388694167137146,
+        "wsi_value_update_cos": 0.9992646972338358,
+        "omic_all8_cos": 0.8531837463378906,
+        "omic_selected2_cos": 0.8497336109479269,
+        "omic_value_update_cos": 0.9836036165555319
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 29,
+      "variant": "S2",
+      "metrics": {
+        "wsi_all8_cos": 0.9382984439531962,
+        "wsi_selected2_cos": 0.9432946642239889,
+        "wsi_value_update_cos": 0.9917905728022257,
+        "omic_all8_cos": 0.8512896100680033,
+        "omic_selected2_cos": 0.8480676213900248,
+        "omic_value_update_cos": 0.9839941263198853
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 29,
+      "variant": "S3",
+      "metrics": {
+        "wsi_all8_cos": 0.9354960123697916,
+        "wsi_selected2_cos": 0.9396422704060873,
+        "wsi_value_update_cos": 0.9995214740435282,
+        "omic_all8_cos": 0.8588293592135111,
+        "omic_selected2_cos": 0.8557309508323669,
+        "omic_value_update_cos": 0.7654416163762411
+      },
+      "replays_match_saved_logits": true
+    },
+    {
+      "seed": 29,
+      "variant": "S4",
+      "metrics": {
+        "wsi_all8_cos": 0.9382183154424032,
+        "wsi_selected2_cos": 0.9434017737706503,
+        "wsi_value_update_cos": 0.9919702013333639,
+        "omic_all8_cos": 0.8515727519989014,
+        "omic_selected2_cos": 0.8479485114415487,
+        "omic_value_update_cos": 0.7582779129346212
+      },
+      "replays_match_saved_logits": true
+    }
+  ],
+  "means": [
+    {
+      "variant": "S0",
+      "metrics": {
+        "wsi_all8_cos": 0.9399602015813192,
+        "wsi_selected2_cos": 0.943364335430993,
+        "wsi_value_update_cos": 0.9998132255342271,
+        "omic_all8_cos": 0.8662396801842583,
+        "omic_selected2_cos": 0.8674251304732429,
+        "omic_value_update_cos": 0.9922480053371853
+      },
+      "paired_delta_to_S0": {
+        "wsi_all8_cos": 0.0,
+        "wsi_selected2_cos": 0.0,
+        "wsi_value_update_cos": 0.0,
+        "omic_all8_cos": 0.0,
+        "omic_selected2_cos": 0.0,
+        "omic_value_update_cos": 0.0
+      }
+    },
+    {
+      "variant": "S1",
+      "metrics": {
+        "wsi_all8_cos": 0.939228978421953,
+        "wsi_selected2_cos": 0.9426443841722276,
+        "wsi_value_update_cos": 0.9997197190920512,
+        "omic_all8_cos": 0.8666368656688266,
+        "omic_selected2_cos": 0.8676437470648024,
+        "omic_value_update_cos": 0.9921445184283787
+      },
+      "paired_delta_to_S0": {
+        "wsi_all8_cos": -0.0007312231593661714,
+        "wsi_selected2_cos": -0.000719951258765302,
+        "wsi_value_update_cos": -9.350644217598347e-05,
+        "omic_all8_cos": 0.000397185484568241,
+        "omic_selected2_cos": 0.0002186165915594914,
+        "omic_value_update_cos": -0.00010348690880664553
+      }
+    },
+    {
+      "variant": "S2",
+      "metrics": {
+        "wsi_all8_cos": 0.9401861826578776,
+        "wsi_selected2_cos": 0.9440622528394064,
+        "wsi_value_update_cos": 0.9964184231228298,
+        "omic_all8_cos": 0.8664014471901788,
+        "omic_selected2_cos": 0.8675913678275214,
+        "omic_value_update_cos": 0.9923084709379408
+      },
+      "paired_delta_to_S0": {
+        "wsi_all8_cos": 0.000225981076558431,
+        "wsi_selected2_cos": 0.0006979174084134065,
+        "wsi_value_update_cos": -0.003394802411397335,
+        "omic_all8_cos": 0.00016176700592037316,
+        "omic_selected2_cos": 0.00016623735427856445,
+        "omic_value_update_cos": 6.0465600755491934e-05
+      }
+    },
+    {
+      "variant": "S3",
+      "metrics": {
+        "wsi_all8_cos": 0.9393316639794244,
+        "wsi_selected2_cos": 0.9428338805834452,
+        "wsi_value_update_cos": 0.9998120069503784,
+        "omic_all8_cos": 0.8584158089425828,
+        "omic_selected2_cos": 0.8603187070952522,
+        "omic_value_update_cos": 0.8655482530593872
+      },
+      "paired_delta_to_S0": {
+        "wsi_all8_cos": -0.0006285376018948149,
+        "wsi_selected2_cos": -0.0005304548475477308,
+        "wsi_value_update_cos": -1.2185838487536553e-06,
+        "omic_all8_cos": -0.007823871241675495,
+        "omic_selected2_cos": -0.007106423377990723,
+        "omic_value_update_cos": -0.12669975227779806
+      }
+    },
+    {
+      "variant": "S4",
+      "metrics": {
+        "wsi_all8_cos": 0.9396123753653632,
+        "wsi_selected2_cos": 0.9436831805441115,
+        "wsi_value_update_cos": 0.9964664445983039,
+        "omic_all8_cos": 0.856851405567593,
+        "omic_selected2_cos": 0.8585524360338846,
+        "omic_value_update_cos": 0.8632162809371948
+      },
+      "paired_delta_to_S0": {
+        "wsi_all8_cos": -0.0003478262159559338,
+        "wsi_selected2_cos": 0.00031884511311848957,
+        "wsi_value_update_cos": -0.0033467809359232583,
+        "omic_all8_cos": -0.00938827461666536,
+        "omic_selected2_cos": -0.008872694439358194,
+        "omic_value_update_cos": -0.12903172439999044
+      }
+    }
+  ],
+  "counts": {
+    "model_forwards": 45,
+    "full_loss_backwards": 0,
+    "optimizer_steps": 0,
+    "patient_runs": 0,
+    "server_runs": 0
+  },
+  "extra_global_RNG_consumption": false,
+  "native_source_hashes_match": true,
+  "raw_generated_metrics_sha256": {
+    "toy_slot_metrics_S0_seed_17.pt": "4089b74909e62cd39eb3db874e76833cb6dca42137caf7f9d6ec327237524da1",
+    "toy_slot_metrics_S0_seed_29.pt": "92a94a4db58cb3a65a30fde7a2824aba7a2190d1417bfc476a1dbffb33858c23",
+    "toy_slot_metrics_S0_seed_3.pt": "5e234ad0f9d6b6f7bd547b63ae09143ddddd30500f9edbc9e9e3e32f4da942ad",
+    "toy_slot_metrics_S1_seed_17.pt": "e8dd78607ce30305d57189cce7f7c0892cda0995946993cc6fa2deb1fb3c4091",
+    "toy_slot_metrics_S1_seed_29.pt": "12e9ca537b31808a482e6d7c5b61befdb50b285e1dc4550b78f33ea36afae770",
+    "toy_slot_metrics_S1_seed_3.pt": "7d44f6f456fd3d1c0f6a75e0dfc4c68937efc3b4d0b0fa05ef98a4ef9dc8d9a2",
+    "toy_slot_metrics_S2_seed_17.pt": "fc61cfa96bef8c4fe9dc6d729ad2cb313234a52b9919c873f49f58ccdbad644b",
+    "toy_slot_metrics_S2_seed_29.pt": "7853a73a95398e4962af195d49bd077ef1371755c1da01ee511375570bd52a7f",
+    "toy_slot_metrics_S2_seed_3.pt": "95b67e3d573c450863afd1bf7cdf9f4c7334d43bace2d5240a9a6f7dcda2f78b",
+    "toy_slot_metrics_S3_seed_17.pt": "d5507b8eb4d4efbefb30901e6178156a8f97eb5e7096a31008f15c5be9fb2c4f",
+    "toy_slot_metrics_S3_seed_29.pt": "c1e9522ab6b881abe8653778782bb2a40dc34213c4b2e904b2f94850ebfac04c",
+    "toy_slot_metrics_S3_seed_3.pt": "c42285fd37fef7ad453663a145581eb9af2aa35991208b938ab50dca909a9b00",
+    "toy_slot_metrics_S4_seed_17.pt": "a977d5ad034c00602d744aceeb16727439d36de91ee61a42bd54b023337f796c",
+    "toy_slot_metrics_S4_seed_29.pt": "9d70e4df361c9920b8e757657edff56939e9f208961fbd5846df8af76432685d",
+    "toy_slot_metrics_S4_seed_3.pt": "c338a950dc72f7e8fea936dd9c4af1f43df38294d9d7a4c79cfefe8d4252fe69"
+  },
+  "status": "completed_generated_only_no_new_training",
+  "paper_audit": {
+    "title": "Unlocking Slot Attention by Changing Optimal Transport Costs",
+    "paper_url": "https://proceedings.mlr.press/v202/zhang23ba/zhang23ba.pdf",
+    "reviewed_pages": 21,
+    "slot_pair_cosine_before_after_result_found": false,
+    "figure_1_metric": "transport entropy and gradient norm, not slot cosine",
+    "table_3_Multi_dSprites": {
+      "metric": "percent, higher better",
+      "SA_FG_ARI": 92.2,
+      "SA_MESH_FG_ARI": 95.6,
+      "SA_FG_mIoU": 24.3,
+      "SA_MESH_FG_mIoU": 86.2
+    },
+    "table_4_ClevrTex": {
+      "metric": "percent, higher better",
+      "SA_FG_ARI": 52.8,
+      "SA_MESH_FG_ARI": 79.0,
+      "SA_FG_mIoU": 26.3,
+      "SA_MESH_FG_mIoU": 43.2
+    },
+    "appendix_F4": "cosine distance is an input-slot transport cost; it is not reported pairwise slot-vector cosine reduction",
+    "author_mesh_code": "https://github.com/davzha/MESH/blob/main/mesh.py",
+    "author_slot_code": "https://github.com/davzha/MESH/blob/main/slot_attention.py",
+    "scope": "Current mesh_uniform is a uniform-marginal SlotSPE adaptation; author model has learned marginals and task-specific cost. No direct slot cosine/orthogonality penalty in MESH cost updates."
+  },
+  "other_methods_status": {
+    "DIAS": {
+      "idea": "remove redundant slots then aggregate original inputs again; full DIAS also self-distills attention",
+      "native_SlotSPE_implemented": false,
+      "native_SlotSPE_similarity_result": null,
+      "source": "https://arxiv.org/html/2507.23755v3"
+    },
+    "MetaSlot": {
+      "idea": "codebook-guided duplicate mask then second masked aggregation; noise and gradient truncation",
+      "native_SlotSPE_implemented": false,
+      "native_SlotSPE_similarity_result": null,
+      "source": "https://arxiv.org/html/2505.20772v2"
+    }
+  },
+  "interpretation": "WSI final cosine is almost unchanged; omic cosine has a small average decrease but S3/S4 each increase on one of three seeds. Reading-weight separation is not the same metric as vector similarity. No conclusion of all MESH variants or patient efficacy.",
+  "metric_replay_max_abs_error_to_prior": 7.947285973752827e-08,
+  "default_plan_model_execution": 0,
+  "default_configs_unchanged": true,
+  "source_git_status_clean": true,
+  "independent_array_recalculation": {
+    "status": "passed",
+    "groups": 15,
+    "draws": 45,
+    "modality_draws": 90,
+    "max_abs_error_recomputed_means": 0.0,
+    "minimum_saved_slot_norm": 2.91951060295105,
+    "no_zero_slots_counted_as_similarity_reduction": true,
+    "all_saved_selected_masks_keep_exactly_2": true,
+    "prior_progress_entries_preserved": true,
+    "git_diff_check": "passed"
+  }
+}

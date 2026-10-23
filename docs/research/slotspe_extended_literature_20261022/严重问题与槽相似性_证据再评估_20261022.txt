@@ -1,0 +1,124 @@
+SlotSPE：槽相似是否有意义，以及文献真正支持哪些严重问题
+2026-10-22；路线 SlotSPE / SPE-08；文献与源码只读复核
+
+一、直接判断
+
+已有证据不能证明“SlotSPE槽高度相似，所以损害患者生存预测”。也不能反过来得出“冗余没有意义、整个槽设计方向已排除”。
+槽相似是诊断线索；严重程度应由功能缺口定义：内容混合、内容遗漏、错误绑定、不能表达必要结构，或事件解释缺少足够依据。解释性受到挑战不要求C-index必然下降，但必须有独立内容判据，不能凭高cos宣布解释失败。
+当前优先级应从“降低槽余弦”转向“槽是否实际保存患者特异、互补且任务相关的内容；现有监督是否足够要求这些内容”。空间绑定是另一个条件明确的支线。
+没有新增训练、推理、患者干预、权重加载或患者数组处理；没有修改原版源码、旧报告或默认队列。
+
+二、槽相似到底说明什么
+
+1. SlotSPE原论文并未把槽冗余当作理所当然的正确设计。v3摘要要求mutually distinctive slots；引言和3.1将选择机制解释为减少冗余、避免多个槽重复关注同类结构并促进特化。[1]
+   但原论文的模块消融支持该模块在作者协议下有用，并没有隔离“降低槽余弦”的因果贡献。不能用作者动机代替机制验收，也不能忽略作者已有的正向预测结果。
+2. 原始Slot Attention允许槽共享信息。其4.1解释，均匀背景通常分散到所有槽，并指出这没有损害其对象解耦或重构质量。[2]
+3. 数学反例（本轮仅推导，没有执行模型）：s1=(100,1,0)，s2=(100,0,1)，cos=10000/10001≈0.999900。后两个坐标仍分别保留不同信息。共同分量可以主导余弦，但没有抹掉区别。
+   反方向也成立：不同患者共用一组正交固定向量，槽间cos可为0，却没有编码患者差异。因此高cos不是内容失败的充分条件，低cos也不是内容成功的充分条件。
+4. 本轮读取历史本地71人公开汇总，未重读患者数组。BLCA fold0/seed3、3轮、256patch、8选2：选后cos均值病理0.99447/组学0.99862，读取分布重叠99.858%/99.555%。后者是逐头token归一化后再平均的读取分布；不是原始竞争精确均分率，更不是病理内容遗漏率。
+   该结果支持指定权重和协议下的高度表示/读取冗余。它没有回答剩余差异是否携带风险信息，也没有证明某类组织被遗漏。来源：docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json。
+5. 文献中collapse有不同定义。OCEBO主要指槽贴附固定位置块/条带而非对象；MESH讨论相同查询无法破平局后的绑定失败；这些不能用一个余弦阈值统一识别。[3][4]
+
+三、直接有用的论文论据：按功能缺口排列
+
+A. 重构成功不保证槽的内容分解正确（优先核查P7.3）
+
+DINOSAUR，ICLR 2023，4.3/Table 3：在COCO、ViT-B/16下，MLP换成Transformer解码器，重构MSE 0.31→0.16，FG-ARI 40.5→34.1；但实例/类别mBO分别27.7→31.6、30.9→39.7。作者解释其更倾向合并语义相关实例。[5]
+可以引用：重构误差下降不保证实例分离改善，评价目标之间有取舍。不能引用为：Transformer普遍有害，或同类组织进入同槽必然有害。
+
+SPOT，CVPR 2024，3.2/Fig.4：自回归解码器的后续位置越来越依赖此前输入的目标特征，对槽的梯度监督减弱；作者用patch-order permutation增强对槽的依赖。[6]
+CODA，ICLR 2026，4.3：扩散去噪把槽作为辅助条件，不自动监督每槽携带图像概念；其关注一槽混多个对象/碎片、过分割、欠分割和槽—区域对应弱。[7]
+迁移边界：SlotSPE没有相同AR或扩散解码器。这两篇支持检查目标内容入口和槽依赖性，不能当成SlotSPE已经采用同一捷径的实证。
+
+OCEBO，ICLR 2025，4.2/Table 1：去掉cross-view patch filtering，MOVi-E FG-ARI 54.8→27.7、mBO 25.8→10.6，发生位置分组坍塌。[4]
+可以引用：监督目标的信息质量能造成实际分组失败。其随机target encoder自蒸馏与SlotSPE预提取病理特征不同，不能直接套用发生率。
+
+SlotSPE对应事实：WSI query=frozen_mlp(x.detach())，冻结与detach均不删除x的内容；cross-attention同时读取query和slots。见third_party/SlotSPE/models/SlotSPE.py:102-105、122-131、313-316。
+既有头级构造反例用共用的固定不同槽字典重构两个不同生成输入，说明低WSI重构损失不足以独立验证槽保存样本变化。槽仍提供字典value，并非完全绕过槽；未证明完整SA可达、自然训练采用该解，未覆盖生存总目标。
+来源：docs/research/slotspe_mechanism_deepcheck_20261022/检查结果与问题优先级.txt、synthetic_receipt_03.json。本轮没有重跑该反例。
+补充源码/论文解释差异：原论文3.1把未激活槽解释为残差信息承载者；当前实现WSI/OMIC自重构却把keep mask传给ReconstructionHead，其余槽被key_padding_mask屏蔽（306/313、125-128）。这条直接重构路径不能单独提供“每个未选槽都保存残差内容”的保证；随机重选、共享参数、joint与生存监督仍存在，不能推出这些槽永远没有梯度。
+
+B. 多个内容被混合，或一个内容被错误拆分，删冗余后也未恢复（P2内容覆盖）
+
+MESH，ICML 2023，1–2、5.4/Table 5：相同查询在集合等变映射下产生相同输出；视频中趋同空槽难以分别绑定新进入的多个对象。CLEVRER-L FG-mIoU：SA 12.2±6.6，MESH 54.4±8.9，5种子。[3]
+这支持“分配/绑定发生功能失败”的机制；并不是静态病理生存中的损害证据。论文7明确尚未验证真实世界数据，也没有保证稀疏attention始终有利。
+
+DIAS，ACM MM 2025，1、3.2、4.4/Table 7：冗余槽竞争导致对象被拆成部分；仅去冗余对对象识别提升有限。COCO、7槽，去冗余但不再聚合class top1=0.68/bbox R2=0.62；再聚合后0.70/0.63；SPOT参照0.67/0.62。[8]
+其关键是剩余槽的内容质量，而非仅降低cos。不能把整套DIAS的收益归因于去冗余单项。
+
+MetaSlot，NeurIPS 2025，1、4.4：固定槽数可造成对象过分割；原型去重、mask、二次聚合与噪声共同作用。COCO完整版本FG-ARI/mBO/mIoU=40.3/29.5/27.9，去掉prototype mask=38.2/28.5/26.9。[9]
+这些论文支持检查混槽、碎片化和内容遗漏，但病理潜在事件不必与自然图像物体一一对应。同一免疫状态可以分布于多个patch，同一patch/通路也可能合理参与多个事件。当前SlotSPE没有独立内容标签证明这些失败已发生。
+
+C. 槽是否对应可复核的预后事件（P4/P7的解释性问题）
+
+Probabilistic Slot Attention，NeurIPS 2024，5/Definition 3/Theorem 2：可辨识保证依赖混合分布、分段仿射和弱单射等假设，允许槽置换和仿射等价；7承认部分条件在实际网络中可能不成立。[10]
+Provably Learning Object-Centric Representations，ICML 2023，3/Theorem 1、5.2、Appendix C：重构约束与组合性不是同一要求，潜变量过大时一槽可携带多个对象信息而解码器忽略其中一部分。[11]
+理论推论（不是论文直接测量结论）：原始cos依赖表示坐标，不能作为普适语义可辨识判据。槽编号固定、重复运行稳定都不等于生物事件绑定。
+
+SlotSPE原文4.7、Appendix I已有attention/assignment图、top-5 patch病理专家注释、通路联系和风险组分析。这些是相关解释依据，应保留。它们不足以单独识别“一槽一个不同预后事件”在全队列普遍成立，也没有证明每槽是独立因果机制。[1]
+适当问题：在允许槽置换后，相同组织状态能否稳定提取，改变某一内容时是否由对应槽承载变化，多个被选槽是否有独立内容。不要改写成“论文没有任何可解释性证据”。
+直接病理相关工作PathoSlot，MICCAI 2026，第4页明确讨论标准SA缺少临床端点语义，槽身份可歧义并跨任务/中心漂移；同时把其factorization界定为共享证据向受监督端点的分配，而非独立临床因子发现。其外部GC-External概念条件消融C-index由无条件0.668到完整0.673，差值小，不能夸成严重普遍预测损害。[14]
+
+D. 必要的空间关系是否在输入/压缩中可表达（X2条件支线）
+
+SlotSPE引言用TIL与癌巢的密度/邻近关系说明结构事件。[1]
+原版forward不接收显式全局坐标或邻接，SA对独立patch集合聚合。既有受控检查中，相同16A/16B特征的两分区/棋盘布局，异类邻接分别8/52与52/52，配对RNG完整模型输出差约1e-16。
+这说明“输入特征多重集相同、上游未编码跨patch布局”的条件下，模型不能恢复缺失的邻接。不是所有空间信息都缺失：patch内形态和上游上下文可能仍在。当前没有患者空间任务损害证据。
+Saltz等，Cell Reports 2018，Correlates of Local TIL Spatial Structure with Survival/Fig.6：先对TIL density回归取残差，再以Cox校正年龄/性别并BH多重校正；4指标×13癌种中有5个空间指标—生存关联显著。BRCA和SKCM有不同的显著聚类指标与方向。[13]
+这提供空间结构含超出TIL总量信息的观察依据；具有癌种/指标依赖，未评估SlotSPE，也不是空间随机干预。不能仅据graph模型分数高就推断SlotSPE受损。
+
+四、槽相似论文提供的双向约束
+
+Slot-BERT，arXiv v4（2026-03-02），3.5、4.9–4.10：引入槽对比约束改善手术视频对象发现；参数分析的最佳mBO-V 50.1，对照无对比学习46.3；作者也明确指出过强强迫不相似会损害对象学习。[12]
+这是“合适的多样性约束有时有用”的实例，不是“cos越低越好”的规律；不覆盖SlotSPE患者生存。
+DIAS显示只删冗余不等于内容修复；原始SA显示共同背景可能无害；DINOSAUR显示重构与实例/语义指标可走不同方向。三者共同要求把任务内容作为验收对象。[2][5][8]
+
+五、对当前研究的建议结论
+
+第一优先：P7.3与P2内容覆盖合并成一个具体问题——现有重构/生存目标下，保留槽是否真正保存患者特异的互补信息，还是主要共享同一全局状态，且单项重构无法辨别二者。
+这有原版结构、已有冗余观察、头级存在性反例与多篇论文动机支撑；当前仍不是患者预测损害结论。
+第二优先：若要继续做去冗余，判据须同时包含独立内容覆盖与任务信息，保留合理共享，并核对去重后剩余槽的完整性。仅槽cos更低不能选出有效方法。
+条件支线：有匹配坐标、空间上下文和任务依据时，检查空间绑定；有可信复杂度/稀有内容依据时，再检验固定容量。初始化、动态槽数、正交损失都不能预设为问题的答案。
+原版门控有单模态辅助生存监督，跨模态使用全槽是原文明确设计，主辅梯度也未普遍对抗。它们不再充当已经证实的严重bug。P8仍不适用。
+现有11组BLCA/UNI2-h/fold0/seed3队列及A/B/C合同保持原状态；本轮不因新文献自动扩组或启动执行。
+
+六、一手来源（阅读范围为相关正文、关键实验/局限，不宣称穷尽全部槽文献）
+
+[1] Structural Prognostic Event Modeling for Multimodal Cancer Survival Analysis. ICLR 2026. v3, 2026-05-01.
+https://arxiv.org/html/2512.01116v3
+[2] Object-Centric Learning with Slot Attention. NeurIPS 2020. 4.1.
+https://papers.nips.cc/paper/2020/file/8511df98c02ab60aea1b2356c013bc0f-Paper.pdf
+[3] Unlocking Slot Attention by Changing Optimal Transport Costs. ICML 2023.
+https://proceedings.mlr.press/v202/zhang23ba/zhang23ba.pdf
+[4] Object-Centric Pretraining via Target Encoder Bootstrapping. ICLR 2025.
+https://arxiv.org/html/2503.15141v1
+[5] Bridging the Gap to Real-World Object-Centric Learning. ICLR 2023.
+https://arxiv.org/html/2209.14860v2
+[6] SPOT: Self-Training with Patch-Order Permutation for Object-Centric Learning with Autoregressive Transformers. CVPR 2024.
+https://arxiv.org/html/2312.00648v3
+[7] Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment. ICLR 2026.
+https://arxiv.org/html/2601.01224v1
+注意：CODA的分割与组合生成结果有取舍，不能宣称全部任务一致改善。
+[8] Slot Attention with Re-Initialization and Self-Distillation. ACM MM 2025.
+https://arxiv.org/html/2507.23755v3
+[9] MetaSlot: Break Through the Fixed Number of Slots in Object-Centric Learning. NeurIPS 2025.
+https://arxiv.org/html/2505.20772v2
+[10] Identifiable Object-Centric Representation Learning via Probabilistic Slot Attention. NeurIPS 2024.
+https://papers.neurips.cc/paper_files/paper/2024/file/a9a3f0e4a95cb273867931369c8fc3b1-Paper-Conference.pdf
+[11] Provably Learning Object-Centric Representations. ICML 2023.
+https://proceedings.mlr.press/v202/brady23a/brady23a.pdf
+[12] Slot-BERT: Self-supervised Object Discovery in Surgical Video. 本轮按arXiv v4核查，不据关键词推断会议录用。
+https://arxiv.org/html/2501.12477v4
+[13] Spatial Organization and Molecular Correlation of Tumor-Infiltrating Lymphocytes Using Deep Learning on Pathology Images. Cell Reports 2018.
+https://www3.cs.stonybrook.edu/~cvl/content/papers/2018/Saltz_CellReport18.pdf
+[14] Joint Biomarker and Survival Prediction via Concept-Conditioned Multimodal Slot Factorization. MICCAI 2026.
+https://papers.miccai.org/miccai-2026/paper/1567_paper.pdf
+
+七、阶段六项
+
+1. 路线/任务：SlotSPE / SPE-08 / literature_severity_reassessment。
+2. 完成：重新区分高cos、共享内容、错误分组、监督不足、事件可辨识与空间边界；以一手论文关键实验说明哪些动机可迁移、哪些损害尚未建立。
+3. 路径/提交：本文件、literature_severity_reassessment_20261022.json；总览与唯一PROGRESS同步。编辑前已在忽略的local_evidence/documentation_backups/备份两个入口文件。本轮无提交/推送。
+4. 检查/实际执行/原始回传：公开论文正文与已登记公开汇总、CodeGraph原版源码核查；验证JSON/引用路径、原版两核心文件SHA与既有记录。无模型前向/反向、训练、推理、患者数组或checkpoint加载、服务器执行或新增患者原始回传。
+5. 缺口/原因：当前SlotSPE患者中的内容遗漏、事件绑定失败、自然训练采用重构捷径、空间预后损害与修正收益均未建立。本文不是新患者证据。
+6. 下一步/用户输入：优先采用“槽内容承载与监督充分性”的可证伪问题，先明确独立内容依据和既有产物可支持到哪一级；不自动启动模型任务或变更队列。

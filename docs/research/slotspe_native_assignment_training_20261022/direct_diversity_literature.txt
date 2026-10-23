@@ -1,0 +1,36 @@
+SlotSPE 直接槽表示去冗余：一手文献便笺
+核对日期：2026-10-22。用途：本地生成数据候选实验的依据与命名，不构成患者效果证据。
+
+1. Slot-BERT（最直接相关）
+原文：https://arxiv.org/html/2501.12477v4#S3.SS5
+作者仓库：https://github.com/PCASOlab/slot-BERT
+
+v4 日期为 2026-03-02。第3.5节 Eq9–11：令 U_i=s_i/||s_i||，C=UU^T-I；
+L_contrast=-(1/(T K^2)) sum_(t,i,j) log[exp(-C_tij/tau)/sum_k exp(-C_tik/tau)]。
+因此 softmax 在每行的目标槽维上计算，包含对角项，而非删除对角线。移植到独立样本批次时，用 B 替代 T；实现等价于 -log_softmax(-(Gram-I)/tau,dim=-1).mean()。
+Eq12–13 将输入特征重构与 alpha*L_contrast 相加。第4.10节的参数分析最佳组合为 alpha=0.01、tau=0.5；不可据此声称所有主实验均使用此默认值。
+
+第4.9节 Figure6 的文字描述：没有对比损失时槽相似度普遍高于0.6，有该损失时接近0。这是示例热图的定性结论，不是全测试集的平均降幅或 SlotSPE 预期降幅。第4.10节也指出，过强的不相似约束会损害对象学习。
+结果：https://arxiv.org/html/2501.12477v4#S4.SS9
+
+官方仓库与公开训练入口 main.py 已核实；入口 contrastive-temp 默认1.0。具体损失函数文件本次未成功读取，因此尚未与作者代码逐项核对。当前可称“论文 Eq11 损失移植”，不能称“作者实现一致”或完整 Slot-BERT 复现。也未移植其视频、时序或 BERT 模块。
+
+2. SlotContrast（CVPR 2025）
+论文项目页：https://slotcontrast.github.io/
+作者源码：https://github.com/martius-lab/slotcontrast/blob/main/slotcontrast/losses.py#L160
+
+源码已核实：L2归一化相邻帧的槽，计算 s_t s_(t+1)^T/tau，以单位矩阵为匹配目标做交叉熵；batch_contrast 可将其他视频的槽作为额外负例。它同时使用特征重构，学习有内容且时间一致的槽。
+局限：SlotSPE没有天然相邻视频帧与稳定槽对应，不能直接把两个随机前向中同编号槽当正例。若做多视图适配，需要先定义有效视图与置换匹配，属于另一项实验。本轮未实现 SlotContrast。
+
+3. VICReg（ICLR 2022）
+原文：https://arxiv.org/html/2105.04906v3#S4.SS1
+作者实现：https://github.com/facebookresearch/vicreg/blob/main/main_vicreg.py#L176
+
+Eq3–6 对两视图使用 MSE 一致性、各特征维标准差下界，以及 c(Z)=(1/d)sum_(i!=j)Cov(Z)_ij^2。作者实现同时核实。
+它去除的是跨批次样本的特征维相关，原公式不是同一样本内部 K 个槽的余弦正交。转轴应用属于新适配。这里仅用它说明：去相关需要与内容和防坍塌约束共同考虑，不能将槽Gram正则称为完整VICReg复现。Barlow Twins亦有相同的“特征维相关不等于槽间相关”区别。
+
+本项目候选对照的命名边界
+R0：原生目标；R1：直接槽Gram/cos^2；R2：Slot-BERT Eq11 损失移植；
+R3：R2加无目标query的集合内容重构；R4：仅集合重构；R5：R1加集合重构。
+集合重构、组合方式与候选权重均为本项目生成数据适配，不冒称论文完整复现或新颖性已确立。
+全部保留8个原生输出槽，检查原始cos、abs cos、RMS cos、槽范数和秩，并用输入错配重构对照检查内容；只降低cos本身不能证明读取正确、内容充分或生存预测改善。

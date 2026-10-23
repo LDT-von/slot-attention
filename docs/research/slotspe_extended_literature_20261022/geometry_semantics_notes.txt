@@ -1,0 +1,73 @@
+SlotSPE 补充研读：空间几何、属性解耦、多层输入与关系（2026-10-22）
+
+范围与证据等级
+本文件仅记录公开原论文研读与迁移条件推断。没有检查本仓库模型代码，没有读取患者特征、权重或逐患者预测，没有训练、推理或患者干预。本轮不实现任何模块。
+下列四篇均阅读了正文方法、实验与局限相关章节；“阅读全文相关章节”不等于逐页审计全部参考文献/附录。在线来源为官方会议 PDF 或作者 arXiv 全文。直接 PDF 下载受当前终端网络限制，未得到本地原件，因此未登记本地 PDF 哈希。没有将未下载误记为原件核验完成。
+论文事实卡使用简洁英文，以便准确区分原作者论断与后面的中文迁移推断。相关结构示意与方程已对照正文；不把摘要视为全文阅读。
+
+G1. Invariant Slot Attention: Object Discovery with Slot-Centric Reference Frames
+Venue/year: ICML 2023, PMLR 202.
+Authors: Ondrej Biza; Sjoerd van Steenkiste; Mehdi S. M. Sajjadi; Gamaleldin F. Elsayed; Aravindh Mahendran; Thomas Kipf.
+Official: https://proceedings.mlr.press/v202/biza23a.html
+Full text: https://proceedings.mlr.press/v202/biza23a/biza23a.pdf
+Read: PDF pp. 3-5 (§3-4), 5-9 (§5.1-5.6 and §6); all page numbers are 1-based PDF pages.
+Problem/mechanism: Ordinary slots entangle appearance with pose. ISA estimates each slot's position/scale from attention moments and uses slot-relative coordinates in attention and decoding. Pose parameters transform equivariantly; appearance latents aim to remain invariant. Rotation uses a principal-axis heuristic.
+Evidence/boundaries: Synthetic segmentation, sample efficiency, positional distribution shift and Waymo experiments support task-specific benefits. However, §5.2 reports increased over-segmentation in one setting; §5.3 reports mixed rotation results. §5.5 explicitly conditions invariance on input features not already encoding absolute position and notes that learned initial poses break symmetry. §6 notes imperfect real-world symmetries and unresolved background handling.
+Mapping: geometry, P4 appearance/pose entanglement; not evidence for cross-patient biological type binding or survival improvement.
+
+对 SlotSPE 的条件性判断（本轮未核对代码）：若输入确实只有不带坐标的 patch 特征集合，应先证明哪些排列信息已不可见；ISA 不是从缺失坐标恢复结构的办法。若“一个槽=跨全片重复的组织模式”，其注意力可能天然多峰，用单一质心/尺度代表它也可能失真。迁移前必须先定义槽究竟对应局部区域、组织类型还是预后事件；并确认平移/旋转/尺度变化是否真是应忽略的因素。倍率变化也不等同于该文的对象尺度。
+
+G2. Explicitly Disentangled Representations in Object-Centric Learning
+Venue/year: TMLR, January 2025. First arXiv submission: 2024; read arXiv v2, 2025-01-23.
+Authors: Riccardo Majellaro; Jonathan Collu; Aske Plaat; Thomas M. Moerland.
+Official record: https://openreview.net/forum?id=r8UFp9olQ0
+Read full text: https://arxiv.org/html/2401.10148v2
+Read: §1; §4.1-4.2; §5.1-5.3; §6. Appendix F.1 caption inspected only, not treated as a complete appendix audit.
+Problem/mechanism: Distinct objects do not imply interpretable, explicitly separated attributes. DISA separates shape, texture, position and scale. A Sobel-filtered shape stream supplies ISA masks; these masks pool an RGB texture stream. Separate decoders restrict information paths, with variance regularization alongside reconstruction.
+Evidence/boundaries: Four synthetic datasets and property/inverse-property probes test whether information appears in intended versus unintended components. Shape/material leakage remains on CLEVR6 and CLEVRTex; difficult segmentation limits information recovery. Composition/generation evidence is qualitative. §6 leaves within-group disentanglement unresolved.
+Mapping: P4 attribute-level interpretability and composition; not statistical identifiability, repeatability of slot indices, or biological concept grounding.
+
+对 SlotSPE 的条件性判断：此文最值得借鉴的是“正向预测与反向泄漏检查”，而非立即加双编码器。病理形态、染色/批次、组织组成和风险可能纠缠；但从已经压缩的单路特征不能假定可拆回形状/纹理。若日后要划分属性子空间，应先有可验证的属性或干扰变量，再检验应有信息、应无信息和风险信号是否丢失。不能照搬跨槽降方差正则并声称减少重复；该正则目的与槽间排斥相反。
+
+G3. MUFASA: A Multi-Layer Framework for Slot Attention
+Venue/year: CVPR 2026; read arXiv v2, 2026-06-17.
+Authors: Sebastian Bock; Leonie Schüßler; Krishnakant Singh; Simone Schaub-Meyer; Stefan Roth.
+Official PDF (search-indexed; direct opening returned HTTP 403 in this session): https://openaccess.thecvf.com/content/CVPR2026/papers/Bock_MUFASA_A_Multi-Layer_Framework_for_Slot_Attention_CVPR_2026_paper.pdf
+Read full text: https://arxiv.org/html/2602.07544v2
+Project/code: https://visinf.github.io/mufasa/
+Read: §1-3.2, §4.1-4.4; Appendix A.1-A.3 and E's explanatory text. Appendix figures were not independently audited.
+Problem/mechanism: Using only a frozen ViT's final layer discards complementary representations. Independent SA modules process selected layers; Hungarian matching aligns binarized attention masks; adjacent aligned slots are summed, concatenated and projected by M-Fusion. The baseline reconstruction/distillation objectives remain.
+Evidence/boundaries: DINOSAUR/SPOT integrations are evaluated on VOC, COCO and MOVi-C. Improvements depend on metric: e.g. some COCO metrics decline. §4.4 still reports merging same-class instances; one-to-one cross-layer matching can be restrictive. Appendix A.3 notes collapse with naive MAE/DINOv2 use, mitigated with learned initialization and BO-QSA.
+Mapping: P6 must distinguish encoder depth from physical magnification. Also informs input-information limits and P2 fragmentation/missing content; does not establish patient benefit.
+
+对 SlotSPE 的条件性判断：这篇现在可作为可靠全文依据，但不等于多倍率病理已经被解决。若目前只存末层特征，迁移需要获得同一批 patch 的多层特征，属于新增特征提取工作，须另获执行授权。固定原始输入下不能公平归因于槽更新规则。先问末层是否丢失预后相关组织信息、不同层是否互补，再决定是否值得承担提取与缓存成本。跨层对齐要保持同一 patch 对应，病理事件的多对多关系也未必适合一对一匹配。
+
+G4. Systematic Visual Reasoning through Object-Centric Relational Abstraction
+Venue/year: NeurIPS 2023.
+Authors: Taylor W. Webb; Shanka Subhra Mondal; Jonathan D. Cohen.
+Official full text: https://proceedings.neurips.cc/paper_files/paper/2023/file/e3cdc587873dd1d00ac78f0c1f9aa60c-Paper-Conference.pdf
+Read: PDF pp. 1-4 (§1-2.3), 7-10 (§4.2-6), especially §5.1 ablations and §6 limitations. Supplementary experimental tables were not independently audited.
+Problem/mechanism: Object grouping alone does not enforce systematic relational abstraction. OCRA factors attention-pooled feature and positional embeddings, computes projected inner-product pair relations, adds spatial indexing, then reasons over relations with a Transformer. The pretrained slot extractor is frozen in downstream reasoning experiments.
+Evidence/boundaries: ART, SVRT and CLEVR-ART test abstract-rule generalization to unseen objects/features; ablations target factorization, the relational bottleneck and higher-order reasoning. §6 leaves real-world grouping, fixed capacity, all-pairs scalability and complex simultaneous relations unresolved.
+Mapping: relationships/composition, with a crucial taxonomy distinction: this adds slot readout/reasoning structure; it does not directly repair competitive assignment or prove recovery after slot selection.
+
+对 SlotSPE 的条件性判断：若目标是“结构之间的关系”，先给出可观测关系，例如组织邻接，而不是直接把任意槽余弦命名为生物互作。跨全片的组织类型槽可能是多峰集合，用质心索引会把不同空间布局压成相同表示；需要保留分布或区域层级。关系瓶颈还可能扔掉生存预测需要的组织量、异型程度等单槽绝对信息，应有强度匹配的普通 readout 对照。本文不是把一个新关系模块立即插入本轮审计的授权。
+
+综合迁移排序（研究判断，不是患者结论）
+1. 低成本、先做的知识增量：把 P4 分为槽级稳定、类型绑定、属性解耦、统计可辨识性；把“关系表示”和“槽分配”分开；把 P6 的物理倍率、编码器深度、空间几何分开。上述四篇支持区分问题，不支持合并命名。
+2. 首先核对可用信息：有无可信坐标、特征层、属性标签/可控干扰。输入信息条件不满足时，应记录“无法由现有观测判断/恢复”，不能用模块复杂度替代证据。
+3. 先诊断再改层：若是稳定但语义不明，优先建立属性或内容检查；若是坐标不可见，讨论输入契约；若是关系缺失，先证明目标关系不能由现有读出得到。P2 重复、碎片化、混槽、遗漏和恢复失败仍须分别检查。
+4. 不以自然图像实例分割上的 ARI/mBO、属性交换可视化或抽象推理准确率推断病理生存 C-index。没有任何一篇在本文件中被登记为 SlotSPE 患者损害或纠正有效性的证据。
+
+未纳入的候选
+DINOSAUR 作为 MUFASA 的背景被核对了项目说明，但本分支未完成其独立正文方法/局限精读，不计入四篇精读。
+Multi-Scale Fusion for Object Representation（MSF）发现了题录线索，但没有精读可靠全文，不登记为本轮全文覆盖。
+Learning Global Object-Centric Representations via Disentangled Slot Attention（arXiv:2410.18809）是另一篇作品，不应与上述 DISA/TMLR 2025 混用；本分支不登记其全文研读。
+
+阶段六项
+路线/任务：公开文献补缺，几何/属性/多层输入/关系四条。
+完成：四篇相关正文精读，记录方法、限度与条件性迁移判断。
+路径/提交：本文件；未提交 Git；未修改原版 SlotSPE、README 或 PROGRESS。
+检查/真实执行/原始回执：核对公开原文节页；无模型运行、无服务器任务、无患者原始回执；本地 PDF 下载未成功，没有原件哈希。
+缺口/原因：不独立复核本仓库代码与患者观测；MSF、DINOSAUR 不计为独立全文精读；没有生物语义或患者收益证据。
+下一步/输入：由主审计把文献约束映射到已验证的 SlotSPE 输入/聚合/选择/读出契约，再据实际缺陷选择一条可证伪问题线；本文件不启动实验。

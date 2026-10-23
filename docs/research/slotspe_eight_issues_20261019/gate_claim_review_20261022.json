@@ -1,0 +1,87 @@
+{
+  "schema": "slotspe_gate_claim_review_v1",
+  "recorded_at": "2026-10-22T17:57:54+08:00",
+  "route_task": "SlotSPE / SPE-08 / truth audit of near-zero gating and 29-patient claim",
+  "status": "numerical_defect_confirmed_count_unverified_patient_harm_not_established",
+  "completed_work": {
+    "official_source_identity_reused_and_live_hashes_rechecked": {
+      "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109"
+    },
+    "source_facts": [
+      "parallel_topk_st selects logits plus Gumbel noise; the soft weighting uses unnoised scores at temperature 0.01.",
+      "MoESlotDecoder.forward masks the global softmax, then divides by selected mass plus 1e-8. Gate weights sum to S/(S+1e-8), not necessarily 1.",
+      "If S is much smaller than 1e-8, the normalized weight sum is near zero; low temperature and excluding the unnoised maximum allow this.",
+      "The weighted decoder logits enter unimodal auxiliary survival losses during training.",
+      "SlotSPE.forward discards the soft gate output and passes hard_keep.bool() to the self-attention/reconstruction branches; final fused logits are computed separately.",
+      "For a frozen original model and identical selected masks/slots, changing only normalized soft weights leaves final fused logits unchanged by dataflow. This does not imply no training-time harm.",
+      "Replacing stochastic selection with deterministic top-2 also changes the masks; its C-index difference cannot isolate soft-normalization harm."
+    ],
+    "standard_library_arithmetic_example": {
+      "invented_scores": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "temperature": 0.01,
+      "selected_indices_zero_based": [
+        1,
+        2
+      ],
+      "selected_global_softmax_mass": 7.440151952041672e-44,
+      "weight_sum_after_native_epsilon_normalization": 7.440151952041672e-36,
+      "scope": "conditional scalar arithmetic only; no model forward, no patient frequency estimate"
+    },
+    "prior_synthetic_observation": {
+      "path": "docs/research/slotspe_eight_issues_20261019/synthetic_checks.json",
+      "gate_normalization_can_collapse": true,
+      "reported_counterexample_gate_sum": 7.567011707354012e-36,
+      "not_rerun_this_review": true
+    },
+    "patient_record_evidence": {
+      "public_record": "docs/research/slotspe_gpu_trisurv_20261022/five_fold_and_mechanism_records.json",
+      "five_fold_seed3_pairs_reporting_natural_near_zero": 1,
+      "five_fold_three_seed_pairs_reporting_natural_near_zero": 6,
+      "meaning": "public registered fold/seed summary; original raw gates were not received or independently recomputed in this review",
+      "observer_unit": "one patient x modality x evaluation repeat; rows are not independent patients",
+      "observer_threshold": "finite gate_sum < 1e-6",
+      "29_unique_patients_or_7_7_percent_verified": false,
+      "exact_zero_and_near_zero_not_interchangeable": true,
+      "slot_cosine_redundancy_and_near_zero_gates_not_interchangeable": true,
+      "unverified_does_not_mean_proven_false_or_fabricated": true
+    }
+  },
+  "paths_commit": {
+    "receipt": "docs/research/slotspe_eight_issues_20261019/gate_claim_review_20261022.json",
+    "source_references": [
+      "third_party/SlotSPE/models/slot_attention.py:164-185",
+      "third_party/SlotSPE/models/SlotSPE.py:54-68",
+      "third_party/SlotSPE/models/SlotSPE.py:287-301",
+      "third_party/SlotSPE/models/SlotSPE.py:321-332",
+      "survot_rank/research/slotspe_proof/native_audit.py:31-76"
+    ],
+    "official_commit": "02051a2083add7b427727e0200e4263516903561",
+    "new_commit_created": false
+  },
+  "checks_actual_execution_raw_receipt": {
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_backward_passes": 0,
+    "patient_array_or_checkpoint_loads": 0,
+    "patient_gate_record_files_loaded": 0,
+    "new_scalar_arithmetic_examples": 1,
+    "server_execution": false,
+    "server_patient_raw_results_received": false,
+    "original_source_modified": false,
+    "historical_reports_modified": false,
+    "real_patient_gate_json_found_locally": false,
+    "metadata_inventory_found_only_three_pytest_gate_jsons_excluded_as_patient_evidence": true
+  },
+  "gaps_reasons": "The genuine numerical failure is established by official source and an existing constructed observation. The specific 29/7.7% statistic has no located original receipt. Public GPU summaries report natural near-zero gates in some configurations, but their raw patient evidence is unavailable in this checkout. Patient fused-performance harm and correction efficacy remain unestablished.",
+  "next_action_user_input": "To verify 29/7.7%, locate the original natural_gate_observations.json and execution protocol, distinguish record rows from unique patients and repeats, and check source/checkpoint hashes. Do not start inference. A deterministic-top2 sweep is a selection-policy intervention rather than an isolated normalization repair."
+}

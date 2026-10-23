@@ -1,0 +1,449 @@
+{
+  "schema": "slotspe_gate_collapse_public_summary_v1",
+  "recorded_at": "2026-10-22T22:19:06.656435+08:00",
+  "route_task": "SlotSPE / SPE-08 / read-only gate collapse diagnosis",
+  "source_verification": {
+    "source_repository": "https://github.com/zylvemvet/SlotSPE.git",
+    "official_pinned_commit": "02051a2083add7b427727e0200e4263516903561",
+    "current_official_remote_main": "02051a2083add7b427727e0200e4263516903561",
+    "comparison": {
+      "method": "SHA256 over raw file bytes; no normalization; official checkout byte Git blob SHA1 checked against pinned commit ls-tree",
+      "enumeration": "git ls-files -- third_party/SlotSPE",
+      "vendor_relative_root": "third_party/SlotSPE",
+      "registered_file_count": 11,
+      "runtime_file_count": 10,
+      "runtime_file_equal_count": 10,
+      "runtime_difference_count": 0,
+      "documentation_difference_paths": [
+        "README.md"
+      ],
+      "every_official_checkout_matches_commit_blob": true,
+      "entire_repository_tree_certified_equal": false
+    }
+  },
+  "protocol": {
+    "cohort": "BLCA historical local validation",
+    "patients": 71,
+    "fold": 0,
+    "training_seed": 3,
+    "training_epochs": 3,
+    "historical_optimizer_steps": 111,
+    "real_patches_per_patient": 256,
+    "retained_slot_generation_eval_seed": 3080000,
+    "checkpoint_sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
+    "observations_sha256": "cf76047a16cd0536ce8bddd2710079ed686e2f91e784c140b7d915bf86bcb703",
+    "retained_receipt_sha256": "c0f62d7a4a6ec617d6f7f391582cbe322cfdc864548cc443099b171e554f3192",
+    "slots_per_modality": 8,
+    "k": 2,
+    "temperature": 0.01,
+    "epsilon": 1e-08,
+    "repeats_per_patient": 20,
+    "base_seed": 4226000,
+    "seed_rule": "base_seed + 10000*repeat + 1000*modality_index + batch_start_index",
+    "batch_size": 8,
+    "device": "cuda:0",
+    "dtype": "float32 native forward; float64 logsumexp mass audit",
+    "torch": "2.6.0+cu124",
+    "numpy": "2.2.6",
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "fixed": "checkpoint and exact retained final patient slots; only decoder RNG varies",
+    "primary_unit": "one unique patient at repeat=0; all 20 draws reported separately",
+    "gate_sum_definition": "sum of returned slot_gate AFTER epsilon normalization, not hard mask cardinality",
+    "temperature_mass_definition": "sum(exp(score/.01)[keep])/sum(exp(score/.01)); stable float64 logsumexp also reported",
+    "raw_mass_definition": "sum(exp(raw_score)[keep])/sum(exp(raw_score)); distinct from temperature-scaled gate mass",
+    "controls": "same RNG temporary temperature=1; scoped zero Gumbel noise with native forward; same-mask masked-softmax arithmetic",
+    "source_api": {
+      "decoder": "third_party/SlotSPE/models/SlotSPE.py:11-70 MoESlotDecoder.forward keep_score/slot_gate/hard_keep",
+      "sampler": "third_party/SlotSPE/models/slot_attention.py:164-185 parallel_topk_st",
+      "fusion": "third_party/SlotSPE/models/SlotSPE.py:287-301 discards slot_gate; retains Boolean hard mask"
+    }
+  },
+  "summary": {
+    "wsi": {
+      "primary_first_prespecified_rng_draw_unique_patients": {
+        "n": 71,
+        "median": 0.9999998807907104,
+        "mean": 0.9999995609404335,
+        "min": 0.9999947547912598,
+        "max": 1.0,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "historical_saved_draw_unique_patients": {
+        "n": 71,
+        "median": 0.9999999403953552,
+        "mean": 0.9999997783714617,
+        "min": 0.9999970197677612,
+        "max": 1.0,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "all_rng_patient_draws_not_independent_patients": {
+        "n": 1420,
+        "median": 0.9999999403953552,
+        "mean": 0.9999997397123928,
+        "min": 0.9999860525131226,
+        "max": 1.0000001192092896,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "unique_patients_ever_below_0_5": 0,
+      "unique_patients_ever_below_0_01": 0,
+      "zero_gate_sum_draws": 0,
+      "nonfinite_gate_draws": 0,
+      "selected_temperature_mass_all_draws": {
+        "n": 1420,
+        "median": 0.15709672664647978,
+        "mean": 0.2419090190328743,
+        "min": 0.0007181395893719257,
+        "max": 0.9748522980304449,
+        "below_0_5_count": 1197,
+        "below_0_5_fraction": 0.8429577464788732,
+        "below_0_01_count": 83,
+        "below_0_01_fraction": 0.05845070422535211
+      },
+      "selected_raw_score_mass_all_draws": {
+        "n": 1420,
+        "median": 0.24998126987611985,
+        "mean": 0.24991185129774982,
+        "min": 0.24134988314845837,
+        "max": 0.2591189446871042,
+        "below_0_5_count": 1420,
+        "below_0_5_fraction": 1.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "collapsed_draws_temperature_mass": null,
+      "top2_overlap_histogram": {
+        "0": 781,
+        "1": 586,
+        "2": 53
+      },
+      "top2_overlap_mean": 0.48732394366197185,
+      "top1_not_retained_fraction": 0.773943661971831,
+      "unique_retained_sets_across_rng": {
+        "n": 71,
+        "median": 14.0,
+        "mean": 14.309859154929578,
+        "min": 11.0,
+        "max": 17.0,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "unique_retained_sets_histogram": {
+        "11": 2,
+        "12": 7,
+        "13": 13,
+        "14": 15,
+        "15": 19,
+        "16": 9,
+        "17": 6
+      },
+      "controls_all_draws": {
+        "temperature_1_same_noise_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999662939931,
+          "min": 0.9999998807907104,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "no_noise_temperature_0_01_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999949629877,
+          "min": 0.9999999403953552,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "masked_softmax_same_mask_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999937876849,
+          "min": 0.9999999403953552,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        }
+      }
+    },
+    "omic": {
+      "primary_first_prespecified_rng_draw_unique_patients": {
+        "n": 71,
+        "median": 0.9999999403953552,
+        "mean": 0.9999999529878858,
+        "min": 0.9999998807907104,
+        "max": 1.0000001192092896,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "historical_saved_draw_unique_patients": {
+        "n": 71,
+        "median": 0.9999999403953552,
+        "mean": 0.9999999546668898,
+        "min": 0.9999998807907104,
+        "max": 1.0,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "all_rng_patient_draws_not_independent_patients": {
+        "n": 1420,
+        "median": 1.0,
+        "mean": 0.9999999568495952,
+        "min": 0.9999998211860657,
+        "max": 1.0000001192092896,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "unique_patients_ever_below_0_5": 0,
+      "unique_patients_ever_below_0_01": 0,
+      "zero_gate_sum_draws": 0,
+      "nonfinite_gate_draws": 0,
+      "selected_temperature_mass_all_draws": {
+        "n": 1420,
+        "median": 0.2498656352844908,
+        "mean": 0.25338110940181874,
+        "min": 0.07716832729060209,
+        "max": 0.5086098670275655,
+        "below_0_5_count": 1418,
+        "below_0_5_fraction": 0.9985915492957746,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "selected_raw_score_mass_all_draws": {
+        "n": 1420,
+        "median": 0.25006409542809077,
+        "mean": 0.2500346393285215,
+        "min": 0.24745922832035047,
+        "max": 0.2521996640070524,
+        "below_0_5_count": 1420,
+        "below_0_5_fraction": 1.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "collapsed_draws_temperature_mass": null,
+      "top2_overlap_histogram": {
+        "0": 741,
+        "1": 605,
+        "2": 74
+      },
+      "top2_overlap_mean": 0.530281690140845,
+      "top1_not_retained_fraction": 0.7387323943661972,
+      "unique_retained_sets_across_rng": {
+        "n": 71,
+        "median": 14.0,
+        "mean": 14.309859154929578,
+        "min": 11.0,
+        "max": 17.0,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "unique_retained_sets_histogram": {
+        "11": 3,
+        "12": 4,
+        "13": 15,
+        "14": 16,
+        "15": 18,
+        "16": 9,
+        "17": 6
+      },
+      "controls_all_draws": {
+        "temperature_1_same_noise_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999659581923,
+          "min": 0.9999998807907104,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "no_noise_temperature_0_01_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999966419918,
+          "min": 0.9999999403953552,
+          "max": 1.0,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "masked_softmax_same_mask_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999955926143,
+          "min": 0.9999999403953552,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        }
+      }
+    }
+  },
+  "conclusion": {
+    "answer": "本次固定患者槽表示与固定权重诊断，病理和组学均未观测到门控权重和坍缩。",
+    "affected_unique_patients": {
+      "wsi": {
+        "count": 0,
+        "denominator": 71,
+        "fraction": 0.0
+      },
+      "omic": {
+        "count": 0,
+        "denominator": 71,
+        "fraction": 0.0
+      }
+    },
+    "severity": "未观测到坍缩；不归入轻度、中度或重度。",
+    "severity_rule": "gate_sum<0.5记为显著衰减；gate_sum<0.01记为严重坍缩；属于数值门控分级，不是临床分级。",
+    "observed": "每模态71名患者、20次固定槽门控重放，共1420个患者-随机抽样记录；各阈值计数均为0。两模态每人20次均出现11至17种保留集合。",
+    "mechanistically_possible_but_not_observed": "官方全槽低温softmax、随机硬掩码、保留质量加1e-8归一化的组合，允许保留质量极小时权重和趋近0；本次患者分数未触发。",
+    "counterfactual_interpretation": "升温与去噪声对照的权重和均接近1；原生门控也未坍缩，所以本次不能以恢复实验证明患者坍缩的成因。",
+    "selection_interpretation": "与原始分数Top2平均交集为0.4873（病理）和0.5303（组学），证明选择高度随机；这些指标本身不证明完全由噪声主导。",
+    "survival_scope": "原生最终融合forward丢弃slot_gate软权重，只把hard_keep布尔掩码传入self attention，cross attention读取全部槽；不能声称本次生存融合丢弃了某模态。",
+    "scope_limit": "仅适用于此71人历史本地BLCA fold0/seed3、3轮权重与单次保留槽表示；不是77人运行、完整队列、其他checkpoint或重新随机生成槽的结论。",
+    "patient_performance_harm": "未评估",
+    "trained_correction_efficacy": "未评估"
+  },
+  "checks": {
+    "error_maxima": {
+      "historical_score_max_abs": 0,
+      "hard_mask_max_deviation": 1.1920928955078125e-07,
+      "native_formula_max_abs": 0,
+      "historical_gate_max_abs": 0,
+      "same_seed_replay_max_abs": 0
+    },
+    "verified_unchanged_input_files": 80,
+    "native_model_purity": {
+      "native_model_class": true,
+      "native_forward": true,
+      "native_slot_classes": true,
+      "native_decoder_classes": true,
+      "no_repaired_eval_buffers": true
+    },
+    "native_source_sha256": {
+      "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+      "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+    },
+    "model_state_sha256_before": "2f8d40a7b5794ccf516daa3792a9231ef5d46f20351fc7150dce5cf777684b80",
+    "model_state_sha256_after": "2f8d40a7b5794ccf516daa3792a9231ef5d46f20351fc7150dce5cf777684b80",
+    "model_sources_weights_inputs_unchanged": true,
+    "control_settings_restored": true,
+    "new_training_runs": 0,
+    "optimizer_steps": 0,
+    "new_slot_generation": 0,
+    "new_full_model_forward_passes": 0,
+    "native_decoder_batch_forward_passes": 1098,
+    "server_execution": false,
+    "new_server_raw_receipt": false,
+    "runner_sha256": "e744528e6ac9f2f0db0c659ce81467426768ca460fb0a7d2acb27ed483fb59f7"
+  },
+  "exhaustive_mask_arithmetic_audit": {
+    "wsi": {
+      "patients": 71,
+      "rng_draws": 1420,
+      "all_reported_distributions_recomputed_match": true,
+      "gate_weight_sum_max_abs_error": 5.960464477539063e-08,
+      "float64_formula_vs_native_max_abs_error": 1.4977235263113897e-07,
+      "float64_mass_max_abs_error": 6.217248937900877e-15,
+      "all_28_mask_combinations_per_patient": {
+        "patient_count": 71,
+        "total_combinations": 1988,
+        "method": "float64 stable softmax of saved original scores, q/(q+1e-8)",
+        "per_patient_worst_gate_sum": {
+          "n": 71,
+          "median": 0.9999991319612335,
+          "mean": 0.9999983187708529,
+          "min": 0.9999860753244895,
+          "max": 0.9999998994092897,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "per_patient_minimum_mass": {
+          "n": 71,
+          "median": 0.01152021281181927,
+          "mean": 0.017968904817986492,
+          "min": 0.0007181395893719244,
+          "max": 0.09941274855440774,
+          "below_0_5_count": 71,
+          "below_0_5_fraction": 1.0,
+          "below_0_01_count": 31,
+          "below_0_01_fraction": 0.43661971830985913
+        }
+      }
+    },
+    "omic": {
+      "patients": 71,
+      "rng_draws": 1420,
+      "all_reported_distributions_recomputed_match": true,
+      "gate_weight_sum_max_abs_error": 5.960464477539063e-08,
+      "float64_formula_vs_native_max_abs_error": 1.590546337970622e-07,
+      "float64_mass_max_abs_error": 6.106226635438361e-16,
+      "all_28_mask_combinations_per_patient": {
+        "patient_count": 71,
+        "total_combinations": 1988,
+        "method": "float64 stable softmax of saved original scores, q/(q+1e-8)",
+        "per_patient_worst_gate_sum": {
+          "n": 71,
+          "median": 0.9999999244733814,
+          "mean": 0.9999999231534447,
+          "min": 0.9999998704131727,
+          "max": 0.9999999478426626,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "per_patient_minimum_mass": {
+          "n": 71,
+          "median": 0.1324036402349012,
+          "mean": 0.13563889351247888,
+          "min": 0.07716832729060202,
+          "max": 0.1917275680944676,
+          "below_0_5_count": 71,
+          "below_0_5_fraction": 1.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        }
+      }
+    }
+  },
+  "private_output": "local_evidence/gate_collapse_audit_20261022/gate_collapse_diagnostic.json",
+  "private_output_sha256": "064b239b102f1ead15aa163952b68003e3c4d85b3c5c148bd87e22a14c2b3b70",
+  "script": "scripts/check_slotspe_gate_collapse.py",
+  "audit_script": "scripts/audit_slotspe_gate_result.py",
+  "per_patient_rows_public": false
+}

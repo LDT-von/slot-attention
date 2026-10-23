@@ -1,0 +1,105 @@
+{
+  "schema": "slotspe_mechanism_deepcheck_v1",
+  "created_utc": "2026-10-22T08:11:40.609937+00:00",
+  "task_id": "SPE-08",
+  "script_sha256": "95c6643d2dc8849d7dbcc0a5c0d6fc9b930089041789d1d2ce2da6fe494bc8a5",
+  "source_hashes_before": {
+    "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+  },
+  "environment": {
+    "python": "3.10.11",
+    "torch": "2.6.0+cu124",
+    "device": "cpu",
+    "dtype": "float64",
+    "threads": 1
+  },
+  "execution_scope": {
+    "generated_inputs_only": true,
+    "new_random_or_disclosed_constructed_weights_only": true,
+    "patient_records_loaded": 0,
+    "checkpoints_loaded": 0,
+    "optimizer_steps": 0,
+    "backward_calls": 0,
+    "server_actions": 0,
+    "arrays_or_weights_saved": false
+  },
+  "checks": {
+    "native_full_model_information_controls": {
+      "runs": [
+        {
+          "seed": 3,
+          "new_random_weights_only": true,
+          "mode": "eval",
+          "paired_rng_seed": 1003,
+          "wsi_projection_dim": 256,
+          "native_slot_count": 8,
+          "native_iterations": 10,
+          "native_parameter_count": 6213678,
+          "full_model_forward_calls": 7,
+          "native_sa_forward_calls": 14,
+          "repeat_all_tokens_3x_logit_max_difference": 2.7755575615628914e-16,
+          "permute_same_token_bag_logit_max_difference": 1.6653345369377348e-16,
+          "change_feature_positive_control_logit_max_difference": 0.12036666214250175,
+          "fixed_32_tokens_A25_vs_A75_logit_max_difference": 0.2206914996124009,
+          "all_outputs_finite": true
+        },
+        {
+          "seed": 17,
+          "new_random_weights_only": true,
+          "mode": "eval",
+          "paired_rng_seed": 1017,
+          "wsi_projection_dim": 256,
+          "native_slot_count": 8,
+          "native_iterations": 10,
+          "native_parameter_count": 6213678,
+          "full_model_forward_calls": 7,
+          "native_sa_forward_calls": 14,
+          "repeat_all_tokens_3x_logit_max_difference": 2.220446049250313e-16,
+          "permute_same_token_bag_logit_max_difference": 2.220446049250313e-16,
+          "change_feature_positive_control_logit_max_difference": 0.06956896127162965,
+          "fixed_32_tokens_A25_vs_A75_logit_max_difference": 0.14235747040742872,
+          "all_outputs_finite": true
+        },
+        {
+          "seed": 29,
+          "new_random_weights_only": true,
+          "mode": "eval",
+          "paired_rng_seed": 1029,
+          "wsi_projection_dim": 256,
+          "native_slot_count": 8,
+          "native_iterations": 10,
+          "native_parameter_count": 6213678,
+          "full_model_forward_calls": 7,
+          "native_sa_forward_calls": 14,
+          "repeat_all_tokens_3x_logit_max_difference": 1.6653345369377348e-16,
+          "permute_same_token_bag_logit_max_difference": 2.7755575615628914e-16,
+          "change_feature_positive_control_logit_max_difference": 0.05937248465751843,
+          "fixed_32_tokens_A25_vs_A75_logit_max_difference": 0.15667603817321563,
+          "all_outputs_finite": true
+        }
+      ],
+      "interpretation": {
+        "replication": "All-token replication changes absolute sample cardinality, not composition; fixed-patch protocols do not expose this variable directly.",
+        "permutation": "Paired-RNG bag-permutation invariance is tested; this is not a test on real tissue geometry or on a spatially contextual feature encoder.",
+        "composition": "A nonzero difference refutes a universal claim that the whole native model cannot respond to content proportions; random-weight sensitivity is not learned biological accuracy."
+      }
+    }
+  },
+  "status": "failed_retained",
+  "error": {
+    "type": "AttributeError",
+    "message": "'types.SimpleNamespace' object has no attribute 'ReconstructionHead'"
+  },
+  "source_hashes_after": {
+    "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+  },
+  "original_source_bytes_unchanged": true
+}

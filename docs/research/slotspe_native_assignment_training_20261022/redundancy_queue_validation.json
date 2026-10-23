@@ -1,0 +1,16 @@
+{
+  "schema": "slotspe_queue_plan_validation_v1",
+  "config_sha256": "d13437c6ca9c8a2ddd0d047e7b29ebd93a86280e86395c1205727d7f3f23cc33",
+  "unique_methods": 12,
+  "first_stage_proposed_jobs": 7,
+  "priority_partition_valid": true,
+  "R0_alias_only": true,
+  "protected_and_evidence_pins_valid": true,
+  "torch_imported": false,
+  "execution_flag_rejected": true,
+  "cli_run_rejection_exit_code": 2,
+  "new_training_runs": 0,
+  "new_model_forwards": 0,
+  "patient_inputs_read": false,
+  "server_execution": false
+}

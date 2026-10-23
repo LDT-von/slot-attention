@@ -1,0 +1,149 @@
+{
+  "reviewed_on": "2026-10-22",
+  "scope": "capacity_initialization_hierarchy_background",
+  "paper_count": 4,
+  "papers": [
+    {
+      "key": "adaslot_2406.09196",
+      "pdf_url": "https://arxiv.org/pdf/2406.09196",
+      "html_url": "https://arxiv.org/html/2406.09196",
+      "pdf_pages": 21,
+      "sha256": "cbc8b162a809c7011d826304118e4181f20885ce516666659d098c6f7b6b5fc7",
+      "bytes": 4937068,
+      "read_level": "main_method_results_and_key_appendices",
+      "page_numbers_1_based": {
+        "method": [
+          3,
+          4
+        ],
+        "results": [
+          6,
+          7,
+          8
+        ],
+        "background_and_training": [
+          11
+        ],
+        "ablation": [
+          13,
+          14,
+          15,
+          16,
+          17
+        ],
+        "limitations": [
+          16,
+          17
+        ]
+      },
+      "source_cache_ignored": true,
+      "patient_jobs": 0
+    },
+    {
+      "key": "csi_2308.11369",
+      "pdf_url": "https://arxiv.org/pdf/2308.11369",
+      "html_url": "https://arxiv.org/html/2308.11369",
+      "pdf_pages": 21,
+      "sha256": "75e72fbdee2f496ebc620768c8e33035af44e797d0963adedb312e29ae85e16f",
+      "bytes": 41807556,
+      "read_level": "main_method_results_and_key_appendices",
+      "page_numbers_1_based": {
+        "method": [
+          2,
+          3
+        ],
+        "results": [
+          5,
+          6,
+          7
+        ],
+        "memory_limit": [
+          8
+        ],
+        "implementation": [
+          11,
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "source_cache_ignored": true,
+      "patient_jobs": 0
+    },
+    {
+      "key": "coca_2505.02071",
+      "pdf_url": "https://arxiv.org/pdf/2505.02071",
+      "html_url": "https://arxiv.org/html/2505.02071",
+      "pdf_pages": 24,
+      "sha256": "2ac0627443f60f76b33e046ebd5c2da5ab228330b54fcbcb9fbfe962d3259c53",
+      "bytes": 37678867,
+      "read_level": "main_method_results_and_key_appendices",
+      "page_numbers_1_based": {
+        "method": [
+          3,
+          4,
+          5,
+          6
+        ],
+        "fixed_main_and_dynamic_ablation": [
+          6,
+          7,
+          8
+        ],
+        "limitations": [
+          8
+        ],
+        "complexity_and_architecture": [
+          12,
+          13,
+          14
+        ],
+        "real_data_and_ablation": [
+          17,
+          18
+        ]
+      },
+      "source_cache_ignored": true,
+      "patient_jobs": 0
+    },
+    {
+      "key": "fasa_2512.02685",
+      "pdf_url": "https://arxiv.org/pdf/2512.02685",
+      "html_url": "https://arxiv.org/html/2512.02685",
+      "pdf_pages": 17,
+      "sha256": "ed8e9238c7f935dd91d2282213e8e96f8748cf72db82ad39afda0b36e8d7ab2e",
+      "bytes": 28670980,
+      "read_level": "main_method_results_and_key_appendices",
+      "page_numbers_1_based": {
+        "method": [
+          4,
+          5
+        ],
+        "results": [
+          6,
+          7,
+          8
+        ],
+        "implementation": [
+          10,
+          11
+        ],
+        "weight_failure": [
+          11,
+          12
+        ],
+        "failure_cases": [
+          14,
+          15
+        ]
+      },
+      "source_cache_ignored": true,
+      "patient_jobs": 0
+    }
+  ],
+  "new_training_runs": 0,
+  "new_patient_inference": 0,
+  "new_server_execution": 0,
+  "new_server_raw_receipt": 0
+}

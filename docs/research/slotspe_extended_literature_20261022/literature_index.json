@@ -1,0 +1,237 @@
+{
+  "schema": "slotspe_extended_literature_v1",
+  "recorded_on": "2026-10-22",
+  "task_id": "SPE-08",
+  "additional_papers_read": 16,
+  "previous_eight_reaudited_this_stage": false,
+  "scope": "relevant main-text mechanisms and key experiments/limitations, not every page or reproduction",
+  "papers": [
+    {
+      "id": "L01",
+      "key": "BO-QSA",
+      "title": "Improving Object-centric Learning with Query Optimization",
+      "venue_or_status": "ICLR 2023",
+      "full_text_url": "https://arxiv.org/pdf/2210.08990v2",
+      "notes_file": "allocation_notes.txt",
+      "read_locations": "§3.1–3.3 pp3–4; §5.3–6 pp8–9; B.2–B.3 pp20–21",
+      "intervention_layer": "initialization_and_gradient",
+      "problem_mapping": "P3/P4; optimization cross-cut",
+      "migration_limit": "shared queries are not patient-conditioned; forward and backward changes must be separated"
+    },
+    {
+      "id": "L02",
+      "key": "Implicit-SA",
+      "title": "Object Representations as Fixed Points: Training Iterative Refinement Algorithms with Implicit Differentiation",
+      "venue_or_status": "NeurIPS 2022",
+      "full_text_url": "https://arxiv.org/pdf/2207.00787v3",
+      "notes_file": "allocation_notes.txt",
+      "read_locations": "§3–4.3 pp3–5; §5 pp5–10",
+      "intervention_layer": "gradient_estimation",
+      "problem_mapping": "P7 optimization cross-cut",
+      "migration_limit": "approximate implicit gradient; no general convergence or semantic guarantee"
+    },
+    {
+      "id": "L03",
+      "key": "SmoothSA",
+      "title": "Smoothing Slot Attention Iterations and Recurrences",
+      "venue_or_status": "ICML 2026; acceptance stated by authors/arXiv comments",
+      "full_text_url": "https://arxiv.org/html/2508.05417v5",
+      "notes_file": "allocation_notes.txt",
+      "read_locations": "§3 pp2–5; Tables1/3/5 pp6–7; §5 pp7–8; A–B p11",
+      "intervention_layer": "input_conditioned_initialization",
+      "problem_mapping": "P3; recovery",
+      "migration_limit": "video recurrence branch does not map to static SlotSPE; stress tests are not systematic-collapse recovery"
+    },
+    {
+      "id": "L04",
+      "key": "CSI",
+      "title": "Enhancing Interpretable Object Abstraction via Clustering-based Slot Initialization",
+      "venue_or_status": "BMVC 2023",
+      "full_text_url": "https://arxiv.org/pdf/2308.11369",
+      "notes_file": "capacity_notes.txt",
+      "read_locations": "arXiv long paper pp2–3,5–8,11–15; publication pagination differs",
+      "intervention_layer": "input_clustering_initialization",
+      "problem_mapping": "P3/P1/input_separability",
+      "migration_limit": "bandwidth and initial centers constrain granularity; fixed-spatial failure cases"
+    },
+    {
+      "id": "L05",
+      "key": "AdaSlot",
+      "title": "Adaptive Slot Attention: Object Discovery with Dynamic Slot Number",
+      "venue_or_status": "CVPR 2024",
+      "full_text_url": "https://arxiv.org/pdf/2406.09196",
+      "notes_file": "capacity_notes.txt",
+      "read_locations": "pp3–4,6–8; appendices pp11,13–17",
+      "intervention_layer": "dynamic_active_capacity",
+      "problem_mapping": "P1/P2 omissions and fragmentation",
+      "migration_limit": "Kmax remains; pruning can lose small objects; selection is not reaggregation"
+    },
+    {
+      "id": "L06",
+      "key": "SlotCurri",
+      "title": "Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning",
+      "venue_or_status": "CVPR 2026",
+      "full_text_url": "https://arxiv.org/html/2603.22758v1",
+      "notes_file": "normalization_and_pathology_notes.txt",
+      "read_locations": "§3.2–3.5, §4; B–D,G,I–M",
+      "intervention_layer": "capacity_training_curriculum",
+      "problem_mapping": "P1/P2/P7; geometry",
+      "migration_limit": "global training schedule is not per-patient K; dense small-object merging remains; static-image adaptation exists"
+    },
+    {
+      "id": "L07",
+      "key": "COCA",
+      "title": "Hierarchical Compact Clustering Attention (COCA) for Unsupervised Object-Centric Learning",
+      "venue_or_status": "CVPR 2025",
+      "full_text_url": "https://arxiv.org/pdf/2505.02071",
+      "notes_file": "capacity_notes.txt",
+      "read_locations": "pp3–8,12–14,17–18",
+      "intervention_layer": "hierarchical_clustering_replacement",
+      "problem_mapping": "P1/P2/P5; geometry and hierarchy",
+      "migration_limit": "main experiments fixed slot count; Dyna separate; requires true spatial compactness"
+    },
+    {
+      "id": "L08",
+      "key": "FASA",
+      "title": "Unsupervised Structural Scene Decomposition via Foreground-Aware Slot Attention with Pseudo-Mask Guidance",
+      "venue_or_status": "arXiv preprint, December 2025; acceptance not verified",
+      "full_text_url": "https://arxiv.org/html/2512.02685v1",
+      "notes_file": "capacity_notes.txt",
+      "read_locations": "pp4–8,10–12,14–15",
+      "intervention_layer": "foreground_background_and_content_supervision",
+      "problem_mapping": "P2/P5/P7",
+      "migration_limit": "corner prior and MaskCut assumptions do not transfer to WSI bags or pathways; pseudo-masks can limit capacity"
+    },
+    {
+      "id": "L09",
+      "key": "SA-Normalization",
+      "title": "Attention Normalization Impacts Cardinality Generalization in Slot Attention",
+      "venue_or_status": "TMLR 2024",
+      "full_text_url": "https://arxiv.org/html/2407.04170v2",
+      "notes_file": "normalization_and_pathology_notes.txt",
+      "read_locations": "§2–5,7; §3.2–4 PDF pp4–5; C–D relevant proofs",
+      "intervention_layer": "value_update_normalization",
+      "problem_mapping": "P1; attention_mass information",
+      "migration_limit": "single-head theorem assumptions do not establish whole-model multihead identifiability or patient harm"
+    },
+    {
+      "id": "L10",
+      "key": "SSA-Dynamics",
+      "title": "Understanding Clustering in Slot Attention via Particle Dynamics",
+      "venue_or_status": "arXiv preprint, October 2026",
+      "full_text_url": "https://arxiv.org/html/2610.04493v1",
+      "notes_file": "normalization_and_pathology_notes.txt",
+      "read_locations": "§2–5; A.2 and related A.3 passages",
+      "intervention_layer": "mechanistic_analysis",
+      "problem_mapping": "assignment and update dynamics",
+      "migration_limit": "energy analysis concerns USSA surrogate; one frozen-feature dataset; not a validated SlotSPE correction"
+    },
+    {
+      "id": "L11",
+      "key": "SPOT",
+      "title": "SPOT: Self-Training with Patch-Order Permutation for Object-Centric Learning with Autoregressive Transformers",
+      "venue_or_status": "CVPR 2024",
+      "full_text_url": "https://arxiv.org/pdf/2312.00648v3",
+      "notes_file": "allocation_notes.txt",
+      "read_locations": "§3 pp3–6; Table1 p6; A p12; B.3–B.4/Table9 p13; B.6,C.1–C.2 p14",
+      "intervention_layer": "decoder_and_assignment_supervision",
+      "problem_mapping": "P7/P2",
+      "migration_limit": "AR decoding scan order is not bag-order sensitivity; BO-QSA negative transfer in two tested hosts"
+    },
+    {
+      "id": "L12",
+      "key": "DISA",
+      "title": "Explicitly Disentangled Representations in Object-Centric Learning",
+      "venue_or_status": "TMLR January 2025; arXiv v2 January 23, 2025",
+      "full_text_url": "https://arxiv.org/html/2401.10148v2",
+      "notes_file": "geometry_semantics_notes.txt",
+      "read_locations": "§1,4.1–4.2,5.1–5.3,6; F.1 caption only",
+      "intervention_layer": "attribute_disentanglement",
+      "problem_mapping": "P4; composition",
+      "migration_limit": "remaining leakage; differs from arXiv2410.18809 DSA; no statistical identifiability guarantee"
+    },
+    {
+      "id": "L13",
+      "key": "PathoSlot",
+      "title": "Joint Biomarker and Survival Prediction via Concept-Conditioned Multimodal Slot Factorization",
+      "venue_or_status": "MICCAI 2026",
+      "full_text_url": "https://papers.miccai.org/miccai-2026/paper/1567_paper.pdf",
+      "notes_file": "normalization_and_pathology_notes.txt",
+      "read_locations": "PDF pp2–8, especially pp4–5 Eq2–7 and p8 ablations",
+      "intervention_layer": "supervised_endpoint_semantics",
+      "problem_mapping": "P4/P7; task content",
+      "migration_limit": "predefined supervised endpoints, reports and clinical concepts differ from latent-event discovery"
+    },
+    {
+      "id": "L14",
+      "key": "Invariant-SA",
+      "title": "Invariant Slot Attention: Object Discovery with Slot-Centric Reference Frames",
+      "venue_or_status": "ICML 2023",
+      "full_text_url": "https://proceedings.mlr.press/v202/biza23a/biza23a.pdf",
+      "notes_file": "geometry_semantics_notes.txt",
+      "read_locations": "PDF pp3–9, §3–6; §5.2,5.3,5.5 limitations",
+      "intervention_layer": "slot_relative_geometry",
+      "problem_mapping": "geometry; P4 appearance vs pose",
+      "migration_limit": "requires input position assumptions; can increase oversegmentation; single-centroid assumption may fail for distributed tissue types"
+    },
+    {
+      "id": "L15",
+      "key": "MUFASA",
+      "title": "MUFASA: A Multi-Layer Framework for Slot Attention",
+      "venue_or_status": "CVPR 2026",
+      "full_text_url": "https://arxiv.org/html/2602.07544v2",
+      "notes_file": "geometry_semantics_notes.txt",
+      "read_locations": "§1–3.2,4.1–4.4; A.1–A.3 and explanatory E; figures not independently audited",
+      "intervention_layer": "encoder_depth_and_slot_fusion",
+      "problem_mapping": "P6/input_information",
+      "migration_limit": "same-encoder layers, not physical magnification; same-class merging and one-to-one cross-layer limits"
+    },
+    {
+      "id": "L16",
+      "key": "OCRA",
+      "title": "Systematic Visual Reasoning through Object-Centric Relational Abstraction",
+      "venue_or_status": "NeurIPS 2023",
+      "full_text_url": "https://proceedings.neurips.cc/paper_files/paper/2023/file/e3cdc587873dd1d00ac78f0c1f9aa60c-Paper-Conference.pdf",
+      "notes_file": "geometry_semantics_notes.txt",
+      "read_locations": "PDF pp1–4,7–10; §2.3,5.1,6",
+      "intervention_layer": "post_slot_relation_reasoning",
+      "problem_mapping": "relations/composition",
+      "migration_limit": "not assignment repair; frozen object encoder in reasoning; absolute information may be needed for survival"
+    }
+  ],
+  "not_counted_as_independent_full_read": [
+    "MSF",
+    "DINOSAUR",
+    "arXiv:2410.18809 distinct DSA"
+  ],
+  "source_facts": {
+    "root": "third_party/SlotSPE",
+    "core_sha256": {
+      "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e"
+    },
+    "details": "normalization_and_pathology_notes.txt",
+    "codegraph_status": "not_initialized_project_path_explicit; optional initialization question pending; not run"
+  },
+  "public_pdf_cache": {
+    "verified_pdf_hash_records": 8,
+    "scope": "public literature only; ignored local_evidence",
+    "manifests": [
+      "capacity_sources.json",
+      "local_evidence/literature_20261022/allocation/download_manifest.json"
+    ],
+    "other_eight_sources": "online official or author full text; no local original PDF hash claimed"
+  },
+  "patient_evidence": {
+    "new_model_runs": 0,
+    "new_training_runs": 0,
+    "new_patient_array_processing": 0,
+    "new_server_runs": 0,
+    "new_raw_patient_receipts": 0,
+    "historical_aggregate_only": true
+  },
+  "new_methods_implemented": 0,
+  "paper_implementations_audited_this_stage": false,
+  "protected_original_modified": false,
+  "commit_or_push": false
+}

@@ -1,0 +1,636 @@
+{
+  "schema": "slotspe_gate_full_rng_public_summary_v1",
+  "recorded_at": "2026-10-22T22:35:06.577828+08:00",
+  "route_task": "SlotSPE / SPE-08 / read-only full-model gate RNG diagnosis",
+  "protocol": {
+    "cohort": "historical local BLCA validation",
+    "patients": 71,
+    "fold": 0,
+    "training_seed": 3,
+    "epochs": 3,
+    "training_patients": 289,
+    "validation_patients": 71,
+    "excluded": 21,
+    "patches": 256,
+    "slots": 8,
+    "k": 2,
+    "temperature": 0.01,
+    "epsilon": 1e-08,
+    "repeats": 20,
+    "eval_seeds": [
+      3080000,
+      3080001,
+      3080002,
+      3080003,
+      3080004,
+      3080005,
+      3080006,
+      3080007,
+      3080008,
+      3080009,
+      3080010,
+      3080011,
+      3080012,
+      3080013,
+      3080014,
+      3080015,
+      3080016,
+      3080017,
+      3080018,
+      3080019
+    ],
+    "batch_size": 8,
+    "device": "cuda:0",
+    "torch": "2.6.0+cu124",
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "scope": "Full original forward; fixed raw patient inputs and weights; regenerate Gaussian slots and Gumbel gates each repeat.",
+    "controls": "Native decoder on each freshly generated slot tensor; restore pre-decoder RNG for paired temperature=1; scoped zero Gumbel noise control.",
+    "set_stability_limit": "Slot identities are reinitialized per full-model repeat; index-set diversity combines Gaussian slot and Gumbel selection variation.",
+    "gate_sum": "Sum of actual returned weights AFTER epsilon normalization.",
+    "temperature_mass": "Softmax(score/.01) mass inside actual hard mask; float64 logsumexp reference.",
+    "raw_mass": "Softmax(unscaled score) mass inside actual hard mask; separate from temperature mass.",
+    "primary_unit": "Unique patient at repeat=0; all draws and ever-affected patient counts reported separately."
+  },
+  "summary": {
+    "wsi": {
+      "primary_first_rng_unique_patients": {
+        "n": 71,
+        "median": 0.9999999403953552,
+        "mean": 0.9999997783714617,
+        "min": 0.9999970197677612,
+        "max": 1.0,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "all_rng_patient_draws_not_independent_patients": {
+        "n": 1420,
+        "median": 0.9999999403953552,
+        "mean": 0.9999997745097523,
+        "min": 0.9999783635139465,
+        "max": 1.0000001192092896,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "unique_patients_ever_below_0_5": 0,
+      "unique_patients_ever_below_0_01": 0,
+      "selected_temperature_mass": {
+        "n": 1420,
+        "median": 0.1638122542138411,
+        "mean": 0.2500688050116824,
+        "min": 0.00046310480087771944,
+        "max": 0.9892007454004296,
+        "below_0_5_count": 1185,
+        "below_0_5_fraction": 0.8345070422535211,
+        "below_0_01_count": 56,
+        "below_0_01_fraction": 0.03943661971830986
+      },
+      "selected_raw_score_mass": {
+        "n": 1420,
+        "median": 0.2499851691896203,
+        "mean": 0.2500323774546234,
+        "min": 0.24176960057895702,
+        "max": 0.2593579014706968,
+        "below_0_5_count": 1420,
+        "below_0_5_fraction": 1.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "top2_overlap_histogram": {
+        "1": 610,
+        "0": 748,
+        "2": 62
+      },
+      "top2_overlap_mean": 0.5169014084507042,
+      "top1_missed_fraction": 0.7549295774647887,
+      "unique_retained_sets": {
+        "n": 71,
+        "median": 14.0,
+        "mean": 14.507042253521126,
+        "min": 11.0,
+        "max": 18.0,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "controls": {
+        "temperature_1_same_noise_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.999999966210043,
+          "min": 0.9999998807907104,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "no_noise_temperature_0_01_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999940395355,
+          "min": 0.9999998807907104,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "masked_softmax_same_mask_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999932839837,
+          "min": 0.9999999403953552,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        }
+      }
+    },
+    "omic": {
+      "primary_first_rng_unique_patients": {
+        "n": 71,
+        "median": 0.9999999403953552,
+        "mean": 0.9999999546668898,
+        "min": 0.9999998807907104,
+        "max": 1.0,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "all_rng_patient_draws_not_independent_patients": {
+        "n": 1420,
+        "median": 0.9999999701976776,
+        "mean": 0.9999999549187405,
+        "min": 0.9999998211860657,
+        "max": 1.0000001192092896,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "unique_patients_ever_below_0_5": 0,
+      "unique_patients_ever_below_0_01": 0,
+      "selected_temperature_mass": {
+        "n": 1420,
+        "median": 0.24520197008880165,
+        "mean": 0.25194792524030996,
+        "min": 0.08963703230148216,
+        "max": 0.5442244151585861,
+        "below_0_5_count": 1418,
+        "below_0_5_fraction": 0.9985915492957746,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "selected_raw_score_mass": {
+        "n": 1420,
+        "median": 0.2500128737751032,
+        "mean": 0.2500162710514654,
+        "min": 0.2478664773494193,
+        "max": 0.2521914623346369,
+        "below_0_5_count": 1420,
+        "below_0_5_fraction": 1.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "top2_overlap_histogram": {
+        "0": 739,
+        "1": 636,
+        "2": 45
+      },
+      "top2_overlap_mean": 0.5112676056338028,
+      "top1_missed_fraction": 0.7345070422535211,
+      "unique_retained_sets": {
+        "n": 71,
+        "median": 15.0,
+        "mean": 14.647887323943662,
+        "min": 12.0,
+        "max": 18.0,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "controls": {
+        "temperature_1_same_noise_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999655384413,
+          "min": 0.9999998807907104,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "no_noise_temperature_0_01_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999947531123,
+          "min": 0.9999999403953552,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "masked_softmax_same_mask_gate_sum": {
+          "n": 1420,
+          "median": 1.0,
+          "mean": 0.9999999949210127,
+          "min": 0.9999999403953552,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        }
+      }
+    }
+  },
+  "conclusion": {
+    "answer": "本次完整模型RNG诊断未观测到门控权重和坍缩，病理和组学均为0/71名患者受影响。",
+    "severity": "未观测到；不判为轻度、中度或重度。",
+    "observed_protocol": "固定真实患者输入与3轮训练权重，完整原版forward重新随机生成两侧槽和Gumbel门控，71人各20次。",
+    "affected_unique_patients": {
+      "wsi": {
+        "below_0_5": 0,
+        "below_0_01": 0,
+        "denominator": 71,
+        "fraction": 0.0
+      },
+      "omic": {
+        "below_0_5": 0,
+        "below_0_01": 0,
+        "denominator": 71,
+        "fraction": 0.0
+      }
+    },
+    "observed_randomness": "完整RNG下保留集合有明显变化，包含高斯槽初始化和Gumbel选槽的共同影响；不能将其全部归为门控噪声。",
+    "mechanistically_possible_but_unobserved": "官方全槽低温softmax乘随机硬掩码后，权重和为q/(q+1e-8)；只有保留质量q极小时才会接近0。本批运行未触发。",
+    "controls": "同槽同噪声升温与同槽去噪声对照均保持权重和约1。原生门控也未坍缩，本次没有患者坍缩恢复实例。",
+    "fusion_scope": "原生最终融合不用slot_gate软权重；仅将hard_keep布尔掩码用于self attention，cross attention读取所有槽。不能声称某模态被最终生存融合实际丢弃。",
+    "remaining_limits": "单个历史本地BLCA fold0/seed3、3轮checkpoint；不等于77人运行或成熟权重，也未评估生存性能损害和修正训练收益。"
+  },
+  "source_verification": {
+    "source_repository": "https://github.com/zylvemvet/SlotSPE.git",
+    "official_pinned_commit": "02051a2083add7b427727e0200e4263516903561",
+    "current_official_remote_main": "02051a2083add7b427727e0200e4263516903561",
+    "comparison": {
+      "method": "SHA256 over raw file bytes; no normalization; official checkout byte Git blob SHA1 checked against pinned commit ls-tree",
+      "enumeration": "git ls-files -- third_party/SlotSPE",
+      "vendor_relative_root": "third_party/SlotSPE",
+      "registered_file_count": 11,
+      "runtime_file_count": 10,
+      "runtime_file_equal_count": 10,
+      "runtime_difference_count": 0,
+      "documentation_difference_paths": [
+        "README.md"
+      ],
+      "every_official_checkout_matches_commit_blob": true,
+      "entire_repository_tree_certified_equal": false
+    }
+  },
+  "checks": {
+    "error_maxima": {
+      "historical_full_logits_max_abs": 0,
+      "native_gate_formula_max_abs": 0
+    },
+    "historical_full_logits_replay_passed": true,
+    "model_purity": {
+      "native_model_class": true,
+      "native_forward": true,
+      "native_slot_classes": true,
+      "native_decoder_classes": true,
+      "no_repaired_eval_buffers": true
+    },
+    "model_state_sha256_before": "2f8d40a7b5794ccf516daa3792a9231ef5d46f20351fc7150dce5cf777684b80",
+    "model_state_sha256_after": "2f8d40a7b5794ccf516daa3792a9231ef5d46f20351fc7150dce5cf777684b80",
+    "sources_weights_inputs_unchanged": true,
+    "hooks_removed_and_settings_restored": true,
+    "training_runs": 0,
+    "optimizer_steps": 0,
+    "full_model_batch_forwards": 180,
+    "full_model_patient_forwards": 1420,
+    "new_slot_generation_patient_pairs": 1420,
+    "paired_control_decoder_batch_forwards": 720,
+    "server_execution": false,
+    "new_server_raw_receipt": false,
+    "runner_sha256": "6eb0ce7370caa2ac67d9167271542fa37e1cd0eddc2174128d2724cff9495dfe"
+  },
+  "audit": {
+    "schema": "slotspe_full_model_gate_result_independent_audit_v1",
+    "status": "passed",
+    "recorded_at": "2026-10-22T22:34:37.910315+08:00",
+    "audit_script_sha256": "36009de9ad6a2ac1f62c3875fec2d2e4118ab020904df9b0cb1f8497c9593234",
+    "numpy": "2.2.6",
+    "model_execution": false,
+    "torch_imported": false,
+    "training_runs": 0,
+    "tolerances": {
+      "gate_weight_sum_abs": 2e-07,
+      "float32_formula_abs": 2e-06,
+      "float32_mass_abs": 2e-06,
+      "control_gate_sum_abs": 3e-07,
+      "float64_abs": 2e-12,
+      "summary_abs": 2e-12,
+      "summary_rel": 2e-12
+    },
+    "result_sha256": "bdc75f1f9408988c394cf8b0cbb9bca7b572ba14ab764a19f463d9600c78623c",
+    "input_sha256": {
+      "local_evidence/original_tree/.review/slotspe_p1_20261020/seed3_native_v2/observations.json": "cf76047a16cd0536ce8bddd2710079ed686e2f91e784c140b7d915bf86bcb703",
+      "local_evidence/original_tree/.review/slotspe_proof_20261018/patient/cache/paired_blca_fold0.pt": "06ff3816afebd0cca1ff53cb3bc05e5fc34e2989e521c85222631c50bc8f1b61",
+      "local_evidence/original_tree/.review/slotspe_proof_20261018/patient/seed_3/original/last.pt": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
+      "local_evidence/original_tree/.review/slotspe_proof_20261018/patient/seed_3/original/eval_repeats.json": "0d529b7674889a78b34d8f81b81ea6c55b651c0ffed0df03179a587d3c167527",
+      "local_evidence/original_tree/.review/slotspe_proof_20261018/patient/manifest.json": "ac7921b8a3e1ef290a292c0bc2bbdec575ae07ebbb39fc0fe444e3e5eea85fe3",
+      "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "third_party/SlotSPE/models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+      "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+      "third_party/SlotSPE/dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+      "third_party/SlotSPE/requirements.txt": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+      "third_party/SlotSPE/scripts/SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+      "third_party/SlotSPE/utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+      "third_party/SlotSPE/utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b"
+    },
+    "patients": 71,
+    "modalities": 2,
+    "repeats_per_patient": 20,
+    "gate_records_audited": 2840,
+    "summary_disagreements": 0,
+    "provenance": {
+      "source_receipt_sha256": "215898c762fe641aaf1264fd90b4d8c03679b88e0f2fbb02f11655190c38549f",
+      "official_pinned_commit": "02051a2083add7b427727e0200e4263516903561",
+      "official_tree_sha1": "2c51383110e1f4bb24a4f2250cc8c9a3bb4fe533",
+      "official_clone_clean": true,
+      "runtime_files_verified": 10,
+      "input_sha256_verified_count": 15,
+      "fixed_git_blobs_verified_count": 11,
+      "checkpoint_sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
+      "cache_sha256": "06ff3816afebd0cca1ff53cb3bc05e5fc34e2989e521c85222631c50bc8f1b61",
+      "runner_sha256": "6eb0ce7370caa2ac67d9167271542fa37e1cd0eddc2174128d2724cff9495dfe"
+    },
+    "unchanged_file_hashes_rechecked": 31,
+    "numeric_error_maxima": {
+      "weight_sum_vs_native_float32_gate_sum": 5.960464477539063e-08,
+      "temperature_mass_float64": 5.88418203051333e-15,
+      "temperature_logmass_float64": 7.105427357601002e-15,
+      "temperature_mass_float32": 7.459471390580674e-07,
+      "raw_score_mass_float64": 1.1102230246251565e-16,
+      "gate_vector_float64_formula": 9.862182142605924e-07,
+      "temperature_1_same_noise_gate_sum_vs_numeric_formula": 1.5920061835483779e-07,
+      "no_noise_temperature_0_01_gate_sum_vs_numeric_formula": 1.3831135614594814e-07,
+      "masked_softmax_same_mask_gate_sum_vs_numeric_formula": 1.1920928955078125e-07
+    },
+    "independent_summary": {
+      "wsi": {
+        "primary_first_rng_unique_patients": {
+          "n": 71,
+          "median": 0.9999999403953552,
+          "mean": 0.9999997783714617,
+          "min": 0.9999970197677612,
+          "max": 1.0,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "all_rng_patient_draws_not_independent_patients": {
+          "n": 1420,
+          "median": 0.9999999403953552,
+          "mean": 0.9999997745097523,
+          "min": 0.9999783635139465,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "unique_patients_ever_below_0_5": 0,
+        "unique_patients_ever_below_0_01": 0,
+        "selected_temperature_mass": {
+          "n": 1420,
+          "median": 0.16381225421384074,
+          "mean": 0.2500688050116824,
+          "min": 0.00046310480087771976,
+          "max": 0.9892007454004301,
+          "below_0_5_count": 1185,
+          "below_0_5_fraction": 0.8345070422535211,
+          "below_0_01_count": 56,
+          "below_0_01_fraction": 0.03943661971830986
+        },
+        "selected_raw_score_mass": {
+          "n": 1420,
+          "median": 0.2499851691896203,
+          "mean": 0.2500323774546234,
+          "min": 0.24176960057895702,
+          "max": 0.25935790147069687,
+          "below_0_5_count": 1420,
+          "below_0_5_fraction": 1.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "top2_overlap_histogram": {
+          "1": 610,
+          "0": 748,
+          "2": 62
+        },
+        "top2_overlap_mean": 0.5169014084507042,
+        "top1_missed_fraction": 0.7549295774647887,
+        "unique_retained_sets": {
+          "n": 71,
+          "median": 14.0,
+          "mean": 14.507042253521126,
+          "min": 11.0,
+          "max": 18.0,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "controls": {
+          "temperature_1_same_noise_gate_sum": {
+            "n": 1420,
+            "median": 1.0,
+            "mean": 0.999999966210043,
+            "min": 0.9999998807907104,
+            "max": 1.0000001192092896,
+            "below_0_5_count": 0,
+            "below_0_5_fraction": 0.0,
+            "below_0_01_count": 0,
+            "below_0_01_fraction": 0.0
+          },
+          "no_noise_temperature_0_01_gate_sum": {
+            "n": 1420,
+            "median": 1.0,
+            "mean": 0.9999999940395355,
+            "min": 0.9999998807907104,
+            "max": 1.0000001192092896,
+            "below_0_5_count": 0,
+            "below_0_5_fraction": 0.0,
+            "below_0_01_count": 0,
+            "below_0_01_fraction": 0.0
+          },
+          "masked_softmax_same_mask_gate_sum": {
+            "n": 1420,
+            "median": 1.0,
+            "mean": 0.9999999932839837,
+            "min": 0.9999999403953552,
+            "max": 1.0000001192092896,
+            "below_0_5_count": 0,
+            "below_0_5_fraction": 0.0,
+            "below_0_01_count": 0,
+            "below_0_01_fraction": 0.0
+          }
+        }
+      },
+      "omic": {
+        "primary_first_rng_unique_patients": {
+          "n": 71,
+          "median": 0.9999999403953552,
+          "mean": 0.9999999546668898,
+          "min": 0.9999998807907104,
+          "max": 1.0,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "all_rng_patient_draws_not_independent_patients": {
+          "n": 1420,
+          "median": 0.9999999701976776,
+          "mean": 0.9999999549187405,
+          "min": 0.9999998211860657,
+          "max": 1.0000001192092896,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "unique_patients_ever_below_0_5": 0,
+        "unique_patients_ever_below_0_01": 0,
+        "selected_temperature_mass": {
+          "n": 1420,
+          "median": 0.2452019700888015,
+          "mean": 0.25194792524030996,
+          "min": 0.08963703230148219,
+          "max": 0.5442244151585858,
+          "below_0_5_count": 1418,
+          "below_0_5_fraction": 0.9985915492957746,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "selected_raw_score_mass": {
+          "n": 1420,
+          "median": 0.2500128737751032,
+          "mean": 0.2500162710514654,
+          "min": 0.2478664773494193,
+          "max": 0.2521914623346369,
+          "below_0_5_count": 1420,
+          "below_0_5_fraction": 1.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "top2_overlap_histogram": {
+          "0": 739,
+          "1": 636,
+          "2": 45
+        },
+        "top2_overlap_mean": 0.5112676056338028,
+        "top1_missed_fraction": 0.7345070422535211,
+        "unique_retained_sets": {
+          "n": 71,
+          "median": 15.0,
+          "mean": 14.647887323943662,
+          "min": 12.0,
+          "max": 18.0,
+          "below_0_5_count": 0,
+          "below_0_5_fraction": 0.0,
+          "below_0_01_count": 0,
+          "below_0_01_fraction": 0.0
+        },
+        "controls": {
+          "temperature_1_same_noise_gate_sum": {
+            "n": 1420,
+            "median": 1.0,
+            "mean": 0.9999999655384413,
+            "min": 0.9999998807907104,
+            "max": 1.0000001192092896,
+            "below_0_5_count": 0,
+            "below_0_5_fraction": 0.0,
+            "below_0_01_count": 0,
+            "below_0_01_fraction": 0.0
+          },
+          "no_noise_temperature_0_01_gate_sum": {
+            "n": 1420,
+            "median": 1.0,
+            "mean": 0.9999999947531123,
+            "min": 0.9999999403953552,
+            "max": 1.0000001192092896,
+            "below_0_5_count": 0,
+            "below_0_5_fraction": 0.0,
+            "below_0_01_count": 0,
+            "below_0_01_fraction": 0.0
+          },
+          "masked_softmax_same_mask_gate_sum": {
+            "n": 1420,
+            "median": 1.0,
+            "mean": 0.9999999949210127,
+            "min": 0.9999999403953552,
+            "max": 1.0000001192092896,
+            "below_0_5_count": 0,
+            "below_0_5_fraction": 0.0,
+            "below_0_01_count": 0,
+            "below_0_01_fraction": 0.0
+          }
+        }
+      }
+    },
+    "independent_double_precision_weight_sum_distributions": {
+      "wsi": {
+        "n": 1420,
+        "median": 0.9999999352730811,
+        "mean": 0.9999997779641208,
+        "min": 0.9999783635139465,
+        "max": 1.0000000894069672,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      },
+      "omic": {
+        "n": 1420,
+        "median": 0.999999962747097,
+        "mean": 0.9999999589063752,
+        "min": 0.9999998211860657,
+        "max": 1.0000000894069672,
+        "below_0_5_count": 0,
+        "below_0_5_fraction": 0.0,
+        "below_0_01_count": 0,
+        "below_0_01_fraction": 0.0
+      }
+    },
+    "execution_receipt_matches": true,
+    "state_digest_before_after_equal": true,
+    "limitations": [
+      "Native scalar gate_sum is checked against stored weights within float32 tolerance; native scalar summaries are then recomputed independently.",
+      "Float64 score masses and deterministic Top2 are independently computed from each repeat's scores, not from the first repeat.",
+      "Control vectors and full-model logits are not stored here; control scalar formulas and summaries are audited, while exact logits replay remains a runner receipt claim.",
+      "Matching state digests is checked from the saved receipt; the auditor does not reload a model or independently compute its state digest.",
+      "Audit consistency is not evidence of predictive harm or correction efficacy."
+    ]
+  },
+  "private_json": "local_evidence/gate_collapse_audit_20261022/gate_collapse_diagnostic_full_rng.json",
+  "private_json_sha256": "16303e639f8966ceef784c25d68a89a75b47566a3c34cae612337db21bba00f3",
+  "runner": "scripts/check_slotspe_gate_full_rng.py",
+  "audit_runner": "scripts/audit_slotspe_gate_full_result.py",
+  "per_patient_rows_public": false
+}

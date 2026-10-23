@@ -1,0 +1,103 @@
+{
+  "schema": "slotspe_gating_design_intent_readonly_review_v1",
+  "recorded_at": "2026-10-22T23:01:41.375955+08:00",
+  "route_task": "SlotSPE / SPE-08 / original design, forward effect and gradient attribution",
+  "status": "design_intent_located_exclusion_claims_not_supported",
+  "primary_paper": {
+    "url": "https://arxiv.org/html/2512.01116v3",
+    "sections": [
+      "Introduction",
+      "3.1",
+      "3.2",
+      "B.2",
+      "B.5 equation 18"
+    ],
+    "official_openreview_link": "https://openreview.net/forum?id=WqCRSn2WAY",
+    "openreview_read_status": "browser challenge; arXiv author paper read successfully"
+  },
+  "verified_design": {
+    "output_slot_goal": "Reduce slot redundancy, encourage distinct prognostic events and specialization. Redundant inputs do not imply the output slots are intended to be mutually redundant.",
+    "gate_supervision": "Equation 18 explicitly contains fused survival loss plus histology and omics survival losses; each modality MoE decoder supplies the respective single-modal logits.",
+    "intra_modal_forward": "Section 3.2 explicitly uses selected Top-K slots in masked self-attention; inter-modal attention uses all slots.",
+    "differentiability": "B.2 describes hard-forward soft-backward straight-through selection. Hard Top-K alone does not imply that every loss must have no gate gradient.",
+    "not_explicitly_required": "The cited design does not explicitly require pred_keep_slot parameters to receive a direct gradient from the fused survival loss."
+  },
+  "verified_source": {
+    "gate_scores": "third_party/SlotSPE/models/SlotSPE.py:37-65",
+    "straight_through_surrogate": "third_party/SlotSPE/models/slot_attention.py:164-185",
+    "fused_forward_uses_boolean_selection": "third_party/SlotSPE/models/SlotSPE.py:289-301",
+    "single_modal_survival_supervision": "third_party/SlotSPE/models/SlotSPE.py:321-328",
+    "interpretation": "Hard masks participate in fused forward computation; bool conversion removes the direct surrogate gradient to the score predictor. Auxiliary decoder survival gradients remain. No direct fused gradient is not the same as no forward influence.",
+    "runtime_files_matching_official_pinned_commit": 10,
+    "official_commit": "02051a2083add7b427727e0200e4263516903561",
+    "source_sha256": {
+      "third_party/SlotSPE/dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+      "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "third_party/SlotSPE/models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+      "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "third_party/SlotSPE/requirements.txt": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+      "third_party/SlotSPE/scripts/SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+      "third_party/SlotSPE/utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+      "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+      "third_party/SlotSPE/utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b"
+    }
+  },
+  "assessment_of_user_quoted_claims": [
+    {
+      "claim": "Changing checkpoint while keeping temperature fixed excludes temperature as a cause.",
+      "verdict": "Does not follow. Selected mass q depends on scores, temperature and noisy mask jointly; gate_sum=q/(q+1e-8). Conditional occurrence is compatible with a temperature-related numerical mechanism."
+    },
+    {
+      "claim": "Near-zero nonsignificant correlation proves no causality.",
+      "verdict": "Does not follow. At most no clear monotonic association was detected under that measurement protocol."
+    },
+    {
+      "claim": "cosine about 0.997 proves the information bottleneck is working normally.",
+      "verdict": "Does not follow. High cosine alone proves neither prediction harm nor successful distinct event compression. The paper explicitly aims to reduce output-slot redundancy."
+    },
+    {
+      "claim": "L3 uniform paired training establishes that gating has no effect.",
+      "quoted_values_independently_verified": false,
+      "verdict": "Exact receipt and arm contract were not located. A small measured change under one protocol does not establish equivalence; distinguish soft gate removal from hard-mask and auxiliary-loss changes."
+    },
+    {
+      "claim": "Cross-fold C-index SD 0.0618 makes paired changes of 0.01 unmeasurable.",
+      "verdict": "Cannot infer power this way. Matched-arm inference requires the distribution of within-fold/seed paired differences and their dependence, not an unpaired baseline SD."
+    },
+    {
+      "claim": "Direct fused-loss gate gradient is absent, so the gate does not affect the main readout.",
+      "verdict": "False as a structural inference. The hard mask is passed to the self-attention branches before fused logits; forward dependence and autograd connectivity are different."
+    }
+  ],
+  "unverified_quoted_new_results": [
+    "collapse rate 0.13-0.24 on checkpoint23549f",
+    "zero collapse in the cited 77-case joint diagnosis on checkpoint4b89dc35",
+    "rho=-0.014/+0.090 and significance tests",
+    "L3 paired training, cosine delta=-0.00078, loss 2.41856 to 2.43769"
+  ],
+  "current_audited_local_gate_result": {
+    "patients": 71,
+    "training_checkpoint_prefix": "3f8ed987",
+    "protocol": "fixed-slot 20 draws and full-model RNG 20 draws, 3-epoch BLCA fold0/seed3",
+    "wsi_patients_ever_gate_sum_below_0_5_or_0_01": 0,
+    "omic_patients_ever_gate_sum_below_0_5_or_0_01": 0,
+    "interpretation": "No gate-sum collapse observed under this protocol; not a global exclusion."
+  },
+  "practical_conclusion": "Do not present gate collapse as an established patient-level problem. Do not label redundancy harmless or the whole line excluded. Direct fused gate-gradient absence alone is insufficient to classify a bug. Any benefit from connecting it or reducing redundancy remains unestablished.",
+  "checks_actual_execution_raw_receipt": {
+    "new_training_runs": 0,
+    "new_model_forwards": 0,
+    "new_backward_passes": 0,
+    "patient_arrays_or_checkpoints_loaded": 0,
+    "gpu_execution": false,
+    "server_execution": false,
+    "new_server_raw_receipt": false,
+    "original_sources_modified": false,
+    "historical_reports_modified": false,
+    "existing_queue_changed": false,
+    "new_commit_or_push": false
+  },
+  "gaps_reasons": "The cited joint-diagnosis and L3 paired-training raw receipts and full arm contracts are unavailable in the reviewed public evidence. No new patient experiment was authorized or run.",
+  "next_action_user_inputs": "Design-document question is resolved. If the new L3 or correlation claims need acceptance, obtain their exact run receipt and arm definition; do not automatically launch another experiment."
+}

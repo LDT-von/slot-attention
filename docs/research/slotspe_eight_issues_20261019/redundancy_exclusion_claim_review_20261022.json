@@ -1,0 +1,97 @@
+{
+  "schema": "slotspe_redundancy_exclusion_claim_review_v1",
+  "recorded_at": "2026-10-22T22:38:37.592667+08:00",
+  "route_task": "SlotSPE / SPE-08 / read-only review of no-meaning and excluded-design claims",
+  "status": "no_harm_not_established_is_valid_exclusion_and_randomness_claims_overstated",
+  "completed_work": {
+    "supported_boundary": "Existing observations do not establish predictive or clinical harm, nor benefit of reducing slot cosine.",
+    "design_intention": {
+      "claim": "Slots were intended as redundant aggregation; high slot similarity is therefore normal.",
+      "verdict": "Unsupported and contrary to the stated intent. The original paper distinguishes redundant INPUTS from distinct OUTPUT slots, and explicitly proposes selective activation to reduce slot redundancy. This does not make cosine a clinical endpoint.",
+      "primary_source": "https://arxiv.org/html/2512.01116v3#S1",
+      "sections": [
+        "Abstract",
+        "Introduction paragraph beginning To reduce slot redundancy",
+        "3.1"
+      ]
+    },
+    "temperature": {
+      "verdict": "Temperature alone is not sufficient to determine gate collapse; score gaps, noisy selected mask and epsilon normalization also matter. Checkpoint variation does not disprove a conditional numerical defect.",
+      "source": "third_party/SlotSPE/models/SlotSPE.py:54-68",
+      "formula": "returned gate sum = selected global-softmax mass / (selected mass + 1e-8)"
+    },
+    "correlation": {
+      "quoted_rho_values": [
+        -0.014,
+        0.09
+      ],
+      "quoted_values_independently_verified": false,
+      "verdict": "Nonsignificance and near-zero Spearman support only no clear monotonic association detected under that sample/protocol, not no causal relationship.",
+      "reference": "https://www.amstat.org/asa/files/pdfs/p-valuestatement.pdf"
+    },
+    "top1_probability": {
+      "quoted_definition_and_rate_independently_verified": false,
+      "native_default_slots": 8,
+      "native_default_k": 2,
+      "if_metric_is_top_scored_slot_retained_random_baseline": 0.25,
+      "if_metric_is_winning_index_marginal_under_uniform_top1": 0.125,
+      "verdict": "Uniform marginal frequency does not prove input-independent random selection. If averaging slot activation frequencies, 1/8 for top1 can be a counting identity; a median is not automatically that identity. Resolve the actual metric before inference.",
+      "existing_auditor_definition": "bool(mask[i, scores[i].argmax()])",
+      "code_reference": "scripts/check_slotspe_gate_collapse.py:162"
+    },
+    "performance_provenance": {
+      "source": "docs/research/slotspe_sparsity_off_20261021/关闭稀疏选择对照.txt",
+      "cohort_n": 71,
+      "checkpoint_sha256": "3f8ed9878cf451854efe93a3d2fd73f9a66cf341522362dc626b061902a9407c",
+      "original_cindex": 0.6866267465069861,
+      "one_modality_off_cindex": 0.687624750499002,
+      "both_modalities_off_cindex": 0.6846307385229541,
+      "comparison_type": "frozen weights and retained final slots, not matched retraining",
+      "boundary": "These are not the two 77-patient checkpoint diagnoses quoted in the claim. Small point differences do not themselves establish statistical equivalence, noise bounds, or lack of training harm."
+    },
+    "two_checkpoint_metadata": {
+      "latest_local_blca_run": {
+        "checkpoint_sha256": "23549f7c82303d5e8eb9de4c4e6cac399a4a546daf051929e789f6ccaed9b3e5",
+        "validation_n": 77,
+        "source": "docs/PROGRESS.json entry latest_local_blca_run"
+      },
+      "latest_local_blca_gpu_run": {
+        "checkpoint_sha256": "4b89dc35f918ce7ba57234475f14ffcd6b0dddc99a839a46b0171039512abcb0",
+        "validation_n": 77,
+        "source": "docs/PROGRESS.json entry latest_local_blca_gpu_run"
+      }
+    },
+    "unverified_new_statistics": [
+      "collapse rates 0.13-0.24 for checkpoint23549f",
+      "77 cases with zero collapse for checkpoint4b89dc35 in the quoted joint diagnosis",
+      "quoted Spearman coefficients and p-values",
+      "exact 0.125 top1 metric and aggregation definition"
+    ],
+    "overall_verdict": "High cosine is a representation observation, not proof of harm. Failure to establish harm is not evidence that the entire slot-design direction is excluded; lowering cosine alone is not proof of a successful correction."
+  },
+  "paths_commit": {
+    "receipt": "docs/research/slotspe_eight_issues_20261019/redundancy_exclusion_claim_review_20261022.json",
+    "new_commit_or_push": false
+  },
+  "checks_actual_execution_raw_receipt": {
+    "original_source_and_public_aggregates_read": true,
+    "primary_paper_and_ASA_statement_read": true,
+    "new_training_runs": 0,
+    "new_model_forwards": 0,
+    "new_backward_passes": 0,
+    "patient_array_or_checkpoint_loads": 0,
+    "server_execution": false,
+    "new_patient_raw_receipt": false,
+    "historical_reports_modified": false,
+    "existing_queue_changed": false
+  },
+  "gaps_reasons": "The quoted joint-diagnosis raw receipt and metric implementation were not located in the searched public evidence. Even if its numbers are accurate, no-causality, random-selection and excluded-design conclusions do not follow from those summaries.",
+  "next_action_user_input": "Obtain the exact metric definition and joint-diagnosis receipt before verifying its frequency/correlation values. Keep the existing single-fold candidate plan unchanged; evaluate geometry, content dependence and prediction separately.",
+  "source_sha256": {
+    "docs/research/slotspe_sparsity_off_20261021/aggregate_summary.json": "f673a346c9d6b71372c51c58d35ca445f2bb678da4a6209d41b4f27518b741e2",
+    "docs/research/slotspe_sparsity_off_20261021/关闭稀疏选择对照.txt": "73f5780935eecf562193da42c45839c38ee16c10df2d1375b789edafb127a48d",
+    "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "docs/research/slotspe_eight_issues_20261019/gate_claim_review_20261022.json": "e4406bf977eeb36c8c3303154b19b933a04d2e39189a51348a53bbf8f9b43909"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "schema": "slotspe_mechanism_deepcheck_issue_map_v1",
+  "recorded_at": "2026-10-22T16:28:53+08:00",
+  "task_id": "SPE-08",
+  "original_p1_p8_preserved": true,
+  "p8_applies_to_original": false,
+  "new_patient_confirmed_problem_count": 0,
+  "findings": [
+    {
+      "id": "reconstruction_content_query",
+      "relation": "P7 target sufficiency and P4 content validation",
+      "status": "new_native_head_constructive_counterexample",
+      "source": "third_party/SlotSPE/models/SlotSPE.py:102,122,214,313",
+      "claim": "Low WSI reconstruction loss alone does not require sample-specific slot changes; fixed distinct dictionary slots can be addressed by target-derived queries.",
+      "limits": "Head-only two-prototype construction with disclosed new in-memory parameters; native SA reachability, trained occurrence, whole objective and patient harm untested.",
+      "receipt": "synthetic_receipt_03.json"
+    },
+    {
+      "id": "geometry_binding",
+      "relation": "Separate geometry dimension, not original P6 scale",
+      "status": "source_boundary_with_stronger_generated_full_model_control",
+      "claim": "Independent patch-feature bags with identical multisets cannot distinguish split versus checkerboard adjacency when no spatial binding is supplied.",
+      "controls": {
+        "unlike_edges": [
+          8,
+          52
+        ],
+        "total_edges": 52,
+        "rotation_invariance": true,
+        "feature_change_positive_control": true,
+        "paired_rng": true
+      },
+      "limits": "Not a real slide test; contextual upstream features and clinical utility untested.",
+      "receipt": "synthetic_receipt_03.json"
+    },
+    {
+      "id": "retained_read_redundancy",
+      "relation": "P2 repeat coverage only",
+      "status": "existing_historical_71_aggregate_and_distinct_GPU_77_report",
+      "claim": "Selected slots still have strongly overlapping readings.",
+      "limits": "Mixing, fragmentation, omissions and predictive harm not implied."
+    },
+    {
+      "id": "selector_direct_fused_gradient",
+      "relation": "P7 local supervision branch",
+      "status": "existing_source_and_public_diagnostic_support",
+      "claim": "Direct fused loss gradient to selector parameters is disconnected.",
+      "limits": "Auxiliary supervision exists; not all SA survival gradients are disconnected."
+    },
+    {
+      "id": "unselected_content_readout",
+      "relation": "Selection semantics implementation finding",
+      "status": "existing_source_and_bounded_synthetic_support",
+      "claim": "Unmasked cross interaction and mean over all self outputs are wider than retained-slot-only readout.",
+      "limits": "No new patient effect measurement here."
+    },
+    {
+      "id": "symmetry_and_recovery",
+      "relation": "P2 recovery / P3 initialization",
+      "status": "conditional_exact_symmetry_boundary_near_recovery_unresolved",
+      "claim": "Equal initial slots remain equal; near-state and ordinary random starts both show net RMS contraction in the disclosed random modules.",
+      "limits": "No content truth or trained recovery failure established.",
+      "receipt": "synthetic_receipt_03.json"
+    },
+    {
+      "id": "fixed_capacity_and_reaggregation",
+      "relation": "P1 and P2",
+      "status": "source_facts_patient_fault_unestablished",
+      "claim": "Native configuration has fixed capacity/top-k and no same-input SA reaggregation after selection.",
+      "limits": "No proof that these choices cause content loss or that extra reaggregation helps."
+    }
+  ],
+  "strong_claims_rejected": [
+    "Whole native SlotSPE must be blind to content proportions.",
+    "Near-equal state contraction proves semantic recovery failure.",
+    "Adding an unused coords keyword establishes patient geometry failure.",
+    "Low reconstruction loss proves sample-specific biological content inside each slot.",
+    "20 completed records constitute 20 independent fold/seed configurations.",
+    "Unchanged C-index means predictions are numerically identical."
+  ],
+  "still_missing_content_evidence": [
+    "mixing",
+    "fragmentation",
+    "specific omissions",
+    "cross-patient type binding",
+    "true irrelevant-content occupancy",
+    "input separability",
+    "matched multi-scale deficiency",
+    "relational reasoning benefit"
+  ],
+  "execution_scope": {
+    "patient_inputs": 0,
+    "checkpoints_loaded": 0,
+    "optimizer_steps": 0,
+    "backward_calls": 0,
+    "server_actions": 0,
+    "new_raw_patient_receipt": false,
+    "innovation_modules_added": 0,
+    "original_sources_modified": false,
+    "commit_or_push": false
+  },
+  "report": "docs/research/slotspe_mechanism_deepcheck_20261022/检查结果与问题优先级.txt"
+}

@@ -1,0 +1,74 @@
+{
+  "schema": "slotspe_official_epoch_selection_review_v1",
+  "recorded_at": "2026-10-23T15:20:11+08:00",
+  "route_task": "SlotSPE / SPE-08 / official score and checkpoint selection source review",
+  "status": "completed_readonly_source_review",
+  "completed_work": {
+    "official_default_max_epochs": 30,
+    "official_default_folds": 5,
+    "selection_metric": "validation concordance_index_censored; not training loss or validation loss",
+    "selection_rule": "Every epoch is evaluated; if val_cindex >= args.max_cindex, update max and overwrite the fold best checkpoint and best prediction file.",
+    "ties": "A later equal-scoring epoch replaces the saved best checkpoint.",
+    "early_stopping_in_step": false,
+    "summary_csv_val_cindex": "The maximum single validation C-index observed across epochs for each fold (args.max_cindex), not the last epoch and not the re-evaluated best-checkpoint C-index.",
+    "summary_csv_mean": "Arithmetic mean of the available fold maxima. With default k=5 and all folds run, mean of five fold maxima; each fold may choose a different epoch.",
+    "fold_split": "Uses train and val. A variable named test_data is instantiated with split_key=val; the score-selection code does not show a separate untouched outer test set.",
+    "risk_definition": "sigmoid(logits) -> cumulative product of (1-hazards) -> risk = negative sum of survival across time bins",
+    "checkpoint_and_prediction_files": {
+      "model_best_s{fold}.pth": "Best validation epoch checkpoint; overwritten on >=.",
+      "s_{fold}_checkpoint.pth": "Final epoch checkpoint.",
+      "split_{fold}_results.pkl": "Predictions saved at the best validation epoch.",
+      "split_{fold}_results_final.pkl": "The results_dict returned from the final-weight evaluation before best checkpoint reload, despite the main CSV C-index being the historical maximum."
+    },
+    "best_checkpoint_reevaluation": {
+      "performed": true,
+      "recomputed_cindex_printed_but_not_returned_as_main_score": true,
+      "other_returned_metrics": "IPCW C-index, Brier metrics, iauc and val_loss use the best-checkpoint re-evaluation.",
+      "randomness_caveat": "Native Gaussian slot draws and Gumbel selection persist in eval; the recomputed score need not equal the saved historical maximum. The _summary function contains no 20-repeat averaging."
+    },
+    "launch_script_seeds": [
+      3,
+      2,
+      1
+    ],
+    "launch_script_scope": "Example launcher runs separate seed-specific jobs and passes --omic_missing. Its seed list does not by itself establish the aggregation used in paper tables.",
+    "current_local_diagnostic_protocol_comparison": "Current documented diagnostic queue uses 3 epochs, 256 real patches, fixed final-epoch weights and 20 repeated evaluations. That is a different score-selection/budget protocol from official 30-epoch validation-peak scoring.",
+    "source_hashes_verified_against_fixed_official_commit": {
+      "third_party/SlotSPE/utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+      "third_party/SlotSPE/utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+      "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "SlotSPE-main/survival.py": "0e660e64abe13d2695c1de2feab7a4ac23c04376f3b8ce54faebb092a64b5f4e",
+      "third_party/SlotSPE/scripts/SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9"
+    }
+  },
+  "paths_commit": {
+    "receipt": "docs/research/slotspe_target_review_20261020/epoch_selection_review_20261023.json",
+    "official_commit": "02051a2083add7b427727e0200e4263516903561",
+    "local_base_commit": "d8dd0518712f99f518df90ee78e94a4072d08810",
+    "source_references": {
+      "split_definition": "third_party/SlotSPE/utils/core_utils.py:38-53",
+      "risk_definition": "third_party/SlotSPE/utils/core_utils.py:200-204",
+      "cindex_definition": "third_party/SlotSPE/utils/core_utils.py:303-304",
+      "per_epoch_evaluation_and_best_save": "third_party/SlotSPE/utils/core_utils.py:421-445",
+      "final_and_best_reevaluation": "third_party/SlotSPE/utils/core_utils.py:447-491",
+      "fold_reset_and_summary": "SlotSPE-main/survival.py:62-108",
+      "defaults": "third_party/SlotSPE/utils/process_args.py:43-51"
+    },
+    "new_commit_created": false
+  },
+  "checks_actual_execution_raw_receipt": {
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_backward_passes": 0,
+    "patient_arrays_or_checkpoints_loaded": 0,
+    "server_execution": false,
+    "server_patient_raw_results_received": false,
+    "paper_experiment_raw_results_received": false,
+    "original_sources_modified": false,
+    "historical_reports_modified": false,
+    "official_source_live_hash_checks_passed": 6
+  },
+  "gaps_reasons": "This confirms behavior of the fixed official public source snapshot, not which artifacts were used for every published paper-table value. Paper table provenance needs the matching configs/logs/checkpoints. A validation-selected peak is not an independently tested generalization result.",
+  "next_action_user_input": "No patient execution is needed to answer this source question. Any score comparison must state the epoch selection rule, fold/split, training budget, patch count, seed and evaluation repetitions; do not equate the current short final-checkpoint audit with official validation-peak scores."
+}

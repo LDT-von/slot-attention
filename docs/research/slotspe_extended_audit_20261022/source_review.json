@@ -1,0 +1,204 @@
+{
+  "schema": "slotspe_extended_source_observations_v1",
+  "recorded_on": "2026-10-22",
+  "task_id": "SPE-08",
+  "source_root": "third_party/SlotSPE",
+  "source_files": {
+    "models/SlotSPE.py": {
+      "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "bytes": 14109
+    },
+    "models/slot_attention.py": {
+      "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "bytes": 4975
+    },
+    "models/transformer.py": {
+      "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "bytes": 10848
+    },
+    "models/omics_encoder.py": {
+      "sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+      "bytes": 648
+    },
+    "utils/loss_func.py": {
+      "sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+      "bytes": 16600
+    },
+    "utils/process_args.py": {
+      "sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+      "bytes": 5407
+    },
+    "dataset/dataset_survival.py": {
+      "sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+      "bytes": 14691
+    }
+  },
+  "main_forward_location": {
+    "path": "models/SlotSPE.py",
+    "start": 253,
+    "end": 332
+  },
+  "main_forward_direct_kwargs_reads": [
+    {
+      "line": 254,
+      "expression": "kwargs['x_wsi']"
+    },
+    {
+      "line": 257,
+      "expression": "kwargs['omic_missing']"
+    },
+    {
+      "line": 260,
+      "expression": "kwargs['x_omic%d' % i]"
+    },
+    {
+      "line": 271,
+      "expression": "kwargs['x_omics']"
+    },
+    {
+      "line": 322,
+      "expression": "kwargs['y']"
+    },
+    {
+      "line": 323,
+      "expression": "kwargs['c']"
+    }
+  ],
+  "main_forward_direct_self_calls_lexical_order_not_runtime_trace": [
+    {
+      "line": 255,
+      "target": "self.wsi_mlp",
+      "arguments": "self.wsi_mlp(x_wsi)"
+    },
+    {
+      "line": 272,
+      "target": "self.sig_networks",
+      "arguments": "self.sig_networks(x_omic)"
+    },
+    {
+      "line": 279,
+      "target": "self.slot_attention_omic",
+      "arguments": "self.slot_attention_omic(x_wsi_proj)"
+    },
+    {
+      "line": 280,
+      "target": "self.reconstruction_head_joint",
+      "arguments": "self.reconstruction_head_joint(x_omics, slots_omic_from_wsi)"
+    },
+    {
+      "line": 283,
+      "target": "self.slot_attention_wsi",
+      "arguments": "self.slot_attention_wsi(x_wsi_proj)"
+    },
+    {
+      "line": 285,
+      "target": "self.slot_attention_omic",
+      "arguments": "self.slot_attention_omic(x_omics)"
+    },
+    {
+      "line": 289,
+      "target": "self.slot_decoder_wsi",
+      "arguments": "self.slot_decoder_wsi(slots_wsi)"
+    },
+    {
+      "line": 291,
+      "target": "self.slot_decoder_omic",
+      "arguments": "self.slot_decoder_omic(slots_omic)"
+    },
+    {
+      "line": 294,
+      "target": "self.cross_attention",
+      "arguments": "self.cross_attention(slots_wsi, slots_omic)"
+    },
+    {
+      "line": 296,
+      "target": "self.self_attention_wsi",
+      "arguments": "self.self_attention_wsi(slots_wsi, mask=wsi_keep_slots.bool())"
+    },
+    {
+      "line": 297,
+      "target": "self.self_attention_omic",
+      "arguments": "self.self_attention_omic(slots_omic, mask=omic_keep_slots.bool())"
+    },
+    {
+      "line": 301,
+      "target": "self.to_logits",
+      "arguments": "self.to_logits(x)"
+    },
+    {
+      "line": 306,
+      "target": "self.reconstruction_head_omic",
+      "arguments": "self.reconstruction_head_omic(x_omics, slots_omic, mask=omic_keep_slots.bool())"
+    },
+    {
+      "line": 309,
+      "target": "self.slot_attention_omic",
+      "arguments": "self.slot_attention_omic(x_wsi_proj)"
+    },
+    {
+      "line": 310,
+      "target": "self.reconstruction_head_joint",
+      "arguments": "self.reconstruction_head_joint(x_omics, slots_omic_from_wsi)"
+    },
+    {
+      "line": 313,
+      "target": "self.reconstruction_head_wsi",
+      "arguments": "self.reconstruction_head_wsi(x_wsi_proj, slots_wsi, mask=wsi_keep_slots.bool())"
+    },
+    {
+      "line": 324,
+      "target": "self.loss_fn",
+      "arguments": "self.loss_fn(logits_wsi, y=y, c=c, t=None)"
+    },
+    {
+      "line": 324,
+      "target": "self.loss_fn",
+      "arguments": "self.loss_fn(logits_omic, y=y, c=c, t=None)"
+    }
+  ],
+  "default_config": {
+    "--slot_num_wsi": {
+      "line": 82,
+      "default": 8
+    },
+    "--slot_num_omics": {
+      "line": 83,
+      "default": 8
+    },
+    "--slot_iters": {
+      "line": 84,
+      "default": 10
+    },
+    "--topk_ratio": {
+      "line": 89,
+      "default": 0.25
+    }
+  },
+  "coordinate_scope": "No explicit global patch coordinates, adjacency or magnification is consumed by this forward; local morphology in x_wsi is not ruled out.",
+  "joint_omic_reconstruction_is_not_selector_feedback": {
+    "first_prediction_slot_calls_lines": [
+      283,
+      285
+    ],
+    "decoder_calls_lines": [
+      289,
+      291
+    ],
+    "joint_reconstruction_slot_call_line": 309,
+    "missing_omic_auxiliary_call_line": 279
+  },
+  "relation_modules_present": {
+    "self_attention_wsi": 197,
+    "self_attention_omic": 198,
+    "cross_attention": 199
+  },
+  "objective_targets": {
+    "main_fused_survival": "The model returns fused logits; the preserved diagnostic gradient_probe evaluates survival loss on logits against y/c.",
+    "auxiliary_unimodal_survival": "models/SlotSPE.py:324",
+    "omic_reconstruction": "learned x_omics.detach(); models/SlotSPE.py:304",
+    "wsi_reconstruction": "normalized learned x_wsi_proj; models/SlotSPE.py:315"
+  },
+  "scope": "source_facts_and_capability_contract_only_not_patient_harm",
+  "patient_data_read": false,
+  "model_executed_by_this_metadata_script": false
+}

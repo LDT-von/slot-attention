@@ -1,0 +1,113 @@
+{
+  "schema": "slotspe_slot_quality_contribution_claim_review_v1",
+  "recorded_at": "2026-10-23T13:21:18+08:00",
+  "route_task": "SlotSPE / SPE-08 / readonly review of quoted slot-quality and contribution diagnosis",
+  "status": "structural_bypass_confirmed_quoted_measurements_unverified_interpretation_corrected",
+  "completed_work": {
+    "source_facts": [
+      {
+        "finding": "Cross attention consumes all original WSI and OMIC slots without selection masks.",
+        "source": "third_party/SlotSPE/models/SlotSPE.py:294"
+      },
+      {
+        "finding": "Self attention masks every pair for which either query or key is unselected. It does not only mask unselected-to-unselected pairs.",
+        "source": "third_party/SlotSPE/models/transformer.py:89-95"
+      },
+      {
+        "finding": "For an unselected query the entire attention row is filled with the same finite -1e9. In the float32 evaluation interpretation its softmax is uniform over all 8 values, not zero. Unselected slots also retain their residual and MLP outputs; all 8 output rows are mean pooled.",
+        "source": "third_party/SlotSPE/models/transformer.py:94-100,128-132; third_party/SlotSPE/models/SlotSPE.py:300",
+        "evidence_tier": "algebra from source, not a new model forward"
+      },
+      {
+        "finding": "The selection mask therefore changes the forward attention pattern but does not enforce strict removal of the other 6 slots from fused prediction.",
+        "boundary": "Does not prove zero selection effect, patient harm or benefit of removing the selector."
+      },
+      {
+        "finding": "The hard Gumbel-TopK branch adds unit-scale Gumbel noise before topk even in eval. Its temperature is used in the soft surrogate, not in the hard topk indices. The decoder's later soft gate separately uses keep_score / temperature.",
+        "source": "third_party/SlotSPE/models/slot_attention.py:164-185; third_party/SlotSPE/models/SlotSPE.py:54-68"
+      },
+      {
+        "finding": "keep_score is a learned Linear-ReLU-Linear function of mapped slot content. It has auxiliary unimodal survival supervision. The fused survival path converts the hard selection to bool, disconnecting its direct selector surrogate gradient.",
+        "source": "third_party/SlotSPE/models/SlotSPE.py:29-51,296-297,321-328"
+      }
+    ],
+    "claim_assessments": [
+      {
+        "claim": "2/77 and 4/77 exact matches, mean overlap 0.53/2, establish random selection.",
+        "assessment": "Compatible with near-uniform random selection, not proof of strict uniformity. Under uniform unordered 8-choose-2 sampling, exact match probability is 1/28, expected matches in 77 cases is 2.75, expected overlap is 0.5 slots. A small rank1-rank2 gap alone is insufficient: all 8 score gaps and especially rank2-rank3 must be inspected."
+      },
+      {
+        "claim": "Per-patient Spearman between keep_score and each slot's whole-cohort C-index measures patient-specific slot quality.",
+        "assessment": "If the 8 whole-cohort C-index values were reused in each patient's correlation, the metric compares patient scores with global slot-index performance, not patient-specific utility. It also reuses the same cohort outcomes. The actual script and grouping are required. Near-zero correlation or small point differences do not establish inability to select useful complementary information."
+      },
+      {
+        "claim": "The cross branch contributes one third of the prediction.",
+        "assessment": "False as an architectural deduction. Equal feature dimensions in cat([cross,wsi,omic]) do not constrain the learned final linear weights or the resulting logit/risk contribution."
+      },
+      {
+        "claim": "Selected contribution is 25.03%/25.01%, while discarded contribution is 19.78%/55.20%.",
+        "assessment": "The table mixes denominators or metrics unless further definitions explain it. Within one modality selected and discarded fractions should sum to 100%; the quoted rows sum to 44.81% and 80.21%. The claimed global discarded fractions cannot be accepted without the exact formula, aggregation and bias treatment."
+      },
+      {
+        "claim": "A 7.56e-7 closed-form error proves exact risk decomposition and no TopK effect.",
+        "assessment": "The final head is linear, so frozen contextual output rows can be decomposed into logit terms plus bias. Those terms already contain information from other slots. The standard NLL risk is nonlinear: -sum_t product_u<=t (1-sigmoid(z_u)). A logit identity is not an additive risk or causal input-slot decomposition. Error target and scale require the actual script."
+      },
+      {
+        "claim": "A selected fraction near 2/8 proves selected slots receive no extra influence.",
+        "assessment": "All output rows have coefficient 1/8 in final mean pooling by construction. Selection can still change the contextual row values through attention. Row contribution or post-hoc row deletion is not equivalent to recomputing the full downstream model with different selection or removed input slots."
+      },
+      {
+        "claim": "Because selection is noise dominated, changing forward iteration count cannot change it.",
+        "assessment": "Does not follow. Iteration count can change slot representations and the keep_score distribution even with frozen weights. Frozen-iteration inference is a checkpoint-specific sensitivity test, not a retrained-method efficacy result. No such inference was authorized or executed in this review."
+      }
+    ],
+    "arithmetic_on_quoted_values_only": {
+      "wsi_slot_cindex_range": 0.0499,
+      "omic_slot_cindex_range": 0.0071,
+      "wsi_contribution_table_row_sum_percent": 44.81,
+      "omic_contribution_table_row_sum_percent": 80.21,
+      "cindex_difference_from_registered_mean": 0.004278516640253471,
+      "difference_in_registered_repeat_rng_population_sd": 1.2091773495625946,
+      "boundary": "The stored mean/SD describe checkpoint evaluation RNG variation, not patient-sampling uncertainty or proof that a diagnostic's definitions are correct. All new per-slot values remain user-quoted and independently unverified."
+    }
+  },
+  "paths_commit": {
+    "receipt": "docs/research/slotspe_eight_issues_20261019/slot_quality_contribution_claim_review_20261023.json",
+    "progress": "docs/PROGRESS.json",
+    "progress_backup": "local_evidence/documentation_backups/slot_quality_claim_review_20261023_132118/PROGRESS.before.json",
+    "current_HEAD": "d8dd0518712f99f518df90ee78e94a4072d08810",
+    "new_commit_or_push": false
+  },
+  "fixed_slot_file_provenance_review": {
+    "named_paths": [
+      "scripts/check_slotspe_fixed_slot_pair.py",
+      "configs/slotspe_fixed_slot_pair_fold0_seed3.json"
+    ],
+    "current_checkout_exact_paths_exist": false,
+    "current_local_all_ref_path_history_entries": 0,
+    "E_DCT_Reg_exact_paths_exist": false,
+    "session_search_scope": "Exact filenames in local Codex sessions dated 2026-10-22 and 2026-10-23, plus session_index.jsonl; matched records inspected for prior creation evidence.",
+    "prior_creation_tool_record_found": false,
+    "verdict": "Creator unconfirmed. Only the current quoted user message and this review's own mentions were found in the scoped session search; this is not proof the files never existed elsewhere. Creation time alone cannot identify their creator."
+  },
+  "checks_actual_execution_raw_receipt": {
+    "original_registered_non_readme_hashes_matching_existing_provenance": 10,
+    "new_training_runs": 0,
+    "new_model_forwards": 0,
+    "new_backward_passes": 0,
+    "patient_arrays_or_checkpoints_loaded": 0,
+    "server_execution": false,
+    "new_patient_raw_receipt": false,
+    "original_sources_modified": false,
+    "historical_reports_modified": false,
+    "existing_queue_changed": false,
+    "quoted_new_diagnostic_script_located": false,
+    "quoted_fixed_slot_files_exist_in_current_checkout": false
+  },
+  "gaps_reasons": "The new 77-case diagnostic script, manifest, repeated draws and raw per-slot outputs were not found in the current local checkout. The two named fixed_slot_pair files are absent here and have no current local all-ref path history. Their creator cannot be inferred from a reported creation time. This is an interpretation/source audit, not an independent numeric acceptance of the quoted run.",
+  "next_action_user_inputs": "Provide the full run/script path or server branch and commit plus private raw receipt. First audit exact slot-quality, contribution, risk and leave-one-out definitions from existing outputs; keep patient arrays ignored. No automatic training, iteration sweep or inference. Patient predictive harm and correction efficacy remain not established.",
+  "primary_references": [
+    "https://scikit-survival.readthedocs.io/en/stable/api/generated/sksurv.metrics.concordance_index_censored.html",
+    "https://proceedings.mlr.press/v97/kool19a.html"
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "schema": "slotspe_public_observe_summary_review_v1",
+  "basis": "public_report_source_inspection_and_generated_arrays_only",
+  "reported_observe_commit": "2a806c27e9c71bee0fe21d48d639ebc67b8b92ee",
+  "server_raw_artifacts_received_and_audited": false,
+  "patient_model_execution_this_review": false,
+  "torch_imported": false,
+  "entropy_counterexample": {
+    "native_competition_slot_probabilities": [
+      0.3,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "native_competition_normalized_entropy": 0.9488131148903386,
+    "native_max_abs_deviation_from_one_eighth": 0.175,
+    "row_normalized_pooling_max_pairwise_abs_difference": 2.168404344971009e-18,
+    "derived_report_metric_entropy_min": 1.0,
+    "derived_report_metric_entropy_max": 1.0,
+    "conclusion": "derived_pooling_entropy_one_does_not_identify_native_competition_uniformity"
+  },
+  "head_averaging_counterexample": {
+    "per_head_rows_differ": true,
+    "mean_head_rows_equal": true
+  },
+  "centered_rank_ceiling": {
+    "4_slots": 3,
+    "8_slots": 7,
+    "16_slots": 15
+  },
+  "generated_centered_eye8_rank": {
+    "value": 6.999999999999998,
+    "reason": null,
+    "algebraic_rank": 7,
+    "variance_fractions": [
+      0.14285714285714285,
+      0.14285714285714285,
+      0.14285714285714285,
+      0.14285714285714285,
+      0.14285714285714285,
+      0.14285714285714285,
+      0.1428571428571428,
+      7.901578703084359e-34
+    ],
+    "definition": "exp(entropy of normalized squared singular values after centering slots)"
+  },
+  "reported_gradient_norm_ratios": {
+    "wsi": {
+      "scope": "ratio_of_reported_rounded_medians_not_median_of_patient_ratios",
+      "weighted_reconstruction_over_main": 0.00033496332518337407,
+      "main_over_weighted_reconstruction": 2985.401459854015,
+      "log10_main_over_weighted_reconstruction": 3.475002740850935,
+      "aux_survival_over_weighted_reconstruction": 3374.6958637469584
+    },
+    "omic": {
+      "scope": "ratio_of_reported_rounded_medians_not_median_of_patient_ratios",
+      "weighted_reconstruction_over_main": 0.0016135048231511254,
+      "main_over_weighted_reconstruction": 619.7688322040653,
+      "log10_main_over_weighted_reconstruction": 2.792229732048246,
+      "aux_survival_over_weighted_reconstruction": 631.7257871662017
+    }
+  },
+  "negative_gradient_cosine_patient_counts_of_77": {
+    "main_vs_aux_survival": {
+      "wsi": 9,
+      "omic": 4
+    },
+    "main_vs_weighted_reconstruction": {
+      "wsi": 44,
+      "omic": 54
+    },
+    "aux_survival_vs_weighted_reconstruction": {
+      "wsi": 55,
+      "omic": 55
+    }
+  },
+  "own_beats_mismatched_donor_counts_of_77": [
+    40,
+    31,
+    72
+  ],
+  "runner_identity": {
+    "reported_sha256": "33f572ff3ee53620e16a4eb0b02cd3983d3076ec2f5bcf1c9b0f4c2b918f1502",
+    "local_sha256": "33f572ff3ee53620e16a4eb0b02cd3983d3076ec2f5bcf1c9b0f4c2b918f1502",
+    "local_matches_report": true,
+    "lf_normalized_matches_report": true,
+    "automatic_source_gate_files": [
+      "models/SlotSPE.py",
+      "models/slot_attention.py",
+      "models/transformer.py",
+      "models/omics_encoder.py",
+      "utils/loss_func.py"
+    ],
+    "reported_manual_eleven_file_check_independently_verified": false
+  },
+  "local_source_hashes": {
+    "vendored": {
+      "models/SlotSPE.py": {
+        "present": true,
+        "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "lf_normalized_sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e"
+      },
+      "models/slot_attention.py": {
+        "present": true,
+        "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "lf_normalized_sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109"
+      },
+      "models/transformer.py": {
+        "present": true,
+        "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "lf_normalized_sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985"
+      },
+      "models/omics_encoder.py": {
+        "present": true,
+        "sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "lf_normalized_sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685"
+      },
+      "utils/loss_func.py": {
+        "present": true,
+        "sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+        "lf_normalized_sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+      },
+      "utils/core_utils.py": {
+        "present": true,
+        "sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+        "lf_normalized_sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af"
+      }
+    },
+    "desktop_original": {
+      "models/SlotSPE.py": {
+        "present": true,
+        "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "lf_normalized_sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e"
+      },
+      "models/slot_attention.py": {
+        "present": true,
+        "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "lf_normalized_sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109"
+      },
+      "models/transformer.py": {
+        "present": true,
+        "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "lf_normalized_sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985"
+      },
+      "models/omics_encoder.py": {
+        "present": true,
+        "sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "lf_normalized_sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685"
+      },
+      "utils/loss_func.py": {
+        "present": true,
+        "sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+        "lf_normalized_sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+      },
+      "utils/core_utils.py": {
+        "present": true,
+        "sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+        "lf_normalized_sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af"
+      }
+    },
+    "local_dct_reference": {
+      "models/SlotSPE.py": {
+        "present": true,
+        "sha256": "0928641f2f7d4df5878036ca10152a94d2e33f81dd71c0947e382be5ab01e642",
+        "lf_normalized_sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e"
+      },
+      "models/slot_attention.py": {
+        "present": true,
+        "sha256": "8f6ba40339f1c25e51028fb3c6927a41831fd603427820f9e6606918594b3a4d",
+        "lf_normalized_sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109"
+      },
+      "models/transformer.py": {
+        "present": true,
+        "sha256": "6f5ae6be95e33fbf6f32616dde405f91e08576b4c0396eae44b51ceb2f0fabde",
+        "lf_normalized_sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985"
+      },
+      "models/omics_encoder.py": {
+        "present": true,
+        "sha256": "c14ada7be2799ee4dee0995bea6e7b57ed9faedf934aef7f9e0e5aa6e0c4af96",
+        "lf_normalized_sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685"
+      },
+      "utils/loss_func.py": {
+        "present": true,
+        "sha256": "bd5d8af96d82a77ffd8b605c843c7849838b2ff6bf49d9b8562ab57b964e3de0",
+        "lf_normalized_sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+      },
+      "utils/core_utils.py": {
+        "present": true,
+        "sha256": "c90148825b73e7b05c3b5a231fb149176378ec45fd8eccd22266f0b3ba2627dc",
+        "lf_normalized_sha256": "280f113e71e37d605f33812b44bd6118618c507cec35c07c77eb7ed59c28d0d0"
+      }
+    }
+  },
+  "local_source_comparisons_to_vendored": {
+    "desktop_original": {
+      "models/SlotSPE.py": {
+        "byte_equal": true,
+        "lf_normalized_equal": true
+      },
+      "models/slot_attention.py": {
+        "byte_equal": true,
+        "lf_normalized_equal": true
+      },
+      "models/transformer.py": {
+        "byte_equal": true,
+        "lf_normalized_equal": true
+      },
+      "models/omics_encoder.py": {
+        "byte_equal": true,
+        "lf_normalized_equal": true
+      },
+      "utils/loss_func.py": {
+        "byte_equal": true,
+        "lf_normalized_equal": true
+      },
+      "utils/core_utils.py": {
+        "byte_equal": true,
+        "lf_normalized_equal": true
+      }
+    },
+    "local_dct_reference": {
+      "models/SlotSPE.py": {
+        "byte_equal": false,
+        "lf_normalized_equal": true
+      },
+      "models/slot_attention.py": {
+        "byte_equal": false,
+        "lf_normalized_equal": true
+      },
+      "models/transformer.py": {
+        "byte_equal": false,
+        "lf_normalized_equal": true
+      },
+      "models/omics_encoder.py": {
+        "byte_equal": false,
+        "lf_normalized_equal": true
+      },
+      "utils/loss_func.py": {
+        "byte_equal": false,
+        "lf_normalized_equal": true
+      },
+      "utils/core_utils.py": {
+        "byte_equal": false,
+        "lf_normalized_equal": false
+      }
+    }
+  },
+  "server_source_identity_scope": "local_paths_are_not_the_server_root; remote_eleven_hash_values_not_received"
+}

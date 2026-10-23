@@ -1,0 +1,655 @@
+{
+  "schema": "native_slotspe_generated_allocation_public_summary_v1",
+  "recorded_at": "2026-10-22T16:38:07.800977+08:00",
+  "source_summary_sha256": "937da30159ad964a4eed8abac2d29d974951d5fea5398e418f0bb520d3a9f751",
+  "evidence_tier": "generated_data_full_model_smoke_and_short_learning_only",
+  "plan": {
+    "data": "invented only; new random weights; CPU float32",
+    "seeds": [
+      3,
+      17,
+      29
+    ],
+    "steps": 24,
+    "batch_size": 8,
+    "train_size": 64,
+    "holdout_size": 32,
+    "eval_repeats": 3,
+    "toy_projection_dim": 32,
+    "slots_per_modality": 8,
+    "toy_slot_iters": 3,
+    "patches": 24,
+    "pathways": 4,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "native_default_shape_gate": "5 arms, dim256/8slots/10iters, full loss backward, no optimizer",
+    "patient_execution": false,
+    "server_execution": false,
+    "selection_rule": "fixed last step; no outcome tuning or best-checkpoint selection"
+  },
+  "variants": {
+    "S0": {
+      "wsi": "original",
+      "omic": "original"
+    },
+    "S1": {
+      "wsi": "sinkhorn",
+      "omic": "sinkhorn"
+    },
+    "S2": {
+      "wsi": "mesh_uniform",
+      "omic": "original"
+    },
+    "S3": {
+      "wsi": "original",
+      "omic": "mesh_uniform"
+    },
+    "S4": {
+      "wsi": "mesh_uniform",
+      "omic": "mesh_uniform"
+    }
+  },
+  "assignment_config": {
+    "mode": "original",
+    "eps": 1e-08,
+    "temperature": 1.0,
+    "sinkhorn_steps": 20,
+    "mesh_steps": 4,
+    "mesh_lr": 1.0,
+    "noise_std": 0.001
+  },
+  "runtime": {
+    "torch": "2.6.0+cu124",
+    "device": "cpu",
+    "dtype": "float32",
+    "threads": 1
+  },
+  "source_sha256": {
+    "third_party/SlotSPE/dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "third_party/SlotSPE/models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "third_party/SlotSPE/utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "third_party/SlotSPE/utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b"
+  },
+  "code_sha256": {
+    "scripts/check_slotspe_native_allocation.py": "8f1ac683bda5358dc3f827a69eb1a283c9140546516d66961422f4a9a8d2fe4f",
+    "survot_rank/research/slotspe_proof/native_allocation.py": "77da90d0ec2303ea90d77e1ffb92cada98c2b115c333fc33afd4ff3ac6ecbf77",
+    "survot_rank/research/slotspe_proof/assignment_router.py": "8adff623dffc74ed5fdfae1cacf230687dd2d68f9c84135744f827f183399608"
+  },
+  "native_shape_gates": [
+    {
+      "variant": "S0",
+      "loss": 3.0030555725097656,
+      "finite": true,
+      "calls": [
+        {
+          "modality": "wsi",
+          "call_index": 0,
+          "source_input_count": 12
+        },
+        {
+          "modality": "omic",
+          "call_index": 0,
+          "source_input_count": 4
+        },
+        {
+          "modality": "omic",
+          "call_index": 1,
+          "source_input_count": 12
+        }
+      ],
+      "seconds": 0.830108600002859
+    },
+    {
+      "variant": "S1",
+      "loss": 3.0030086040496826,
+      "finite": true,
+      "calls": [
+        {
+          "modality": "wsi",
+          "call_index": 0,
+          "source_input_count": 12
+        },
+        {
+          "modality": "omic",
+          "call_index": 0,
+          "source_input_count": 4
+        },
+        {
+          "modality": "omic",
+          "call_index": 1,
+          "source_input_count": 12
+        }
+      ],
+      "seconds": 0.3852499999993597
+    },
+    {
+      "variant": "S2",
+      "loss": 3.0013504028320312,
+      "finite": true,
+      "calls": [
+        {
+          "modality": "wsi",
+          "call_index": 0,
+          "source_input_count": 12
+        },
+        {
+          "modality": "omic",
+          "call_index": 0,
+          "source_input_count": 4
+        },
+        {
+          "modality": "omic",
+          "call_index": 1,
+          "source_input_count": 12
+        }
+      ],
+      "seconds": 0.6165844999995898
+    },
+    {
+      "variant": "S3",
+      "loss": 3.002195358276367,
+      "finite": true,
+      "calls": [
+        {
+          "modality": "wsi",
+          "call_index": 0,
+          "source_input_count": 12
+        },
+        {
+          "modality": "omic",
+          "call_index": 0,
+          "source_input_count": 4
+        },
+        {
+          "modality": "omic",
+          "call_index": 1,
+          "source_input_count": 12
+        }
+      ],
+      "seconds": 1.4191334000024654
+    },
+    {
+      "variant": "S4",
+      "loss": 3.0005910396575928,
+      "finite": true,
+      "calls": [
+        {
+          "modality": "wsi",
+          "call_index": 0,
+          "source_input_count": 12
+        },
+        {
+          "modality": "omic",
+          "call_index": 0,
+          "source_input_count": 4
+        },
+        {
+          "modality": "omic",
+          "call_index": 1,
+          "source_input_count": 12
+        }
+      ],
+      "seconds": 1.2828678000005311
+    }
+  ],
+  "per_seed": [
+    {
+      "seed": 3,
+      "variant": "S0",
+      "initial_holdout": {
+        "nll": 1.715745210647583,
+        "wsi_0_slot_cosine": 0.676496167977651,
+        "wsi_0_read_overlap": 0.9569126764933268,
+        "omic_0_slot_cosine": 0.6556944251060486,
+        "omic_0_read_overlap": 0.8599057197570801
+      },
+      "final_holdout": {
+        "nll": 1.387152910232544,
+        "wsi_0_slot_cosine": 0.9273604154586792,
+        "wsi_0_read_overlap": 0.9655171831448873,
+        "omic_0_slot_cosine": 0.898791233698527,
+        "omic_0_read_overlap": 0.9015842080116272
+      },
+      "paired_final_nll_delta_to_S0": 0.0,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 17,
+      "variant": "S0",
+      "initial_holdout": {
+        "nll": 2.3224851290384927,
+        "wsi_0_slot_cosine": 0.5861170093218485,
+        "wsi_0_read_overlap": 0.9509575764338175,
+        "omic_0_slot_cosine": 0.5748781760533651,
+        "omic_0_read_overlap": 0.8565832376480103
+      },
+      "final_holdout": {
+        "nll": 1.2839383284250896,
+        "wsi_0_slot_cosine": 0.9555948575337728,
+        "wsi_0_read_overlap": 0.967542310555776,
+        "omic_0_slot_cosine": 0.8492785692214966,
+        "omic_0_read_overlap": 0.8933466871579488
+      },
+      "paired_final_nll_delta_to_S0": 0.0,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 29,
+      "variant": "S0",
+      "initial_holdout": {
+        "nll": 1.8630263805389404,
+        "wsi_0_slot_cosine": 0.6731683214505514,
+        "wsi_0_read_overlap": 0.9349838495254517,
+        "omic_0_slot_cosine": 0.5424502491950989,
+        "omic_0_read_overlap": 0.8271400729815165
+      },
+      "final_holdout": {
+        "nll": 1.2812094688415527,
+        "wsi_0_slot_cosine": 0.9369254310925802,
+        "wsi_0_read_overlap": 0.961129347483317,
+        "omic_0_slot_cosine": 0.8506491581598917,
+        "omic_0_read_overlap": 0.8744602799415588
+      },
+      "paired_final_nll_delta_to_S0": 0.0,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 3,
+      "variant": "S1",
+      "initial_holdout": {
+        "nll": 1.7158064444859822,
+        "wsi_0_slot_cosine": 0.6764588157335917,
+        "wsi_0_read_overlap": 0.9569936990737915,
+        "omic_0_slot_cosine": 0.6555739839871725,
+        "omic_0_read_overlap": 0.860024650891622
+      },
+      "final_holdout": {
+        "nll": 1.3840293884277344,
+        "wsi_0_slot_cosine": 0.9269237915674845,
+        "wsi_0_read_overlap": 0.9627663294474283,
+        "omic_0_slot_cosine": 0.8984372019767761,
+        "omic_0_read_overlap": 0.900809089342753
+      },
+      "paired_final_nll_delta_to_S0": -0.0031235218048095703,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 17,
+      "variant": "S1",
+      "initial_holdout": {
+        "nll": 2.3228390216827393,
+        "wsi_0_slot_cosine": 0.5861824750900269,
+        "wsi_0_read_overlap": 0.9510898590087891,
+        "omic_0_slot_cosine": 0.5751093228658041,
+        "omic_0_read_overlap": 0.8566686113675436
+      },
+      "final_holdout": {
+        "nll": 1.2837710777918498,
+        "wsi_0_slot_cosine": 0.9556979934374491,
+        "wsi_0_read_overlap": 0.9653770526250204,
+        "omic_0_slot_cosine": 0.8482897082964579,
+        "omic_0_read_overlap": 0.8928690155347189
+      },
+      "paired_final_nll_delta_to_S0": -0.0001672506332397461,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 29,
+      "variant": "S1",
+      "initial_holdout": {
+        "nll": 1.8627703587214153,
+        "wsi_0_slot_cosine": 0.6735692620277405,
+        "wsi_0_read_overlap": 0.9354685743649801,
+        "omic_0_slot_cosine": 0.5427996317545573,
+        "omic_0_read_overlap": 0.827280859152476
+      },
+      "final_holdout": {
+        "nll": 1.2776756683985393,
+        "wsi_0_slot_cosine": 0.9350651303927103,
+        "wsi_0_read_overlap": 0.9551425774892172,
+        "omic_0_slot_cosine": 0.8531837264696757,
+        "omic_0_read_overlap": 0.8738324046134949
+      },
+      "paired_final_nll_delta_to_S0": -0.003533800443013435,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 3,
+      "variant": "S2",
+      "initial_holdout": {
+        "nll": 1.7154121398925781,
+        "wsi_0_slot_cosine": 0.674121101697286,
+        "wsi_0_read_overlap": 0.7987483143806458,
+        "omic_0_slot_cosine": 0.6556944251060486,
+        "omic_0_read_overlap": 0.8599057197570801
+      },
+      "final_holdout": {
+        "nll": 1.3859376907348633,
+        "wsi_0_slot_cosine": 0.9276566704114279,
+        "wsi_0_read_overlap": 0.8074785073598226,
+        "omic_0_slot_cosine": 0.8979312181472778,
+        "omic_0_read_overlap": 0.9012063344319662
+      },
+      "paired_final_nll_delta_to_S0": -0.001215219497680664,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 17,
+      "variant": "S2",
+      "initial_holdout": {
+        "nll": 2.321653127670288,
+        "wsi_0_slot_cosine": 0.5845741033554077,
+        "wsi_0_read_overlap": 0.7940616210301717,
+        "omic_0_slot_cosine": 0.5748781760533651,
+        "omic_0_read_overlap": 0.8565832376480103
+      },
+      "final_holdout": {
+        "nll": 1.2813810110092163,
+        "wsi_0_slot_cosine": 0.9546034733454386,
+        "wsi_0_read_overlap": 0.8092994491259257,
+        "omic_0_slot_cosine": 0.8499834338823954,
+        "omic_0_read_overlap": 0.8935032288233439
+      },
+      "paired_final_nll_delta_to_S0": -0.0025573174158732837,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 29,
+      "variant": "S2",
+      "initial_holdout": {
+        "nll": 1.8629550536473591,
+        "wsi_0_slot_cosine": 0.6726306080818176,
+        "wsi_0_read_overlap": 0.7900944352149963,
+        "omic_0_slot_cosine": 0.5424502491950989,
+        "omic_0_read_overlap": 0.8271400729815165
+      },
+      "final_holdout": {
+        "nll": 1.3113794724146526,
+        "wsi_0_slot_cosine": 0.9382984240849813,
+        "wsi_0_read_overlap": 0.8097071448961893,
+        "omic_0_slot_cosine": 0.8512895703315735,
+        "omic_0_read_overlap": 0.8743990461031595
+      },
+      "paired_final_nll_delta_to_S0": 0.030170003573099846,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 3,
+      "variant": "S3",
+      "initial_holdout": {
+        "nll": 1.7161321640014648,
+        "wsi_0_slot_cosine": 0.676496167977651,
+        "wsi_0_read_overlap": 0.9569126764933268,
+        "omic_0_slot_cosine": 0.6405347983042399,
+        "omic_0_read_overlap": 0.47431325912475586
+      },
+      "final_holdout": {
+        "nll": 1.384420394897461,
+        "wsi_0_slot_cosine": 0.9268168409665426,
+        "wsi_0_read_overlap": 0.965085506439209,
+        "omic_0_slot_cosine": 0.8823277155558268,
+        "omic_0_read_overlap": 0.5038959980010986
+      },
+      "paired_final_nll_delta_to_S0": -0.002732515335083008,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 17,
+      "variant": "S3",
+      "initial_holdout": {
+        "nll": 2.3233338991800943,
+        "wsi_0_slot_cosine": 0.5861170093218485,
+        "wsi_0_read_overlap": 0.9509575764338175,
+        "omic_0_slot_cosine": 0.5645063519477844,
+        "omic_0_read_overlap": 0.47257572412490845
+      },
+      "final_holdout": {
+        "nll": 1.283180832862854,
+        "wsi_0_slot_cosine": 0.9556821783383688,
+        "wsi_0_read_overlap": 0.9676521420478821,
+        "omic_0_slot_cosine": 0.8340903719266256,
+        "omic_0_read_overlap": 0.5003688335418701
+      },
+      "paired_final_nll_delta_to_S0": -0.0007574955622355883,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 29,
+      "variant": "S3",
+      "initial_holdout": {
+        "nll": 1.8641879558563232,
+        "wsi_0_slot_cosine": 0.6731683214505514,
+        "wsi_0_read_overlap": 0.9349838495254517,
+        "omic_0_slot_cosine": 0.5298602978388468,
+        "omic_0_read_overlap": 0.4521442651748657
+      },
+      "final_holdout": {
+        "nll": 1.2835710446039836,
+        "wsi_0_slot_cosine": 0.9354960123697916,
+        "wsi_0_read_overlap": 0.9607800245285034,
+        "omic_0_slot_cosine": 0.8588294188181559,
+        "omic_0_read_overlap": 0.48651116092999774
+      },
+      "paired_final_nll_delta_to_S0": 0.002361575762430901,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 3,
+      "variant": "S4",
+      "initial_holdout": {
+        "nll": 1.7158013979593914,
+        "wsi_0_slot_cosine": 0.674121101697286,
+        "wsi_0_read_overlap": 0.7987483143806458,
+        "omic_0_slot_cosine": 0.6405347983042399,
+        "omic_0_read_overlap": 0.47431325912475586
+      },
+      "final_holdout": {
+        "nll": 1.3844323952992756,
+        "wsi_0_slot_cosine": 0.9258996248245239,
+        "wsi_0_read_overlap": 0.8074874480565389,
+        "omic_0_slot_cosine": 0.8831949234008789,
+        "omic_0_read_overlap": 0.5040640632311503
+      },
+      "paired_final_nll_delta_to_S0": -0.002720514933268303,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 17,
+      "variant": "S4",
+      "initial_holdout": {
+        "nll": 2.3224993546803794,
+        "wsi_0_slot_cosine": 0.5845741033554077,
+        "wsi_0_read_overlap": 0.7940616210301717,
+        "omic_0_slot_cosine": 0.5645063519477844,
+        "omic_0_read_overlap": 0.47257572412490845
+      },
+      "final_holdout": {
+        "nll": 1.2817374467849731,
+        "wsi_0_slot_cosine": 0.9547191659609476,
+        "wsi_0_read_overlap": 0.809879740079244,
+        "omic_0_slot_cosine": 0.8357864220937093,
+        "omic_0_read_overlap": 0.5006155371665955
+      },
+      "paired_final_nll_delta_to_S0": -0.0022008816401164477,
+      "optimizer_steps": 24,
+      "all_finite": true
+    },
+    {
+      "seed": 29,
+      "variant": "S4",
+      "initial_holdout": {
+        "nll": 1.8641135295232136,
+        "wsi_0_slot_cosine": 0.6726306080818176,
+        "wsi_0_read_overlap": 0.7900944352149963,
+        "omic_0_slot_cosine": 0.5298602978388468,
+        "omic_0_read_overlap": 0.4521442651748657
+      },
+      "final_holdout": {
+        "nll": 1.312113364537557,
+        "wsi_0_slot_cosine": 0.9382183154424032,
+        "wsi_0_read_overlap": 0.8093487819035848,
+        "omic_0_slot_cosine": 0.8515727917353312,
+        "omic_0_read_overlap": 0.4854872723420461
+      },
+      "paired_final_nll_delta_to_S0": 0.030903895696004158,
+      "optimizer_steps": 24,
+      "all_finite": true
+    }
+  ],
+  "means": [
+    {
+      "variant": "S0",
+      "initial_nll": 1.9670855734083388,
+      "final_nll": 1.3174335691663954,
+      "paired_nll_delta_mean": 0.0,
+      "paired_nll_delta_std_ddof1": 0.0,
+      "paired_nll_deltas": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "final_mechanism": {
+        "wsi_0_slot_cosine": 0.9399602346950108,
+        "wsi_0_read_overlap": 0.9647296137279935,
+        "omic_0_slot_cosine": 0.8662396536933051,
+        "omic_0_read_overlap": 0.8897970583703783
+      }
+    },
+    {
+      "variant": "S1",
+      "initial_nll": 1.9671386082967122,
+      "final_nll": 1.3151587115393746,
+      "paired_nll_delta_mean": -0.0022748576270209173,
+      "paired_nll_delta_std_ddof1": 0.0018367328522183304,
+      "paired_nll_deltas": [
+        -0.0031235218048095703,
+        -0.0001672506332397461,
+        -0.003533800443013435
+      ],
+      "final_mechanism": {
+        "wsi_0_slot_cosine": 0.9392289717992146,
+        "wsi_0_read_overlap": 0.9610953198538886,
+        "omic_0_slot_cosine": 0.8666368789143032,
+        "omic_0_read_overlap": 0.8891701698303223
+      }
+    },
+    {
+      "variant": "S2",
+      "initial_nll": 1.9666734404034085,
+      "final_nll": 1.3262327247195773,
+      "paired_nll_delta_mean": 0.008799155553181967,
+      "paired_nll_delta_std_ddof1": 0.01851985867989616,
+      "paired_nll_deltas": [
+        -0.001215219497680664,
+        -0.0025573174158732837,
+        0.030170003573099846
+      ],
+      "final_mechanism": {
+        "wsi_0_slot_cosine": 0.9401861892806159,
+        "wsi_0_read_overlap": 0.8088283671273125,
+        "omic_0_slot_cosine": 0.8664014074537489,
+        "omic_0_read_overlap": 0.8897028697861565
+      }
+    },
+    {
+      "variant": "S3",
+      "initial_nll": 1.9678846730126274,
+      "final_nll": 1.3170574241214328,
+      "paired_nll_delta_mean": -0.0003761450449625651,
+      "paired_nll_delta_std_ddof1": 0.0025683676119689167,
+      "paired_nll_deltas": [
+        -0.002732515335083008,
+        -0.0007574955622355883,
+        0.002361575762430901
+      ],
+      "final_mechanism": {
+        "wsi_0_slot_cosine": 0.939331677224901,
+        "wsi_0_read_overlap": 0.9645058910051981,
+        "omic_0_slot_cosine": 0.8584158354335361,
+        "omic_0_read_overlap": 0.49692533082432216
+      }
+    },
+    {
+      "variant": "S4",
+      "initial_nll": 1.9674714273876615,
+      "final_nll": 1.3260944022072685,
+      "paired_nll_delta_mean": 0.008660833040873136,
+      "paired_nll_delta_std_ddof1": 0.01926480941768958,
+      "paired_nll_deltas": [
+        -0.002720514933268303,
+        -0.0022008816401164477,
+        0.030903895696004158
+      ],
+      "final_mechanism": {
+        "wsi_0_slot_cosine": 0.9396123687426249,
+        "wsi_0_read_overlap": 0.8089053233464559,
+        "omic_0_slot_cosine": 0.8568513790766398,
+        "omic_0_read_overlap": 0.4967222909132639
+      }
+    }
+  ],
+  "counts": {
+    "synthetic_training_runs": 15,
+    "optimizer_steps": 360,
+    "native_shape_full_forwards": 5,
+    "native_shape_full_backwards": 5,
+    "toy_full_forwards": 450,
+    "toy_full_backwards": 360,
+    "patient_runs": 0,
+    "server_runs": 0
+  },
+  "protected_files_unchanged": true,
+  "raw_synthetic_file_sha256": {
+    "generated_seed_17.pt": "b490872390b17485804948e5278e8cbb0f19e9a4d45bbbdec1a46b4a43b6c199",
+    "generated_seed_29.pt": "1541715451a79b4e2207d048055277b1554c1b8ee77bb1f64c1c23f20916c71d",
+    "generated_seed_3.pt": "d53906fceb200a8af29a5a6e27a854c0c0cea06d03ec9f148cedabb452621c0d",
+    "toy_S0_seed_17.pt": "576d58daa885cd08e142ef5e34865b30ccca064f5c289161a3dad2bccc3d930d",
+    "toy_S0_seed_29.pt": "3500c86ecd6af6625ebc9c14ef5480cfea9de13382f4c6bac7274cb0d685e999",
+    "toy_S0_seed_3.pt": "9c95e9a5523b9b810bc5c4ae2633a695194b37db78abee86f08f036050b6d16e",
+    "toy_S1_seed_17.pt": "1759115b3466e0a82d42dad58823e62e27af0e1b655a47703b8b8e8502bc80df",
+    "toy_S1_seed_29.pt": "20296fb4f00ef57ff9e2e7c8000e9b270a45afcb3d98995b40a50f927f51aebf",
+    "toy_S1_seed_3.pt": "31de2d47a7dea41e692cc6d20ddebfb3e0ef0a7746b2210621fa903d38bfa839",
+    "toy_S2_seed_17.pt": "1ec4d131b6b28f2a93d2576a8f3b2055cb70eef44b98f0991391737b12e34123",
+    "toy_S2_seed_29.pt": "8735a11d62a314b3e305260169c00062f228dc02fcbb7b857acf4bf24a05e881",
+    "toy_S2_seed_3.pt": "9516c4440be09c569e128ce3545b6e53f3463f956f1c88fc3518ef86899bf529",
+    "toy_S3_seed_17.pt": "45dc2576be9ad629eca12a34f115d75f9e0a4b09bd7ce11a223c74c912f29a7a",
+    "toy_S3_seed_29.pt": "25d3207e36528776ce8d4fd2b0bd21c4e72a8894ef04db5a5d642f489f48179d",
+    "toy_S3_seed_3.pt": "3c1e9d3de0d1d6612a111e008b8d96732fba485ac60d0d3e33502ae31535bf8d",
+    "toy_S4_seed_17.pt": "72b05df40a08d45ca9949627dcc2c192bbeed2431ea779becea84882681f2e95",
+    "toy_S4_seed_29.pt": "936e2c2d336250893597d561e372d1158579e0bb3f3592ef121dcb1bd3e9dd3a",
+    "toy_S4_seed_3.pt": "83f090ec5d5c26c146584c41c774986a1ada964bbb2dbf252d4d1de07168bf0c"
+  },
+  "metric_definitions": {
+    "nll": "native discrete survival NLL summed over invented examples / batch size; all generated examples uncensored; lower better",
+    "paired_delta": "final holdout NLL(Si)-NLL(S0) within same generated-data seed; not initial-to-final improvement",
+    "read_overlap": "mean over generated examples, heads and unordered slot pairs of sum_token min(final-iteration per-head reading weights)",
+    "slot_cosine": "mean cosine over generated examples and unordered final slot pairs",
+    "eval": "mean of three separate native stochastic forward metrics; logits are not averaged before NLL"
+  },
+  "limits": [
+    "Three seeds change both generated dataset and initialization: three paired synthetic scenarios, not patient evidence.",
+    "24 randomly sampled minibatches are not three strict epochs; no outcome-based hyperparameter/checkpoint selection.",
+    "S3/S4 replace every omic SA call, including WSI-to-omic reconstruction.",
+    "S4-S1 contrasts full MESH perturbation+cost updates against Sinkhorn; S2/S3 lack same-side Sinkhorn controls.",
+    "Lower reading overlap/cosine does not by itself establish useful content recovery or predictive benefit.",
+    "Native-dimension gate uses encoding8 and a small invented input; short training uses dimension32 and 3 iterations.",
+    "Real patient training integration and efficacy remain unestablished."
+  ]
+}

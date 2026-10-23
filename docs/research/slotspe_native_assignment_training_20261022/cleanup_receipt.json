@@ -1,0 +1,21 @@
+{
+  "schema": "current_chat_misunderstanding_cleanup_public_receipt_v1",
+  "status": "completed",
+  "recorded_at_utc": "2026-10-22T08:31:59.0829489Z",
+  "candidates": 13,
+  "candidates_verified_untracked_before_deletion": 13,
+  "backup_files": 16,
+  "all_backups_sha256_verified_before_deletion": true,
+  "deleted_current_chat_untracked_files": 13,
+  "original_entry_documents_unchanged": 3,
+  "tracked_files_deleted": 0,
+  "protected_original_source_touched": false,
+  "historical_archives_deleted": 0,
+  "patient_data_touched": false,
+  "patient_training_runs": 0,
+  "patient_inference_runs": 0,
+  "actual_server_execution": false,
+  "committed_or_pushed": false,
+  "private_backup_root_relative": "local_evidence/misunderstanding_cleanup_20261022_20261022_083158_226Z",
+  "private_manifest_sha256": "37d36bfde38828456517250235e79ce93f51f90aedb8f2183cd568d5a28686f8"
+}

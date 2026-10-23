@@ -1,0 +1,70 @@
+{
+  "schema": "native_slotspe_local_allocation_validation_v1",
+  "recorded_at": "2026-10-22T16:41:45.104556+08:00",
+  "route_task": "SlotSPE / SPE-08",
+  "status": "passed",
+  "tests": {
+    "command": "python -B -m pytest tests/test_slotspe_native_allocation.py tests/test_slotspe_assignment_router.py -q -p no:cacheprovider",
+    "passed": 32,
+    "failed": 0,
+    "elapsed_seconds": 9.01,
+    "earlier_adapter_only_passed": 20,
+    "same_suite_rerun_not_independent_evidence": true
+  },
+  "counts_script_only": {
+    "synthetic_training_runs": 15,
+    "optimizer_steps": 360,
+    "native_shape_full_forwards": 5,
+    "native_shape_full_backwards": 5,
+    "toy_full_forwards": 450,
+    "toy_full_backwards": 360,
+    "patient_runs": 0,
+    "server_runs": 0
+  },
+  "full_script_forwards": 455,
+  "full_script_backwards": 365,
+  "default_plan_verified_model_execution": 0,
+  "protected_original_python_files_hash_verified": 8,
+  "original_source_and_all_configs_git_status_clean": true,
+  "default_config_sha256": {
+    "configs/slotspe_clean_original_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
+    "configs/slotspe_proof_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
+    "configs/slotspe_attribution_server.json": "1a32f540adcfba9511b70802d43b850d02ba1183ac328d59ff605ad0a5987815",
+    "configs/slotspe_problem_experiments.json": "6c3ca7ba44746978f266bb0f15176ab68508c7c105a7ca3c553ceb5d7e266087"
+  },
+  "executed_script_and_adapter_sha_match_current": true,
+  "synthetic_raw_files_sha_verified": 18,
+  "raw_synthetic_outputs_git_ignored": true,
+  "all_unrelated_progress_history_semantically_unchanged": true,
+  "task_history_only_SPE08_next_action_changed": true,
+  "erroneous_progress_blocks_removed": 2,
+  "erroneous_untracked_files_removed_after_backup": 13,
+  "public_files_scanned": [
+    "aggregate_summary.json",
+    "cleanup_receipt.json",
+    "independent_review.txt",
+    "validation_receipt.json",
+    "对照设计.txt",
+    "本地五组测试与清理报告.txt"
+  ],
+  "public_patient_identifiers_detected": 0,
+  "public_host_absolute_paths_detected": 0,
+  "patient_features_or_existing_checkpoint_read": false,
+  "actual_server_execution": false,
+  "commit_or_push": false,
+  "files_sha256": {
+    "docs/research/slotspe_native_assignment_training_20261022/aggregate_summary.json": "a2aab58a7e9494f0b9c69eaa38301d3fbfbcb0165797b10445742795e18d5e3c",
+    "docs/research/slotspe_native_assignment_training_20261022/cleanup_receipt.json": "5ceac06c7236e1694da8a65d5f29c516a09d173b8f203dfcabe2b2de704ef75d",
+    "docs/research/slotspe_native_assignment_training_20261022/本地五组测试与清理报告.txt": "30d3b72b5aa50a0820e3f26a405eb826224fb60c6a56247613ae55dbdb4e98e0",
+    "docs/research/slotspe_native_assignment_training_20261022/对照设计.txt": "f3d368e0a6174bd0828f13b1e8272558b7714ce7d47af0de507b374bb36340cf",
+    "scripts/check_slotspe_native_allocation.py": "8f1ac683bda5358dc3f827a69eb1a283c9140546516d66961422f4a9a8d2fe4f",
+    "scripts/summarize_slotspe_native_allocation.py": "12f180507c3ee6cc8a6ac5b970012f0ea6e0373bdaa90eeba6936fa542aad776",
+    "survot_rank/research/slotspe_proof/native_allocation.py": "77da90d0ec2303ea90d77e1ffb92cada98c2b115c333fc33afd4ff3ac6ecbf77",
+    "tests/test_slotspe_native_allocation.py": "491bef17022a5a948b9faccd0544dc0773f651963808128f3454982b82d373c8",
+    "docs/research/slotspe_native_assignment_training_20261022/independent_review.txt": "257c989fe5e3d4f82d6aaa8ee450df71fb67192a457e70604626d1b84d9dfc7b"
+  },
+  "git_diff_check_passed": true,
+  "independent_review": "docs/research/slotspe_native_assignment_training_20261022/independent_review.txt",
+  "independent_arithmetic_and_cleanup_review_passed": true,
+  "active_documents_LF_preserved": true
+}

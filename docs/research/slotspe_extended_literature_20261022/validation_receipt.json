@@ -1,0 +1,41 @@
+{
+  "schema": "slotspe_literature_validation_v1",
+  "recorded_at": "2026-10-22T02:00:45+08:00",
+  "task_id": "SPE-08",
+  "paper_count": 16,
+  "unique_paper_keys": 16,
+  "note_files_exist": true,
+  "public_pdf_hashes_recomputed": 8,
+  "protected_core_source_hashes_matched": 2,
+  "original_source_git_diff_empty": true,
+  "public_pdf_cache_ignored": true,
+  "progress_json_valid": true,
+  "preexisting_progress_values_preserved_except_timestamp": true,
+  "independent_review": {
+    "scope": "four geometry/semantics papers and main-report reasoning boundaries",
+    "blocking_findings": 0,
+    "clarity_corrections_applied": [
+      "attention mass renamed as assignment total",
+      "MUFASA clarified as layers of one encoder",
+      "combined corpus count clarified as24"
+    ],
+    "metaslot_reaggregation_basis": "existing 20261021 literature-to-module review explicitly records second masked aggregation; not newly reaudited"
+  },
+  "report_sha256": {
+    "扩展文献研读与SlotSPE迁移判断.txt": "6423b65430dc942400b76c1a08f2f3e9db3542e548f3441b04227b63e70f3b37",
+    "literature_index.json": "7e30dc429e5d70474cbe381831a548912fdac3aaad79181dda0a74dbb7073710",
+    "allocation_notes.txt": "0ef8ab3d0578cc4044f6ceffea47e48fa4774aeb694d522173158695c606da7b",
+    "capacity_notes.txt": "79c6465de375dd704ae66b028678ed5ff2608faa0cf1190652ec22ae69ae3db3",
+    "capacity_sources.json": "c8dd9dda309154924db7a9b910272494e279b4bac11e9ae1b75e21f43556ec32",
+    "geometry_semantics_notes.txt": "a5f595454e97f9983ec24e6db3b97d7df3063175fea0c4ccbb289956856c9c8a",
+    "normalization_and_pathology_notes.txt": "a4832a8a3e8fbcea00c9fb86ed56479c5210ffc5bf1b23eb2dc5b05c192a5599"
+  },
+  "checks_imported_torch": false,
+  "new_model_runs": 0,
+  "new_training_runs": 0,
+  "new_patient_array_processing": 0,
+  "new_server_execution": 0,
+  "new_raw_patient_receipts": 0,
+  "new_methods_implemented": 0,
+  "commit_or_push": false
+}

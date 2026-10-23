@@ -1,0 +1,96 @@
+槽机制扩展精读：初始化、迭代优化与分配监督
+日期：2026-10-22
+范围：只读公开论文；本分工没有探索本仓库源码、运行模型或患者任务。SlotSPE现状只依据本轮已读README/PROGRESS；具体代码适配须以主报告的源码核对为准。
+阅读层级：以下4篇均阅读全文相关方法和指定附录/局限，不是摘要登记；没有声称逐字审读全部参考文献与可视化页。
+页码：均为指定arXiv版本PDF的从1起文件页码，不能混用其他会议版或原8篇本地页码。
+公开PDF已缓存到Git忽略的local_evidence/literature_20261022/allocation/；download_manifest.json保存完整URL、SHA256、字节数与页数。公开报告不复制全文、不包含患者材料。
+
+一、Improving Object-centric Learning with Query Optimization（BO-QSA）
+作者：Baoxiong Jia, Yu Liu, Siyuan Huang。ICLR 2023。
+来源：https://arxiv.org/abs/2210.08990 （页面明确Published as a conference paper at ICLR 2023）
+本轮版本：https://arxiv.org/pdf/2210.08990v2 ，2023-02-10，32页。
+HTML全文：https://arxiv.org/html/2210.08990v2
+读到的位置：§3.1–3.3，PDF pp3–4；§5.3/Table7，p8；§5.4/§6，p9；附录A.3.1，p17；B.2–B.3，pp20–21；C，p22。
+
+作者的问题和改动：随机初槽缺少概念先验；仅换成可学习query又难训。先做T次聚合，在额外一步前用SG(s_T)+q−SG(q)保留前向值并把近似梯度送回query。它联合改变初始化和反传路径，不能简化成“固定初槽”。训练query另有退火噪声。作者不把共享query直接MSE拉向最终槽，认为这会学成数据集平均表示。
+实测和边界：Table7在相同编码器/解码器内比较初始化×优化方式；附录B.3比较RunningMean、KMeans、VQ约束等。概念绑定主要是定性观察，作者承认不能控制学到颜色、轮廓还是位置；固定query数仍限制容量。没有预后或病理患者实测。
+
+迁移判断（本报告推断）：
+1. 对应P3的“初态先验”和P4的“跨样本类型绑定”，但共享query仍不读当前患者；它不是患者条件初始化的同义词。
+2. 可作为“共享高斯初态 / 共享可学习query / 当前输入条件query”的分离对照。应独立比较前向次数和反传方式；T+1步须计入预算。直接替换query而沿用断梯度，可能让新query学不到任务，这正是作者试图避免的组合。
+3. BO-QSA所谓概念可以是颜色或位置，不能据此给SlotSPE槽命名为预后事件。其B.3是警告“共享query追全数据末槽均值”，不能解释成任何输入条件蒸馏都无效。
+4. 暂不建议凭本篇给现有门控加更多梯度补丁；当前P2读取高度重叠和选择后内容恢复仍应单测。
+
+二、Object Representations as Fixed Points: Training Iterative Refinement Algorithms with Implicit Differentiation（Implicit Slot Attention / I-SA）
+作者：Michael Chang, Thomas L. Griffiths, Sergey Levine。NeurIPS 2022。
+来源：https://arxiv.org/abs/2207.00787 （页面注明NeurIPS 2022接收）
+本轮版本：https://arxiv.org/pdf/2207.00787v3 ，2023-01-01，20页。
+HTML全文：https://arxiv.org/html/2207.00787v3
+读到的位置：§3–4.3，PDF pp3–5；§5.1–5.3，pp5–8；§5.4–5.6，pp9–10。
+
+作者的问题和改动：通过所有迭代展开反传，可能使优化不稳定且显存随步数增长。将末槽视为近似固定点，前向继续迭代，但只对末端更新反传，使用隐式梯度的一阶Neumann近似。针对SLATE比较求解器与梯度估计器，并做去掉梯度裁剪、warmup及改变迭代次数的检查。
+证据和边界：研究含CLEVR-Mirror、ShapeStacks、COCO及原SA属性预测/分割。§4.2明确没有证明SA一定收敛到固定点；方法是有偏/近似优化，不是精确隐式求导的一般保证。§5.5区分“末步反传”与“前向仅一步”。
+
+迁移判断（本报告推断）：
+1. 是新的“迭代训练是否失稳”诊断线，可挂在P7的优化子项，但不等于主辅目标冲突，也不直接解决P2语义混槽。
+2. 真要迁移，应先比较各迭代残差、槽/参数梯度、不同迭代预算和学习曲线；当前槽相似并不能推出梯度爆炸。
+3. 需要检查早期断梯度会怎样影响SlotSPE的高斯初态参数、输入编码器和共享迭代权重。尤其不能把它混入A/B/C选槽梯度对照，否则同时改变多个机制。
+4. 更多前向步骤可以更稳定地走向一个冗余表示；迭代收敛与内容分工是不同证据。因此本方向优先级低于已观察的重复读取，除非新增诊断实际发现迭代优化异常。
+
+三、SPOT: Self-Training with Patch-Order Permutation for Object-Centric Learning with Autoregressive Transformers
+作者：Ioannis Kakogeorgiou, Spyros Gidaris, Konstantinos Karantzalos, Nikos Komodakis。CVPR 2024；arXiv初稿2023。
+本轮版本：https://arxiv.org/pdf/2312.00648v3 ，2024-04-05，15页。
+HTML全文：https://arxiv.org/html/2312.00648v3
+会议入口：https://openaccess.thecvf.com/content/CVPR2024/html/Kakogeorgiou_SPOT_Self-Training_with_Patch-Order_Permutation_for_Object-Centric_Learning_with_Autoregressive_CVPR_2024_paper.html （本轮读取返回403；正文依据上面的作者arXiv全文，不把此链接记为已成功抓取）
+读到的位置：§3.1–3.3，PDF pp3–6；§4.2/Table1，p6；附录A，p12；B.3–B.4/Table9，p13；B.6和C.1–C.2，p14。
+
+作者的问题和改动：重建解码器的分组掩码可能优于SA读取掩码；强自回归解码器还会依靠前文token绕开槽。先重建训练教师，再将其解码掩码硬化、Hungarian匹配后以交叉熵监督学生SA；解码时随机采用9种patch扫描顺序，减弱位置导致的槽监督不均。后者针对自回归teacher forcing捷径。
+局限：固定槽数、小对象丢失和语义/实例定义歧义仍在；附录A指出FG-ARI单指标可偏爱退化分组。上述图像分割收益不证明生存收益。
+
+须保留的负向迁移证据（作者公开Table9，不是本项目复现）：
+附录B.4，PDF p13，COCO、100 epoch的同表重现基线→加BO-QSA：
+- DINOSAUR：mBO^i 32.3→31.5；mBO^c 42.1→39.7。
+- SlotDiffusion：mBO^i 30.5→29.5；mBO^c 36.3→34.7。
+mBO^i为按真实实例掩码计算的mean Best Overlap；每个真实对象取最佳预测槽IoU再汇总，和按语义类掩码计算的mBO^c不同，不是C-index。这里使用同表Reprod.列，未拿不同训练270 epoch的DINOSAUR Offic.列当匹配基线。作者据此写明BO-QSA单独接入这两框架没有表现好；不能扩大为BO-QSA总无效，更不能预测其接入SlotSPE必然变差。
+
+迁移判断（本报告推断）：
+1. 对应P7“重建能完成但分配监督不足”和P2“读取实际内容”。更关键的思想是教师必须提供更好的内容分组，非再加一个无差别一致性项。
+2. 原版SlotSPE若没有自回归重建器和空间扫描序列，9种扫描顺序不具直接对应物；普通打乱patch输入不是SPOT改动，也不能用本篇论证必须按空间顺序输入。
+3. 掩码蒸馏可作为后续候选，但须先证明候选教师在独立组织/通路内容依据上更好，并按槽集合匹配。将现有高度重叠的读取权重直接硬化，可能把任意平局当成监督，这不是已验证修复。
+4. 单项FG-ARI、低熵、槽间低余弦都不足以评价SlotSPE内容改进；仍需覆盖、纯度、重复和碎片化的分离测量。
+
+四、Smoothing Slot Attention Iterations and Recurrences（SmoothSA）
+作者：Rongzhen Zhao, Wenyan Yang, Juho Kannala, Joni Pajarinen。
+版本信息：https://arxiv.org/abs/2508.05417 ，初稿2025-08-07；当前v5为2026-05-27，页面Comments明确“Accepted to ICML 2026”。PDF封面自身仍写Preprint May28 2026，两者原样区分。
+本轮全文：https://arxiv.org/pdf/2508.05417v5 ，11页；https://arxiv.org/html/2508.05417v5
+读到的位置：§3.1–3.3，PDF pp2–5；§4.1，p5；Table1/3，p6；Table5及§5，pp7–8；附录A–B，p11。
+
+作者的问题和改动：全数据层面的初query缺当前样本线索。预热器先跨注意力读输入，再做槽间自注意力，以MSE追踪停止梯度的最终槽；预热query进入SA前也停止梯度。视频另采用首帧3步、后续帧1步，共享SA权重。图像实验基于去除删槽的DIAS，视频基于RandSF.Q，不能把整表差异都当纯SA替换。
+实测/理论边界：附录A对训练中1000次随机重度污染做压力测试；这不同于长期、结构性槽冗余。附录B明确收缩/唯一固定点只作理论直觉，未提供全域保证。主表并非全部指标都提升，例如视频属性分类增加时box IoU降低。
+
+迁移判断（本报告推断）：
+1. 四篇中它最直接对应P3“当前患者条件初始化”。可针对WSI和OMIC分别让query读当前真实输入，避免把另一患者槽或全队列均值当本患者线索。
+2. 和BO-QSA并不冲突：SmoothSA蒸馏的是依赖当前输入的预热query，BO-QSA反对的是不读当前样本的共享query追整个数据集最终槽。两者条件变量和梯度路径不同。
+3. 不能把预热器学会重现当前最终槽，当成生物学内容已正确。原槽若已高度重复，须同时检查预热是否只是更快得到相同重复读取；应增加同患者、随机与多个错配患者线索、以及匹配步数预算的内容比较。
+4. 其随机污染压力测试支持特定扰动下稳健，不证明能恢复系统性的遗漏、混槽或语义坍缩。沿单条轨迹相邻步距离下降也不足以证明对任意初态全域收缩，更不证明稳定点是期望生物概念。
+5. 原版静态SlotSPE没有视频前后帧时，3+1视频递归安排不直接适用；只讨论图像式预热部分。其loss weight=100是特定图像目标标度的设置，不应直接移植到生存损失。
+
+综合优先级（仅机制研究建议，未授权任何患者执行）：
+A. 当前已有表示/读取冗余证据，因此先诊断分配矩阵、value投影和更新后内容何时开始重复；不应把全部P2归因初态。
+B. 想针对P3做单独改动，可优先比较输入条件预热与共享可学习query，同时严格匹配前向聚合次数和训练预算。前者对应当前患者线索；后者只是数据集先验。
+C. 想针对P7内容监督，应先找能独立验证分组质量的教师或内容标签，再考虑分配监督；没有这种依据时，SPOT只是研究动机。
+D. 仅在发现迭代优化不稳后，再优先考虑I-SA或BO-QSA式反传；SPOT中两种宿主的负向移植结果已说明不能直接假设可通用获益。
+
+未确认项：
+- 本分工没有将任何候选接入SlotSPE；没有独立核验患者损害、改正收益或论文代码与论文完全一致。
+- SlotCurri已在官方CVF检索到CVPR2026《Reconstruction-Guided Slot Curriculum: Addressing Object Over-Fragmentation in Video Object-Centric Learning》（arXiv:2603.22758），但本分工未精读，不能计入本轮4篇全文卡片。容量分工若另行核验可提升其阅读等级。
+- 没有确认一个标题恰为“Slot Attention with Slot Refinement”的独立论文；该短语在多文中只是普通机制描述，不登记成正式论文。
+- SmoothSA采用的DIAS、MetaSlot等既有8篇未在这里重复登记为新增。
+
+阶段交付六项：
+1. 路线/任务：外部槽机制文献中的初始化、迭代优化、分配监督。
+2. 完成：4篇相关方法和关键附录精读，记录正向机制、负向移植及适配边界。
+3. 路径/提交：本文件；公开PDF及哈希manifest在忽略缓存；本分工未提交。
+4. 检查/实际执行：只下载公开论文、提取文本并核对PDF页码；没有模型、训练、推理、服务器任务或患者原始接收。
+5. 缺口/原因：SlotSPE源码适配由主报告统一核对；内容质量与患者收益须另有已授权实测，论文不能代替。
+6. 下一步：先把P2拆成重复/混槽/碎片化/遗漏/恢复失败，再将每种候选放在确切发生层比较；不要直接组合所有模块。

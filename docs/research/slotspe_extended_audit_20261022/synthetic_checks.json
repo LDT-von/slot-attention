@@ -1,0 +1,549 @@
+{
+  "schema": "slotspe_extended_generated_checks_v1",
+  "created_utc": "2026-10-21T17:51:32.991410+00:00",
+  "script_sha256": "796ceedb3deca6f4a2545667ae01c017c15c741fb9249009ecff0008bb3e9b4c",
+  "source_root": "third_party/SlotSPE",
+  "source_hashes_before": {
+    "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+  },
+  "environment": {
+    "python": "3.10.11",
+    "platform": "Windows",
+    "torch": "2.6.0+cu124",
+    "device": "cpu",
+    "torch_threads": 1,
+    "cuda_visible_devices": ""
+  },
+  "execution_scope": {
+    "generated_tensors_only": true,
+    "random_new_weights_only": true,
+    "checkpoint_files_loaded": 0,
+    "patient_records_loaded": 0,
+    "optimizer_steps": 0,
+    "backward_calls": 0,
+    "arrays_or_models_saved": false
+  },
+  "execution_counts": {
+    "standalone_native_sa_forward_calls": 3,
+    "deterministic_replay_calls": 3,
+    "full_model_forward_calls": 6,
+    "full_model_eval_forward_calls": 5,
+    "full_model_train_mode_forward_calls": 1,
+    "native_sa_calls_inside_full_model": {
+      "wsi": 6,
+      "omic": 7
+    },
+    "all_native_sa_forward_calls": 16,
+    "count_basis": "Forward entry hooks; train-mode is one generated forward, not optimization or training. Replay calls directly apply original submodules and are counted separately."
+  },
+  "checks": {
+    "identical_initial_slot_symmetry": {
+      "status": "generated_counterexample_observed",
+      "standalone_native_sa_forward_calls": 3,
+      "deterministic_replay_calls": 3,
+      "runs": [
+        {
+          "seed": 3,
+          "new_random_weights": true,
+          "configuration": {
+            "num_slots": 8,
+            "dim": 32,
+            "heads": 8,
+            "dim_head": 64,
+            "iters": 10
+          },
+          "input_shape": [
+            2,
+            16,
+            32
+          ],
+          "input_token_max_difference_from_first": 7.7580885887146,
+          "initial_noise": "exact zeros, intercepted only at native initialization shape [2,8,32]",
+          "initialization_calls_intercepted": 1,
+          "native_iterations": 10,
+          "native_replay_all_states_accepted": true,
+          "native_replay_max_abs_error_by_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max_slot_difference_from_first_by_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "exactly_identical_slots_at_all_captured_states": true
+        },
+        {
+          "seed": 17,
+          "new_random_weights": true,
+          "configuration": {
+            "num_slots": 8,
+            "dim": 32,
+            "heads": 8,
+            "dim_head": 64,
+            "iters": 10
+          },
+          "input_shape": [
+            2,
+            16,
+            32
+          ],
+          "input_token_max_difference_from_first": 6.776559829711914,
+          "initial_noise": "exact zeros, intercepted only at native initialization shape [2,8,32]",
+          "initialization_calls_intercepted": 1,
+          "native_iterations": 10,
+          "native_replay_all_states_accepted": true,
+          "native_replay_max_abs_error_by_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max_slot_difference_from_first_by_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "exactly_identical_slots_at_all_captured_states": true
+        },
+        {
+          "seed": 29,
+          "new_random_weights": true,
+          "configuration": {
+            "num_slots": 8,
+            "dim": 32,
+            "heads": 8,
+            "dim_head": 64,
+            "iters": 10
+          },
+          "input_shape": [
+            2,
+            16,
+            32
+          ],
+          "input_token_max_difference_from_first": 6.767600059509277,
+          "initial_noise": "exact zeros, intercepted only at native initialization shape [2,8,32]",
+          "initialization_calls_intercepted": 1,
+          "native_iterations": 10,
+          "native_replay_all_states_accepted": true,
+          "native_replay_max_abs_error_by_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max_slot_difference_from_first_by_state": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "exactly_identical_slots_at_all_captured_states": true
+        }
+      ],
+      "claim": "With exactly equal initial slots, this original update cannot split slot identity in these diverse generated inputs, even across ten iterations.",
+      "limits": "Conditional symmetry/capability counterexample; it does not measure natural collision frequency, training-induced collapse, or patient harm. Native random initialization is usually unequal."
+    },
+    "native_call_path": {
+      "status": "source_path_observed",
+      "modes": {
+        "eval": {
+          "events": [
+            {
+              "order": 1,
+              "module": "slot_attention_wsi",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  16,
+                  32
+                ]
+              ],
+              "input_equals_current_wsi_projection": true
+            },
+            {
+              "order": 2,
+              "module": "slot_attention_omic",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  3,
+                  32
+                ]
+              ],
+              "input_equals_current_wsi_projection": false,
+              "input_role": "ordinary_omic_tokens"
+            },
+            {
+              "order": 3,
+              "module": "slot_decoder_wsi",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 4,
+              "module": "slot_decoder_omic",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 5,
+              "module": "cross_attention",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ],
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 6,
+              "module": "self_attention_wsi",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 7,
+              "module": "self_attention_omic",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            }
+          ],
+          "counts": {
+            "slot_attention_wsi": 1,
+            "slot_attention_omic": 1,
+            "slot_decoder_wsi": 1,
+            "slot_decoder_omic": 1,
+            "cross_attention": 1,
+            "self_attention_wsi": 1,
+            "self_attention_omic": 1,
+            "reconstruction_head_omic": 0,
+            "reconstruction_head_joint": 0,
+            "reconstruction_head_wsi": 0
+          },
+          "logit_shape": [
+            2,
+            4
+          ],
+          "finite_logits": true,
+          "matches_expected_source_path": true,
+          "slot_attention_calls_after_first_decoder": [],
+          "observed_gate_selected_input_reaggregation": false
+        },
+        "train": {
+          "events": [
+            {
+              "order": 1,
+              "module": "slot_attention_wsi",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  16,
+                  32
+                ]
+              ],
+              "input_equals_current_wsi_projection": true
+            },
+            {
+              "order": 2,
+              "module": "slot_attention_omic",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  3,
+                  32
+                ]
+              ],
+              "input_equals_current_wsi_projection": false,
+              "input_role": "ordinary_omic_tokens"
+            },
+            {
+              "order": 3,
+              "module": "slot_decoder_wsi",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 4,
+              "module": "slot_decoder_omic",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 5,
+              "module": "cross_attention",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ],
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 6,
+              "module": "self_attention_wsi",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 7,
+              "module": "self_attention_omic",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 8,
+              "module": "reconstruction_head_omic",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  3,
+                  32
+                ],
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 9,
+              "module": "slot_attention_omic",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  16,
+                  32
+                ]
+              ],
+              "input_equals_current_wsi_projection": true,
+              "input_role": "wsi_projection_for_joint_reconstruction"
+            },
+            {
+              "order": 10,
+              "module": "reconstruction_head_joint",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  3,
+                  32
+                ],
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            },
+            {
+              "order": 11,
+              "module": "reconstruction_head_wsi",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  16,
+                  32
+                ],
+                [
+                  2,
+                  8,
+                  32
+                ]
+              ]
+            }
+          ],
+          "counts": {
+            "slot_attention_wsi": 1,
+            "slot_attention_omic": 2,
+            "slot_decoder_wsi": 1,
+            "slot_decoder_omic": 1,
+            "cross_attention": 1,
+            "self_attention_wsi": 1,
+            "self_attention_omic": 1,
+            "reconstruction_head_omic": 1,
+            "reconstruction_head_joint": 1,
+            "reconstruction_head_wsi": 1
+          },
+          "logit_shape": [
+            2,
+            4
+          ],
+          "finite_logits": true,
+          "matches_expected_source_path": true,
+          "slot_attention_calls_after_first_decoder": [
+            {
+              "order": 9,
+              "module": "slot_attention_omic",
+              "tensor_input_shapes": [
+                [
+                  2,
+                  16,
+                  32
+                ]
+              ],
+              "input_equals_current_wsi_projection": true,
+              "input_role": "wsi_projection_for_joint_reconstruction"
+            }
+          ],
+          "observed_gate_selected_input_reaggregation": false
+        }
+      },
+      "claim": "The generated eval path aggregates each modality once before selection. The extra train OMIC-module call reads the WSI projection for joint reconstruction; it is not selected-slot feedback to same-modality inputs.",
+      "limits": "Observed execution paths and tensor identity establish this mechanism path only; call counts alone establish neither a representation defect nor patient harm."
+    },
+    "coordinate_field_nonconsumption": {
+      "status": "coordinate_nonconsumption_observed",
+      "same_feature_bag_same_model_same_rng": true,
+      "two_coordinate_layouts_are_distinct": true,
+      "without_coords_vs_layout_a_max_logit_abs_difference": 0.0,
+      "without_coords_vs_layout_b_max_logit_abs_difference": 0.0,
+      "changed_wsi_feature_positive_control_max_logit_abs_difference": 0.09672654420137405,
+      "positive_control_is_nonconstant": true,
+      "claim": "The original forward does not consume this extra coordinate field in these generated calls.",
+      "limits": "An ignored extra keyword is not a supported coordinate interface. This does not establish that all spatial information is absent: patch embeddings can retain local morphology, and existing contextual encoders may embed spatial information."
+    }
+  },
+  "generated_full_model": {
+    "batch": 2,
+    "wsi_tokens": 16,
+    "wsi_feature_dim": 32,
+    "omic_feature_dims": [
+      5,
+      7,
+      3
+    ],
+    "n_classes": 4,
+    "args": {
+      "omic_sizes": [
+        5,
+        7,
+        3
+      ],
+      "n_classes": 4,
+      "encoding_dim": 32,
+      "wsi_projection_dim": 32,
+      "rna_format": "Pathways",
+      "slot_num_wsi": 8,
+      "slot_num_omics": 8,
+      "slot_iters": 10,
+      "temperature": 0.01,
+      "topk_ratio": 0.25,
+      "top_k_method": "parallel_topk_st",
+      "bag_loss": "nll_surv",
+      "alpha_surv": 0.5,
+      "lambda_recon_loss": 0.01
+    }
+  },
+  "status": "completed",
+  "source_hashes_after": {
+    "models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+  },
+  "original_source_bytes_unchanged": true
+}

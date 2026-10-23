@@ -1,5 +1,6 @@
 # Local evidence, patient inputs, raw predictions, checkpoints and original downloads
 /local_evidence/
+/.codegraph/
 /.review/
 /.validation/
 /LOCAL_MIGRATION_MANIFEST.json
@@ -9,6 +10,7 @@
 /results/
 /data/
 /prepared/
+/tmp/
 __pycache__/
 *.py[cod]
 .pytest_cache/

@@ -1,0 +1,139 @@
+{
+  "schema": "slotspe_literature_severity_reassessment_v1",
+  "recorded_at": "2026-10-22T23:22:44.000+08:00",
+  "route_task": "SlotSPE / SPE-08 / literature_severity_reassessment",
+  "status": "completed_readonly_literature_source_and_public_summary_review",
+  "completed_work": "以包括原版SlotSPE在内的14篇一手文献相应章节重评槽相似、内容分组、监督充分性、事件语义和空间边界；高cos不等同患者损害，未证损害也不排除研究价值。首选P7.3与P2内容覆盖，X2为条件支线。",
+  "report": "docs/research/slotspe_extended_literature_20261022/严重问题与槽相似性_证据再评估_20261022.txt",
+  "selected_primary_source_count": 14,
+  "reading_scope": "Relevant full-text sections, key experiments and limitations; not exhaustive literature review or replication.",
+  "evidence": {
+    "source_facts": [
+      "WSI query retains input content despite detach/frozen parameters",
+      "Within-modality reconstruction masks unselected slots in its direct key/value path",
+      "No explicit global patch coordinates or adjacency consumed by this forward",
+      "Unimodal survival supervision exists; full-slot cross-modal interaction is intentional"
+    ],
+    "historical_local_public_aggregate": "71-person BLCA fold0/seed3, 3 epochs, 256 patches, selected-pair cos WSI 0.99447 / OMIC 0.99862, readout overlap 99.858% / 99.555%; not new patient measurements",
+    "prior_generated_counterexample": "Existing reconstruction-head fixed dictionary counterexample reread, not rerun; no claim of trained full-model attainability",
+    "patient_harm_established": false,
+    "natural_training_shortcut_established": false,
+    "correction_efficacy_established": false,
+    "source_code_hashes": {
+      "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109"
+    }
+  },
+  "representative_paper_checks": [
+    {
+      "paper": "SlotSPE",
+      "version": "arXiv v3, 2026-05-01",
+      "location": "Abstract; sections 1/3.1/4.7; B.3/B.5; Appendix I",
+      "url": "https://arxiv.org/html/2512.01116v3",
+      "claim": "Distinct events and redundancy reduction are explicit aims; existing ablations and expert-annotated interpretations retained."
+    },
+    {
+      "paper": "DINOSAUR",
+      "location": "4.3 Table 3, COCO ViT-B/16",
+      "url": "https://arxiv.org/html/2209.14860v2",
+      "MLP": {
+        "MSE": 0.31,
+        "FG_ARI": 40.5,
+        "mBO_instance": 27.7,
+        "mBO_class": 30.9
+      },
+      "Transformer": {
+        "MSE": 0.16,
+        "FG_ARI": 34.1,
+        "mBO_instance": 31.6,
+        "mBO_class": 39.7
+      },
+      "limit": "Reconstruction vs grouping and instance vs semantic tradeoffs; not universal harm."
+    },
+    {
+      "paper": "DIAS",
+      "location": "Fig.1; 4.4 Table 7, COCO 7 slots",
+      "url": "https://arxiv.org/html/2507.23755v3",
+      "reduction_only": {
+        "class_top1": 0.68,
+        "bbox_R2": 0.62
+      },
+      "reduction_reaggregation": {
+        "class_top1": 0.7,
+        "bbox_R2": 0.63
+      },
+      "limit": "Not survival; full-method benefit cannot be assigned to cosine decrease."
+    },
+    {
+      "paper": "OCEBO",
+      "location": "4.2 Table 1, MOVi-E",
+      "url": "https://arxiv.org/html/2503.15141v1",
+      "base": {
+        "FG_ARI": 54.8,
+        "mBO": 25.8
+      },
+      "without_patch_filtering": {
+        "FG_ARI": 27.7,
+        "mBO": 10.6
+      },
+      "limit": "Primarily positional grouping collapse, not high raw cosine; target-encoder regime differs."
+    },
+    {
+      "paper": "Slot-BERT",
+      "location": "3.5; 4.9-4.10 parameter analysis",
+      "url": "https://arxiv.org/html/2501.12477v4",
+      "no_contrast_mBO_V": 46.3,
+      "best_tuned_mBO_V": 50.1,
+      "limit": "Over-enforced dissimilarity can harm object learning; surgical video is not patient survival."
+    },
+    {
+      "paper": "PathoSlot",
+      "location": "p.4; Table 2 GC-External",
+      "url": "https://papers.miccai.org/miccai-2026/paper/1567_paper.pdf",
+      "without_concept_Cindex": 0.668,
+      "full_Cindex": 0.673,
+      "limit": "Predefined endpoint allocation, not independent clinical factor discovery; small survival difference."
+    },
+    {
+      "paper": "Saltz et al.",
+      "location": "Correlates of Local TIL Spatial Structure with Survival; Fig.6; methods",
+      "url": "https://www3.cs.stonybrook.edu/~cvl/content/papers/2018/Saltz_CellReport18.pdf",
+      "claim": "Some spatial structure associations persist after adjustment for density and age/sex with multiplicity correction.",
+      "limit": "Observational cancer- and metric-dependent association; no SlotSPE evaluation."
+    }
+  ],
+  "paths_commit": {
+    "report": "docs/research/slotspe_extended_literature_20261022/严重问题与槽相似性_证据再评估_20261022.txt",
+    "receipt": "docs/research/slotspe_extended_literature_20261022/literature_severity_reassessment_20261022.json",
+    "backup": "local_evidence/documentation_backups/literature_severity_20261022_231813",
+    "current_HEAD": "d8dd0518712f99f518df90ee78e94a4072d08810",
+    "new_commit_or_push": false
+  },
+  "checks_actual_execution_raw_receipt": {
+    "codegraph_original_source_review": true,
+    "public_paper_sections_and_existing_aggregate_review": true,
+    "new_model_forwards": 0,
+    "new_backward_passes": 0,
+    "new_training_runs": 0,
+    "new_inference_runs": 0,
+    "patient_arrays_or_checkpoints_loaded": 0,
+    "new_synthetic_model_experiments": 0,
+    "server_execution": false,
+    "new_patient_raw_receipt": false,
+    "original_sources_modified": false,
+    "historical_reports_modified": false,
+    "existing_queue_changed": false
+  },
+  "validation": {
+    "progress_and_receipt_json_parse": "passed",
+    "referenced_local_artifacts_exist": true,
+    "prior_progress_properties_missing": 0,
+    "concurrent_eleven_arm_delivery_entry_preserved": true,
+    "protected_core_source_hashes_match": true,
+    "git_diff_check_scoped": "passed",
+    "independent_literature_inference_review": "passed; DINOSAUR, OCEBO, SPOT, CODA, Provably and reconstruction masking interpretation checked",
+    "model_or_patient_test_execution": false
+  },
+  "gaps_reasons": "缺独立患者内容标签/空间任务依据，以及自然训练采用捷径和修正收益的匹配证据；物体发现论文不能直接证明SlotSPE患者损害。",
+  "next_action_user_inputs": "以内容承载与监督充分性提出可证伪问题，先明确独立内容依据；保留现有11组单折队列与A/B/C合同，不自动执行或扩组。"
+}

@@ -1,0 +1,104 @@
+{
+  "schema": "slotspe_new_problem_distillation_v1",
+  "recorded_on": "2026-10-22",
+  "task_id": "SPE-08",
+  "answer": "在既有槽冗余之外，新增一项已确认结构局限，以及一项新机制风险；不登记为两项已验证患者损害。",
+  "independent_structural_limitation": {
+    "name": "全局patch布局未被当前前向消费",
+    "plain_language": "同一袋patch特征保持不变时，当前模型不能使用未输入的全局位置区分聚团、邻近或散布。",
+    "source_evidence": "docs/research/slotspe_extended_audit_20261022/source_review.json",
+    "prior_generated_evidence": "docs/research/slotspe_extended_audit_20261022/synthetic_checks.json",
+    "prior_result": "保持特征与随机状态，更换附加坐标布局，logit差0；改变特征的正控制差0.09672654420137405。",
+    "limits": "仅限固定入口特征的显式全局布局；局部形态或上下文编码中的空间信息不被排除。未验证患者预测损害。"
+  },
+  "new_mechanism_risk": {
+    "name": "归一化更新未显式保留分配总量",
+    "source": "third_party/SlotSPE/models/slot_attention.py:97-107",
+    "primary_paper": "https://arxiv.org/html/2407.04170v2",
+    "plain_language": "平均内容可以相同，但分到这个槽的总权重不同；这一轮的value更新不能单独区别两者。",
+    "generated_arithmetic": {
+      "scope": "three_slots_two_tokens_attention_matrices_only",
+      "eps": 1e-8,
+      "reading_rows": [
+        [
+          0.8,
+          0.2
+        ],
+        [
+          0.2,
+          0.8
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "value_rows": [
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "construction": "factor=1+3*eps; augmented_mass=base_mass*factor; raw_attention[k,i]=augmented_mass[k]*reading_rows[k,i]-eps; raw attention columns sum to1 and are all positive; normalize(raw_attention+eps) exactly as the source aggregation step.",
+      "base_mass_a": [
+        0.5,
+        0.5,
+        1
+      ],
+      "base_mass_b": [
+        0.75,
+        0.75,
+        0.5
+      ],
+      "updates_in_both_cases": [
+        [
+          1.6,
+          0.4
+        ],
+        [
+          0.4,
+          1.6
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "max_update_difference": 2.220446049250313e-16,
+      "pairwise_update_cosines": [
+        0.47058823529411764,
+        0.8574929257125441,
+        0.8574929257125441
+      ],
+      "meaning": "The ambiguity can occur when the three updates are distinct; it is not only an exact-duplicate-slot construction.",
+      "not_claimed": "No assertion that these matrices are reached by the fixed actual SlotSPE checkpoint, or that the full GRU states lose abundance."
+    },
+    "limits": "只证明一次聚合更新的总量歧义；GRU历史、其他槽与输入编码可间接携带数量。未验证完整模型或患者组织丰度损失。"
+  },
+  "not_counted_as_independent_new_problems": {
+    "postselection_reaggregation": "并入P2冗余/分工恢复；缺少该模块本身不是患者故障证据。",
+    "fixed_capacity_or_random_init": "代码属性已知，是否造成任务失配仍未建立。",
+    "mixing_fragmentation_omission_semantics": "仍缺各自独立内容依据。"
+  },
+  "checks": {
+    "codegraph_context_and_source_explore": true,
+    "primary_paper_refreshed": true,
+    "pure_arithmetic_check_passed": true,
+    "subagent_evidence_boundary_review_completed": true
+  },
+  "execution": {
+    "new_patient_reads": 0,
+    "new_model_calls": 0,
+    "new_training_steps": 0,
+    "new_server_execution": 0,
+    "new_server_raw_receipt": 0,
+    "torch_imported": false,
+    "original_source_modified": false
+  },
+  "next_action": "先检查真实患者任务中，同类组织比例变化是否在完整表示中被保留；几何问题需真实坐标与审核过的布局关系。这里只登记诊断目标，不启动患者执行。",
+  "commit_or_push": false
+}

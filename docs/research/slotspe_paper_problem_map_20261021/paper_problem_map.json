@@ -1,0 +1,263 @@
+{
+  "schema": "slotspe_local_paper_problem_coverage_v1",
+  "recorded_on": "2026-10-21",
+  "task_id": "SPE-08",
+  "route": "local_paper_problem_coverage_review",
+  "local_full_papers_read": 8,
+  "original_question_numbers_preserved": true,
+  "papers": [
+    {
+      "paper": "SA",
+      "title": "Object-Centric Learning with Slot Attention",
+      "file": "Centric Learning with Slot Attention.pdf",
+      "pdf_pages": 27,
+      "sha256": "ff310f9ee610ce0bad20bfc7517cb730b19e11b8f45195cd548b510616164b1f",
+      "matches_registered_original": true,
+      "key_pdf_pages": [
+        1,
+        3,
+        8,
+        15
+      ],
+      "original_question_mapping": [
+        "P4",
+        "P5",
+        "P7"
+      ],
+      "additional_or_underdefined_dimensions": [
+        "background",
+        "task_defined_grouping",
+        "geometry",
+        "slot_communication"
+      ],
+      "primary_url": "https://proceedings.neurips.cc/paper_files/paper/2020/file/8511df98c02ab60aea1b2356c013bc0f-Paper.pdf"
+    },
+    {
+      "paper": "MESH",
+      "title": "Unlocking Slot Attention by Changing Optimal Transport Costs",
+      "file": "zhang23ba.pdf",
+      "pdf_pages": 21,
+      "sha256": "4135fdf1546b33299af1d2a22d585ba27524f6d3e962063a9b54d898597fda07",
+      "matches_registered_original": true,
+      "key_pdf_pages": [
+        1,
+        2,
+        3,
+        4,
+        7
+      ],
+      "original_question_mapping": [
+        "P2",
+        "P3"
+      ],
+      "additional_or_underdefined_dimensions": [
+        "soft_mixing",
+        "late_tie_recovery",
+        "attention_not_segmentation_ground_truth"
+      ],
+      "primary_url": "https://proceedings.mlr.press/v202/zhang23ba.html"
+    },
+    {
+      "paper": "DIAS",
+      "title": "Slot Attention with Re-Initialization and Self-Distillation",
+      "file": "2507.23755v3.pdf",
+      "pdf_pages": 8,
+      "sha256": "c562ba606ad0b0ca88ba92a6cb38324fdf1436d9302dba7c08b3bb375f6147f7",
+      "matches_registered_original": true,
+      "key_pdf_pages": [
+        1,
+        2,
+        4,
+        7
+      ],
+      "original_question_mapping": [
+        "P1",
+        "P2",
+        "P3",
+        "P7"
+      ],
+      "additional_or_underdefined_dimensions": [
+        "post_selection_reaggregation",
+        "internal_supervision_quality"
+      ],
+      "primary_url": "https://arxiv.org/abs/2507.23755"
+    },
+    {
+      "paper": "MetaSlot",
+      "title": "MetaSlot: Break Through the Fixed Number of Slots in Object-Centric Learning",
+      "file": "NeurIPS-2025-metaslot-break-through-the-fixed-number-of-slots-in-object-centric-learning-Paper-Conference.pdf",
+      "pdf_pages": 26,
+      "sha256": "d496dc81809df6f4c394a1621dbc85d79526da1038cc5eece7bceca75ac9c4b1",
+      "matches_registered_original": true,
+      "key_pdf_pages": [
+        1,
+        2,
+        4,
+        5,
+        10,
+        18
+      ],
+      "original_question_mapping": [
+        "P1",
+        "P2",
+        "P3",
+        "P4"
+      ],
+      "additional_or_underdefined_dimensions": [
+        "candidate_vs_effective_capacity",
+        "under_and_over_segmentation",
+        "position_dependency",
+        "attribute_composition"
+      ],
+      "primary_url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/614ef802d663b9cdac2e6600f8ee5764-Abstract-Conference.html"
+    },
+    {
+      "paper": "CoSA",
+      "title": "Grounded Object-Centric Learning",
+      "file": "6936_Grounded_Object_Centric_L.pdf",
+      "pdf_pages": 45,
+      "sha256": "208aa2ae460ac5b1b5ef948febfbd52b221033e51e9ca959d0127978cfebd387",
+      "matches_registered_original": true,
+      "key_pdf_pages": [
+        1,
+        2,
+        4,
+        5,
+        9,
+        16,
+        22,
+        43
+      ],
+      "original_question_mapping": [
+        "P1",
+        "P3",
+        "P4"
+      ],
+      "additional_or_underdefined_dimensions": [
+        "input_separability_assumptions",
+        "type_vs_instance",
+        "dictionary_coverage"
+      ],
+      "primary_url": "https://openreview.net/pdf/66165ac8488ed6d946efbafac570d3d4388587c6.pdf"
+    },
+    {
+      "paper": "PSA",
+      "title": "Identifiable Object-Centric Representation Learning via Probabilistic Slot Attention",
+      "file": "NeurIPS-2024-identifiable-object-centric-representation-learning-via-probabilistic-slot-attention-Paper-Conference.pdf",
+      "pdf_pages": 36,
+      "sha256": "349d837347a425def3a623a7ec45f81281725b529fcc219854f81eeab5bd12b2",
+      "matches_registered_original": true,
+      "key_pdf_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        17,
+        21,
+        22,
+        23,
+        24
+      ],
+      "original_question_mapping": [
+        "P1",
+        "P4"
+      ],
+      "additional_or_underdefined_dimensions": [
+        "identifiability_vs_repeatability",
+        "decoder_and_latent_assumptions"
+      ],
+      "primary_url": "https://proceedings.neurips.cc/paper_files/paper/2024/hash/a9a3f0e4a95cb273867931369c8fc3b1-Abstract.html"
+    },
+    {
+      "paper": "CODA",
+      "title": "Improved Object-Centric Diffusion Learning with Registers and Contrastive Alignment",
+      "file": "ICLR-2026-improved-object-centric-diffusion-learning-with-registers-and-contrastive-alignment-Paper-Conference.pdf",
+      "pdf_pages": 29,
+      "sha256": "d98570d8c58800816acea29210dc344d8d4ad19105bd21d1d2ed38271fd064ae",
+      "matches_registered_original": true,
+      "key_pdf_pages": [
+        1,
+        2,
+        4,
+        5,
+        6,
+        19,
+        26
+      ],
+      "original_question_mapping": [
+        "P1",
+        "P2",
+        "P5",
+        "P7"
+      ],
+      "additional_or_underdefined_dimensions": [
+        "full_set_success_vs_individual_content",
+        "residual_attention",
+        "conditional_objective_alignment"
+      ],
+      "primary_url": "https://arxiv.org/abs/2601.01224"
+    },
+    {
+      "paper": "OCEBO",
+      "title": "Object-Centric Pretraining via Target Encoder Bootstrapping",
+      "file": "ICLR-2025-object-centric-pretraining-via-target-encoder-bootstrapping-Paper-Conference.pdf",
+      "pdf_pages": 14,
+      "sha256": "c5199a7684f4acec22c9e48beaa2953d6da8a8cdb63a92d3b874a8c63e274392",
+      "matches_registered_original": true,
+      "key_pdf_pages": [
+        1,
+        2,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "original_question_mapping": [
+        "P4",
+        "P7"
+      ],
+      "additional_or_underdefined_dimensions": [
+        "target_information_quality",
+        "target_drift",
+        "positional_shortcuts",
+        "different_collapse_modes"
+      ],
+      "primary_url": "https://arxiv.org/abs/2503.15141"
+    }
+  ],
+  "new_dimensions_proposed_not_patient_defects_confirmed": [
+    "input_feature_separability_and_information_boundary",
+    "spatial_geometry_and_position_shortcuts",
+    "inter_slot_relations_and_compositional_information"
+  ],
+  "cross_cutting_validation": "compositional_and_out_of_distribution_generalization",
+  "important_reclassification": "MESH concerns internal assignment and tiebreaking, mainly P2/P3; it does not establish P8 two-stage cross-modal OT conflict",
+  "source_pdf_files_modified": false,
+  "patient_data_read": false,
+  "model_or_paper_code_executed": false,
+  "new_patient_runs": 0,
+  "server_actions": 0,
+  "other_attachment_references_not_read_as_local_fulltext_this_stage": [
+    "AdaSlot",
+    "SlotCurri",
+    "SmoothSA",
+    "BO-QSA",
+    "Pay Attention to the Foreground",
+    "MSF",
+    "MUFASA",
+    "SlotSPE"
+  ],
+  "rendered_key_source_pages": [
+    "Centric Learning with Slot Attention.pdf:15",
+    "zhang23ba.pdf:1"
+  ],
+  "report": "docs/research/slotspe_paper_problem_map_20261021/逐篇论文问题与八项覆盖核查.txt"
+}

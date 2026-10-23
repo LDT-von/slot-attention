@@ -1,0 +1,50 @@
+原版SlotSPE：S0–S6七组对照定义与接入说明
+
+一、路线/任务
+SlotSPE / SPE-08 / P2。用户明确增加S5=DIAS、S6=MetaSlot。宿主仍是third_party/SlotSPE原版，不改源码；两侧模态内部独立执行。
+
+二、已完成的接入
+S0：病理与组学原分配。
+S1：两侧Sinkhorn。
+S2：病理MESH式分配、组学原分配。
+S3：病理原分配、组学MESH式分配。
+S4：两侧MESH式分配。
+S5：两侧DIAS式去冗余核心，T−1轮原生SA→余弦距离平均linkage层次聚类→簇均值作为保留槽→1轮重新读取原输入。总计T轮。
+S6：两侧MetaSlot式去冗余核心，T轮原生SA→最近欧氏原型替换→同原型只保留首个→共享权重T轮再聚合。训练细化加入逐步归零的独立输入噪声；截断先前梯度，最后一步接回原始可学习query。最终有效槽按logical batch显式EMA更新原型，带死码复活。总计2T轮。
+
+S5实现DIAS论文§3.2的去冗余再聚合，不包含§3.3额外注意力自蒸馏和图像自回归解码器；不能称完整DIAS论文复现。官方公开源码缺少去重/再初始化核心，因此本实现按论文独立重写。
+S6按MetaSlot论文的最近邻、梯度截断和EMA方案独立适配，没有照搬作者图像框架的Gumbel量化/去重概率warmup。小码本、确定性训练向量拟合、EMA参数与超时均为本地预设，不冒称作者默认。
+本地预设：S5余弦距离阈值0.05、平均linkage、簇均值代表；S6原型数8、训练输入噪声标准差0.5→0、EMA更新率0.05、死码超时100个logical batch、初始Lloyd迭代10。没有根据留出结果调这些值。
+
+三、下游如何接收有效槽
+被去掉的槽物理压紧，原生decoder、cross/self attention、重建头和mean只接收有效槽；不把置零槽塞回8槽张量。
+原生forward逐样本执行，forward_compact合并一个logical batch，并平均原生辅助损失。S0参照也必须使用同一逐样本协议；旧S0–S4向量化批次结果保留为历史，不能与新结果直接拼成一轮七组比较。
+Top-K保持原定最大保留数，实际k=min(原k,有效槽数)，不按剩余槽数重新计算保留比例。若只剩1槽则保留1槽。
+S5/S6作用于slot_attention_omic的全部调用，包含组学输入与WSI→组学重建。S6两侧原型库独立；组学库在同一共享模块的这两个调用之间共享，训练拟合/更新范围必须记录。
+S6原型只能由训练分区的槽拟合和更新，评估冻结；保存模型还必须一并保存外置原型库state_dict。未提交的codebook队列禁止保存。
+原生生存、两侧辅助生存及重建公式/系数保留；S5这里不叠加自蒸馏项。A/B/C既有定义与入口不变。
+
+四、检查/路径与实际执行
+当前统一配置：configs/slotspe_native_variants.json（患者执行false）。
+统一工厂：survot_rank/research/slotspe_proof/native_variants.py，ALL_VARIANTS与make_native_adapter。
+紧凑适配：native_pruning.py；外置原型：prototype_bank.py；旧native_allocation.py与S0–S4映射保留，历史脚本不会自动扩为七组。
+检查：新增20项通过，与原有32项合计52项通过；两组均完成原生256维/8候选/10迭代、小生成输入的完整前向与反向。
+匹配模拟入口：scripts/check_slotspe_s5_s6.py。默认打印计划，--synthetic才执行；只接受已登记生成数据的哈希清单，不接患者数据。
+模拟协议：S0/S5/S6，同三种子[3,17,29]、同初始参数、同训练64/留出32生成样本、同24个batch8、Adam1e-3；32维/8候选/3迭代。S6码本只用训练编码槽拟合，之后每次optimizer更新显式提交一次EMA。
+本轮实际完成计数与结果见同目录s5_s6_synthetic_summary.json和S5-S6本地有效槽相似度.txt；不以当前说明代替运行收据。
+没有服务器执行、患者任务、新提交或推送。原始生成权重、codebook和逐样本数组留在被忽略的local_evidence。
+
+五、评价与缺口
+主指标为病理/基因有效槽cos，同时报告有效槽数量、仅1槽比例、具有有效cos对的覆盖率、实际Top-K槽cos，以及去重前/再聚合前后的相似度。
+仅1槽没有槽对，cos必须null，不能写0并称改善。比较Si−S0时只在Si存在有效槽对的相同生成样本/重复子集上计算，并单列覆盖率；无法配对时记null。
+槽数减少本身、码本粗细与额外SA轮数都可能影响结果；S6比原版多一倍SA轮数。局部生成模型的变化不等于患者效果，也不能单凭cos证明内容分工或语义识别。
+
+六、下一步
+先根据相似度和有效槽数判断是否只是把8槽缩成1槽，再定位去重/再聚合本身是否增加分工。需要完整DIAS时将自蒸馏另列组件对照；需要公平分解S6时另设同2T原SA、无原型/无剪枝控制，不能将多个成分的结果全部归因于去冗余。
+患者五/七臂训练队列仍未接入，本轮不自动启动真实患者训练。
+
+论文与源码依据
+DIAS §3.2：https://arxiv.org/html/2507.23755v3#S3.SS2
+DIAS公开实现边界：https://github.com/Genera1Z/DIAS/blob/main/readme.md
+MetaSlot §2与算法1：https://arxiv.org/html/2505.20772v2#S2
+MetaSlot作者实现：https://github.com/lhj-lhj/MetaSlot/blob/main/object_centric_bench/model/metaslot.py

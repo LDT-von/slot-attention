@@ -1,0 +1,26 @@
+{
+  "schema": "slotspe_uni2h_scope_confirmation_v1",
+  "recorded_at": "2026-10-22T22:48:59.311394+08:00",
+  "scope": {
+    "one_queue": true,
+    "methods": 11,
+    "study": "blca",
+    "feature_encoder": "UNI2-h",
+    "folds": [
+      0
+    ],
+    "seeds": [
+      3
+    ],
+    "new_feature_extraction": false
+  },
+  "config_sha256": "cdc19e0a17b86a42d88b926faf01043b6573a2b6bd9d2612e1459beff536fa27",
+  "planner_sha256": "6a4db3f70fcdac368326141a758aad5ad5bd2bb0011c51a97800d6420c43c97f",
+  "metadata_plan_checks_passed": true,
+  "patient_queue_ready": false,
+  "execution_implemented": false,
+  "new_model_forwards": 0,
+  "new_training_runs": 0,
+  "patient_features_loaded": false,
+  "server_execution": false
+}

@@ -1,0 +1,356 @@
+{
+  "schema": "slotspe_extended_issue_evidence_matrix_v1",
+  "recorded_on": "2026-10-22",
+  "task_id": "SPE-08",
+  "route": "extended_mechanism_audit",
+  "source_commit_at_start": "a5121692c9cce5ef65ee75a9a821800eb1283992",
+  "source_and_synthetic_are_not_patient_harm_proof": true,
+  "server_raw_artifacts_audited_locally": false,
+  "historical_local_patient_count": 71,
+  "historical_local_metrics": {
+    "wsi": {
+      "all_pair_cosine_mean": 0.9937741507629392,
+      "selected_pair_cosine": 0.9944680934017909,
+      "all_pair_reading_overlap_mean": 0.9985403725427686,
+      "selected_pair_reading_overlap": 0.9985833998212321
+    },
+    "omic": {
+      "all_pair_cosine_mean": 0.9987895138082374,
+      "selected_pair_cosine": 0.9986244912794483,
+      "all_pair_reading_overlap_mean": 0.9957719284354354,
+      "selected_pair_reading_overlap": 0.9955457868292232
+    }
+  },
+  "read_overlap_scope": "per_head_first_then_average; historical_local_71_not_server_77",
+  "patient_predictions_or_arrays_in_this_file": false,
+  "new_patient_executions": 0,
+  "new_patient_array_reads": 0,
+  "new_optimizer_steps": 0,
+  "new_backward_calls": 0,
+  "latest_successful_synthetic_run_execution_counts": {
+    "standalone_native_sa_forward_calls": 3,
+    "deterministic_replay_calls": 3,
+    "full_model_forward_calls": 6,
+    "full_model_eval_forward_calls": 5,
+    "full_model_train_mode_forward_calls": 1,
+    "native_sa_calls_inside_full_model": {
+      "wsi": 6,
+      "omic": 7
+    },
+    "all_native_sa_forward_calls": 16,
+    "count_basis": "Forward entry hooks; train-mode is one generated forward, not optimization or training. Replay calls directly apply original submodules and are counted separately."
+  },
+  "execution_count_scope": "latest recorded successful run only; development reruns are not independent experiments and are not summed here",
+  "original_p1_p8_labels_preserved": true,
+  "issues": [
+    {
+      "id": "P1_capacity",
+      "question": "固定候选/选中数是否不适配实际复杂度",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "source_fact",
+        "server_summary_not_raw_audited"
+      ],
+      "supported_scope": "默认两侧8候选/选2固定；已有冻结容量探针",
+      "limits": "固定数本身不证明不适配；缺独立复杂度与匹配训练",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json",
+        "docs/research/slotspe_observe_review_20261021/服务器observe复核.txt"
+      ],
+      "answer_to_question": "实际容量不适配尚未建立"
+    },
+    {
+      "id": "P2_duplicate_reading",
+      "question": "槽表示和输入读取是否重复",
+      "verdict": "机制证据支持",
+      "evidence_level": [
+        "historical_local_patient_aggregate_previously_audited"
+      ],
+      "supported_scope": "71人同一3轮checkpoint，全对高相似且选中后仍高度重叠",
+      "limits": "不代表完全同一副本、无独立预后信息或患者损害",
+      "evidence": [
+        "docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json"
+      ],
+      "answer_to_question": "存在，限定历史71人checkpoint"
+    },
+    {
+      "id": "P2_selected_redundancy",
+      "question": "选槽后是否已经消除冗余",
+      "verdict": "机制证据支持",
+      "evidence_level": [
+        "historical_local_patient_aggregate_previously_audited"
+      ],
+      "supported_scope": "选中两槽仍重复读取；后置self的槽仍高相似",
+      "limits": "仅限该checkpoint；不证明门控训练毫无作用",
+      "evidence": [
+        "docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json",
+        "docs/research/slotspe_sparsity_off_20261021/aggregate_summary.json"
+      ],
+      "answer_to_question": "没有消除该checkpoint下的重复现象"
+    },
+    {
+      "id": "P2_mixing",
+      "question": "同一槽是否混入多个应区分的实体",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "no_independent_content_labels"
+      ],
+      "supported_scope": "只观察到读取相似/弥散代理",
+      "limits": "缺独立实体单位和标签；不能由高cos直接判定",
+      "evidence": [
+        "docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json",
+        "docs/research/slotspe_observe_review_20261021/服务器observe复核.txt"
+      ],
+      "answer_to_question": "尚未建立"
+    },
+    {
+      "id": "P2_fragmentation",
+      "question": "一个完整实体是否被拆成多个槽",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "no_independent_instance_boundaries"
+      ],
+      "supported_scope": "现有特征簇不足以登记真实组织碎片化",
+      "limits": "同类不同实例不自动视为碎片化",
+      "evidence": [
+        "docs/research/slotspe_observe_review_20261021/服务器observe复核.txt"
+      ],
+      "answer_to_question": "尚未建立"
+    },
+    {
+      "id": "P2_omission",
+      "question": "哪些独特内容没有被有效保存",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "no_independent_content_targets"
+      ],
+      "supported_scope": "没有语义覆盖/召回真值",
+      "limits": "注意力不是分割真值；重复读取不直接证明具体内容遗漏",
+      "evidence": [
+        "docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json",
+        "docs/research/slotspe_observe_review_20261021/服务器observe复核.txt"
+      ],
+      "answer_to_question": "尚未建立"
+    },
+    {
+      "id": "P2_no_postselection_reaggregation",
+      "question": "选槽后是否重新聚合原输入",
+      "verdict": "机制证据支持",
+      "evidence_level": [
+        "source_fact",
+        "new_generated_native_execution"
+      ],
+      "supported_scope": "正常双模态路径没有gate→同模态SA反馈；train额外OMIC调用是WSI joint重构",
+      "limits": "这是结构事实，不是缺该模块即患者受损",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json",
+        "docs/research/slotspe_extended_audit_20261022/synthetic_checks.json"
+      ],
+      "answer_to_question": "没有该反馈再聚合路径"
+    },
+    {
+      "id": "P2_P3_equal_state_recovery",
+      "question": "精确相同的槽能否通过原版更新重新分开",
+      "verdict": "机制证据支持",
+      "evidence_level": [
+        "new_generated_counterexample"
+      ],
+      "supported_scope": "三个新随机权重种子、8头、10轮精确同初态始终相同，原生重放一致",
+      "limits": "没有证明真实近似平局如何形成/恢复或出现频率",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/synthetic_checks.json"
+      ],
+      "answer_to_question": "精确同初态反例中不能分开"
+    },
+    {
+      "id": "P3_patient_cues",
+      "question": "缺少患者条件初态是否妨碍正确聚合",
+      "verdict": "仅代理线索",
+      "evidence_level": [
+        "source_fact",
+        "server_summary_not_raw_audited"
+      ],
+      "supported_scope": "初态是共享高斯；own更近长迭代参照但未稳定优于全部供体",
+      "limits": "长迭代参照非正确内容真值，缺独立内容证据",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json",
+        "docs/research/slotspe_observe_review_20261021/服务器observe复核.txt"
+      ],
+      "answer_to_question": "实际聚合质量受损尚未建立"
+    },
+    {
+      "id": "P4_identity",
+      "question": "槽是否有稳定可辨识语义身份",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "source_fact",
+        "server_summary_not_raw_audited"
+      ],
+      "supported_scope": "匿名可交换槽；有通路专属输入网络，不能说完全没有类型信息",
+      "limits": "未核对PSA识别假设；低匹配距离不证明具名语义",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json",
+        "docs/research/slotspe_observe_review_20261021/服务器observe复核.txt"
+      ],
+      "answer_to_question": "尚未建立"
+    },
+    {
+      "id": "P5_nuisance",
+      "question": "真实无关内容是否挤占有效信息",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "no_reviewed_roles"
+      ],
+      "supported_scope": "原始输入归一化无显式语义拒绝保证",
+      "limits": "补零与无关组织不同；缺真实角色和预后相关性依据",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json",
+        "docs/research/slotspe_observe_review_20261021/服务器observe复核.txt"
+      ],
+      "answer_to_question": "尚未建立"
+    },
+    {
+      "id": "P6_multiscale",
+      "question": "单倍率/单特征层是否遗漏互补内容",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "source_fact",
+        "no_aligned_feature_pairs"
+      ],
+      "supported_scope": "入口未显式融合多倍率/多层；输入是预提取特征",
+      "limits": "上游是否已有多尺度信息未知；缺真实配对特征",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json"
+      ],
+      "answer_to_question": "尚未建立"
+    },
+    {
+      "id": "P7_gradient_objectives",
+      "question": "主辅助生存是否普遍冲突",
+      "verdict": "仅代理线索",
+      "evidence_level": [
+        "server_summary_not_raw_audited"
+      ],
+      "supported_scope": "服务器汇总不支持主/辅生存普遍对抗；重建有较小局部反向关系",
+      "limits": "梯度方向不代替长期损害和内容语义检验",
+      "evidence": [
+        "docs/research/slotspe_observe_review_20261021/服务器observe复核.txt"
+      ],
+      "answer_to_question": "本批服务器汇总不支持普遍对抗"
+    },
+    {
+      "id": "P7_reconstruction_guarantee",
+      "question": "重构达标是否保证完整信息保留",
+      "verdict": "机制证据支持",
+      "evidence_level": [
+        "source_fact",
+        "historical_generated_counterexample"
+      ],
+      "supported_scope": "历史受控编码常量解可使三项重构0",
+      "limits": "仅针对重构项；生存目标仍可反对退化，未证明真实模型选中坏解",
+      "evidence": [
+        "docs/research/slotspe_eight_issues_20261019/audit.json",
+        "docs/research/slotspe_extended_audit_20261022/source_review.json"
+      ],
+      "answer_to_question": "不保证，存在历史合成退化解；生存项仍可反对"
+    },
+    {
+      "id": "P7_semantic_content",
+      "question": "各槽是否实际承载独立且完整的预后概念",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "no_independent_concept_targets"
+      ],
+      "supported_scope": "目标没有直接逐槽具名语义监督；有融合/辅助生存监督",
+      "limits": "没有直接保证不等于没有学到语义；全槽有效不代表单槽独立",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json"
+      ],
+      "answer_to_question": "尚未建立"
+    },
+    {
+      "id": "P8_second_OT",
+      "question": "是否存在Slot后跨模态OT双阶段约束",
+      "verdict": "原版不适用",
+      "evidence_level": [
+        "source_fact"
+      ],
+      "supported_scope": "后续为cross attention，无第二跨模态OT",
+      "limits": "不新增OT来验证原版不存在的结构",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json"
+      ],
+      "answer_to_question": "原版无第二跨模态OT，不适用"
+    },
+    {
+      "id": "extra_input_separability",
+      "question": "预提取特征是否已经丢失/混合所需因素",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "source_fact",
+        "no_target_feature_pair_audit"
+      ],
+      "supported_scope": "只接收特征；不能从现有槽相似度定位上游是否不可分",
+      "limits": "混合可逆性与任务单位需独立定义，不因降维即判故障",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json"
+      ],
+      "answer_to_question": "实际所需信息丢失尚未建立"
+    },
+    {
+      "id": "extra_global_geometry",
+      "question": "同特征袋不同全局布局是否可显式区分",
+      "verdict": "机制证据支持",
+      "evidence_level": [
+        "source_fact",
+        "new_generated_native_execution"
+      ],
+      "supported_scope": "当前前向不消费显式coords；同特征/RNG不同附加布局logits不变",
+      "limits": "能力边界，非所有空间信息都丢失；局部/上游上下文特征可能含形态",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json",
+        "docs/research/slotspe_extended_audit_20261022/synthetic_checks.json"
+      ],
+      "answer_to_question": "不能利用未消费的附加coords区别布局；仅限相同入口特征"
+    },
+    {
+      "id": "extra_no_communication_allegation",
+      "question": "是否完全没有槽间通信",
+      "verdict": "未观察到",
+      "evidence_level": [
+        "source_fact",
+        "new_generated_native_execution"
+      ],
+      "supported_scope": "相反：两路self及cross模块实际执行",
+      "limits": "有交互路径不等于关系正确/充分",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json",
+        "docs/research/slotspe_extended_audit_20261022/synthetic_checks.json"
+      ],
+      "answer_to_question": "不成立，已有并执行self/cross交互"
+    },
+    {
+      "id": "extra_relational_adequacy",
+      "question": "关系、单槽完整性和组合泛化是否不足",
+      "verdict": "缺条件不可检验",
+      "evidence_level": [
+        "no_independent_relations_or_compositional_protocol"
+      ],
+      "supported_scope": "没有真实关系目标、未见组合验收或独立内容分解证据",
+      "limits": "不能凭无图网络或单次删槽反事实认定失败",
+      "evidence": [
+        "docs/research/slotspe_extended_audit_20261022/source_review.json"
+      ],
+      "answer_to_question": "不足尚未建立"
+    }
+  ],
+  "evidence_file_sha256": {
+    "docs/research/slotspe_local_redundancy_20261021/aggregate_summary.json": "9350f96dac2e2ad64d6bdc563610b139815e0f8a415bd8c0b5c2765d5082faac",
+    "docs/research/slotspe_sparsity_off_20261021/aggregate_summary.json": "f673a346c9d6b71372c51c58d35ca445f2bb678da4a6209d41b4f27518b741e2",
+    "docs/research/slotspe_observe_review_20261021/summary_verification.json": "8f35a90961f4e80975eb465f4bd9cd345b905f9da99cd50dc5f363094f0dfcc5",
+    "docs/research/slotspe_eight_issues_20261019/audit.json": "170a67c485f471091aecb031de04cec0d5429140acafdb32fc48ddb50ec40f40",
+    "docs/research/slotspe_extended_audit_20261022/source_review.json": "21c8af0b0977924bd7d8fc96ddfa0d8f4ba7c6b4ee22a7e059cb5904cba5366a",
+    "docs/research/slotspe_extended_audit_20261022/synthetic_checks.json": "32b76e0025400ad4f804cd1cfc08e4020bb60790af2634bebb978cbaeece03b5",
+    "scripts/check_slotspe_extended_mechanisms.py": "796ceedb3deca6f4a2545667ae01c017c15c741fb9249009ecff0008bb3e9b4c"
+  }
+}

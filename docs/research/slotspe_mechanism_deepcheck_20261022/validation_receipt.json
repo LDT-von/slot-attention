@@ -1,0 +1,38 @@
+{
+  "schema": "slotspe_mechanism_deepcheck_validation_v1",
+  "created_utc": "2026-10-22T08:29:36.125416+00:00",
+  "status": "passed_bounded_receipt_and_provenance_checks",
+  "latest_synthetic_receipt": "synthetic_receipt_03.json",
+  "checks": {
+    "three_receipts_parse": true,
+    "three_script_versions_match_receipt_hashes": true,
+    "current_script_matches_latest_receipt": true,
+    "five_original_execution_source_hashes_unchanged_and_match_live_files": true,
+    "full_model_controls_pass": true,
+    "constructive_head_positive_and_negative_controls_pass": true,
+    "zero_initial_state_ratio_excluded": true,
+    "execution_counts_match": true,
+    "progress_and_issue_map_valid": true,
+    "existing_public_GPU_record_unchanged": true,
+    "tracked_readme_progress_git_diff_check_passed": true
+  },
+  "validation_did_not_run_models_or_read_patient_arrays": true,
+  "claimed_evidence": "Source boundaries, generated-input results and head-only counterexample; no patient fault/benefit inference.",
+  "file_sha256": {
+    "docs/research/slotspe_mechanism_deepcheck_20261022/abundance_logic_review.txt": "5d195855cb55a59a716d83bd648c760ca73d54ec4b8e0441ffce4b6c3119cea0",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/existing_evidence_review.txt": "2270f14b6afddb52324ff620d2dea8c1a73435f9b14eca3fb031b6a517c35950",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/independent_review.txt": "96700fd6c046627b8a5d349045a7acd33715d653a6899b65ccb9129fbdb5f1ed",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/issue_evidence.json": "38fe6d2b4c4eed284a6335caadbcf990fc5854c2fee8601f50bd8332056946c3",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/prior_probe_review.txt": "d01703310e1f82de14497cd62236cc3ee0fcd82f3d505f0e2fc43f52a0f5a2f1",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/synthetic_receipt_01.json": "c597b10f6d3617c18056392c850035243e6c6929eee156528ef8ab38c24798da",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/synthetic_receipt_02.json": "20fa774ea134bdec44e0bdf3ff81c0b2352275c4a95c947a35a1b418857cfe45",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/synthetic_receipt_03.json": "e8e5dcfac9819c23155f3ae5e39a669b486bb1a2bebde19950c957e4ac87ae45",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/检查结果与问题优先级.txt": "bdc26c6eefd1f154960a6b2082762def4b65ee687be166084de0f5effb3ba671",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/script_snapshots/check_slotspe_mechanism_deepcheck_v01.py": "95c6643d2dc8849d7dbcc0a5c0d6fc9b930089041789d1d2ce2da6fe494bc8a5",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/script_snapshots/check_slotspe_mechanism_deepcheck_v02.py": "861a207ce2a669d9b5b4128b1235f88879cdd5c46670267335a1f2315dc9f9d4",
+    "docs/research/slotspe_mechanism_deepcheck_20261022/script_snapshots/check_slotspe_mechanism_deepcheck_v03.py": "a774b1a9a166f49563e28ea87e02d4f9398c10d3bae50a7e59d7d9d0d187d478",
+    "scripts/check_slotspe_mechanism_deepcheck.py": "a774b1a9a166f49563e28ea87e02d4f9398c10d3bae50a7e59d7d9d0d187d478",
+    "README.md": "173992f7a2be8c4a3188d07d8644201377f317da61eaa0ff3f1e374d6b094908",
+    "docs/PROGRESS.json": "ba47cc325def4025d71679505c88d227510f20b3a1cfdf863d0bfc81bf533826"
+  }
+}

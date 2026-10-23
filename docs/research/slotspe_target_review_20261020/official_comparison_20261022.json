@@ -1,0 +1,484 @@
+{
+  "schema": "slotspe_official_source_comparison_v1",
+  "recorded_at": "2026-10-22T17:47:27+08:00",
+  "route_task": "SlotSPE / SPE-08 / official-source provenance verification",
+  "status": "verified_runtime_source_match_readme_only_difference",
+  "local_base_commit": "d8dd0518712f99f518df90ee78e94a4072d08810",
+  "official_repository": "https://github.com/zylvemvet/SlotSPE.git",
+  "official_ref": "refs/heads/main",
+  "official_commit": "02051a2083add7b427727e0200e4263516903561",
+  "official_git_tree_sha1": "2c51383110e1f4bb24a4f2250cc8c9a3bb4fe533",
+  "official_commit_url": "https://github.com/zylvemvet/SlotSPE/commit/02051a2083add7b427727e0200e4263516903561",
+  "acquisition": {
+    "initial_sandbox_git_ls_remote": "failed_to_connect_to_github_com_443",
+    "web_official_page": "accessible",
+    "git_ls_remote_and_clone_with_network_permission": "succeeded",
+    "clone_options": "--filter=blob:none --no-checkout --single-branch --branch main; core.autocrlf=false",
+    "checkout": "sparse models/ utils/ dataset/ scripts/ README.md requirements.txt survival.py .gitignore",
+    "private_clone": "local_evidence/official_source_audit_20261022/upstream",
+    "official_checkout_clean": true,
+    "whole_machine_no_internet_claim_supported": false
+  },
+  "comparison_scope": {
+    "method": "raw-byte SHA256 equality; official bytes additionally verified against Git blob object IDs; no newline normalization",
+    "vendored_directory": "third_party/SlotSPE",
+    "vendored_registered_files": 11,
+    "vendored_non_readme_equal": 10,
+    "local_full_directory": "SlotSPE-main",
+    "official_runtime_python_files_equal": 12,
+    "official_runtime_launcher_files_equal": 1,
+    "official_runtime_requirements_files_equal": 1,
+    "local_full_files_compared_including_readme": 15,
+    "historical_local_copy_files_compared_including_readme": 15,
+    "local_full_extra_runtime_py_or_sh_files_in_selected_directories": [],
+    "entire_repository_tree_certified_equal": false,
+    "excluded": [
+      "dataset_csv contents",
+      "patient features, weights and predictions",
+      "feature_extract pipeline",
+      "gene_preprocess notebook and pipeline",
+      "independent diagnostic/adaptation code"
+    ]
+  },
+  "file_comparisons": [
+    {
+      "path": "README.md",
+      "official": {
+        "bytes": 9329,
+        "sha256": "baab7f3d0a5b204b3c12a3be58953abe3e42e91daa3e79086e7d0ffea8c77da5",
+        "git_blob_sha1": "4916819ceaa1d4611277317eb2bf374b35cba371"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 8812,
+        "sha256": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82",
+        "git_blob_sha1": "890058fd12eb64bad59e966e99614a92b928a36b"
+      },
+      "vendored_equal": false,
+      "local_full": {
+        "bytes": 8812,
+        "sha256": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82",
+        "git_blob_sha1": "890058fd12eb64bad59e966e99614a92b928a36b"
+      },
+      "local_full_equal": false,
+      "historical_local": {
+        "bytes": 8812,
+        "sha256": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82",
+        "git_blob_sha1": "890058fd12eb64bad59e966e99614a92b928a36b"
+      },
+      "historical_local_equal": false
+    },
+    {
+      "path": "dataset/dataset_survival.py",
+      "official": {
+        "bytes": 14691,
+        "sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+        "git_blob_sha1": "a2c789bbee7b467a9059d0e5b672354c630611a5"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 14691,
+        "sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+        "git_blob_sha1": "a2c789bbee7b467a9059d0e5b672354c630611a5"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 14691,
+        "sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+        "git_blob_sha1": "a2c789bbee7b467a9059d0e5b672354c630611a5"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 14691,
+        "sha256": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+        "git_blob_sha1": "a2c789bbee7b467a9059d0e5b672354c630611a5"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "models/SlotSPE.py",
+      "official": {
+        "bytes": 14109,
+        "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "git_blob_sha1": "1833587c97851ea7f6892bc87e61f3b2a1dc65cf"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 14109,
+        "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "git_blob_sha1": "1833587c97851ea7f6892bc87e61f3b2a1dc65cf"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 14109,
+        "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "git_blob_sha1": "1833587c97851ea7f6892bc87e61f3b2a1dc65cf"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 14109,
+        "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "git_blob_sha1": "1833587c97851ea7f6892bc87e61f3b2a1dc65cf"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "models/omics_encoder.py",
+      "official": {
+        "bytes": 648,
+        "sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "git_blob_sha1": "ac1b8ff197a129f5a8c04193206e29c5758e9016"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 648,
+        "sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "git_blob_sha1": "ac1b8ff197a129f5a8c04193206e29c5758e9016"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 648,
+        "sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "git_blob_sha1": "ac1b8ff197a129f5a8c04193206e29c5758e9016"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 648,
+        "sha256": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "git_blob_sha1": "ac1b8ff197a129f5a8c04193206e29c5758e9016"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "models/slot_attention.py",
+      "official": {
+        "bytes": 4975,
+        "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "git_blob_sha1": "b7f3e593b923dfa9bd15da02ba2a80a1b648eed8"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 4975,
+        "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "git_blob_sha1": "b7f3e593b923dfa9bd15da02ba2a80a1b648eed8"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 4975,
+        "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "git_blob_sha1": "b7f3e593b923dfa9bd15da02ba2a80a1b648eed8"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 4975,
+        "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "git_blob_sha1": "b7f3e593b923dfa9bd15da02ba2a80a1b648eed8"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "models/transformer.py",
+      "official": {
+        "bytes": 10848,
+        "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "git_blob_sha1": "af938c2df5223231d5187548659d87cdd4d1d4da"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 10848,
+        "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "git_blob_sha1": "af938c2df5223231d5187548659d87cdd4d1d4da"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 10848,
+        "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "git_blob_sha1": "af938c2df5223231d5187548659d87cdd4d1d4da"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 10848,
+        "sha256": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "git_blob_sha1": "af938c2df5223231d5187548659d87cdd4d1d4da"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "requirements.txt",
+      "official": {
+        "bytes": 57,
+        "sha256": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+        "git_blob_sha1": "33407499ebdec7631c58f5213b75b71e631c0766"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 57,
+        "sha256": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+        "git_blob_sha1": "33407499ebdec7631c58f5213b75b71e631c0766"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 57,
+        "sha256": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+        "git_blob_sha1": "33407499ebdec7631c58f5213b75b71e631c0766"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 57,
+        "sha256": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+        "git_blob_sha1": "33407499ebdec7631c58f5213b75b71e631c0766"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "scripts/SlotSPE.sh",
+      "official": {
+        "bytes": 1745,
+        "sha256": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+        "git_blob_sha1": "bf2204a698d4a267d5ad4c34b0ff738487be9b10"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 1745,
+        "sha256": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+        "git_blob_sha1": "bf2204a698d4a267d5ad4c34b0ff738487be9b10"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 1745,
+        "sha256": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+        "git_blob_sha1": "bf2204a698d4a267d5ad4c34b0ff738487be9b10"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 1745,
+        "sha256": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+        "git_blob_sha1": "bf2204a698d4a267d5ad4c34b0ff738487be9b10"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "survival.py",
+      "official": {
+        "bytes": 3784,
+        "sha256": "0e660e64abe13d2695c1de2feab7a4ac23c04376f3b8ce54faebb092a64b5f4e",
+        "git_blob_sha1": "facf8ddfe87c54879fefbc965fd0a3272d1e2461"
+      },
+      "official_matches_git_object": true,
+      "vendored": null,
+      "vendored_equal": null,
+      "local_full": {
+        "bytes": 3784,
+        "sha256": "0e660e64abe13d2695c1de2feab7a4ac23c04376f3b8ce54faebb092a64b5f4e",
+        "git_blob_sha1": "facf8ddfe87c54879fefbc965fd0a3272d1e2461"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 3784,
+        "sha256": "0e660e64abe13d2695c1de2feab7a4ac23c04376f3b8ce54faebb092a64b5f4e",
+        "git_blob_sha1": "facf8ddfe87c54879fefbc965fd0a3272d1e2461"
+      },
+      "historical_local_equal": true,
+      "vendored_status": "not_in_registered_vendor_subset"
+    },
+    {
+      "path": "utils/core_utils.py",
+      "official": {
+        "bytes": 19403,
+        "sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+        "git_blob_sha1": "27a224645c4d36f2175fcca831101621c136be49"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 19403,
+        "sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+        "git_blob_sha1": "27a224645c4d36f2175fcca831101621c136be49"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 19403,
+        "sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+        "git_blob_sha1": "27a224645c4d36f2175fcca831101621c136be49"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 19403,
+        "sha256": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+        "git_blob_sha1": "27a224645c4d36f2175fcca831101621c136be49"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "utils/general_utils.py",
+      "official": {
+        "bytes": 8622,
+        "sha256": "9df960706e54e5045e319b61be5351ee74214640afcf7a03f9ef955c977915bc",
+        "git_blob_sha1": "8d7f595f6c9fdd75cf843fbd5e2f34475af07cb0"
+      },
+      "official_matches_git_object": true,
+      "vendored": null,
+      "vendored_equal": null,
+      "local_full": {
+        "bytes": 8622,
+        "sha256": "9df960706e54e5045e319b61be5351ee74214640afcf7a03f9ef955c977915bc",
+        "git_blob_sha1": "8d7f595f6c9fdd75cf843fbd5e2f34475af07cb0"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 8622,
+        "sha256": "9df960706e54e5045e319b61be5351ee74214640afcf7a03f9ef955c977915bc",
+        "git_blob_sha1": "8d7f595f6c9fdd75cf843fbd5e2f34475af07cb0"
+      },
+      "historical_local_equal": true,
+      "vendored_status": "not_in_registered_vendor_subset"
+    },
+    {
+      "path": "utils/loss_func.py",
+      "official": {
+        "bytes": 16600,
+        "sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+        "git_blob_sha1": "cb80be8a7e8eb50ba3703d72c5382efde8ab95c3"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 16600,
+        "sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+        "git_blob_sha1": "cb80be8a7e8eb50ba3703d72c5382efde8ab95c3"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 16600,
+        "sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+        "git_blob_sha1": "cb80be8a7e8eb50ba3703d72c5382efde8ab95c3"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 16600,
+        "sha256": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+        "git_blob_sha1": "cb80be8a7e8eb50ba3703d72c5382efde8ab95c3"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "utils/model_utils.py",
+      "official": {
+        "bytes": 1165,
+        "sha256": "364cbd170d368084321fdd79ab9d19c75048a767438aa8679ab42cc798ad195f",
+        "git_blob_sha1": "1d0ef3fd821a5b57c71eab63efc09d646deb9f5d"
+      },
+      "official_matches_git_object": true,
+      "vendored": null,
+      "vendored_equal": null,
+      "local_full": {
+        "bytes": 1165,
+        "sha256": "364cbd170d368084321fdd79ab9d19c75048a767438aa8679ab42cc798ad195f",
+        "git_blob_sha1": "1d0ef3fd821a5b57c71eab63efc09d646deb9f5d"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 1165,
+        "sha256": "364cbd170d368084321fdd79ab9d19c75048a767438aa8679ab42cc798ad195f",
+        "git_blob_sha1": "1d0ef3fd821a5b57c71eab63efc09d646deb9f5d"
+      },
+      "historical_local_equal": true,
+      "vendored_status": "not_in_registered_vendor_subset"
+    },
+    {
+      "path": "utils/process_args.py",
+      "official": {
+        "bytes": 5407,
+        "sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+        "git_blob_sha1": "e53d14727b9d34c2b8a9204d9ce64374e77c5fe6"
+      },
+      "official_matches_git_object": true,
+      "vendored": {
+        "bytes": 5407,
+        "sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+        "git_blob_sha1": "e53d14727b9d34c2b8a9204d9ce64374e77c5fe6"
+      },
+      "vendored_equal": true,
+      "local_full": {
+        "bytes": 5407,
+        "sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+        "git_blob_sha1": "e53d14727b9d34c2b8a9204d9ce64374e77c5fe6"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 5407,
+        "sha256": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b",
+        "git_blob_sha1": "e53d14727b9d34c2b8a9204d9ce64374e77c5fe6"
+      },
+      "historical_local_equal": true
+    },
+    {
+      "path": "utils/visual_utils.py",
+      "official": {
+        "bytes": 16067,
+        "sha256": "7d4998b6772d77e63362e978910f01941b454fbdc15357989e867049c6c1cb40",
+        "git_blob_sha1": "5290987067540063c1b60d9fa1d78cd9efe14ccf"
+      },
+      "official_matches_git_object": true,
+      "vendored": null,
+      "vendored_equal": null,
+      "local_full": {
+        "bytes": 16067,
+        "sha256": "7d4998b6772d77e63362e978910f01941b454fbdc15357989e867049c6c1cb40",
+        "git_blob_sha1": "5290987067540063c1b60d9fa1d78cd9efe14ccf"
+      },
+      "local_full_equal": true,
+      "historical_local": {
+        "bytes": 16067,
+        "sha256": "7d4998b6772d77e63362e978910f01941b454fbdc15357989e867049c6c1cb40",
+        "git_blob_sha1": "5290987067540063c1b60d9fa1d78cd9efe14ccf"
+      },
+      "historical_local_equal": true,
+      "vendored_status": "not_in_registered_vendor_subset"
+    }
+  ],
+  "readme_difference": {
+    "local_bytes": 8812,
+    "official_bytes": 9329,
+    "official_additional_lines": 6,
+    "summary": "Official latest README adds only a Gene (RNA-seq) Preprocessing section; no runtime source difference.",
+    "unified_diff": "--- local/README.md\n+++ official/README.md\n@@ -148,6 +148,12 @@\n \n That submodule also includes CLAM-based tooling and helper scripts for feature extraction with multiple pathology encoders.\n \n+## Gene (RNA-seq) Preprocessing\n+\n+The omics side of the pipeline turns raw [cBioPortal](https://www.cbioportal.org/) downloads into the RNA-seq tables, survival labels, and fold splits that SlotSPE reads from `dataset_csv/`. The full, runnable walkthrough (using `TCGA-BRCA` as the example) is in [gene_preprocess/Genes-Preprocessing.ipynb](gene_preprocess/Genes-Preprocessing.ipynb).\n+\n+These outputs correspond directly to the metadata paths described in [Metadata under `dataset_csv/`](#metadata-under-dataset_csv).\n+\n ## Quick Start\n \n The public training entrypoint is:\n"
+  },
+  "local_full_all_15_match_historical_official_commits": [
+    "83b9ec2b46068f9fd899082acad0fa2ec9c6a3c8",
+    "ef1a049a8cf7822980432f41f1c0110ccfc31172"
+  ],
+  "official_runtime_changes_since_previous_official_commit_83b9ec2": [],
+  "supplied_message_checks": {
+    "quoted_commits": {
+      "f1f4d36": {
+        "present_in_current_local_object_database": false
+      },
+      "0ddc9fb": {
+        "present_in_current_local_object_database": false
+      },
+      "829857e": {
+        "present_in_current_local_object_database": false
+      }
+    },
+    "local_worktree_was_clean": false,
+    "missing_local_objects_do_not_exclude_another_machine_or_unfetched_branch": true,
+    "29_patients_7_7_percent_verified_in_current_public_records": false,
+    "gate_near_zero_and_slot_representation_similarity_are_distinct": true,
+    "patient_performance_loss_established_by_source_comparison": false
+  },
+  "execution": {
+    "new_training_runs": 0,
+    "new_model_forward_passes": 0,
+    "new_backward_passes": 0,
+    "patient_arrays_or_checkpoints_loaded": 0,
+    "server_execution": false,
+    "server_patient_raw_results_received": false,
+    "official_source_received_locally": true,
+    "original_sources_modified": false,
+    "historical_reports_modified": false,
+    "new_git_commit_or_push": false
+  },
+  "progress_backup_private": "local_evidence/official_source_audit_20261022/PROGRESS.before_official_source_verification.json",
+  "progress_sha256_before": "66515dc49545fe8a1bc2aaae773e6353a81c9826187d877a28f0c24b1b87e807",
+  "gaps_reasons": "Runtime source identity is verified for the stated file set. This does not verify patient harm, correction efficacy, the 29/7.7% count, or the full preprocessing/data tree.",
+  "next_action_user_input": "No second internet-connected machine is needed to repeat this runtime-source check. For a separate 29/7.7% audit, identify its original receipt and protocol first; patient recomputation remains separately authorized."
+}

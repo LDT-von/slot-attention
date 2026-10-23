@@ -1,0 +1,29 @@
+{
+  "schema": "native_slotspe_S5_S6_validation_v1",
+  "recorded_at": "2026-10-22T17:55:19.811557+08:00",
+  "status": "passed",
+  "combined_test_count": 55,
+  "test_seconds": 7.26,
+  "native_full_shape_gates": 2,
+  "independent_cos_array_review": "1728 final modality draws; max error0; one-slot null kept",
+  "original8_and_default4_hashes_verified": true,
+  "previous_progress_entries_preserved": true,
+  "seven_arm_registry_matches_config": true,
+  "navigation_links_resolve": 61,
+  "git_diff_check": "passed",
+  "patient_server_runs": 0,
+  "commit_or_push": false,
+  "raw_outputs_ignored": true,
+  "post_run_guard_patch_no_numerical_algorithm_change": true,
+  "files_sha256": {
+    "docs/research/slotspe_native_assignment_training_20261022/s5_s6_synthetic_summary.json": "b946acd322f0d546c9fd97f5e74a3995c3d22293e18d482e8e92992fbb7724c2",
+    "docs/research/slotspe_native_assignment_training_20261022/S5-S6本地有效槽相似度.txt": "bcaf72448f2889a53d5d71c9a5d210f78275fe4dc9fa635d8a99bd9bb9043150",
+    "docs/research/slotspe_native_assignment_training_20261022/S0-S6对照定义与接入说明.txt": "76a6af29889d81f24398804e723e2929df9cd508c0aba9686c99dfd55a350467",
+    "configs/slotspe_native_variants.json": "b40b1c2be9fce9c162aa15829494e9eca9a394c14b0cb5d091e2cf5d8f47de01",
+    "survot_rank/research/slotspe_proof/native_pruning.py": "2a86f81afd3811effa74dacae7cd24cc5905c8b9dbc2ce02726eff9cd3d27244",
+    "survot_rank/research/slotspe_proof/prototype_bank.py": "b95c25130c0aee1e83d049c2535c6ae1d9673964c250fe5b212c2595fe0b2b95",
+    "survot_rank/research/slotspe_proof/native_variants.py": "a84e52746d53e70fe8e4df26f62766b26ece2ef5b5c1b2642573a05dc8b71444",
+    "tests/test_slotspe_native_pruning.py": "ad971d6944e24c7382522130c1c5684ead5d2c6d02197ef601014158aeb95a44",
+    "scripts/check_slotspe_s5_s6.py": "15b1ab9983b0cb4c1a95cc71659437e4ca974e8e1f93c2fd1d11727fc1d94059"
+  }
+}

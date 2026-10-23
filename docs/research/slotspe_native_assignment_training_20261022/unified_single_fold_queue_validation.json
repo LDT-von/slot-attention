@@ -1,0 +1,253 @@
+{
+  "schema": "slotspe_unified_single_fold_queue_validation_v1",
+  "recorded_at": "2026-10-22T22:22:18.777678+08:00",
+  "config_sha256": "75ffaf89a80b579affb82aa9bbba97dcc321edf1d0272485790550f096e3ec58",
+  "planner_sha256": "b48a9239058d976777e08a3a3911fa7370b28590e0eb524ee3029427e8417bbd",
+  "selected_variants": [
+    "S0",
+    "S4",
+    "R1",
+    "R2",
+    "R3",
+    "R4",
+    "R5",
+    "S1",
+    "S2",
+    "S3",
+    "S5"
+  ],
+  "planned_training_jobs": 11,
+  "catalog_methods_including_held_S6": 12,
+  "study": "blca",
+  "folds": [
+    0
+  ],
+  "seeds": [
+    3
+  ],
+  "automatic_cross_fold_expansion": false,
+  "metadata_checks": {
+    "priority_partition_valid": true,
+    "single_S0_with_shared_batching_protocol": true,
+    "source_evidence_and_old_queue_pins_valid": true,
+    "torch_imported": false,
+    "plan_cli_passed": true,
+    "run_flag_rejected": true,
+    "run_flag_exit_code": 2
+  },
+  "actual_execution": {
+    "new_training_runs": 0,
+    "new_model_forwards": 0,
+    "patient_inputs_read": false,
+    "server_runs": 0
+  },
+  "code_count_basis": "Physical source lines including blank lines/comments/docstrings within each definition or file; no trainer/tests counted. Shared code is not per-arm independent additions.",
+  "source_code_counts": {
+    "third_party/SlotSPE/models/SlotSPE.py": {
+      "physical_lines": 332,
+      "sha256": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "top_level_definitions": {
+        "MoESlotDecoder": {
+          "start": 11,
+          "end": 70,
+          "lines": 60
+        },
+        "PlaceholderQueryGenerator": {
+          "start": 72,
+          "end": 107,
+          "lines": 36
+        },
+        "ReconstructionHead": {
+          "start": 110,
+          "end": 132,
+          "lines": 23
+        },
+        "SlotSPE": {
+          "start": 136,
+          "end": 332,
+          "lines": 197
+        }
+      }
+    },
+    "third_party/SlotSPE/models/slot_attention.py": {
+      "physical_lines": 185,
+      "sha256": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "top_level_definitions": {
+        "MultiHeadSlotAttention": {
+          "start": 20,
+          "end": 112,
+          "lines": 93
+        },
+        "log": {
+          "start": 118,
+          "end": 119,
+          "lines": 2
+        },
+        "gumbel_noise": {
+          "start": 121,
+          "end": 123,
+          "lines": 3
+        },
+        "relaxed_topk": {
+          "start": 126,
+          "end": 142,
+          "lines": 17
+        },
+        "gumbel_topk_st": {
+          "start": 145,
+          "end": 161,
+          "lines": 17
+        },
+        "parallel_topk_st": {
+          "start": 164,
+          "end": 185,
+          "lines": 22
+        }
+      }
+    },
+    "survot_rank/research/slotspe_proof/assignment_router.py": {
+      "physical_lines": 181,
+      "sha256": "8adff623dffc74ed5fdfae1cacf230687dd2d68f9c84135744f827f183399608",
+      "top_level_definitions": {
+        "AssignmentConfig": {
+          "start": 23,
+          "end": 42,
+          "lines": 20
+        },
+        "_uniform_log_plan": {
+          "start": 45,
+          "end": 61,
+          "lines": 17
+        },
+        "SlotAssignmentRouter": {
+          "start": 64,
+          "end": 134,
+          "lines": 71
+        },
+        "replay_with_assignment": {
+          "start": 137,
+          "end": 181,
+          "lines": 45
+        }
+      }
+    },
+    "survot_rank/research/slotspe_proof/native_allocation.py": {
+      "physical_lines": 132,
+      "sha256": "77da90d0ec2303ea90d77e1ffb92cada98c2b115c333fc33afd4ff3ac6ecbf77",
+      "top_level_definitions": {
+        "NativeAllocation": {
+          "start": 25,
+          "end": 132,
+          "lines": 108
+        }
+      }
+    },
+    "survot_rank/research/slotspe_proof/native_pruning.py": {
+      "physical_lines": 281,
+      "sha256": "2a86f81afd3811effa74dacae7cd24cc5905c8b9dbc2ce02726eff9cd3d27244",
+      "top_level_definitions": {
+        "PruningConfig": {
+          "start": 22,
+          "end": 41,
+          "lines": 20
+        },
+        "cosine_clusters": {
+          "start": 44,
+          "end": 67,
+          "lines": 24
+        },
+        "forward_compact": {
+          "start": 70,
+          "end": 99,
+          "lines": 30
+        },
+        "NativePruning": {
+          "start": 102,
+          "end": 281,
+          "lines": 180
+        }
+      }
+    },
+    "survot_rank/research/slotspe_proof/slot_regularization.py": {
+      "physical_lines": 153,
+      "sha256": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
+      "top_level_definitions": {
+        "_validate_slots": {
+          "start": 15,
+          "end": 21,
+          "lines": 7
+        },
+        "_gram": {
+          "start": 24,
+          "end": 27,
+          "lines": 4
+        },
+        "slot_gram_loss": {
+          "start": 30,
+          "end": 34,
+          "lines": 5
+        },
+        "slotbert_loss": {
+          "start": 37,
+          "end": 48,
+          "lines": 12
+        },
+        "SlotCapture": {
+          "start": 51,
+          "end": 93,
+          "lines": 43
+        },
+        "QueryFreeSlotDecoder": {
+          "start": 96,
+          "end": 113,
+          "lines": 18
+        },
+        "matched_set_mse": {
+          "start": 116,
+          "end": 132,
+          "lines": 17
+        },
+        "slot_metrics": {
+          "start": 135,
+          "end": 153,
+          "lines": 19
+        }
+      }
+    }
+  },
+  "module_comparison": {
+    "original_gate_and_aux_decoder": {
+      "MoESlotDecoder": 60,
+      "default_TopK_helpers": 27,
+      "total": 87,
+      "scope": "Decoder includes mapping and auxiliary prediction; this is not just the three-line soft-gate normalization."
+    },
+    "S1_S4_shared_assignment_and_adapter": {
+      "assignment_router": 181,
+      "native_allocation": 132,
+      "total": 313
+    },
+    "S5_shared_pruning_adapter": {
+      "file_lines": 281,
+      "scope": "Shared S5/S6 adapter including instrumentation; not S5-exclusive code or complete DIAS."
+    },
+    "R1_R5_shared_regularization_module": {
+      "file_lines": 153,
+      "scope": "Shared R1-R5 losses, decoder, capture, validation and metrics."
+    },
+    "individual_R_core_definitions": {
+      "R1": 5,
+      "R2": 12,
+      "R3": 47,
+      "R4": 35,
+      "R5": 40
+    },
+    "core_definition_exclusions": "Individual R counts omit shared validation/normalization/capture/metrics, training and patient-target integration; line counts do not establish novelty."
+  },
+  "pending": [
+    "Native-dimension patient trainer and execution artifact contract",
+    "All-arm shared per-example batching/RNG implementation",
+    "Heterogeneous-pathway target construction",
+    "Variable-K content-probe matching/coverage for S5"
+  ]
+}
