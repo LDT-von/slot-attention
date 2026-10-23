@@ -1,0 +1,49 @@
+{
+  "schema": "slotspe_gate_pair_v1",
+  "note": "Paired gate training. Arms differ ONLY in native decoder k/temperature. Plan does not read patient tensors; only --run trains.",
+  "gate_arms": [
+    "L1_top2",
+    "L2_soft8",
+    "L3_uniform8"
+  ],
+  "fold": 0,
+  "seed": 3,
+  "gate_epochs": 3,
+  "gate_lr": 0.0005,
+  "gate_batch_size": 8,
+  "gate_eval_repeats": 5,
+  "torch_threads": 2,
+  "model_args": {
+    "n_classes": 4,
+    "encoding_dim": 1536,
+    "wsi_projection_dim": 256,
+    "rna_format": "Pathways",
+    "slot_num_wsi": 8,
+    "slot_num_omics": 8,
+    "slot_iters": 10,
+    "temperature": 0.01,
+    "topk_ratio": 0.25,
+    "top_k_method": "parallel_topk_st",
+    "bag_loss": "nll_surv",
+    "alpha_surv": 0.5,
+    "lambda_recon_loss": 0.01,
+    "omic_sizes_source": "prepared/manifest.json of the same batch; verified equal to native_model_audit.json purity.model_args"
+  },
+  "reference_arm_recorded_val_cindex_per_repeat": [
+    0.7194928684627575,
+    0.7242472266244057,
+    0.7218700475435816,
+    0.7258320126782885,
+    0.7210776545166403
+  ],
+  "reference_arm_recorded_val_cindex": 0.7225039619651346,
+  "reference_tolerance": 1e-06,
+  "reference_source": {
+    "input_root": "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169",
+    "pair": "pairs/fold_0/seed_3/original",
+    "eval_repeats_sha256": "58a3d63926810f092d53726413d8fd90d4c10979609fc618bfa192c564a1fbda",
+    "summary_sha256": "3c9857ae28f1852d334218fe9fe1db76eb190a7d1dda8faee6d0e0ab0517e6de",
+    "eval_seed_rule": "seed*1000000 + 80000 + repeat (identical in this run)",
+    "note": "L1 restores the constructed original decoder attributes, so it must reproduce these per-repeat values."
+  }
+}
