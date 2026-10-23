@@ -29,7 +29,7 @@ DEFAULTS = {"source_root": "third_party/SlotSPE", "study": "blca",
     "folds": [0, 1, 2, 3, 4], "seeds": [3, 17, 29], "epochs": 30,
     "patches": 4096, "batch_size": 8, "eval_repeats": 20,
     "encoding_dim": None, "device": "cuda:0", "lr": 0.0005, "torch_threads": 2,
-    "experiment": "reproduction"}
+    "experiment": "reproduction", "splits_dir": "5fold"}
 PATH_KEYS = ("source_root", "metadata_root", "features_root")
 PACKAGE = "slotspe_proof"
 
@@ -86,6 +86,8 @@ def normalize_config(values, base=REPO_ROOT):
             raise ValueError(f"{key} contains duplicates")
     if not re.fullmatch(r"[A-Za-z0-9_-]+", str(config["study"])):
         raise ValueError("study must be a cohort name, not a path")
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", str(config["splits_dir"])):
+        raise ValueError("splits_dir must be a directory name under <metadata_root>/splits, not a path")
     if config["label_col"] not in {"survival_months_dss", "survival_months_os", "survival_months_pfi", "survival_months_dfs"}:
         raise ValueError("Unsupported survival endpoint")
     if config["signature"] not in {"all", "six", "hallmarks", "combine", "xena"}:
@@ -138,7 +140,7 @@ def metadata_paths(config, training=True):
     study, signature = config["study"], config["signature"]
     signature = "signatures.csv" if signature == "six" else ("combine_signatures.csv" if signature == "all" else signature + "_signatures.csv")
     files = [root / "clinical/all" / (study + ".csv"),
-        *[root / "splits/5fold" / study / f"fold_{fold}.csv" for fold in config["folds"]]]
+        *[root / "splits" / config.get("splits_dir", "5fold") / study / f"fold_{fold}.csv" for fold in config["folds"]]]
     if training:
         files += [root / "raw_rna_data_inter" / (study + "_rna_inter.csv"), root / "signatures" / signature]
     return files
@@ -346,13 +348,14 @@ def main(argv=None):
     for key in ("epochs", "patches", "batch_size", "eval_repeats", "encoding_dim"):
         p.add_argument("--" + key.replace("_", "-"), type=int)
     p.add_argument("--study")
+    p.add_argument("--splits-dir", help="Split directory under <metadata_root>/splits (default 5fold)")
     p.add_argument("--device")
     p.add_argument("--experiment", choices=("reproduction", "attribution_abc", "original_audit"))
     p.add_argument("--checks-only", action="store_true", help="Run metadata/synthetic checks without patient training")
     p.add_argument("--resume", action="store_true", help="Verify and skip completed stages in an explicitly named prior output")
     args = p.parse_args(argv)
     overrides = {key: getattr(args, key) for key in (*PATH_KEYS, "folds", "seeds", "epochs", "patches", "batch_size",
-        "eval_repeats", "encoding_dim", "study", "device", "experiment") if getattr(args, key) is not None}
+        "eval_repeats", "encoding_dim", "study", "splits_dir", "device", "experiment") if getattr(args, key) is not None}
     config = normalize_config({**_json(args.config), **overrides})
     if args.resume and (not args.run or args.output_root is None):
         p.error("--resume requires --run and the original --output-root")

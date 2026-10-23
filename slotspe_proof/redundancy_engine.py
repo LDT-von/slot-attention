@@ -330,7 +330,11 @@ def _evaluate_repeat(model, heads, adapter, capture, reference, root, manifest, 
     total_nll = 0.0
     with torch.no_grad():
         for index, pid in enumerate(ids):
-            batch = patient._batch(root, manifest, fold_data, [pid], device, torch)
+            # Fixed patch subset: the repeated evaluations exist to measure
+            # evaluation randomness, so their input must not change between
+            # repeats. The original loader does not sample for validation.
+            batch = patient._batch(root, manifest, fold_data, [pid], device, torch,
+                                   sample_seed=0)
             target = reference.targets(batch)
             schedule_seed = case_seed(seed, repeat, index, evaluation=True)
             patient._rng(schedule_seed, torch, np)
@@ -367,7 +371,8 @@ def _evaluate_repeat(model, heads, adapter, capture, reference, root, manifest, 
             # input change from native random initialization/Gumbel draws.
             if repeat == 0 and len(ids) > 1:
                 donor_id = ids[(index + 1) % len(ids)]
-                donor_batch = patient._batch(root, manifest, fold_data, [donor_id], device, torch)
+                donor_batch = patient._batch(root, manifest, fold_data, [donor_id], device, torch,
+                                             sample_seed=0)
                 patient._rng(schedule_seed, torch, np)
                 adapter.set_noise_seed(schedule_seed + 27001)
                 donor_logits, _ = model(**donor_batch)
@@ -464,6 +469,11 @@ def run_arm(config, root, manifest, arm, initial_core, initial_probe, reference,
                 "core_backward_calls": 0, "probe_backward_calls": 0, "core_optimizer_steps": 0,
                 "probe_optimizer_steps": 0, "component_autograd_grad_calls": 0}
     if device.type == "cuda":
+        # torch.cuda.reset_peak_memory_stats raises "Invalid device argument"
+        # when no CUDA context exists yet, because it is called before the
+        # model is moved onto the device. Initialise the context explicitly so
+        # the peak-memory baseline is actually reset rather than skipped.
+        torch.cuda.init()
         torch.cuda.reset_peak_memory_stats(device)
     try:
         model, heads = _construct(manifest, config["source_root"], config.get("projection_dim", 256),

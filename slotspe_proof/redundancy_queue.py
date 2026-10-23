@@ -69,7 +69,7 @@ def normalize_runtime(config, metadata_root=None, features_root=None, device=Non
             "folds": scope["folds"], "seeds": scope["seeds"],
             "variants": scope["selected_variants"], "epochs": stage["epochs"],
             "patches": stage["real_patches"], "batch_size": stage["batch_size"],
-            "eval_repeats": stage["eval_repeats"],
+            "eval_repeats": stage["eval_repeats"], "splits_dir": stage.get("splits_dir", "5fold"),
             **config.get("execution", {}),
         }
     else:
@@ -81,7 +81,7 @@ def normalize_runtime(config, metadata_root=None, features_root=None, device=Non
         "probe_lr": 0.0005, "torch_threads": 2, "encoding_dim": None,
         "projection_dim": 256, "slot_iters": 10, "content_target_dim": 32,
         "content_clusters": 8, "content_reference_seed": 731, "dias_distance": 0.05,
-        "slotbert_temperature": 0.5, "experiment": "original_audit",
+        "slotbert_temperature": 0.5, "experiment": "original_audit", "splits_dir": "5fold",
     }
     runtime = {**defaults, **runtime}
     for key, value in (("metadata_root", metadata_root), ("features_root", features_root), ("device", device)):
@@ -111,6 +111,8 @@ def normalize_runtime(config, metadata_root=None, features_root=None, device=Non
         raise ValueError("encoding_dim must be positive or null")
     if not isinstance(runtime["device"], str) or not re.fullmatch(r"cpu|cuda(?::[0-9]+)?", runtime["device"]):
         raise ValueError("device must be cpu or cuda[:index]")
+    if not re.fullmatch(r"[A-Za-z0-9_-]+", str(runtime["splits_dir"])):
+        raise ValueError("splits_dir must be a directory name under <metadata_root>/splits, not a path")
     for key in ("source_root", "metadata_root", "features_root"):
         runtime[key] = _resolve(runtime[key])
     if Path(runtime["source_root"]).resolve() != (ROOT / "third_party/SlotSPE").resolve():

@@ -188,11 +188,12 @@
       "seeds": [
         3
       ],
-      "epochs": 3,
-      "real_patches": 256,
+      "epochs": 30,
+      "real_patches": 4096,
       "batch_size": 8,
       "eval_repeats": 20,
-      "budget_scope": "3 epochs / 256 real patches / logical batch 8 / 20 evaluation repeats; short diagnostic only",
+      "splits_dir": "5fold_uni2h",
+      "budget_scope": "30 epochs / 4096 patches / logical batch 8 / 20 evaluation repeats, matching the original SlotSPE defaults (utils/process_args.py --max_epochs 30 --num_patches 4096). Patch subsets are resampled every epoch and short bags are zero-padded rather than excluding the patient, reproducing third_party/SlotSPE/dataset/dataset_survival.py lines 285-292.",
       "planned_unique_training_runs": 11,
       "hyperparameters": "Locked core lr .0005, probe lr .0005, Gram weight10, paper weight1 temperature.5, content weight5; no heldout tuning.",
       "preconditions": [
@@ -253,10 +254,10 @@
   },
   "protected_existing_queue_sha256": {
     "configs/slotspe_native_variants.json": "b40b1c2be9fce9c162aa15829494e9eca9a394c14b0cb5d091e2cf5d8f47de01",
-    "configs/slotspe_clean_original_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
-    "configs/slotspe_proof_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
-    "configs/slotspe_attribution_server.json": "1a32f540adcfba9511b70802d43b850d02ba1183ac328d59ff605ad0a5987815",
-    "slotspe_proof/queue.py": "e9a964c5769de606a377d4e7af989e7074d0f51a7a1dce3219d68fcae81ff76d",
+    "configs/slotspe_clean_original_server.json": "0af504b2c191fc1923a1ab0d39e1e36c15c322c0840665ab5792a39c21d1f8c1",
+    "configs/slotspe_proof_server.json": "0af504b2c191fc1923a1ab0d39e1e36c15c322c0840665ab5792a39c21d1f8c1",
+    "configs/slotspe_attribution_server.json": "8b0db03b22c8d6d6d8b44d61e58efa1d0182bce58867a46927de2ba4e37dc6f2",
+    "slotspe_proof/queue.py": "0ff71ba56d076d94eb5b22dea097c4d5f33c50d66ee6dda7a6228403b639354d",
     "scripts/run_slotspe_proof.py": "902453fe7344a4bed6c5cbf87b7c6d32665dd5d5f50283ce240838f8303bfe77"
   },
   "actual_execution_this_update": {
@@ -272,10 +273,10 @@
     "slotspe_proof/native_variants.py": "a84e52746d53e70fe8e4df26f62766b26ece2ef5b5c1b2642573a05dc8b71444",
     "slotspe_proof/slot_regularization.py": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
     "slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f",
-    "slotspe_proof/redundancy_queue.py": "c7ed9370a146a668d289e7d3bfb824695c52f5d449cae9c4bb34a58fea72db52",
-    "slotspe_proof/redundancy_engine.py": "40c2a845bffc19892e7b51d6f2b7bd4f49f9007370c13b996ca44e546826dc23",
+    "slotspe_proof/redundancy_queue.py": "101bb49201eef607196ca18e4243201ac737f00318db020ef66f08eab133b43d",
+    "slotspe_proof/redundancy_engine.py": "8683ff5e81238b595001558ab97fde951023b8b7215d7827c36614bc0141f9f0",
     "slotspe_proof/redundancy_content.py": "a58c48dd5fccd60683aaf7a74c4330ad1338748565e84b5b19677f4ba7eddc49",
-    "slotspe_proof/patient.py": "2b43f598678cf31d34b26769c09a45d418914ae74c67baa03ace655257c6d774",
+    "slotspe_proof/patient.py": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
     "scripts/run_slotspe_redundancy.py": "1012bea771ce70894a0fcd891504c6a65501cf202ba367b498c73ce7b017ed86",
     "scripts/plan_slotspe_redundancy_queue.py": "0addcc27c507eed7e8f3be8d353d2f434ede0d24dd9287167f065d12cd844b74"
   },
@@ -378,5 +379,17 @@
     "slotbert_temperature": 0.5,
     "experiment": "original_audit"
   },
-  "validation_receipt": "docs/research/slotspe_native_assignment_training_20261022/eleven_arm_delivery_validation.json"
+  "validation_receipt": "docs/research/slotspe_native_assignment_training_20261022/eleven_arm_delivery_validation.json",
+  "pin_revision_note": {
+    "recorded_at": "2026-10-23T16:15:00+08:00",
+    "changed_files": [
+      "slotspe_proof/redundancy_engine.py",
+      "slotspe_proof/patient.py"
+    ],
+    "change": "CUDA context is now explicitly initialised before torch.cuda.reset_peak_memory_stats.",
+    "reason": "On the RTX 5090 the first eleven-arm patient run failed in arm S0 with RuntimeError: Invalid device argument at redundancy_engine.run_arm. reset_peak_memory_stats requires an existing CUDA context; redundancy_engine called it before any CUDA allocation, whereas patient.py only worked because an unrelated earlier get_device_name call happened to create the context. The fix makes the peak-memory baseline reset explicit and order-independent.",
+    "patient_behaviour_unchanged": "Only the peak-memory counter reset path changed. No model, loss, RNG, batching, evaluation seed, checkpoint selection or metric logic was modified.",
+    "first_run_failure_retained": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01 (prepare and initialize completed; arm S0 failed and was retained, not overwritten)",
+    "historical_document_not_edited": "docs/research/slotspe_native_assignment_training_20261022/eleven_arm_delivery_validation.json still records the pre-fix hash for the historical survot_rank path and is left verbatim."
+  }
 }

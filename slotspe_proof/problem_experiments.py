@@ -329,8 +329,15 @@ def paired_probe(model, x, initial, item, patient_meta, input_root, labels=None)
     needed = ("same_patient", "same_coordinates_and_fov_contract", "same_row_order", "common_feature_space", "independently_reviewed")
     if not all(contract.get(k) is True for k in needed) or not item.get("review_provenance"):
         return {"status": "not_testable_unverified_feature_contract"}
-    if item.get("base_patch_indices") != patient_meta["patch_indices_concatenated_slide_order"]:
-        raise ValueError("P6 base row mapping differs from actual cached patches")
+    if item.get("base_patch_indices") != patient_meta.get("patch_indices_concatenated_slide_order"):
+        # The prepared cache now stores every real patch, and the fixed-length
+        # bag is resampled per access. P6's paired-feature contract still
+        # requires an explicit row mapping, so it is only meaningful when the
+        # annotation names the same indices that were actually sampled.
+        if not patient_meta.get("sampled_patch_indices"):
+            raise ValueError("P6 base row mapping differs from actual cached patches")
+        if item.get("base_patch_indices") != patient_meta["sampled_patch_indices"]:
+            raise ValueError("P6 base row mapping differs from actual cached patches")
     base = replay_slots(model.slot_attention_wsi, x, initial)
     results = []
     for variant in item.get("variants", []):

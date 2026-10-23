@@ -20,14 +20,14 @@ import time
 from datetime import datetime, timezone
 
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 ARMS = ("original", "readout_fix")
 _DEFAULTS = {
     "study": "blca", "label_col": "survival_months_dss", "signature": "combine",
     "folds": [0, 1, 2, 3, 4], "seeds": [3, 17, 29], "epochs": 30,
     "patches": 4096, "batch_size": 8, "eval_repeats": 20,
     "encoding_dim": None, "device": "cuda:0", "lr": 5e-4,
-    "experiment": "reproduction",
+    "experiment": "reproduction", "splits_dir": "5fold",
 }
 _CENSORS = {"survival_months_os": "censorship_os", "survival_months_pfi": "censorship_pfi",
             "survival_months_dss": "censorship_dss", "survival_months_dfs": "censorship_dfs"}
@@ -106,7 +106,8 @@ def _csv_paths(config):
     result = [root / "clinical/all" / f"{study}.csv",
               root / "raw_rna_data_inter" / f"{study}_rna_inter.csv",
               root / "signatures" / signature]
-    result.extend(root / "splits/5fold" / study / f"fold_{fold}.csv" for fold in config["folds"])
+    result.extend(root / "splits" / config.get("splits_dir", "5fold") / study / f"fold_{fold}.csv"
+                  for fold in config["folds"])
     for path in result:
         if not path.is_file():
             raise FileNotFoundError(f"Required metadata absent (RNA is never substituted): {path}")
@@ -115,7 +116,8 @@ def _csv_paths(config):
 
 def _preparation_config(config):
     return {name: config[name] for name in ("source_root", "metadata_root", "features_root", "study",
-            "label_col", "signature", "folds", "patches", "encoding_dim")}
+            "label_col", "signature", "folds", "patches", "encoding_dim")} | {
+            "splits_dir": config.get("splits_dir", "5fold")}
 
 
 def _h5_feature_array(handle):
@@ -280,21 +282,23 @@ def prepare(config, output_root):
                 "channels": int(tensor.shape[1]), "size_bytes": before.st_size, "mtime_ns": before.st_mtime_ns})
         sizes = [len(t) for t in chunks]
         total = sum(sizes)
-        if total < config["patches"]:
-            return "fewer_real_patches_than_configured_no_padding"
-        sample_seed = int(hashlib.sha256((pid + "_slotspe_paired_proof_v1").encode()).hexdigest()[:8], 16)
-        indices = np.sort(np.random.default_rng(sample_seed).choice(total, config["patches"], replace=False))
-        cumulative = np.cumsum([0] + sizes)
-        bag = torch.empty((config["patches"], encoding_dim), dtype=torch.float32)
-        for index, tensor in enumerate(chunks):
-            selected = (indices >= cumulative[index]) & (indices < cumulative[index + 1])
-            bag[selected] = tensor[indices[selected] - cumulative[index]].float()
+        # Cache EVERY real patch for this patient so that training can resample
+        # a fresh subset at each epoch, which is what the original loader does
+        # inside __getitem__. A patient is never excluded for owning fewer
+        # patches than the configured budget; the original loader pads the
+        # remainder with zeros instead (dataset/dataset_survival.py lines
+        # 285-292), and that padding is reproduced at sampling time below.
+        if total < 1:
+            return "no_real_patches"
+        concatenated = torch.cat(chunks, dim=0).float() if len(chunks) > 1 else chunks[0].float()
+        if not torch.isfinite(concatenated).all():
+            return "nonfinite_selected_inputs"
         omics = dataset.load_genes(pid)
         if not isinstance(omics, (list, tuple)) or len(omics) != len(factory.omic_sizes):
             raise ValueError("Original Pathways loader returned an unexpected RNA layout")
         if any(g.ndim != 1 or len(g) != int(size) for g, size in zip(omics, factory.omic_sizes)):
             raise ValueError("Original RNA pathway width changed")
-        if not torch.isfinite(bag).all() or not all(torch.isfinite(g).all() for g in omics):
+        if not all(torch.isfinite(g).all() for g in omics):
             return "nonfinite_selected_inputs"
         for path, info in zip(paths, slide_info):
             after = path.stat()
@@ -302,16 +306,20 @@ def prepare(config, output_root):
                 raise RuntimeError(f"Feature file changed during cache preparation: {path}")
         name = hashlib.sha256(pid.encode()).hexdigest() + ".pt"
         cache = prepared / "cache/patients" / name
-        torch.save({"patient_id": pid, "wsi": bag, "omics": [g.detach().cpu().float() for g in omics]}, cache)
+        # "patches" now stores the full per-patient patch matrix in
+        # concatenated slide order; the fixed-length training bag is derived by
+        # _sample_bag at each access instead of being frozen here.
+        torch.save({"patient_id": pid, "patches": concatenated,
+                    "omics": [g.detach().cpu().float() for g in omics]}, cache)
         patients[pid] = {"patient_id": pid, "time": event_time, "censor": event_censor,
             "cache_path": cache.relative_to(root).as_posix(), "cache_sha256": _sha(cache),
-            "full_patch_count": total, "sample_seed": sample_seed,
-            "patch_indices_concatenated_slide_order": indices.tolist(), "slides": slide_info,
-            "selected_patch_tensor_sha256": hashlib.sha256(bag.numpy().tobytes()).hexdigest()}
+            "full_patch_count": total, "slides": slide_info,
+            "full_patch_tensor_sha256": hashlib.sha256(concatenated.numpy().tobytes()).hexdigest()}
         return None
 
     for fold in config["folds"]:
-        split_path = Path(config["metadata_root"]) / "splits/5fold" / config["study"] / f"fold_{fold}.csv"
+        split_path = (Path(config["metadata_root"]) / "splits" / config.get("splits_dir", "5fold")
+                      / config["study"] / f"fold_{fold}.csv")
         split = pd.read_csv(split_path)
         split_ids = {}
         for kind in ("train", "val"):
@@ -364,14 +372,34 @@ def prepare(config, output_root):
         "omic_sizes": [int(n) for n in factory.omic_sizes], "encoding_dim": encoding_dim,
         "patches": config["patches"], "folds": folds, "patients": patients,
         "counts": {"unique_complete_case_patients": len(patients), "per_fold": {f: v["counts"] for f, v in folds.items()}},
-        "exclusion_policy": "Complete observed clinical/RNA/all slides, finite selected inputs, at least configured real patches; no zero substitution or padding",
-        "patch_policy": "Fixed per-patient seeded sampling without replacement, shared by arms, folds, epochs, and evaluations",
+        "exclusion_policy": "Complete observed clinical/RNA/all slides and finite real inputs. A patient is NEVER excluded for owning fewer patches than the configured budget; the original loader pads the remainder with zeros (third_party/SlotSPE/dataset/dataset_survival.py lines 285-292) and that padding is reproduced here.",
+        "patch_policy": "Every real patch is cached per patient in concatenated slide order. A fresh subset is drawn without replacement at every access, and the remainder is zero-padded up to the configured budget, reproducing the original __getitem__ sampling. Arms, folds and epochs therefore see different patch subsets.",
         "feature_provenance": "Original feature file path/shape/size/mtime retained; cached tensors content-hashed; full original feature files are not content-hashed",
         "rna_transform": "Requested original Pathways loader, no added normalization",
         "scope": "Paired mechanism proof; final-epoch exploratory validation; no OT mechanism or performance gain asserted",
         "preparation_seconds": time.perf_counter() - start}
     _dump(prepared / "manifest.json", manifest)
     return manifest
+
+
+def _sample_bag(patches, budget, np, torch, generator_seed=None):
+    """Draw one training bag the way the original loader does.
+
+    Mirrors dataset/dataset_survival.py lines 285-292: take
+    ``min(budget, available)`` patches without replacement, sorted, then pad
+    with zeros when the patient owns fewer real patches than the budget. A
+    ``None`` seed draws from global numpy state, which is how per-epoch
+    resampling varies the selection.
+    """
+    available = patches.shape[0]
+    n_samples = min(budget, available)
+    rng = np.random.default_rng(generator_seed) if generator_seed is not None else np.random
+    indices = np.sort(rng.choice(available, n_samples, replace=False))
+    bag = patches[torch.from_numpy(indices.astype(np.int64))]
+    if n_samples < budget:
+        pad = torch.zeros((budget - n_samples, patches.shape[1]), dtype=patches.dtype)
+        bag = torch.cat([bag, pad], dim=0)
+    return bag, indices
 
 
 def _rng(seed, torch, np):
@@ -382,12 +410,43 @@ def _rng(seed, torch, np):
         torch.cuda.manual_seed_all(seed)
 
 
-def _batch(root, manifest, fold_data, ids, device, torch):
+def _batch(root, manifest, fold_data, ids, device, torch, np=None, budget=None, sample_seed=None):
+    """Assemble one batch of fixed-length patch bags.
+
+    ``sample_seed`` selects the patch subset. ``None`` draws from the global
+    numpy random stream, which is how training resamples a fresh subset on
+    every access and therefore on every epoch. An integer draws a fixed,
+    reproducible subset, which is what evaluation and the diagnostic probes
+    need so that their results do not depend on patch-selection luck.
+    """
+    if np is None:
+        import numpy as np
     cache = [torch.load(Path(root) / manifest["patients"][pid]["cache_path"],
                         map_location="cpu", weights_only=True) for pid in ids]
     if any(item["patient_id"] != pid for item, pid in zip(cache, ids)):
         raise RuntimeError("Prepared cache patient identity mismatch")
-    batch = {"x_wsi": torch.stack([item["wsi"] for item in cache]).to(device),
+    if budget is None:
+        budget = manifest.get("patches")
+        if budget is None:
+            budget = (manifest.get("preparation_config") or {}).get("patches")
+    bags = []
+    for item in cache:
+        if budget is None:
+            # No configured budget in this manifest. The cache holds every real
+            # patch, so using the whole set is the untruncated, unpadded bag and
+            # needs no sampling decision.
+            bags.append(item["patches"])
+        else:
+            if sample_seed is None:
+                patient_seed = None
+            else:
+                # Offset by the patient so that a fixed evaluation draw is
+                # identical across repeats but still differs between patients.
+                patient_seed = (int(sample_seed) + int(hashlib.sha256(
+                    str(item["patient_id"]).encode()).hexdigest()[:8], 16)) % (2 ** 63)
+            bag, _ = _sample_bag(item["patches"], budget, np, torch, patient_seed)
+            bags.append(bag)
+    batch = {"x_wsi": torch.stack(bags).to(device),
         "y": torch.tensor([fold_data["labels"][pid] for pid in ids], dtype=torch.long, device=device),
         "c": torch.tensor([manifest["patients"][pid]["censor"] for pid in ids], dtype=torch.float32, device=device),
         "omic_missing": False}
@@ -403,7 +462,14 @@ def _evaluate(model, root, manifest, fold_data, ids, config, device, seed, torch
     with torch.no_grad():
         for start in range(0, len(ids), config["batch_size"]):
             selected = ids[start:start + config["batch_size"]]
-            batch = _batch(root, manifest, fold_data, selected, device, torch)
+            # Evaluation uses a fixed patch subset that does NOT vary with the
+            # evaluation seed. The repeated evaluations exist to measure
+            # evaluation randomness, and their contract is that the patient
+            # risks are identical across repeats, so the input must not change
+            # underneath them. The original loader does not sample for
+            # validation at all.
+            batch = _batch(root, manifest, fold_data, selected, device, torch, np,
+                           config["patches"], sample_seed=0)
             logits, _ = model(**batch)
             if not bool(torch.isfinite(logits).all()):
                 raise RuntimeError("Nonfinite evaluation logits")
@@ -423,10 +489,10 @@ def _evaluate(model, root, manifest, fold_data, ids, config, device, seed, torch
             "risks": risks.tolist(), "logits": logits.tolist(), "eval_seed": seed}
 
 
-def _selector_gradients(model, root, manifest, fold_data, ids, device, seed, torch, np):
+def _selector_gradients(model, root, manifest, fold_data, ids, device, seed, torch, np, budget):
     model.train()
     _rng(seed, torch, np)
-    batch = _batch(root, manifest, fold_data, ids, device, torch)
+    batch = _batch(root, manifest, fold_data, ids, device, torch, np, budget, sample_seed=0)
     logits, auxiliary = model(**batch)
     main = model.loss_fn(logits, y=batch["y"], c=batch["c"], t=None) / len(ids)
     named = [(name, parameter) for name, parameter in model.named_parameters() if "pred_keep_slot" in name and parameter.requires_grad]
@@ -549,7 +615,7 @@ def run_pair(config, output_root, fold: int, seed: int):
             from .attribution import matched_bc_check
             ids = train_ids[:config["batch_size"]]
             check = matched_bc_check(config["source_root"], args, initial,
-                _batch(root, manifest, fold_data, ids, device, torch), seed + 1000, device)
+                _batch(root, manifest, fold_data, ids, device, torch, np, config["patches"], sample_seed=0), seed + 1000, device)
             check.update(patient_ids=ids, input_scope="prepared_training_patient_inputs_shared_initial_weights")
             _dump(pair_root / "matched_state_bc_checks.json", check)
             structural = [value for key, value in check["checks"].items() if key != "C_main_nonzero_each_modality"]
@@ -560,6 +626,11 @@ def run_pair(config, output_root, fold: int, seed: int):
             out.mkdir()
             arm_start = time.perf_counter()
             if device.type == "cuda":
+                # Explicitly create the CUDA context first. Without it
+                # reset_peak_memory_stats raises "Invalid device argument",
+                # so the peak-memory baseline must not rely on an unrelated
+                # earlier CUDA call having happened to initialise the context.
+                torch.cuda.init()
                 torch.cuda.reset_peak_memory_stats(device)
             _rng(seed, torch, np)
             model = build_model(config["source_root"], args, arm).to(device)
@@ -641,7 +712,7 @@ def run_pair(config, output_root, fold: int, seed: int):
             _dump(out / "eval_repeats.json", repeats)
             _write_predictions(out / "validation_predictions.csv", manifest, fold_data, val_ids, repeats)
             gradient = _selector_gradients(model, root, manifest, fold_data, train_ids[:config["batch_size"]],
-                device, seed * 1000000 + 90000, torch, np)
+                device, seed * 1000000 + 90000, torch, np, config["patches"])
             _dump(out / "trained_selector_gradients.json", gradient)
             from .interventions import slot_intervention
             interventions = []
@@ -650,7 +721,7 @@ def run_pair(config, output_root, fold: int, seed: int):
                 probe_seed = seed * 1000000 + 91000 + batch_start
                 _rng(probe_seed, torch, np)
                 interventions.append(slot_intervention(model,
-                    _batch(root, manifest, fold_data, ids, device, torch), ids,
+                    _batch(root, manifest, fold_data, ids, device, torch, np, config["patches"], sample_seed=0), ids,
                     probe_seed, _sha(out / "last.pt")))
             _dump(out / "patient_slot_intervention.json", {
                 "status": "measured", "arm": arm, "split": "validation",

@@ -43,8 +43,8 @@ def test_clean_delivery_runs_native_and_offline_audits(tmp_path):
     default_plan = subprocess.run([sys.executable, "-B", str(task / "scripts/run_slotspe_proof.py"), "--plan"],
         cwd=task, capture_output=True, text=True, encoding="utf-8", timeout=30, check=True)
     safe_plan = json.loads(default_plan.stdout)
-    assert safe_plan["training_runs"] == 1 and safe_plan["config"]["epochs"] == 3
-    assert safe_plan["config"]["patches"] == 256 and safe_plan["training_arms"] == ["original"]
+    assert safe_plan["training_runs"] == 1 and safe_plan["config"]["epochs"] == 30
+    assert safe_plan["config"]["patches"] == 4096 and safe_plan["training_arms"] == ["original"]
     fixtures.metadata_fixture(tmp_path, rna=True)
     features = tmp_path / "features"
     features.mkdir()

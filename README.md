@@ -2,9 +2,11 @@
 
 ## Executable eleven-arm diagnostic (2026-10-22)
 
-The current SlotSPE queue is implemented: **S0, S4, R1, R2, R3, R4, R5, S1, S2, S3, S5**, limited to **BLCA / existing UNI2-h / fold0 / seed3**. Defaults: 3 epochs, 256 real patches, logical batch 8, 20 evaluation repeats, final-epoch checkpoint. This is a short diagnostic; patient results are pending. S6 is held; R0 aliases S0. Historical D0-D4 below are a separate DCT-host design, not this SlotSPE queue.
+The current SlotSPE queue is implemented: **S0, S4, R1, R2, R3, R4, R5, S1, S2, S3, S5**, limited to **BLCA / existing UNI2-h / fold0 / seed3**. Defaults: 30 epochs, 4096 real patches, logical batch 8, 20 evaluation repeats, final-epoch checkpoint, splits `5fold_uni2h`. These match the original SlotSPE defaults (`--max_epochs 30 --num_patches 4096`). S6 is held; R0 aliases S0. Historical D0-D4 below are a separate DCT-host design, not this SlotSPE queue.
 
-The complete 14-stage/11-arm generated-data smoke passed at native 256 dimensions, 8 slots and 10 iterations. It uses invented features, not patient or real UNI2-h inputs. Focused checks: 152 passed. Original SlotSPE source, existing default configs and A/B/C definitions are preserved.
+Patch handling reproduces the original loader: all real patches are cached per patient, a fresh subset is drawn without replacement at each access, and bags shorter than the budget are zero-padded instead of excluding the patient (`third_party/SlotSPE/dataset/dataset_survival.py` lines 285-292). Earlier revisions of this harness excluded such patients and froze one fixed subset per patient; both were deviations from the original and are corrected.
+
+The complete 14-stage/11-arm generated-data smoke passed at native 256 dimensions, 8 slots and 10 iterations. It uses invented features, not patient or real UNI2-h inputs. Focused checks: 312 passed. Original SlotSPE source, existing default configs and A/B/C definitions are preserved.
 
 [Implementation, metrics and server handoff](docs/research/slotspe_native_assignment_training_20261022/十一组可执行队列与服务器交接.md) | [Validation receipt](docs/research/slotspe_native_assignment_training_20261022/eleven_arm_delivery_validation.json).
 
@@ -160,7 +162,7 @@ python -B scripts/run_slotspe_proof.py --plan
 python -B scripts/run_slotspe_proof.py --config configs/slotspe_attribution_server.json --plan
 ```
 
-默认是干净原版：fold0、seed3、3轮、256真实patch、batch8、同权重20次评估；计划不会读取患者张量或训练。
+默认是干净原版：fold0、seed3、30轮、4096真实patch、batch8、同权重20次评估、划分 `5fold_uni2h`；计划不会读取患者张量或训练。
 原DCT目录中的宽网格默认配置仅保留在本机历史区；本仓库默认配置复制现有clean-original配置，原文件不改。
 真实数据位置由服务器的 `SLOTSPE_METADATA_ROOT` / `SLOTSPE_FEATURES_ROOT` 提供。`--doctor`和`--run`按服务器说明与授权执行。
 

@@ -164,7 +164,7 @@ def generated_manifest(root):
     for index, name in enumerate(ids):
         path = f"prepared/cache/patients/{name}.pt"
         (root / path).parent.mkdir(parents=True, exist_ok=True)
-        torch.save({"patient_id": name, "wsi": batch["x_wsi"][index],
+        torch.save({"patient_id": name, "patches": batch["x_wsi"][index],
                     "omics": [batch[f"x_omic{k+1}"][index] for k in range(3)]}, root / path)
         patients[name] = {"cache_path": path, "censor": float(batch["c"][index]), "time": float(index + 1)}
     fold = {"train": ids[:3], "val": ids[3:], "labels": {name: index % 4 for index, name in enumerate(ids)}}
