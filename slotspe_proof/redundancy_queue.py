@@ -17,7 +17,7 @@ import re
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / "configs/slotspe_redundancy_queue.json"
 ARMS = ("S0", "S4", "R1", "R2", "R3", "R4", "R5", "S1", "S2", "S3", "S5")
 DEFAULT_OUTPUT = "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01"
@@ -218,7 +218,7 @@ def _verify_completed(root, stage, record):
 def _subprocess_stage(stage, runtime, root):
     log = root / "logs" / (stage["id"] + ".log")
     log.parent.mkdir(parents=True, exist_ok=True)
-    command = [sys.executable, "-B", "-m", "survot_rank.research.slotspe_proof.redundancy_queue",
+    command = [sys.executable, "-B", "-m", "slotspe_proof.redundancy_queue",
                "--run", "--worker-stage", stage["id"], "--output-root", str(root)]
     environment = dict(os.environ, PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1")
     with log.open("x", encoding="utf-8") as stream:

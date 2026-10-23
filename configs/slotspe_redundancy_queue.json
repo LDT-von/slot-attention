@@ -256,7 +256,7 @@
     "configs/slotspe_clean_original_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
     "configs/slotspe_proof_server.json": "3e9e18b85539f3af3e80579d9dfb08add911c4d5f366535c4f3507fa95838778",
     "configs/slotspe_attribution_server.json": "1a32f540adcfba9511b70802d43b850d02ba1183ac328d59ff605ad0a5987815",
-    "survot_rank/research/slotspe_proof/queue.py": "5a6fd533896f41d8640eb5dfd52ea01592f397b439edab5d3c23d54d364e4dab",
+    "slotspe_proof/queue.py": "e9a964c5769de606a377d4e7af989e7074d0f51a7a1dce3219d68fcae81ff76d",
     "scripts/run_slotspe_proof.py": "902453fe7344a4bed6c5cbf87b7c6d32665dd5d5f50283ce240838f8303bfe77"
   },
   "actual_execution_this_update": {
@@ -266,16 +266,16 @@
     "server_runs": 0
   },
   "candidate_implementation_sha256": {
-    "survot_rank/research/slotspe_proof/native_allocation.py": "77da90d0ec2303ea90d77e1ffb92cada98c2b115c333fc33afd4ff3ac6ecbf77",
-    "survot_rank/research/slotspe_proof/native_pruning.py": "2a86f81afd3811effa74dacae7cd24cc5905c8b9dbc2ce02726eff9cd3d27244",
-    "survot_rank/research/slotspe_proof/prototype_bank.py": "b95c25130c0aee1e83d049c2535c6ae1d9673964c250fe5b212c2595fe0b2b95",
-    "survot_rank/research/slotspe_proof/native_variants.py": "a84e52746d53e70fe8e4df26f62766b26ece2ef5b5c1b2642573a05dc8b71444",
-    "survot_rank/research/slotspe_proof/slot_regularization.py": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
-    "survot_rank/research/slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f",
-    "survot_rank/research/slotspe_proof/redundancy_queue.py": "cede1bf2a496faf7f83937bf81c95956ce40d203326f21aeb3c1b6c7be751820",
-    "survot_rank/research/slotspe_proof/redundancy_engine.py": "40c2a845bffc19892e7b51d6f2b7bd4f49f9007370c13b996ca44e546826dc23",
-    "survot_rank/research/slotspe_proof/redundancy_content.py": "a58c48dd5fccd60683aaf7a74c4330ad1338748565e84b5b19677f4ba7eddc49",
-    "survot_rank/research/slotspe_proof/patient.py": "2b43f598678cf31d34b26769c09a45d418914ae74c67baa03ace655257c6d774",
+    "slotspe_proof/native_allocation.py": "77da90d0ec2303ea90d77e1ffb92cada98c2b115c333fc33afd4ff3ac6ecbf77",
+    "slotspe_proof/native_pruning.py": "2a86f81afd3811effa74dacae7cd24cc5905c8b9dbc2ce02726eff9cd3d27244",
+    "slotspe_proof/prototype_bank.py": "b95c25130c0aee1e83d049c2535c6ae1d9673964c250fe5b212c2595fe0b2b95",
+    "slotspe_proof/native_variants.py": "a84e52746d53e70fe8e4df26f62766b26ece2ef5b5c1b2642573a05dc8b71444",
+    "slotspe_proof/slot_regularization.py": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
+    "slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f",
+    "slotspe_proof/redundancy_queue.py": "c7ed9370a146a668d289e7d3bfb824695c52f5d449cae9c4bb34a58fea72db52",
+    "slotspe_proof/redundancy_engine.py": "40c2a845bffc19892e7b51d6f2b7bd4f49f9007370c13b996ca44e546826dc23",
+    "slotspe_proof/redundancy_content.py": "a58c48dd5fccd60683aaf7a74c4330ad1338748565e84b5b19677f4ba7eddc49",
+    "slotspe_proof/patient.py": "2b43f598678cf31d34b26769c09a45d418914ae74c67baa03ace655257c6d774",
     "scripts/run_slotspe_redundancy.py": "1012bea771ce70894a0fcd891504c6a65501cf202ba367b498c73ce7b017ed86",
     "scripts/plan_slotspe_redundancy_queue.py": "0addcc27c507eed7e8f3be8d353d2f434ede0d24dd9287167f065d12cd844b74"
   },

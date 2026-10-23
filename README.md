@@ -142,7 +142,8 @@ eval_fix的同权重平均C-index变化+0.00269，按来源算法复算的区间
 
 ## 文件位置
 
-- `survot_rank/research/slotspe_proof/`：原版诊断、回传验收、P1–P4测量与A/B/C代码。保留包名以维持历史接口，不依赖整套DCT仓库。
+- `slotspe_proof/`：原版诊断、回传验收、P1–P4测量与A/B/C代码。新代码请直接用这个路径。
+- `survot_rank/research/slotspe_proof/`：仅为兼容历史脚本的薄壳，不含任何实现代码；它把旧路径别名到 `slotspe_proof` 的同一批模块对象，因此两套导入路径不会加载两份代码。
 - `third_party/SlotSPE/`：指定桌面原仓库的核心源码快照及原作者说明，逐字节核对。
 - `docs/research/slotspe_*`：各阶段报告、源码证据与既有检查记录；P5旧报告必须连同勘误阅读。
 - `evidence/code_snapshots/`：冻结诊断脚本，保留其历史哈希。

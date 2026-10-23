@@ -23,7 +23,8 @@ def main():
     if args.original_only and args.clean_source_root is None:
         parser.error("--original-only requires --clean-source-root to freeze explicit original bytes")
     paths = [ROOT / "survot_rank/__init__.py", ROOT / "survot_rank/research/__init__.py",
-        *sorted((ROOT / "survot_rank/research/slotspe_proof").glob("*.py")),
+        ROOT / "survot_rank/research/slotspe_proof/__init__.py",
+        *sorted((ROOT / "slotspe_proof").glob("*.py")),
         ROOT / "scripts/run_slotspe_proof.py", ROOT / "scripts/build_slotspe_proof_delivery.py",
         ROOT / "run_slotspe_proof.sh",
         ROOT / "configs/slotspe_proof_server.json", ROOT / "docs/SLOTSPE_PROOF_TASK.json",

@@ -17,7 +17,7 @@ from pathlib import Path
 import re
 from types import SimpleNamespace
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = REPO / "configs/slotspe_problem_experiments.json"
 QUESTIONS = {
     "P1": "Fixed capacity versus independently measured patient complexity",

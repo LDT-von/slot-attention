@@ -19,7 +19,7 @@ import socket
 import subprocess
 import sys
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = REPO_ROOT / "configs/slotspe_proof_server.json"
 REQUIRED_SOURCE = ("models/SlotSPE.py", "models/slot_attention.py",
     "models/transformer.py", "models/omics_encoder.py", "utils/loss_func.py",
@@ -31,7 +31,7 @@ DEFAULTS = {"source_root": "third_party/SlotSPE", "study": "blca",
     "encoding_dim": None, "device": "cuda:0", "lr": 0.0005, "torch_threads": 2,
     "experiment": "reproduction"}
 PATH_KEYS = ("source_root", "metadata_root", "features_root")
-PACKAGE = "survot_rank.research.slotspe_proof"
+PACKAGE = "slotspe_proof"
 
 
 def _sha(path):

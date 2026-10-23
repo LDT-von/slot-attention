@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-23T13:32:00+08:00",
+  "recorded_at": "2026-10-23T15:55:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
@@ -1447,5 +1447,41 @@
       "Not a predictive-harm claim: the collapse is measured as a representation fact, and its patient consequence remains unestablished."
     ],
     "next_action": "Capacity scan remains, but its expected value is reduced: the dominant ring R2 is a normalization operator and is independent of slot count, so changing slot capacity may not relieve the collapse. Loose the problem_capacity.py state contract and run 4/8/16 slots as independent-initialization arms to test that prediction. Any training requires fresh explicit user authorization; the earlier authorization covered the read-only dissection only."
+  },
+  "latest_package_relocation": {
+    "recorded_at": "2026-10-23T15:55:00+08:00",
+    "task_id": "SPE-RELOCATE",
+    "route": "SlotSPE repository layout / import-path relocation only; no training, no inference, no patient work",
+    "question": "Can the SlotSPE research harness live at the top level under its own name while every historical import path keeps working unchanged?",
+    "completed_work": "Moved all 33 implementation modules from survot_rank/research/slotspe_proof/ to the top-level slotspe_proof/ package. survot_rank/research/slotspe_proof/__init__.py is now a compatibility shim that holds no implementation code: a meta path finder resolves each legacy dotted name onto the canonical module and binds that SAME module object, so both paths share one module identity. The shim is lazy on purpose, because several harness modules import torch/pandas at module scope and this repository treats 'plan must not import torch' as a hard contract. Updated the three hardcoded legacy imports inside the harness (slot_ring_dissection, redundancy_queue -m target, queue PACKAGE), the 7 module-level repository-root constants from parents[3] to parents[1], the delivery builder glob, the 11 anti-tamper path pins plus their hashes in configs/slotspe_redundancy_queue.json, and the 17 survot_rank entries in PUBLICATION_MANIFEST.json. acceptance.py now accepts either the new or the historical delivery prefix and rejects an ambiguous match.",
+    "paths": {
+      "new_package": "slotspe_proof/ (33 modules)",
+      "compat_shim": "survot_rank/research/slotspe_proof/__init__.py",
+      "third_party_untouched": "third_party/SlotSPE/ (byte-for-byte unchanged)"
+    },
+    "checks": {
+      "pytest_tests": "312 passed, 0 failed, 2 pre-existing CUDA capability warnings (RTX 5090 / sm_120 vs installed torch build)",
+      "module_identity": "slotspe_proof.model is survot_rank.research.slotspe_proof.model -> True; __name__ stays 'slotspe_proof.model'",
+      "package_spec_consistency": "__package__ == __spec__.parent == 'slotspe_proof' under the legacy path; zero DeprecationWarnings (was 37)",
+      "plan_import_purity": "--plan still loads neither torch nor pandas on all three entrypoints",
+      "entrypoints": [
+        "run_slotspe_proof.sh --plan",
+        "python -B scripts/run_slotspe_redundancy.py --plan",
+        "python -B scripts/run_slotspe_problem_experiments.py --plan"
+      ],
+      "script_import_smoke": "all scripts/check_slotspe_*.py, run_slotspe_*.py, export_slotspe_*.py, audit/pack_slotspe_return import cleanly",
+      "new_deprecation_warnings": 0,
+      "training_runs": 0,
+      "inference_passes": 0,
+      "patient_arrays_read": 0,
+      "parameters_updated": 0
+    },
+    "gaps_and_reasons": [
+      "evidence/code_snapshots/* still reference survot_rank/research/slotspe_proof/. Those files are frozen archives whose sha256 values are registered in PUBLICATION_MANIFEST.json; AGENTS.md requires their historical bytes and hashes be preserved, so they were deliberately NOT edited. Relocating code does not make old-path auditors portable, exactly as the local migration note already warned for the E:/DCT-Reg -> /data1/SlotSPE move.",
+      "docs/research/** still cite the old path in historical reports. Those citations are left verbatim so that recorded hashes and measurement reports stay intact; only README.md's live 'file locations' entry was updated to describe the new package and the shim.",
+      "Historical scripts and tests still import the old path. That is intentional and is the compatibility guarantee; they were not rewritten.",
+      "No SlotSPE behavior changed. The relocation fixes no clinical or predictive question, and proves nothing about patient performance."
+    ],
+    "next_action": "Return to the pending user-authorized task: implement best-validation-C-index checkpoint selection in slotspe_proof/patient.py (train 30 epochs, keep the peak per fold, reload best weights, report the exploratory peak as the main C-index, and reset max_cindex per fold to avoid the original cross-fold threshold bug), then run 5 folds x 1 seed, arm A only. Nothing has been trained or executed here."
   }
 }

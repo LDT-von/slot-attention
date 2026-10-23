@@ -42,7 +42,7 @@ import json
 from pathlib import Path
 import random
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[1]
 
 # The four rings plus the untouched reference arm.
 RINGS = ("none", "r1_slot_axis_softmax", "r2_l1_normalize", "r3_gru_residual", "r4_shared_mu")
@@ -340,8 +340,8 @@ def run(config, *, input_root, observations, checkpoint, output_dir, device):
     import torch
     from torch.torch_version import TorchVersion
 
-    from survot_rank.research.slotspe_proof.model import build_model, make_args
-    from survot_rank.research.slotspe_proof.native_audit import model_purity, _state_digest
+    from slotspe_proof.model import build_model, make_args
+    from slotspe_proof.native_audit import model_purity, _state_digest
 
     plan_value = plan(config)
     output = Path(output_dir).resolve()

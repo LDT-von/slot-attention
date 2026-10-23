@@ -57,8 +57,18 @@ def audit_return(root, delivery=None):
         if not implementation:
             raise ValueError("Legacy batch lacks full implementation map; audit without --delivery and retain that limitation")
         for name, digest in implementation.items():
-            if delivered.get("survot_rank/research/slotspe_proof/" + name) != digest:
+            # New deliveries package the harness under "slotspe_proof/"; legacy
+            # deliveries kept the historical "survot_rank/research/slotspe_proof/"
+            # prefix. Accept either, but require exactly one to match.
+            candidates = (
+                "slotspe_proof/" + name,
+                "survot_rank/research/slotspe_proof/" + name,
+            )
+            matched = [key for key in candidates if delivered.get(key) == digest]
+            if not matched:
                 raise ValueError(f"Returned implementation differs from supplied delivery: {name}")
+            if len(matched) > 1:
+                raise ValueError(f"Returned implementation is ambiguous across prefixes: {name}")
         implementation_verified = True
     summary = _read(root / "proof_summary.json")
     if summary.get("status") != "completed" or summary.get("transport_added") is not False:

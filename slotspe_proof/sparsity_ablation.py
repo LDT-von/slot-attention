@@ -13,7 +13,7 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
-REPO = Path(__file__).resolve().parents[3]
+REPO = Path(__file__).resolve().parents[1]
 ARMS = ("native_top2", "dense_wsi", "dense_omic", "dense_both", "uniform_both")
 
 
