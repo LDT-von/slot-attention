@@ -2,9 +2,11 @@
 
 ## Executable eleven-arm diagnostic (2026-10-22)
 
-The current SlotSPE queue is implemented: **S0, S4, R1, R2, R3, R4, R5, S1, S2, S3, S5**, limited to **BLCA / existing UNI2-h / fold0 / seed3**. Defaults: 30 epochs, 4096 real patches, logical batch 8, 20 evaluation repeats, final-epoch checkpoint, splits `5fold_uni2h`. These match the original SlotSPE defaults (`--max_epochs 30 --num_patches 4096`). S6 is held; R0 aliases S0. Historical D0-D4 below are a separate DCT-host design, not this SlotSPE queue.
+The current SlotSPE queue is implemented: **S0, S4, R1, R2, R3, R4, R5, S1, S2, S3, S5**, limited to **BLCA / existing UNI2-h / fold0 / seed3**. Configured defaults: 30 epochs, 4096 real patches, logical batch 8, 20 evaluation repeats, final-epoch checkpoint, splits `5fold_uni2h`. These match the original SlotSPE defaults (`--max_epochs 30 --num_patches 4096`). S6 is held; R0 aliases S0. Historical D0-D4 below are a separate DCT-host design, not this SlotSPE queue.
 
-Patch handling reproduces the original loader: all real patches are cached per patient, a fresh subset is drawn without replacement at each access, and bags shorter than the budget are zero-padded instead of excluding the patient (`third_party/SlotSPE/dataset/dataset_survival.py` lines 285-292). Earlier revisions of this harness excluded such patients and froze one fixed subset per patient; both were deviations from the original and are corrected.
+**Configured is not the same as executed.** No patient run has ever used 4096 patches: every completed run is 3 epochs / 256 patches, including both failed eleven-arm attempts. At 4096, 50 of 457 BLCA slides own fewer real patches, 18 of them are more than half padding, and the worst case is 97.0% padded rows, so running the configured budget for the first time would combine two never-tested conditions. Read [the reconciliation](docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt) before authorizing a 4096 run.
+
+Patch handling reproduces the original loader: all real patches are cached per patient, a fresh subset is drawn without replacement at each access, and bags shorter than the budget are zero-padded instead of excluding the patient (`third_party/SlotSPE/dataset/dataset_survival.py` lines 285-292). Earlier revisions of this harness excluded such patients and froze one fixed subset per patient; both were deviations from the original and are corrected. The published loader passes no padding mask, so padded rows still produce keys and values.
 
 The complete 14-stage/11-arm generated-data smoke passed at native 256 dimensions, 8 slots and 10 iterations. It uses invented features, not patient or real UNI2-h inputs. Focused checks: 312 passed. Original SlotSPE source, existing default configs and A/B/C definitions are preserved.
 
@@ -24,7 +26,15 @@ All arms share paired initialization, cached inputs, per-example random schedule
 
 本仓库先检验槽表示、内容分配、聚合过程与学习目标，再分别研究预测后果和修正收益。表示机制的证据不必以C-index下降为前提；高相似、sanity check和人为干预的输出变化也不直接登记为预测损害。
 
-当前入口：[进度](docs/PROGRESS.json)、[本机GPU阶段登记与离散度](docs/research/slotspe_gpu_trisurv_20261022/本机GPU阶段登记与离散度.txt)、[槽塌缩四环只读拆解](docs/research/slotspe_slot_ring_dissection_20261023/槽塌缩四环只读拆解.txt)、[门控配对训练报告](docs/research/slotspe_gate_pair_20261022/门控配对训练与冗余对比.txt)、[服务器新结论复核](docs/research/slotspe_server_claims_20261020/服务器结论复核.txt)、[原始回传与对照要求](docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt)、[P5勘误](docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt)。
+当前入口：[进度](docs/PROGRESS.json)、[补丁—槽共享只读实测与patch预算核对](docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt)、[本机GPU阶段登记与离散度](docs/research/slotspe_gpu_trisurv_20261022/本机GPU阶段登记与离散度.txt)、[槽塌缩四环只读拆解](docs/research/slotspe_slot_ring_dissection_20261023/槽塌缩四环只读拆解.txt)、[门控配对训练报告](docs/research/slotspe_gate_pair_20261022/门控配对训练与冗余对比.txt)、[服务器新结论复核](docs/research/slotspe_server_claims_20261020/服务器结论复核.txt)、[原始回传与对照要求](docs/research/slotspe_server_claims_20261020/服务器AI_回传与对照验收.txt)、[P5勘误](docs/research/slotspe_p5_20261020/P5_交接复核与勘误.txt)。
+
+## patch 与槽的共享：每个 patch 被全部 8 槽读（2026-10-23）
+
+对 fold0/seed3 原生 3 轮 checkpoint、77 名验证患者**已保存**的注意力数组做纯只读复算。**每个 patch 的有效读取槽数 WSI 7.99999（最低 7.99940）、OMIC 7.99984**；两槽在同一 patch 上的最大权重差 WSI 5.8e-05，而平均 patch 权重是 3.9e-03。**每个槽读取的有效 patch 数 WSI 255.99964/256**，前 10% patch 只拿到 9.79% 质量（均匀应为 10.0%）；注意力矩阵被 u(槽)×v(patch) 秩一结构解释 0.999997 的能量。**读取层重叠 0.99918（WSI）比已登记的槽向量余弦 0.99717 更严重。**
+
+**这不是槽轴 softmax 造成的**：原始 softmax 在一个 patch 上 8 槽的 max/min 比只有 1.031（WSI）/1.045（OMIC），即它拿到的 logits 本身就没有分化；这从数据侧独立复现了四环拆解"R1 不是主因"。接近均匀在**第 1 次迭代就已存在**，并在 10 次迭代内持续收紧（WSI 偏离 0.00571→0.00157），说明成因在 softmax 之前：8 个槽形成第一个 query 时就已几乎相同。
+
+单 fold0/单 seed3/单冻结 checkpoint/77 人，纯几何事实，**不构成预测损害或修正收益证据**；未做因果干预；注意力经 head 平均；且全部数字来自 **3 轮/256 patch**，不是 4096 预算下的结果。详见[报告](docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt)。
 
 ## 槽塌缩四环只读拆解（2026-10-23）
 
