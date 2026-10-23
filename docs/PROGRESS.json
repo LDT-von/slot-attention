@@ -1626,8 +1626,15 @@
       "new_backward_passes": 0,
       "patient_feature_arrays_loaded": false,
       "actual_server_execution_this_stage": false,
-      "new_server_raw_results_received": false
+      "new_server_raw_results_received": false,
+      "published_commit": "99f457428bc3409b22c1ff7d1ed168883cee44d4",
+      "published_branch": "main",
+      "remote_main_verified_equal_to_local_head": true,
+      "published_files": 4,
+      "patient_identifiers_staged": false,
+      "private_patient_inputs_staged": false
     },
+    "publication_note": "本地工作分支名为 master，而远端跟踪分支是 main。第一次 push 因此意外新建了远端 master 分支，随后已把同样内容以 fast-forward 推送到 main，并删除了远端 master，随后把本地分支重命名为 main。推送到 main 的范围包含三个先前未推送的提交：93a83e9（迁移 slotspe_proof 顶层包）、24dedca（对齐原版 patch 语义）、99f4574（本轮）。远端 main 与本地 HEAD 已核验一致。",
     "paths": {
       "report": "docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt",
       "sharing_entrypoint": "scripts/check_slotspe_patch_slot_sharing.py",
