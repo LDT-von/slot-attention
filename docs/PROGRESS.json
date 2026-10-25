@@ -1,9 +1,9 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-24T04:13:07.672178+08:00",
+  "recorded_at": "2026-10-25T16:54:46.423388+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
-  "scope": "Only SlotSPE issue discovery; no DCT candidate development or transport insertion",
+  "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
   "issues": {
     "P1": "原义：固定槽容量不适配患者复杂度。服务器observe已报告K4/8/16冻结槽模块探针；中心化秩上限为3/7/15。容量×独立复杂度的训练因果未检验；capacity_train未启动。",
     "P2": "本地历史BLCA 3轮原版71人已复算：选中2槽cos均值WSI0.99447/OMIC0.99862，读取重叠99.858%/99.555%。另收到服务器77人observe汇总，支持高度表示/读取冗余；其熵来自头平均后的归一化读取权重，不能推出原始竞争精确均分。服务器原始产物待独立验收；碎片化与预测损害未证。",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "The authorized public repository delivery is complete for the verified payload. Use main as the single current implementation and check DELIVERY_MANIFEST with --check --require-tracked; after future public-file edits refresh and commit the manifest with those files. Patient execution and active server adjustments remain outside this repository-delivery task.",
+  "next_action": "V1/V2/V3 and nine fixed presets are implemented and synthetically validated. Server connection remains deferred. After LAN access is restored and user resumes server work, doctor then stage v1, with actual patient receipts before later stages.",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -4139,5 +4139,362 @@
     },
     "gaps_reasons": "1) 仅fold0/seed3单折、77验证患者, 患者级bootstrap下11臂中只有S1的配对Δ95%CI不跨0, 其余全部跨0含0, 故不能宣称任何臂的cindex优势已确立。2) 20次重复是评估随机性而非独立患者, 配对t检验的极小p值反映的是评估噪声可复现性, 不是患者层面的证据强度。3) 观测到槽冗余与cindex的关系与设计意图相反(见slot_diagnostics), 现有机制解释未被支持。4) 梯度爆炸在无裁剪下普遍存在, 尤以R4最重; 本队列未做裁剪对照, 无法区分'改善来自机制'与'改善来自不稳定的隐式正则'。5) 全部为探索性, 非泛化、非临床获益、非A/B/C纠正效力证据。未观察到的问题不臆造: 本队列不涉及P8传输, 不做新模块。",
     "next_action_user_inputs": "建议优先: (a) 跨折(seed/fold)重复以消除单折与胜者诅咒, 尤其S1/S2/R5/S3; (b) 加梯度裁剪对照以隔离数值不稳定贡献; (c) 复核R5/S1/S3风险压缩是否意味着风险分数失去意义。是否授权扩展队列需要用户明确执行授权; 本轮已完成不需再授权。"
+  },
+  "latest_mi_disentanglement_implementation_plan_20261025": {
+    "recorded_at": "2026-10-25T16:06:06.513992+08:00",
+    "route_task": "SlotSPE / staged MI and disentanglement implementation plan; V1 core generated validation",
+    "authorization_and_current_scope": {
+      "implementation_and_each_version_execution_authorized": true,
+      "execution_environment_user_selected": "existing rtx-5090 / trisurv",
+      "latest_user_steering": "Defer connection because VPN prevents LAN access; complete the plan first",
+      "current_stage": "Plan and synthetic core validation only; no patient execution"
+    },
+    "completed_work": "Finalized V1 supervised stochastic slot compression, V2 content-constrained shared/private summary dependence, and V3 pairwise relation residual plan. Fixed nine controlled pilot presets with official best-validation epoch selection, matched noise/capacity controls, finite-sample limits and failure gates. Implemented only one canonical V1 core and its generated checks; no new patient runner or V2/V3 implementation.",
+    "paths_commit": {
+      "base_HEAD": "d7f30cfdf8a62d02426a90704b4db4c859d03c6d",
+      "files": [
+        "docs/research/slotspe_native_assignment_training_20261022/互信息与解耦模块实施计划_20261025.md",
+        "slotspe_proof/slot_bottleneck.py",
+        "scripts/check_slotspe_vib.py",
+        "tests/test_slot_bottleneck.py"
+      ],
+      "file_sha256": {
+        "docs/research/slotspe_native_assignment_training_20261022/互信息与解耦模块实施计划_20261025.md": "22f52194b37bce7e381e1de76a2f59504b2d2700aca8a799db1a3c04676769c3",
+        "slotspe_proof/slot_bottleneck.py": "670441a10594bd25ae22ea9ab860e8c56c9147e3adf7cc35adbe9876e4f09570",
+        "scripts/check_slotspe_vib.py": "555421088b2786f8704b25cce5f64873ac9930d57f43a23e714776867f5a9e69",
+        "tests/test_slot_bottleneck.py": "d4cbe11c2b569ff6a4d3c0658ffb013f1a7d7073adf02128fee19ec152d2ce60"
+      },
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "focused_v1_tests": {
+        "passed": 16,
+        "receipt": "local_evidence/implementation/20261025_slot_vib/pytest_v1_final.xml"
+      },
+      "generated_native_size_smoke": {
+        "conditions": 4,
+        "optimizer_steps_per_condition": 1,
+        "K": 8,
+        "D": 256,
+        "slot_iterations": 10,
+        "patches": 4096,
+        "generated_encoding_dim": 8,
+        "generated_pathways": [
+          3,
+          5
+        ],
+        "patient_inputs": false,
+        "receipt": "local_evidence/implementation/20261025_slot_vib/generated_smoke_final.json"
+      },
+      "public_suite_initial": {
+        "collected": 354,
+        "passed": 351,
+        "failed": 3,
+        "reason": "Windows child GBK output decoded as UTF-8 caused stdout=None in three existing packaging tests",
+        "receipt": "local_evidence/implementation/20261025_slot_vib/pytest_public_suite.xml"
+      },
+      "public_suite_utf8_targeted_recheck": {
+        "task": "public_pytest_three_failures_encoding_recheck",
+        "exit_code": 0,
+        "tests": 3,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "passed": 3,
+        "seconds": 103.56,
+        "environment": {
+          "PYTHONIOENCODING": "utf-8",
+          "PYTHONDONTWRITEBYTECODE": "1"
+        },
+        "full_suite_repeated": false,
+        "patient_inputs_used": false,
+        "log": "pytest_utf8_recheck.log",
+        "xml": "pytest_utf8_recheck.xml",
+        "root_cause": "Windows child stdout encoded GBK while parent subprocess text capture forced UTF-8; UnicodeDecodeError in reader thread leaves stdout=None."
+      },
+      "not_a_single_354_green_run": true,
+      "padding_guard_findings": 0,
+      "protected_before_hashes_matched": 11,
+      "original_11_tracked_files_diff_from_HEAD": false,
+      "patient_training_runs": 0,
+      "patient_inference_runs": 0,
+      "new_server_raw_receipt": false,
+      "source_review": {
+        "independent_reviews": 2,
+        "main_loss_gradient_gap_test_added": true,
+        "v2_scale_shortcut_corrected_in_plan": true
+      },
+      "unscoped_collection_attempt": {
+        "status": "collection_failed_before_tests",
+        "errors": 106,
+        "reason": "pytest without tests path collected ignored historical delivery copies; rerun scoped to tests; no archive deleted"
+      }
+    },
+    "mathematical_claims": {
+      "proved_in_plan": [
+        "analytic joint Gaussian KL and equality case",
+        "expected KL = input MI + aggregate posterior KL; total correlation decomposition",
+        "two-modality normalization factor 4096",
+        "constant private decoded content has target-variance error floor",
+        "nonnegative Gaussian-kernel HSIC on the specified summaries",
+        "private scalar rescaling invariance after nondegenerate differentiable standardization",
+        "zero-output relation residual initialization and slot permutation equivariance"
+      ],
+      "not_proved": [
+        "patient prediction benefit or generalization",
+        "eight statistically independent or biologically named slots",
+        "independence of all private content from summary HSIC",
+        "automatic causal interaction discovery",
+        "native censored weighted objective as unconditional true-event-time MI estimator"
+      ]
+    },
+    "gaps_reasons": "V1 is a tested core, not a complete patient experiment implementation. New protocol runner, source/input identity checks, best/last checkpoints and all patient receipts remain future work. V2/V3 are specified but unimplemented. Connection deliberately deferred by the latest user instruction. Single-fold diagnostics cannot prove generalization.",
+    "next_action_user_inputs": "Implement and synthetically validate the separate patient protocol entrypoint and declared presets; then verify existing trisurv server paths when LAN access is restored. Execute stage by stage within the existing authorization and freeze results before adding the next version. Do not retry SSH during this plan stage."
+  },
+  "latest_mi_disentanglement_feasibility_20261025": {
+    "recorded_at": "2026-10-25T15:26:09.496129+08:00",
+    "route_task": "SlotSPE / MI and disentanglement feasibility literature review / advisory only",
+    "completed_work": "Reviewed the user weekly-report ideas against current slot generation, existing Gram and SlotBERT regularizers, padding behavior, original self/cross attention and pathway tokenization. Consulted primary MI, bottleneck, disentanglement, object-centric and survival literature, including the directly adjacent PIBD. Proposed a single implementation with separate declared presets and separate padding-validity controls; no module was implemented.",
+    "paths_commit": {
+      "base_HEAD": "d7f30cfdf8a62d02426a90704b4db4c859d03c6d",
+      "progress": "docs/PROGRESS.json",
+      "private_review_notes": "local_evidence/literature_reviews/20261025_152609_mi_disentanglement/review.json",
+      "source_mapping": [
+        "third_party/SlotSPE/models/slot_attention.py:69-112",
+        "third_party/SlotSPE/models/SlotSPE.py:253-332",
+        "third_party/SlotSPE/dataset/dataset_survival.py:278-292",
+        "slotspe_proof/slot_regularization.py:24-48",
+        "configs/slotspe_redundancy_queue.json:63-112"
+      ],
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "primary_paper_entries": 18,
+      "review_scope": "Primary abstracts and selected relevant method/theory passages, including PIBD censored objectives and CLUB variational optimization; not a claim that every paper was exhaustively reproduced.",
+      "codegraph_context_and_source_exploration": true,
+      "native_and_canonical_source_files_sha256_unchanged": 44,
+      "new_model_forwards": 0,
+      "new_backward_passes": 0,
+      "new_training_runs": 0,
+      "new_inference_runs": 0,
+      "new_synthetic_experiments": 0,
+      "patient_arrays_or_checkpoints_loaded": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "existing_queue_or_padding_guard_changed": false
+    },
+    "gaps_reasons": "All new plugin designs are hypotheses pending specification and experiments. Existing methods already cover IB plus common/private survival representations and plug-and-play slot pruning; novelty and patient efficacy are not established. Slot alignment, batch sample construction, estimator calibration, content retention and censoring-aware supervision remain design questions.",
+    "next_action_user_inputs": "First agree on whether the next implementation targets task compression or distinct content coverage. A low-complexity VIB preset and then a content-constrained shared/private preset are feasible candidates; MI-estimator and explicit relation versions should be separable ablations. Keep the current original-only/eleven-arm controls intact, use fixed named configurations, and obtain explicit authorization before any patient execution.",
+    "paper_sources": [
+      {
+        "name": "MINE",
+        "year": 2018,
+        "url": "https://proceedings.mlr.press/v80/belghazi18a.html",
+        "role": "MI lower-bound estimation; not an automatic MI minimizer"
+      },
+      {
+        "name": "CPC / InfoNCE",
+        "year": 2018,
+        "url": "https://arxiv.org/abs/1807.03748",
+        "role": "MI lower-bound maximization and positive/negative construction"
+      },
+      {
+        "name": "On Variational Bounds of Mutual Information",
+        "year": 2019,
+        "url": "https://proceedings.mlr.press/v97/poole19a.html",
+        "role": "Estimator bias/variance and high-dimensional limitations"
+      },
+      {
+        "name": "CLUB",
+        "year": 2020,
+        "url": "https://proceedings.mlr.press/v119/cheng20b.html",
+        "role": "MI minimization; conditional-density fit and vCLUB bound caveats"
+      },
+      {
+        "name": "Deep VIB",
+        "year": 2017,
+        "url": "https://arxiv.org/abs/1612.00410",
+        "role": "Task loss plus variational KL compression; no batch negative requirement for analytic Gaussian KL"
+      },
+      {
+        "name": "PIBD",
+        "year": 2024,
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2024/file/9ead108421b202494d01b5060d12aa34-Paper-Conference.pdf",
+        "role": "Direct pathology-genomics survival prior art; prototypes, bottleneck, common/private disentanglement and censored NLL"
+      },
+      {
+        "name": "VICReg",
+        "year": 2022,
+        "url": "https://arxiv.org/abs/2105.04906",
+        "role": "Variance anti-collapse, view invariance and covariance regularization; dimension-wise original objective"
+      },
+      {
+        "name": "Barlow Twins",
+        "year": 2021,
+        "url": "https://proceedings.mlr.press/v139/zbontar21a.html",
+        "role": "Cross-view feature-dimension correlation reduction"
+      },
+      {
+        "name": "FactorVAE",
+        "year": 2018,
+        "url": "https://proceedings.mlr.press/v80/kim18b.html",
+        "role": "Aggregate posterior total correlation; not direct proof of slot semantics"
+      },
+      {
+        "name": "Locatello et al. disentanglement limitations",
+        "year": 2019,
+        "url": "https://proceedings.mlr.press/v97/locatello19a.html",
+        "role": "Need explicit inductive bias/supervision for identifiable factors"
+      },
+      {
+        "name": "MISA",
+        "year": 2020,
+        "url": "https://arxiv.org/abs/2005.03545",
+        "role": "Shared/private subspaces as an architectural precedent outside survival"
+      },
+      {
+        "name": "PARTS",
+        "year": 2021,
+        "url": "https://openaccess.thecvf.com/content/ICCV2021/html/Zoran_PARTS_Unsupervised_Segmentation_With_Slots_Attention_and_Independence_Maximization_ICCV_2021_paper.html",
+        "role": "Existing slot/independence-oriented object-centric model"
+      },
+      {
+        "name": "CoSA / Grounded Object-Centric Learning",
+        "year": 2024,
+        "url": "https://proceedings.iclr.cc/paper_files/paper/2024/hash/ba4caa85ecdcafbf9102ab8ec384182d-Abstract-Conference.html",
+        "role": "Grounded slot dictionary and stable binding precedent"
+      },
+      {
+        "name": "MetaSlot",
+        "year": 2025,
+        "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/614ef802d663b9cdac2e6600f8ee5764-Abstract-Conference.html",
+        "role": "Existing plug-and-play duplicate-slot removal; current local S6 remains only an adaptation"
+      },
+      {
+        "name": "CODA",
+        "year": 2026,
+        "url": "https://arxiv.org/abs/2601.01224",
+        "role": "Register slots and slot-input contrastive alignment; image/diffusion evidence, not pathology-survival evidence"
+      },
+      {
+        "name": "Multimodal information decomposition",
+        "year": 2023,
+        "url": "https://arxiv.org/abs/2302.12247",
+        "role": "Task redundancy, unique information and synergy"
+      },
+      {
+        "name": "SynIB",
+        "year": 2026,
+        "url": "https://arxiv.org/abs/2606.09853",
+        "role": "Preprint synergy-targeting objective; unimodal-confidence penalty not automatically appropriate for survival"
+      },
+      {
+        "name": "IB-GPID",
+        "year": 2026,
+        "url": "https://doi.org/10.1016/j.cmpb.2026.109566",
+        "role": "Survival-specific information bottleneck and Gaussian PID; assumptions must not be transplanted as ground truth"
+      }
+    ]
+  },
+  "latest_mi_disentanglement_code_20261025": {
+    "recorded_at": "2026-10-25T16:54:46.423388+08:00",
+    "route_task": "SlotSPE / V1-V3 plugin implementation and staged nine-preset executable queue",
+    "completed_work": "Implemented stochastic VIB, content-constrained shared/private slots, scale-standardized summary HSIC, query-free content matching, zero-initialized relation/capacity residuals, one native prediction-slot hook, and an independent staged queue. All nine presets run actual optimization on generated native-size inputs. Added complete generated-cache train/best/last/evaluation integration plus failure and stage-drift tests.",
+    "paths_commit": {
+      "base_HEAD": "fe23ab2fe7c11541970274f7ece8dc5d58497296",
+      "canonical_source_sha256": {
+        "slotspe_proof/slot_bottleneck.py": "8e9bbe7e47dd51d596fe27da1a512ab13a67407a40f7d9a5a70331c334fc70f4",
+        "slotspe_proof/slot_disentanglement.py": "75ab77ac2cec6f16a4b73f37f027b574a4f41ca7f21e9cfb741fb13bfb8859ea",
+        "slotspe_proof/slot_relations.py": "2914a8f886a8f345169d30bf88b4058b0df296453d44825e17ccfc1fe43186a3",
+        "slotspe_proof/prediction_slots.py": "6a65a38d86297ed4941ec25c53d770719eab07d598229ac572628def337f98cc",
+        "slotspe_proof/plugin_host.py": "e47761e4a33c1e924dae29b8534383dc7d20f2d647040e069c74d6e7311465a7",
+        "slotspe_proof/plugin_engine.py": "7f6a01c76b9b3d33bdb43ec57163d981ed5db581d14c24c6021366adcfab0892",
+        "slotspe_proof/plugin_queue.py": "7570a766a5710edc024ef4390246d2b487083bf59778446db0bc34aeed03aa9e"
+      },
+      "config": "configs/slotspe_plugins_fold0_seed3.json",
+      "entrypoint": "scripts/run_slotspe_plugins.py",
+      "usage": "docs/research/slotspe_native_assignment_training_20261022/插件版本使用与验收_20261025.md",
+      "delivery": "Commit and remote receipt recorded in the final reply and ignored delivery_verification.json; no patient artifacts included"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "public_suite": {
+        "tests": 497,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "public_suite_receipt": "local_evidence/implementation/20261025_plugins/pytest_full_run02.xml",
+      "full_suite_exit_code": 0,
+      "generated_native_size_smoke": {
+        "conditions": 9,
+        "optimizer_steps_each": 1,
+        "root_forwards_each": 8,
+        "D": 256,
+        "K": 8,
+        "slot_iterations": 10,
+        "patches": 4096,
+        "logical_batch": 8,
+        "generated_encoding_dim": 8,
+        "generated_pathways": [
+          3,
+          5
+        ],
+        "patient_inputs": false,
+        "receipt": "local_evidence/implementation/20261025_plugins/native_smoke_run02/generated_summary.json"
+      },
+      "core_and_integration_checks": [
+        "V1 bypass output/loss/gradient/optimizer/RNG equivalence",
+        "prediction main gradient reaches both modality bottlenecks",
+        "content constant-output variance floor and target stop-gradient",
+        "differentiable HSIC standardization rescaling invariance",
+        "relation permutation, identity initialization and non-dead gradients",
+        "controlled cross-slot interaction and generated XOR fit",
+        "best/last checkpoint and all-real validation cache integration",
+        "v1-v2-v3 stage and implementation/config/input/artifact drift gates",
+        "initialization/preparation/generated failures retained"
+      ],
+      "prior_attempts_retained": [
+        {
+          "receipt": "local_evidence/implementation/20261025_plugins/pytest_full_run01.xml",
+          "passed": 395,
+          "setup_errors": 84,
+          "reason": "The explicitly requested pytest basetemp parent did not yet exist. Created parent first, reran entire public suite; no archived evidence removed."
+        }
+      ],
+      "original_source_files_byte_identical_to_HEAD": 11,
+      "protected_padding_guard_findings": 0,
+      "new_patient_training_runs": 0,
+      "new_patient_inference_runs": 0,
+      "new_server_execution": false,
+      "new_patient_raw_receipt": false
+    },
+    "novelty_assessment": {
+      "kind": "limited_primary_literature_design_judgment_not_a_novelty_proof",
+      "single_module_potential_order": [
+        "V2",
+        "V3",
+        "V1"
+      ],
+      "recommended_roles": {
+        "V2": "core content-preserving slot redundancy candidate",
+        "V3": "separate synergy/interaction extension with capacity control",
+        "V1": "information compression reference"
+      },
+      "prior_art": [
+        "https://arxiv.org/abs/1612.00410",
+        "https://arxiv.org/abs/2005.03545",
+        "https://proceedings.iclr.cc/paper_files/paper/2024/hash/9ead108421b202494d01b5060d12aa34-Abstract-Conference.html",
+        "https://proceedings.neurips.cc/paper/2017/hash/e6acf4b0f69f6f6e60e9a815938aa1ff-Abstract.html"
+      ]
+    },
+    "upstream_progress_preserved": {
+      "commit": "fe23ab2fe7c11541970274f7ece8dc5d58497296",
+      "key": "latest_local_redundancy_queue_run",
+      "independent_raw_acceptance_this_turn": false,
+      "backup": "local_evidence/implementation/20261025_plugins/upstream_metadata_merge",
+      "merge": "metadata-only fast-forward; disjoint progress keys semantically merged; twenty other local public changes hash-preserved"
+    },
+    "gaps_reasons": "No new patient jobs or performance conclusions. Server connection remains deferred per user. HSIC constrains a private summary, not all slot independence; content targets are feature proxies, not biological labels. Native-size generated input widths/pathway count differ from real UNI2-h. Single-fold best-validation trials will remain exploratory and need matched strong baselines plus independent generalization checks.",
+    "next_action_user_inputs": "When the user resumes server work and LAN access is restored, verify the existing trisurv inputs/runtime with --doctor and execute only stage v1 first. Existing authorization covers the declared versions; do not expand folds/seeds or automatically start later stages. Keep all patient artifacts ignored."
   }
 }

@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-25T15:40:21.249536+08:00",
-  "base_commit_before_delivery": "d7f30cfdf8a62d02426a90704b4db4c859d03c6d",
+  "recorded_at": "2026-10-25T16:55:36.846047+08:00",
+  "base_commit_before_delivery": "fe23ab2fe7c11541970274f7ece8dc5d58497296",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 402,
-  "repository_file_count_including_manifest": 403,
+  "covered_file_count": 420,
+  "repository_file_count_including_manifest": 421,
   "patient_data_included": false,
   "files": [
     {
@@ -41,8 +41,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 16257,
-      "sha256": "54e96d5da7aa89f9a1d5845e6abdd129486141b46ba1c052cc6c4317859d294f"
+      "bytes": 16960,
+      "sha256": "740fa2fa6ac88486e4d8d9813989635f6d8a0929a4f5691041071a7ac9e18719"
     },
     {
       "path": "configs/slotspe_attribution_server.json",
@@ -68,6 +68,11 @@
       "path": "configs/slotspe_native_variants.json",
       "bytes": 3290,
       "sha256": "b40b1c2be9fce9c162aa15829494e9eca9a394c14b0cb5d091e2cf5d8f47de01"
+    },
+    {
+      "path": "configs/slotspe_plugins_fold0_seed3.json",
+      "bytes": 782,
+      "sha256": "f8c6895805e6d5b15cddf3eece6a17837936406d0b5964dc13dbc87e319f063a"
     },
     {
       "path": "configs/slotspe_problem_experiments.json",
@@ -121,8 +126,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 239580,
-      "sha256": "5465c69d50238f6086e7bef09d8b2d3a7df6c924194aa057f96dbc84a9012229"
+      "bytes": 259053,
+      "sha256": "0c89024fcd2512bf13534ed17d3ddaef0040b8963039d59536073fb6721a0812"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -196,8 +201,8 @@
     },
     {
       "path": "docs/research/README.md",
-      "bytes": 8644,
-      "sha256": "e14b9fb55bd7925e1d2e21ed4c8d20e7386a08a40e7b8ea10bf8f1cb97636819"
+      "bytes": 8917,
+      "sha256": "2dac0ed77e58178daa243abe49ded1dc2094a5752b3df98927d19329bc4756e5"
     },
     {
       "path": "docs/research/slotspe_abc_20261019/checks.json",
@@ -640,6 +645,11 @@
       "sha256": "e43a03c26ee00c41c2c082ec955cee82f4e5e37dd2c06c6fd13d7e1f47c38e39"
     },
     {
+      "path": "docs/research/slotspe_native_assignment_training_20261022/互信息与解耦模块实施计划_20261025.md",
+      "bytes": 23310,
+      "sha256": "6c9822d48696dd1fd3dc74d8ddfe649481223a5f02ab90ddbf167cd6d9c6902f"
+    },
+    {
       "path": "docs/research/slotspe_native_assignment_training_20261022/十一组可执行队列与服务器交接.md",
       "bytes": 8153,
       "sha256": "924ff9beeb759f38ed072e42394cabebb8e7d4c1b84f0fee08bf8b7e0fbd0816"
@@ -648,6 +658,11 @@
       "path": "docs/research/slotspe_native_assignment_training_20261022/对照设计.txt",
       "bytes": 3803,
       "sha256": "f3d368e0a6174bd0828f13b1e8272558b7714ce7d47af0de507b374bb36340cf"
+    },
+    {
+      "path": "docs/research/slotspe_native_assignment_training_20261022/插件版本使用与验收_20261025.md",
+      "bytes": 8985,
+      "sha256": "e3a34f120b3322770f760cc26b4333d8c568a3359d02b0b405e810a249282ea0"
     },
     {
       "path": "docs/research/slotspe_native_assignment_training_20261022/本地五组测试与清理报告.txt",
@@ -1530,6 +1545,11 @@
       "sha256": "35a2e90bd171ea6d7163de47703eb3aed481f8efa70cf80c288667dcdeefa9b0"
     },
     {
+      "path": "scripts/check_slotspe_vib.py",
+      "bytes": 6171,
+      "sha256": "555421088b2786f8704b25cce5f64873ac9930d57f43a23e714776867f5a9e69"
+    },
+    {
       "path": "scripts/export_slotspe_p1_observations.py",
       "bytes": 14472,
       "sha256": "88488dbdee3a45afa98631d746e34321be0ecf7cba2cf0824c12e9f643f66d4e"
@@ -1553,6 +1573,11 @@
       "path": "scripts/refresh_slotspe_queue_pins.py",
       "bytes": 2994,
       "sha256": "6380c3eab5e7c339246ee361cbda45368c2838aa5a7394b0e3bee86448ba74f6"
+    },
+    {
+      "path": "scripts/run_slotspe_plugins.py",
+      "bytes": 269,
+      "sha256": "b5837b213c38a281c1cf4554525b04445ab34cc6e9504b3b15a817b81a49a6ca"
     },
     {
       "path": "scripts/run_slotspe_problem_experiments.py",
@@ -1765,6 +1790,26 @@
       "sha256": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59"
     },
     {
+      "path": "slotspe_proof/plugin_engine.py",
+      "bytes": 25589,
+      "sha256": "7f6a01c76b9b3d33bdb43ec57163d981ed5db581d14c24c6021366adcfab0892"
+    },
+    {
+      "path": "slotspe_proof/plugin_host.py",
+      "bytes": 4972,
+      "sha256": "e47761e4a33c1e924dae29b8534383dc7d20f2d647040e069c74d6e7311465a7"
+    },
+    {
+      "path": "slotspe_proof/plugin_queue.py",
+      "bytes": 11023,
+      "sha256": "7570a766a5710edc024ef4390246d2b487083bf59778446db0bc34aeed03aa9e"
+    },
+    {
+      "path": "slotspe_proof/prediction_slots.py",
+      "bytes": 1857,
+      "sha256": "6a65a38d86297ed4941ec25c53d770719eab07d598229ac572628def337f98cc"
+    },
+    {
       "path": "slotspe_proof/problem_capacity.py",
       "bytes": 16661,
       "sha256": "f0bb9a25292e328ccdee287c1647f34c048adcc8ab89caba519f9656f3016067"
@@ -1815,9 +1860,24 @@
       "sha256": "101bb49201eef607196ca18e4243201ac737f00318db020ef66f08eab133b43d"
     },
     {
+      "path": "slotspe_proof/slot_bottleneck.py",
+      "bytes": 8321,
+      "sha256": "8e9bbe7e47dd51d596fe27da1a512ab13a67407a40f7d9a5a70331c334fc70f4"
+    },
+    {
+      "path": "slotspe_proof/slot_disentanglement.py",
+      "bytes": 10292,
+      "sha256": "75ab77ac2cec6f16a4b73f37f027b574a4f41ca7f21e9cfb741fb13bfb8859ea"
+    },
+    {
       "path": "slotspe_proof/slot_regularization.py",
       "bytes": 5786,
       "sha256": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9"
+    },
+    {
+      "path": "slotspe_proof/slot_relations.py",
+      "bytes": 5408,
+      "sha256": "2914a8f886a8f345169d30bf88b4058b0df296453d44825e17ccfc1fe43186a3"
     },
     {
       "path": "slotspe_proof/slot_ring_dissection.py",
@@ -1853,6 +1913,21 @@
       "path": "tests/test_delivery_manifest.py",
       "bytes": 3103,
       "sha256": "ab01ea0c72eb3e21c988bb4461caade0c897a691687f0352a0939ab105622158"
+    },
+    {
+      "path": "tests/test_slot_bottleneck.py",
+      "bytes": 11353,
+      "sha256": "d4cbe11c2b569ff6a4d3c0658ffb013f1a7d7073adf02128fee19ec152d2ce60"
+    },
+    {
+      "path": "tests/test_slot_disentanglement.py",
+      "bytes": 11535,
+      "sha256": "75822f8a4c476216481c2eaff8f4692e96a393c698ec7e3e67c737273b79d40d"
+    },
+    {
+      "path": "tests/test_slot_relations.py",
+      "bytes": 9239,
+      "sha256": "2dbfde5ef54517736222441895333eb96f98bb62e2732d099eb1f8415a0f7f1b"
     },
     {
       "path": "tests/test_slotspe_assignment_router.py",
@@ -1913,6 +1988,21 @@
       "path": "tests/test_slotspe_patch_sampling.py",
       "bytes": 2944,
       "sha256": "0139f6c84f40ebeb50f45f77cfc0588fd41fa344201ccac91b639cbb4f770d98"
+    },
+    {
+      "path": "tests/test_slotspe_plugin_engine.py",
+      "bytes": 8972,
+      "sha256": "971fedbae8acd22d30b11649ac19e615623ee6dbf5fe0889b68e6a1ebded40ad"
+    },
+    {
+      "path": "tests/test_slotspe_plugin_queue.py",
+      "bytes": 8300,
+      "sha256": "f1e6fd5ea790d355f8cfae349db7c9b0ecc85298b0530fd034fbbcf817dcba25"
+    },
+    {
+      "path": "tests/test_slotspe_plugin_stages.py",
+      "bytes": 11199,
+      "sha256": "9e97fee6cb22b44932524aa7ae466aa9f16c50fa6d8693bc1cdf8d039dd111b1"
     },
     {
       "path": "tests/test_slotspe_problem_capacity.py",

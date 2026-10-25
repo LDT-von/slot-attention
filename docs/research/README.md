@@ -32,7 +32,7 @@
 
 | 文件夹 | 用途 | 阅读要求 |
 |---|---|---|
-| [slotspe_native_assignment_training_20261022](slotspe_native_assignment_training_20261022/) | **当前原版SlotSPE S0–S6**、R0–R5直接表示探索及当前11组BLCA单折候选队列、内容检验。 | 均为生成测试；直接损失降cos未证明内容收益。 |
+| [slotspe_native_assignment_training_20261022](slotspe_native_assignment_training_20261022/) | **当前原版SlotSPE S0–S6**、R0–R5直接表示探索、当前11组BLCA单折候选队列；新增[互信息与解耦计划](slotspe_native_assignment_training_20261022/互信息与解耦模块实施计划_20261025.md)及[插件代码入口](slotspe_native_assignment_training_20261022/插件版本使用与验收_20261025.md)。 | V1/V2/V3及九个preset完成生成验收，新插件患者实验为0；直接损失降cos未证明内容收益。 |
 | [slotspe_mechanism_protocol_20261021](slotspe_mechanism_protocol_20261021/) | 原P1–P8协议、observe报告与阶段交接。 | 协议与实际完成状态分开；不直接重放旧服务器提示词。 |
 | [slotspe_redundancy_methods_20261021](slotspe_redundancy_methods_20261021/) | MESH/DIAS/MetaSlot机制、分配原型与历史发布。 | DCT桥接支线仅作历史；当前原生方案以上一行为准。 |
 | [slotspe_abc_20261019](slotspe_abc_20261019/) | A/B/C选择内容和末次权重梯度隔离控制。 | 保持A/B/C定义，不与S0–S4分配比较混用。 |

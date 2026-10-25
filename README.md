@@ -13,7 +13,7 @@
 python -B scripts/check_delivery_manifest.py --check --require-tracked
 ```
 
-本轮403文件干净交付副本的全量测试为 **338 passed，0失败、0跳过**；测试只使用合成输入。
+上一轮已发布的403文件干净交付副本的全量测试为 **338 passed，0失败、0跳过**；该历史回执只使用合成输入。后续候选代码与检查结果以PROGRESS最新记录为准。
 
 该检查只读源码和文档，不读取患者证据。维护者修改公开文件后，用 `--refresh` 更新当前清单，并将清单与对应文件一起提交。全量测试与交付核验的实际结果统一登记在[PROGRESS](docs/PROGRESS.json)。
 
@@ -34,6 +34,8 @@ python -B scripts/check_delivery_manifest.py --check --require-tracked
 - 患者预测损害、修正的稳定患者收益均未建立。原P1–P8、补充维度、实现问题与被否定的强说法统一见研究总览。
 
 ## 当前实验路线
+
+新增[互信息与解耦模块实施计划](docs/research/slotspe_native_assignment_training_20261022/互信息与解耦模块实施计划_20261025.md)已接通代码：V1监督槽压缩、V2内容约束的共享/私有分解、V3关系残差，统一为九个固定preset，配套数学命题和逐版对照。模块、独立训练入口与生成输入检查已完成；患者实验为0，服务器连接仍按用户要求暂缓。[代码入口、命令与验收边界](docs/research/slotspe_native_assignment_training_20261022/插件版本使用与验收_20261025.md)。以下既有队列协议保持原状。
 
 宿主为 **third_party/SlotSPE 中的原版 SlotSPE**。当前对照为 **S0–S6**：S0双原版，S1双Sinkhorn，S2病理MESH，S3组学MESH，S4双MESH；S5为双侧DIAS式去冗余再聚合核心，S6为双侧MetaSlot式原型去冗余核心。适配实现为`mesh_uniform`，不表示作者整套方法已完整复现。
 
