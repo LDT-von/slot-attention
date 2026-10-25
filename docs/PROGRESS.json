@@ -3971,5 +3971,173 @@
     },
     "gaps_reasons": "No outstanding public-file omissions were found in the verified 403-file payload. Private patient evidence, backups, caches and temporary renders stay ignored locally by design. The 338 passing tests use synthetic fixtures and establish delivery/implementation contracts, not patient benefit or validity of unreceived server results. Older historical progress and manifest records retain their original time-specific statements.",
     "next_action_user_inputs": "The authorized public repository delivery is complete for the verified payload. Use main as the single current implementation and check DELIVERY_MANIFEST with --check --require-tracked; after future public-file edits refresh and commit the manifest with those files. Patient execution and active server adjustments remain outside this repository-delivery task."
+  },
+  "latest_local_redundancy_queue_run": {
+    "recorded_at": "2026-10-25T15:45:00+08:00",
+    "task_id": "SPE-09",
+    "route": "original_questions_v1_redundancy_eleven_arm",
+    "status": "completed_single_fold_exploratory_measured",
+    "completed": "11臂BLCA UNI2-h 队列(30轮/4096 patch/20次重复评估/fold0/seed3)全部完成并汇总。队列总训练时长22.2小时，全部11臂status=completed，含summarize阶段。跨臂不变量核查通过：initial_core_hash/initial_probe_hash/source_hashes/epochs/训练303验证77/counters(除R1-R5的component_autograd_grad_calls=30外)全臂一致。",
+    "paths_commit": {
+      "run_root": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/",
+      "summary": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/summary.json",
+      "queue_manifest": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/queue_manifest.json",
+      "per_arm": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/arms/{S0,S4,R1,R2,R3,R4,R5,S1,S2,S3,S5}/",
+      "commits": "f18b106(检查脚本), a3db9bc(进度), 026ed68(格式修正)"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "all_11_arms_completed": true,
+      "summarize_stage_completed": true,
+      "cross_arm_initial_weights_identical": true,
+      "cross_arm_source_hashes_identical": true,
+      "source_unchanged_all_arms": true,
+      "epochs_30_all_arms": true,
+      "train303_val77_all_arms": true,
+      "counters_identical_except_component_autograd_grad_calls": true,
+      "third_party_slotspe_unmodified": true,
+      "outputs_confined_to_ignored_local_evidence": true,
+      "patient_data_not_staged_or_published": true,
+      "patient_level_bootstrap_executed": true,
+      "winners_curse_check_executed": true,
+      "actual_server_or_local_execution": "本地GPU实际执行11臂训练，非模拟；原始产物在 ignored local_evidence/",
+      "raw_receipt": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/ 每臂含 curve.json/eval_repeats.json/patient_diagnostics.json/last.pt/20份 raw_validation_repeat_*.pt",
+      "patient_predictive_harm_established": false,
+      "correction_efficacy_established": false
+    },
+    "measured_results": {
+      "arms_and_contracts": {
+        "S0": "基线：原版分配 + 无辅助损失",
+        "S4": "mesh_uniform 分配(WSI+OMIC)",
+        "R1": "S0 + gram_weight=10 (余弦抑制)",
+        "R2": "S0 + slotbert_weight=1",
+        "R3": "S0 + slotbert=1 + content=5",
+        "R4": "S0 + content=5",
+        "R5": "S0 + gram=10 + content=5",
+        "S1": "sinkhorn 分配(WSI+OMIC)",
+        "S2": "mesh_uniform(WSI)+原版(OMIC)",
+        "S3": "原版(WSI)+mesh_uniform(OMIC)",
+        "S5": "dias 剪枝(WSI+OMIC)"
+      },
+      "val_cindex_mean_exploratory": {
+        "R5": 0.6703,
+        "S3": 0.6569,
+        "R3": 0.6326,
+        "S1": 0.6235,
+        "S2": 0.62,
+        "S4": 0.6154,
+        "S5": 0.5898,
+        "R1": 0.5294,
+        "R2": 0.5256,
+        "S0": 0.5239,
+        "R4": 0.4894
+      },
+      "paired_repeat_test_vs_S0": {
+        "note": "同repeat索引共享native seed调度，20次重复配对t检验",
+        "R5": "+0.1464 t=16.9 20/20胜",
+        "S3": "+0.1329 t=15.6 20/20胜",
+        "R3": "+0.1086 t=9.7 20/20胜",
+        "S1": "+0.0995 t=14.6 20/20胜",
+        "S2": "+0.0960 t=7.5 18/20胜",
+        "S4": "+0.0915 t=8.7 20/20胜",
+        "S5": "+0.0658 t=10.5 20/20胜",
+        "R1": "+0.0055 t=0.5 不显著",
+        "R2": "+0.0017 t=0.2 不显著",
+        "R4": "-0.0345 t=-3.2 显著为负"
+      },
+      "patient_level_bootstrap": {
+        "note": "77验证患者, B=2000, 单折; 这是对患者抽样不确定性的诚实刻画",
+        "paired_delta_vs_S0_95CI": {
+          "S1": "[+0.005, +0.231] 仅此一个不跨0",
+          "R5": "[-0.052, +0.297]",
+          "S3": "[-0.034, +0.281]",
+          "R3": "[-0.012, +0.257]",
+          "S2": "[-0.000, +0.313]",
+          "S4": "[-0.066, +0.219]",
+          "S5": "[-0.087, +0.196]",
+          "R1": "[-0.113, +0.193]",
+          "R2": "[-0.157, +0.186]",
+          "R4": "[-0.195, +0.141]"
+        },
+        "winners_curse_check": {
+          "note": "每次重采样内选最优臂",
+          "S2": "42.0%",
+          "R5": "21.6%",
+          "R3": "11.8%",
+          "S3": "11.3%",
+          "S1": "9.7%",
+          "S0": "0.0%",
+          "best_arm_cindex_mean": 0.7087,
+          "best_arm_cindex_95CI": "[0.636, 0.791]"
+        }
+      },
+      "slot_diagnostics": {
+        "note": "设计意图是去冗余/提高槽有效秩，但实测未支持该因果链",
+        "R5_wsi_cosine": 0.27,
+        "R5_wsi_effective_rank": 3.766,
+        "S0_wsi_cosine": 0.751,
+        "S0_wsi_effective_rank": 1.389,
+        "R5_omic_cosine": 0.998,
+        "R5_omic_effective_rank": 1.004,
+        "spearman_cindex_vs_wsi_effrank": "+0.173",
+        "spearman_cindex_vs_omic_effrank": "-0.609",
+        "finding": "cindex提升与'槽更多样'并不同向；R5在WSI侧最分散却OMIC侧近乎塌缩(秩1.004)，仍拿到最高cindex"
+      },
+      "gradient_stability": {
+        "note": "原版与harness均无梯度裁剪",
+        "median_grad_norm": {
+          "S0": 17.2,
+          "S4": 19.8,
+          "R1": 26.1,
+          "R2": 25.6,
+          "R3": 20.9,
+          "R4": 26.3,
+          "R5": 70.3,
+          "S1": 8.5,
+          "S2": 13.4,
+          "S3": 27.4,
+          "S5": 7.3
+        },
+        "batches_over_1e3_of_1140": {
+          "S0": 11,
+          "S4": 17,
+          "R1": 11,
+          "R2": 20,
+          "R3": 16,
+          "R4": 63,
+          "R5": 16,
+          "S1": 15,
+          "S2": 7,
+          "S3": 16,
+          "S5": 2
+        },
+        "max_grad_norm": {
+          "S4": 1654504192.0,
+          "R4": 11901493248.0,
+          "R3": 692282496.0
+        },
+        "finding": "R4最不稳定(63/1140批次>1e3, 峰值1.19e10)且cindex最差; R5梯度中位数最高(70.3)但仍得分最高"
+      },
+      "overfitting_and_risk_compression": {
+        "train_val_nll_gap": {
+          "R5": -0.0377,
+          "R3": 0.0395,
+          "S0": 0.4992,
+          "R1": 1.941,
+          "S1": 1.4433,
+          "S3": 1.6001,
+          "S5": 2.1125
+        },
+        "patient_risk_std_mean": {
+          "S0": 0.4584,
+          "R5": 0.0638,
+          "R3": 0.1094,
+          "S1": 0.0537,
+          "S3": 0.0973
+        },
+        "finding": "R5/S1/S3训练-验证gap近0或为负且风险分数被压缩(R5 range仅0.88, S0为3.43)；cindex对单调重标不变, 故压缩本身不改变cindex, 但提示风险值已无临床可解释幅度"
+      }
+    },
+    "gaps_reasons": "1) 仅fold0/seed3单折、77验证患者, 患者级bootstrap下11臂中只有S1的配对Δ95%CI不跨0, 其余全部跨0含0, 故不能宣称任何臂的cindex优势已确立。2) 20次重复是评估随机性而非独立患者, 配对t检验的极小p值反映的是评估噪声可复现性, 不是患者层面的证据强度。3) 观测到槽冗余与cindex的关系与设计意图相反(见slot_diagnostics), 现有机制解释未被支持。4) 梯度爆炸在无裁剪下普遍存在, 尤以R4最重; 本队列未做裁剪对照, 无法区分'改善来自机制'与'改善来自不稳定的隐式正则'。5) 全部为探索性, 非泛化、非临床获益、非A/B/C纠正效力证据。未观察到的问题不臆造: 本队列不涉及P8传输, 不做新模块。",
+    "next_action_user_inputs": "建议优先: (a) 跨折(seed/fold)重复以消除单折与胜者诅咒, 尤其S1/S2/R5/S3; (b) 加梯度裁剪对照以隔离数值不稳定贡献; (c) 复核R5/S1/S3风险压缩是否意味着风险分数失去意义。是否授权扩展队列需要用户明确执行授权; 本轮已完成不需再授权。"
   }
 }
