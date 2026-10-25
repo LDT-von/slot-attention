@@ -4386,9 +4386,10 @@
       "splits_dir_verification": {
         "resolved": "5fold",
         "why": "原版 loader third_party/SlotSPE/dataset/dataset_survival.py 第203行硬编码 os.path.join(data_path,'splits','5fold',study,f'fold_{fold}.csv'), 完全忽略 harness 的 splits_dir 配置项。因此 harness 侧只能填 5fold, 否则 prepared manifest 会与实际训练用的 split 不一致。",
-        "independent_proof": "以 fold0 已完成运行的产物反查: 其 prepared/manifest.json 的 fold0 train=303/val=77 与 splits/5fold/blca/fold_0.csv 完全一致(train 差集 0, val 完全相等); 而 splits/5fold_uni2h/blca/fold_0.csv 与之 train 相差 61 例、val 仅交集 15/77。因此 fold0 实际训练在 5fold 上, 本次沿用同一 split 家族, fold0 可复用。",
+        "independent_proof": "以 fold0 已完成运行的产物反查 (逐项集合比较, 不依赖新推理): 历史 fold0 prepared/manifest.json 的 fold0 train=303 例与 splits/5fold/blca/fold_0.csv 的 train 列完全相同 (manifest 独有 0 例, csv 独有 1 例: TCGA-GV-A3QG, 该患者因临床终点缺失被排除, 不属分折差异); val 列: manifest 的 77 例全部包含在 csv 的 val 中 (交集 77/77, manifest 独有 0 例), csv 另有 1 个空字符串占位。 而 splits/5fold_uni2h/blca/fold_0.csv 与之相差悬殊: train 差 61 例, val 交集仅 15/77。 因此 fold0 实际训练在 splits/5fold 上, 本次沿用同一 split 家族, fold0 可复用。",
         "new_run_consistency": "新 prepared/manifest.json 的 fold0 与旧 fold0 run 的 train/val/labels 逐项完全相同(train equal True, val equal True, labels equal True), 证明两次准备的划分、分箱一致, 复用合法。",
-        "source_hash_unchanged": "dataset_survival.py sha256=44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3, 与 fold0 protocol.json 记录一致"
+        "source_hash_unchanged": "dataset_survival.py sha256=44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3, 与 fold0 protocol.json 记录一致",
+        "csv_shape_note": "splits/5fold/blca/fold_0.csv 为 304 行 x 2 列的 'train,val' 长表: train 列 304 个互异患者, val 列 78 个互异值 (其中 1 个空字符串占位), 227 行为空 val。校验时按集合比较并剔除空串。"
       },
       "per_fold_counts_prepared": {
         "fold0": {
@@ -4438,7 +4439,7 @@
         "per_arm": "记录曾误写为 runs/arms/fold_{1..4}/{arm}/; 实际布局是 folds/{fold}/arms/{arm}/ (folds 目录下另有 initial/ 与 summary.json)。已更正为真实路径。"
       }
     },
-    "gaps_reasons": "本阶段为进行中, 尚无跨折结论。主要未决项: (1) 44次训练尚未完成, 失败记录与分折产物仍在生成中, 任何中间数字都不可当作5折统计。(2) 只有seed3, 折间标准差仍只反映折划分变化, 不含训练种子变化。(3) 20次重复是评估随机性, 不是20次独立训练, 折内先汇总再算5折统计的约定只能压缩评估噪声。(4) fold0 的历史结果是在同一5fold划分、同一末轮口径下产出, 但当时未与fold1-4共用同一调度器, 复用时保留该历史边界, 会在最终汇总中如实标注。",
-    "next_action_user_inputs": "等待44次训练与4次fold汇总完成; 完成后运行 local_evidence/render_multifold_report.py 生成5折跨臂表, 逐臂汇总: 各折C-index + 5折均值±折间标准差; 病理/组学的signed与absolute与RMS余弦、读取重叠、有效秩、有效槽数; 内容探针(own vs donor MSE, static字典对照); 训练稳定性(梯度范数分布、爆炸批次数、训练-验证NLL gap); 耗时与完成状态。20次评估先在折内汇总再算5折统计。最终汇报须明确区分折间方差与评估噪声, 不得把折内20次重复当作独立样本。无需追加用户输入, 除非要求提前中止。"
+    "gaps_reasons": "本阶段为进行中, 尚无跨折结论。主要未决项: (1) 44次训练尚未完成, 失败记录与分折产物仍在生成中, 任何中间数字都不可当作5折统计。(2) 只有seed3, 折间标准差仍只反映折划分变化, 不含训练种子变化。(3) 20次重复是评估随机性, 不是20次独立训练, 折内先汇总再算5折统计的约定只能压缩评估噪声。(4) fold0 的历史结果是在同一5fold划分、同一末轮口径下产出, 但当时未与fold1-4共用同一调度器, 复用时保留该历史边界, 会在最终汇总中如实标注。 (5) 一处待修的过时文档: slotspe_proof/redundancy_multifold.py 中 stage_chains 的 docstring 仍写着\"同一折内 11 个臂严格串行\", 但实际调度器按 stage_dependencies 允许同折臂并发 (实测同时跑 6 个同折臂), 与 _run_wave 的 docstring 及实测行为一致。实现是正确的, 错的只是这句说明。修它必须等本次运行结束后再做, 因为该文件被 multifold 配置 pin 住, 且运行中的队列每次波次都会重新核对实现哈希, 运行中改动会触发 \"implementation changed while queue was running\" 并使队列失败。",
+    "next_action_user_inputs": "等待44次训练与4次fold汇总完成; 完成后运行 local_evidence/render_multifold_report.py 生成5折跨臂表, 逐臂汇总: 各折C-index + 5折均值±折间标准差; 病理/组学的signed与absolute与RMS余弦、读取重叠、有效秩、有效槽数; 内容探针(own vs donor MSE, static字典对照); 训练稳定性(梯度范数分布、爆炸批次数、训练-验证NLL gap); 耗时与完成状态。20次评估先在折内汇总再算5折统计。最终汇报须明确区分折间方差与评估噪声, 不得把折内20次重复当作独立样本。无需追加用户输入, 除非要求提前中止。 另: 运行结束后修正 stage_chains 的过时 docstring, 刷新 configs/slotspe_redundancy_multifold_queue.json 的 candidate_implementation_sha256 钉, 跑 refresh_slotspe_multifold_pins.py 与 check_delivery_manifest.py --refresh, 再提交一次。此项不需要额外用户授权。"
   }
 }
