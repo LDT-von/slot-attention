@@ -4338,5 +4338,107 @@
         "note": "各臂全程最优epoch与末轮差距大(如S0 epoch18 nll=0.0067 vs 末轮1.2564), 说明批次级波动很大, 但这是逐batch曲线而非epoch均值, 且检查点策略是固定末轮, 不影响当前读数。"
       }
     }
+  },
+  "latest_local_multifold_redundancy_run": {
+    "recorded_at": "2026-10-25T17:05:00+08:00",
+    "task_id": "SPE-09",
+    "route": "original_questions_v1_redundancy_eleven_arm_multifold_folds1to4",
+    "status": "executing_folds1to4_seed3_44_new_training_runs_in_progress",
+    "completed": "多折入口适配完成并已实际启动执行。fold1-4 x 11臂 = 44次新增训练正在跑(6并发worker, 跨 cuda:0/cuda:1)。fold0 直接复用 local_evidence/redundancy_blca_uni2h_fold0_seed3_run01, 不重训。准备阶段已完成: 380名complete-case患者缓存, 5折分区与train-only分箱已生成。截至 2026-10-26 07:02 (+08:00): 已完成 16/44 臂 (fold1 9, fold2 4, fold3 0, fold4 3), 无失败记录, 两块GPU均在实际训练。",
+    "paths_commit": {
+      "run_root": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/",
+      "queue_manifest": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/queue_manifest.json",
+      "resolved_config": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/resolved_config.json",
+      "prepared_manifest": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/prepared/manifest.json",
+      "per_arm": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/folds/{fold}/arms/{arm}/",
+      "runner": "scripts/run_slotspe_redundancy_multifold.py",
+      "implementation": "slotspe_proof/redundancy_multifold.py",
+      "config": "configs/slotspe_redundancy_multifold_queue.json",
+      "log": "local_evidence/multifold_run_20261025.log"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "actual_execution": "本地GPU实际执行(非模拟/非dry-run); 训练进程实际占用 cuda:0 与 cuda:1",
+      "gpu_observed": "cuda:0 util 87% / mem 16715MiB, cuda:1 util 29% / mem 16114MiB (6并发worker)",
+      "protocol_matches_fold0": {
+        "epochs_30": true,
+        "patches_4096": true,
+        "batch_size_8": true,
+        "eval_repeats_20": true,
+        "seed_only_3": true,
+        "feature_encoder_UNI2-h": true,
+        "label_col_survival_months_dss": true,
+        "signature_combine": true,
+        "lr_5e-4": true,
+        "probe_lr_5e-4": true,
+        "projection_dim_256": true,
+        "slot_iters_10": true,
+        "content_target_dim_32": true,
+        "content_clusters_8": true,
+        "content_reference_seed_731": true,
+        "dias_distance_0.05": true,
+        "slotbert_temperature_0.5": true,
+        "checkpoint_selection": "fixed_final_epoch_no_selection (末轮权重)",
+        "patch_policy": "全量真实patch缓存, 每次访问无放回重抽子集, 不足补零(原版 __getitem__ 语义)",
+        "validation_policy": "验证全量patch, 20次重复评估, 同一组评估随机种子",
+        "arm_initialization": "同折各臂共享同一 initial_core_hash / initial_probe_hash / 抽样日程",
+        "binning": "仅由各自训练折的未删失患者拟合(q=4), 验证结局不参与训练分箱"
+      },
+      "splits_dir_verification": {
+        "resolved": "5fold",
+        "why": "原版 loader third_party/SlotSPE/dataset/dataset_survival.py 第203行硬编码 os.path.join(data_path,'splits','5fold',study,f'fold_{fold}.csv'), 完全忽略 harness 的 splits_dir 配置项。因此 harness 侧只能填 5fold, 否则 prepared manifest 会与实际训练用的 split 不一致。",
+        "independent_proof": "以 fold0 已完成运行的产物反查: 其 prepared/manifest.json 的 fold0 train=303/val=77 与 splits/5fold/blca/fold_0.csv 完全一致(train 差集 0, val 完全相等); 而 splits/5fold_uni2h/blca/fold_0.csv 与之 train 相差 61 例、val 仅交集 15/77。因此 fold0 实际训练在 5fold 上, 本次沿用同一 split 家族, fold0 可复用。",
+        "new_run_consistency": "新 prepared/manifest.json 的 fold0 与旧 fold0 run 的 train/val/labels 逐项完全相同(train equal True, val equal True, labels equal True), 证明两次准备的划分、分箱一致, 复用合法。",
+        "source_hash_unchanged": "dataset_survival.py sha256=44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3, 与 fold0 protocol.json 记录一致"
+      },
+      "per_fold_counts_prepared": {
+        "fold0": {
+          "train": 303,
+          "val": 77,
+          "excluded": 1
+        },
+        "fold1": {
+          "train": 305,
+          "val": 75,
+          "excluded": 1
+        },
+        "fold2": {
+          "train": 304,
+          "val": 76,
+          "excluded": 1
+        },
+        "fold3": {
+          "train": 304,
+          "val": 76,
+          "excluded": 1
+        },
+        "fold4": {
+          "train": 304,
+          "val": 76,
+          "excluded": 1
+        }
+      },
+      "excluded_patient_reason": "TCGA-GV-A3QG: missing_clinical_endpoint_or_wsi_string (同一原因在所有折一致, 属同一患者的临床缺失, 非分折造成的差异)",
+      "determinism_of_concurrency": "并发与跨卡不改变数值: 同折内并发臂的 curve 指标与串行运行逐位相同; 同一计算在不同物理GPU(cuda:0 vs cuda:1)逐位相同(76/76 curve 行完全一致)",
+      "third_party_slotspe_unmodified": true,
+      "outputs_confined_to_ignored_local_evidence": true,
+      "patient_data_not_staged_or_published": true,
+      "audit_mode": "execution_authorized_by_user; 只做训练与评估, 无患者干预",
+      "patient_predictive_harm_established": false,
+      "correction_efficacy_established": false,
+      "fold0_reuse_boundary_verified_independently": {
+        "what_was_checked": "直接从两份保留产物反查, 不依赖任何新推理: 比较历史 fold0 与新 fold1 在 11 臂之间的 epoch1/batch0 (patient_ids, native_seeds) 签名, 以及共享 adapter 的 S0 组臂的 batch0 main_nll。",
+        "historical_fold0": "11 臂的 epoch1/batch0 (patient_ids, native_seeds) 完全一致 (distinct signatures = 1); 但共享 adapter S0 的 6 个臂 batch0 main_nll 各不相同 (6 个不同值), 说明各臂第一条逻辑批的真实 patch 子集抽样彼此不同。",
+        "new_folds_1_to_4": "同样 11 臂的 epoch1/batch0 (patient_ids, native_seeds) 完全一致 (distinct signatures = 1), 且共享 adapter S0 的 6 个臂 batch0 main_nll 收敛到同一数值 (1 个不同值), 说明首条逻辑批的真实 patch 子集已按臂对齐。",
+        "why_they_differ": "历史 fold0 的 arm worker 在每臂子进程中从未播种全局 numpy 流, 首个 patch 子集取自 OS 随机化的全局流; 新队列在训练循环前用 patient._rng(initial_stream_seed, ...) 固定该流, 且 initial_stream_seed 只依赖 (seed, fold), 与臂无关, 故同折各臂一致。",
+        "scope_of_difference": "差异只影响每折第一条逻辑批的真实 patch 子集抽样 (之后每样本由 execute_logical_batch 逐样本重播种); 内容参考的 patch 子集另有机制 (历史未播种, 新队列用固定 per-patient 种子)。数值上, 两版 batch0 main_nll 均在 1.39-1.59 区间但不相等, 属抽样差异而非模型差异。",
+        "consequence_for_reuse": "fold0 的结果仍然可比 (协议、划分、末轮口径、评估重复数一致), 但它与 fold1-4 不是逐位同源的, 因此五折统计必须标注这一历史边界, 且不得声称 fold0 与新折共用同一抽样日程。",
+        "already_disclosed_in_code": "slotspe_proof/redundancy_multifold.py 的 _summarize_all caveats 已写明该边界 (fold0 首条逻辑批与内容参考 patch 抽取来自未播种全局 numpy 流, 新折使用固定可复现抽取)。"
+      },
+      "paths_corrected": {
+        "per_arm": "记录曾误写为 runs/arms/fold_{1..4}/{arm}/; 实际布局是 folds/{fold}/arms/{arm}/ (folds 目录下另有 initial/ 与 summary.json)。已更正为真实路径。"
+      }
+    },
+    "gaps_reasons": "本阶段为进行中, 尚无跨折结论。主要未决项: (1) 44次训练尚未完成, 失败记录与分折产物仍在生成中, 任何中间数字都不可当作5折统计。(2) 只有seed3, 折间标准差仍只反映折划分变化, 不含训练种子变化。(3) 20次重复是评估随机性, 不是20次独立训练, 折内先汇总再算5折统计的约定只能压缩评估噪声。(4) fold0 的历史结果是在同一5fold划分、同一末轮口径下产出, 但当时未与fold1-4共用同一调度器, 复用时保留该历史边界, 会在最终汇总中如实标注。",
+    "next_action_user_inputs": "等待44次训练与4次fold汇总完成; 完成后运行 local_evidence/render_multifold_report.py 生成5折跨臂表, 逐臂汇总: 各折C-index + 5折均值±折间标准差; 病理/组学的signed与absolute与RMS余弦、读取重叠、有效秩、有效槽数; 内容探针(own vs donor MSE, static字典对照); 训练稳定性(梯度范数分布、爆炸批次数、训练-验证NLL gap); 耗时与完成状态。20次评估先在折内汇总再算5折统计。最终汇报须明确区分折间方差与评估噪声, 不得把折内20次重复当作独立样本。无需追加用户输入, 除非要求提前中止。"
   }
 }

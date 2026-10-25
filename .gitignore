@@ -1,5 +1,7 @@
 # Local evidence, patient inputs, raw predictions, checkpoints and original downloads
 /local_evidence/
+# Local execution virtualenv (torch cu128 build for sm_120); recreated from requirements
+/.venv_slot_spe/
 /.codegraph/
 /.review/
 /.validation/

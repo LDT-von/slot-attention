@@ -274,7 +274,7 @@
     "slotspe_proof/slot_regularization.py": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
     "slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f",
     "slotspe_proof/redundancy_queue.py": "101bb49201eef607196ca18e4243201ac737f00318db020ef66f08eab133b43d",
-    "slotspe_proof/redundancy_engine.py": "8683ff5e81238b595001558ab97fde951023b8b7215d7827c36614bc0141f9f0",
+    "slotspe_proof/redundancy_engine.py": "c0f34a5c7c7975bca4a59734e3666e0ce1cb85a4e3ceea9a94a5a7186a34b95a",
     "slotspe_proof/redundancy_content.py": "a58c48dd5fccd60683aaf7a74c4330ad1338748565e84b5b19677f4ba7eddc49",
     "slotspe_proof/patient.py": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
     "scripts/run_slotspe_redundancy.py": "1012bea771ce70894a0fcd891504c6a65501cf202ba367b498c73ce7b017ed86",

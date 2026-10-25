@@ -1,0 +1,283 @@
+{
+  "schema": "native_slotspe_redundancy_multifold_queue_v1",
+  "recorded_at": "2026-10-25T17:10:00+08:00",
+  "route_task": "SlotSPE / SPE-09 continuation / executable eleven-arm BLCA five-fold diagnostic",
+  "status": "implemented_pending_execution",
+  "host": "third_party/SlotSPE original; byte-preserved and pinned",
+  "patient_execution": false,
+  "server_execution": false,
+  "patient_queue_ready": true,
+  "execution_implemented": true,
+  "planning_entrypoint": "scripts/run_slotspe_redundancy_multifold.py --plan",
+  "execution_entrypoint": "scripts/run_slotspe_redundancy_multifold.py --run",
+  "relationship_to_fold0_queue": {
+    "fold0": "reused unchanged from local_evidence/redundancy_blca_uni2h_fold0_seed3_run01",
+    "folds_1_to_4": "trained by this queue",
+    "new_training_runs": 44,
+    "shared_protocol": "identical model computation, hyperparameters, initialization scheme, batching, patch budget, checkpoint rule and evaluation contract"
+  },
+  "variant_catalog": {
+    "S0": {
+      "family": "allocation",
+      "wsi": "original",
+      "omic": "original"
+    },
+    "S4": {
+      "family": "allocation",
+      "wsi": "mesh_uniform",
+      "omic": "mesh_uniform"
+    },
+    "R1": {
+      "family": "representation_loss",
+      "regularizer": "off_diagonal_cosine_squared",
+      "regularizer_weight": 10.0,
+      "set_weight": 0.0
+    },
+    "R2": {
+      "family": "representation_loss",
+      "regularizer": "SlotBERT_Eq11_transplant",
+      "regularizer_weight": 1.0,
+      "set_weight": 0.0
+    },
+    "R3": {
+      "family": "representation_loss",
+      "regularizer": "SlotBERT_Eq11_transplant",
+      "regularizer_weight": 1.0,
+      "set_weight": 5.0
+    },
+    "R4": {
+      "family": "representation_loss",
+      "regularizer": "none",
+      "regularizer_weight": 0.0,
+      "set_weight": 5.0
+    },
+    "R5": {
+      "family": "representation_loss",
+      "regularizer": "off_diagonal_cosine_squared",
+      "regularizer_weight": 10.0,
+      "set_weight": 5.0
+    },
+    "S1": {
+      "family": "allocation",
+      "wsi": "sinkhorn",
+      "omic": "sinkhorn"
+    },
+    "S2": {
+      "family": "allocation",
+      "wsi": "mesh_uniform",
+      "omic": "original"
+    },
+    "S3": {
+      "family": "allocation",
+      "wsi": "original",
+      "omic": "mesh_uniform"
+    },
+    "S5": {
+      "family": "pruning",
+      "wsi": "dias",
+      "omic": "dias"
+    }
+  },
+  "stages": [
+    {
+      "id": "real_data_diagnostic",
+      "kind": "multi_fold_eleven_arm_diagnostic",
+      "status": "implemented_not_executed_on_patients",
+      "variants": [
+        "S0",
+        "S4",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "S1",
+        "S2",
+        "S3",
+        "S5"
+      ],
+      "study": "blca",
+      "folds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "seeds": [
+        3
+      ],
+      "epochs": 30,
+      "real_patches": 4096,
+      "batch_size": 8,
+      "eval_repeats": 20,
+      "splits_dir": "5fold",
+      "planned_unique_training_runs": 44,
+      "hyperparameters": "Locked core lr .0005, probe lr .0005, Gram weight10, paper weight1 temperature.5, content weight5; no heldout tuning.",
+      "purpose": "Complete the eleven-arm BLCA five-fold picture at seed3. fold0 is reused unchanged from the earlier single-fold queue; folds 1-4 are trained here under the same protocol.",
+      "feature_encoder": "UNI2-h"
+    }
+  ],
+  "requested_scope": {
+    "study": "blca",
+    "folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "new_folds": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "reused_folds": [
+      0
+    ],
+    "seeds": [
+      3
+    ],
+    "one_queue": true,
+    "selected_variants": [
+      "S0",
+      "S4",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "S1",
+      "S2",
+      "S3",
+      "S5"
+    ],
+    "automatic_cross_fold_expansion": false,
+    "fold_seed_choice": "seed3 only, as instructed; no additional seeds are introduced.",
+    "feature_encoder": "UNI2-h"
+  },
+  "matched_protocol": [
+    "Same eligible patients per fold, same split hashes, same real-patch cache/order, and train-fold-only survival bins fitted independently per fold",
+    "Same seed-specific initial core/probe weights and data batches within each fold; all eleven arms of a fold share one initialization and one sampling schedule",
+    "Same survival/auxiliary/reconstruction objectives plus the explicitly itemized experimental losses",
+    "Fixed final-epoch checkpoint rule and the same repeated-evaluation seeds; no best-seed or best-epoch selection",
+    "Every private feature, identifier, weight, raw prediction and per-case array stays under ignored local_evidence"
+  ],
+  "required_metrics": {
+    "prediction": [
+      "Per-fold C-index averaged over the 20 evaluation repeats",
+      "Five-fold mean and between-fold standard deviation over the five per-fold values",
+      "The 20 repeats are aggregated inside a fold first and are never the units of the five-fold statistic"
+    ],
+    "slot_geometry": [
+      "WSI and OMIC signed cosine, absolute cosine and RMS cosine",
+      "Head-averaged read overlap",
+      "Effective rank and valid slot count",
+      "If active K<2, cosine is N/A with coverage and single-slot count; never substitute zero"
+    ],
+    "content": [
+      "Own versus donor content probe error and the input-independent static dictionary control",
+      "Same-noise changed-input and same-input changed-noise responses"
+    ],
+    "training": [
+      "Core gradient norm distribution, nonfinite batch count and last-epoch degradation",
+      "Wall time and peak CUDA memory per arm and fold"
+    ]
+  },
+  "decision_boundary": "This queue completes a five-fold single-seed comparison of one SlotSPE implementation family. It supports a matched local screen only. Low cosine alone does not authorize a claim, and no multiplicity-corrected significance is asserted here.",
+  "feature_contract": {
+    "wsi_encoder": "UNI2-h",
+    "input": "existing pre-extracted UNI2-h WSI features",
+    "new_feature_extraction": false,
+    "encoding_dim": null,
+    "substitution_allowed": false
+  },
+  "execution": {
+    "source_root": "third_party/SlotSPE",
+    "metadata_root": "${SLOTSPE_METADATA_ROOT}",
+    "features_root": "${SLOTSPE_FEATURES_ROOT}",
+    "device": "cuda:0",
+    "label_col": "survival_months_dss",
+    "signature": "combine",
+    "lr": 0.0005,
+    "probe_lr": 0.0005,
+    "torch_threads": 2,
+    "encoding_dim": null,
+    "projection_dim": 256,
+    "slot_iters": 10,
+    "content_target_dim": 32,
+    "content_clusters": 8,
+    "content_reference_seed": 731,
+    "dias_distance": 0.05,
+    "slotbert_temperature": 0.5,
+    "experiment": "original_audit"
+  },
+  "recorded_findings": {
+    "fold0_split_provenance": {
+      "finding": "The completed fold0 queue recorded split_csv as splits/5fold_uni2h/blca/fold_0.csv and hashed that file, but its retained patient lists actually come from splits/5fold/blca/fold_0.csv.",
+      "cause": "third_party/SlotSPE/dataset/dataset_survival.py SurvivalDataset._load_split hardcodes the 5fold directory, so slotspe_proof/patient.py's splits_dir setting never reaches the loader that selects the cohort.",
+      "verified": "The fold0 manifest train list equals clinical-complete-case order intersected with 5fold/fold_0.train, and its val list equals the same for 5fold/fold_0.val; the 5fold_uni2h file differs by 61 train patients and 1 val patient.",
+      "decision": "This queue uses splits_dir 5fold so that folds 1-4 use the same effective cohort definition as the cohort fold0 actually executed, and so that the recorded split_csv and hashed CSVs are truthful. Both split families are verified clean five-fold partitions of the complete-case cohort: every complete-case patient is validation in exactly one fold and training in the other four.",
+      "historical_evidence_unchanged": "The fold0 manifest, its hashes and its recorded split_csv are left byte-for-byte unchanged. The mislabel is recorded here, not edited."
+    },
+    "fold0_first_batch_reproducibility": {
+      "finding": "The patch subset of the first training logical batch was drawn from the unseeded global numpy stream before any per-example reseeding, so the eleven arms of the completed fold0 run did not literally share that first batch. The content reference was fitted from the same unseeded stream and was likewise not reproducible.",
+      "reproduction": "Two fresh processes calling patient._batch(..., sample_seed=None) on the same patient produced different bag checksums (27152.82 vs 26720.63).",
+      "decision": "Folds 1-4 seed the global stream with an arm-independent, fold-dependent value before the training loop and fit the content reference from a fixed per-patient patch draw. Only the first logical batch of 1140 per arm and the reference patch subset change; the model, losses, optimizer, per-example seed schedule, checkpoint rule and evaluation contract are untouched.",
+      "residual_gap": "fold0 is reused as produced, so it differs from folds 1-4 by exactly these two mechanisms. Re-running fold0 under the fixed engine was not authorised."
+    }
+  },
+  "actual_execution_this_update": {
+    "training_runs": 0,
+    "model_forwards": 0,
+    "patient_inputs_read": 0,
+    "server_runs": 0
+  },
+  "concurrency_protocol": {
+    "status": "implemented_and_measured_not_yet_executed_on_patients",
+    "reason": "The sequential queue needed about 89 wall-clock hours for the 44 new runs. The workload was measured to be data/CPU bound rather than GPU bound (10.5 percent mean GPU utilization, 2.2 GiB peak of 32 GiB), so concurrent stages can raise throughput without changing the model computation.",
+    "ordering_rule": "The only enforced ordering is that an arm starts after its own fold's shared initialization. Arms of one fold and arms of different folds may overlap.",
+    "why_arms_may_overlap": "Every arm re-reads the same frozen initialization and the same frozen content reference. The sampling schedule is derived from the fold, epoch and batch position, never from the arm. Each arm owns a private output folder, so no two arms write the same file.",
+    "why_folds_may_overlap": "Each fold fits its own survival bins and its own content reference from its own training patients only, and the prepared input cache is written once before any arm starts.",
+    "measured_evidence": {
+      "same_fold_concurrent_arms_are_bit_identical": "Arms S0 and R1 of fold0 were each run alone and then at the same time. All 76 retained curve rows matched bit for bit in total_loss, core_gradient_norm, probe_loss, main_nll, gram_loss, slotbert_loss and content_loss.",
+      "cross_gpu_results_are_bit_identical": "The same arm was run on cuda:0 and on cuda:1. All 76 retained curve rows matched bit for bit.",
+      "four_way_concurrency_is_bit_identical": "Four concurrent copies on one GPU matched the single-process run bit for bit in total_loss, core_gradient_norm and probe_loss.",
+      "throughput": "Two epochs of one arm took 292 s alone, 319 s and 333 s when two shared one GPU (435 s wall for two), 411 s to 420 s when four shared one GPU (622 s wall for four), and 536 s wall for four processes spread over two GPUs.",
+      "conclusion": "Concurrency changes the wall time only. The model computation, the data, the seeds and the numbers are unchanged, which was verified rather than assumed."
+    },
+    "device_assignment": "Per stage, from a pool of physical GPUs, using the measured peak allocation of that arm so that two heavy arms (S1 and S4 at 8.87 GiB) never share one device.",
+    "device_assignment_is_not_a_hyperparameter": "Device selection decides only which GPU runs a stage. It does not enter the model computation, the data, the seeds or the reported numbers.",
+    "unchanged_model_contract": "Model, losses, optimizer, scheduler, per-example seed schedule, patch budget, zero padding, checkpoint rule and the 20-repeat evaluation contract are all byte-identical to the fold0 queue. Only the wall-clock schedule of the stages changed."
+  },
+  "protected_original_source_sha256": {
+    "third_party/SlotSPE/dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "third_party/SlotSPE/models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "third_party/SlotSPE/utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "third_party/SlotSPE/utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b"
+  },
+  "candidate_implementation_sha256": {
+    "slotspe_proof/redundancy_multifold.py": "fd443b4de1998ca96b339410a6de31c13eae1209195f4607baa26d4ee16fcf8f",
+    "slotspe_proof/redundancy_engine.py": "c0f34a5c7c7975bca4a59734e3666e0ce1cb85a4e3ceea9a94a5a7186a34b95a",
+    "slotspe_proof/redundancy_content.py": "a58c48dd5fccd60683aaf7a74c4330ad1338748565e84b5b19677f4ba7eddc49",
+    "slotspe_proof/patient.py": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
+    "slotspe_proof/model.py": "af88877c39c661cef29a9fde32a663457a5636392236daaad4bf1ac98ffd816f",
+    "slotspe_proof/native_allocation.py": "77da90d0ec2303ea90d77e1ffb92cada98c2b115c333fc33afd4ff3ac6ecbf77",
+    "slotspe_proof/native_pruning.py": "2a86f81afd3811effa74dacae7cd24cc5905c8b9dbc2ce02726eff9cd3d27244",
+    "slotspe_proof/native_variants.py": "a84e52746d53e70fe8e4df26f62766b26ece2ef5b5c1b2642573a05dc8b71444",
+    "slotspe_proof/prototype_bank.py": "b95c25130c0aee1e83d049c2535c6ae1d9673964c250fe5b212c2595fe0b2b95",
+    "slotspe_proof/slot_regularization.py": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9",
+    "slotspe_proof/assignment_router.py": "8adff623dffc74ed5fdfae1cacf230687dd2d68f9c84135744f827f183399608",
+    "scripts/run_slotspe_redundancy_multifold.py": "87d1247c7ee62dcc0dd3f868821e7b52aa6801e0c577b1a6610c8206e7929743"
+  },
+  "pin_refresh_note": {
+    "recorded_at": "2026-10-25T17:10:00+08:00",
+    "change": "Added the multi-fold queue module, its configuration and its entry point, and adapted redundancy_engine.run_arm with a keyword-only fold and output_root plus an explicit initial stream seed.",
+    "patient_behaviour_unchanged_for_fold0": "The fold0 configuration and the completed fold0 artifacts are unchanged. The engine adaptation only adds a fold selector, an artifact destination and an explicit seed for the first logical batch; the model, losses, optimizer, scheduler, per-example seed schedule, checkpoint rule and evaluation code are untouched."
+  }
+}
