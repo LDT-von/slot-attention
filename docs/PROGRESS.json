@@ -3973,10 +3973,10 @@
     "next_action_user_inputs": "The authorized public repository delivery is complete for the verified payload. Use main as the single current implementation and check DELIVERY_MANIFEST with --check --require-tracked; after future public-file edits refresh and commit the manifest with those files. Patient execution and active server adjustments remain outside this repository-delivery task."
   },
   "latest_local_redundancy_queue_run": {
-    "recorded_at": "2026-10-25T15:45:00+08:00",
+    "recorded_at": "2026-10-25T16:55:00+08:00",
     "task_id": "SPE-09",
     "route": "original_questions_v1_redundancy_eleven_arm",
-    "status": "completed_single_fold_exploratory_measured",
+    "status": "completed_single_fold_exploratory_measured_audited_and_corrected",
     "completed": "11臂BLCA UNI2-h 队列(30轮/4096 patch/20次重复评估/fold0/seed3)全部完成并汇总。队列总训练时长22.2小时，全部11臂status=completed，含summarize阶段。跨臂不变量核查通过：initial_core_hash/initial_probe_hash/source_hashes/epochs/训练303验证77/counters(除R1-R5的component_autograd_grad_calls=30外)全臂一致。",
     "paths_commit": {
       "run_root": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/",
@@ -4002,7 +4002,20 @@
       "actual_server_or_local_execution": "本地GPU实际执行11臂训练，非模拟；原始产物在 ignored local_evidence/",
       "raw_receipt": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/ 每臂含 curve.json/eval_repeats.json/patient_diagnostics.json/last.pt/20份 raw_validation_repeat_*.pt",
       "patient_predictive_harm_established": false,
-      "correction_efficacy_established": false
+      "correction_efficacy_established": false,
+      "audit_mode": "read_only_no_training_no_inference_no_patient_intervention",
+      "bootstrap_convention_corrected_to": "B: mean over 20 evaluation repeats of per-repeat c-index (engine convention)",
+      "bootstrap_two_independent_implementations_agree": true,
+      "multiplicity_correction_applied": [
+        "bonferroni_99.5CI",
+        "BH-FDR"
+      ],
+      "brier_with_train_based_IPCW_computed": true,
+      "constant_predictor_brier_baseline_computed": true,
+      "calibration_in_the_large_computed": true,
+      "effective_rank_circularity_checked": true,
+      "content_retention_probes_read": true,
+      "last_epoch_degradation_checked": true
     },
     "measured_results": {
       "arms_and_contracts": {
@@ -4137,7 +4150,159 @@
         "finding": "R5/S1/S3训练-验证gap近0或为负且风险分数被压缩(R5 range仅0.88, S0为3.43)；cindex对单调重标不变, 故压缩本身不改变cindex, 但提示风险值已无临床可解释幅度"
       }
     },
-    "gaps_reasons": "1) 仅fold0/seed3单折、77验证患者, 患者级bootstrap下11臂中只有S1的配对Δ95%CI不跨0, 其余全部跨0含0, 故不能宣称任何臂的cindex优势已确立。2) 20次重复是评估随机性而非独立患者, 配对t检验的极小p值反映的是评估噪声可复现性, 不是患者层面的证据强度。3) 观测到槽冗余与cindex的关系与设计意图相反(见slot_diagnostics), 现有机制解释未被支持。4) 梯度爆炸在无裁剪下普遍存在, 尤以R4最重; 本队列未做裁剪对照, 无法区分'改善来自机制'与'改善来自不稳定的隐式正则'。5) 全部为探索性, 非泛化、非临床获益、非A/B/C纠正效力证据。未观察到的问题不臆造: 本队列不涉及P8传输, 不做新模块。",
-    "next_action_user_inputs": "建议优先: (a) 跨折(seed/fold)重复以消除单折与胜者诅咒, 尤其S1/S2/R5/S3; (b) 加梯度裁剪对照以隔离数值不稳定贡献; (c) 复核R5/S1/S3风险压缩是否意味着风险分数失去意义。是否授权扩展队列需要用户明确执行授权; 本轮已完成不需再授权。"
+    "gaps_reasons": "审计后仍成立的主要限制: (1) 仅fold0/seed3单折, 77验证患者; 患者级bootstrap只覆盖患者重采样, 未覆盖训练种子与折划分。(2) 多重比较校正(Bonferroni 99.5%CI / BH-FDR)后没有任何单臂达到显著, 因此不能宣称任何臂有效, 也不能宣布S1有效。(3) 内容保留探针显示无臂优于S0(static_mse全臂相同), '冗余下降'与'内容保留'的关联未被证明。(4) 全部11臂在10/18/24月的Brier均劣于常数预测者, 故本队列的cindex排序优势尚未转化为校准意义上的可用预测。(5) 梯度爆炸普遍存在且无裁剪对照, 其对结果的作用未知。(6) 20次评估是评估随机性, 不是20次独立训练。全部为探索性, 非泛化、非临床获益、非A/B/C纠正效力证据。",
+    "next_action_user_inputs": "审计已通过并更正完毕。按用户指示, 暂不追加训练; 后续若获授权, 建议锁定 R5、S1(及S3/R3)少数候选 + 保留 S0、R1、R4 对照, 安排跨折跨种子重复; 并优先加入 (a) 梯度裁剪匹配对照, (b) Brier/校准作为并列验收指标而非仅C-index, (c) 选择后推断以处理模型选择偏差。执行需明确授权。",
+    "audit_corrections": {
+      "summary": "只读复核, 未运行训练/推理/患者干预。以下更正此前记录与汇报中的错误。",
+      "correction_1_bootstrap_convention": {
+        "error": "此前记录的bootstrap用了 repeat0 的单次风险向量(A口径), 而引擎summary报的是20次cindex均值(B口径); 两者混用, 导致此前结论'只有S1不跨0'错误。",
+        "audit_finding": "A口径下只有S1不跨0; B口径(引擎口径)下 R3/R5/S1/S3 四个臂的配对Δ95%CI不跨0。两套独立实现(sklearn版与自写快速版)结果一致, 快速版与sklearn逐位相同(diff=0.00e+00)。",
+        "paired_delta_95CI_B_convention": {
+          "R5": "[+0.009, +0.272] 不跨0",
+          "S3": "[+0.011, +0.252] 不跨0",
+          "S1": "[+0.006, +0.188] 不跨0",
+          "R3": "[+0.005, +0.217] 不跨0",
+          "S2": "[-0.020, +0.208]",
+          "S4": "[-0.027, +0.201]",
+          "S5": "[-0.051, +0.186]",
+          "R1": "[-0.117, +0.120]",
+          "R2": "[-0.120, +0.131]",
+          "R4": "[-0.157, +0.088]"
+        },
+        "corrected_reading": "点估计优势仍在(B口径下R5配对Δ=+0.1441)。区间跨0表示患者抽样不确定性较大, 不表示优势消失。",
+        "uncovered_by_this_bootstrap": "训练种子与折划分变化仍未被覆盖; 本bootstrap只覆盖验证集患者重采样。"
+      },
+      "correction_2_no_single_valid_arm": {
+        "error": "此前表述'S1唯一有效'过强。",
+        "audit_finding": "S1是在10次比较中唯一未经校正的区间刚好不跨0, 属于未校正的多重比较, 不能据此宣布有效。",
+        "multiplicity_corrected": {
+          "bonferroni_99.5CI": "10个臂的配对Δ99.5%CI全部跨0(R5 [-0.055,+0.323], S3 [-0.049,+0.307], R3 [-0.047,+0.243], S1 [-0.043,+0.242])",
+          "bh_fdr_0.05": "无一臂显著(R3/S3 p=0.036, R5/S1 p=0.039, 其余更大)",
+          "conclusion": "多重比较校正后没有任何单臂达到显著"
+        },
+        "winner_frequency_interpretation_corrected": "bootstrap内最优臂频率(R5 44.1%, S3 25.6%, S1 12.8%, R3 8.5%, S4 6.2%)只反映排名稳定性, 不是'真正最优的概率', 也不能解释为模型选择偏差已被量化。增加fold和seed不会自动消除模型选择偏差; 需按选择后推断(如在同一批次内重采样/嵌套交叉验证)处理。"
+      },
+      "correction_3_mechanism_not_refuted": {
+        "error": "此前表述'去冗余机制被推翻/说重了'。",
+        "audit_finding": "R1单独说明'降低几何冗余不足以保证预测改善'(R1 cindex 0.5294, 与S0 0.5239无显著差异); 但R5仍可能经病理侧或内容约束获益, 不能据此否定整个机制。",
+        "circularity_confirmed": {
+          "issue": "effective_rank = K^2 / sum(gram^2), 而 slot_gram_loss 正是最小化非对角gram平方; 因此 R1/R5 的 effective_rank 是被直接优化的目标量, 用它与cindex做相关属于循环论证。",
+          "evidence": "gram_weight>0 的臂 (R1, R5) WSI effective_rank 为 2.952 / 3.766; gram_weight=0 的10个臂全部 <=1.389。",
+          "corrected_correlation": "排除 R1/R5 后, spearman(cindex, WSI effective_rank) = -0.050 (原含R1/R5为 +0.173); OMIC 侧 -0.467 (原 -0.609)。11臂均值相关无法识别因果。"
+        },
+        "content_retention_probe_reading": {
+          "own_mse_vs_S0": {
+            "R5": "WSI +0.0082 / OMIC +0.0613",
+            "R1": "WSI +0.0062 / OMIC -0.0088",
+            "S3": "WSI +0.0116 / OMIC +0.2146",
+            "S1": "WSI +0.0086 / OMIC +0.1369"
+          },
+          "donor_to_own_ratio_vs_S0": "全部臂变化在 ±0.02 以内, 均约等于1.0",
+          "finding": "没有任何臂改善内容保留: own_mse 全部接近或劣于S0, donor_to_own_mse_ratio 全部约1.0(探针无法区分本例与供体)。static_mse 全臂相同(0.8577/25.1303), 说明内容目标本身未被任何臂改变。"
+        },
+        "corrected_reading": "探针结果表明'去冗余'未伴随可测的内容保留提升; 但这仍不能否定R5的收益来源, 只是说明'冗余下降'与'内容保留'在本队列中未被证明关联。"
+      },
+      "correction_4_nll_gap": {
+        "error": "此前汇报称S1/S3的训练-验证gap'接近0或为负', 错误。",
+        "audit_finding": {
+          "S1": 1.4433,
+          "S3": 1.6001,
+          "R5": -0.0377,
+          "R3": 0.0395,
+          "S0": 0.4992,
+          "R4": 0.2516,
+          "S2": 0.6276,
+          "S4": 0.4625,
+          "R1": 1.941,
+          "R2": 0.1603,
+          "S5": 2.1125
+        },
+        "corrected_reading": "接近0或为负的只有R5(-0.0377)与R3(+0.0395); S1(1.4433)与S3(1.6001)是全队列第二第三大的正gap, 即严重过拟合。",
+        "normalization_checked": "训练 main = model.loss_fn(...) / count (sum reduction 除以batch内患者数); 验证 nll = total_nll / len(ids) (sum reduction 除以验证集患者数)。两者均为每患者平均NLL, 量纲一致, 可比。已核验。",
+        "additional_checked": "每epoch 38个batch x batch_size 8 = 304 患者次 (训练集303例, 末batch含1例重复)。"
+      },
+      "correction_5_calibration_not_risk_range": {
+        "error": "此前把风险分数范围压缩解读为'失去临床意义', 并把巨大梯度解读为'隐式正则', 均不成立。",
+        "audit_finding": "C-index只评价排序, 不评价校准; 风险值范围本身无法判断概率是否校准。已按对应时间点做生存概率校准与Brier分数。",
+        "brier_scores_IPCW_train_based": {
+          "note": "sksurv brier_score, IPCW用训练折(303例,101事件)估计删失分布, 验证集77例(27事件); 离散生存S(t)由repeat0 logits经cumprod(1-sigmoid)得到, 时间分箱用训练折未删失分位点边界(8.088/15.123/21.403月)",
+          "S0": [
+            0.2736,
+            0.2727,
+            0.3007
+          ],
+          "S4": [
+            0.2184,
+            0.2877,
+            0.4156
+          ],
+          "R1": [
+            0.1986,
+            0.3632,
+            0.3991
+          ],
+          "R2": [
+            0.1508,
+            0.2539,
+            0.3929
+          ],
+          "R3": [
+            0.2263,
+            0.3317,
+            0.4416
+          ],
+          "R4": [
+            0.1558,
+            0.2108,
+            0.3009
+          ],
+          "R5": [
+            0.1354,
+            0.2033,
+            0.2851
+          ],
+          "S1": [
+            0.228,
+            0.2499,
+            0.3706
+          ],
+          "S2": [
+            0.139,
+            0.1988,
+            0.2893
+          ],
+          "S3": [
+            0.6853,
+            0.6683,
+            0.6296
+          ],
+          "S5": [
+            0.2269,
+            0.3999,
+            0.4305
+          ]
+        },
+        "constant_predictor_baseline": {
+          "t10": 0.1069,
+          "t18": 0.1902,
+          "t24": 0.2333
+        },
+        "finding": "全部11臂在全部3个时间点的Brier都劣于常数预测者。R5/S2最接近(仍分别高出+0.029/+0.013/+0.052 与+0.032/+0.009/+0.056)。S3最差(0.685/0.668/0.630), 其cindex却排第2。",
+        "calibration_in_the_large_S18": {
+          "KM_observed_S18": 0.7104,
+          "S1": "+0.0332",
+          "S2": "-0.0470",
+          "R5": "-0.0693",
+          "S0": "-0.1122",
+          "R3": "-0.3728",
+          "S3": "-0.6757"
+        },
+        "gradient_finding_corrected": "梯度异常值得调查(R4 有63/1140批次>1e3, 峰值1.19e10, 且cindex最差; R5 梯度中位数最高70.3), 但其作用需匹配对照(梯度裁剪)才能判断, 不能据此断言隐式正则。"
+      },
+      "correction_6_last_epoch_degradation": {
+        "audit_finding": "S0无末轮退化。逐epoch平均main_nll: epoch21-30 为 0.6511/0.6401/0.6152/0.5918/0.5564/0.5636/0.5670/0.5758/0.5760/0.5760, 末轮与前一轮持平。所有臂均使用末轮固定检查点(固定末轮, 无验证集选择), 因此不存在末轮退化污染结论的情形。",
+        "note": "各臂全程最优epoch与末轮差距大(如S0 epoch18 nll=0.0067 vs 末轮1.2564), 说明批次级波动很大, 但这是逐batch曲线而非epoch均值, 且检查点策略是固定末轮, 不影响当前读数。"
+      }
+    }
   }
 }
