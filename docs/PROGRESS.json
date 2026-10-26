@@ -4504,7 +4504,9 @@
       "regression_suite_no_regressions": true,
       "real_data_equivalence_verified_on_gpu": "在真实患者数据上核实: 用 fold1 S0 已训练好的 last.pt 权重, 在同一进程、同一设备(cuda:0)下, 我的 _validation_cindex 得 0.6201353637901861, _evaluate_repeat 的 repeat0 也得 0.6201353637901861, 且与该臂已留存的 eval_repeats.json 中 repeat0 的 0.6201353637901861 逐位相同。三个数完全一致。",
       "cpu_gpu_float_difference_noted": "先在 CPU 上做同一比较时得 0.6083 vs 0.6201, 差异被定位为 CPU 与 CUDA 的浮点非确定性, 而非实现差异: 同设备同进程下两者逐位相同。该差异不进入报告, 因为所有队列运行都在 cuda:0 上。",
-      "best_queue_tests": "tests/test_slotspe_redundancy_best_multifold.py 13项全部通过; tests/test_slotspe_redundancy_best_engine.py 8项全部通过。"
+      "best_queue_tests": "tests/test_slotspe_redundancy_best_multifold.py 13项全部通过; tests/test_slotspe_redundancy_best_engine.py 8项全部通过。",
+      "delivery_manifest_refreshed": "2026-10-26 12:40+08:00 交付清单随本阶段新增的6个公开文件(best引擎/队列模块/配置/入口/2个测试)与本次PROGRESS更新一并刷新: DELIVERY_MANIFEST.json 现覆盖413个公开文件(仅排除自身), scripts/check_delivery_manifest.py --check --require-tracked 返回 {\"ok\": true, \"findings\": []}。刷新只读写清单与文档, 未触及被运行中队列钉住的实现文件, 队列未受影响。",
+      "current_queue_progress_at_manifest_refresh": "末轮44臂队列仍在运行(截至2026-10-26 04:38 UTC已完成30/44臂, 两块GPU均有训练进程, 无失败记录); 本阶段未新增任何训练或患者前向/反向。"
     },
     "gaps_reasons": {
       "exact_best_score_unknown": "确切数值无法从现有产物推算: 当前队列训练中从未评估验证集, 未保存任何非末轮权重, 且4096patch/30ep的训练轨迹与历史3ep/256patch从ep1即分叉。任何具体预测值都将是编造。",
