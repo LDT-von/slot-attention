@@ -115,6 +115,38 @@ def _best_manifest(root):
     return manifest, reference
 
 
+def test_per_epoch_validation_is_exactly_repeat_zero_of_the_real_evaluation(tmp_path):
+    """The per-epoch validation pass must rank epochs on the same quantity
+    that the final repeated evaluation reports, otherwise the selected epoch
+    would not correspond to the reported C-index.
+
+    The per-epoch pass uses repeat 0 of the evaluation seed schedule and the
+    same fixed patch subset, so it must reproduce repeat 0 of
+    ``_evaluate_repeat`` exactly on the same weights.
+    """
+    from slotspe_proof.redundancy_engine import (_construct, _evaluate_repeat,
+                                                  make_initial_states)
+    from slotspe_proof.native_variants import make_native_adapter
+    from slotspe_proof.slot_regularization import SlotCapture
+    from sksurv.metrics import concordance_index_censored
+    manifest, reference = _best_manifest(tmp_path)
+    core, probe = make_initial_states(manifest, SOURCE, 3, projection_dim=16, slot_iters=2)
+    model, heads = _construct(manifest, SOURCE, 16, 2, "cpu")
+    model.load_state_dict(core)
+    heads.load_state_dict(probe)
+    fold_data = manifest["folds"]["0"]
+    val_ids = fold_data["val"]
+    with make_native_adapter(model, "S0", capture=True) as adapter, SlotCapture(model) as capture:
+        score, status = _validation_cindex(model, heads, adapter, tmp_path, manifest,
+                                            fold_data, val_ids, "cpu", 3, 1,
+                                            concordance_index_censored)
+        evaluation, _rows, _raw = _evaluate_repeat(
+            model, heads, adapter, capture, reference, tmp_path, manifest, fold_data,
+            val_ids, "cpu", 3, 0, concordance_index_censored, baseline_slots=None)
+    assert score == evaluation["cindex"]
+    assert status == evaluation["cindex_status"]
+
+
 def test_generated_best_run_retains_the_best_epoch_and_reloads_it(tmp_path):
     """End to end on generated data: the run completes, records one
     validation value per epoch, keeps a best epoch and a best checkpoint, and

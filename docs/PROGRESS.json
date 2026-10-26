@@ -4470,7 +4470,8 @@
       "final_evaluation_inside_capture_context": "best权重重载后的20次重复评估必须保持在 SlotCapture 上下文内, 否则捕获钩子已注销, _check_capture 会报 'native slot call contract changed'。此错误在测试中被发现并已修正。",
       "fold_scope_correction": "best 队列对五折全部重训(55臂), 不复用末轮的 fold0: 不同检查点规则下训练的折不能混入同一五折统计。已从末轮队列的 44臂/复用fold0 改为 55臂/不复用。",
       "own_spawner": "best 队列的 _spawn_stage 指向本模块, 不复用末轮队列指向 redundancy_multifold 的 _spawn_stage, 否则 arm 阶段会训练成末轮口径。",
-      "own_validator": "末轮队列的 normalize_runtime 硬编码 'folds 1-4 are trained here and fold0 is reused', 故 best 队列实现自己的 validate(同一预算/超参/范围锁, 但 new_folds=(0,1,2,3,4), reused_folds=())。"
+      "own_validator": "末轮队列的 normalize_runtime 硬编码 'folds 1-4 are trained here and fold0 is reused', 故 best 队列实现自己的 validate(同一预算/超参/范围锁, 但 new_folds=(0,1,2,3,4), reused_folds=())。",
+      "bugs_found_and_fixed_by_tests": "测试发现并修正了三个真实缺陷: (1) best权重重载后的20次重复评估原本在 SlotCapture 上下文之外, 捕获钩子已注销, 会报 'native slot call contract changed'; (2) best队列的 execute 原本调用末轮队列的 _run_wave 与 _subprocess_stage, 而末轮队列的 _spawn_stage 硬编码 '-m slotspe_proof.redundancy_multifold', 会把臂训练成末轮口径 —— 已改为本模块自有的 _run_wave/_subprocess_stage/_spawn_stage; (3) best配置的 metadata_root/features_root 曾被我硬编码为具体路径, 与末轮队列用环境变量的做法不一致, 已改回 ${SLOTSPE_METADATA_ROOT}/${SLOTSPE_FEATURES_ROOT}。"
     },
     "paths_commit": {
       "current_queue_run_root": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/",
@@ -4500,7 +4501,10 @@
       "original_source_pins_identical": "best 配置的 protected_original_source_sha256 与末轮队列配置逐项相同, 且已用实际文件字节复核通过(初次誊写时 process_args.py 哈希有误, 已被校验脚本发现并修正)。",
       "hyperparameters_identical": "epochs=30 patches=4096 batch_size=8 eval_repeats=20 lr=5e-4 probe_lr=5e-4 projection_dim=256 slot_iters=10 content_target_dim=32 content_clusters=8 content_reference_seed=731 dias_distance=0.05 slotbert_temperature=0.5 splits_dir=5fold label_col=survival_months_dss signature=combine torch_threads=2 —— 与末轮队列逐项相同, 唯一差异是 checkpoint_selection。",
       "regression_suite": "tests/ 全量回归: 384 passed, 1 warning, 0 failed, 143.44s。新增的 tests/test_slotspe_redundancy_best_engine.py 7 项全部通过; 末轮队列既有测试无回归。",
-      "regression_suite_no_regressions": true
+      "regression_suite_no_regressions": true,
+      "real_data_equivalence_verified_on_gpu": "在真实患者数据上核实: 用 fold1 S0 已训练好的 last.pt 权重, 在同一进程、同一设备(cuda:0)下, 我的 _validation_cindex 得 0.6201353637901861, _evaluate_repeat 的 repeat0 也得 0.6201353637901861, 且与该臂已留存的 eval_repeats.json 中 repeat0 的 0.6201353637901861 逐位相同。三个数完全一致。",
+      "cpu_gpu_float_difference_noted": "先在 CPU 上做同一比较时得 0.6083 vs 0.6201, 差异被定位为 CPU 与 CUDA 的浮点非确定性, 而非实现差异: 同设备同进程下两者逐位相同。该差异不进入报告, 因为所有队列运行都在 cuda:0 上。",
+      "best_queue_tests": "tests/test_slotspe_redundancy_best_multifold.py 13项全部通过; tests/test_slotspe_redundancy_best_engine.py 8项全部通过。"
     },
     "gaps_reasons": {
       "exact_best_score_unknown": "确切数值无法从现有产物推算: 当前队列训练中从未评估验证集, 未保存任何非末轮权重, 且4096patch/30ep的训练轨迹与历史3ep/256patch从ep1即分叉。任何具体预测值都将是编造。",

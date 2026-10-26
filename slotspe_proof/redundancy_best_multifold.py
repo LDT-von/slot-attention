@@ -537,7 +537,7 @@ def execute(config, output_root, resume=False, executor=None, runtime_check=True
                     "started_utc": datetime.now(timezone.utc).isoformat()}
         base.write(manifest_path, manifest)
     custom_executor = executor is not None
-    executor = executor or base._subprocess_stage
+    executor = executor or _subprocess_stage
 
     def verify_live_identity():
         saved = base.read(manifest_path)
@@ -579,8 +579,11 @@ def execute(config, output_root, resume=False, executor=None, runtime_check=True
                 for stage in pending:
                     executor(stage, runtime, root)
             else:
-                base._run_wave(order, {stage["id"] for stage in pending}, runtime, root,
-                               device_pool, workers)
+                # This module's own scheduler, whose spawned worker is this
+                # module's worker.  The shared scheduler of the final-epoch
+                # queue would train the arms under the final-epoch rule.
+                _run_wave(order, {stage["id"] for stage in pending}, runtime, root,
+                          device_pool, workers)
             verify_live_identity()
             for stage in pending:
                 manifest["records"][stage["id"]] = {"status": "completed",

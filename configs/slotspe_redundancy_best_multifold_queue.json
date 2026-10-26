@@ -191,8 +191,8 @@
   },
   "execution": {
     "source_root": "third_party/SlotSPE",
-    "metadata_root": "/data1/dataset_csv",
-    "features_root": "/data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files",
+    "metadata_root": "${SLOTSPE_METADATA_ROOT}",
+    "features_root": "${SLOTSPE_FEATURES_ROOT}",
     "device": "cuda:0",
     "label_col": "survival_months_dss",
     "signature": "combine",
