@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-26T09:44:34.842669+08:00",
-  "base_commit_before_delivery": "19ab4448e2faee577ed5fac2909ca88f56873935",
+  "recorded_at": "2026-10-26T09:47:28.811012+08:00",
+  "base_commit_before_delivery": "cee0458b434b8994a4682c63ecb54a8373c45f65",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -131,8 +131,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 283108,
-      "sha256": "1870a89d5d44828a817daebff253dcfc91a6ef8dbee67d0d6b0deff42716c67e"
+      "bytes": 286487,
+      "sha256": "17455a953dd188e039cd3e52e4f8d63a398f5b2d4183065a44a94f09fb3997a7"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",

@@ -4340,11 +4340,11 @@
     }
   },
   "latest_local_multifold_redundancy_run": {
-    "recorded_at": "2026-10-25T17:05:00+08:00",
+    "recorded_at": "2026-10-26T09:38:00+08:00",
     "task_id": "SPE-09",
     "route": "original_questions_v1_redundancy_eleven_arm_multifold_folds1to4",
     "status": "executing_folds1to4_seed3_44_new_training_runs_in_progress",
-    "completed": "多折入口适配完成并已实际启动执行。fold1-4 x 11臂 = 44次新增训练正在跑(6并发worker, 跨 cuda:0/cuda:1)。fold0 直接复用 local_evidence/redundancy_blca_uni2h_fold0_seed3_run01, 不重训。准备阶段已完成: 380名complete-case患者缓存, 5折分区与train-only分箱已生成。截至 2026-10-26 07:02 (+08:00): 已完成 16/44 臂 (fold1 9, fold2 4, fold3 0, fold4 3), 无失败记录, 两块GPU均在实际训练。",
+    "completed": "多折入口适配完成并已实际启动执行。fold1-4 x 11臂 = 44次新增训练正在跑(6并发worker, 跨 cuda:0/cuda:1)。fold0 直接复用 local_evidence/redundancy_blca_uni2h_fold0_seed3_run01, 不重训。准备阶段已完成: 380名complete-case患者缓存, 5折分区与train-only分箱已生成。截至 2026-10-26 09:38 (+08:00): 已完成 22/44 臂 (fold1 11, fold2 8, fold3 0, fold4 3), 无失败记录, 两块GPU均在实际训练。fold1 全部11臂已完成并已生成 folds/1/summary.json (status=completed)。",
     "paths_commit": {
       "run_root": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/",
       "queue_manifest": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/queue_manifest.json",
@@ -4358,7 +4358,7 @@
     },
     "checks_actual_execution_raw_receipt": {
       "actual_execution": "本地GPU实际执行(非模拟/非dry-run); 训练进程实际占用 cuda:0 与 cuda:1",
-      "gpu_observed": "cuda:0 util 87% / mem 16715MiB, cuda:1 util 29% / mem 16114MiB (6并发worker)",
+      "gpu_observed": "cuda:0 util 88% / mem 20293MiB, cuda:1 util 94% / mem 12810MiB (6并发worker)",
       "protocol_matches_fold0": {
         "epochs_30": true,
         "patches_4096": true,
@@ -4381,7 +4381,11 @@
         "patch_policy": "全量真实patch缓存, 每次访问无放回重抽子集, 不足补零(原版 __getitem__ 语义)",
         "validation_policy": "验证全量patch, 20次重复评估, 同一组评估随机种子",
         "arm_initialization": "同折各臂共享同一 initial_core_hash / initial_probe_hash / 抽样日程",
-        "binning": "仅由各自训练折的未删失患者拟合(q=4), 验证结局不参与训练分箱"
+        "binning": "仅由各自训练折的未删失患者拟合(q=4), 验证结局不参与训练分箱",
+        "fold0_parity_reverified": "2026-10-26 复核: fold0 历史 protocol.json 与 fold1 新 protocol.json 的 epochs=30 / batch_size=8 / patches=4096 / checkpoint_selection=fixed_final_epoch_no_selection / native_forward_protocol / probe_protocol / content_reference_fit / seed=3 逐项一致; 11臂 variants 列表与请求的 S0,S4,R1,R2,R3,R4,R5,S1,S2,S3,S5 完全相同; seeds=[3] 无新增种子; folds=[0..4], new_folds=[1,2,3,4], reused_folds=[0]; 每折 distinct_core_hash=1, distinct_probe_hash=1, distinct_batch0_schedule=1, 证明同折各臂共享初始化与抽样日程。",
+        "train_only_bin_and_reference_reverified": "2026-10-26 复核: 每折 binning.fit_subset=complete_case_train_uncensored_only, q=4, validation_outcomes_used_for_training_bins=False; 内容参考 receipt 记录 reference_fit_split=train_only, training_examples=305(fold1), frozen_during_evaluation=True, target_scope 为 input-only 随机投影聚类。",
+        "patch_sampling_reverified": "2026-10-26 复核 third_party/SlotSPE/dataset/dataset_survival.py 第285-292行: 训练时 n_samples=min(num_patches, wsi.size(0)), np.random.choice(..., replace=False) 无放回重抽, 不足预算用 torch.cat 补零而非剔除患者; 验证路径不触发该分支, 即全量patch。",
+        "aggregation_order_reverified": "2026-10-26 复核 slotspe_proof/redundancy_multifold.py _summarize_all: 每折先由 eval_repeats 的20次重复得到该折 cindex_mean_over_repeats, 再对5个折值算 mean/pstdev/stdev (population与sample两种折间标准差都输出), 与请求的'先折内汇总再算5折统计'一致。"
       },
       "splits_dir_verification": {
         "resolved": "5fold",
@@ -4437,10 +4441,65 @@
       },
       "paths_corrected": {
         "per_arm": "记录曾误写为 runs/arms/fold_{1..4}/{arm}/; 实际布局是 folds/{fold}/arms/{arm}/ (folds 目录下另有 initial/ 与 summary.json)。已更正为真实路径。"
-      }
+      },
+      "per_arm_metrics_available_verified": "2026-10-26 复核每个已完成臂的产物均覆盖请求的三类指标: C-index (eval_repeats.json 20次 + summary.cindex_mean_over_repeats); 槽几何/内容 (summary.slot_diagnostics.{wsi,omic}.cosine/absolute_cosine/rms_cosine/read_overlap/effective_rank/slot_count/nonzero_count/min_norm, 及 own_mse/donor_mse/static_mse/donor_to_own_mse_ratio/same_noise_changed_input_distance/same_input_changed_noise_distance); 训练稳定性 (curve.json 1170行逐批 core_gradient_norm/total_loss/probe_loss 等, _stability 汇总); 耗时与状态 (summary.elapsed_seconds / cuda_peak_bytes / status)。另每臂保留20个 raw_validation_repeat_NN.pt 与 validation_predictions.csv。",
+      "queue_plan_verified": "54个阶段: prepare(1) + initialize(4) + arm(44) + summarize_fold(4) + summarize(1); max_concurrent_stages=6, device_assignment=[0,1]; 最终 summarize 阶段会自动生成根 summary.json 与 summary.txt, 无需人工拼接。",
+      "no_failures_to_date": "日志中无 Traceback/RuntimeError/CUDA OOM; queue_manifest 中无 failed 记录。",
+      "stage_chains_docstring_defect_still_deferred": "仍未修: stage_chains docstring 写着'同一折内11个臂严格串行', 与实际按 stage_dependencies 并发不符。必须等本次运行结束后再改, 因为该文件被配置 pin 住且队列每波重新核对实现哈希, 运行中改动会使队列失败。"
     },
     "gaps_reasons": "本阶段为进行中, 尚无跨折结论。主要未决项: (1) 44次训练尚未完成, 失败记录与分折产物仍在生成中, 任何中间数字都不可当作5折统计。(2) 只有seed3, 折间标准差仍只反映折划分变化, 不含训练种子变化。(3) 20次重复是评估随机性, 不是20次独立训练, 折内先汇总再算5折统计的约定只能压缩评估噪声。(4) fold0 的历史结果是在同一5fold划分、同一末轮口径下产出, 但当时未与fold1-4共用同一调度器, 复用时保留该历史边界, 会在最终汇总中如实标注。 (5) 一处待修的过时文档: slotspe_proof/redundancy_multifold.py 中 stage_chains 的 docstring 仍写着\"同一折内 11 个臂严格串行\", 但实际调度器按 stage_dependencies 允许同折臂并发 (实测同时跑 6 个同折臂), 与 _run_wave 的 docstring 及实测行为一致。实现是正确的, 错的只是这句说明。修它必须等本次运行结束后再做, 因为该文件被 multifold 配置 pin 住, 且运行中的队列每次波次都会重新核对实现哈希, 运行中改动会触发 \"implementation changed while queue was running\" 并使队列失败。",
     "next_action_user_inputs": "等待44次训练与4次fold汇总完成; 完成后运行 local_evidence/render_multifold_report.py 生成5折跨臂表, 逐臂汇总: 各折C-index + 5折均值±折间标准差; 病理/组学的signed与absolute与RMS余弦、读取重叠、有效秩、有效槽数; 内容探针(own vs donor MSE, static字典对照); 训练稳定性(梯度范数分布、爆炸批次数、训练-验证NLL gap); 耗时与完成状态。20次评估先在折内汇总再算5折统计。最终汇报须明确区分折间方差与评估噪声, 不得把折内20次重复当作独立样本。无需追加用户输入, 除非要求提前中止。 另: 运行结束后修正 stage_chains 的过时 docstring, 刷新 configs/slotspe_redundancy_multifold_queue.json 的 candidate_implementation_sha256 钉, 跑 refresh_slotspe_multifold_pins.py 与 check_delivery_manifest.py --refresh, 再提交一次。此项不需要额外用户授权。"
+  },
+  "latest_plugin_delivery_sync_20261026": {
+    "recorded_at": "2026-10-26T09:44:34.252648+08:00",
+    "route_task": "SlotSPE / complete plugin delivery and concurrent upstream integration",
+    "completed_work": "Merged the tested V1/V2/V3 nine-preset implementation with upstream audit corrections and the separate multifold redundancy queue. Preserved both histories and disjoint progress fields; regenerated the public inventory. No new patient job was started.",
+    "paths_commit": {
+      "plugin_payload_commit": "19ab4448e2faee577ed5fac2909ca88f56873935",
+      "upstream_commit": "ce64451889ca4d3461d3dd8660c9c32e4049de37",
+      "progress": "docs/PROGRESS.json",
+      "manifest": "DELIVERY_MANIFEST.json",
+      "private_backup": "local_evidence/implementation/20261026_delivery_merge",
+      "final_commit_remote_receipt": "final response and ignored delivery_verification.json",
+      "additional_metadata_commit": "1002d7cf561a62bd6b811af2d6c4eeb69d9b5f6d",
+      "additional_metadata_scope": "Only upstream latest_local_multifold_redundancy_run refreshed; source tree and 536-test validation remain unchanged."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "full_public_suite": {
+        "tests": 536,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suite_receipt": "local_evidence/implementation/20261026_delivery_merge/pytest_merged_run01.xml",
+      "native_size_generated_conditions": 9,
+      "generated_shape": {
+        "D": 256,
+        "K": 8,
+        "iterations": 10,
+        "patches": 4096,
+        "logical_batch": 8
+      },
+      "generated_encoding_dim": 8,
+      "generated_pathways": [
+        3,
+        5
+      ],
+      "generated_losses_and_updates_identical_before_after_merge": true,
+      "generated_receipt": "local_evidence/implementation/20261026_delivery_merge/generated_native/generated_summary.json",
+      "original_source_unchanged_files": 11,
+      "plugin_imported_utility_functions_byte_identical": 2,
+      "unaffected_existing_public_files_hash_preserved": 416,
+      "public_file_total": 426,
+      "manifest_covered_files_excluding_self": 425,
+      "padding_guard_findings": 0,
+      "patient_training_runs_started_this_delivery": 0,
+      "patient_inference_runs_started_this_delivery": 0,
+      "new_server_raw_patient_artifacts_accepted": false
+    },
+    "gaps_reasons": "The upstream public results are preserved as their reports; no raw patient artifacts were independently accepted in this delivery. New plugins have generated-data validation only. Merging changes the full implementation identity, so future patient queues must use this final version consistently; no plugin patient queue exists to resume across the merge.",
+    "next_action_user_inputs": "After the user resumes server work and LAN access is restored, verify trisurv metadata/features/runtime using the plugin doctor, then execute only declared stage v1 before later stages. No automatic new folds, seeds or concurrent server job.",
+    "format_check": "An intermediate merge serialization used Windows CRLF; it was normalized to the existing LF/indent2 style before the merge commit. No whole-file format-only diff is committed."
   },
   "latest_mi_disentanglement_implementation_plan_20261025": {
     "recorded_at": "2026-10-25T16:06:06.513992+08:00",
@@ -4798,54 +4857,5 @@
     },
     "gaps_reasons": "No new patient jobs or performance conclusions. Server connection remains deferred per user. HSIC constrains a private summary, not all slot independence; content targets are feature proxies, not biological labels. Native-size generated input widths/pathway count differ from real UNI2-h. Single-fold best-validation trials will remain exploratory and need matched strong baselines plus independent generalization checks.",
     "next_action_user_inputs": "When the user resumes server work and LAN access is restored, verify the existing trisurv inputs/runtime with --doctor and execute only stage v1 first. Existing authorization covers the declared versions; do not expand folds/seeds or automatically start later stages. Keep all patient artifacts ignored."
-  },
-  "latest_plugin_delivery_sync_20261026": {
-    "recorded_at": "2026-10-26T09:44:34.252648+08:00",
-    "route_task": "SlotSPE / complete plugin delivery and concurrent upstream integration",
-    "completed_work": "Merged the tested V1/V2/V3 nine-preset implementation with upstream audit corrections and the separate multifold redundancy queue. Preserved both histories and disjoint progress fields; regenerated the public inventory. No new patient job was started.",
-    "paths_commit": {
-      "plugin_payload_commit": "19ab4448e2faee577ed5fac2909ca88f56873935",
-      "upstream_commit": "ce64451889ca4d3461d3dd8660c9c32e4049de37",
-      "progress": "docs/PROGRESS.json",
-      "manifest": "DELIVERY_MANIFEST.json",
-      "private_backup": "local_evidence/implementation/20261026_delivery_merge",
-      "final_commit_remote_receipt": "final response and ignored delivery_verification.json"
-    },
-    "checks_actual_execution_raw_receipt": {
-      "full_public_suite": {
-        "tests": 536,
-        "failures": 0,
-        "errors": 0,
-        "skipped": 0
-      },
-      "suite_receipt": "local_evidence/implementation/20261026_delivery_merge/pytest_merged_run01.xml",
-      "native_size_generated_conditions": 9,
-      "generated_shape": {
-        "D": 256,
-        "K": 8,
-        "iterations": 10,
-        "patches": 4096,
-        "logical_batch": 8
-      },
-      "generated_encoding_dim": 8,
-      "generated_pathways": [
-        3,
-        5
-      ],
-      "generated_losses_and_updates_identical_before_after_merge": true,
-      "generated_receipt": "local_evidence/implementation/20261026_delivery_merge/generated_native/generated_summary.json",
-      "original_source_unchanged_files": 11,
-      "plugin_imported_utility_functions_byte_identical": 2,
-      "unaffected_existing_public_files_hash_preserved": 416,
-      "public_file_total": 426,
-      "manifest_covered_files_excluding_self": 425,
-      "padding_guard_findings": 0,
-      "patient_training_runs_started_this_delivery": 0,
-      "patient_inference_runs_started_this_delivery": 0,
-      "new_server_raw_patient_artifacts_accepted": false
-    },
-    "gaps_reasons": "The upstream public results are preserved as their reports; no raw patient artifacts were independently accepted in this delivery. New plugins have generated-data validation only. Merging changes the full implementation identity, so future patient queues must use this final version consistently; no plugin patient queue exists to resume across the merge.",
-    "next_action_user_inputs": "After the user resumes server work and LAN access is restored, verify trisurv metadata/features/runtime using the plugin doctor, then execute only declared stage v1 before later stages. No automatic new folds, seeds or concurrent server job.",
-    "format_check": "An intermediate merge serialization used Windows CRLF; it was normalized to the existing LF/indent2 style before the merge commit. No whole-file format-only diff is committed."
   }
 }
