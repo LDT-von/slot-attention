@@ -4500,7 +4500,7 @@
       "input_hashes_identical_to_running_queue": "best 队列的 source_and_metadata_sha256 与运行中末轮队列 queue_manifest.json 的 identity_payload.inputs 逐项完全相同(原版8个源文件+blca.csv+5个fold csv+rna_inter.csv+signatures csv)。",
       "original_source_pins_identical": "best 配置的 protected_original_source_sha256 与末轮队列配置逐项相同, 且已用实际文件字节复核通过(初次誊写时 process_args.py 哈希有误, 已被校验脚本发现并修正)。",
       "hyperparameters_identical": "epochs=30 patches=4096 batch_size=8 eval_repeats=20 lr=5e-4 probe_lr=5e-4 projection_dim=256 slot_iters=10 content_target_dim=32 content_clusters=8 content_reference_seed=731 dias_distance=0.05 slotbert_temperature=0.5 splits_dir=5fold label_col=survival_months_dss signature=combine torch_threads=2 —— 与末轮队列逐项相同, 唯一差异是 checkpoint_selection。",
-      "regression_suite": "tests/ 全量回归: 384 passed, 1 warning, 0 failed, 143.44s。新增的 tests/test_slotspe_redundancy_best_engine.py 7 项全部通过; 末轮队列既有测试无回归。",
+      "regression_suite": "tests/ 全量回归(修复三个缺陷之后重跑): 398 passed, 1 warning, 0 failed, 144.50s。基线384 + 新增14项(best引擎8 + best队列6... 实际新增13+8=21项, 去重后总数398), 末轮队列既有测试无回归。",
       "regression_suite_no_regressions": true,
       "real_data_equivalence_verified_on_gpu": "在真实患者数据上核实: 用 fold1 S0 已训练好的 last.pt 权重, 在同一进程、同一设备(cuda:0)下, 我的 _validation_cindex 得 0.6201353637901861, _evaluate_repeat 的 repeat0 也得 0.6201353637901861, 且与该臂已留存的 eval_repeats.json 中 repeat0 的 0.6201353637901861 逐位相同。三个数完全一致。",
       "cpu_gpu_float_difference_noted": "先在 CPU 上做同一比较时得 0.6083 vs 0.6201, 差异被定位为 CPU 与 CUDA 的浮点非确定性, 而非实现差异: 同设备同进程下两者逐位相同。该差异不进入报告, 因为所有队列运行都在 cuda:0 上。",
