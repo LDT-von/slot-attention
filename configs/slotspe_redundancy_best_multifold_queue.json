@@ -1,0 +1,234 @@
+{
+  "schema": "native_slotspe_redundancy_best_multifold_queue_v1",
+  "recorded_at": "2026-10-26T12:15:00+08:00",
+  "route_task": "SlotSPE / SPE-09 continuation / executable eleven-arm BLCA five-fold diagnostic under the original per-epoch best-checkpoint rule",
+  "status": "implemented_pending_execution",
+  "host": "third_party/SlotSPE original; byte-preserved and pinned",
+  "patient_execution": false,
+  "server_execution": false,
+  "patient_queue_ready": true,
+  "execution_implemented": true,
+  "planning_entrypoint": "scripts/run_slotspe_redundancy_best_multifold.py --plan",
+  "execution_entrypoint": "scripts/run_slotspe_redundancy_best_multifold.py --run",
+  "authorization": "用户于2026-10-26 10:42明确选择: 等现有末轮队列跑完后启动 best 版全量重跑, 且只报 best 口径(复现原版语义)。本配置记录该授权范围。",
+  "relationship_to_final_epoch_queue": {
+    "final_epoch_queue": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01 (末轮口径, 独立完成)",
+    "best_queue": "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01 (best口径, 独立执行)",
+    "separate_output_root": true,
+    "final_epoch_queue_is_resumed_or_modified": false,
+    "why_fold0_is_retrained": "fold0 的末轮产物是在末轮口径下产出的, 不能与 best 口径的折混入同一个五折统计。best 队列对五折全部重训, 而不是把末轮的 fold0 拼进来。"
+  },
+  "variant_catalog": {
+    "S0": {
+      "family": "allocation",
+      "wsi": "original",
+      "omic": "original"
+    },
+    "S4": {
+      "family": "allocation",
+      "wsi": "mesh_uniform",
+      "omic": "mesh_uniform"
+    },
+    "R1": {
+      "family": "representation_loss",
+      "regularizer": "off_diagonal_cosine_squared",
+      "regularizer_weight": 10.0,
+      "set_weight": 0.0
+    },
+    "R2": {
+      "family": "representation_loss",
+      "regularizer": "SlotBERT_Eq11_transplant",
+      "regularizer_weight": 1.0,
+      "set_weight": 0.0
+    },
+    "R3": {
+      "family": "representation_loss",
+      "regularizer": "SlotBERT_Eq11_transplant",
+      "regularizer_weight": 1.0,
+      "set_weight": 5.0
+    },
+    "R4": {
+      "family": "representation_loss",
+      "regularizer": "none",
+      "regularizer_weight": 0.0,
+      "set_weight": 5.0
+    },
+    "R5": {
+      "family": "representation_loss",
+      "regularizer": "off_diagonal_cosine_squared",
+      "regularizer_weight": 10.0,
+      "set_weight": 5.0
+    },
+    "S1": {
+      "family": "allocation",
+      "wsi": "sinkhorn",
+      "omic": "sinkhorn"
+    },
+    "S2": {
+      "family": "allocation",
+      "wsi": "mesh_uniform",
+      "omic": "original"
+    },
+    "S3": {
+      "family": "allocation",
+      "wsi": "original",
+      "omic": "mesh_uniform"
+    },
+    "S5": {
+      "family": "pruning",
+      "wsi": "dias",
+      "omic": "dias"
+    }
+  },
+  "stages": [
+    {
+      "id": "real_data_diagnostic",
+      "kind": "multi_fold_eleven_arm_diagnostic",
+      "status": "implemented_not_executed_on_patients",
+      "variants": [
+        "S0",
+        "S4",
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "S1",
+        "S2",
+        "S3",
+        "S5"
+      ],
+      "study": "blca",
+      "folds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "seeds": [
+        3
+      ],
+      "epochs": 30,
+      "real_patches": 4096,
+      "batch_size": 8,
+      "eval_repeats": 20,
+      "splits_dir": "5fold",
+      "planned_unique_training_runs": 55,
+      "hyperparameters": "Locked core lr .0005, probe lr .0005, Gram weight10, paper weight1 temperature.5, content weight5; no heldout tuning.",
+      "purpose": "Complete the eleven-arm BLCA five-fold picture at seed3 under the original per-epoch best-validation checkpoint rule, which is the only difference from the completed final-epoch queue.",
+      "feature_encoder": "UNI2-h"
+    }
+  ],
+  "requested_scope": {
+    "study": "blca",
+    "folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "new_folds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "reused_folds": [],
+    "seeds": [
+      3
+    ],
+    "one_queue": true,
+    "selected_variants": [
+      "S0",
+      "S4",
+      "R1",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "S1",
+      "S2",
+      "S3",
+      "S5"
+    ],
+    "automatic_cross_fold_expansion": false,
+    "fold_seed_choice": "seed3 only, as instructed; no additional seeds are introduced.",
+    "feature_encoder": "UNI2-h"
+  },
+  "matched_protocol": [
+    "Same eligible patients per fold, same split hashes, same real-patch cache/order, and train-fold-only survival bins fitted independently per fold",
+    "Same seed-specific initial core/probe weights and data batches within each fold; all eleven arms of a fold share one initialization and one sampling schedule",
+    "Same survival/auxiliary/reconstruction objectives plus the explicitly itemized experimental losses",
+    "Same repeated-evaluation seeds and the same 20-repeat evaluation contract; only the checkpoint rule differs",
+    "Every private feature, identifier, weight, raw prediction and per-case array stays under ignored local_evidence"
+  ],
+  "checkpoint_rule": {
+    "selection": "per_epoch_validation_best_then_reload_and_reevaluate",
+    "source": "third_party/SlotSPE/utils/core_utils.py:421-475",
+    "per_epoch": "one full validation-fold pass after each of the 30 epochs, using the original risk definition -sum(cumprod(1-sigmoid(logits))) and the same fixed patch subset and evaluation seed schedule as the final evaluation",
+    "tie_rule": "a later epoch whose value is greater than or equal to the running maximum replaces the retained epoch, matching the original comparison",
+    "final": "after the final epoch the retained best weights are loaded and evaluated once more with the full 20-repeat contract",
+    "rng_isolation": "the per-epoch validation pass restores the python, numpy and torch CPU/CUDA global random streams, so the training trajectory of this queue equals the training trajectory of the completed final-epoch queue for the same arm, fold and seed",
+    "verified": "tests/test_slotspe_redundancy_best_engine.py::test_best_run_training_trajectory_matches_the_final_epoch_run compares the retained per-batch training rows of both protocols and requires them to be identical"
+  },
+  "required_metrics": [
+    "Per-fold C-index of the retained best checkpoint, averaged over the 20 evaluation repeats",
+    "Five-fold mean and between-fold standard deviation over the five per-fold values",
+    "The retained best epoch per fold",
+    "The per-epoch validation C-index trajectory of every arm",
+    "The 20 repeats are aggregated inside a fold first and are never the units of the five-fold statistic"
+  ],
+  "decision_boundary": "This queue completes a five-fold single-seed comparison of one SlotSPE implementation family under the original best-checkpoint rule. The reported C-index is a validation-selected peak, which is not an independently tested generalization result. Low cosine alone does not authorize a claim, and no multiplicity-corrected significance is asserted here.",
+  "feature_contract": {
+    "wsi_encoder": "UNI2-h",
+    "input": "existing pre-extracted UNI2-h WSI features",
+    "new_feature_extraction": false,
+    "encoding_dim": null,
+    "substitution_allowed": false
+  },
+  "execution": {
+    "source_root": "third_party/SlotSPE",
+    "metadata_root": "/data1/dataset_csv",
+    "features_root": "/data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files",
+    "device": "cuda:0",
+    "label_col": "survival_months_dss",
+    "signature": "combine",
+    "lr": 0.0005,
+    "probe_lr": 0.0005,
+    "torch_threads": 2,
+    "encoding_dim": null,
+    "projection_dim": 256,
+    "slot_iters": 10,
+    "content_target_dim": 32,
+    "content_clusters": 8,
+    "content_reference_seed": 731,
+    "dias_distance": 0.05,
+    "slotbert_temperature": 0.5,
+    "experiment": "original_audit",
+    "checkpoint_selection": "per_epoch_validation_best_then_reload_and_reevaluate"
+  },
+  "actual_execution_this_update": {
+    "training_runs": 0,
+    "model_forwards": 0,
+    "patient_inputs_read": 0,
+    "server_runs": 0
+  },
+  "protected_original_source_sha256": {
+    "third_party/SlotSPE/dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "third_party/SlotSPE/models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "third_party/SlotSPE/utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "third_party/SlotSPE/utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b"
+  },
+  "pin_refresh_note": {
+    "recorded_at": "2026-10-26T12:15:00+08:00",
+    "change": "New configuration for the best-checkpoint queue. It pins the same byte-for-byte original SlotSPE source as the final-epoch queue and adds the two new implementation modules.",
+    "final_epoch_queue_unchanged": "The final-epoch queue's own configuration, pins and artifacts are untouched by this file."
+  }
+}

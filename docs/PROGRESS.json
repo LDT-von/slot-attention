@@ -4449,5 +4449,68 @@
     },
     "gaps_reasons": "本阶段为进行中, 尚无跨折结论。主要未决项: (1) 44次训练尚未完成, 失败记录与分折产物仍在生成中, 任何中间数字都不可当作5折统计。(2) 只有seed3, 折间标准差仍只反映折划分变化, 不含训练种子变化。(3) 20次重复是评估随机性, 不是20次独立训练, 折内先汇总再算5折统计的约定只能压缩评估噪声。(4) fold0 的历史结果是在同一5fold划分、同一末轮口径下产出, 但当时未与fold1-4共用同一调度器, 复用时保留该历史边界, 会在最终汇总中如实标注。 (5) 一处待修的过时文档: slotspe_proof/redundancy_multifold.py 中 stage_chains 的 docstring 仍写着\"同一折内 11 个臂严格串行\", 但实际调度器按 stage_dependencies 允许同折臂并发 (实测同时跑 6 个同折臂), 与 _run_wave 的 docstring 及实测行为一致。实现是正确的, 错的只是这句说明。修它必须等本次运行结束后再做, 因为该文件被 multifold 配置 pin 住, 且运行中的队列每次波次都会重新核对实现哈希, 运行中改动会触发 \"implementation changed while queue was running\" 并使队列失败。",
     "next_action_user_inputs": "等待44次训练与4次fold汇总完成; 完成后运行 local_evidence/render_multifold_report.py 生成5折跨臂表, 逐臂汇总: 各折C-index + 5折均值±折间标准差; 病理/组学的signed与absolute与RMS余弦、读取重叠、有效秩、有效槽数; 内容探针(own vs donor MSE, static字典对照); 训练稳定性(梯度范数分布、爆炸批次数、训练-验证NLL gap); 耗时与完成状态。20次评估先在折内汇总再算5折统计。最终汇报须明确区分折间方差与评估噪声, 不得把折内20次重复当作独立样本。无需追加用户输入, 除非要求提前中止。 另: 运行结束后修正 stage_chains 的过时 docstring, 刷新 configs/slotspe_redundancy_multifold_queue.json 的 candidate_implementation_sha256 钉, 跑 refresh_slotspe_multifold_pins.py 与 check_delivery_manifest.py --refresh, 再提交一次。此项不需要额外用户授权。"
+  },
+  "latest_best_checkpoint_protocol_plan": {
+    "recorded_at": "2026-10-26T11:55:00+08:00",
+    "task_id": "SPE-09",
+    "route": "original_questions_v1_best_checkpoint_protocol_plan_and_source_facts",
+    "status": "implemented_and_unit_verified_pending_current_queue_completion_no_patient_execution_yet",
+    "authorization": "用户于2026-10-26 10:42明确选择: 等现有队列跑完后, 再启动 best 版全44臂, 且只报 best 口径(复现原版语义)。本条目记录计划与已核实事实, 尚未执行任何新训练。",
+    "completed_work": {
+      "source_facts_original_semantics": "third_party/SlotSPE/utils/core_utils.py:421-445 每个epoch训练后调用 _summary 在验证集上评估, 当 val_cindex >= args.max_cindex 时更新 max_cindex 并保存 model_best_s{cur}.pth 与该epoch的 results; 447-448 保存末轮 s_{cur}_checkpoint.pth; 450-475 末轮再评估一次, 然后加载 best 权重并再次 _summary, 返回的 max_cindex 是验证集峰值。",
+      "current_engine_diff": "slotspe_proof/redundancy_engine.py 的评估循环位于训练 for 循环之外(512-537行训练, 539-543行评估), protocol 固定写入 checkpoint_selection='fixed_final_epoch_no_selection'(475行), 只落盘 last.pt, curve.json 不含任何 val/cindex 字段(实测1170行曲线键中无验证指标)。",
+      "hard_constraint_no_code_change_during_run": "redundancy_multifold.execute() 的 verify_live_identity() 在每个波次前后校验 implementation_hashes(); 运行中修改被pin住的实现文件会抛出 'implementation changed while queue was running' 并使队列失败。因此改造只能在当前队列结束后进行。",
+      "hard_constraint_no_resume": "redundancy_engine.run_arm 第443-444行: out 目录非空即抛 'refusing to overwrite or resume prior arm output'。best 版44臂必须在新目录全量重跑。",
+      "rng_contamination_mechanism": "_evaluate_repeat 内部调用 patient._rng(schedule_seed,...) 会 np.random.seed 重置全局流; 而训练期 patient._batch(sample_seed=None) 的真实patch无放回抽样正依赖该全局流(patient.py:394-401)。实测重置全局流后下一次抽样结果改变。因此逐epoch插入验证评估若不隔离随机流, 会改变后续epoch的训练轨迹, 使 best 版与现有末轮结果不可配对比较。",
+      "historical_anchor_best_vs_final": "仓库内已有未被进度引用的历史运行 results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169 (5折x3seed=15次, 3ep/256patch/original臂, 逐epoch记录验证C-index): 末轮20次重复均值 0.6632±0.0585, 逐epoch best 均值 0.6656±0.0606, best-末轮=+0.0024。即在不过拟合的短训练预算下 best 与末轮几乎重合, 该历史分数并非来自 best 口径而是来自未过拟合。",
+      "split_proximity_to_current_queue": "历史3seed run 与当前队列逐折验证集对比: fold0/1/3/4 验证集 100% 相同(77/77,75/75,76/76,76/76); fold2 差1例(TCGA-GC-A3WC 在历史为验证集, 当前为训练集); 训练集亦各差1例。故历史运行是当前队列的近乎完美代理, 但其 epoch/patch 预算不同, 训练轨迹从ep1即分叉(当前fold0 S0 ep1 train_nll=1.1145 vs 历史1.0498), 不能据此外推。",
+      "selection_bias_quantified": "用30个epoch的模拟(真值随机游走+逐epoch噪声)估计 E[best-末轮]: epoch间sd=0.010时 +0.029, sd=0.020时 +0.059, sd=0.030时 +0.087, sd=0.050时 +0.146。历史实测epoch间sd中位0.0103(仅3个epoch, 30epoch深度过拟合时更大)。该增量是验证集选峰引入的乐观偏差, 不是真实泛化提升。",
+      "implementation_created": "新增三个文件, 全部与末轮队列的被pin文件分离: slotspe_proof/redundancy_best_engine.py (逐epoch验证+best保存+重载再评估, 带随机流守卫), slotspe_proof/redundancy_best_multifold.py (best版队列调度器, 自有validate/spawner/summary), configs/slotspe_redundancy_best_multifold_queue.json 与 scripts/run_slotspe_redundancy_best_multifold.py。未改动 redundancy_engine.py / redundancy_multifold.py / 任何被当前队列pin住的文件。",
+      "rng_isolation_implemented": "_StreamGuard 在每次逐epoch验证前后保存并恢复 python random、numpy 全局流、torch CPU RNG 与全部 CUDA RNG 状态, 使验证过程对训练轨迹不可观测。已实测: 守卫后三个流的下一抽样值与守卫前一致。",
+      "final_evaluation_inside_capture_context": "best权重重载后的20次重复评估必须保持在 SlotCapture 上下文内, 否则捕获钩子已注销, _check_capture 会报 'native slot call contract changed'。此错误在测试中被发现并已修正。",
+      "fold_scope_correction": "best 队列对五折全部重训(55臂), 不复用末轮的 fold0: 不同检查点规则下训练的折不能混入同一五折统计。已从末轮队列的 44臂/复用fold0 改为 55臂/不复用。",
+      "own_spawner": "best 队列的 _spawn_stage 指向本模块, 不复用末轮队列指向 redundancy_multifold 的 _spawn_stage, 否则 arm 阶段会训练成末轮口径。",
+      "own_validator": "末轮队列的 normalize_runtime 硬编码 'folds 1-4 are trained here and fold0 is reused', 故 best 队列实现自己的 validate(同一预算/超参/范围锁, 但 new_folds=(0,1,2,3,4), reused_folds=())。"
+    },
+    "paths_commit": {
+      "current_queue_run_root": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/",
+      "current_queue_head_commit": "1002d7c",
+      "new_engine_module": "slotspe_proof/redundancy_best_engine.py",
+      "new_queue_module": "slotspe_proof/redundancy_best_multifold.py",
+      "new_config": "configs/slotspe_redundancy_best_multifold_queue.json",
+      "new_output_root": "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/",
+      "historical_anchor": "results/slotspe_proof/blca_5fold_3seed_gpu_trisurv_a512169/",
+      "new_entrypoint": "scripts/run_slotspe_redundancy_best_multifold.py",
+      "new_test": "tests/test_slotspe_redundancy_best_engine.py"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "new_training_runs": 0,
+      "new_model_forward_passes": 0,
+      "new_backward_passes": 0,
+      "patient_arrays_loaded_by_this_step": 0,
+      "server_execution": false,
+      "server_patient_raw_results_received": false,
+      "original_sources_modified": false,
+      "historical_reports_modified": false,
+      "checks_performed": "只读源码核对(core_utils.py:421-491, redundancy_engine.py:475/512-543/443-444, patient.py:394-401) + 只读读取本机既有产物(summary/eval_repeats/curve/protocol/queue_manifest) + 纯numpy模拟; 未训练、未评估、未新增任何前向/反向",
+      "unit_tests": "tests/test_slotspe_redundancy_best_engine.py 7项全部通过, 含决定性的 test_best_run_training_trajectory_matches_the_final_epoch_run: 末轮协议与best协议的逐批训练行(total_loss/main_nll/probe_loss/core_gradient_norm/gram_loss/slotbert_loss/content_loss/epoch/batch_start)逐项完全相同, 且 core_optimizer_steps 相同, 证明插入逐epoch验证不改变训练轨迹。",
+      "plan_generated": "scripts/run_slotspe_redundancy_best_multifold.py --plan 成功: output_root=local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01, training_runs=55, stages=67, reused_folds=[], checkpoint_selection=per_epoch_validation_best_then_reload_and_reevaluate, patient_work_executed=false, unresolved_variables=[]。",
+      "doctor_passed": "--doctor 返回 status=ready; patient_features_read=false, patient_training_executed=false, feature_extraction_started=false。",
+      "input_hashes_identical_to_running_queue": "best 队列的 source_and_metadata_sha256 与运行中末轮队列 queue_manifest.json 的 identity_payload.inputs 逐项完全相同(原版8个源文件+blca.csv+5个fold csv+rna_inter.csv+signatures csv)。",
+      "original_source_pins_identical": "best 配置的 protected_original_source_sha256 与末轮队列配置逐项相同, 且已用实际文件字节复核通过(初次誊写时 process_args.py 哈希有误, 已被校验脚本发现并修正)。",
+      "hyperparameters_identical": "epochs=30 patches=4096 batch_size=8 eval_repeats=20 lr=5e-4 probe_lr=5e-4 projection_dim=256 slot_iters=10 content_target_dim=32 content_clusters=8 content_reference_seed=731 dias_distance=0.05 slotbert_temperature=0.5 splits_dir=5fold label_col=survival_months_dss signature=combine torch_threads=2 —— 与末轮队列逐项相同, 唯一差异是 checkpoint_selection。",
+      "regression_suite": "tests/ 全量回归: 384 passed, 1 warning, 0 failed, 143.44s。新增的 tests/test_slotspe_redundancy_best_engine.py 7 项全部通过; 末轮队列既有测试无回归。",
+      "regression_suite_no_regressions": true
+    },
+    "gaps_reasons": {
+      "exact_best_score_unknown": "确切数值无法从现有产物推算: 当前队列训练中从未评估验证集, 未保存任何非末轮权重, 且4096patch/30ep的训练轨迹与历史3ep/256patch从ep1即分叉。任何具体预测值都将是编造。",
+      "expected_range_is_speculation": "预计各臂best落在0.65-0.78区间属推测, 非实测; 其中约+0.03~+0.09来自选择偏差。",
+      "best_only_reporting_cost": "用户选择只报best。代价: 11臂各自在30个epoch中挑各自峰值, 峰值epoch不同, 臂间差异会混入'哪个臂撞上峰'的运气成分; 且best是验证集选峰, 不是独立泛化结果(历史审计 latest_official_epoch_selection_review 已明确记录该边界)。",
+      "single_seed_only": "只有seed3, 折间标准差只反映折划分变化, 不含训练种子变化。",
+      "not_multiplicity_corrected": "C-index臂间差异未经多重比较校正。",
+      "no_patient_execution_yet": "本条目所有检查均为源码核对、纯numpy模拟与生成张量上的单元测试; 没有读取任何患者数组, 没有训练, 没有评估, 没有新增任何前向/反向。真实患者执行须等末轮队列跑完后单独启动。"
+    },
+    "next_action_user_input": "1) 等当前末轮队列44臂跑完并产出 summary.json (记录时为 29/44, 零失败, 两块GPU均在训练, ETA约6.9小时, 预计 10-26 10:54 完成); 2) 队列结束后再执行 best 队列, 因为末轮队列每次波次前后都会校验 implementation_hashes(), 运行中改动被pin文件会使其失败; 3) best 队列命令: .venv_slot_spe/bin/python scripts/run_slotspe_redundancy_best_multifold.py --run --devices 0,1 --workers 6 (explicit execution); 4) best 队列对五折全部重训 55 臂, 预计约24-26小时 (比末轮队列多 fold0 的11臂, 且每臂多30次逐epoch验证); 5) 只报best口径, 并在summary的caveats中标注验证集选峰的乐观偏差与折间不可混入末轮fold0; 6) 启动前建议先跑 fold0 的单臂探测以核对逐epoch验证轨迹与best epoch, 再放全量。",
+    "claim_boundary": "以上为源码事实核对与本机既有产物读取, 未启动任何新训练, 不涉及患者干预, 不声称患者预测危害或纠正效力, 不声称任何5折或best口径结论成立。"
   }
 }
