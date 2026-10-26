@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-25T16:54:46.423388+08:00",
+  "recorded_at": "2026-10-26T09:44:34.252648+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -3973,10 +3973,10 @@
     "next_action_user_inputs": "The authorized public repository delivery is complete for the verified payload. Use main as the single current implementation and check DELIVERY_MANIFEST with --check --require-tracked; after future public-file edits refresh and commit the manifest with those files. Patient execution and active server adjustments remain outside this repository-delivery task."
   },
   "latest_local_redundancy_queue_run": {
-    "recorded_at": "2026-10-25T15:45:00+08:00",
+    "recorded_at": "2026-10-25T16:55:00+08:00",
     "task_id": "SPE-09",
     "route": "original_questions_v1_redundancy_eleven_arm",
-    "status": "completed_single_fold_exploratory_measured",
+    "status": "completed_single_fold_exploratory_measured_audited_and_corrected",
     "completed": "11臂BLCA UNI2-h 队列(30轮/4096 patch/20次重复评估/fold0/seed3)全部完成并汇总。队列总训练时长22.2小时，全部11臂status=completed，含summarize阶段。跨臂不变量核查通过：initial_core_hash/initial_probe_hash/source_hashes/epochs/训练303验证77/counters(除R1-R5的component_autograd_grad_calls=30外)全臂一致。",
     "paths_commit": {
       "run_root": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/",
@@ -4002,7 +4002,22 @@
       "actual_server_or_local_execution": "本地GPU实际执行11臂训练，非模拟；原始产物在 ignored local_evidence/",
       "raw_receipt": "local_evidence/redundancy_blca_uni2h_fold0_seed3_run01/ 每臂含 curve.json/eval_repeats.json/patient_diagnostics.json/last.pt/20份 raw_validation_repeat_*.pt",
       "patient_predictive_harm_established": false,
-      "correction_efficacy_established": false
+      "correction_efficacy_established": false,
+      "audit_mode": "read_only_no_training_no_inference_no_patient_intervention",
+      "bootstrap_convention_corrected_to": "B: mean over 20 evaluation repeats of per-repeat c-index (engine convention)",
+      "bootstrap_two_independent_implementations_agree": true,
+      "multiplicity_correction_applied": [
+        "bonferroni_99.5CI",
+        "BH-FDR"
+      ],
+      "brier_with_train_based_IPCW_computed": true,
+      "constant_predictor_brier_baseline_computed": true,
+      "calibration_in_the_large_computed": true,
+      "effective_rank_circularity_checked": true,
+      "content_retention_probes_read": true,
+      "last_epoch_degradation_checked": true,
+      "bootstrap_robustness_replicated_independent_seed": true,
+      "recorded_intervals_reverified_against_saved_bootstrap_arrays": true
     },
     "measured_results": {
       "arms_and_contracts": {
@@ -4137,8 +4152,295 @@
         "finding": "R5/S1/S3训练-验证gap近0或为负且风险分数被压缩(R5 range仅0.88, S0为3.43)；cindex对单调重标不变, 故压缩本身不改变cindex, 但提示风险值已无临床可解释幅度"
       }
     },
-    "gaps_reasons": "1) 仅fold0/seed3单折、77验证患者, 患者级bootstrap下11臂中只有S1的配对Δ95%CI不跨0, 其余全部跨0含0, 故不能宣称任何臂的cindex优势已确立。2) 20次重复是评估随机性而非独立患者, 配对t检验的极小p值反映的是评估噪声可复现性, 不是患者层面的证据强度。3) 观测到槽冗余与cindex的关系与设计意图相反(见slot_diagnostics), 现有机制解释未被支持。4) 梯度爆炸在无裁剪下普遍存在, 尤以R4最重; 本队列未做裁剪对照, 无法区分'改善来自机制'与'改善来自不稳定的隐式正则'。5) 全部为探索性, 非泛化、非临床获益、非A/B/C纠正效力证据。未观察到的问题不臆造: 本队列不涉及P8传输, 不做新模块。",
-    "next_action_user_inputs": "建议优先: (a) 跨折(seed/fold)重复以消除单折与胜者诅咒, 尤其S1/S2/R5/S3; (b) 加梯度裁剪对照以隔离数值不稳定贡献; (c) 复核R5/S1/S3风险压缩是否意味着风险分数失去意义。是否授权扩展队列需要用户明确执行授权; 本轮已完成不需再授权。"
+    "gaps_reasons": "审计后仍成立的主要限制: (1) 仅fold0/seed3单折, 77验证患者; 患者级bootstrap只覆盖患者重采样, 未覆盖训练种子与折划分。(2) 多重比较校正(Bonferroni 99.5%CI / BH-FDR)后没有任何单臂达到显著, 因此不能宣称任何臂有效, 也不能宣布S1有效。(3) 内容保留探针显示无臂优于S0(static_mse全臂相同), '冗余下降'与'内容保留'的关联未被证明。(4) 全部11臂在10/18/24月的Brier均劣于常数预测者, 故本队列的cindex排序优势尚未转化为校准意义上的可用预测。(5) 梯度爆炸普遍存在且无裁剪对照, 其对结果的作用未知。(6) 20次评估是评估随机性, 不是20次独立训练。全部为探索性, 非泛化、非临床获益、非A/B/C纠正效力证据。",
+    "next_action_user_inputs": "审计已通过并更正完毕。按用户指示, 暂不追加训练; 后续若获授权, 建议锁定 R5、S1(及S3/R3)少数候选 + 保留 S0、R1、R4 对照, 安排跨折跨种子重复; 并优先加入 (a) 梯度裁剪匹配对照, (b) Brier/校准作为并列验收指标而非仅C-index, (c) 选择后推断以处理模型选择偏差。执行需明确授权。",
+    "audit_corrections": {
+      "summary": "只读复核, 未运行训练/推理/患者干预。以下更正此前记录与汇报中的错误。",
+      "correction_1_bootstrap_convention": {
+        "error": "此前记录的bootstrap用了 repeat0 的单次风险向量(A口径), 而引擎summary报的是20次cindex均值(B口径); 两者混用, 导致此前结论'只有S1不跨0'错误。",
+        "audit_finding": "A口径下只有S1不跨0; B口径(引擎口径)下 R3/R5/S1/S3 四个臂的配对Δ95%CI不跨0。两套独立实现(sklearn版与自写快速版)结果一致, 快速版与sklearn逐位相同(diff=0.00e+00)。",
+        "paired_delta_95CI_B_convention": {
+          "R5": "[+0.009, +0.272] 不跨0",
+          "S3": "[+0.011, +0.252] 不跨0",
+          "S1": "[+0.006, +0.188] 不跨0",
+          "R3": "[+0.005, +0.217] 不跨0",
+          "S2": "[-0.020, +0.208]",
+          "S4": "[-0.027, +0.201]",
+          "S5": "[-0.051, +0.186]",
+          "R1": "[-0.117, +0.120]",
+          "R2": "[-0.120, +0.131]",
+          "R4": "[-0.157, +0.088]"
+        },
+        "corrected_reading": "点估计优势仍在(B口径下R5配对Δ=+0.1441)。区间跨0表示患者抽样不确定性较大, 不表示优势消失。",
+        "uncovered_by_this_bootstrap": "训练种子与折划分变化仍未被覆盖; 本bootstrap只覆盖验证集患者重采样。",
+        "robustness_replication_independent_seed": {
+          "purpose": "验证记录的B口径区间不是单一随机种子的偶然结果",
+          "setup": "B=4000, 独立随机种子20261025 (记录值用种子12345, B=2000), 相同引擎口径与相同配对基线S0",
+          "paired_delta_95CI": {
+            "R5": "[+0.013, +0.274]",
+            "S3": "[+0.001, +0.251]",
+            "R3": "[+0.007, +0.213]",
+            "S1": "[+0.004, +0.191]",
+            "S2": "[-0.024, +0.206]",
+            "S4": "[-0.031, +0.205]",
+            "S5": "[-0.054, +0.181]",
+            "R1": "[-0.123, +0.123]",
+            "R2": "[-0.121, +0.129]",
+            "R4": "[-0.162, +0.087]"
+          },
+          "bonferroni_99.5CI_all_cross_zero": true,
+          "bh_fdr_significant_arms": 0,
+          "bh_fdr_smallest_p": [
+            0.0295,
+            0.037
+          ],
+          "winner_frequency": {
+            "R5": "44.2%",
+            "S3": "26.8%",
+            "S1": "11.2%",
+            "R3": "9.3%",
+            "S4": "6.3%",
+            "S5": "1.3%",
+            "S2": "0.8%"
+          },
+          "conclusion": "独立种子与更大B复算后, 不跨0的臂集合仍为 R3/R5/S1/S3 四臂; Bonferroni 与 BH-FDR 校正后仍无任何显著臂; 冠军频率分布基本不变。记录的区间与结论对bootstrap随机性稳健。"
+        }
+      },
+      "correction_2_no_single_valid_arm": {
+        "error": "此前表述'S1唯一有效'过强。",
+        "audit_finding": "S1是在10次比较中唯一未经校正的区间刚好不跨0, 属于未校正的多重比较, 不能据此宣布有效。",
+        "multiplicity_corrected": {
+          "bonferroni_99.5CI": "10个臂的配对Δ99.5%CI全部跨0(R5 [-0.055,+0.323], S3 [-0.049,+0.307], R3 [-0.047,+0.243], S1 [-0.043,+0.242])",
+          "bh_fdr_0.05": "无一臂显著(R3/S3 p=0.036, R5/S1 p=0.039, 其余更大)",
+          "conclusion": "多重比较校正后没有任何单臂达到显著"
+        },
+        "winner_frequency_interpretation_corrected": "bootstrap内最优臂频率(R5 44.1%, S3 25.6%, S1 12.8%, R3 8.5%, S4 6.2%)只反映排名稳定性, 不是'真正最优的概率', 也不能解释为模型选择偏差已被量化。增加fold和seed不会自动消除模型选择偏差; 需按选择后推断(如在同一批次内重采样/嵌套交叉验证)处理。"
+      },
+      "correction_3_mechanism_not_refuted": {
+        "error": "此前表述'去冗余机制被推翻/说重了'。",
+        "audit_finding": "R1单独说明'降低几何冗余不足以保证预测改善'(R1 cindex 0.5294, 与S0 0.5239无显著差异); 但R5仍可能经病理侧或内容约束获益, 不能据此否定整个机制。",
+        "circularity_confirmed": {
+          "issue": "effective_rank = K^2 / sum(gram^2), 而 slot_gram_loss 正是最小化非对角gram平方; 因此 R1/R5 的 effective_rank 是被直接优化的目标量, 用它与cindex做相关属于循环论证。",
+          "evidence": "gram_weight>0 的臂 (R1, R5) WSI effective_rank 为 2.952 / 3.766; gram_weight=0 的10个臂全部 <=1.389。",
+          "corrected_correlation": "排除 R1/R5 后, spearman(cindex, WSI effective_rank) = -0.050 (原含R1/R5为 +0.173); OMIC 侧 -0.467 (原 -0.609)。11臂均值相关无法识别因果。"
+        },
+        "content_retention_probe_reading": {
+          "own_mse_vs_S0": {
+            "R5": "WSI +0.0082 / OMIC +0.0613",
+            "R1": "WSI +0.0062 / OMIC -0.0088",
+            "S3": "WSI +0.0116 / OMIC +0.2146",
+            "S1": "WSI +0.0086 / OMIC +0.1369"
+          },
+          "donor_to_own_ratio_vs_S0": "全部臂变化在 ±0.02 以内, 均约等于1.0",
+          "finding": "没有任何臂改善内容保留: own_mse 全部接近或劣于S0, donor_to_own_mse_ratio 全部约1.0(探针无法区分本例与供体)。static_mse 全臂相同(0.8577/25.1303), 说明内容目标本身未被任何臂改变。"
+        },
+        "corrected_reading": "探针结果表明'去冗余'未伴随可测的内容保留提升; 但这仍不能否定R5的收益来源, 只是说明'冗余下降'与'内容保留'在本队列中未被证明关联。"
+      },
+      "correction_4_nll_gap": {
+        "error": "此前汇报称S1/S3的训练-验证gap'接近0或为负', 错误。",
+        "audit_finding": {
+          "S1": 1.4433,
+          "S3": 1.6001,
+          "R5": -0.0377,
+          "R3": 0.0395,
+          "S0": 0.4992,
+          "R4": 0.2516,
+          "S2": 0.6276,
+          "S4": 0.4625,
+          "R1": 1.941,
+          "R2": 0.1603,
+          "S5": 2.1125
+        },
+        "corrected_reading": "接近0或为负的只有R5(-0.0377)与R3(+0.0395); S1(1.4433)与S3(1.6001)是全队列第二第三大的正gap, 即严重过拟合。",
+        "normalization_checked": "训练 main = model.loss_fn(...) / count (sum reduction 除以batch内患者数); 验证 nll = total_nll / len(ids) (sum reduction 除以验证集患者数)。两者均为每患者平均NLL, 量纲一致, 可比。已核验。",
+        "additional_checked": "每epoch 38个batch x batch_size 8 = 304 患者次 (训练集303例, 末batch含1例重复)。"
+      },
+      "correction_5_calibration_not_risk_range": {
+        "error": "此前把风险分数范围压缩解读为'失去临床意义', 并把巨大梯度解读为'隐式正则', 均不成立。",
+        "audit_finding": "C-index只评价排序, 不评价校准; 风险值范围本身无法判断概率是否校准。已按对应时间点做生存概率校准与Brier分数。",
+        "brier_scores_IPCW_train_based": {
+          "note": "sksurv brier_score, IPCW用训练折(303例,101事件)估计删失分布, 验证集77例(27事件); 离散生存S(t)由repeat0 logits经cumprod(1-sigmoid)得到, 时间分箱用训练折未删失分位点边界(8.088/15.123/21.403月)",
+          "S0": [
+            0.2736,
+            0.2727,
+            0.3007
+          ],
+          "S4": [
+            0.2184,
+            0.2877,
+            0.4156
+          ],
+          "R1": [
+            0.1986,
+            0.3632,
+            0.3991
+          ],
+          "R2": [
+            0.1508,
+            0.2539,
+            0.3929
+          ],
+          "R3": [
+            0.2263,
+            0.3317,
+            0.4416
+          ],
+          "R4": [
+            0.1558,
+            0.2108,
+            0.3009
+          ],
+          "R5": [
+            0.1354,
+            0.2033,
+            0.2851
+          ],
+          "S1": [
+            0.228,
+            0.2499,
+            0.3706
+          ],
+          "S2": [
+            0.139,
+            0.1988,
+            0.2893
+          ],
+          "S3": [
+            0.6853,
+            0.6683,
+            0.6296
+          ],
+          "S5": [
+            0.2269,
+            0.3999,
+            0.4305
+          ]
+        },
+        "constant_predictor_baseline": {
+          "t10": 0.1069,
+          "t18": 0.1902,
+          "t24": 0.2333
+        },
+        "finding": "全部11臂在全部3个时间点的Brier都劣于常数预测者。R5/S2最接近(仍分别高出+0.029/+0.013/+0.052 与+0.032/+0.009/+0.056)。S3最差(0.685/0.668/0.630), 其cindex却排第2。",
+        "calibration_in_the_large_S18": {
+          "KM_observed_S18": 0.7104,
+          "S1": "+0.0332",
+          "S2": "-0.0470",
+          "R5": "-0.0693",
+          "S0": "-0.1122",
+          "R3": "-0.3728",
+          "S3": "-0.6757"
+        },
+        "gradient_finding_corrected": "梯度异常值得调查(R4 有63/1140批次>1e3, 峰值1.19e10, 且cindex最差; R5 梯度中位数最高70.3), 但其作用需匹配对照(梯度裁剪)才能判断, 不能据此断言隐式正则。"
+      },
+      "correction_6_last_epoch_degradation": {
+        "audit_finding": "S0无末轮退化。逐epoch平均main_nll: epoch21-30 为 0.6511/0.6401/0.6152/0.5918/0.5564/0.5636/0.5670/0.5758/0.5760/0.5760, 末轮与前一轮持平。所有臂均使用末轮固定检查点(固定末轮, 无验证集选择), 因此不存在末轮退化污染结论的情形。",
+        "note": "各臂全程最优epoch与末轮差距大(如S0 epoch18 nll=0.0067 vs 末轮1.2564), 说明批次级波动很大, 但这是逐batch曲线而非epoch均值, 且检查点策略是固定末轮, 不影响当前读数。"
+      }
+    }
+  },
+  "latest_local_multifold_redundancy_run": {
+    "recorded_at": "2026-10-25T17:05:00+08:00",
+    "task_id": "SPE-09",
+    "route": "original_questions_v1_redundancy_eleven_arm_multifold_folds1to4",
+    "status": "executing_folds1to4_seed3_44_new_training_runs_in_progress",
+    "completed": "多折入口适配完成并已实际启动执行。fold1-4 x 11臂 = 44次新增训练正在跑(6并发worker, 跨 cuda:0/cuda:1)。fold0 直接复用 local_evidence/redundancy_blca_uni2h_fold0_seed3_run01, 不重训。准备阶段已完成: 380名complete-case患者缓存, 5折分区与train-only分箱已生成。截至 2026-10-26 07:02 (+08:00): 已完成 16/44 臂 (fold1 9, fold2 4, fold3 0, fold4 3), 无失败记录, 两块GPU均在实际训练。",
+    "paths_commit": {
+      "run_root": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/",
+      "queue_manifest": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/queue_manifest.json",
+      "resolved_config": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/resolved_config.json",
+      "prepared_manifest": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/prepared/manifest.json",
+      "per_arm": "local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/folds/{fold}/arms/{arm}/",
+      "runner": "scripts/run_slotspe_redundancy_multifold.py",
+      "implementation": "slotspe_proof/redundancy_multifold.py",
+      "config": "configs/slotspe_redundancy_multifold_queue.json",
+      "log": "local_evidence/multifold_run_20261025.log"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "actual_execution": "本地GPU实际执行(非模拟/非dry-run); 训练进程实际占用 cuda:0 与 cuda:1",
+      "gpu_observed": "cuda:0 util 87% / mem 16715MiB, cuda:1 util 29% / mem 16114MiB (6并发worker)",
+      "protocol_matches_fold0": {
+        "epochs_30": true,
+        "patches_4096": true,
+        "batch_size_8": true,
+        "eval_repeats_20": true,
+        "seed_only_3": true,
+        "feature_encoder_UNI2-h": true,
+        "label_col_survival_months_dss": true,
+        "signature_combine": true,
+        "lr_5e-4": true,
+        "probe_lr_5e-4": true,
+        "projection_dim_256": true,
+        "slot_iters_10": true,
+        "content_target_dim_32": true,
+        "content_clusters_8": true,
+        "content_reference_seed_731": true,
+        "dias_distance_0.05": true,
+        "slotbert_temperature_0.5": true,
+        "checkpoint_selection": "fixed_final_epoch_no_selection (末轮权重)",
+        "patch_policy": "全量真实patch缓存, 每次访问无放回重抽子集, 不足补零(原版 __getitem__ 语义)",
+        "validation_policy": "验证全量patch, 20次重复评估, 同一组评估随机种子",
+        "arm_initialization": "同折各臂共享同一 initial_core_hash / initial_probe_hash / 抽样日程",
+        "binning": "仅由各自训练折的未删失患者拟合(q=4), 验证结局不参与训练分箱"
+      },
+      "splits_dir_verification": {
+        "resolved": "5fold",
+        "why": "原版 loader third_party/SlotSPE/dataset/dataset_survival.py 第203行硬编码 os.path.join(data_path,'splits','5fold',study,f'fold_{fold}.csv'), 完全忽略 harness 的 splits_dir 配置项。因此 harness 侧只能填 5fold, 否则 prepared manifest 会与实际训练用的 split 不一致。",
+        "independent_proof": "以 fold0 已完成运行的产物反查 (逐项集合比较, 不依赖新推理): 历史 fold0 prepared/manifest.json 的 fold0 train=303 例与 splits/5fold/blca/fold_0.csv 的 train 列完全相同 (manifest 独有 0 例, csv 独有 1 例: TCGA-GV-A3QG, 该患者因临床终点缺失被排除, 不属分折差异); val 列: manifest 的 77 例全部包含在 csv 的 val 中 (交集 77/77, manifest 独有 0 例), csv 另有 1 个空字符串占位。 而 splits/5fold_uni2h/blca/fold_0.csv 与之相差悬殊: train 差 61 例, val 交集仅 15/77。 因此 fold0 实际训练在 splits/5fold 上, 本次沿用同一 split 家族, fold0 可复用。",
+        "new_run_consistency": "新 prepared/manifest.json 的 fold0 与旧 fold0 run 的 train/val/labels 逐项完全相同(train equal True, val equal True, labels equal True), 证明两次准备的划分、分箱一致, 复用合法。",
+        "source_hash_unchanged": "dataset_survival.py sha256=44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3, 与 fold0 protocol.json 记录一致",
+        "csv_shape_note": "splits/5fold/blca/fold_0.csv 为 304 行 x 2 列的 'train,val' 长表: train 列 304 个互异患者, val 列 78 个互异值 (其中 1 个空字符串占位), 227 行为空 val。校验时按集合比较并剔除空串。"
+      },
+      "per_fold_counts_prepared": {
+        "fold0": {
+          "train": 303,
+          "val": 77,
+          "excluded": 1
+        },
+        "fold1": {
+          "train": 305,
+          "val": 75,
+          "excluded": 1
+        },
+        "fold2": {
+          "train": 304,
+          "val": 76,
+          "excluded": 1
+        },
+        "fold3": {
+          "train": 304,
+          "val": 76,
+          "excluded": 1
+        },
+        "fold4": {
+          "train": 304,
+          "val": 76,
+          "excluded": 1
+        }
+      },
+      "excluded_patient_reason": "TCGA-GV-A3QG: missing_clinical_endpoint_or_wsi_string (同一原因在所有折一致, 属同一患者的临床缺失, 非分折造成的差异)",
+      "determinism_of_concurrency": "并发与跨卡不改变数值: 同折内并发臂的 curve 指标与串行运行逐位相同; 同一计算在不同物理GPU(cuda:0 vs cuda:1)逐位相同(76/76 curve 行完全一致)",
+      "third_party_slotspe_unmodified": true,
+      "outputs_confined_to_ignored_local_evidence": true,
+      "patient_data_not_staged_or_published": true,
+      "audit_mode": "execution_authorized_by_user; 只做训练与评估, 无患者干预",
+      "patient_predictive_harm_established": false,
+      "correction_efficacy_established": false,
+      "fold0_reuse_boundary_verified_independently": {
+        "what_was_checked": "直接从两份保留产物反查, 不依赖任何新推理: 比较历史 fold0 与新 fold1 在 11 臂之间的 epoch1/batch0 (patient_ids, native_seeds) 签名, 以及共享 adapter 的 S0 组臂的 batch0 main_nll。",
+        "historical_fold0": "11 臂的 epoch1/batch0 (patient_ids, native_seeds) 完全一致 (distinct signatures = 1); 但共享 adapter S0 的 6 个臂 batch0 main_nll 各不相同 (6 个不同值), 说明各臂第一条逻辑批的真实 patch 子集抽样彼此不同。",
+        "new_folds_1_to_4": "同样 11 臂的 epoch1/batch0 (patient_ids, native_seeds) 完全一致 (distinct signatures = 1), 且共享 adapter S0 的 6 个臂 batch0 main_nll 收敛到同一数值 (1 个不同值), 说明首条逻辑批的真实 patch 子集已按臂对齐。",
+        "why_they_differ": "历史 fold0 的 arm worker 在每臂子进程中从未播种全局 numpy 流, 首个 patch 子集取自 OS 随机化的全局流; 新队列在训练循环前用 patient._rng(initial_stream_seed, ...) 固定该流, 且 initial_stream_seed 只依赖 (seed, fold), 与臂无关, 故同折各臂一致。",
+        "scope_of_difference": "差异只影响每折第一条逻辑批的真实 patch 子集抽样 (之后每样本由 execute_logical_batch 逐样本重播种); 内容参考的 patch 子集另有机制 (历史未播种, 新队列用固定 per-patient 种子)。数值上, 两版 batch0 main_nll 均在 1.39-1.59 区间但不相等, 属抽样差异而非模型差异。",
+        "consequence_for_reuse": "fold0 的结果仍然可比 (协议、划分、末轮口径、评估重复数一致), 但它与 fold1-4 不是逐位同源的, 因此五折统计必须标注这一历史边界, 且不得声称 fold0 与新折共用同一抽样日程。",
+        "already_disclosed_in_code": "slotspe_proof/redundancy_multifold.py 的 _summarize_all caveats 已写明该边界 (fold0 首条逻辑批与内容参考 patch 抽取来自未播种全局 numpy 流, 新折使用固定可复现抽取)。"
+      },
+      "paths_corrected": {
+        "per_arm": "记录曾误写为 runs/arms/fold_{1..4}/{arm}/; 实际布局是 folds/{fold}/arms/{arm}/ (folds 目录下另有 initial/ 与 summary.json)。已更正为真实路径。"
+      }
+    },
+    "gaps_reasons": "本阶段为进行中, 尚无跨折结论。主要未决项: (1) 44次训练尚未完成, 失败记录与分折产物仍在生成中, 任何中间数字都不可当作5折统计。(2) 只有seed3, 折间标准差仍只反映折划分变化, 不含训练种子变化。(3) 20次重复是评估随机性, 不是20次独立训练, 折内先汇总再算5折统计的约定只能压缩评估噪声。(4) fold0 的历史结果是在同一5fold划分、同一末轮口径下产出, 但当时未与fold1-4共用同一调度器, 复用时保留该历史边界, 会在最终汇总中如实标注。 (5) 一处待修的过时文档: slotspe_proof/redundancy_multifold.py 中 stage_chains 的 docstring 仍写着\"同一折内 11 个臂严格串行\", 但实际调度器按 stage_dependencies 允许同折臂并发 (实测同时跑 6 个同折臂), 与 _run_wave 的 docstring 及实测行为一致。实现是正确的, 错的只是这句说明。修它必须等本次运行结束后再做, 因为该文件被 multifold 配置 pin 住, 且运行中的队列每次波次都会重新核对实现哈希, 运行中改动会触发 \"implementation changed while queue was running\" 并使队列失败。",
+    "next_action_user_inputs": "等待44次训练与4次fold汇总完成; 完成后运行 local_evidence/render_multifold_report.py 生成5折跨臂表, 逐臂汇总: 各折C-index + 5折均值±折间标准差; 病理/组学的signed与absolute与RMS余弦、读取重叠、有效秩、有效槽数; 内容探针(own vs donor MSE, static字典对照); 训练稳定性(梯度范数分布、爆炸批次数、训练-验证NLL gap); 耗时与完成状态。20次评估先在折内汇总再算5折统计。最终汇报须明确区分折间方差与评估噪声, 不得把折内20次重复当作独立样本。无需追加用户输入, 除非要求提前中止。 另: 运行结束后修正 stage_chains 的过时 docstring, 刷新 configs/slotspe_redundancy_multifold_queue.json 的 candidate_implementation_sha256 钉, 跑 refresh_slotspe_multifold_pins.py 与 check_delivery_manifest.py --refresh, 再提交一次。此项不需要额外用户授权。"
   },
   "latest_mi_disentanglement_implementation_plan_20261025": {
     "recorded_at": "2026-10-25T16:06:06.513992+08:00",
@@ -4496,5 +4798,54 @@
     },
     "gaps_reasons": "No new patient jobs or performance conclusions. Server connection remains deferred per user. HSIC constrains a private summary, not all slot independence; content targets are feature proxies, not biological labels. Native-size generated input widths/pathway count differ from real UNI2-h. Single-fold best-validation trials will remain exploratory and need matched strong baselines plus independent generalization checks.",
     "next_action_user_inputs": "When the user resumes server work and LAN access is restored, verify the existing trisurv inputs/runtime with --doctor and execute only stage v1 first. Existing authorization covers the declared versions; do not expand folds/seeds or automatically start later stages. Keep all patient artifacts ignored."
+  },
+  "latest_plugin_delivery_sync_20261026": {
+    "recorded_at": "2026-10-26T09:44:34.252648+08:00",
+    "route_task": "SlotSPE / complete plugin delivery and concurrent upstream integration",
+    "completed_work": "Merged the tested V1/V2/V3 nine-preset implementation with upstream audit corrections and the separate multifold redundancy queue. Preserved both histories and disjoint progress fields; regenerated the public inventory. No new patient job was started.",
+    "paths_commit": {
+      "plugin_payload_commit": "19ab4448e2faee577ed5fac2909ca88f56873935",
+      "upstream_commit": "ce64451889ca4d3461d3dd8660c9c32e4049de37",
+      "progress": "docs/PROGRESS.json",
+      "manifest": "DELIVERY_MANIFEST.json",
+      "private_backup": "local_evidence/implementation/20261026_delivery_merge",
+      "final_commit_remote_receipt": "final response and ignored delivery_verification.json"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "full_public_suite": {
+        "tests": 536,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "suite_receipt": "local_evidence/implementation/20261026_delivery_merge/pytest_merged_run01.xml",
+      "native_size_generated_conditions": 9,
+      "generated_shape": {
+        "D": 256,
+        "K": 8,
+        "iterations": 10,
+        "patches": 4096,
+        "logical_batch": 8
+      },
+      "generated_encoding_dim": 8,
+      "generated_pathways": [
+        3,
+        5
+      ],
+      "generated_losses_and_updates_identical_before_after_merge": true,
+      "generated_receipt": "local_evidence/implementation/20261026_delivery_merge/generated_native/generated_summary.json",
+      "original_source_unchanged_files": 11,
+      "plugin_imported_utility_functions_byte_identical": 2,
+      "unaffected_existing_public_files_hash_preserved": 416,
+      "public_file_total": 426,
+      "manifest_covered_files_excluding_self": 425,
+      "padding_guard_findings": 0,
+      "patient_training_runs_started_this_delivery": 0,
+      "patient_inference_runs_started_this_delivery": 0,
+      "new_server_raw_patient_artifacts_accepted": false
+    },
+    "gaps_reasons": "The upstream public results are preserved as their reports; no raw patient artifacts were independently accepted in this delivery. New plugins have generated-data validation only. Merging changes the full implementation identity, so future patient queues must use this final version consistently; no plugin patient queue exists to resume across the merge.",
+    "next_action_user_inputs": "After the user resumes server work and LAN access is restored, verify trisurv metadata/features/runtime using the plugin doctor, then execute only declared stage v1 before later stages. No automatic new folds, seeds or concurrent server job.",
+    "format_check": "An intermediate merge serialization used Windows CRLF; it was normalized to the existing LF/indent2 style before the merge commit. No whole-file format-only diff is committed."
   }
 }

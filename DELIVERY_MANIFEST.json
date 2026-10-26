@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-25T16:55:36.846047+08:00",
-  "base_commit_before_delivery": "fe23ab2fe7c11541970274f7ece8dc5d58497296",
+  "recorded_at": "2026-10-26T09:44:34.842669+08:00",
+  "base_commit_before_delivery": "19ab4448e2faee577ed5fac2909ca88f56873935",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 420,
-  "repository_file_count_including_manifest": 421,
+  "covered_file_count": 425,
+  "repository_file_count_including_manifest": 426,
   "patient_data_included": false,
   "files": [
     {
@@ -21,8 +21,8 @@
     },
     {
       "path": ".gitignore",
-      "bytes": 2110,
-      "sha256": "083346ad4c1076ffce277618c594609f7d2783a8e9ee95be52046296c4d04a57"
+      "bytes": 2216,
+      "sha256": "7763f9a90ad86921078715a73f00b23c5236f82fa38266064874c280aab06661"
     },
     {
       "path": "AGENTS.md",
@@ -85,9 +85,14 @@
       "sha256": "0af504b2c191fc1923a1ab0d39e1e36c15c322c0840665ab5792a39c21d1f8c1"
     },
     {
+      "path": "configs/slotspe_redundancy_multifold_queue.json",
+      "bytes": 15083,
+      "sha256": "baf5b62357ca2b8b761f8ec3b84df8081ea84dc2862a8ac2b5efde4aae7cc9c9"
+    },
+    {
       "path": "configs/slotspe_redundancy_queue.json",
       "bytes": 20098,
-      "sha256": "ca53ff0c233ed98a96c0d51dfbe06167bcf48d64078f344c5d898af16d2735b2"
+      "sha256": "8c67dbf89fd805a97d1e99d5eb9df67cb1f747606374328b639892fa9fb229cf"
     },
     {
       "path": "configs/slotspe_redundancy_variants/D0_native.json",
@@ -126,8 +131,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 259053,
-      "sha256": "0c89024fcd2512bf13534ed17d3ddaef0040b8963039d59536073fb6721a0812"
+      "bytes": 283108,
+      "sha256": "1870a89d5d44828a817daebff253dcfc91a6ef8dbee67d0d6b0deff42716c67e"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -1570,6 +1575,11 @@
       "sha256": "7fbe0e11172ee41e83a4819527903504b1c4a77592ff2b440111dcf1f2382492"
     },
     {
+      "path": "scripts/refresh_slotspe_multifold_pins.py",
+      "bytes": 2696,
+      "sha256": "f79b346bc88243fa7c670fd95d4506299cc6d4befcbfe62aa537dafb6270fd31"
+    },
+    {
       "path": "scripts/refresh_slotspe_queue_pins.py",
       "bytes": 2994,
       "sha256": "6380c3eab5e7c339246ee361cbda45368c2838aa5a7394b0e3bee86448ba74f6"
@@ -1593,6 +1603,11 @@
       "path": "scripts/run_slotspe_redundancy.py",
       "bytes": 314,
       "sha256": "1012bea771ce70894a0fcd891504c6a65501cf202ba367b498c73ce7b017ed86"
+    },
+    {
+      "path": "scripts/run_slotspe_redundancy_multifold.py",
+      "bytes": 308,
+      "sha256": "87d1247c7ee62dcc0dd3f868821e7b52aa6801e0c577b1a6610c8206e7929743"
     },
     {
       "path": "scripts/server_diagnostics/_p1246_diag.py",
@@ -1851,8 +1866,13 @@
     },
     {
       "path": "slotspe_proof/redundancy_engine.py",
-      "bytes": 31801,
-      "sha256": "8683ff5e81238b595001558ab97fde951023b8b7215d7827c36614bc0141f9f0"
+      "bytes": 33159,
+      "sha256": "c0f34a5c7c7975bca4a59734e3666e0ce1cb85a4e3ceea9a94a5a7186a34b95a"
+    },
+    {
+      "path": "slotspe_proof/redundancy_multifold.py",
+      "bytes": 49218,
+      "sha256": "fd443b4de1998ca96b339410a6de31c13eae1209195f4607baa26d4ee16fcf8f"
     },
     {
       "path": "slotspe_proof/redundancy_queue.py",
@@ -2043,6 +2063,11 @@
       "path": "tests/test_slotspe_redundancy_engine.py",
       "bytes": 14503,
       "sha256": "9740ab1ad5e416c510e56af6689bcf15c7b2bc5c6d8054d8943722eb4ccc174b"
+    },
+    {
+      "path": "tests/test_slotspe_redundancy_multifold.py",
+      "bytes": 14298,
+      "sha256": "4bf017f93f242b5cede0e688b1d69394d542073cc06a6099a9ce1eb43db131c1"
     },
     {
       "path": "tests/test_slotspe_redundancy_queue.py",

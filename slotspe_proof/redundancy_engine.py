@@ -411,12 +411,20 @@ def _evaluate_repeat(model, heads, adapter, capture, reference, root, manifest, 
     return evaluation, rows, raw
 
 
-def run_arm(config, root, manifest, arm, initial_core, initial_probe, reference, *, _generated_test=False):
-    """Train one declared arm, retaining receipts even on failure; no resume."""
+def run_arm(config, root, manifest, arm, initial_core, initial_probe, reference, *,
+            fold=0, output_root=None, _generated_test=False):
+    """Train one declared arm, retaining receipts even on failure; no resume.
+
+    ``fold`` selects the manifest fold entry; the model computation, budget,
+    seed schedule and evaluation contract are identical for every fold.
+    ``output_root`` places the arm artifacts; it defaults to ``root``.
+    """
     if arm not in ARMS or arm not in config["variants"]:
         raise ValueError("arm outside the declared eleven-arm queue")
-    if config["study"] != "blca" or config["folds"] != [0] or config["seeds"] != [3]:
-        raise ValueError("this queue is locked to BLCA fold0 seed3")
+    if config["study"] != "blca" or config["seeds"] != [3]:
+        raise ValueError("this queue is locked to BLCA seed3")
+    if fold not in config["folds"]:
+        raise ValueError("requested fold is outside the declared queue")
     if config.get("feature_encoder") != "UNI2-h":
         raise ValueError("feature_encoder must be explicitly UNI2-h")
     if config.get("dias_distance", .05) != .05 or config.get("slotbert_temperature", .5) != .5:
@@ -431,7 +439,7 @@ def run_arm(config, root, manifest, arm, initial_core, initial_probe, reference,
     if not reference.fitted:
         raise ValueError("a separately fitted train-only content reference is required")
     root = Path(root)
-    out = root / "arms" / arm
+    out = Path(output_root) / "arms" / arm if output_root is not None else root / "arms" / arm
     if out.exists() and any(out.iterdir()):
         raise RuntimeError("refusing to overwrite or resume prior arm output")
     source_before = patient._source_hashes(config)
@@ -445,7 +453,7 @@ def run_arm(config, root, manifest, arm, initial_core, initial_probe, reference,
     torch.backends.cudnn.allow_tf32 = False
     if hasattr(torch.backends, "cuda"):
         torch.backends.cuda.matmul.allow_tf32 = False
-    fold_data = manifest["folds"]["0"]
+    fold_data = manifest["folds"][str(fold)]
     train_ids, val_ids = fold_data["train"], fold_data["val"]
     if not train_ids or not val_ids or set(train_ids) & set(val_ids):
         raise ValueError("nonempty disjoint training/validation IDs required")
@@ -454,13 +462,22 @@ def run_arm(config, root, manifest, arm, initial_core, initial_probe, reference,
     out.mkdir(parents=True, exist_ok=True)
     started = time.perf_counter()
     seed = config["seeds"][0]
-    protocol = {"arm": arm, "contract": ARM_CONTRACTS[arm], "fold": 0, "seed": seed,
+    # The patch subset of the FIRST training logical batch is drawn from the
+    # global numpy stream before any per-example reseeding happens.  Seed that
+    # stream explicitly with an arm-independent, fold-dependent value so that
+    # every arm of a fold starts from the identical batch.  Only the first
+    # logical batch is affected; every later batch is already reseeded per
+    # example by execute_logical_batch.
+    initial_stream_seed = int(seed) * 1_000_003 + int(fold) * 7919 + 13
+    protocol = {"arm": arm, "contract": ARM_CONTRACTS[arm], "fold": fold, "seed": seed,
                 "initial_core_hash": state_hash(initial_core), "initial_probe_hash": state_hash(initial_probe),
                 "source_hashes": source_before, "epochs": config["epochs"], "batch_size": config["batch_size"],
                 "patches": config["patches"], "checkpoint_selection": "fixed_final_epoch_no_selection",
                 "native_forward_protocol": "B1_for_all_arms_accumulated_into_logical_batch",
                 "probe_protocol": "one_detached_update_then_frozen_head_core_objective_per_logical_batch",
                 "content_reference_fit": "training_inputs_only_no_outcomes",
+                "initial_stream_seed": initial_stream_seed,
+                "initial_stream_seed_scope": "first training logical batch patch draw only; arm-independent within a fold",
                 "added_loss_slot_calls": {"wsi": 0, "omic": 0},
                 "raw_data_privacy": "all_outputs_in_ignored_local_evidence",
                 "started_utc": patient._now()}
@@ -488,6 +505,10 @@ def run_arm(config, root, manifest, arm, initial_core, initial_probe, reference,
         probe_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(probe_optimizer, T_max=config["epochs"], eta_min=1e-6)
         curve = []
         with make_native_adapter(model, ARM_CONTRACTS[arm]["adapter"], capture=True) as adapter, SlotCapture(model) as capture:
+            # Seed the global stream so that the first logical batch's patch
+            # draw is identical for every arm of this fold.  See the
+            # initial_stream_seed entry in the protocol.
+            patient._rng(initial_stream_seed, torch, np)
             for epoch in range(config["epochs"]):
                 model.train()
                 heads.train()
@@ -538,7 +559,7 @@ def run_arm(config, root, manifest, arm, initial_core, initial_probe, reference,
         source_after = patient._source_hashes(config)
         if source_before != source_after:
             raise RuntimeError("original source changed during execution")
-        summary = {"status": "completed", "arm": arm, "fold": 0, "seed": seed,
+        summary = {"status": "completed", "arm": arm, "fold": fold, "seed": seed,
                    "epochs": config["epochs"], "training_cases": len(train_ids), "validation_cases": len(val_ids),
                    "protocol": protocol, "counters": counters, "evaluation_summary": patient._repeat_summary(evaluations, np),
                    "slot_diagnostics": _summarize_diagnostics(diagnostics), "source_unchanged": True,
