@@ -82,13 +82,15 @@ def test_stage_list_covers_all_five_folds_and_eleven_arms_each():
 
 def test_the_best_queue_never_reuses_the_final_epoch_fold0():
     """A fold trained under one checkpoint rule cannot be mixed into the
-    statistic of a fold trained under another."""
+    statistic of a fold trained under another, so all five folds are retrained:
+    5 folds x 11 arms = 55 new training runs."""
     assert best.NEW_FOLDS == (0, 1, 2, 3, 4)
     assert best.REUSED_FOLDS == ()
     config = best.load_config()
     scope = config["requested_scope"]
     assert scope["new_folds"] == [0, 1, 2, 3, 4]
     assert scope["reused_folds"] == []
+    assert best.make_plan()["training_runs"] == 55
 
 
 def test_the_best_queue_declares_the_original_checkpoint_rule():
@@ -167,6 +169,64 @@ def test_failure_retains_partial_evidence_and_does_not_resume():
     assert len(calls) == 1
 
 
+def test_the_disk_budget_accounts_for_the_cache_the_arms_and_the_headroom():
+    """A full disk truncates a checkpoint, so the budget must be computed
+    from the measured sizes of this cohort, not guessed."""
+    budget = best._estimate_disk_budget()
+    assert budget["prepared_cache_bytes"] > 30 * 1024 ** 3
+    assert budget["arm_bytes"] == 11 * 5 * best.ARM_BYTES
+    assert budget["fold_initial_bytes"] == 5 * best.FOLD_INITIAL_BYTES
+    assert budget["required_bytes"] == (budget["prepared_cache_bytes"] + budget["arm_bytes"]
+                                        + budget["fold_initial_bytes"] + best.DISK_HEADROOM_BYTES)
+    assert budget["required_bytes"] < 100 * 1024 ** 3
+
+
+def test_the_disk_budget_uses_the_manifest_patch_count_when_it_exists():
+    """Before preparation the estimate uses the measured cohort figure; after
+    preparation it must use the manifest's own patch count."""
+    manifest = {"encoding_dim": 1536,
+                "patients": {"p1": {"full_patch_count": 1000}, "p2": {"full_patch_count": 2000}}}
+    budget = best._estimate_disk_budget(manifest)
+    assert budget["patches"] == 3000
+    assert budget["patients"] == 2
+    assert budget["prepared_cache_bytes"] == 3000 * 1536 * 4
+
+
+def test_a_full_filesystem_refuses_to_start_before_writing_anything(monkeypatch):
+    """The guard must run before the preparation stage, so a refused run
+    leaves no half-built preparation and no truncated checkpoint."""
+    output = REPO / "local_evidence" / ("generated_best_diskfull_" + uuid.uuid4().hex)
+    monkeypatch.setattr(best, "_free_bytes", lambda path: 1)
+    with pytest.raises(RuntimeError, match="Insufficient disk"):
+        best.execute(_resolved_config(), output, executor=lambda *a, **k: None, runtime_check=False)
+    assert not output.exists()
+
+
+def test_the_disk_guard_reports_the_output_path_and_the_free_space():
+    output = REPO / "local_evidence" / ("generated_best_diskinfo_" + uuid.uuid4().hex)
+    budget = best.check_disk_budget(output)
+    assert budget["required_bytes"] > 0
+    assert output not in [Path("/tmp")]
+
+
+def test_the_free_space_probe_works_on_a_directory_that_does_not_exist_yet():
+    """The output directory is created by the queue, so the first budget check
+    runs on a path that is not there yet."""
+    missing = REPO / "local_evidence" / ("generated_best_missing_" + uuid.uuid4().hex) / "deeper"
+    assert not missing.exists()
+    assert best._free_bytes(missing) > 0
+
+
+def test_the_doctor_reports_the_disk_budget_before_execution():
+    # The doctor must be given a configuration whose input roots are resolved:
+    # an unresolved ${...} placeholder is a configuration error, and the
+    # budget is computed from the real output path, not from a template.
+    result = best.doctor(_resolved_config(), runtime_check=False)
+    assert "disk_budget" in result
+    assert result["disk_budget"]["output_root"].startswith(str(REPO / "local_evidence"))
+    assert result["disk_budget"]["sufficient"] in (True, False)
+
+
 def test_the_real_execution_path_uses_the_concurrent_scheduler(monkeypatch):
     """Without a custom executor the queue must run the concurrent wave."""
     calls = []
@@ -205,12 +265,17 @@ def test_the_worker_spawner_names_this_module():
     assert "--worker-stage" in source
 
 
-def test_the_best_summary_excludes_the_final_epoch_fold0():
-    """The summary must state the four/five-fold scope and the selection
-    boundary rather than silently mixing protocols."""
+def test_the_best_summary_covers_all_five_folds_without_reuse():
+    """The summary must state the five-fold scope, the 55-run count and the
+    selection boundary rather than silently mixing protocols or dropping a
+    fold."""
     source = (REPO / "slotspe_proof" / "redundancy_best_multifold.py").read_text(encoding="utf-8")
     assert "validation-selected peak" in source
-    assert "excluded_folds" in source
+    assert "no_fold_is_reused_from_the_final_epoch_queue" in source
+    assert "cindex_five_fold" in source
+    assert "cindex_four_fold" not in source
+    assert "folds 1-4" not in source
     result = best.make_plan()
     assert result["reused_folds"] == []
+    assert result["training_runs"] == 55
     assert result["relationship_to_final_epoch_queue"].startswith("separate protocol")

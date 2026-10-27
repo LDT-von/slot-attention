@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-26T12:32:39.831149+08:00",
-  "base_commit_before_delivery": "dbe48bb7311ee444f5a94327b64cc33a3cbc8f14",
+  "recorded_at": "2026-10-26T20:40:09.117534+08:00",
+  "base_commit_before_delivery": "3e1ef604059d96a8b103d3f76bf22ed927f4d836",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 413,
-  "repository_file_count_including_manifest": 414,
+  "covered_file_count": 414,
+  "repository_file_count_including_manifest": 415,
   "patient_data_included": false,
   "files": [
     {
@@ -125,14 +125,19 @@
       "sha256": "48e14c38a52cb3f38cc1cf9c19433cef62719d885c9ba1441c4502c411522019"
     },
     {
+      "path": "conftest.py",
+      "bytes": 1801,
+      "sha256": "3230165e833f164fc6415d3113c44ca336105b0c58a04a89b9c46df464d37df4"
+    },
+    {
       "path": "docs/LITERATURE_LOCAL_INDEX.json",
       "bytes": 2995,
       "sha256": "b82bff7995dfc804ffa3f960c2efc007f515440c9d93b56c8924e81c1217df64"
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 277223,
-      "sha256": "74cc81f53bd78fa428dfae5f1f0acb79347e4f24f0af4186208810cfa03e9f55"
+      "bytes": 289900,
+      "sha256": "2101076e2a2825b80d54c4669633aa238a7392a2af8b21162148c5f5a472195e"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -1831,8 +1836,8 @@
     },
     {
       "path": "slotspe_proof/redundancy_best_multifold.py",
-      "bytes": 35671,
-      "sha256": "4c378fc59ebdcb22e8bdc790970d6d07536172cdfe540597d405b7e126028820"
+      "bytes": 42021,
+      "sha256": "b690c48b02886419e2a88d8f7d19f446b69f2905bbfa8e4bff469ef4a9bb6953"
     },
     {
       "path": "slotspe_proof/redundancy_content.py",
@@ -1991,8 +1996,8 @@
     },
     {
       "path": "tests/test_slotspe_redundancy_best_multifold.py",
-      "bytes": 10112,
-      "sha256": "3abd8fe1a0f82e9f64e24073f8b1e3eca14e8de9dea5547c977469cbbbe407eb"
+      "bytes": 13272,
+      "sha256": "4dd7370ba920fec80ecf86ac60035b7bb7be31c33e45cc985eeef9c922641b4b"
     },
     {
       "path": "tests/test_slotspe_redundancy_content.py",

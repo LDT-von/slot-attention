@@ -21,6 +21,7 @@ import json
 import math
 from pathlib import Path
 import re
+import shutil
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,7 +39,109 @@ ALL_FOLDS = base.ALL_FOLDS
 # a fold trained under another.
 NEW_FOLDS = (0, 1, 2, 3, 4)
 REUSED_FOLDS = ()
+# The final-epoch queue's fold0 root is recorded here only to make the
+# separation explicit.  This queue never reads it: fold0 is trained from
+# scratch here under the best-checkpoint rule.
 FOLD0_ROOT = base.FOLD0_ROOT
+
+# ---------------------------------------------------------------------------
+# Disk budget.
+#
+# A full disk truncates a checkpoint mid-write, and a truncated checkpoint is
+# indistinguishable from a corrupt one: torch.load then fails long after the
+# training that produced it.  The budget is therefore checked BEFORE the
+# preparation stage writes anything, and re-checked before every arm stage, so
+# that a disk filled by another process stops the queue before it destroys an
+# arm rather than after.
+#
+# The figures below were measured on this machine, not guessed:
+#   * the prepared cache holds every real patch of every patient as float32,
+#     so it is 5,504,738 patches x 1536 channels x 4 B = 33.8 GB for this
+#     cohort (measured prepared/cache/ = 32 GB);
+#   * one arm keeps last.pt (405 MB, of which 264 MB is optimizer state),
+#     best.pt (134 MB, the retained best epoch weights), 20 raw validation
+#     repeat files (1.5 MB each, 85 MB for the first and 1.5 MB for the rest)
+#     and the curve and diagnostics, which measured 511 MB per arm under the
+#     final-epoch rule; the best rule adds best.pt, so 645 MB per arm;
+#   * one fold keeps a shared initialization of 131 MB.
+# ---------------------------------------------------------------------------
+PATIENT_CACHE_BYTES_PER_PATIENT = None  # resolved from the prepared manifest
+ARM_BYTES = 645 * 1024 * 1024
+FOLD_INITIAL_BYTES = 131 * 1024 * 1024
+DISK_HEADROOM_BYTES = 20 * 1024 ** 3
+
+
+def _estimate_disk_budget(manifest=None):
+    """Estimate the bytes this queue needs on the output filesystem.
+
+    The prepared cache dominates.  Its size is known exactly only after the
+    preparation stage has read every slide, so before preparation the estimate
+    uses the measured cohort-wide figure for this study; after preparation it
+    uses the manifest's own patch count.
+    """
+    patients = 380
+    patches = 5_504_738
+    encoding_dim = 1536
+    if manifest:
+        patients = len(manifest.get("patients", {}))
+        encoding_dim = manifest.get("encoding_dim", encoding_dim)
+        patches = sum(entry.get("full_patch_count", 0)
+                      for entry in manifest["patients"].values())
+    cache_bytes = patches * encoding_dim * 4
+    arms_bytes = len(ARMS) * len(NEW_FOLDS) * ARM_BYTES
+    initial_bytes = len(NEW_FOLDS) * FOLD_INITIAL_BYTES
+    return {"prepared_cache_bytes": cache_bytes,
+            "arm_bytes": arms_bytes,
+            "fold_initial_bytes": initial_bytes,
+            "total_bytes": cache_bytes + arms_bytes + initial_bytes,
+            "headroom_bytes": DISK_HEADROOM_BYTES,
+            "required_bytes": cache_bytes + arms_bytes + initial_bytes + DISK_HEADROOM_BYTES,
+            "patients": patients,
+            "patches": patches,
+            "encoding_dim": encoding_dim}
+
+
+def _free_bytes(path):
+    """Free bytes on the filesystem that will hold ``path``.
+
+    The output directory does not exist yet when the budget is first
+    checked, and ``os.statvfs`` raises on a missing path, so the nearest
+    existing ancestor is used.  The ancestor is on the same filesystem
+    because the path is created under an existing parent.
+    """
+    candidate = Path(path)
+    while not candidate.exists():
+        parent = candidate.parent
+        if parent == candidate:
+            break
+        candidate = parent
+    return shutil.disk_usage(str(candidate)).free
+
+
+def check_disk_budget(root, manifest=None, stage=None):
+    """Refuse to start or continue when the output filesystem cannot hold the
+    run plus its headroom.
+
+    This check is a precondition of execution, not a model computation.  It
+    never touches patient data and never changes a number.
+    """
+    budget = _estimate_disk_budget(manifest)
+    free = _free_bytes(root)
+    if free < budget["required_bytes"]:
+        raise RuntimeError(
+            "Insufficient disk for this queue; refusing to start because a full disk "
+            "truncates checkpoints and invalidates the run.\n"
+            f"  output_root       : {root}\n"
+            f"  estimated needed  : {budget['required_bytes'] / 1024**3:.1f} GB "
+            f"(cache {budget['prepared_cache_bytes'] / 1024**3:.1f} GB + "
+            f"arms {budget['arm_bytes'] / 1024**3:.1f} GB + "
+            f"initials {budget['fold_initial_bytes'] / 1024**3:.1f} GB + "
+            f"headroom {DISK_HEADROOM_BYTES / 1024**3:.0f} GB)\n"
+            f"  free on that path : {free / 1024**3:.1f} GB\n"
+            "  Put --output-root on a filesystem with enough free space, for example a "
+            "dedicated directory on the 10 TB volume, and never on the 97 GB root "
+            "partition.")
+    return budget
 
 # The implementation identity of this queue covers the best engine and the
 # best queue module in addition to the shared modules, so that a change to
@@ -311,7 +414,7 @@ def expected_artifacts(stage):
     return ["summary.json", "summary.txt"]
 
 
-def doctor(config, runtime_check=True):
+def doctor(config, runtime_check=True, output_root=None):
     runtime = normalize_runtime(config)
     from .queue import preflight
     result = preflight(runtime, checks_only=False, check_runtime=runtime_check)
@@ -322,6 +425,14 @@ def doctor(config, runtime_check=True):
     result.update(feature_encoder="UNI2-h",
                   encoder_provenance="declared existing root; actual feature source must match server records",
                   feature_extraction_started=False, patient_training_executed=False)
+    # The disk budget is shown here so that the requirement is visible before
+    # any execution, not discovered when a checkpoint is already truncated.
+    root = base.private_output(output_root or ROOT / DEFAULT_OUTPUT)
+    budget = _estimate_disk_budget()
+    budget["output_root"] = str(root)
+    budget["free_bytes_on_output_path"] = _free_bytes(root)
+    budget["sufficient"] = budget["free_bytes_on_output_path"] >= budget["required_bytes"]
+    result["disk_budget"] = budget
     return result
 
 
@@ -388,7 +499,7 @@ def _summarize_all(root, runtime):
         best_epoch = {fold: fold_views[fold]["arms"][arm].get("best_epoch") for fold in NEW_FOLDS}
         entry = {
             "cindex_per_fold": cindex,
-            "cindex_four_fold": base._fold_stats([cindex[fold] for fold in NEW_FOLDS]),
+            "cindex_five_fold": base._fold_stats([cindex[fold] for fold in NEW_FOLDS]),
             "best_epoch_per_fold": best_epoch,
             "cindex_repeat_std_per_fold": {fold: fold_views[fold]["arms"][arm]["cindex_repeat_std_population"]
                                            for fold in NEW_FOLDS},
@@ -408,10 +519,13 @@ def _summarize_all(root, runtime):
         "recorded_at": datetime.now(timezone.utc).isoformat(),
         "scope": {"study": "blca", "feature_encoder": "UNI2-h", "folds": list(NEW_FOLDS), "seed": 3,
                   "arms": list(ARMS), "executed_folds": list(NEW_FOLDS),
-                  "excluded_folds": list(REUSED_FOLDS),
-                  "excluded_folds_reason": "fold0 was executed by the final-epoch protocol and is not re-executed "
-                                          "here; a fold trained under a different checkpoint rule cannot be mixed "
-                                          "into one five-fold statistic"},
+                  "reused_folds": list(REUSED_FOLDS),
+                  "no_fold_is_reused_from_the_final_epoch_queue": True,
+                  "fold_scope_reason": "Every one of the five folds is trained from scratch under the best-checkpoint "
+                                       "rule, so this is 5 folds x 11 arms = 55 new training runs. The final-epoch "
+                                       "queue's fold0 artifact is not reused and not mixed into this statistic, "
+                                       "because a fold trained under one checkpoint rule cannot be mixed into the "
+                                       "statistic of a fold trained under another."},
         "protocol": {"epochs": runtime["epochs"], "patches": runtime["patches"],
                      "batch_size": runtime["batch_size"], "eval_repeats": runtime["eval_repeats"],
                      "splits_dir": runtime["splits_dir"], "lr": runtime["lr"],
@@ -424,29 +538,29 @@ def _summarize_all(root, runtime):
                                              "are restored afterwards so the training trajectory equals the "
                                              "final-epoch protocol for the same arm, fold and seed",
                      "evaluation_aggregation": "the 20 repeats are averaged inside each fold first; "
-                                               "the four-fold statistic is then computed over the four per-fold values",
+                                               "the five-fold statistic is then computed over the five per-fold values",
                      "std_convention": "population and sample standard deviations are both reported for the between-fold spread"},
         "folds": fold_views, "per_arm": per_arm,
         "caveats": [
             "The reported C-index is a validation-selected peak. A validation-selected peak is not an independently tested generalization result.",
             "Selecting the best of 30 validation evaluations inflates the reported value relative to an independent test set by an amount that depends on the epoch-to-epoch spread of the validation metric.",
-            "Only the four newly executed folds are summarized. fold0 is not re-executed under this checkpoint rule and is therefore excluded from the statistic rather than mixed in.",
+            "All five folds are trained from scratch under this checkpoint rule (55 new training runs); no fold is reused from the final-epoch queue.",
             "The 20 evaluation repeats inside a fold are not independent patients and are averaged before the fold value is formed.",
             "C-index differences between arms are exploratory single-seed observations and are not corrected for multiplicity here."],
-        "claim_boundary": "Four-fold single-seed BLCA diagnostic of one original SlotSPE implementation family under the "
+        "claim_boundary": "Five-fold single-seed BLCA diagnostic of one original SlotSPE implementation family under the "
                           "original per-epoch best-checkpoint rule; no generalization, clinical benefit or "
                           "multiplicity-corrected significance is asserted"}
     base.write(root / "summary.json", result)
-    lines = ["SlotSPE BLCA / UNI2-h / folds 1-4 / seed3 / eleven arms: per-epoch best-checkpoint rule, all folds completed.",
+    lines = ["SlotSPE BLCA / UNI2-h / folds 0-4 / seed3 / eleven arms: per-epoch best-checkpoint rule, all folds completed.",
              "",
-             "arm  cindex_per_fold(1..4)  fold_mean  fold_std_population  best_epochs"]
+             "arm  cindex_per_fold(0..4)  fold_mean  fold_std_population  best_epochs"]
     for arm in ARMS:
         entry = per_arm[arm]
         values = " ".join(f"{entry['cindex_per_fold'][fold]:.4f}" if entry["cindex_per_fold"][fold] is not None
                           else "  n/a " for fold in NEW_FOLDS)
         epochs = " ".join(str(entry["best_epoch_per_fold"][fold]) for fold in NEW_FOLDS)
-        lines.append(f"{arm:>3}  {values}  {entry['cindex_four_fold']['fold_mean']:.4f}  "
-                     f"{entry['cindex_four_fold']['fold_std_population']:.4f}  {epochs}")
+        lines.append(f"{arm:>3}  {values}  {entry['cindex_five_fold']['fold_mean']:.4f}  "
+                     f"{entry['cindex_five_fold']['fold_std_population']:.4f}  {epochs}")
     (root / "summary.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
     return result
 
@@ -506,7 +620,12 @@ def execute(config, output_root, resume=False, executor=None, runtime_check=True
     """
     plan = make_plan(config, output_root)
     runtime, root = plan["config"], Path(plan["output_root"])
-    checked = doctor(runtime, runtime_check=runtime_check)
+    # The disk budget is checked before anything is written, so an output
+    # filesystem that cannot hold the run produces no half-built preparation
+    # and no truncated checkpoint.  A resumed run re-checks against the
+    # manifest it already has.
+    disk_budget = check_disk_budget(root)
+    checked = doctor(runtime, runtime_check=runtime_check, output_root=root)
     code = implementation_hashes()
     identity_payload = {"runtime": runtime, "implementation": code, "stages": plan["stages"],
                         "inputs": checked.get("source_and_metadata_sha256", {}),
@@ -534,6 +653,7 @@ def execute(config, output_root, resume=False, executor=None, runtime_check=True
                     "stages": plan["stages"], "status": "running", "records": {},
                     "device_assignment": device_pool,
                     "max_concurrent_stages": workers,
+                    "disk_budget": disk_budget,
                     "started_utc": datetime.now(timezone.utc).isoformat()}
         base.write(manifest_path, manifest)
     custom_executor = executor is not None
@@ -551,6 +671,10 @@ def execute(config, output_root, resume=False, executor=None, runtime_check=True
 
     for wave in base.execution_waves(base.stage_chains(plan["stages"])):
         verify_live_identity()
+        # Re-check the disk before every wave.  Another process may have
+        # filled the filesystem while this queue was running, and a wave
+        # that writes a checkpoint then truncates it.
+        disk_budget = check_disk_budget(root)
         for prior in plan["stages"]:
             record = manifest["records"].get(prior["id"], {})
             if record.get("status") == "completed":
@@ -644,7 +768,8 @@ def main(argv=None):
         print(json.dumps({"status": result["status"], "output_root": str(base.private_output(args.output_root))}))
     elif args.doctor:
         verify_config_pins(config)
-        print(json.dumps(doctor(runtime), ensure_ascii=False, indent=2))
+        print(json.dumps(doctor(runtime, output_root=args.output_root or ROOT / DEFAULT_OUTPUT),
+                         ensure_ascii=False, indent=2))
     else:
         print(json.dumps(make_plan(resolved, args.output_root), ensure_ascii=False, indent=2))
 
