@@ -17,7 +17,7 @@
 | [slotspe_results_review_20261021](slotspe_results_review_20261021/) | 原P编号对齐、旧服务器诊断与训练曲线复核。 | 原编号对齐的主依据；包含不采信的强说法。 |
 | [slotspe_p6_addendum_20261020](slotspe_p6_addendum_20261020/) | 指定提交同步来的阶段报告、诊断摘要与图表索引。 | 属来源证据；不能跳过results_review独立复核。 |
 | [slotspe_gate_pair_20261022](slotspe_gate_pair_20261022/) | 门控配对训练与槽冗余定位的历史患者观察。 | 匹配门控对照与冻结读取观察分开；单折差异不构成修正收益证据。 |
-| [slotspe_patch_slot_sharing_20261023](slotspe_patch_slot_sharing_20261023/) | 历史保存注意力的patch跨槽共享复算与patch预算核对。 | 读取冗余来自3轮/256 patch；4096补零统计是协议风险，不是患者预测损害。 |
+| [slotspe_patch_slot_sharing_20261023](slotspe_patch_slot_sharing_20261023/) | 历史保存注意力的patch跨槽共享复算与patch预算核对；[标注癌区与通路的原版槽冗余实验方案](slotspe_patch_slot_sharing_20261023/标注癌区与通路的原版槽冗余实验方案_20261027.md)。 | 读取冗余来自3轮/256 patch；新方案仅设计，未完成患者匹配或推理；4096补零统计是协议风险，不是患者预测损害。 |
 | [slotspe_slot_ring_dissection_20261023](slotspe_slot_ring_dissection_20261023/) | 冻结checkpoint的槽注意力迭代四环拆解观察。 | 单折单种子10人推理期对照；未建立预测损害或修正收益。 |
 
 ## B．文献问题与迁移条件（3个）
@@ -32,7 +32,7 @@
 
 | 文件夹 | 用途 | 阅读要求 |
 |---|---|---|
-| [slotspe_native_assignment_training_20261022](slotspe_native_assignment_training_20261022/) | **当前原版SlotSPE S0–S6**、R0–R5直接表示探索及当前11组BLCA单折候选队列、内容检验。 | 均为生成测试；直接损失降cos未证明内容收益。 |
+| [slotspe_native_assignment_training_20261022](slotspe_native_assignment_training_20261022/) | **当前原版SlotSPE S0–S6**、R0–R5直接表示探索、当前11组BLCA单折候选队列；新增[互信息与解耦计划](slotspe_native_assignment_training_20261022/互信息与解耦模块实施计划_20261025.md)及[插件代码入口](slotspe_native_assignment_training_20261022/插件版本使用与验收_20261025.md)。 | V1/V2/V3及九个preset完成生成验收，新插件患者实验为0；直接损失降cos未证明内容收益。 |
 | [slotspe_mechanism_protocol_20261021](slotspe_mechanism_protocol_20261021/) | 原P1–P8协议、observe报告与阶段交接。 | 协议与实际完成状态分开；不直接重放旧服务器提示词。 |
 | [slotspe_redundancy_methods_20261021](slotspe_redundancy_methods_20261021/) | MESH/DIAS/MetaSlot机制、分配原型与历史发布。 | DCT桥接支线仅作历史；当前原生方案以上一行为准。 |
 | [slotspe_abc_20261019](slotspe_abc_20261019/) | A/B/C选择内容和末次权重梯度隔离控制。 | 保持A/B/C定义，不与S0–S4分配比较混用。 |
