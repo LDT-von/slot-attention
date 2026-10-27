@@ -5023,5 +5023,46 @@
     },
     "gaps_reasons": "BLCA annotation package/schema, server paths, real RNA coverage, checkpoint provenance, eligible patients and feature-coordinate matches remain unverified. Existing native trace does not implement the complete required annotation-to-slide/patch visual export, and the current fixed-budget _batch discards sampled indices. Case examples, O/M/Q metrics and thresholds in the document are proposed methodology, not patient results.",
     "next_action_user_inputs": "Locate/check server metadata and annotation schema, then implement and validate an independent export and figure workflow on synthetic inputs. Any patient forward or intervention requires explicit user execution authorization."
+  },
+  "latest_remote_push_reconciliation_20261027": {
+    "recorded_at": "2026-10-27T11:22:09.080864+08:00",
+    "route_task": "SlotSPE repository delivery / verification of the pushed commit 8ca17cb and reconciliation with the local line; no training, no inference, no patient intervention",
+    "completed_work": "Verified the pushed commit independently, then reconciled it with this clone. 8ca17cb is genuine and is refs/heads/main on origin (git ls-remote). Verified in an isolated throwaway clone at that commit, not by trusting the local worktree: the delivery manifest passed --check --require-tracked with 426 covered files and zero findings, all 426 inventoried hashes matched their blobs, the design document and the docs/research/README.md navigation row are both present, docs/PROGRESS.json parses with 92 top-level records, and the full suite passed 536 tests with zero failures. That tree is internally consistent. The claim that the remote commit equals local HEAD did NOT hold in this clone: local HEAD was 3e1ef60, four commits ahead on a divergent branch that forked at 1002d7c, and origin/main had four commits that were not local. The push was therefore made from some other checkout, not this one. Both lines were preserved: the pending local work (disk-budget guard, pytest scratch redirect, completed 44/44 final-epoch record, conftest.py) was committed first, then origin/main was merged. Conflicting docs/PROGRESS.json was resolved as a union of both key sets (94 records, no record dropped) with scope/recorded_at/next_action rewritten to describe both lines; DELIVERY_MANIFEST.json was regenerated from the merged tree instead of hand-merged so its hashes describe the files that actually exist.",
+    "paths_commit": {
+      "verified_remote_commit": "8ca17cb939c4ef936ef4ef5846abd24e92c7cb98",
+      "prior_local_head": "3e1ef604059d96a8b103d3f76bf22ed927f4d836",
+      "merge_base_before_merge": "1002d7cf561a62bd6b811af2d6c4eeb69d9b5f6d",
+      "local_work_commit_before_merge": "dbb0d4c825b41811460558574474bed3feb1827a",
+      "merge_commit": "58af0f9",
+      "backup_worktree_diff": "local_evidence/git_backups/pre_merge_20261027/worktree.diff",
+      "backup_local_lineage_bundle": "local_evidence/git_backups/pre_merge_20261027/local_lineage.bundle",
+      "pushed": false,
+      "push_note": "The merge is committed locally only. Pushing is a separate decision and was not performed."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "remote_ref_confirmed_by_ls_remote": "8ca17cb939c4ef936ef4ef5846abd24e92c7cb98 refs/heads/main; also 35b3d1e on refs/heads/codex/server-slotspe-evidence-20261020",
+      "isolated_clone_verification": "cloned the local object store to a temporary directory, checked out 8ca17cb, ran the checks there; the temporary clone was deleted afterwards",
+      "pushed_tree_manifest": "check_delivery_manifest.py --check --require-tracked -> {ok: true, covered_files: 426, findings: []}; 426 inventoried, 427 in tree including the manifest itself, content mismatch count 0",
+      "pushed_tree_tests": "536 passed, 1 warning, 0 failed, 130.65s on the isolated checkout of 8ca17cb",
+      "merged_tree_tests": "563 passed, 1 warning, 0 failed, 136.50s on the merge commit. Measured on the remote line alone: 536. The pre-merge local line's own receipt (404 passed) is taken from the recorded entry and was not re-run here. The merge total (563) exceeds the remote total because the local line contributes the best-checkpoint queue tests and the disk-budget tests, which the remote line does not contain.",
+      "merged_tree_manifest": "check_delivery_manifest.py --check --require-tracked -> {ok: true, covered_files: 433, findings: []}",
+      "merged_tree_plan_entrypoints": "run_slotspe_redundancy.py --plan, run_slotspe_redundancy_best_multifold.py --plan, run_slotspe_plugins.py --plan and check_slotspe_s5_s6.py all exit 0; the plugin plan reports 9 presets and patient_work_executed=false",
+      "ancestry_after_merge": "merge-base --is-ancestor confirms both 8ca17cb and 3e1ef60 are ancestors of the merge commit, so neither line was discarded",
+      "no_private_data_in_manifest": "no local_evidence/, results/, prepared/ or data/ path and no .pt/.pth/.npz/.npy/.h5/.pkl file is inventoried",
+      "tests_are_synthetic_only": true,
+      "patient_runs_started": 0,
+      "server_execution": false
+    },
+    "gaps_reasons": "The merge is local and unpushed, so origin/main still points at 8ca17cb and does not yet contain the best-checkpoint queue, the disk-budget guard, conftest.py or the completed 44/44 record. The test receipts prove the tree loads and its synthetic checks pass; they say nothing about patient performance. The remote line and the local line also give contradictory status for the same five-fold work: the remote latest_local_multifold_redundancy_run still reads status=executing_folds1to4 with 22/44 arms as of 2026-10-26T09:38, while the local final_epoch_multifold_completed_20261026 record reports 44/44 completed. The on-disk artifacts support the local record: the run root summary.json has status=completed at 2026-10-26T12:02:27Z, all 44 per-arm summary.json files read completed, and folds/1..4 summaries are all completed. The stale remote record was left unedited rather than silently rewritten, because it is a historical statement about the moment it was written.",
+    "next_action_user_inputs": "Decide whether to push the merge. If yes, push 58af0f9 (or a follow-up) so origin/main carries both lines. Separately, the best-checkpoint 55-arm queue is implemented and unit-verified but has never been started, and it requires explicit authorization. Before starting any queue, note the separate watcher defect recorded in this entry's gap note: /tmp/slotspe_4096_5fold_wait_and_run.sh cannot ever select a device, so the authorized 4096 five-fold 30-epoch proof it was meant to launch has never run.",
+    "watcher_defect_found": {
+      "script": "/tmp/slotspe_4096_5fold_wait_and_run.sh",
+      "symptom": "The authorized 4096/30ep five-fold proof was never launched. The driver log shows 1143 'no idle GPU yet' polls and zero 'starting proof queue' lines across two watcher generations, and the monitor log records TIMEOUT_WAITING at 2026-10-26 12:08:45 after 720 polls.",
+      "root_cause": "gpu_compute_pids prints the literal string 'none' when a device has no compute process (pids=\"${pids:-none}\"). pick_device then tests [ -z \"$pids\" ] to mean 'device is free', but 'none' is a non-empty string, so the test is false for every device and the loop always continues.",
+      "reproduced": "Ran the function standalone: gpu_compute_pids prints '0 none' and '1 none', and both devices report SKIPPED because pids='none'.",
+      "current_machine_state_at_check": "Both RTX 5090s were genuinely idle at the time of the check (0% utilisation, 32106 MiB free, only Xorg holding 4 MiB), so an idle device was available and the watcher still would not fire.",
+      "fix_not_applied": "Not fixed here. The script lives in /tmp, outside this repository, and changing it would silently alter an authorized execution path, so it is reported rather than edited. The minimal fix is to test -z \"${pids//none/}\" or to emit an empty string instead of 'none'.",
+      "consequence_boundary": "This explains why the authorized proof never started. It is not evidence about any model result, and it does not mean the proof should now start automatically."
+    }
   }
 }
