@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-26T09:47:28.811012+08:00",
-  "base_commit_before_delivery": "cee0458b434b8994a4682c63ecb54a8373c45f65",
+  "recorded_at": "2026-10-27T10:46:55.504010+08:00",
+  "base_commit_before_delivery": "699384aa1930803b73c521180b8e985c203da7c2",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 425,
-  "repository_file_count_including_manifest": 426,
+  "covered_file_count": 426,
+  "repository_file_count_including_manifest": 427,
   "patient_data_included": false,
   "files": [
     {
@@ -131,8 +131,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 286487,
-      "sha256": "17455a953dd188e039cd3e52e4f8d63a398f5b2d4183065a44a94f09fb3997a7"
+      "bytes": 292975,
+      "sha256": "8e3b9162a3f86752875cddb67459fd7d7b026db63ced4e27890ae87a3aa42e64"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -206,8 +206,8 @@
     },
     {
       "path": "docs/research/README.md",
-      "bytes": 8917,
-      "sha256": "2dac0ed77e58178daa243abe49ded1dc2094a5752b3df98927d19329bc4756e5"
+      "bytes": 9128,
+      "sha256": "a260c59fd311d68f1a2b1cb0ea9d95491be38eece7a19d660c766ce61fd37545"
     },
     {
       "path": "docs/research/slotspe_abc_20261019/checks.json",
@@ -1018,6 +1018,11 @@
       "path": "docs/research/slotspe_patch_slot_sharing_20261023/patch_to_slot_sharing_readonly.txt",
       "bytes": 17699,
       "sha256": "59deec3b38702699c1cb978ea6eb20e51c09f42b6597a83e5a0cfc4d101db75c"
+    },
+    {
+      "path": "docs/research/slotspe_patch_slot_sharing_20261023/标注癌区与通路的原版槽冗余实验方案_20261027.md",
+      "bytes": 14257,
+      "sha256": "dd82618573e7d1ddd76ae1fec54dd92270a390e54085477e36b7bb488fa0e72a"
     },
     {
       "path": "docs/research/slotspe_redundancy_methods_20261021/DCT_bridge_verification.json",

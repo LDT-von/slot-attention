@@ -17,7 +17,7 @@
 | [slotspe_results_review_20261021](slotspe_results_review_20261021/) | 原P编号对齐、旧服务器诊断与训练曲线复核。 | 原编号对齐的主依据；包含不采信的强说法。 |
 | [slotspe_p6_addendum_20261020](slotspe_p6_addendum_20261020/) | 指定提交同步来的阶段报告、诊断摘要与图表索引。 | 属来源证据；不能跳过results_review独立复核。 |
 | [slotspe_gate_pair_20261022](slotspe_gate_pair_20261022/) | 门控配对训练与槽冗余定位的历史患者观察。 | 匹配门控对照与冻结读取观察分开；单折差异不构成修正收益证据。 |
-| [slotspe_patch_slot_sharing_20261023](slotspe_patch_slot_sharing_20261023/) | 历史保存注意力的patch跨槽共享复算与patch预算核对。 | 读取冗余来自3轮/256 patch；4096补零统计是协议风险，不是患者预测损害。 |
+| [slotspe_patch_slot_sharing_20261023](slotspe_patch_slot_sharing_20261023/) | 历史保存注意力的patch跨槽共享复算与patch预算核对；[标注癌区与通路的原版槽冗余实验方案](slotspe_patch_slot_sharing_20261023/标注癌区与通路的原版槽冗余实验方案_20261027.md)。 | 读取冗余来自3轮/256 patch；新方案仅设计，未完成患者匹配或推理；4096补零统计是协议风险，不是患者预测损害。 |
 | [slotspe_slot_ring_dissection_20261023](slotspe_slot_ring_dissection_20261023/) | 冻结checkpoint的槽注意力迭代四环拆解观察。 | 单折单种子10人推理期对照；未建立预测损害或修正收益。 |
 
 ## B．文献问题与迁移条件（3个）

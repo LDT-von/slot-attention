@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-26T09:44:34.252648+08:00",
+  "recorded_at": "2026-10-27T10:23:25+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "V1/V2/V3 and nine fixed presets are implemented and synthetically validated. Server connection remains deferred. After LAN access is restored and user resumes server work, doctor then stage v1, with actual patient receipts before later stages.",
+  "next_action": "Annotated cancer-region and pathway reading protocol is designed. Verify matching data and annotation metadata and prepare synthetic-only tooling first; patient execution requires explicit authorization. Server connection remains deferred.",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -4857,5 +4857,70 @@
     },
     "gaps_reasons": "No new patient jobs or performance conclusions. Server connection remains deferred per user. HSIC constrains a private summary, not all slot independence; content targets are feature proxies, not biological labels. Native-size generated input widths/pathway count differ from real UNI2-h. Single-fold best-validation trials will remain exploratory and need matched strong baselines plus independent generalization checks.",
     "next_action_user_inputs": "When the user resumes server work and LAN access is restored, verify the existing trisurv inputs/runtime with --doctor and execute only stage v1 first. Existing authorization covers the declared versions; do not expand folds/seeds or automatically start later stages. Keep all patient artifacts ignored."
+  },
+  "latest_annotation_guided_redundancy_design_20261026": {
+    "recorded_at": "2026-10-26T18:11:25+08:00",
+    "route_task": "Original SlotSPE / P2 annotated content-reading redundancy / dataset discovery and experimental design only",
+    "completed_work": {
+      "preferred_route": "Retain existing TCGA-BLCA cohort and intersect held-out patients and exact diagnostic slides with the public Manual tumor annotations in TCGA BLCA.zip; use existing RNA, survival, feature-row coordinates and an appropriate frozen original checkpoint.",
+      "public_sources": [
+        "https://zenodo.org/records/5320076",
+        "https://gdc.cancer.gov/about-data/publications/blca_2017",
+        "https://github.com/PathologyDataScience/BCSS"
+      ],
+      "annotation_limit": "BLCA annotations enrich invasive-tumor regions and are not exhaustive pixel-perfect labels. Unannotated areas are unknown rather than confirmed normal. BCSS is an alternative for TCGA-BRCA multiclass tissue ROIs; outside-ROI zero is don't-care.",
+      "source_findings": "Pathways mode encodes each gene set into one token before omics slot attention. Slot-token attention is not gene-level attribution; gene-set overlap can duplicate a gene across tokens. Native softmax plus epsilon yields positive reads for every token, so nonzero membership alone is not redundancy evidence.",
+      "proposed_readouts": "Same-colorscale per-slot WSI heatmaps, identical-size top-patch galleries, pairwise normalized reading overlap with a uniform baseline, and slot-by-pathway profiles. Single-gene panels require a separate declared attribution method aggregating all occurrences of a gene. Report annotation coverage and keep unknown and padding separate.",
+      "interpretation": "Repeated strong reading of the same exact annotated patches supports reading redundancy; reading different patches from the same tumor class does not suffice. One patient is a case illustration; prevalence needs an independent patient set. Neither panel proves prognostic harm, biological event identity, or correction efficacy."
+    },
+    "paths_commit": {
+      "progress": "docs/PROGRESS.json",
+      "backup": "local_evidence/documentation_backups/annotation_guided_design_20261026/PROGRESS.before.json",
+      "original_dataset_source": "third_party/SlotSPE/dataset/dataset_survival.py",
+      "original_model_source": "third_party/SlotSPE/models/SlotSPE.py",
+      "commit_created": false,
+      "existing_uncommitted_work": "Preserved; no reset, staging or history edits."
+    },
+    "checks_and_actual_execution_receipt": {
+      "public_source_and_native_source_review": true,
+      "local_inventory_metadata_only": true,
+      "real_blca_rna_gene_coverage_verified": false,
+      "exact_slide_annotation_intersection_verified": false,
+      "dataset_downloads": 0,
+      "patient_numeric_arrays_or_weights_loaded": 0,
+      "training_inference_or_intervention_runs": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "original_source_or_queue_modified": false,
+      "delivery_manifest_before_edit": "pass: 431 covered files, zero findings"
+    },
+    "gaps_reasons": "This Windows session has no configured SLOTSPE_METADATA_ROOT or SLOTSPE_FEATURES_ROOT. Checked repository paths expose small generated RNA fixtures, no raw SVS and no BLCA.zip. Server input availability, exact annotation CSV schema and coordinate units, checkpoint protocol, real gene coverage and eligible patient counts remain unchecked. Historical saved attention results do not establish annotated tumor/gene specialization.",
+    "next_action_user_inputs": "First identify the existing server RNA/signature, SVS, coordinate and feature files and checkpoint by metadata, then inspect the public annotation schema and compute an eligible exact-slide intersection under the applicable execution gate. Prefer a fixed original-model diagnostic over changing the cohort or training a tumor-only bag. No patient execution is authorized by this dataset-design discussion."
+  },
+  "latest_annotated_roi_redundancy_protocol_20261027": {
+    "recorded_at": "2026-10-27T10:23:25+08:00",
+    "route_task": "P2 original SlotSPE annotated cancer region and pathway reading redundancy experimental protocol",
+    "completed_work": "Designed prospective TCGA-BLCA exact-slide/row/coordinate selection, unknown annotation treatment, full-bag original validation versus separate fixed 4096 diagnostic validation, 20 randomized initializations, patient-level analysis, visualizations, explicit candidate thresholds and sensitivity checks, pathway-token scope, and trace/export acceptance gates. Corrected the earlier loose description: original dataset loader samples and pads only in training; original validation loader passes all real patches.",
+    "paths_commit": {
+      "protocol": "docs/research/slotspe_patch_slot_sharing_20261023/标注癌区与通路的原版槽冗余实验方案_20261027.md",
+      "navigation": "docs/research/README.md",
+      "progress": "docs/PROGRESS.json",
+      "backup": "local_evidence/documentation_backups/annotated_roi_protocol_20261027/",
+      "commit_created": false,
+      "preexisting_uncommitted_changes": "preserved without staging, reset or overwrite"
+    },
+    "checks_and_server_receipt": {
+      "source_and_existing_trace_review": true,
+      "independent_protocol_review": true,
+      "dataset_downloads": 0,
+      "patient_arrays_weights_or_predictions_loaded": 0,
+      "patient_training_inference_or_interventions": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "original_source_or_existing_experiment_queue_modified": false,
+      "verification_scope": "JSON parse, navigation target and delivery manifest; no model or patient experiment"
+    },
+    "gaps_reasons": "BLCA annotation package/schema, server paths, real RNA coverage, checkpoint provenance, eligible patients and feature-coordinate matches remain unverified. Existing native trace does not implement the complete required annotation-to-slide/patch visual export, and the current fixed-budget _batch discards sampled indices. Case examples, O/M/Q metrics and thresholds in the document are proposed methodology, not patient results.",
+    "next_action_user_inputs": "Locate/check server metadata and annotation schema, then implement and validate an independent export and figure workflow on synthetic inputs. Any patient forward or intervention requires explicit user execution authorization."
   }
 }
