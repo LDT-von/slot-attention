@@ -19,9 +19,11 @@ from datetime import datetime, timezone
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -340,7 +342,6 @@ def _run_wave(order, pending_ids, runtime, root, gpu_pool, workers):
     the dependency rule are unchanged from the final-epoch queue.
     """
     import statistics
-    import subprocess
     import time
 
     completed = set()

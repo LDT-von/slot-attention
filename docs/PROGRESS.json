@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-27T11:18:15.602385+08:00",
+  "recorded_at": "2026-10-28T15:35:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -5064,5 +5064,91 @@
       "fix_not_applied": "Not fixed here. The script lives in /tmp, outside this repository, and changing it would silently alter an authorized execution path, so it is reported rather than edited. The minimal fix is to test -z \"${pids//none/}\" or to emit an empty string instead of 'none'.",
       "consequence_boundary": "This explains why the authorized proof never started. It is not evidence about any model result, and it does not mean the proof should now start automatically."
     }
+  },
+  "status_recheck_20261027_1152": {
+    "route_task": "SlotSPE 状态复核 / 只读检查既有产物、GPU 状态、进程与 watcher; 未启动任何队列, 未训练, 未新增任何患者前向/反向。",
+    "completed_work": "末轮44臂队列已于 2026-10-26 12:02:27Z 完成 (status=completed), 产物齐全; best 队列从未启动 (输出根不存在)。发现并复核 watcher 缺陷仍在持续: 该 watcher 进程 PID 493595 至今仍在运行并持续轮询, 但因脚本 bug 永远选不出设备。",
+    "paths_commit": "只读检查, 未修改任何实现文件。HEAD=909be4b (工作区干净), 本地7个提交未推送, origin/main 无独有提交。",
+    "checks_actual_execution_raw_receipt": {
+      "gpu_state": "两块 RTX 5090 均 0% 利用率, 15/32607 MiB 显存, 温度 38/45°C, 功耗 8.28/15.74W, 无 compute app, 无 slotSPE python 进程。内存 62G 中可用 59G, load average 0.04。",
+      "best_queue_never_started": "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01 不存在 (从未创建)。--doctor 复核: 磁盘需 93.2 GB / 可用 9436.6 GB / sufficient=true, patient_training_executed=false, patient_features_read=false。",
+      "watcher_still_running_and_still_broken": "2026-10-27 03:53:42 (UTC) 实测: 进程 bash /tmp/slotspe_4096_5fold_wait_and_run.sh (PID 493595) 仍在运行; driver 日志已轮询 1188 次, 'starting proof queue' 出现 0 次; 输出根 /data1/DCT-Reg/results/slotspe_proof/slotspe_4096_5fold_30ep_20261026 不存在, 从未产出任何东西。",
+      "watcher_bug_reproduced_independently": "独立复现: gpu_compute_pids 在两块空闲卡上打印 '0 none' / '1 none'; [ -z \"none\" ] 为假 -> 每块卡都被判定为忙碌, 循环永远 continue。修复式 [ -z \"${pids//none/}\" ] 为真 -> 正确判定空闲。",
+      "watcher_ownership_boundary": "该 watcher 指向 REPO=/data1/DCT-Reg, 调用 DCT-Reg 自己的 scripts/run_slotspe_proof.py 与 configs/slotspe_clean_original_server.json, 源码根为 /data1/DCT-Reg/third_party/SlotSPE。它不属于本仓库的 SlotSPE 线, 也不应在本仓库内修改。",
+      "final_epoch_queue_artifacts_reverified": "末轮队列根 summary.json status=completed recorded_at=2026-10-26T12:02:27Z; 44 个臂 summary.json 全 completed; folds/1..4/summary.json 全存在; manifest records={completed:54}; 无失败命名文件; 占用 54GB。",
+      "git_state": "HEAD=909be4b 'Record the verification of the pushed commit and the merge reconciliation'; 58af0f9 合并 origin/main (含插件模块/新设计文档); origin/main 指向 8ca17cb; 本地独有7个提交 (909be4b,58af0f9,dbb0d4c,3e1ef60,dbe48bb,fd16ac3,98a198c) 均未推送; 备份在 local_evidence/git_backups/pre_merge_20261027/。",
+      "patient_runs_started_by_this_check": 0,
+      "server_execution": false
+    },
+    "gaps_reasons": "1) 已授权但从未执行的 4096/30ep 五折证明队列仍被 watcher 的 'none' 字符串 bug 阻塞, 且该队列位于 /data1/DCT-Reg (他人项目), 本仓库既无对应配置也无权代为启动; 需要用户在 DCT-Reg 侧修脚本后自行决定, 或明确要求把等价队列落在本仓库自己的 local_evidence/ 下。2) best 55 臂队列仍未启动, 预计墙钟约 27.7 小时 (并发6, 实测加速比 5.17, 每臂验证增量 +7.9%), 磁盘需 93.2 GB。3) 本地7个提交未推送, origin/main 仍缺少 best 队列/磁盘预算守卫/conftest.py/44-44 完成记录。4) 远端 latest_local_multifold_redundancy_run 仍写 22/44 executing, 与本地 44/44 completed 矛盾; 磁盘产物支持本地记录, 远端陈旧记录按历史陈述保留未改。",
+    "next_action_user_inputs": "需要用户决定三件事: (a) 是否启动本仓库的 best 55 臂队列 (需明确执行授权, 预计约一天); (b) 4096 五折证明队列是否要在本仓库重建自己的入口与输出根, 以免继续受 DCT-Reg 侧脚本 bug 影响; (c) 是否推送本地7个提交到 origin/main。"
+  },
+  "best_queue_launched_20261027": {
+    "route_task": "本仓库 best 55 臂队列 (五折 x 十一臂, 逐epoch验证选best后重载再评估) 的真实执行; 用户于 2026-10-27 11:55 +08:00 明确授权启动。",
+    "completed_work": "队列已启动并经实测确认在真实训练 (非仅进程存活): prepare 阶段完成 (32 GB cache, 五折划分 train/val = 303/77, 305/75, 304/76, 304/76, 304/76, 各折1例排除, 与末轮队列一致); 五个 initialize 阶段并发完成; 六个训练臂 (fold0 的 S0/S4/R1/R2/R3/R4) 并发运行, 各臂日志逐epoch打印 val_cindex 与 best_epoch/best_cindex。",
+    "paths_commit": "输出根 local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/ (33 GB, .gitignore 忽略); 根日志 local_evidence/best_multifold_run_20261027.log; 失败启动的残留已归档至 local_evidence/FAILED_LAUNCH_missing_import_20261027/ (按红线未删除)。实现改动: slotspe_proof/redundancy_best_multifold.py 增加 import os 与 import subprocess; tests/test_slotspe_redundancy_best_multifold.py 增加两项回归测试。",
+    "checks_actual_execution_raw_receipt": {
+      "two_real_defects_found_and_fixed_before_execution": "启动即失败并暴露两个真实缺陷: (1) NameError: name 'os' is not defined -- _spawn_stage 与 _subprocess_stage 用 os.environ 但模块从未 import os; (2) 同一根因的连续症状: 这两处还用 subprocess.Popen/subprocess.run 但模块从未 import subprocess (只有 _run_wave 有函数内局部导入), 因此修好 os 后立刻撞上 subprocess。两者都在真正启动子进程的那条路径上, 合成队列测试从未触达。",
+      "fix_minimality_verified": "git diff slotspe_proof/redundancy_best_multifold.py 仅两行 import os 与 import subprocess, 并删去 _run_wave 内已冗余的局部 import subprocess; 无其他实现改动。",
+      "regression_test_added": "新增 test_the_queue_module_imports_every_module_it_uses (用 symtable 解析真实词法作用域, 检出模块级未绑定名) 与 test_the_stage_spawner_can_build_its_child_environment。",
+      "negative_control_proven": "负控实测: 临时撤掉 import os 与 import subprocess 后, 新测试失败并报 unbound module-level names: ['os', 'subprocess']; 恢复后 21 passed。因此该测试确实能抓住本次缺陷, 不是空断言。",
+      "full_regression_suite": "tests/ 全量回归: 565 passed, 1 warning, 0 failed, 155.30s。较合并前基线 404 增至 565 (合并引入插件模块及其测试); 末轮队列既有测试无回归。",
+      "preflight_before_launch": "--plan: training_runs=55, folds=[0,1,2,3,4], reused_folds=[], checkpoint_selection=per_epoch_validation_best_then_reload_and_reevaluate, stages 含 prepare/5x initialize/55 arm/5x summarize_fold/1x summarize。--doctor: 磁盘需 93.2 GB / 可用 9436.6 GB / sufficient=true, patient_training_executed=false。21 个被钉文件与末轮队列钉住值逐项相同 (差异: 无)。输出根启动前不存在。",
+      "actual_execution_started_utc": "2026-10-27T04:03:05.540798+00:00 (12:03 +08:00), devices=['0','1'], workers=6。",
+      "real_gpu_training_confirmed": "实测 GPU0 90% / 9805 MiB, GPU1 94% / 16114 MiB; 六个 worker 进程各约 101-109% CPU; 队列根日志出现 'completed stage(s) prepare'; manifest records 状态 {completed: 1, running: 65}。",
+      "epoch_level_val_cindex_observed": "训练臂日志逐epoch记录 val_cindex 与 best_epoch/best_cindex, 例如 fold0: S0 epoch1 val_cindex=0.713946117274168; R3 epoch1 0.6386687797147385 -> epoch2 0.6980982567353408 (best_epoch=2); R4 epoch1 0.5253565768621236 -> epoch2 0.696513470681458; R1 epoch1 0.5911251980982567 -> epoch2 0.5578446909667195 (best_epoch 保持1)。这些是首epoch实时读数, 不是最终结论。",
+      "prepared_cache_and_splits": "prepare.log: Prepared fold=0 train=303 val=77 excluded=1; fold=1 305/75/1; fold=2 304/76/1; fold=3 304/76/1; fold=4 304/76/1。prepared/cache 实测 32 GB (预算估算 33.8 GB)。",
+      "disk_actual": "输出根 33 GB; /data1 仍有 8.6 TB 可用 (10%), 未接近磁盘预算上限。",
+      "patient_runs_started_by_this_stage": 55,
+      "server_execution": false,
+      "new_training_runs_completed": 0
+    },
+    "gaps_reasons": "1) 队列刚启动, 尚无任何臂完成, 不能报任何 C-index 结论; 上述 epoch 读数只是首epoch实时值。2) 预计墙钟约 27.7 小时 (并发6, 每臂验证增量 +7.9%), 实际以 manifest 与各臂 summary.json 为准。3) 本次修复改动了被该队列钉住的实现文件 (redundancy_best_multifold.py), 因此队列运行期间不可再改该文件, 否则 verify_live_identity 会使队列失败; 队列运行中只做只读观察。4) DCT-Reg 侧的 4096 五折 watcher 缺陷未处理 (脚本在 /tmp, 属他人项目), 本仓库的 best 队列与它无关。5) 本地7个提交仍未推送。",
+    "next_action_user_inputs": "等待队列完成 (预计约 27.7 小时, 起点 2026-10-27 12:03 +08:00), 完成后读取根 summary.json 并汇报五折 best 口径 C-index、各臂 best_epoch 分布与选择偏差边界; 运行期间只做只读进度观察, 不改动被钉文件。"
+  },
+  "final_epoch_arm_score_comparison_20261027": {
+    "route_task": "汇报用分数整理 / 只读读取已完成的末轮44臂队列 summary.json, 回答'既有降冗余又提分的臂吗'; 未新增任何训练或患者前向/反向, 未修改任何产物。",
+    "completed_work": "从末轮队列根 summary.json (status=completed, recorded_at=2026-10-26T12:02:27Z) 提取全部11臂的五折 C-index 与槽几何, 完成'降冗余且提分'的对照分析。结论: 有, R3 是唯一在多项冗余指标上同时下降且 C-index 提升显著的臂。",
+    "paths_commit": "只读来源 local_evidence/redundancy_blca_uni2h_folds1to4_seed3_run01/summary.json; 臂定义 configs/slotspe_redundancy_multifold_queue.json 的 variant_catalog; 实现 slotspe_proof/redundancy_engine.py 的 ARM_CONTRACTS (第32-39行); 机制 slotspe_proof/slot_regularization.py 的 slotbert_loss (第37行起)。未修改任何文件。",
+    "checks_actual_execution_raw_receipt": {
+      "data_source": "末轮队列根 summary.json, scope: folds=[0,1,2,3,4], seed=3, reused_folds=[0], executed_folds=[1,2,3,4], 11臂, 每折20次评估重复后取均值再形成折值, 再对5折取均值。",
+      "all_eleven_arms_cindex_and_geometry": "S0 C=0.5778 折std=0.0562 wsi_cos=0.9062; S4 C=0.5970 0.0495 0.9066; R1 C=0.5542 0.0660 0.6611; R2 C=0.6072 0.0459 0.8215; R3 C=0.6426 0.0299 0.8113; R4 C=0.5694 0.0406 0.9336; R5 C=0.5556 0.0700 0.8036; S1 C=0.6062 0.0641 0.9220; S2 C=0.6105 0.0371 0.9268; S3 C=0.6331 0.0147 0.9651; S5 C=0.6118 0.0377 0.8644。",
+      "arms_that_lower_redundancy_and_raise_score": "3/10 臂同时满足 ΔC>0 且 Δwsi_cosine<0: R3 (ΔC=+0.0649, Δcos=-0.0949, Δread_overlap=-0.0504, Δeffective_rank=+0.29), S5 (ΔC=+0.0341, Δcos=-0.0419, Δovl=-0.0760, Δrank=+0.07), R2 (ΔC=+0.0294, Δcos=-0.0847, 但 Δovl=+0.0726 反而升高)。",
+      "r3_mechanism": "R3 = Slot-BERT Eq.11 移植正则 (weight 1.0) + 内容覆盖损失 (weight 5.0) 叠加在原始 S0 分配之上 (ARM_CONTRACTS: slotbert_weight=1.0, content_weight=5.0, gram_weight=0.0, adapter=S0)。",
+      "r3_per_fold_vs_s0": "逐折 C: S0 0.5239/0.6120/0.4974/0.6396/0.6159; R3 0.6326/0.5896/0.6516/0.6669/0.6726; 差 +0.1086/-0.0224/+0.1541/+0.0273/+0.0567; R3 胜4/5折, 配对符号检验单侧 p=0.188 (n=5, 未达显著)。",
+      "r3_redundancy_per_fold_wsi_cosine": "S0 0.7512/0.9333/0.9582/0.9902/0.8984; R3 0.9236/0.6341/0.6911/0.9488/0.8590; R3 逐折余弦在4/5折低于基线, 唯一升高的是基线本身最冗余的 fold0。",
+      "negative_result_also_recorded": "R1 (纯 off-diagonal 余弦平方正则, w=10) 冗余降得最多 (wsi_cos 0.9062->0.6611, Δ=-0.2451) 但 C-index 下降 -0.0236, 且 read_overlap 反而升高 +0.1247。即单纯压余弦不足以提分, 必须配合内容覆盖目标。R4/R5 分数均低于基线。",
+      "lowest_variance_arm": "S3 折std=0.0147 为11臂最小, C=0.6331 第二高, 但其 wsi_cos=0.9651 为最高冗余之一, 且 read_overlap 0.9657 最高, 因此不满足'降冗余'。",
+      "caveats_read_from_summary": "summary.json 自带四条 caveats: fold0 复用自早前单折队列且其首个训练批与内容参考 patch 取自未播种的全局 numpy 流 (不可复现, 臂间不一致), 折1-4 用固定可复现抽样; 五折统计以5个折值为单位, 折内20次评估重复非独立患者已先行平均; 臂间 C-index 差异为探索性单种子观测, 未做多重比较校正。",
+      "patient_runs_started_by_this_check": 0,
+      "server_execution": false
+    },
+    "gaps_reasons": "1) 以上全部来自末轮 (fixed_final_epoch_no_selection) 口径, 不是 best 口径; best 55 臂队列仍在运行 (2026-10-27 17:00 +08:00 复核: manifest {completed:1, running:65}), 其 best 口径数值尚不可得, 两者不能混用。2) 只有 seed3 一个训练种子, 折间标准差只反映折划分变化, 不含训练随机性。3) 臂间 C-index 差异未经多重比较校正, 且 R3 vs S0 的配对符号检验 p=0.188 未达常规显著水平。4) fold0 的抽样机制与折1-4 不同, 折间可比性受此机制影响。5) 槽余弦与 read_overlap 是描述性几何指标, 不是临床终点, 不能据此声称患者获益。",
+    "next_action_user_inputs": "汇报时必须同时给出: (a) 末轮口径下 R3 为唯一在余弦相似度与读重叠双降的同时把五折 C-index 从 0.5778 提到 0.6426 (Δ+0.065) 的臂, 4/5 折为正; (b) 明确标注单种子、未做多重比较校正、符号检验 p=0.188、fold0 抽样机制与其余折不同; (c) 说明 best 口径的55臂队列仍在跑, 汇报时不可把末轮数值说成 best 数值。等待 best 队列完成后再做 best 口径的同口径对照。"
+  },
+  "best_multifold_five_fold_completed_20261028": {
+    "route_task": "本仓库 best 55 臂队列 (五折 x 十一臂, 逐epoch验证选best后重载再评估) 的完成记录与结果分析; 用户于 2026-10-28 15:18 +08:00 授权'记录然后push'。本条目只做结果汇总与只读分析, 未新增任何训练、推理或患者干预。",
+    "completed_work": "队列已完整完成: 根 summary.json status=completed recorded_at=2026-10-28T07:32:46Z, 67 个 stage 全部 completed, 五折 x 十一臂 = 55 次全新训练, 无任何折复用末轮队列产物。结论: (1) 分数最高的臂是 R4 (五折均值 0.7071) 与基线 S0 (0.7039), 两者差异不显著 (5折配对差 +0.0033, t(4df)=+0.22); (2) 分数高的臂恰恰没有解决槽冗余——R4/S0 的 WSI 有效秩仅 1.170/1.144、槽余弦 0.914/0.937; 唯一真正把冗余解开的 R5 (有效秩 2.651、余弦 0.634) 与 R1 (1.735/0.729) 恰是分数最低的两个 (0.6196/0.6103); (3) 跨 55 个(臂x折)点的 Spearman 显示冗余与性能的关系方向为反: wsi.effective_rank -0.2475, omic.effective_rank -0.3183; (4) 换 checkpoint 规则结论反转: 末轮(fixed_final_epoch)口径下 S0 排第 8/11 (0.5778) 而 R3 排第 1 (0.6426), 与 best 口径 S0 第 2 / R3 第 6 相反。因此当前证据不支持'解决槽冗余能提升生存预测', 也不支持'解决冗余有害'。",
+    "paths_commit": "输出根 local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/ (根 summary.json 462458 bytes, .gitignore 忽略, 55 臂 x 5 折的 summary.json/eval_repeats.json/curve.json/epoch_validation.json/best.pt); 根日志 local_evidence/best_multifold_run_20261027.log; 队列 manifest local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/queue_manifest.json。臂定义 configs/slotspe_redundancy_best_multifold_queue.json 的 variant_catalog 与 slotspe_proof/redundancy_engine.py 的 ARM_CONTRACTS。实现文件 slotspe_proof/redundancy_best_multifold.py 本轮未再改动 (与队列启动时钉住的哈希一致)。本轮唯一实现改动是此前 best_queue_launched_20261027 记录的 import os / import subprocess 修复。",
+    "checks_actual_execution_raw_receipt": {
+      "queue_actually_completed": "根 summary.json schema=slotspe_native_redundancy_best_multifold_summary_v1, status=completed, recorded_at=2026-10-28T07:32:46.023436+00:00; manifest records 67 条全部 status=completed (含 prepare / 5x initialize / 55 arm / 5x summarize_fold / 1x summarize); 主进程 PID 668429 已正常退出; 五个 folds/0..4/summary.json 齐全, 55 个臂 summary.json 全部 status=completed。",
+      "independent_recomputation_matches_the_queue_summary": "用 eval_repeats.json 独立重算每臂每折 20 次重复的 C-index 均值再对 5 折取均值, 与队列自身 summary.json 的 per_arm.cindex_five_fold.fold_mean 逐臂比对: 11/11 臂在 1e-12 精度内完全一致, 且逐折值也全部一致。S0 0.7038637172 / R4 0.7071193512 / S5 0.6984091759 / S2 0.6950440217 / S4 0.6925287182 / R3 0.6924398957 / S1 0.6909506001 / S3 0.6902540342 / R2 0.6756459824 / R5 0.6195854673 / R1 0.6103360585。",
+      "best_protocol_five_fold_cindex": "R4 0.7071 (sd_pop 0.0269) 0.7170/0.7549/0.6968/0.6813/0.6857; S0 0.7039 (0.0411) 0.7485/0.7492/0.6422/0.6997/0.6798; S5 0.6984 (0.0258); S2 0.6950 (0.0428); S4 0.6925 (0.0361); R3 0.6924 (0.0253); S1 0.6910 (0.0384); S3 0.6903 (0.0453); R2 0.6756 (0.0705); R5 0.6196 (0.0769); R1 0.6103 (0.0930)。",
+      "five_fold_paired_test_against_S0": "每折内 20 次重复先配对求差, 再对 5 折聚合。R4 +0.0033 sd 0.0329 t(4df)=+0.22 胜3/5; S5 -0.0055 t=-0.39; S2 -0.0088 t=-1.13; S4 -0.0113 t=-1.69; R3 -0.0114 t=-0.67; S3 -0.0136 t=-1.01; S1 -0.0129 t=-1.75; R2 -0.0282 t=-0.73; R5 -0.0843 t=-1.90; R1 -0.0935 t=-2.01 胜1/5。除 R1 外无臂达常规显著水平, 11 臂挤在 0.61-0.71 的窄带, 折间标准差 (0.025-0.093) 远大于臂间差异。",
+      "redundancy_was_not_solved_by_the_high_scoring_arms": "best 口径五折均值 WSI 几何: R4 有效秩 1.170 余弦 0.9137 读重叠 0.9053; S0 1.144/0.9365/0.9491; S2 1.101/0.9491; S4 1.145/0.9126; S1 1.101/0.9495; S5 1.180/0.8257/0.7647; S3 1.069/0.9627; R3 1.449/0.8017; R2 1.468/0.8134; R5 2.651/0.6338/0.9975; R1 1.735/0.7289/0.9984。R5 与 R1 是唯二有效秩>1.5 且余弦<0.8 的臂, 也正是 C-index 最低的两个。",
+      "redundancy_performance_relationship_is_negative_and_uncorrected": "跨 55 个(臂x折)点 Spearman: wsi.effective_rank vs C-index = -0.2475; omic.effective_rank = -0.3183; wsi.cosine = +0.2367; omic.cosine = +0.2799; wsi.read_overlap = -0.0263。即冗余越低分数越低。只看基线 S0 自身 5 折, wsi.effective_rank vs C-index = -0.10 (无关)。",
+      "final_epoch_protocol_gives_the_opposite_ranking": "末轮 (fixed_final_epoch_no_selection) 口径同一五折 cohort: R3 0.6426 (eff_rank 1.450, cos 0.8113) 第1; S3 0.6331; S5 0.6118; S2 0.6105; R2 0.6072; S1 0.6062; S4 0.5970; S0 0.5778 (eff_rank 1.162, cos 0.9062) 第8; R4 0.5694 第9; R5 0.5556; R1 0.5542 (eff_rank 2.003, cos 0.6611)。best 口径 S0 第2、R3 第6, 末轮口径 S0 第8、R3 第1, 两协议的臂间排名互相矛盾, 说明臂间排名主要由选择规则产生而非模型固有属性。",
+      "earlier_interim_claims_from_this_queue_that_are_now_superseded": "本会话早期基于单折 fold0 的两处结论已被五折数据推翻, 在此明确更正: (a) 曾称'基线 S0 最强'(fold0 S0 0.7485 对 10 臂配对全胜)——fold0 单折是运气好的一折, 五折下 R4 略微反超且差异不显著, 且单折配对检验在此是陷阱(两臂共享同一批患者, 同折噪声高度相关); (b) 曾称'R2 塌到 0.5767 与拆解结论一致'——该说法不成立并已收回: 槽环拆解是在冻结的塌缩权重上做只读消融(测'移除该环后表示如何变化'), 本队列是从头训练(测'移除该环能否训好'), 两者答案相反不矛盾, 说明该环同时制造冗余又承担实质功能。",
+      "patient_runs_started_by_this_check": 0,
+      "server_execution": false,
+      "new_training_runs_completed_by_this_check": 0,
+      "total_training_runs_in_the_completed_queue": 55,
+      "source_unchanged_flag_per_arm": "55 个臂 summary.json 的 source_unchanged 全部为 true, 原版 third_party/SlotSPE 源码 8 个被钉文件的 sha256 与队列启动时记录逐项相同, 实测 24 个 implementation 文件哈希与 manifest identity_payload 完全一致 (0 mismatch)。",
+      "queue_summarized_caveats_read_from_the_artifact": "根 summary.json 自带五条 caveats: 报告的 C-index 是验证集上选出的峰值, 不是独立测试集上的泛化结果; 从 30 次验证评估中取最好会使报告值相对独立测试集偏高, 偏高幅度取决于逐 epoch 验证指标的波动; 五折全部在本 checkpoint 规则下从头训练, 无一折复用末轮队列; 折内 20 次评估重复不是独立患者, 先平均再形成折值; 臂间 C-index 差异是探索性单种子观测, 此处未做多重比较校正。",
+      "implementation_defect_found_and_fixed_before_this_queue_ran": "队列首次启动即失败, 暴露两个真实缺陷: 模块从未 import os 却使用 os.environ, 且从未 import subprocess 却使用 subprocess.Popen/subprocess.run (只有 _run_wave 有函数内局部导入), 两者都在真正启动子进程的那条路径上, 合成队列测试从未触达。修复为两行模块级 import。已用 AST/symtable 解析复现该 NameError 条件: HEAD 版本在模块级未绑定名清单中确实含 'os' 与 'subprocess'。",
+      "delivery_manifest_check_result": "python -B scripts/check_delivery_manifest.py --check --require-tracked 在本轮修改前报告 ok=false, findings 为 README.md 与 tests/test_slotspe_redundancy_best_multifold.py 内容变更; 本轮提交后重新生成清单并复核。"
+    },
+    "gaps_reasons": "1) 单种子 (seed3) 单队列, 折间标准差只反映折划分变化, 不含训练随机性; 训练随机性未估计。2) 臂间 C-index 差异未做多重比较校正, 且除 R1 外 5 折配对检验均未达常规显著水平; 11 臂全部落在 0.61-0.71 的窄带内, 现有数据无法把任何臂与基线区分开。3) best 口径的 30 选 1 验证峰值选择自带的乐观偏差已由队列 caveats 标明, 本仓库未做独立测试集复评, 因此这些数值不能当作泛化性能。4) 末轮口径下 fold0 复用自早前单折队列且其首个训练批与内容参考 patch 取自未播种的全局 numpy 流 (不可复现, 臂间不一致), 折1-4 用固定可复现抽样, 故末轮口径的折间可比性受此机制影响。5) 槽余弦、有效秩、读重叠是描述性几何指标, 不是临床终点, 不能据此声称患者获益; '冗余与性能负相关'是描述性相关, 不构成'冗余有害'的因果结论——R5/R1 的折间标准差最大 (0.0769/0.0930) 且在 fold1/fold4 剧烈崩塌 (R5 0.5147/0.5466, R1 0.5337/0.5331), 更像是强行拆冗余破坏了训练稳定性而非获得更好表示, 这一区分尚未被实验分离。6) 本轮未做任何容量扫描 (4/8/16 槽), 因而'给更多槽能否避免塌缩'这一直接问题仍未回答。7) 本条目不声称任何患者获益、临床价值或泛化性能。",
+    "next_action_user_inputs": "汇报时必须同时给出: (a) best 口径五折 R4 0.7071 与 S0 0.7039 差异不显著 (t(4df)=+0.22), 不能称基线最强也不能称 R4 更优; (b) 分数最高的臂没有解决槽冗余, 唯二解决冗余的 R5/R1 分数最低, 跨 55 点 Spearman 方向为负 (-0.25/-0.32); (c) 换末轮口径排名反转 (S0 第8、R3 第1), 必须标注单种子、未做多重比较校正、best 峰值选择偏差、折0 抽样机制与末轮口径不同; (d) 明确槽几何是描述性指标不是临床终点。下一步需要用户决定: (a) 是否授权容量扫描 (4/8/16 槽) 训练以直接回答'更多槽能否避免塌缩'; (b) 是否授权多训练种子 (如 seed3/7/11) 以估计训练随机性, 否则折间方差无法与臂间差异分离; (c) 是否授权对 R5/R1 的训练稳定性做专项诊断 (区分'冗余有害'与'训练发散'); (d) 本地 7 个提交已推送, 本轮记录提交是否直接推送到 origin/main。"
   }
 }

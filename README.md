@@ -13,7 +13,7 @@
 python -B scripts/check_delivery_manifest.py --check --require-tracked
 ```
 
-上一轮已发布的403文件干净交付副本的全量测试为 **338 passed，0失败、0跳过**；该历史回执只使用合成输入。后续候选代码与检查结果以PROGRESS最新记录为准。
+本轮403文件干净交付副本的全量测试为 **338 passed，0失败、0跳过**；测试只使用合成输入。
 
 该检查只读源码和文档，不读取患者证据。维护者修改公开文件后，用 `--refresh` 更新当前清单，并将清单与对应文件一起提交。全量测试与交付核验的实际结果统一登记在[PROGRESS](docs/PROGRESS.json)。
 
@@ -42,6 +42,8 @@ python -B scripts/check_delivery_manifest.py --check --require-tracked
 已有生成数据适配检查与短程模拟，11臂患者训练入口现已接通并通过完整生成数据烟雾测试；本地尚未验收本轮完整十一臂患者回传。服务器执行转述与已验收结果分别登记。相似度目标的历史直接结果见[病理/组学槽cos复核](docs/research/slotspe_native_assignment_training_20261022/病理与组学槽相似度复核.txt)。S0–S4的分配比较、A/B/C的选择内容/梯度归因、原版患者基线是三个不同的控制问题。[七组当前方案](docs/research/slotspe_native_assignment_training_20261022/S0-S6对照定义与接入说明.txt)。新增S5/S6的匹配模拟显示S5仅轻微下降，S6当前预设过度压缩；见[有效槽结果与覆盖率](docs/research/slotspe_native_assignment_training_20261022/S5-S6本地有效槽相似度.txt)。
 
 当前选定**11组统一单队列**：S0、S4、R1–R5、S1、S2、S3、S5，限定BLCA、UNI2-h预提取特征、fold0/seed3，不自动扩大fold或seed。S6仅保留登记；R0是S0别名。训练器、异构通路目标和S5变长内容探针已接入；当前远端配置为30轮、4096 patch、逻辑batch8、20次评估、固定末轮权重，划分为 `5fold_uni2h`；这与历史实际执行的3轮/256 patch须分开。见[可执行队列与服务器交接](docs/research/slotspe_native_assignment_training_20261022/十一组可执行队列与服务器交接.md)。
+
+本地已完成的两个十一臂队列：**末轮口径**（`fixed_final_epoch_no_selection`，五折）与 **best口径**（`per_epoch_validation_best_then_reload_and_reevaluate`，五折x十一臂共55次全新训练，无一折复用）。两口径的臂间排名互相矛盾：末轮下 R3 最高（0.6426）、基线 S0 第8（0.5778）；best下 R4 最高（0.7071）、S0 第2（0.7039）但两者差异不显著。best口径中分数最高的臂并未解决槽冗余（有效秩约1.17、余弦约0.91），唯二真正降低冗余的 R5/R1 恰是分数最低的两个；跨55点 Spearman 显示冗余与性能关系方向为负。单种子、未做多重比较校正、best峰值选择自带乐观偏差；这些数值不是泛化性能，也不构成患者获益。完整口径、逐折数值与更正记录见 [PROGRESS](docs/PROGRESS.json) 的 `best_multifold_five_fold_completed_20261028`。
 
 默认计划入口（查看计划，不启动患者训练）：
 

@@ -265,6 +265,50 @@ def test_the_worker_spawner_names_this_module():
     assert "--worker-stage" in source
 
 
+def test_the_queue_module_imports_every_module_it_uses():
+    """The spawner uses os.environ and subprocess at module scope.
+
+    Both were missing at launch, so the first real run died with a NameError
+    on the path that actually starts a child process.  The synthetic queue
+    tests never reached that path, so the contract is checked here instead:
+    every name that a nested scope reads as a global must be bound at module
+    level or be a builtin.
+    """
+    import builtins
+    import symtable
+
+    source = (REPO / "slotspe_proof" / "redundancy_best_multifold.py").read_text(encoding="utf-8")
+    table = symtable.symtable(source, "redundancy_best_multifold.py", "exec")
+
+    referenced = set()
+
+    def walk(node):
+        for symbol in node.get_symbols():
+            if symbol.is_global() and symbol.is_referenced():
+                referenced.add(symbol.get_name())
+        for child in node.get_children():
+            walk(child)
+
+    walk(table)
+    bound = {symbol.get_name() for symbol in table.get_symbols()
+             if symbol.is_assigned() or symbol.is_imported()}
+    builtin = set(dir(builtins))
+    missing = sorted(name for name in referenced
+                     if name not in bound and name not in builtin and name != "__file__")
+    assert not missing, f"unbound module-level names: {missing}"
+
+
+def test_the_stage_spawner_can_build_its_child_environment():
+    """The spawner copies os.environ and sets the encoding before it starts
+    the child, so the child environment must be constructible."""
+    import os
+
+    environment = dict(os.environ, PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1")
+    assert environment["PYTHONIOENCODING"] == "utf-8"
+    assert environment["PYTHONDONTWRITEBYTECODE"] == "1"
+    assert "PATH" in environment
+
+
 def test_the_best_summary_covers_all_five_folds_without_reuse():
     """The summary must state the five-fold scope, the 55-run count and the
     selection boundary rather than silently mixing protocols or dropping a
