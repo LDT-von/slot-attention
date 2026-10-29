@@ -5516,5 +5516,337 @@
     },
     "gaps_reasons": "Quick pilot is one fold/seed, only 3 epochs, 256 training patches, 3 repeats and uses final checkpoint; cannot establish clinical benefit or compare with best-validation or 30/4096 results. Validation still uses all patches. Server access, runtime and patient artifacts must be verified before any execution.",
     "next_action_user_inputs": "On an isolated checkout at the delivered commit, run --quick --plan and --quick --doctor, verify server and GPU availability, then run --quick --run under existing user request; audit raw receipts and compare all four arms."
+  },
+  "latest_crossview_quick_patient_run_20261029": {
+    "recorded_at": "2026-10-29T04:32:00+08:00",
+    "route_task": "User-authorized V2 cross-view four-arm quick patient pilot (small-data sanity check, one fold)",
+    "user_steering": "Purpose is a simple test; run very small data or a single fold.",
+    "status": "completed_all_four_arms_exploratory_single_fold_single_seed",
+    "completed_work": "Pulled remote commit fa40171 (fast-forward from ee1d506), reviewed the new V2 cross-view module family, then executed the newly added --quick profile locally on this machine: BLCA UNI2-h, fold0, seed3, 3 epochs, 256 sampled training patches per epoch, batch 8, 3 evaluation repeats over all real validation patches, fixed final-epoch checkpoint. Four matched arms ran to completion: B0_native, V2_separate, V2_crossview_compute (auxiliary graph computed, view loss weight 0), V2_crossview_train (view loss weight 1.0). The native full-bag prediction path was unchanged; the cross-view branch only reads A/B disjoint real rows and predicts fixed training-fold reference mass and first moments from all slots.",
+    "paths_commit": {
+      "base_HEAD": "fa40171b058f37699cd7be3aa410507d46d0136f",
+      "output_root": "local_evidence/crossview_quick_blca_uni2h_fold0_seed3_run01",
+      "runner": "scripts/run_slotspe_crossview.py",
+      "queue": "slotspe_proof/crossview_queue.py",
+      "engine": "slotspe_proof/crossview_engine.py",
+      "report": "docs/research/slotspe_eight_issues_20261019/跨视图模块合成验收与服务器交接_20261027.txt",
+      "note": "All patient artifacts, weights, per-patient predictions and checkpoints stay in the ignored local_evidence directory and were not staged."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "pre_execution_math_gate": "9 pure arithmetic checks passed, 0 failed; 0 neural forwards, 0 training runs.",
+      "pre_execution_generated_tests": "59 targeted pytest items passed, including four-arm one-step synthetic optimization, checkpoint save/reload and quick-profile validation.",
+      "pre_execution_plan_and_doctor": "--quick --plan printed the four-arm matched plan; --quick --doctor returned ok=true with 4 metadata file hashes matched, 8 original-source hashes matched, features_directory_exists=true, patient_arrays_loaded=false, models_constructed=false.",
+      "delivery_manifest_check": "scripts/check_delivery_manifest.py --check --require-tracked ok, 466 covered files.",
+      "server_execution": true,
+      "execution_host": "local machine /data1/SlotSPE, RTX 5090 sm_120, conda env trisurv",
+      "new_server_raw_receipt": true,
+      "runtime": "python 3.10.20, torch 2.10.0+cu128, numpy 1.26.4, scipy 1.15.3, scikit-survival 0.25.0, scikit-learn 1.7.2, pandas 2.3.3, h5py 3.16.0, einops 0.8.2",
+      "prepared_patients": "fold=0 train=303 val=77 excluded=0; 380 eligible of 608 split rows",
+      "patient_training_runs": 4,
+      "patient_inference_runs": "4 arms x 3 evaluation repeats over all real validation patches",
+      "optimizer_steps_per_arm": 114,
+      "epochs_per_arm": 3,
+      "patches_per_epoch": 256,
+      "eval_repeats": 3,
+      "checkpoint_policy": "fixed_final_epoch_no_validation_selection",
+      "cuda_peak_bytes_per_arm": "about 1.70 GB (1.69 GB for B0_native)",
+      "arm_elapsed_seconds": "B0_native 338, V2_separate 468, V2_crossview_compute 587, V2_crossview_train 547",
+      "repeat_cindex_mean": {
+        "B0_native": 0.7007,
+        "V2_separate": 0.7187,
+        "V2_crossview_compute": 0.7187,
+        "V2_crossview_train": 0.7205
+      },
+      "repeat_cindex_std_population": {
+        "B0_native": 0.0032,
+        "V2_separate": 0.0013,
+        "V2_crossview_compute": 0.0013,
+        "V2_crossview_train": 0.0007
+      },
+      "repeat_cindex_values": {
+        "B0_native": [
+          0.6981,
+          0.7052,
+          0.6989
+        ],
+        "V2_separate": [
+          0.7187,
+          0.7171,
+          0.7203
+        ],
+        "V2_crossview_compute": [
+          0.7187,
+          0.7171,
+          0.7203
+        ],
+        "V2_crossview_train": [
+          0.7211,
+          0.7195,
+          0.7211
+        ]
+      },
+      "compute_control_equivalence_check": "V2_separate and V2_crossview_compute share 1509 host state tensors that are bitwise equal (max absolute difference 0.0), and their per-batch main_nll, native_auxiliary, total_loss, gradient_l2 and added-loss terms are numerically identical while the compute arm additionally reports view_loss_observed=0.039122 with view_loss_used=0.0 and view_cases=7. This confirms the auxiliary graph changed no training signal.",
+      "crossview_train_view_loss_by_epoch": {
+        "epoch_1": 0.031449,
+        "epoch_2": 0.019592,
+        "epoch_3": 0.024906
+      },
+      "crossview_diagnostic_V2_crossview_compute": {
+        "eligible_validation_patients": 77,
+        "skipped_validation_patients": 0,
+        "mass": {
+          "own_mse": 0.026712,
+          "training_constant_mse": 0.01598,
+          "donor_mse": 0.026641,
+          "constant_minus_own": -0.010731,
+          "donor_minus_own": -7.1e-05
+        },
+        "moment": {
+          "own_mse": 0.018559,
+          "training_constant_mse": 0.013574,
+          "donor_mse": 0.018481,
+          "constant_minus_own": -0.004985,
+          "donor_minus_own": -7.8e-05
+        }
+      },
+      "crossview_diagnostic_V2_crossview_train": {
+        "eligible_validation_patients": 77,
+        "skipped_validation_patients": 0,
+        "mass": {
+          "own_mse": 0.017641,
+          "training_constant_mse": 0.01598,
+          "donor_mse": 0.01738,
+          "constant_minus_own": -0.001661,
+          "donor_minus_own": -0.000261
+        },
+        "moment": {
+          "own_mse": 0.014133,
+          "training_constant_mse": 0.013574,
+          "donor_mse": 0.014224,
+          "constant_minus_own": -0.000558,
+          "donor_minus_own": 9.1e-05
+        }
+      },
+      "raw_receipt_sha256": {
+        "summary.json": "a5da3b745d273a4a4c86c50e88faf7284fa7826c192526565e9be7970c7c8794",
+        "crossview_queue_manifest.json": "45d30e46c530c74bad47889255479583bc3e9c1626e87e173a02b04e13a2d1b0",
+        "identity.json": "130e9920f2447c6e781a2eed79419a61ae90bbbd019b597746ac2879591edf7d",
+        "arms/B0_native/summary.json": "0e57a68aa598fb3f8542d3446bb4251eda0a4df6743fe1f06bea65ce6101f079",
+        "arms/V2_separate/summary.json": "acb6ff9316caa2563804d83e97f61be7943b07330e08a6ea40454f99b57c8409",
+        "arms/V2_crossview_compute/summary.json": "045e8946230c95924443e7ffa7ac243a14d49f7b6706627d81df43f2c66e2cd3",
+        "arms/V2_crossview_train/summary.json": "f8e6232e4c4c13d70c92db70eb5bbc02c39457254a02dfce35e7b5e9c307d31f",
+        "arms/V2_crossview_compute/crossview_eval.json": "142d3aaa12de4adc5d131c92434da70019a568a880332cf2d62c6356e75e48d0",
+        "arms/V2_crossview_train/crossview_eval.json": "5d3a884f5467780d382b76069bef03c7a082250eba593b378e69474eb79089ae"
+      },
+      "original_source_modified": false,
+      "original_source_hashes_verified": "8 third_party/SlotSPE files matched recorded provenance in the doctor output and in the run identity.json.",
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "v2_and_existing_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "arm_ordering": "B0_native 0.7007 < V2_separate 0.7187 = V2_crossview_compute 0.7187 < V2_crossview_train 0.7205 on this fold/seed/3-epoch/3-repeat probe.",
+      "v2_over_native_gap": "about +0.018 C-index for V2 over the native baseline in this tiny configuration.",
+      "crossview_train_over_v2_separate_gap": "about +0.0018 C-index, far below the 0.0032 and 0.0013 evaluation noise bands of the arms involved.",
+      "crossview_target_predictability": "In the trained arm the cross-view target is still not better predicted by the patient's own content than by the training-fold constant: constant_minus_own is negative for both mass and moment (-0.001661 and -0.000558). The compute arm is worse still (-0.010731 and -0.004985). Own-patient prediction does not beat the equal-patient training constant, and donor-minus-own is near zero and changes sign between mass and moment, so this probe does not show patient-specific content recovery.",
+      "interpretation_boundary": "These are descriptive single-fold single-seed numbers from a deliberately tiny configuration. They are not evidence of clinical benefit, of slot-wise content uniqueness, or of generalization, and they are not comparable with the historical best-validation 30/4096/20 results or the 0.61-0.71 eleven-arm band."
+    },
+    "gaps_reasons": "One fold and one seed; 3 epochs and 256 sampled patches; 3 evaluation repeats of the same trained model, which are not independent training runs; fixed final-epoch checkpoint, so scores must not be mixed with the best-validation policy used by older V2 and redundancy queues; validation still uses all real patches, so the evaluation is slower than training. The cross-view target is a feature proxy, not a biological label. The observed own-versus-constant result does not separate patient-specific information from a global content statistic, so this probe does not support the reconstruction premise, and the delete-slot oracle is not a continuous-slot uniqueness or population proof. The compute control confirms only that the auxiliary graph adds no training signal at weight 0. Nothing here establishes patient harm, correction efficacy, or population generalization, and no multiple-comparison correction, capacity scan or multi-seed training was performed.",
+    "next_action_user_inputs": "Decide whether to (a) scale the same queue to the normal 30/4096/20 profile on more folds and seeds, (b) first run the delete-slot and cross-view predictability diagnostics on real patients to decide whether the reconstruction premise holds before spending training budget, or (c) run a capacity scan or multi-seed training to separate training randomness from arm differences. Keep this quick profile separate from every historical best-validation result, and do not treat the observed arm ordering as a clinical result."
+  },
+  "latest_crossview_deletion_diagnostics_20261029": {
+    "recorded_at": "2026-10-29T18:05:00+08:00",
+    "route_task": "SlotSPE / P7.3 / real-patient slot-deletion oracle and slot geometry diagnostics on the completed quick cross-view checkpoint",
+    "user_steering": "User authorized running the delete-slot and cross-view predictability diagnostics on real patients before committing further training budget.",
+    "status": "completed_no_training_geometry_collapse_observed_deletion_gap_not_above_permutation_null",
+    "completed_work": "Implemented the connector between trained slot tensors and the previously unused finite-table deletion oracle. Added a deterministic farthest-point-plus-Lloyd codebook fitted on the training fold only, a permutation null control that preserves the bucket structure while destroying the code/target association, a multiset-multiplicity report that detects patient-fingerprint collapse, and a slot-geometry summary. The runner rebuilds each arm host from the saved final checkpoint, re-runs inference on the training and validation folds, and evaluates the exact empirical oracle on the held-out fold with two patient-level targets: the survival-bin category and the fixed training-fold reference content-mass vector. Added 13 generated-input tests. No training, no optimizer step, no checkpoint modification.",
+    "paths_commit": {
+      "base_HEAD": "fa40171b058f37699cd7be3aa410507d46d0136f",
+      "module": "slotspe_proof/crossview_deletion.py",
+      "runner": "scripts/check_slotspe_crossview_deletion.py",
+      "tests": "tests/test_crossview_deletion.py",
+      "source_run": "local_evidence/crossview_quick_blca_uni2h_fold0_seed3_run01",
+      "output_root": "local_evidence/crossview_deletion_diagnostics_20261029",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "generated_tests": "13 new pytest items passed (tests/test_crossview_deletion.py), covering deterministic codebook fitting, cluster recovery, permutation invariance of the oracle, zero gap for redundant slots, positive gap when a deleted slot is the only distinguishing evidence, null-control reproducibility, multiset multiplicity reporting and geometry summary.",
+      "pre_existing_test_suite": "59 crossview tests still pass; the 9-item pure arithmetic math gate still passes.",
+      "host_rebuild_exactness": "For B0_native, V2_separate and V2_crossview_train the rebuilt host reproduces the stored raw_repeat_00.pt logits and slot tensors with max absolute difference 0.000e+00, so the diagnostic uses the trained weights and not a fresh initialization.",
+      "plan_mode": "scripts/check_slotspe_crossview_deletion.py --plan prints the full plan and loads no patient data and no checkpoint.",
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, RTX 5090 sm_120, conda env trisurv, torch 2.10.0+cu128",
+      "patient_training_runs": 0,
+      "optimizer_steps": 0,
+      "checkpoints_loaded": 4,
+      "patient_inference_passes": 8,
+      "inference_note": "Two passes per arm: the training fold supplies codebook vectors with the original sampled bag, the validation fold supplies the evaluated slots with the full real bag, matching the stored evaluation tensors.",
+      "oracle_population": "validation_fold",
+      "codebook_population": "training_fold_only",
+      "codebook_sizes": [
+        2,
+        4,
+        8
+      ],
+      "slot_spaces": [
+        "native",
+        "private",
+        "content"
+      ],
+      "permutation_null_repeats": 8,
+      "elapsed_seconds": 277,
+      "compute_control_identity": "The full diagnostic dictionary of V2_crossview_compute is byte-identical to V2_separate, confirming the auxiliary graph changed no trained weights and no slot geometry.",
+      "slot_geometry_validation_fold_wsi": {
+        "B0_native_native": {
+          "mean_cosine": 0.9971,
+          "mean_max_cosine": 0.9992,
+          "fraction_cosine_above_0.9": 1.0,
+          "mean_effective_rank": 1.005
+        },
+        "V2_separate_native": {
+          "mean_cosine": 0.9846,
+          "mean_max_cosine": 0.9962,
+          "fraction_cosine_above_0.9": 0.999,
+          "mean_effective_rank": 1.028
+        },
+        "V2_separate_private": {
+          "mean_cosine": 0.9858,
+          "mean_max_cosine": 0.9967,
+          "fraction_cosine_above_0.9": 0.998,
+          "mean_effective_rank": 1.025
+        },
+        "V2_separate_content": {
+          "mean_cosine": 0.9828,
+          "mean_max_cosine": 0.9971,
+          "fraction_cosine_above_0.9": 0.995,
+          "mean_effective_rank": 1.031
+        },
+        "V2_crossview_train_native": {
+          "mean_cosine": 0.9815,
+          "mean_max_cosine": 0.9956,
+          "fraction_cosine_above_0.9": 0.996,
+          "mean_effective_rank": 1.033
+        },
+        "V2_crossview_train_private": {
+          "mean_cosine": 0.9817,
+          "mean_max_cosine": 0.996,
+          "fraction_cosine_above_0.9": 0.993,
+          "mean_effective_rank": 1.033
+        },
+        "V2_crossview_train_content": {
+          "mean_cosine": 0.9771,
+          "mean_max_cosine": 0.996,
+          "fraction_cosine_above_0.9": 0.979,
+          "mean_effective_rank": 1.041
+        }
+      },
+      "deletion_gap_versus_permutation_null": {
+        "summary": "Of the 48 arm/space/codebook/target cells, 6 gaps exceed the maximum of their own 8-repeat permutation null: 2 of 6 for B0_native (native space, codebook 4 and 8, category target), 1 of 18 for V2_separate (content space, codebook 4, category), 1 of 18 for V2_crossview_compute (identical cell), and 2 of 18 for V2_crossview_train (native and private space, codebook 4, category). Every MSE-target cell is at or below its permutation null.",
+        "interpretation": "The surviving cells are sparse: their code multisets have only 11 to 14 distinct buckets over 77 patients and 5 to 7 singleton drop buckets. The category target has four bins over 77 patients, so the conditional tables are close to a lookup. These cells are consistent with bucket memorization rather than with slot content information.",
+        "examples": {
+          "B0_native_native_codebook4_category": {
+            "gap": 0.049007,
+            "null_mean": 0.032074,
+            "gap_minus_null": 0.016934,
+            "distinct_multisets": 14,
+            "drop_singleton_buckets": 7
+          },
+          "B0_native_native_codebook8_category": {
+            "gap": 0.054239,
+            "null_mean": 0.036472,
+            "gap_minus_null": 0.017768,
+            "distinct_multisets": 21,
+            "drop_singleton_buckets": 15
+          },
+          "V2_separate_content_codebook4_category": {
+            "gap": 0.054075,
+            "null_mean": 0.044208,
+            "gap_minus_null": 0.009867,
+            "distinct_multisets": 14,
+            "drop_singleton_buckets": 5
+          },
+          "V2_crossview_train_native_codebook4_category": {
+            "gap": 0.038639,
+            "null_mean": 0.02907,
+            "gap_minus_null": 0.009569,
+            "distinct_multisets": 13,
+            "drop_singleton_buckets": 7
+          },
+          "V2_crossview_train_private_codebook4_category": {
+            "gap": 0.027687,
+            "null_mean": 0.019213,
+            "gap_minus_null": 0.008474,
+            "distinct_multisets": 11,
+            "drop_singleton_buckets": 7
+          }
+        }
+      },
+      "multiset_structure": "Across arms, spaces and codebook sizes the 8-slot code multiset is far from unique per patient: the distinct-multiset fraction ranges from 5.2 percent (codebook 2) to 42.9 percent (codebook 8 in the V2_crossview_train content space), and the largest single multiset holds 8 to 42 of the 77 patients. The fraction of patients whose multiset is unique is 0 to 24.7 percent. So the slots did not collapse into a per-patient fingerprint at this checkpoint, and the deletion gaps are not explained by fingerprint uniqueness either.",
+      "raw_receipt_sha256": {
+        "summary.json": "fd85a9433c5cc416b6c3a309316e0d4b649e00e4c134faac7969560fadc8c4dc",
+        "arm_B0_native.json": "bef058349dfad21d5040cf3e62c3d29bfe9fed2ffc03b5c4d8f7469e6e81b287",
+        "arm_V2_separate.json": "13af6eaa1ac75a5b4d71827d22ce731b095fa7f7031e5973040323c964746ea1",
+        "arm_V2_crossview_compute.json": "b03399b24b37d7d94b8efd87776c395677b312637a133d4ae1c1cde3c02f4424",
+        "arm_V2_crossview_train.json": "91c5990207a90af4edf5547728b2c5d56cd4d011e69f7753b73a13e25997b608",
+        "slotspe_proof/crossview_deletion.py": "74265d4461975ae43ab2522763548d929a7a3b4df7353d58e4456f7117fa9915",
+        "scripts/check_slotspe_crossview_deletion.py": "3dc33fda8d91137dc9300d4e12849148eee6beeb6048cc2a0d06adcbc4f2b7ce",
+        "tests/test_crossview_deletion.py": "47c3a737c434ad45b902a8810d9805822762b0026faa9807b185c1aeaca98efa"
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "checkpoints_or_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "slot_collapse_is_real_and_extreme": "On this checkpoint the eight slots of a patient are nearly identical. Mean pairwise cosine is 0.977 to 0.997, the fraction of slot pairs with cosine above 0.9 is 0.979 to 1.000, and the effective rank of the slot Gram matrix is 1.005 to 1.041 out of eight. The native baseline is the most collapsed (cosine 0.997, effective rank 1.005); the V2 and cross-view arms are slightly less collapsed but essentially at the same level. This is a descriptive geometry observation, consistent with the pre-existing redundancy reports, and it is not a clinical endpoint.",
+      "deletion_information_is_not_established": "The exact empirical deletion gap never clearly exceeds the sparsity null. The six surviving cells are all category-target cells with 11 to 14 buckets over 77 patients and four survival bins, i.e. the tables are close to a lookup, and the same effect is present in the native baseline arm that has no cross-view mechanism at all. Every continuous-target cell is at or below its null. So this probe does not show that deleting a slot removes patient-specific information from the remaining slots; it also does not show that the slots carry none.",
+      "cross_view_did_not_fix_collapse": "The V2_crossview_train arm has the lowest slot cosine (0.977 in the content space) and the highest effective rank (1.041) of the four arms, a difference of the order of 0.02 in cosine and 0.03 in effective rank. The cross-view objective therefore produced no material change in slot geometry at this budget.",
+      "interpretation_boundary": "Single fold, single seed, three epochs, 256 sampled patches, fixed final-epoch checkpoint. The oracle is an in-sample empirical quantity over 77 held-out patients. None of this establishes patient harm, correction efficacy, population generalization, or that the slots are information-free; it only reports that this particular measurement could not separate information from bucket sparsity at this sample size."
+    },
+    "gaps_reasons": "Seventy-seven held-out patients split into at most 42 distinct code multisets, with the survival target having only four bins, so the conditional tables are sparse and close to a lookup; the permutation null absorbs most of the apparent gap and the surviving cells are not distinguishable from the native baseline, which has no reconstruction mechanism. The oracle is an in-sample empirical optimum, not a population quantity, and it quantizes continuous slots into at most eight codes, so it cannot resolve continuous-slot uniqueness. The measurement was made on the deliberately tiny quick checkpoint; a larger budget could change the slot geometry that the whole diagnostic depends on. The geometry metrics are descriptive and are not clinical endpoints. No training was run, so nothing here measures whether a larger budget would create deletable patient information.",
+    "next_action_user_inputs": "The deletion oracle did not settle the premise at this sample size, so the choice is between (a) enlarging the budget (30 epochs, 4096 patches, 20 repeats, more folds and seeds) and repeating the same diagnostics on that checkpoint, which would test whether the observed near-total slot collapse is a consequence of the tiny budget, (b) enlarging the evaluated population within the current fold by evaluating the oracle on the training fold as well, which trades a held-out guarantee for bucket density, or (c) accepting that the current measurement cannot separate information from sparsity and moving to a capacity scan or multi-seed training instead. Recommend (a) with at least two more folds, because every diagnostic in this line depends on the slot geometry of the checkpoint being measured. Do not treat the near-total collapse as a clinical result and do not treat the surviving deletion cells as evidence of slot information."
+  },
+  "latest_pushed_commit_remote_confirmation_20261029": {
+    "recorded_at": "2026-10-29T18:25:00+08:00",
+    "route_task": "Independent remote confirmation that the delivered commit fa40171 is actually present on the server-facing remote",
+    "user_steering": "User is responsible for push and for the server-side pull/execution; the previous round reported push success but the follow-up remote query failed on the network, so the confirmation had to be redone independently.",
+    "status": "remote_presence_of_pushed_commit_confirmed_independently",
+    "completed_work": "Re-ran the remote checks that had failed on the network last round and confirmed the pushed commit by two independent channels. First, 'git ls-remote origin' now returns fa40171b058f37699cd7be3aa410507d46d0136f for both HEAD and refs/heads/main. Second, an anonymous HTTPS clone (--depth 1, no credentials, no SSH key) into a fresh temporary directory checked out the same full commit id, which proves the commit is reachable by the exact command that was sent to the server side. The cloned tree passed the delivery manifest check (ok=true, covered_files=466, findings=[]) and 'run_slotspe_crossview.py --quick --plan' exited 0 with the four-arm matched plan, so the delivered tree is self-consistent without any private local state. A separate check confirmed that every execution-relevant tracked file in the local working tree is identical to the pushed commit; the only local differences are docs/PROGRESS.json and DELIVERY_MANIFEST.json. The read-only '--quick --doctor' check was also executed locally and returned ok=true with 4 metadata file hashes, 8 original-source python hashes, features_directory_exists=true, patient_arrays_loaded=false and models_constructed=false, which is the same command sequence the server side was asked to run. The slot-deletion diagnostic that ran afterwards is recorded separately under latest_crossview_deletion_diagnostics_20261029 and is not duplicated here.",
+    "paths_commit": {
+      "pushed_commit": "fa40171b058f37699cd7be3aa410507d46d0136f",
+      "remote_url_https": "https://github.com/LDT-von/slot-attention.git",
+      "remote_visibility": "public, confirmed by the unauthenticated GitHub API and by a credential-free clone",
+      "verified_remote_refs": "HEAD and refs/heads/main both at fa40171b058f37699cd7be3aa410507d46d0136f",
+      "other_remote_branch_present": "refs/heads/codex/server-slotspe-evidence-20261020 at 35b3d1e52d2c367fef49c781b3bf0b64af66b0b1",
+      "server_side_checkout_command": "git clone https://github.com/LDT-von/slot-attention.git slotspe-crossview-quick-fa40171 && git checkout --detach fa40171b058f37699cd7be3aa410507d46d0136f",
+      "note": "No patient artifacts, weights or per-patient predictions were staged or transmitted; the check used only Git object transfer and the public source tree."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "remote_ref_query": "git ls-remote origin -> fa40171b058f37699cd7be3aa410507d46d0136f HEAD; fa40171b058f37699cd7be3aa410507d46d0136f refs/heads/main; 35b3d1e52d2c367fef49c781b3bf0b64af66b0b1 refs/heads/codex/server-slotspe-evidence-20261020",
+      "https_clone_exit_code": 0,
+      "https_clone_head": "fa40171b058f37699cd7be3aa410507d46d0136f",
+      "https_clone_depth": 1,
+      "cloned_tree_manifest_check": "scripts/check_delivery_manifest.py --check --require-tracked -> ok=true, covered_files=466, self_excluded=DELIVERY_MANIFEST.json, findings=[]",
+      "cloned_tree_quick_plan": "python -B scripts/run_slotspe_crossview.py --quick --plan -> exit 0, four arms B0_native / V2_separate / V2_crossview_compute / V2_crossview_train, epochs=3, patches=256, eval_repeats=3, folds=[0], seeds=[3], checkpoint_selection=fixed_final_epoch_no_validation_selection, patient_work_executed=false",
+      "local_tree_vs_pushed_commit": "git diff fa40171 --name-only -> only docs/PROGRESS.json and DELIVERY_MANIFEST.json; no execution-relevant file differs",
+      "quick_doctor_local": "python -B scripts/run_slotspe_crossview.py --quick --doctor -> ok=true, 4 metadata files hashed, 8 original-source python hashes, features_directory_exists=true, patient_arrays_loaded=false, models_constructed=false, torch 2.6.0+cu124 with cuda_available=true",
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "push_is_real": "The commit id given to the server side is present on the remote under both HEAD and main, and is reachable by a credential-free HTTPS clone, so the server-side checkout command will resolve the exact requested id.",
+      "delivered_tree_is_self_consistent": "The cloned tree passes the delivery manifest check and prints the expected four-arm plan with no private local state, so a fresh server checkout can run --quick --plan and --quick --doctor before any patient access.",
+      "interpretation_boundary": "This confirms delivery and reproducibility of the code only. It says nothing about patient performance, and the quick pilot numbers remain a single-fold single-seed exploratory probe that cannot support any clinical or generalization claim."
+    },
+    "gaps_reasons": "The confirmation covers source delivery only. No patient execution was performed on the server side in this stage, so the server's own environment, GPU availability, metadata and feature paths remain unverified there; the doctor must pass on the server before --quick --run is issued. The local --quick --doctor was run in the system Python environment (torch 2.6.0+cu124), while the completed quick pilot itself ran in the conda env trisurv (torch 2.10.0+cu128) on an RTX 5090; a torch build without sm_120 kernels fails at the first CUDA forward, so the server must use a CUDA build matching its own GPU. No code, configuration or protocol was changed by this stage.",
+    "next_action_user_inputs": "On the server side, in a new directory, clone and check out the commit, run --quick --plan and --quick --doctor, set SLOTSPE_METADATA_ROOT and SLOTSPE_FEATURES_ROOT if the doctor reports unresolved input paths, confirm the CUDA build matches the GPU, and only then run --quick --run. Report the four arm summaries, the two cross-view crossview_eval.json files, the run status and any error text; do not upload patient identifiers, features, weights or per-patient predictions to Git. The slot-deletion diagnostic is still unpushed and needs a separate decision before the server can run it."
   }
 }
