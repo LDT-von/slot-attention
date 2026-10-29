@@ -5822,8 +5822,10 @@
       "remote_visibility": "public, confirmed by the unauthenticated GitHub API and by a credential-free clone",
       "verified_remote_refs": "HEAD and refs/heads/main both at fa40171b058f37699cd7be3aa410507d46d0136f",
       "other_remote_branch_present": "refs/heads/codex/server-slotspe-evidence-20261020 at 35b3d1e52d2c367fef49c781b3bf0b64af66b0b1",
-      "server_side_checkout_command": "git clone https://github.com/LDT-von/slot-attention.git slotspe-crossview-quick-fa40171 && git checkout --detach fa40171b058f37699cd7be3aa410507d46d0136f",
-      "note": "No patient artifacts, weights or per-patient predictions were staged or transmitted; the check used only Git object transfer and the public source tree."
+      "server_side_checkout_command": "git clone https://github.com/LDT-von/slot-attention.git slotspe-crossview-quick-fa40171 && git checkout --detach fa40171b058f37699cd7be3aa410507d46d0136f (or c6f3a31064e17be94e02ca32af6ad96bcc7fb6f3 to include the deletion diagnostic)",
+      "note": "No patient artifacts, weights or per-patient predictions were staged or transmitted; the check used only Git object transfer and the public source tree.",
+      "later_pushed_commit": "c6f3a31064e17be94e02ca32af6ad96bcc7fb6f3",
+      "later_commit_contains": "c6f3a31 adds the slot-deletion diagnostic on top of fa40171; git merge-base --is-ancestor confirms fa40171 is an ancestor of c6f3a31, so a server checkout of fa40171 remains valid and reproducible, and a checkout of c6f3a31 additionally carries the diagnostic."
     },
     "checks_actual_execution_raw_receipt": {
       "remote_ref_query": "git ls-remote origin -> fa40171b058f37699cd7be3aa410507d46d0136f HEAD; fa40171b058f37699cd7be3aa410507d46d0136f refs/heads/main; 35b3d1e52d2c367fef49c781b3bf0b64af66b0b1 refs/heads/codex/server-slotspe-evidence-20261020",
@@ -5839,14 +5841,19 @@
       "original_source_modified": false,
       "historical_reports_modified": false,
       "queue_or_abc_definition_changed": false,
-      "patient_artifacts_staged": false
+      "patient_artifacts_staged": false,
+      "later_remote_ref_query": "git ls-remote origin -> c6f3a31064e17be94e02ca32af6ad96bcc7fb6f3 for HEAD and refs/heads/main; fa40171 remains reachable as an ancestor.",
+      "later_https_clone_head": "c6f3a31064e17be94e02ca32af6ad96bcc7fb6f3",
+      "later_cloned_tree_manifest_check": "scripts/check_delivery_manifest.py --check --require-tracked -> ok=true, covered_files=469, findings=[]",
+      "later_cloned_tree_quick_plan": "python -B scripts/run_slotspe_crossview.py --quick --plan -> exit 0 in the fresh clone",
+      "full_public_test_suite": "python -B -m pytest tests/ -q -> 637 passed, 1 pre-existing CUDA fork_rng warning, 0 failed, 0 skipped (the suite must be scoped to tests/; an unscoped run collects pytest scratch copies inside local_evidence/pytest_tmp and errors on duplicate test module basenames, which is a collection artifact and not a test failure)"
     },
     "observed_but_not_claimed": {
       "push_is_real": "The commit id given to the server side is present on the remote under both HEAD and main, and is reachable by a credential-free HTTPS clone, so the server-side checkout command will resolve the exact requested id.",
       "delivered_tree_is_self_consistent": "The cloned tree passes the delivery manifest check and prints the expected four-arm plan with no private local state, so a fresh server checkout can run --quick --plan and --quick --doctor before any patient access.",
       "interpretation_boundary": "This confirms delivery and reproducibility of the code only. It says nothing about patient performance, and the quick pilot numbers remain a single-fold single-seed exploratory probe that cannot support any clinical or generalization claim."
     },
-    "gaps_reasons": "The confirmation covers source delivery only. No patient execution was performed on the server side in this stage, so the server's own environment, GPU availability, metadata and feature paths remain unverified there; the doctor must pass on the server before --quick --run is issued. The local --quick --doctor was run in the system Python environment (torch 2.6.0+cu124), while the completed quick pilot itself ran in the conda env trisurv (torch 2.10.0+cu128) on an RTX 5090; a torch build without sm_120 kernels fails at the first CUDA forward, so the server must use a CUDA build matching its own GPU. No code, configuration or protocol was changed by this stage.",
-    "next_action_user_inputs": "On the server side, in a new directory, clone and check out the commit, run --quick --plan and --quick --doctor, set SLOTSPE_METADATA_ROOT and SLOTSPE_FEATURES_ROOT if the doctor reports unresolved input paths, confirm the CUDA build matches the GPU, and only then run --quick --run. Report the four arm summaries, the two cross-view crossview_eval.json files, the run status and any error text; do not upload patient identifiers, features, weights or per-patient predictions to Git. The slot-deletion diagnostic is still unpushed and needs a separate decision before the server can run it."
+    "gaps_reasons": "The confirmation covers source delivery only. No patient execution was performed on the server side in this stage, so the server's own environment, GPU availability, metadata and feature paths remain unverified there; the doctor must pass on the server before --quick --run is issued. The local --quick --doctor was run in the system Python environment (torch 2.6.0+cu124), while the completed quick pilot itself ran in the conda env trisurv (torch 2.10.0+cu128) on an RTX 5090; a torch build without sm_120 kernels fails at the first CUDA forward, so the server must use a CUDA build matching its own GPU. No code, configuration or protocol was changed by this stage. The deletion diagnostic that was unpushed at the time of the first confirmation has since been committed and pushed as c6f3a31, so the server can now run it after checking out that commit.",
+    "next_action_user_inputs": "On the server side, in a new directory, clone and check out the commit, run --quick --plan and --quick --doctor, set SLOTSPE_METADATA_ROOT and SLOTSPE_FEATURES_ROOT if the doctor reports unresolved input paths, confirm the CUDA build matches the GPU, and only then run --quick --run. Report the four arm summaries, the two cross-view crossview_eval.json files, the run status and any error text; do not upload patient identifiers, features, weights or per-patient predictions to Git. If the deletion diagnostic is also wanted on the server, check out c6f3a31 and run scripts/check_slotspe_crossview_deletion.py --plan and then --run against the completed quick output; it refuses to overwrite an existing output directory."
   }
 }
