@@ -5855,5 +5855,130 @@
     },
     "gaps_reasons": "The confirmation covers source delivery only. No patient execution was performed on the server side in this stage, so the server's own environment, GPU availability, metadata and feature paths remain unverified there; the doctor must pass on the server before --quick --run is issued. The local --quick --doctor was run in the system Python environment (torch 2.6.0+cu124), while the completed quick pilot itself ran in the conda env trisurv (torch 2.10.0+cu128) on an RTX 5090; a torch build without sm_120 kernels fails at the first CUDA forward, so the server must use a CUDA build matching its own GPU. No code, configuration or protocol was changed by this stage. The deletion diagnostic that was unpushed at the time of the first confirmation has since been committed and pushed as c6f3a31, so the server can now run it after checking out that commit.",
     "next_action_user_inputs": "On the server side, in a new directory, clone and check out the commit, run --quick --plan and --quick --doctor, set SLOTSPE_METADATA_ROOT and SLOTSPE_FEATURES_ROOT if the doctor reports unresolved input paths, confirm the CUDA build matches the GPU, and only then run --quick --run. Report the four arm summaries, the two cross-view crossview_eval.json files, the run status and any error text; do not upload patient identifiers, features, weights or per-patient predictions to Git. If the deletion diagnostic is also wanted on the server, check out c6f3a31 and run scripts/check_slotspe_crossview_deletion.py --plan and then --run against the completed quick output; it refuses to overwrite an existing output directory."
+  },
+  "latest_redundancy_slot_deletion_probe_20261029": {
+    "recorded_at": "2026-10-29T22:20:00+08:00",
+    "route_task": "SlotSPE / P7.3 / read-only probe of the completed 30-epoch 4096-patch 20-repeat five-fold redundancy queue: do the stored per-patient slots carry patient-specific content information that the quick-pilot checkpoint did not?",
+    "user_steering": "User confirmed the read-only best.pt / slot-tensor verification and authorized the zero-training-cost probe.",
+    "status": "completed_read_only_probe_no_patient_specific_slot_information_established_and_a_geometry_instability_found",
+    "completed_work": "First verified that the completed 30/4096/20 five-fold best-checkpoint queue already stores the per-patient slot tensors: each folds/<f>/arms/<arm>/raw_validation_repeat_NN.pt holds 77 held-out patients with slots[wsi] and slots[omic] of shape (1, 8, 256), plus the same_noise_donor_slots, final_attention, targets and probe_predictions. best.pt itself holds only state_dict and probe_state_dict, but redundancy_best_engine writes best.pt and then reloads it before the 20 repeated evaluations, so the stored slots are the best-epoch weights' slots. Then implemented scripts/check_slotspe_redundancy_slot_deletion_probe.py, which reads those stored tensors and applies the existing finite-table deletion oracle and permutation null without any model forward. Executed it over 5 folds x 5 arms (S0, R4, R5, R1, R3) x 2 slot spaces x 3 codebook sizes x 2 patient targets: 25 arm-fold results, 300 evaluated cells, 0 model forwards, 0 training runs, 0 optimizer steps. Independently recomputed the slot geometry from the stored tensors and it matches the queue's own recorded slot_diagnostics (fold 0 / S0 / wsi: recomputed cosine 0.8499 and effective rank 1.3929 versus recorded 0.8458 and 1.4093).",
+    "paths_commit": {
+      "probe_script": "scripts/check_slotspe_redundancy_slot_deletion_probe.py",
+      "probe_output_root": "local_evidence/redundancy_slot_deletion_probe_all_20261029",
+      "source_queue_root": "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01",
+      "oracle_module": "slotspe_proof/crossview_deletion.py",
+      "note": "All patient slot tensors, per-patient targets and derived products stay in the ignored local_evidence directory and were not staged."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, RTX 5090 sm_120, conda env trisurv (torch 2.10.0+cu128); CPU only, no CUDA forward",
+      "model_forwards": 0,
+      "training_runs": 0,
+      "optimizer_steps": 0,
+      "arm_fold_results": 25,
+      "evaluated_cells": 300,
+      "codebook_sizes": [
+        2,
+        4,
+        8
+      ],
+      "permutation_null_repeats": 8,
+      "codebook_population": "evaluated_held_out_population (the redundancy queue stored slots only for the held-out fold, so the training-fold codebook of the cross-view diagnostic is not available here)",
+      "geometry_independently_recomputed": {
+        "fold0_S0_wsi": {
+          "recomputed_cosine": 0.8499,
+          "recomputed_effective_rank": 1.3929,
+          "recorded_cosine": 0.8458,
+          "recorded_effective_rank": 1.4093
+        },
+        "fold0_S0_omic": {
+          "recomputed_cosine": 0.7078,
+          "recomputed_effective_rank": 1.6414
+        },
+        "fold0_R5_wsi": {
+          "recomputed_cosine": 0.1257,
+          "recomputed_effective_rank": 5.1517,
+          "recorded_cosine": 0.1325,
+          "recorded_effective_rank": 5.0878
+        }
+      },
+      "cells_exceeding_permutation_null_max": {
+        "S0": {
+          "wsi_category": "2/15",
+          "wsi_mse": "0/15",
+          "omic_category": "3/15",
+          "omic_mse": "1/15"
+        },
+        "R4": {
+          "wsi_category": "0/15",
+          "wsi_mse": "1/15",
+          "omic_category": "0/15",
+          "omic_mse": "1/15"
+        },
+        "R5": {
+          "wsi_category": "0/15",
+          "wsi_mse": "2/15",
+          "omic_category": "0/15",
+          "omic_mse": "0/15"
+        },
+        "R1": {
+          "wsi_category": "0/15",
+          "wsi_mse": "3/15",
+          "omic_category": "2/15",
+          "omic_mse": "0/15"
+        },
+        "R3": {
+          "wsi_category": "1/15",
+          "wsi_mse": "0/15",
+          "omic_category": "2/15",
+          "omic_mse": "2/15"
+        }
+      },
+      "raw_receipt_sha256": {
+        "probe/result_fold0_R1.json": "f54dc96b37b48f665b68a57edd7afa9ece635478ff1afbe7ed22f4021ff88e35",
+        "probe/result_fold0_R3.json": "943f5d8f60237181430ac29fc2fab304a47c4f5245e5f6885bb28a04d7879547",
+        "probe/result_fold0_R4.json": "72fe210fc4b6b6cc92a93745ec05264a2a9a2fc93f886f9d13b5c83aad099561",
+        "probe/result_fold0_R5.json": "7201930938e39b4e171678a6a604dfadada06c86b30012ea039bb0480a929e45",
+        "probe/result_fold0_S0.json": "4183b4ea7815de83621af5d614116dade9d0877618ed8ddb7515973a26510689",
+        "probe/result_fold1_R1.json": "d1daf6bb520d1f1139f60bad36ccde2b9a882394734c8572cc72f180a6789e5b",
+        "probe/result_fold1_R3.json": "996a74ed6fecab0d4d6ae6abeab11b96a4e4f9793ade94c7eeb6442cf32f3d23",
+        "probe/result_fold1_R4.json": "81328ccd70c535e28c5629ff46f54811f9a7e1732dd36edb8486e8fe1ac4d317",
+        "probe/result_fold1_R5.json": "154f7629583e061c4b145ecd8d15b6cacb68a2682e80d672f01d64b532f36787",
+        "probe/result_fold1_S0.json": "776c8e52d1fcc32da561e2ed9bff8107285fcc6963988aeea985bbcb4494afd3",
+        "probe/result_fold2_R1.json": "6885f2c9714e5ba7a88fc27564054aa903a09b645041d2b8c42172107851faad",
+        "probe/result_fold2_R3.json": "430fa63eae980b39efa133f0b7267136ffe2bc96e569622896e99cc946794f7c",
+        "probe/result_fold2_R4.json": "43b653fa386782b6ab54c89996f0bca52013e2f2c9ce037f46c5419ca23f94fe",
+        "probe/result_fold2_R5.json": "8c224857986500dd0acc7d47af6535f2ee1e4cd8c463bcbedcfa5a2579aae40b",
+        "probe/result_fold2_S0.json": "b4cc7e11656d86fb29c6f7c6b792bceb2323f63f8a605fdaa544bed48d28b137",
+        "probe/result_fold3_R1.json": "17b5377985d51faa877b1e6553dd9ac55e635014ec5e46c269c9cc463e068cb7",
+        "probe/result_fold3_R3.json": "a6a22e1d452bb2dd53614cb2972f714bc58ebced26044a02a609b241f26a6be5",
+        "probe/result_fold3_R4.json": "7294eafd3b5d2a5fccd0b31a7a28852b3373837f66622c1f03aed309c22ce12d",
+        "probe/result_fold3_R5.json": "47a988766e435ab0ae8270422f2856ca9177e574e93fdaae6930b61ec1fbb0cb",
+        "probe/result_fold3_S0.json": "2b21a52183f733af22aef8e366e54ffcc72013011bbf1a8a98a2bfa967234c69",
+        "probe/result_fold4_R1.json": "695c3662cecfcbb9a20d49e998bd3f4adfbc6673d84e8ba2f50f98e266740c8f",
+        "probe/result_fold4_R3.json": "de09b5fc50c58307d7e3c4c8a5cdaed61fd2337096c017aa96839359a5b7111e",
+        "probe/result_fold4_R4.json": "fc35a45ff38284f7c4442e203636e2cbada470e8a1bbd77c1bff728c3e209311",
+        "probe/result_fold4_R5.json": "535500a1f6c4fa5f59294609202796f02567f2b6ddc4be78f2e5e968e2862d83",
+        "probe/result_fold4_S0.json": "7bc5dbba49cffd3e8a10777118f4cfb611d7b9cdadad952eb82952e8ba1824e6",
+        "probe/summary.json": "a5460864d4a23b84a4c54fb45912f52477bae242dde6ae1bce1dc722dcdc183c"
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "checkpoints_or_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "patient_specific_slot_information_is_not_established_at_the_full_budget_either": "The deletion gap still does not clear its own permutation null in a systematic way. Across 300 evaluated cells, at most 3 of 15 cells per arm/space/target exceed the null maximum, and those exceptions are spread over different folds and codebook sizes without a consistent arm, space or target. The baseline S0 is not distinguishable from the modified arms. The continuous content target is at or below its null in 22 of 40 arm/space/target combinations.",
+      "lower_redundancy_does_not_buy_more_information": "R5 has the lowest slot redundancy (fold 0 and fold 4 effective rank 5.09 and 4.90, cosine 0.13 and 0.18) yet its category-target gap-minus-null mean is -0.001145 over 15 wsi cells with 0 of 15 exceeding the null, so spreading the slots apart did not make them carry more patient-specific content. This is consistent with the earlier 55-arm finding that redundancy and performance are negatively related: neither the direction 'fix the redundancy and the slots become informative' nor the direction 'the redundancy is harmful' is supported.",
+      "the_slot_geometry_is_unstable_across_folds_and_this_is_the_real_obstacle": "The same arm and the same budget produce very different geometry on different folds. S0 wsi effective rank is 1.409, 1.008, 1.063, 1.188, 1.053 over folds 0-4 and R5 is 5.088, 1.030, 1.107, 1.134, 4.899. Only folds 0 and 4 give R5 a genuinely uncollapsed slot set; on folds 1, 2 and 3 R5 collapses as badly as the baseline. Any claim about slot quality that is not averaged over folds therefore describes a training accident, not a mechanism. This also means the earlier five-fold geometry averages (R5 effective rank 2.651) are a mean over a bimodal outcome and should not be read as a stable arm property.",
+      "read_overlap_does_not_track_slot_similarity": "R5 at folds 0 and 4 has low slot cosine (0.13, 0.18) but a read_overlap of 0.997 and 0.995, the highest of any arm. So the eight slots can differ from each other while still reading the same patch distribution. Slot vector similarity and slot reading behaviour are separate failure axes, and the redundancy objective moved the second without moving the first.",
+      "quick_pilot_collapse_was_a_budget_effect": "The quick pilot's near-total collapse (cosine 0.977-0.997, effective rank 1.005-1.041) is not reproduced at the full budget: fold 0 S0 gives cosine 0.8499 and effective rank 1.3929 from the stored slots. The quick pilot's deletion result therefore measured a degenerate checkpoint and must not be used to reject the reconstruction premise; equally, the full-budget probe does not support that premise either.",
+      "interpretation_boundary": "The codebook is fitted on the evaluated population because the redundancy queue stored slots only for the held-out fold, so absolute gaps are not comparable with the cross-view training-fold-codebook numbers; only the gap-versus-null comparison is meaningful. The oracle is an in-sample empirical optimum over 77 patients with sparse buckets, it quantizes continuous slots into at most eight codes, the content target is a feature proxy rather than a biological label, and every number is single-seed. Nothing here establishes patient harm, correction efficacy, population generalization, or that the slots are information-free."
+    },
+    "gaps_reasons": "The probe reads only the held-out fold, so the codebook cannot be fitted on the training fold and the absolute deletion gaps are weaker than the cross-view diagnostic's; a stricter version would have to re-run the training fold's forward pass to recover a held-out-codebook estimate. The permutation null uses 8 repeats, so the null max itself carries sampling noise, and with 300 cells a handful of exceptions is within the range expected from chance under a null that is only approximately exchangeable. The slot geometry varies strongly between folds, which means the five-fold geometry averages recorded earlier are means over a bimodal outcome rather than stable arm properties. Only repeat 0 was probed, so evaluation randomness in the slots is not characterized beyond the single observation that repeat 1 and 2 produce different slot tensors. No training, no model forward and no new checkpoint was produced, so this stage says nothing about whether a larger budget would create deletable patient information.",
+    "next_action_user_inputs": "The probe answers the question it was built for, and the answer is negative for the reconstruction premise and reveals that slot quality is not a stable fold-level property. The remaining choice is between (a) investigating why the geometry is bimodal across folds, since the fold-0 and fold-4 R5 runs are qualitatively different from folds 1-3 and that instability, not the redundancy objective, is what blocks every conclusion about slot quality, (b) testing a larger seed or fold count to see whether the bimodality is a training-dynamics artifact, or (c) stopping this line and reporting that the slot mechanism's redundancy, its reading behaviour and its content information are three separate axes that none of the current interventions move together. The server side has the four-arm quick pilot to run; that remains independent of this probe."
   }
 }

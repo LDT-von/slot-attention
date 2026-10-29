@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-29T18:16:12.035450+08:00",
-  "base_commit_before_delivery": "c6f3a31064e17be94e02ca32af6ad96bcc7fb6f3",
+  "recorded_at": "2026-10-29T22:09:00.097259+08:00",
+  "base_commit_before_delivery": "b3a70ee4be14cd7f05c819ccba65e37527493a6b",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 469,
-  "repository_file_count_including_manifest": 470,
+  "covered_file_count": 470,
+  "repository_file_count_including_manifest": 471,
   "patient_data_included": false,
   "files": [
     {
@@ -141,8 +141,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 416696,
-      "sha256": "a3cfe41661d4bc8df71192014ec17774e61b9bc99e2c10c37972404a14d75a5c"
+      "bytes": 429560,
+      "sha256": "a48cdbb3bce8e8ad49daca04b88f81089741f5937d101a211855a0ccbe14738e"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -1653,6 +1653,11 @@
       "path": "scripts/check_slotspe_redundancy_delivery.py",
       "bytes": 5098,
       "sha256": "65d760fa7cfc754b60b434fa0b3fa69c7267e93e194de106ae712346e8ef08b4"
+    },
+    {
+      "path": "scripts/check_slotspe_redundancy_slot_deletion_probe.py",
+      "bytes": 12836,
+      "sha256": "3e6336241420b903e221d4489e0e939118ad9d4309f42492e9653612a7a27c3f"
     },
     {
       "path": "scripts/check_slotspe_retained_redundancy.py",
