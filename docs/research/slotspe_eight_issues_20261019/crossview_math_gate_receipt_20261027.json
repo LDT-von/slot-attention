@@ -1,0 +1,75 @@
+{
+  "schema": "crossview_math_gate_v1",
+  "checks": [
+    {
+      "name": "beta_bernoulli_positive_exact",
+      "passed": true,
+      "ordered_sequences": 16,
+      "bayes_mse": "1/8",
+      "baseline_mse": "1/6",
+      "gain": "1/24"
+    },
+    {
+      "name": "perfect_crossview_does_not_prove_patient_difference",
+      "passed": true,
+      "states": 2,
+      "crossview_mse": "0",
+      "patient_bag_mean_variance": "0"
+    },
+    {
+      "name": "disjoint_finite_views_negatively_correlated",
+      "passed": true,
+      "allocations": 90,
+      "covariance": "-1/20"
+    },
+    {
+      "name": "oracle_rejects_weak_drop_decoder_false_positive",
+      "passed": true,
+      "oracle_gap": "0",
+      "fixed_decoder_mse": "1/64"
+    },
+    {
+      "name": "finite_multiset_oracle_nonempty_example",
+      "passed": true,
+      "patients": 3,
+      "oracle_gap": "1/18"
+    },
+    {
+      "name": "quantized_gap_need_not_mean_continuous_slot_uniqueness",
+      "passed": true,
+      "states": 2
+    },
+    {
+      "name": "finite_sample_certificate_can_be_vacuous",
+      "passed": true,
+      "small": {
+        "n": 288,
+        "empirical_gap_nats": 0.6365141682948128,
+        "penalty_nats": 2.1078198797408,
+        "lower_bound_nats": 0
+      },
+      "large": {
+        "n": 9999,
+        "empirical_gap_nats": 0.6365141682948128,
+        "penalty_nats": 0.5177236639113272,
+        "lower_bound_nats": 0.1187905043834856
+      }
+    }
+  ],
+  "passed": 7,
+  "failed": 0,
+  "execution": {
+    "stdlib_arithmetic_only": true,
+    "neural_forwards": 0,
+    "neural_backwards": 0,
+    "patient_data_loads": 0,
+    "training_runs": 0,
+    "server_runs": 0
+  },
+  "limitations": [
+    "The proven positive example assumes a Dirichlet/iid patient distribution.",
+    "The conditional table is an empirical oracle, not a deployed predictor or patient outcome proof.",
+    "Quantized-code information does not establish unique information in original continuous slots."
+  ],
+  "recorded_at": "2026-10-27T18:38:53.015125+08:00"
+}

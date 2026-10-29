@@ -1,0 +1,506 @@
+\documentclass[UTF8,fontset=fandol,11pt,a4paper]{ctexart}
+\usepackage[margin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs,longtable,array}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue]{hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\setlength{\parskip}{4pt}
+\newtheorem{theorem}{定理}[section]
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{范围说明}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\R}{\mathbb R}
+\newcommand{\KL}{D_{\mathrm{KL}}}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\relu}[1]{[#1]_+}
+\title{SlotSPE 内容约束与门控：严格命题、反例及理论门槛}
+\author{研究审查稿}
+\date{2026年10月26日}
+\begin{document}
+\maketitle
+\begin{abstract}
+本稿区分局部算子保证、表达能力、优化保证与患者泛化。
+可严格建立：无目标查询、共享逐槽解码下的内容匹配分离证书，以及在明确条件下的内容可恢复性。
+不能无条件建立：接通ST梯度改善真实离散风险、条件门控优于原版、内容匹配必然保留患者生存信息。
+其中第一项失败命题有标准NLL下的解析反例；全槽cross充分时，任何门控均无Bayes风险改进空间。
+证明经过独立推导复核，配套脚本只作精确算术核查，非Lean/Coq形式化认证。
+未运行模型、患者训练、推理或服务器任务。
+\end{abstract}
+\tableofcontents
+
+\section{对象、假设与判定标准}
+原版位置为\texttt{third\_party/SlotSPE/}。门控先产生单模态辅助预测，
+self分支使用bool mask，cross分支读取全部槽，三分支平均后融合。
+两侧门控仍有辅助生存监督。故本稿不假设未选槽已从最终预测完全消失。
+
+记患者输入为$X$，原生槽为$S$，固定内容代理集合为
+$T(X)=\{t_1,\ldots,t_M\}\subset\R^d$，$M\le K$。
+$T$只代表被定义的特征代理，不先验等于生物事件或生存充分统计量。
+门控策略为$\pi$，其最终实际可见表示记为$R_\pi$，必须包括实际保留的所有旁路。
+总体风险、样本平均、一次优化更新是不同对象。
+
+\begin{center}
+\begin{tabular}{p{0.38\textwidth}p{0.49\textwidth}}
+\toprule
+欲声称的结论 & 本稿判定\\ \midrule
+低内容匹配损失排除完全相同的内容预测 & 成立，有显式逐样本阈值\\
+足够低误差保证匹配槽定量分离 & 成立，需目标间隔与共享Lipschitz解码器\\
+低重构损失普遍证明患者内容进入槽 & 不成立，目标查询及目标缺失信息均有反例\\
+B/C接通梯度扩大表达能力 & 不成立，同前向时函数类相同\\
+ST接通保证真实离散NLL下降 & 不成立，有解析反例\\
+条件集合门控必然优于原版 & 不成立，需另定可核验分布与函数类条件\\
+上述性质保证C-index或患者泛化提升 & 未建立\\ \bottomrule
+\end{tabular}
+\end{center}
+
+\section{内容集合匹配：能严格保证什么}
+固定一个样本，预测$p_i=g(z_i)\in\R^d$，$i=1,\ldots,K$。
+每个槽使用同一个解码器$g$，不读目标查询、槽编号或独立槽头。
+定义覆盖所有目标的单射匹配损失
+\begin{equation}\label{eq:set}
+ L=\frac1{Md}\min_{\sigma:[M]\hookrightarrow[K]}
+ \sum_{j=1}^M\|p_{\sigma(j)}-t_j\|^2 .
+\end{equation}
+有限匹配集合保证最小值存在；这是数学损失，不要求匹配在所有参数处可微。
+
+\begin{theorem}[完全相同预测的精确下界]\label{th:constant}
+若$p_i=a$对全部$i$成立，记$\bar t=M^{-1}\sum_jt_j$，
+$V_T=(Md)^{-1}\sum_j\|t_j-\bar t\|^2$，则
+\[
+ L=\frac{\|a-\bar t\|^2}{d}+V_T\ge V_T.
+\]
+\end{theorem}
+\begin{proof}
+匹配不改变常量预测。将$a-t_j=(a-\bar t)+(\bar t-t_j)$代入，
+交叉项为$2\langle a-\bar t,\sum_j(\bar t-t_j)\rangle=0$。
+除以$Md$即得。
+\end{proof}
+因此逐样本$L<V_T$排除全部预测相同。共享$g$下也排除全部$z_i$相同。
+若$V_T=0$，此证书为空；平均损失低不能逐样本套用该阈值。
+
+\begin{theorem}[定量分离证书，常数紧]\label{th:separation}
+设$2\le M\le K$且$\|t_j-t_\ell\|\ge\delta>0$对$j\ne\ell$成立。
+对式\eqref{eq:set}的任一最优匹配$\sigma^*$，均有
+\begin{equation}\label{eq:sep}
+ \|p_{\sigma^*(j)}-p_{\sigma^*(\ell)}\|
+ \ge \relu{\delta-\sqrt{2MdL}}.
+\end{equation}
+特别地，$L<\delta^2/(2Md)$保证匹配的$M$个预测两两不同。
+若$g$为$L_g$-Lipschitz且$0<L_g<\infty$，则
+\[
+ \|z_{\sigma^*(j)}-z_{\sigma^*(\ell)}\|
+ \ge\frac{\relu{\delta-\sqrt{2MdL}}}{L_g}.
+\]
+\end{theorem}
+\begin{proof}
+令$e_j=\|p_{\sigma^*(j)}-t_j\|$，故$\sum_je_j^2=MdL$。
+三角不等式及Cauchy--Schwarz给出
+\[
+ \|p_{\sigma^*(j)}-p_{\sigma^*(\ell)}\|
+ \ge\delta-e_j-e_\ell
+ \ge\delta-\sqrt{2(e_j^2+e_\ell^2)}
+ \ge\delta-\sqrt{2MdL}.
+\]
+再用距离非负及$\|g(z)-g(z')\|\le L_g\|z-z'\|$。
+紧性取$K=M=2$，在一条坐标轴上令$t_1=-\delta/2,t_2=\delta/2$，
+$p_1=-\delta/2+a,p_2=\delta/2-a$，$0\le a\le\delta/2$。
+此时$L=a^2/d$、距离$\delta-2a=\delta-\sqrt{2MdL}$。
+$a=\delta/2$时发生碰撞且$L=\delta^2/(2Md)$，
+故严格阈值不能改成$\le$。线性$g(z)=L_gz$也使潜变量界取等。
+\end{proof}
+现有内容head为Affine--GELU--Affine。精确GELU满足
+$|\mathrm{GELU}'(x)|\le1+1/\sqrt{2\pi e}$，
+因为$\mathrm{GELU}'(x)=\Phi(x)+x\phi(x)$、$\Phi\le1$且
+$\sup_x|x\phi(x)|=1/\sqrt{2\pi e}$。
+故有限权重下可取$L_g=(1+1/\sqrt{2\pi e})\|W_2\|_2\|W_1\|_2$；
+偏置不改变此界。权重放大可使潜变量分离界变弱，因此不据低内容误差宣称latent正交。
+\begin{corollary}[碰撞比例界]
+若$M,d,\delta$对所有样本统一，事件$E$为最优匹配中至少一对预测相同，则
+\[
+ \Prob(E)\le\min\{1,\,2Md\,\E L/\delta^2\}.
+\]
+\end{corollary}
+\begin{proof}
+定理\ref{th:separation}给出$E\Rightarrow L\ge\delta^2/(2Md)$，
+于是$\ind_E\le2MdL/\delta^2$，取期望。
+\end{proof}
+经验平均只能约束已测样本内比例，不能无附加泛化假设外推总体。
+当$M<K$时，未匹配的$K-M$个槽不受此结论约束。
+欧氏分离不等于低余弦、语义独立或风险信息不同；
+$L_g$很大时潜变量界可以很弱。目标重复使$\delta=0$，不得据数值噪声硬造正间隔。
+
+\section{Query-free内容可恢复性与明确反例}
+\begin{theorem}[条件平方风险恒等式]\label{th:variance}
+令目标$T\in\R^d$平方可积，$A$为解码器可见的公共结构上下文，
+$D=D(Z,A)$平方可积，$\mu=\E[T\mid Z,A]$。
+则
+\[
+ \E\|T-D\|^2=\E\|T-\mu\|^2+\E\|\mu-D\|^2.
+\]
+记$\mu_A=\E[T\mid A]$及$V_A=\E\|T-\mu_A\|^2$。若$Z\perp T\mid A$，则
+$\E\|T-D\|^2\ge V_A$。
+\end{theorem}
+\begin{proof}
+展开$T-D=(T-\mu)+(\mu-D)$，交叉项在给定$(Z,A)$后的条件期望为0。
+若条件独立，$\mu=\mu_A$，代入即得。
+\end{proof}
+只有$V_A>0$时才有非空保证。
+患者ID、目标内容或能恢复目标的查询可能使$V_A=0$；
+\texttt{detach}只切断梯度，不删除查询中的信息。
+
+\begin{proposition}[原生重构头级目标查询反例]\label{pr:query}
+对原生MHA头可以构造：字典槽对所有样本固定，目标符号变化，
+有限参数下余弦损失严格为0，而槽不携带符号信息。
+\end{proposition}
+\begin{proof}
+设$H$头、每头$r$维，总维$d=Hr$。
+取$v=H^{-1/2}(e_1,\ldots,e_1)$，$\|v\|=1$；
+目标$x=tv$，$t\in\{-1,1\}$均匀。固定保留两个槽$\pm v$，
+其他槽被固定mask。于是$I(t;Z)=0$。
+冻结查询为$q_0=Fx+b_0$，只需$Fv\ne0$。
+令$L=v(Fv)^\top/\|Fv\|^2$，故$LFv=v$。
+可训练查询投影取$q=\beta H\sqrt r\,L(q_0-b_0)$，
+键、值及输出投影均为恒等，残差MLP为0。
+每头两个scaled logits恰为$\pm\beta t$，
+故$\widehat x=\tanh(\beta)x$。
+任意有限$\beta>0$在理想余弦定义下均有$1-\cos(x,\widehat x)=0$。
+若实现含归一化epsilon，取$\beta\ge1$即可远离其阈值。
+另一方面
+$\|x-\widehat x\|^2=(1-\tanh\beta)^2>0$且不超过$4e^{-4\beta}$。
+例如$\beta=\log3$时$\tanh\beta=4/5$，MSE为$1/25$。
+\end{proof}
+这是重构头级存在性反例，不证明完整原生槽生成器在真实输入域产生该字典。
+正负目标也不保证是原生WSI投影的可达输出。
+固定mask、可构造MHA参数与自然训练路径须明确区分。
+该反例证明监督不足，不证明患者自然训练确有捷径或预测损害。
+
+\begin{theorem}[固定原型的内容恢复界]\label{th:recovery}
+设$m\ge2$、类别$C\in\{1,\ldots,m\}$，固定目标为$T=t_C(A)$，
+不同类别原型间距至少$\Delta>0$。
+设未按维平均的误差$\mathcal E=\E\|T-D(Z,A)\|^2$。
+对最近原型分类器$\widehat C$有
+\[
+ p_e=\Prob(\widehat C\ne C)\le4\mathcal E/\Delta^2.
+\]
+\end{theorem}
+\begin{proof}
+若分类错误，最近原型性质与三角不等式给出
+$\Delta\le\|t_C-t_{\widehat C}\|\le2\|T-D\|$。
+因此$\ind_{\{\widehat C\ne C\}}\le4\|T-D\|^2/\Delta^2$，取期望。
+\end{proof}
+若$\epsilon=4\mathcal E/\Delta^2\le1-1/m$，条件Fano界进一步给出
+\[
+ I(C;Z\mid A)\ge H(C\mid A)-h_b(\epsilon)-\epsilon\log(m-1).
+\]
+证明为：以错误指标$E$分解条件熵，
+$H(C\mid Z,A)\le h_b(p_e)+p_e\log(m-1)$，
+再用该右侧在$[0,1-1/m]$的单调性。超过此区间只用平凡熵界。
+类别概率$\pi_c>0$时，逐类错误率至多$4\mathcal E/(\pi_c\Delta^2)$，
+故总体小误差不保证稀有内容无遗漏。
+
+\begin{proposition}[集合目标不保证患者特异信息]\label{pr:support}
+即使无目标查询、共享逐槽解码、匹配损失为0且目标有正间隔，
+也不能一般推出所有患者变化或生存相关信息进入槽。
+\end{proposition}
+\begin{proof}
+取8个不同类型向量。两类样本均含全部8个类型，但类型频数不同。
+令$T$只含8个类型中心、不含频数，则两类的无序目标集合相同。
+固定8槽字典解码成这些中心即可使$L=0$，
+但以频数阈值定义的类别标签不能从该常量字典恢复。
+对恰含8个不同类型、每类有正频数的输入，
+最远点初始化在重复类型距离为0时会先覆盖全部类型，
+Lloyd更新中心保持类型值；因此中心集合确会忽略这些频数。
+类似地，无序集合目标无法区分相同多重集的不同空间排列。
+\end{proof}
+这不证明当前目标在患者上丢失信息，只证明不能从其定义推出充分性。
+可训练目标还存在$T_\phi(X)\equiv c,D\equiv c$的零损失反例；
+stop-gradient也不保证目标跨训练步骤固定。
+现有内容参考在原始训练输入上拟合并冻结，避免此特定目标更新捷径，
+但不自动建立语义或任务充分性。
+
+\subsection{只作数学定义的补充目标：类型与频率绑定}
+下面定义尚未接入现有V2，不改变代码或既有对照。
+冻结$K\ge2$个锚$c_j\in\R^{d_c}$及量化器$q$，
+锚间距至少$\gamma>0$。对一个含$N\ge1$个真实token的集合定义
+$p_j=N^{-1}\sum_{n=1}^N\ind_{\{q(x_n)=j\}}$，故$p\in\Delta^{K-1}$。
+补零行不计入此统计；它不改变主模型的原生padding处理。
+取固定$\lambda>0$，令目标$t_j=(c_j,\lambda p_j)$，维度$D=d_c+1$。
+共享query-free解码器输出$(a_i,\lambda\widehat p_i)$，预测与目标均为$K$个，
+用式\eqref{eq:set}的双射版本计算损失$L$，记$E=KDL$。
+
+\begin{theorem}[带类型锚的频率可恢复性]
+若逐样本$E<\gamma^2/4$，则每个预测中心$a_i$的唯一最近锚
+恰为最优匹配所对应的$c_j$；最近锚重排可在不读目标频率$p$的情况下完成。
+按此重排的频率向量满足
+\[
+ \|\widehat p^{\rm ordered}-p\|_2^2\le E/\lambda^2.
+\]
+若再将该向量欧氏投影到概率单纯形，误差不增。
+\end{theorem}
+\begin{proof}
+对任一最优匹配$\sigma$，其每项非负，故
+$\|a_{\sigma(j)}-c_j\|^2\le E<\gamma^2/4$。
+对$\ell\ne j$，
+$\|a_{\sigma(j)}-c_\ell\|\ge\gamma-\|a_{\sigma(j)}-c_j\|>\gamma/2$
+而到$c_j$的距离小于$\gamma/2$，所以最近锚唯一且恢复该双射。
+再由$\lambda^2\sum_j(\widehat p_{\sigma(j)}-p_j)^2\le E$得频率界。
+设$\widetilde p$是$\widehat p^{\rm ordered}$到闭凸单纯形的欧氏投影。
+投影最优性给出
+$\langle\widehat p^{\rm ordered}-\widetilde p,p-\widetilde p\rangle\le0$；
+展开平方可得
+$\|\widehat p^{\rm ordered}-p\|^2
+\ge\|\widehat p^{\rm ordered}-\widetilde p\|^2+\|\widetilde p-p\|^2$，
+故投影误差不增。
+\end{proof}
+若要求频率平方误差至多$\epsilon$，还需$E\le\lambda^2\epsilon$。
+中心阈值本身不保证频率误差很小，尤其不能忽略$\lambda$的尺度。
+结论只保留该量化器对该token集合的频率，
+不自动对应组织面积、细胞丰度、连续形态、空间邻接或生存相关性。
+输入为抽样bag时，不把它的频率等同于全患者频率；抽样误差须另证。
+只证明低损失的含义，不保证该损失对当前槽维度、输入信息和优化器可达。
+
+\begin{proposition}[内容到任务的条件桥接]
+另设$Y\perp X\mid(C,A)$，$Z$由$X$及独立噪声编码，任务损失$0\le\ell\le B$。
+其中$R_Z^*$指观察$(Z,A)$的最优风险，$R_X^*$指观察$(X,A)$的最优风险；
+假设$C$由$(X,A)$确定，各相关Bayes行动存在。
+允许任意可测预测器时，
+\[
+ R_Z^*-R_X^*\le Bp_e\le4B\mathcal E/\Delta^2.
+\]
+\end{proposition}
+\begin{proof}
+令$a^*(C,A)$为知道真实内容的Bayes行动。
+用$a^*(\widehat C,A)$预测；分类正确时行动相同，错误时损失差至多$B$。
+取期望得到相对内容Bayes风险的上界；充分性使内容Bayes风险等于完整输入Bayes风险。
+$Z,A$上的最优行动不劣于这一构造行动，故结论成立。
+\end{proof}
+保证是好预测器的存在性，不保证现有预测头学到它。
+未截断的生存NLL无界，C-index又是配对排序指标，
+均不能直接引用此有界逐样本损失定理。
+
+\section{门控梯度与B/C：可证明的局部事实}
+\begin{proposition}[硬选择局部偏导与期望导数不同]
+固定槽$S$及噪声$\xi$，若第$K$与第$K+1$分数有严格间隔，
+连续打分器在足够小参数邻域内保持相同Top-$K$集合。
+经过此硬选择路径的主损失对打分器专属参数局部偏导为0。
+\end{proposition}
+\begin{proof}
+有限个严格不等式由连续性在某邻域内保留，故集合不变，
+固定$S$下由集合决定的主读出亦不变。
+\end{proof}
+选择边界可不可微；bool转换还使自动微分图失去ST路径，
+参数可能返回\texttt{None}，不等于已经计算出了零张量。
+辅助监督和主损失对上游槽的梯度不在该结论内。
+若$M=\ind_{\{a+G>0\}}$、$G$为logistic噪声，
+逐样本导数几乎处处为0，而$(\E M)'=\sigma(a)(1-\sigma(a))>0$。
+所以不得交换求导和期望以宣称真实风险梯度也为0。
+
+\begin{theorem}[同前向B/C具有相同最优风险]
+若对所有$\theta,x,\omega$均有$F_\theta^B(x,\omega)=F_\theta^C(x,\omega)$，
+且参数域及全部数值目标相同，则B/C函数类、人口目标及其下确界均相同。
+\end{theorem}
+\begin{proof}
+相同参数在两个定义下给出同一随机预测与数值损失；
+逐参数目标相等，取同一参数域下确界仍相等。
+\end{proof}
+B/C改变反向更新规则；不以模型类扩大解释其训练差异。
+A到B则包含读出内容、权重和归一化改变，不是同一个比较。
+
+\section{ST梯度不保证真实NLL下降：解析反例}
+设$b=\log3$，门控参数$a$，$G\sim\operatorname{Logistic}(0,1)$，
+$Y\sim\operatorname{Bernoulli}(11/20)$独立于$G$。
+两个专家logit为$-b,+b$。令
+\[
+ Z=\ind_{\{a+G>0\}},\quad s=\sigma(a+G),\quad
+ p(z)=\sigma((2z-1)b),\quad
+ \ell(z,Y)=-Y\log p(z)-(1-Y)\log(1-p(z)).
+\]
+使用硬前向、$s$的导数反向，温度为1。
+
+\begin{theorem}[平均ST方向与真实风险梯度严格相反]\label{th:st}
+在$a=b$处，真实离散风险$R(a)=\E\ell(Z,Y)$满足
+\[
+ R'(b)=-\frac{3b}{160}<0,\qquad
+ \E g_{\rm ST}=\frac{3b}{40}
+ \left(4\log\frac{32}{27}-\frac12\right)>\frac{3b}{320}>0.
+\]
+因此沿平均ST下降更新严格增加真实风险。
+\end{theorem}
+\begin{proof}
+记$L_z=\E_Y\ell(z,Y)$，有$L_1-L_0=-b/10$，
+$R(a)=L_0-(b/10)\sigma(a)$，在$a=b$时$\sigma(b)=3/4$，
+故真实导数为$-3b/160$。
+
+另一方面$\partial_z\ell=2b(p(z)-Y)$，
+在$z=0,1$的标签平均导数分别为$-3b/5,2b/5$。
+令
+$A=\E[s(1-s)\ind_{\{Z=1\}}]$、
+$B_0=\E[s(1-s)\ind_{\{Z=0\}}]$，于是
+$\E g_{\rm ST}=b(2A-3B_0)/5$。
+用$G=\log(U/(1-U)),\,U\sim\operatorname{Uniform}(0,1)$，
+在$a=b$有
+\[
+ s=\frac{3U}{1+2U},\quad
+ s(1-s)=\frac{3U(1-U)}{(1+2U)^2},\quad Z=\ind_{\{U>1/4\}}.
+\]
+代换$t=1+2U$后的原函数为
+$\frac38(-t+4\log t+3/t)$。
+在$U=0,1/4,1$取端点得到
+\[
+ A=\frac38(4\log2-\tfrac52),\quad
+ B_0=\frac38(4\log\tfrac32-\tfrac32).
+\]
+故$2A-3B_0=\frac38(4\log(32/27)-1/2)$。
+对$x>0$，函数$\log(1+x)-x/(1+x)$从0出发且导数$x/(1+x)^2>0$。
+取$x=5/27$得$\log(32/27)>5/32$，括号严格大于$1/8$，
+完成符号证明。
+$R(a)$在所有实数上严格递减，而平均ST更新降低$a$，
+故任意正步长的该平均更新都严格增加$R$。
+\end{proof}
+\begin{corollary}[随机单步也可在期望上增加真实风险]
+在$a=b$处，充分小步长下$\E[R(a-\eta g_{\rm ST})]>R(a)$。
+显式充分范围可取$0<\eta<1/(10b)$。
+\end{corollary}
+\begin{proof}
+$|R''|\le b/40$，$|g_{\rm ST}|\le3b/8$。
+Taylor界给出
+\[
+ \E[R(a-\eta g_{\rm ST})]-R(a)
+ \ge-\eta R'(a)\E g_{\rm ST}
+      -\frac{9b^3}{5120}\eta^2
+ >\frac{9b^2}{51200}\eta-\frac{9b^3}{5120}\eta^2>0.
+\]
+\end{proof}
+可嵌入全观测两时间bin生存NLL：令$T=0$当$Y=1$，
+$T=1$当$Y=0$，所有样本$c=0$，
+$h_0(z)=p(z)$、$h_1=1/2$。
+原生NLL等于上述$\ell(z,Y)+(1-Y)\log2$，
+附加项不依赖门控，且$c=0$时原生$\alpha$重加权不改变该式。
+本构造相关hazard及生存概率均不小于$1/8$；原生clamp阈值为$10^{-7}<1/8$，故不激活clamp。
+故这并非依靠非标准损失得到的反例。
+它仍只是两专家ST子问题，不是原生8选2完整模型在温度0.01下已发生反向梯度的证据。
+
+\section{条件集合门控：可证范围与无法保证之处}
+\begin{theorem}[对数风险分解与嵌套观察]
+有限标签$Y$和实际观察$R$下，
+\[
+ \E[-\log q(Y\mid R)]
+ =H(Y\mid R)+\E_R\KL(P(Y\mid R)\Vert q(Y\mid R)).
+\]
+不受限预测器的最优风险为$H(Y\mid R)$。
+若新观察完整保留旧观察，$R_1=(R_0,V)$，则
+$R_0^*-R_1^*=I(Y;V\mid R_0)$。
+\end{theorem}
+\begin{proof}
+在对数中乘除真实条件概率，分别得到条件熵与KL项。
+KL非负且在$q=P$处取0；链式条件熵恒等式给出第二式。
+\end{proof}
+同$K$替换一般不嵌套，不能用一个正的条件MI直接宣布收益。
+若$\mathcal F_0\subseteq\mathcal F_1$，一般损失的最优风险弱不劣只来自下确界；
+不保证严格改进、优化成功或有限样本泛化。
+
+\begin{proposition}[边际排序Top-2并非普适集合最优]\label{pr:xor}
+令$U,V$为独立公平比特，$Y=U\oplus V$，
+$N_1,N_2\sim\operatorname{Bernoulli}(1/4)$相互及与$(U,V)$独立。
+候选槽为$U,V,W_1=Y\oplus N_1,W_2=Y\oplus N_2$。
+无有效旁路、固定集合、预算2时，按单槽MI选Top-2严格次优。
+\end{proposition}
+\begin{proof}
+本反例的熵以bit计，$h_2$表示以2为底的二元熵。
+$I(Y;U)=I(Y;V)=0$，$I(Y;W_i)=1-h_2(1/4)>0$，
+故边际排序选择$(W_1,W_2)$。
+但$H(Y\mid U,V)=0$。
+两个$W$一致概率为$5/8$，此时后验错误率为$1/10$；
+不一致概率$3/8$，后验公平，故
+$H(Y\mid W_1,W_2)=\frac58h_2(1/10)+\frac38>0$。
+编码$\widetilde Y=2Y-1$时，后验均值在一致情形绝对值为$4/5$，
+故平方Bayes风险为$1-\frac58(4/5)^2=3/5$；
+$(U,V)$对应风险为0。
+\end{proof}
+槽不是相同变量，$\Prob(W_1\ne W_2)=3/8$；
+但两个噪声测量共享目标信息，不称其完全信息不冗余。
+此例不证明辅助门控等于MI排序，不证明可学习$\phi(s_i)$不能选$(U,V)$，
+更不证明保留全部cross的原版受此损害。
+
+\begin{theorem}[充分cross旁路使门控无Bayes改进空间]\label{th:bypass}
+设$B=B(X)$为始终保留的cross输出，
+$Y\perp X\mid B$，门控所用噪声$\xi$与$(X,Y)$独立。
+其他门控输出$A_\pi$为$(X,\xi)$的函数。
+则$P(Y\mid B,A_\pi)=P(Y\mid B)$，最优对数风险对$\pi$不变。
+\end{theorem}
+\begin{proof}
+独立噪声及充分性给出$P(Y\mid X,\xi)=P(Y\mid B)$。
+对$(B,A_\pi)$条件期望即得结论。
+\end{proof}
+这是对普适严格收益命题的反例，不宣称真实cross已充分。
+若固定网络的最终预测头把self分支权重设为0，
+还可使同一参数下输出对所有mask严格不变。
+有限函数类或计算限制下的收益需另行证明。
+
+动态选择还必须纳入索引通道。若预测器实际看到$(B,A,J,S_J)$，则
+\[
+ I(Y;J,S_J\mid B,A)
+ =I(Y;J\mid B,A)+I(Y;S_J\mid J,B,A).
+\]
+取$Y=U\oplus V$，门控在$Y=0$时选$U$、否则选$V$，
+索引$J$即携带完整$Y$，而被选数值与$Y$独立。
+门控在此从$(U,V)$计算异或，不读取真实标签；
+原生网络若只看到池化输出，必须分析该实际输出，
+不得假装下游可访问额外索引。
+
+\section{源码对应与证明门槛}
+\begin{itemize}
+\item 原生重构头：\texttt{models/SlotSPE.py:72--131}。
+定理\ref{pr:query}只覆盖头级可构造参数与固定mask。
+\item 原生预测路径：\texttt{models/SlotSPE.py:283--328}。
+bool断路为局部路径结论，cross全槽必须保留在风险分析中。
+\item 内容候选：\texttt{slotspe\_proof/slot\_disentanglement.py:85--148}。
+共享逐槽head不接目标查询；匹配覆盖全部$M$目标，按$Md$归一化。
+定理\ref{th:constant}、\ref{th:separation}与该数学损失一致。
+\item 参考目标：\texttt{slotspe\_proof/redundancy\_content.py:151--210}。
+参考在训练输入上拟合并固定；中心代理不自带频数或生物语义保证。
+\item 原生生存损失：\texttt{utils/loss\_func.py:84--101}。
+其数值形式为未删失损失$+(1-\alpha)$倍删失损失，并含clamp。
+不能无条件以$H(T\mid Z)$替代该加权删失风险；
+$T\perp C_{\rm censor}\mid X$也不自动推出给定压缩$Z$后独立。
+\end{itemize}
+
+\textbf{本阶段裁决。}
+内容匹配的反塌缩与条件可恢复性证明通过；
+患者内容充分性、语义识别与预测收益尚未通过。
+接通ST的普遍下降命题被反驳；
+条件门控相对原版的严格优势尚未建立，
+暂不因“数学通过”启动新的门控实现。
+不把已有V1/V2/V3的生成验收升级为患者效果证明。
+
+\textbf{下一道门槛。}
+先定义冻结的内容单位、非退化间隔和目标未编码的信息；
+若要为门控证明严格优势，必须给出含全槽cross旁路的实际表示、
+明确分布和有限预测器类，证明原策略存在不可消除的风险差。
+不能为得到结论直接假设“新门控更准确”或假设掉原生旁路。
+
+\section{核查与复现边界}
+配套\texttt{check\_strict\_math.py}仅用Python标准库和有理数：
+枚举16个有限概率状态、核对后验及平方风险，
+核查集合分离紧性、矩形匹配边界、固定字典与索引反例，
+并用精确代数核对ST积分原函数与对数符号下界。
+有限枚举不替代任意实数、总体分布或优化定理的证明；
+源代码、配置、A/B/C定义、患者数据均未改变。
+
+本阶段六项记录：路线为SlotSPE/SPE-08数学审查；
+完成命题与反例、源码映射及算术核查；
+路径为本LaTeX项目及唯一进度记录，未提交推送；
+无模型/患者/服务器执行或新原始回传；
+缺口为完整原版优势、语义与泛化；
+下一步维持数学门槛，不扩大实验。
+
+\begin{thebibliography}{9}
+\bibitem{slotspe} Zhang et al. Structural Prognostic Event Modeling for Multimodal Cancer Survival Analysis.
+\url{https://arxiv.org/html/2512.01116v3}.
+\bibitem{st} Shekhovtsov. Bias-Variance Tradeoffs in Single-Sample Binary Gradient Estimators.
+\url{https://arxiv.org/abs/2110.03549}.
+\end{thebibliography}
+\end{document}

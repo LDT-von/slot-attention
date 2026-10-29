@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-28T15:49:01.159809+08:00",
-  "base_commit_before_delivery": "909be4bd8d8c4e4152650932d5fd805cc457c44e",
+  "recorded_at": "2026-10-29T11:29:23.768874+08:00",
+  "base_commit_before_delivery": "ee1d506ae25496e06da2d4848a9b0f8c76c852b9",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 433,
-  "repository_file_count_including_manifest": 434,
+  "covered_file_count": 466,
+  "repository_file_count_including_manifest": 467,
   "patient_data_included": false,
   "files": [
     {
@@ -41,8 +41,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 17778,
-      "sha256": "5014345064940074d06a7ac68f1d4fd56fe46a9e72002d0c5d3e7b19f90ca5f7"
+      "bytes": 20706,
+      "sha256": "344aad2fe0324687d5a137b3ba5d78aa562b821b0da4864f96263c318aa499f9"
     },
     {
       "path": "configs/slotspe_attribution_server.json",
@@ -141,8 +141,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 351018,
-      "sha256": "42b16228aef3290386c0ebf622e0f9332ed0b9e70a09c54be767495d09076cb9"
+      "bytes": 385035,
+      "sha256": "cd8859e0665628168a84c02cdf265a4ed9f6d1b197d7d626b82b72db1c4aed8d"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -156,8 +156,8 @@
     },
     {
       "path": "docs/RESEARCH_OVERVIEW.md",
-      "bytes": 20283,
-      "sha256": "b1db6321aad2faa780992205882c9c2f6b31f521430978bd09e3b821c43cdee6"
+      "bytes": 24376,
+      "sha256": "06f4c06bc3d26be0f65466a9fd02bd5bf6d73854e976f6c2e5a175ee336697b6"
     },
     {
       "path": "docs/SLOTSPE_PROOF_TASK.json",
@@ -275,9 +275,64 @@
       "sha256": "64b47bccda0443565a730f16f47883229c7fa2990637dab37c19fbad885a6f2b"
     },
     {
+      "path": "docs/research/slotspe_eight_issues_20261019/V2跨视图重构与槽增量_理论试错_20261027.txt",
+      "bytes": 17955,
+      "sha256": "ecfb57193a86fea7925d2b8eba1ef2a8e09f2f2b7e41ab059eca81b1eed80184"
+    },
+    {
       "path": "docs/research/slotspe_eight_issues_20261019/audit.json",
       "bytes": 14673,
       "sha256": "170a67c485f471091aecb031de04cec0d5429140acafdb32fc48ddb50ec40f40"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/check_crossview_theory_20261027.py",
+      "bytes": 8621,
+      "sha256": "b9bf00c8f41f4681137109354e2113dce37aeae61d12f499d7c916877895f810"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/check_native_gate_math_20261027.py",
+      "bytes": 9987,
+      "sha256": "e1f8b789422a9eb24f8559096bf7ecb095c911f4c53ff693aad8e39ef0ed6366"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/check_reconstruction_theory_20261027.py",
+      "bytes": 5559,
+      "sha256": "d58f85e5e84d12684851a93221c8e32f8fff0c2cfb5dbdb8d2b6d335b8df22e3"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/crossview_math_gate_receipt_20261027.json",
+      "bytes": 2032,
+      "sha256": "ea50d61188a0107db338b1f52af26516dbe8868868a5fe2baaeb4fb5db976e09"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/crossview_math_gate_receipt_v2_20261027.json",
+      "bytes": 2337,
+      "sha256": "381fc152cf13306847259309aa1ba5d476a9348c0c5214b25a8a80feef277779"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_20261027.json",
+      "bytes": 2709,
+      "sha256": "dbad55095c5c681e6f959bcddac613d7afccafc29e5c050d66fa90d3c81170e9"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_v2_20261027.json",
+      "bytes": 2709,
+      "sha256": "cb86072406545095564a7359f9af052d10cd062e216f09ccdc562260dc242d7e"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_v3_20261027.json",
+      "bytes": 2727,
+      "sha256": "60964af520053b46060fae07095135b2891b133792ec5180178bdf374398a715"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_v4_20261027.json",
+      "bytes": 2937,
+      "sha256": "4880ac6d68cf55642d4cbc3209d68563db1882aae625da5a64f521878e714fc8"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_v5_20261027.json",
+      "bytes": 2937,
+      "sha256": "d4d3d2f076405ae06688cddc76d8082c05f76833cbc2849b55fe4d5a2aa62ff2"
     },
     {
       "path": "docs/research/slotspe_eight_issues_20261019/gate_claim_review_20261022.json",
@@ -300,6 +355,16 @@
       "sha256": "70b669d3668abb970881dc3264e457511a6051615301d8fb58b5edd22ea7ff65"
     },
     {
+      "path": "docs/research/slotspe_eight_issues_20261019/native_gate_math_receipt_20261027.json",
+      "bytes": 2854,
+      "sha256": "1c22a31e0b59b1a7445995ca387d09a50e80bbc41393d0ab1dccee450f220cd4"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/reconstruction_theory_receipt_20261027.json",
+      "bytes": 2194,
+      "sha256": "4fcdfd2cac98ab4508cb912e82467300e8063d9ba54bdc43f139101806347671"
+    },
+    {
       "path": "docs/research/slotspe_eight_issues_20261019/redundancy_exclusion_claim_review_20261022.json",
       "bytes": 6180,
       "sha256": "d5cd84e2e5e4c6a6de62ae538dc6f18689f48f20c783c448b6800fa0a5219e00"
@@ -320,9 +385,59 @@
       "sha256": "07747247f199cf82fa5ed937b2e6ba71ac48f45a8366e22e163c7617e377dc79"
     },
     {
+      "path": "docs/research/slotspe_eight_issues_20261019/theory_20261026/arithmetic_receipt.json",
+      "bytes": 2492,
+      "sha256": "66db8144dc10795fca895e691f29d7608af2df2d52dceb1a4a2b855a9c8db341"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/theory_20261026/arithmetic_receipt_v2.json",
+      "bytes": 2798,
+      "sha256": "e802f117e91ba76f850821f278597686efbfc4d9dd5949e4f2ca1762e240aa26"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/theory_20261026/check_strict_math.py",
+      "bytes": 11161,
+      "sha256": "d08a11fd56b92077498c40b267307ec7cb282d25235aeed658184b9d08e43a7d"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/theory_20261026/main.tex",
+      "bytes": 24123,
+      "sha256": "9c9d45afb319ad77f208d5d4f79c8e58ff0cf3ad3daf9e5e1a47566b680f4bae"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/theory_20261026/结论与验收.txt",
+      "bytes": 4847,
+      "sha256": "e1e22696b9ac4961e4783cf546ec716888d3027a80636d7d859e679a1d8d2c6d"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/原版门控与证据支持量_严格审查_20261027.txt",
+      "bytes": 17314,
+      "sha256": "38d0810ed6b3e2dda85c3bf4b470a99ee53a79f8c3cecd009d68c0433ff07a25"
+    },
+    {
       "path": "docs/research/slotspe_eight_issues_20261019/核查结论.txt",
       "bytes": 9146,
       "sha256": "0d478427b03dc563d3eb2f36c3a455ed1834d163637bc7b29f62c4617f4a60a1"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/跨视图可预测性与删槽判据_数学门槛_20261027.txt",
+      "bytes": 10001,
+      "sha256": "502f0471d381d4bcf6c47619b4420f548f3355400119fcef7384148ba897ab19"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/跨视图模块合成验收与服务器交接_20261027.txt",
+      "bytes": 6247,
+      "sha256": "637dd72803b67a5f748b205f52fc87edb94f8d89ec5d4c140a2baa6b5b6850e8"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/重构模块问题与全槽内容重建方案_20261027.txt",
+      "bytes": 16905,
+      "sha256": "3e660819b508a7bae994767d36ea3089222b1f966347ce003a9cb2d9274a435d"
+    },
+    {
+      "path": "docs/research/slotspe_eight_issues_20261019/门控研究方向与证据分级_20261026.txt",
+      "bytes": 12768,
+      "sha256": "3d45a82799867fdc6925a4154c71e853499a1a1c75ccccde0c839d5799ccefa2"
     },
     {
       "path": "docs/research/slotspe_extended_audit_20261022/SlotSPE扩展问题逐项核查.txt",
@@ -1435,6 +1550,11 @@
       "sha256": "19feaadce6a11b28fbad62cbaa107e877f5497e016fd14eb7da2b46ea8a27557"
     },
     {
+      "path": "scripts/check_crossview_math_gate.py",
+      "bytes": 6885,
+      "sha256": "dd5d5c6789cb8f8d7af77d530decca2ce3a4444ca3fdb2468a3d5fd4219f34a0"
+    },
+    {
       "path": "scripts/check_delivery_manifest.py",
       "bytes": 7585,
       "sha256": "b351630f9bdac62ba87dd7383a3402301220c9473316deaf06fbdd33c5f37170"
@@ -1600,6 +1720,11 @@
       "sha256": "6380c3eab5e7c339246ee361cbda45368c2838aa5a7394b0e3bee86448ba74f6"
     },
     {
+      "path": "scripts/run_slotspe_crossview.py",
+      "bytes": 284,
+      "sha256": "176833cdc14fa27d24402346a27bc1233eee61ebab0e96c2e05419596b544f36"
+    },
+    {
       "path": "scripts/run_slotspe_plugins.py",
       "bytes": 269,
       "sha256": "b5837b213c38a281c1cf4554525b04445ab34cc6e9504b3b15a817b81a49a6ca"
@@ -1753,6 +1878,26 @@
       "path": "slotspe_proof/checks.py",
       "bytes": 33019,
       "sha256": "de78846021c7c1ca7c8a6dfe2a8f45f80c7b8b66a5480239388886084f881a76"
+    },
+    {
+      "path": "slotspe_proof/crossview_diagnostic.py",
+      "bytes": 9854,
+      "sha256": "003344adfeb8b01a7f12d115c55d34972131fe6258331161e52c715ef94adec4"
+    },
+    {
+      "path": "slotspe_proof/crossview_engine.py",
+      "bytes": 23259,
+      "sha256": "56f75a05f607a087f8e45963d3ce541e8c99e8c903041c5ca198aba7c4f84799"
+    },
+    {
+      "path": "slotspe_proof/crossview_queue.py",
+      "bytes": 8382,
+      "sha256": "54a2e0d8343eb5afc9ec339b7cc9070da0f38821519c62ec2485bc6b3e24de26"
+    },
+    {
+      "path": "slotspe_proof/crossview_reconstruction.py",
+      "bytes": 16093,
+      "sha256": "0e5cc487c90d3564225dafd2458761b77cd961eaf5cb853ef2143ce95cffa6a2"
     },
     {
       "path": "slotspe_proof/fixed_slot_pair.py",
@@ -1958,6 +2103,26 @@
       "path": "survot_rank/research/slotspe_proof/__init__.py",
       "bytes": 4015,
       "sha256": "39fbe30d5dc58d0965ccb9e7a07b040189fecf6507091d6e389252feebb0fc13"
+    },
+    {
+      "path": "tests/test_crossview_diagnostic.py",
+      "bytes": 4290,
+      "sha256": "7a9407d1ddf1070fd4e4a7b24c66ee6999ab9ad3a1456d1fcb172e8b6d2d52a5"
+    },
+    {
+      "path": "tests/test_crossview_generated_smoke.py",
+      "bytes": 3623,
+      "sha256": "2ef3be0cf79ed189dacb3e71cb271f8bd686eadfc704f83719f1ba68635ac3cf"
+    },
+    {
+      "path": "tests/test_crossview_queue.py",
+      "bytes": 11345,
+      "sha256": "0ebfe5657be8c4542c6c0aad00f308790f42861554e5a32dc0c2f4941065e64e"
+    },
+    {
+      "path": "tests/test_crossview_reconstruction.py",
+      "bytes": 14016,
+      "sha256": "7676474c18586e96322420a56ef9a401b41d695b2b40877edad31d3565ba7dd4"
     },
     {
       "path": "tests/test_delivery_manifest.py",

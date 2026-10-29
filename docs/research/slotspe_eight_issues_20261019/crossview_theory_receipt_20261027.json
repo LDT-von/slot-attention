@@ -1,0 +1,94 @@
+{
+  "schema": "slotspe_v2_crossview_theory_v1",
+  "recorded_at": "2026-10-27T17:22:47.605822+08:00",
+  "passed": 8,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "source_and_v2_hashes",
+      "passed": true,
+      "matched": 3
+    },
+    {
+      "name": "v2_matching_zero_loss_does_not_exclude_full_information_duplication",
+      "passed": true,
+      "cases": 4
+    },
+    {
+      "name": "fixed_decoder_deletion_sensitivity_is_not_unique_information",
+      "passed": true,
+      "fixed_mse": "1/64",
+      "best_drop_mse": "0"
+    },
+    {
+      "name": "duplicated_bit_shapley_and_last_increment",
+      "passed": true,
+      "shapley": [
+        "1/2",
+        "1/2"
+      ],
+      "last": [
+        "0",
+        "0"
+      ],
+      "total": "1"
+    },
+    {
+      "name": "xor_synergy_and_nonadditivity_of_last_increments",
+      "passed": true,
+      "shapley": [
+        "1/2",
+        "1/2"
+      ],
+      "last": [
+        "1",
+        "1"
+      ],
+      "total": "1"
+    },
+    {
+      "name": "imperfect_drop_decoder_overstates_increment",
+      "passed": true,
+      "true_bits": "1",
+      "observed_bits": "2"
+    },
+    {
+      "name": "disjoint_views_finite_population_identity",
+      "passed": true,
+      "allocations": 90,
+      "target_variance": "1/10",
+      "view_covariance": "-1/20",
+      "view_mse": "3/10"
+    },
+    {
+      "name": "unordered_hard_capacity_witness",
+      "passed": true,
+      "target_classes": 165,
+      "remaining_multisets": 120,
+      "average_conditional_entropy_bits": 1.7383342074889048,
+      "strict_lower_bound_bits": 0.45943161863729726,
+      "m5_drop_classes": 330,
+      "example_train_patients": 289
+    }
+  ],
+  "protected_source_sha256": {
+    "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "slotspe_proof/slot_disentanglement.py": "75ab77ac2cec6f16a4b73f37f027b574a4f41ca7f21e9cfb741fb13bfb8859ea",
+    "slotspe_proof/plugin_host.py": "e47761e4a33c1e924dae29b8534383dc7d20f2d647040e069c74d6e7311465a7"
+  },
+  "checker_sha256": "a7badaa5e7b55cb8edb2f69af6818db2bb4a99e2ad24abc0ee7692d80d296250",
+  "report_sha256": "4fba90f3561d5f6212433e0b7993e762142d430c6ab735266efbd9f094639724",
+  "execution": {
+    "stdlib_arithmetic_only": true,
+    "neural_forwards": 0,
+    "neural_backwards": 0,
+    "patient_data_loads": 0,
+    "training_runs": 0,
+    "server_runs": 0
+  },
+  "limitations": [
+    "Finite arithmetic checks supplement the written proofs, not formal verification.",
+    "Synthetic exact examples do not show real model convergence, patient damage or benefit.",
+    "Empirical decoder gaps do not equal conditional information without fit-error assumptions."
+  ]
+}

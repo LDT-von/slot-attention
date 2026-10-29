@@ -1,0 +1,73 @@
+{
+  "schema": "slotspe_reconstruction_theory_audit_v1",
+  "recorded_at": "2026-10-27T17:07:17.079810+08:00",
+  "passed": 8,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "native_source_hashes",
+      "passed": true,
+      "matched": 4
+    },
+    {
+      "name": "nonzero_constant_target_cosine_is_one",
+      "passed": true,
+      "norm_squared": "25"
+    },
+    {
+      "name": "padding_loss_weight_decomposition",
+      "passed": true,
+      "cases": 72
+    },
+    {
+      "name": "patient_target_separation_triangle",
+      "passed": true,
+      "cases": 729
+    },
+    {
+      "name": "mass_coordinate_bound",
+      "passed": true,
+      "cases": 289
+    },
+    {
+      "name": "conditional_mse_identity",
+      "passed": true,
+      "predictors": 64,
+      "irreducible_variance": "1"
+    },
+    {
+      "name": "query_bypass_conditional_variance_example",
+      "passed": true,
+      "without_query": "1",
+      "with_query": "0"
+    },
+    {
+      "name": "conditional_information_nonzero_example",
+      "passed": true,
+      "probabilities": [
+        "1/4",
+        "3/4"
+      ]
+    }
+  ],
+  "protected_source_sha256": {
+    "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "third_party/SlotSPE/models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "third_party/SlotSPE/dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3"
+  },
+  "checker_sha256": "d58f85e5e84d12684851a93221c8e32f8fff0c2cfb5dbdb8d2b6d335b8df22e3",
+  "report_sha256": "3e660819b508a7bae994767d36ea3089222b1f966347ce003a9cb2d9274a435d",
+  "execution": {
+    "stdlib_arithmetic_only": true,
+    "neural_forwards": 0,
+    "neural_backwards": 0,
+    "patient_data_loads": 0,
+    "training_runs": 0,
+    "server_runs": 0
+  },
+  "limits": [
+    "Finite checks do not replace the mathematical proofs or constitute formal verification.",
+    "No patient outcomes, biological semantics, model reachability or intervention efficacy are proved."
+  ]
+}

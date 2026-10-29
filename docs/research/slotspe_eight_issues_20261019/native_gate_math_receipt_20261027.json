@@ -1,0 +1,86 @@
+{
+  "schema": "slotspe_native_gate_math_audit_v1",
+  "recorded_at": "2026-10-27T16:36:46.165805+08:00",
+  "checks": [
+    {
+      "name": "protected_native_source_hashes",
+      "passed": true,
+      "matched": 4
+    },
+    {
+      "name": "pooled_attention_bound_and_decomposition",
+      "passed": true,
+      "rational_matrix_cases": 1482,
+      "default_minimum_unselected_mass": "9/16"
+    },
+    {
+      "name": "finite_score_gumbel_top2_probabilities",
+      "passed": true,
+      "masks": 28,
+      "two_positive": "3/5",
+      "mixed": "7/19",
+      "two_negative": "3/95"
+    },
+    {
+      "name": "auxiliary_output_distribution_identical_with_native_epsilon",
+      "passed": true,
+      "paired_masks": 28,
+      "temperature": "1/100",
+      "epsilon": "1/100000000",
+      "nonzero_auxiliary_logits": true
+    },
+    {
+      "name": "eight_distinct_slots_equal_norm_and_rank4_decoder_kernel",
+      "passed": true,
+      "dimension": 256,
+      "rank": 4
+    },
+    {
+      "name": "finite_mask_native_readout_counterexample",
+      "passed": true,
+      "rational_eta_cases": 4,
+      "masks_per_eta": 28
+    },
+    {
+      "name": "strict_fused_nll_gap",
+      "passed": true,
+      "exact_expression": "(54/95)*log(8/5)",
+      "approximate_for_readability": 0.2671599576765234,
+      "positive_by": "positive rational coefficient times log of rational greater than one"
+    },
+    {
+      "name": "native_epsilon_support_mass_identity_and_collision",
+      "passed": true,
+      "exact_scale_cases": 4
+    },
+    {
+      "name": "selection_and_aggregation_do_not_commute",
+      "passed": true,
+      "exact_gap": "20000000/50000001"
+    }
+  ],
+  "passed": 9,
+  "failed": 0,
+  "protected_source_sha256": {
+    "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+  },
+  "checker_sha256": "e1f8b789422a9eb24f8559096bf7ecb095c911f4c53ff693aad8e39ef0ed6366",
+  "report_sha256": "38d0810ed6b3e2dda85c3bf4b470a99ee53a79f8c3cecd009d68c0433ff07a25",
+  "execution": {
+    "stdlib_arithmetic_only": true,
+    "neural_forwards": 0,
+    "neural_backwards": 0,
+    "patient_data_loads": 0,
+    "training_runs": 0,
+    "server_runs": 0
+  },
+  "limitations": [
+    "No formal proof assistant used.",
+    "Finite arithmetic checks supplement the written proofs.",
+    "Gumbel probabilities use the ideal continuous law, not PyTorch RNG measurements.",
+    "No patient harm, correction efficacy, or full encoder reachability established."
+  ]
+}

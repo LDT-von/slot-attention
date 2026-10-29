@@ -1,0 +1,102 @@
+{
+  "schema": "slotspe_strict_math_arithmetic_v1",
+  "kind": "exact_arithmetic_sanity_checks_not_formal_proof",
+  "checks_passed": 17,
+  "all_passed": true,
+  "neural_model_calls": 0,
+  "patient_inputs_loaded": 0,
+  "server_execution": false,
+  "limitations": [
+    "Finite rational checks do not prove real-valued theorems.",
+    "No theorem establishes original SlotSPE patient efficacy or C-index improvement."
+  ],
+  "checks": [
+    {
+      "name": "constant_prediction_floor_identity",
+      "passed": true,
+      "exact_cases": 25
+    },
+    {
+      "name": "rectangular_matching_separation_finite_grid",
+      "passed": true,
+      "exact_cases": 2500
+    },
+    {
+      "name": "separation_bound_and_strict_threshold_are_tight",
+      "passed": true,
+      "collision_loss": "1"
+    },
+    {
+      "name": "unmatched_extra_slot_can_duplicate_at_zero_loss",
+      "passed": true
+    },
+    {
+      "name": "query_free_constant_code_variance_floor",
+      "passed": true,
+      "floor": "1"
+    },
+    {
+      "name": "target_query_constant_dictionary_zero_cosine_counterexample",
+      "passed": true,
+      "scale": "4/5",
+      "mse": "1/25"
+    },
+    {
+      "name": "type_support_target_can_miss_frequency_label",
+      "passed": true,
+      "targets_identical": true
+    },
+    {
+      "name": "anchored_frequency_can_be_recovered_without_target_frequency",
+      "passed": true,
+      "squared_frequency_error": "1/128"
+    },
+    {
+      "name": "anchored_frequency_target_detects_same_support_different_mass",
+      "passed": true,
+      "fixed_dictionary_loss": "1/48"
+    },
+    {
+      "name": "marginal_topk_strictly_suboptimal_finite_distribution",
+      "passed": true,
+      "states": 16,
+      "uv_risk": "0",
+      "noisy_pair_risk": "3/5",
+      "agreement": "5/8"
+    },
+    {
+      "name": "marginal_information_ordering_certified_by_exact_posteriors",
+      "passed": true
+    },
+    {
+      "name": "dynamic_selection_index_channel_counterexample",
+      "passed": true,
+      "value_only_risk": "1",
+      "index_and_value_risk": "0"
+    },
+    {
+      "name": "sufficient_bypass_has_no_additional_bayes_risk_gain",
+      "passed": true
+    },
+    {
+      "name": "st_integral_antiderivative_rational_derivative_identity",
+      "passed": true
+    },
+    {
+      "name": "st_expected_direction_opposes_true_nll_gradient",
+      "passed": true,
+      "true_gradient_over_log3": "-3/160",
+      "strict_st_lower_bound_over_log3": "3/320"
+    },
+    {
+      "name": "st_random_step_explicit_taylor_step_bound",
+      "passed": true,
+      "sufficient_eta_times_log3": "less than 1/10"
+    },
+    {
+      "name": "native_alpha_survival_loss_algebra",
+      "passed": true
+    }
+  ],
+  "script_sha256": "d08a11fd56b92077498c40b267307ec7cb282d25235aeed658184b9d08e43a7d"
+}

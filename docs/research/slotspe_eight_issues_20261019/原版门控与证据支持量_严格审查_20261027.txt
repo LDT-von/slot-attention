@@ -1,0 +1,235 @@
+SlotSPE 原版门控与证据支持量：严格审查
+日期：2026-10-27
+范围：受保护的原版源码、一手论文、算子证明和纯算术检查。没有执行神经网络或患者任务。
+
+一、本次找到的具体问题
+
+优先级1，Q2：原版 self-attention 的未选槽并未退出该支路。
+这是对已有“全屏蔽行均匀、全位置平均”线索的定量推进，并非新发现历史线索。
+默认8选2，平均后的每头注意力权重至少有9/16=56.25%落在未选的6个value上。
+这个下界对任意有限注意力logits成立，限定eval/关闭dropout或dropout之前。
+它不是最终logit、风险、生存表现或因果贡献百分比。
+跨模态全槽读取是作者明确的设计；本结论专门针对声称选槽的self支路。
+
+优先级2，P7.1：辅助预测评分不能唯一确定最终融合所需的选择。
+已给出原版槽到读出接口内的有限参数反例：8个互不相同的槽、非零且可满行秩的辅助预测头、默认8选2/temperature=.01，
+两套门控的辅助生存输出具有完全相同分布，但一套的期望融合生存NLL严格更差。
+这个结论超出了通用ST有偏：它直接对应原版“辅助MoE预测负责训练、bool mask负责融合选边”的结构。
+未宣称完整上游编码器在自然训练中必然产生该构造，也未宣称所有参数下都失败。
+
+优先级3，P2/P7：槽更新没有显式保留证据支持总量。
+原版token归一化允许竞争强弱不同的槽获得完全相同的更新；考虑原生epsilon后，极弱支持更新还会趋向全局均值。
+这是逐头聚合算子的精确性质。GRU状态可能另存信息，所以不把它改写为“完整模型看不见组织比例”。
+
+补充，P2的选择后恢复：先竞争聚合再删槽，与先删槽再聚合不交换。
+后置Top-K本身不能回滚竞争者已造成的内容变化。这解释为什么只改最后门控未必解决上游内容问题。
+
+本轮没有建立患者损害或修正收益，也没有把四条机制线索当作四个已经成立的论文创新。
+推荐主问题：原版能否保留槽的支持证据，并使选槽依据、实际使用范围与最终任务一致？
+Q2需要先作为实现对照处理；P7的监督可识别性与P2的支持量保留更适合继续研究。
+
+二、源码与论文定位
+
+third_party/SlotSPE/models/slot_attention.py
+  95-100：槽轴softmax；加1e-8；token轴L1归一化；value聚合。
+  104-110：聚合更新进入GRU并保留先前状态，因此局部信息缺失不能升级为全网络不可恢复。
+  164-185：scores+Gumbel决定hard top-k；temperature仅进入软替代分支。
+third_party/SlotSPE/models/SlotSPE.py
+  43-70：map后的槽经线性decoder给出辅助logits；pred_keep_slot给分；全局softmax后mask和epsilon归一化。
+  289-291：最终融合只取hard_keep，连续slot_gate被丢弃。
+  294-301：cross使用全部槽；self输入bool mask；三支分别全槽mean后进入独立线性to_logits。
+  306/313：重构mask也经bool转换。
+  321-328：两侧辅助生存监督与重构组成aux_loss。
+third_party/SlotSPE/models/transformer.py
+  89-95：mask_q*mask_k的外积掩码、-1e9填充、row softmax。
+  98-100：value混合、投影与dropout。
+  128-132：全槽残差与逐位置MLP。
+third_party/SlotSPE/utils/loss_func.py
+  69-101：hazard=sigmoid(logit)，event bin0且未删失时损失化为softplus(-logit)，alpha抵消。
+
+SlotSPE v3，3.2节明确区分：self使用最具单模态预测性的Top-K；cross刻意使用全部槽。
+附录B.4 Eq16做mean pooling，B.5 Eq18明确包含两路单模态辅助生存损失。
+https://arxiv.org/html/2512.01116v3
+https://github.com/zylvemvet/SlotSPE
+
+三、定理A：原版self分支的未选value质量下界
+
+假设：S个槽，实际bool mask恰有k个true；1<=k<S；注意力logits有限；没有softmax异常；eval或考察dropout前权重。
+记选中集合T。每头原生注意力为
+  A_ij = softmax_j(B_ij),
+  B_ij = L_ij，若i,j都属于T；否则B_ij=-C，C=10^9。
+
+若i不属于T，整行B_i恒为-C，因此A_ij=1/S对所有j成立。
+设全query平均后对value j的权重 beta_j=(1/S) sum_i A_ij，则
+  beta_j = (S-k)/S^2 + (1/S) sum_{i属于T} A_ij。
+由于A非负，所有未选value总质量满足
+  sum_{j不属于T} beta_j >= (S-k)^2/S^2。
+S=8,k=2时右侧为36/64=9/16=56.25%。每个未选value至少得到3/32。
+在实数有限-C softmax下，selected行的未选列仍有正值，因此通常严格大于下界；
+在float32等正常数值范围下这些极小值可下溢为0，此时达到下界。无需依靠下溢才能证明下界。
+
+同时有精确恒等式
+  mean_i(sum_j A_ij v_j)
+  = ((S-k)/S) mean_j(v_j) + (1/S) sum_{i属于T} sum_j A_ij v_j。
+默认第一项系数3/4，说明全局平均被结构性加入了“稀疏”self支路。
+注意3/4和9/16是两个不同的量：前者是全局value均值项系数；后者是落在未选value上的总注意力质量下界。
+
+多头分别满足上述结论。后续输出投影可能有负权重或消去某些方向，不能把attention mass当最终输出贡献。
+Transformer还直接保留输入残差，随后才经过MLP；原版全位置mean并未清掉未选位置。
+因此“self严格只使用被选槽内容”不成立，但这不是“所有未选槽都会使预测变坏”的证明。
+训练dropout的单次实现可打破这个数值下界；标准独立inverted-dropout在条件期望上保留对应权重等式。
+float16若不能表示-1e9而抛错或生成异常，不属于上述有限数值假设。
+
+四、定理B：辅助生存目标不能识别融合最优门控
+
+B1. 原版参数路径
+记门控独有参数为theta_phi，仅属于pred_keep_slot。
+融合logits和重构仅通过hard_keep.bool()使用它的输出。PyTorch图没有从这些bool节点返回theta_phi的梯度。
+原生autograd中直接训练theta_phi的信号来自loss_decoder，即两路单模态辅助生存损失。
+对固定噪声且无top-k平局的区域，离散融合损失对score的经典局部导数也为0；
+但对Gumbel噪声积分后的期望融合损失可以随theta_phi变化。不能混淆这两个导数。
+上游槽/map可能受其他损失改变，因此本结论只谈门控独有参数的直接梯度路径。
+
+B2. 互不相同的槽与非零辅助头
+固定一次槽接口输入，S=8,d=256。选取均值为0、等范数的槽
+  z_i = t_i v + delta*w_i，t_1,...,t_4=+1，t_5,...,t_8=-1；delta>0。
+v与所有w_i正交；w_1,...,w_4为不同等范数方向，w_{i+4}=-w_i；每个方向逐坐标均值为0。
+于是z_{i+4}=-z_i，8槽均不同，sum_i z_i=0，LayerNorm对它们仅施加同一正缩放（取合法gamma=1,beta=0）。
+map可在这8个有限输入上实现h_i=h0+z_i：用足够大的正平移让ReLU处于线性区即可。
+选非零、行秩4的decoder矩阵D，使v及w_i均在ker(D)中；256维空间足够。
+设置偏置后，各槽辅助logits相同为c!=0。这个构造不要求零decoder或重复槽。
+
+B3. 两种门控与原始温度/epsilon
+门控phi+给score u_i=t_i*ln2，phi-给u'_i=-t_i*ln2。原版两层ReLU网络可在这些有限输入上实现线性投影及其相反数。
+都保留k=2、tau=.01、全局softmax后mask与epsilon=1e-8。
+将Gumbel噪声同时按i<->i+4置换，phi+与phi-得到对应的选择集合。
+两者score多重集相同，选中softmax质量m完全相同；即使包含epsilon，两者辅助输出都是
+  y_aux = [m/(m+epsilon)] c。
+因此配对输出逐次相同，辅助生存损失分布及期望完全相同。
+这一步没有假设epsilon=0，也没有把近似相等当作精确相等。
+该“相同”专指loss_decoder；重构损失数值可以不同，但其bool路径仍不给theta_phi直接梯度。
+
+B4. 最终融合能够区分这两种门控
+保持原cross支路及另一模态不变，它们对本次固定槽输入给出共同、可非零的基线贡献。
+对被考察的self支路，选择原版允许的Q=K=0，使未屏蔽注意力logits均为0；
+V和输出投影取槽的t_i坐标，补偿共同LayerNorm缩放；将本例MLP设为0。
+全槽残差均值与全体V均值都是0。令eta=exp(-10^9)，
+  kappa = 2(1-eta)/(2+6eta)>0，M=(1/2) sum_{i属于T} t_i。
+从原版finite mask直接计算：self池化在此坐标上等于(kappa/4)M。
+选择独立最终线性头的该坐标权重4*ln2/kappa，并以合法偏置把所有与门控无关贡献合并为ln2，得到
+  h(T) = ln2 + ln2*M。
+这没有移除或mask cross；构造只利用它在固定槽/固定其他随机流下不随当前self mask改变。
+
+原生Gumbel-Top2对应不放回Plackett-Luce抽样。phi+下两组指数权重比例4:1，每组4个槽：
+  P(选两个+) = (16/20)*(12/16) = 3/5 = 57/95；
+  P(选两个-) = (4/20)*(3/19) = 3/95；
+  P(各选一个) = 7/19 = 35/95。
+phi-交换前两项概率，混选概率不变。
+这些是理想独立连续Gumbel变量的解析概率；PyTorch有限随机数网格和log clamp只近似该分布，不把分数当实测频率。
+
+取构造标签为未删失、event bin0。原版NLL退化为ell(h)=log(1+exp(-h))；其他3个time-bin logit任意有限。
+两个+、混选、两个-分别给h=ln4、ln2、0，对应NLL=ln(5/4)、ln(3/2)、ln2，原生clamp均不激活。
+因此
+  E[L_fused(phi-)] - E[L_fused(phi+)]
+  = (54/95)*ln(8/5) > 0。
+
+结论：在原版可表达的槽后模块中，辅助目标分辨不出的门控，可能具有严格不同的最终任务损失。
+这个存在性反例不依赖槽重复，也不依赖把cross删掉，直接否定“辅助MoE分数必能识别融合最佳选择”的保证。
+构造不是完整训练轨迹、不是整个模型驻点证明、不是患者错误率证据，也没有证明既有ST更新在所有位置为0。
+它证明的是辅助目标对最终选择存在不可识别性；修复后是否能学好是后续独立问题。
+反例用eval算子/关闭dropout隔离语义；未给训练dropout下整模型优化收敛定理。
+
+五、定理C：支持总量消去与弱支持的均值填充
+
+对原生SA的一头，a_jn是slot-axis softmax输出，r_j=sum_n a_jn，N为token数，epsilon=1e-8。
+注意r_j是该头的分配总量，不是患者组织面积、细胞丰度或生物可信度真值。
+原版聚合在combine_heads前为
+  u_j = sum_n(a_jn+epsilon)v_n / (r_j+N*epsilon)。
+记mu_j=sum_n a_jn v_n/r_j，bar_v=mean_n(v_n)，则精确有
+  u_j = [r_j/(r_j+N*epsilon)]mu_j + [N*epsilon/(r_j+N*epsilon)]bar_v。
+若值有界，r_j趋近0时u_j趋近bar_v。弱分配不使更新自然趋近0；epsilon把它变成全局均值。
+进一步，若a_jn=c_j对所有n成立，sum_j c_j=1且各c_j>0，则
+  u_j=bar_v，对任何c_j都精确成立，包含原生epsilon。
+不同槽可有极不相同的r_j=N*c_j，却获得相同更新。
+有限logits log(c_j)即可实现该竞争矩阵；这是更新级碰撞，不要求无限logits。
+combine_heads的共享线性映射会保留更新相等；GRU可能通过slots_prev区分这些槽，不能把证明越过这一界面。
+
+DSSA把弱槽的竞争信息被token归一化抹掉作为视频问题；Attention Normalization研究质量恢复及槽数泛化。
+本次只迁移其聚合代数问题，不迁移视频时序身份结论，也不宣称原版固定8槽全模型无法编码比例。
+因此较合理的待研究量是“槽表示之外是否显式保存支持质量，以及门控是否用到它”，而非再次盲目压低cos。
+
+六、定理D：后置选择不能回滚先前竞争
+
+两个token的标量value为0、1。保留槽的logits为(0,0)，竞争槽logits为(ln9,-ln9)。
+slot-axis softmax给保留槽权重(1/10,9/10)。含原生epsilon的更新为
+  u_after = (9/10+epsilon)/(1+2*epsilon)。
+若先删掉竞争槽再算slot-softmax，该唯一槽权重为(1,1)，更新为1/2。
+差为(2/5)/(1+2*epsilon)>0。
+删掉一个已经参与竞争的槽不会重新计算已留下槽的内容，因此两种顺序不交换。
+原版没有选槽后向原输入重新聚合的调用；其cross和self仍可能补偿这个差异。
+这个例子不能证明0.9比0.5更坏，也不能单独证明信息丢失；它只否定“末端删除等价于从未参与聚合”。
+DIAS/MetaSlot的reaggregation提供对应文献动机，普通加一层self-attention不等于回原始token重新聚合。
+
+七、本轮文献与代码复核范围
+
+1. SlotSPE v3：self Top-K与dense cross有不同设计目的；辅助MoE和融合目标按实际代码区分。
+   https://arxiv.org/html/2512.01116v3
+   https://github.com/zylvemvet/SlotSPE
+2. AdaSlot，CVPR 2024，3.3节Eq8-11：置零槽不等于删去解码影响；实际输出mask要匹配选择语义。
+   https://arxiv.org/html/2406.09196v1
+   https://github.com/amazon-science/AdaSlot
+3. QASA，2026，3.2节Eq3-6、3.3节Eq8：quality、coverage、novelty与解码门控联合设计。
+   该版本mask只用于训练，不能把它当测试时动态预算门控；它也不证明临床最优选择。
+   https://arxiv.org/html/2601.12936v1
+   https://github.com/ouyangtianran/QASA-tianran
+4. Attention Normalization，TMLR 2024，3.2节及附录C/D：更新归一化与分配质量/槽数泛化的关系。
+   其跨任意槽数命题不直接证明固定8槽完整网络不能恢复比例。
+   https://arxiv.org/html/2407.04170v2
+   https://github.com/EmbodiedVision/slot_attention_normalization
+5. DSSA，2026，3.2/3.4节：token归一化放大弱支持，CMA调制聚合。本文只用算子分析启发。
+   https://arxiv.org/html/2606.12601v2
+   https://uark-aicv.github.io/dssa/
+6. DIAS，MM 2025，3.2节Eq8-11：选后重新聚合。官方README当前明确公开代码未含slot pruning和re-initialization。
+   现有S5仍应称按论文构造的核心适配，不能据仓库存在宣称完整官方复现。
+   https://arxiv.org/html/2507.23755v1
+   https://github.com/Genera1Z/DIAS
+7. MetaSlot，NeurIPS 2025，2.2/2.3节：按原型去重并重新聚合；同类型不自动等于可删除的重复实例。
+   https://arxiv.org/html/2505.20772v2
+   https://github.com/lhj-lhj/MetaSlot
+8. MESH，ICML 2023：破平局和分配；不能把近似槽的收缩证明替换为相同槽的对称性定理。
+   https://proceedings.mlr.press/v202/zhang23ba.html
+9. SPOT，CVPR 2024：重构器可能弱化对槽依赖；原版SlotSPE目标查询须另证，不能沿用AR前缀机制。
+   https://arxiv.org/html/2312.00648v2
+10. CODA，ICLR 2026，4.3/4.4节：正确/错配槽对比和信息论联系；MMSE/噪声积分条件不能删。
+   https://arxiv.org/html/2601.01224v2
+11. I2MoE，ICML 2025，3.3节：两模态条件权重和最终task loss，说明仅加跨模态门控不构成充分新意。
+   https://arxiv.org/html/2505.19190v1
+12. MoME，MICCAI 2024，2.3节：两模态上下文控制融合专家，同样限制直接换gate的新意。
+   https://arxiv.org/html/2406.09696v1
+
+另参考SlotContrast与Particle Dynamics的适用条件；没有把视频身份或简化动力学定理移植为SlotSPE结论。
+本次文献/官方仓库阅读不等于逐个代码库完整审计或复现。
+
+八、研究决定与下一步
+
+首先将Q2作为门控语义的基础对照，沿已有A/B/C，不改变定义：
+A原self全槽pool；B选中self pool且末次选择权重梯度detach；C与B同前向而连接该梯度。
+selected pool可去掉未选query的均匀项，但finite mask selected-row泄漏、残差、重构与ST仍需按原定义分别解释。
+不会将“接通ST”当作定理B的现成解法；此前ST反例仍有效。
+
+数学继续重点：在明确的原版槽接口与目标分布上，定义最终任务的选择校准条件，或显式支持量的可恢复条件。
+任何新方法需要说明能消除哪个定理中的反例、代价是什么，再与普通多模态门控及已有A/B/C比较。
+不得用无条件优于原版作为前提；cross已充分、全部槽等价时不存在严格改善空间。
+
+患者阶段的最小验证是固定成熟权重/槽/随机流，枚举8选2的28个集合，分别测aux与fused排序及原self与selected pool。
+这是待执行设计；当前没有加载患者输入、权重、数组，也没有启动诊断或训练。
+标签选择的oracle集合只能作为诊断上界，不能作为可部署模型或无泄漏性能。
+
+九、本阶段六项交接
+
+路线/任务：SlotSPE / Q2、P7.1、P2 / 原版门控与支持证据的数学问题发现。
+完成工作：源码映射；self未选value质量下界；非重复槽的辅助目标不可识别反例；epsilon支持量分解；选择与聚合不交换；一手文献对照。
+路径/提交：本文件、check_native_gate_math_20261027.py、native_gate_math_receipt_20261027.json、docs/PROGRESS.json；未提交或推送。
+检查/实际执行/回传：纯标准库有理数/公式检查，源码hash；无神经网络forward/backward、训练、患者推理、服务器执行或新增原始回传。
+缺口/原因：模块接口构造尚无完整encoder可达性或训练发生率；56.25%不是预测贡献；患者损害/修正收益未知；无证明助手形式化认证。
+下一步/用户输入：继续以本报告明确命题为门槛，优先研究最终选择校准与支持量保留；患者阶段另按具体授权和匹配输入推进。

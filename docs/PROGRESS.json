@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-28T15:35:00+08:00",
+  "recorded_at": "2026-10-29T11:28:31.494936+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -11,7 +11,7 @@
     "P4": "原义：槽语义身份不稳定。服务器仅报告同输入整体读取稳定；高度重复槽的低Hungarian匹配距离与数值非平局标记不证明槽身份可辨识。跨患者语义一致性仍缺独立标签。",
     "P5": "原义：无关内容干扰或占槽。补零无mask是相关输入处理风险，不能替代真实无关patch/通路占槽的直接证据。",
     "P6": "原义：尺度或特征层次不足。本轮无多倍率/多编码器层匹配比较。patch顺序必须另记Q6，不再作为P6证据。",
-    "P7": "原义：槽学习目标与生存预测目标不一致。服务器observe不支持主/辅生存普遍对抗的强假设；加权重建有较小局部反向关系，报告范数中位数之比约为主梯度的1/2985(WSI)、1/620(OMIC)，非逐患者比值。选槽器主梯度断路仍为支路结论；原始梯度产物及长期表示后果待验。",
+    "P7": "原义：槽学习目标与生存预测目标不一致。服务器observe不支持主/辅生存普遍对抗的强假设；加权重建有较小局部反向关系，报告范数中位数之比约为主梯度的1/2985(WSI)、1/620(OMIC)，非逐患者比值。选槽器主梯度断路仍为支路结论；原始梯度产物及长期表示后果待验。 2026-10-27新增原版槽后接口反例：非重复槽可有相同辅助生存损失而融合NLL严格不同，证明辅助评分对最终选择不可识别；不等于已观察患者损害。 2026-10-27重构复核：原病理/组学自重构仅直接读取当前选中槽；提出全槽固定内容参考重构，数学界为条件性代理保证，尚未实现或验证患者收益。 2026-10-27后续：用户V2的全槽跨视图候选和四臂队列已实现，数学结论依赖明确生成假设；生成数据检查不证明患者收益。",
     "P8": "原义：Slot聚合与后续跨模态OT双阶段约束。原版SlotSPE没有该后续OT，故本仓库不适用。"
   },
   "tasks": [
@@ -5150,5 +5150,371 @@
     },
     "gaps_reasons": "1) 单种子 (seed3) 单队列, 折间标准差只反映折划分变化, 不含训练随机性; 训练随机性未估计。2) 臂间 C-index 差异未做多重比较校正, 且除 R1 外 5 折配对检验均未达常规显著水平; 11 臂全部落在 0.61-0.71 的窄带内, 现有数据无法把任何臂与基线区分开。3) best 口径的 30 选 1 验证峰值选择自带的乐观偏差已由队列 caveats 标明, 本仓库未做独立测试集复评, 因此这些数值不能当作泛化性能。4) 末轮口径下 fold0 复用自早前单折队列且其首个训练批与内容参考 patch 取自未播种的全局 numpy 流 (不可复现, 臂间不一致), 折1-4 用固定可复现抽样, 故末轮口径的折间可比性受此机制影响。5) 槽余弦、有效秩、读重叠是描述性几何指标, 不是临床终点, 不能据此声称患者获益; '冗余与性能负相关'是描述性相关, 不构成'冗余有害'的因果结论——R5/R1 的折间标准差最大 (0.0769/0.0930) 且在 fold1/fold4 剧烈崩塌 (R5 0.5147/0.5466, R1 0.5337/0.5331), 更像是强行拆冗余破坏了训练稳定性而非获得更好表示, 这一区分尚未被实验分离。6) 本轮未做任何容量扫描 (4/8/16 槽), 因而'给更多槽能否避免塌缩'这一直接问题仍未回答。7) 本条目不声称任何患者获益、临床价值或泛化性能。",
     "next_action_user_inputs": "汇报时必须同时给出: (a) best 口径五折 R4 0.7071 与 S0 0.7039 差异不显著 (t(4df)=+0.22), 不能称基线最强也不能称 R4 更优; (b) 分数最高的臂没有解决槽冗余, 唯二解决冗余的 R5/R1 分数最低, 跨 55 点 Spearman 方向为负 (-0.25/-0.32); (c) 换末轮口径排名反转 (S0 第8、R3 第1), 必须标注单种子、未做多重比较校正、best 峰值选择偏差、折0 抽样机制与末轮口径不同; (d) 明确槽几何是描述性指标不是临床终点。下一步需要用户决定: (a) 是否授权容量扫描 (4/8/16 槽) 训练以直接回答'更多槽能否避免塌缩'; (b) 是否授权多训练种子 (如 seed3/7/11) 以估计训练随机性, 否则折间方差无法与臂间差异分离; (c) 是否授权对 R5/R1 的训练稳定性做专项诊断 (区分'冗余有害'与'训练发散'); (d) 本地 7 个提交已推送, 本轮记录提交是否直接推送到 origin/main。"
+  },
+  "latest_gate_research_direction_20261026": {
+    "recorded_at": "2026-10-26T12:11:25.533156+08:00",
+    "route_task": "SlotSPE / SPE-08 / evidence-ranked research directions beyond redundancy and original gating",
+    "status": "advisory_review_completed_no_new_patient_claims",
+    "completed_work": "Reviewed current original source with CodeGraph, existing public evidence, and primary slot/routing papers. Recommended content-faithful slots plus final-task conditional set selection as two separable, falsifiable research questions. Preserved dense cross attention design intent and existing A/B/C; separated gradient/readout engineering controls from new-method claims. Recorded adjacent MoME, I2MoE and PIBD prior art, diagnostic stopping rules, and a future factorial comparison.",
+    "paths_commit": {
+      "report": "docs/research/slotspe_eight_issues_20261019/门控研究方向与证据分级_20261026.txt",
+      "base_HEAD": "699384aa1930803b73c521180b8e985c203da7c2",
+      "backup": "local_evidence/documentation_backups/gating_research_direction_20261026_120848",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "codegraph_current_source_review": true,
+      "primary_literature_and_author_repository_review": true,
+      "all_literature_implementations_reproduced_or_line_audited": false,
+      "new_patient_feature_weight_or_array_loads": 0,
+      "new_model_forward_or_backward_calls": 0,
+      "new_training_runs": 0,
+      "new_patient_inference_runs": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "existing_live_run_status_verified": false,
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "new_method_implemented": false,
+      "documentation_json_and_delivery_checks": {
+        "progress_json_parse": "passed",
+        "original_core_hashes": "3/3 matched recorded provenance",
+        "protected_source_configs_implementation_diff": "empty",
+        "delivery_manifest": "refreshed and checked with scripts/check_delivery_manifest.py; terminal receipt required"
+      }
+    },
+    "evidence_boundaries": {
+      "redundancy_correction_efficacy": "not_established",
+      "gating_main_loss_gradient_disconnect": "source_fact_auxiliary_survival_gradient_remains",
+      "gating_conditional_contribution_mismatch": "hypothesis_not_patient_confirmed",
+      "wsi_target_query_shortcut": "existing_head_level_constructed_counterexample_natural_use_unknown",
+      "cross_all_slots": "intentional_original_design_to_preserve_intermodal_synergy",
+      "novelty": "limited_primary_literature_judgment_not_novelty_proof"
+    },
+    "gaps_reasons": "No new evidence of patient-level gating misranking, natural reconstruction-shortcut use, predictive harm or correction efficacy. Frozen-mask scans and all new patient experiments described in the report are future designs, not executed work. Existing V1/V2/V3 synthetic validation is not patient efficacy; local normalization ambiguity is not whole-model abundance blindness.",
+    "next_action_user_inputs": "Align the proposed content checks with existing V2 and preserve A/B/C as readout/gradient controls. Check conditional-set gating value before expanding modules. Any future patient work must stay within specific existing execution authorization and verified inputs/protocol; this advisory stage does not trigger execution."
+  },
+  "latest_mathematical_proof_review_20261026": {
+    "recorded_at": "2026-10-26T18:00:23.472723+08:00",
+    "route_task": "SlotSPE / SPE-08 / strict mathematics before further implementation",
+    "status": "conditional_content_theorems_proved_unconditional_gate_claims_refuted_full_model_advantage_unproved",
+    "user_steering": "First establish rigorous mathematical proofs; do not force an unproved route. User then requested continuation.",
+    "completed_work": "Derived and independently reviewed explicit-assumption proofs for matched-content separation with tight constants, query-free recovery, type-frequency target recovery, hard-selection local derivatives and identical-forward B/C equality. Constructed analytic NLL straight-through ascent, sufficient dense-cross, marginal-topk, target-query and content-support counterexamples. No existing implementation changed.",
+    "paths_commit": {
+      "base_HEAD": "699384aa1930803b73c521180b8e985c203da7c2",
+      "proof": "docs/research/slotspe_eight_issues_20261019/theory_20261026/main.tex",
+      "readable_verdict": "docs/research/slotspe_eight_issues_20261019/theory_20261026/结论与验收.txt",
+      "arithmetic_checker": "docs/research/slotspe_eight_issues_20261019/theory_20261026/check_strict_math.py",
+      "final_arithmetic_receipt": "docs/research/slotspe_eight_issues_20261019/theory_20261026/arithmetic_receipt_v2.json",
+      "prior_receipt_preserved": "docs/research/slotspe_eight_issues_20261019/theory_20261026/arithmetic_receipt.json",
+      "backup": "local_evidence/documentation_backups/strict_math_20261026_165213",
+      "new_commit_or_push": false
+    },
+    "proof_verdicts": {
+      "matched_prediction_distance": "proved: positive part of delta-sqrt(2*M*d*L), threshold and constants tight",
+      "query_free_recovery": "proved conditional variance and fixed-prototype error bounds; fixed noncollapsed targets required",
+      "anchored_frequency_target": "proved low-error recovery for specified quantized real-token frequencies; mathematical definition only, not implemented",
+      "content_implies_patient_task_sufficiency": "not_proved; unweighted-centre support/frequency counterexample",
+      "B_C_increased_expressivity": "refuted when forward functions and parameter domains are identical",
+      "ST_universal_descent": "refuted by analytic two-expert NLL example, embeddable in all-uncensored two-bin survival loss",
+      "conditional_gate_strict_advantage_over_original": "not_proved; sufficient dense-cross is a counterexample to a universal claim",
+      "patient_generalization_or_C_index_gain": "not_established"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "independent_theory_review_topics": [
+        "content and quantitative bounds",
+        "gating and complete observations",
+        "ST analytic counterexample and final manuscript audit"
+      ],
+      "formal_proof_assistant_used": false,
+      "final_exact_arithmetic_checks_passed": 17,
+      "earlier_exact_arithmetic_checks_passed": 15,
+      "arithmetic_runs": 2,
+      "invented_distribution_states": 16,
+      "exact_rectangular_matching_grid_cases": 2500,
+      "patient_inputs_or_weights_or_arrays_loaded": 0,
+      "neural_model_forwards_or_backwards": 0,
+      "training_or_patient_inference_runs": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "original_source_modified": false,
+      "existing_candidate_implementation_or_queue_modified": false,
+      "historical_reports_modified": false,
+      "latex_compile_attempts": 1,
+      "latex_compile_status": "unavailable_environment: Tectonic WinError 5 access denied; no TeX Live detected; PDF not created",
+      "metadata_validation": "JSON parse, script/receipt SHA and unchanged protected source/config/implementation verified; delivery manifest refresh and check performed after final docs update"
+    },
+    "hashes": {
+      "proof_sha256": "9c9d45afb319ad77f208d5d4f79c8e58ff0cf3ad3daf9e5e1a47566b680f4bae",
+      "checker_sha256": "d08a11fd56b92077498c40b267307ec7cb282d25235aeed658184b9d08e43a7d",
+      "final_arithmetic_receipt_sha256": "e802f117e91ba76f850821f278597686efbfc4d9dd5949e4f2ca1762e240aa26",
+      "protected_source_sha256": {
+        "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+      }
+    },
+    "gaps_reasons": "Theorems certify only their stated proxies and assumptions, not full-model advantage, biological semantics, attainable loss, censoring identifiability or patient performance. The extra frequency target is not an implementation. No unrestricted gate-improvement theorem survives dense-cross and ST counterexamples. Typesetting preview is unavailable because the compiler could not execute.",
+    "next_action_user_inputs": "Keep mathematics first. Do not start new gating implementation or patient work on an unproved improvement premise. Specify actual fixed content targets and any finite-head/distribution assumptions before seeking a further full-model guarantee; preserve existing V1/V2/V3 and A/B/C definitions."
+  },
+  "latest_native_gate_theorems_20261027": {
+    "recorded_at": "2026-10-27T16:39:04.628098+08:00",
+    "route_task": "SlotSPE / Q2, P7.1, P2 / original-gate and support-mass mathematical issue discovery",
+    "status": "source_specific_mask_bound_and_auxiliary_nonidentification_counterexample_proved",
+    "completed_work": "Derived the universal per-head unselected-value pooled attention lower bound; constructed eight distinct slots and a nonzero rank-4 auxiliary head with identical auxiliary-survival distributions but strictly different fused NLL under the native readout and ideal Gumbel law; proved native-epsilon support-mass decomposition and selection/aggregation noncommutation; reviewed primary slot literature and official repository limitations.",
+    "paths_commit": {
+      "base_HEAD": "8ca17cb939c4ef936ef4ef5846abd24e92c7cb98",
+      "report": "docs/research/slotspe_eight_issues_20261019/原版门控与证据支持量_严格审查_20261027.txt",
+      "checker": "docs/research/slotspe_eight_issues_20261019/check_native_gate_math_20261027.py",
+      "receipt": "docs/research/slotspe_eight_issues_20261019/native_gate_math_receipt_20261027.json",
+      "backup": "local_evidence/documentation_backups/native_gate_theorems_20261027",
+      "new_commit_or_push": false
+    },
+    "proof_verdicts": {
+      "Q2_unselected_value_mass": "For finite valid attention logits before dropout/eval, beta_unselected >= ((S-k)/S)^2; native S8/k2 gives 9/16. Not final prediction contribution.",
+      "Q2_global_mean_term": "Exact pre-projection pooled attention decomposition includes (S-k)/S times all-value mean; native default coefficient 3/4.",
+      "P7_auxiliary_nonidentification": "Native slot-interface counterexample with eight distinct slots, nonzero rank4 auxiliary head, tau .01 and epsilon 1e-8: identical auxiliary-survival distributions, fused expected NLL gap (54/95)*log(8/5)>0. Dense cross retained.",
+      "P7_direct_gate_gradient": "Final fusion and reconstruction reach scorer only through bool masks; auxiliary survival remains its direct task-supervision path. Reconstruction scalar losses need not coincide in the counterexample.",
+      "P2_support_mass": "Exact native-epsilon aggregation mixture identity and different-support/same-update collision; claim stops before GRU and does not imply full-network abundance blindness.",
+      "P2_postselection_recovery": "Noncommutation counterexample with original epsilon; does not establish which representation is preferable or prove patient harm.",
+      "patient_harm_and_correction_efficacy": "not_established"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "arithmetic_checks_passed": 9,
+      "arithmetic_checks_failed": 0,
+      "rational_attention_matrix_cases": 1482,
+      "paired_top2_masks": 28,
+      "source_hashes_matched": 4,
+      "formal_proof_assistant_used": false,
+      "neural_forwards": 0,
+      "neural_backwards": 0,
+      "patient_inputs_weights_arrays_loaded": 0,
+      "training_runs": 0,
+      "patient_inference_runs": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "original_source_modified": false,
+      "candidate_models_configs_or_abc_changed": false,
+      "historical_reports_modified": false,
+      "all_related_repositories_line_audited_or_reproduced": false,
+      "metadata_validation": "Passed: receipt/script/report hash consistency, JSON parsing, unchanged protected source/config/implementation diff, CRLF-aware diff check, and delivery manifest check with 435 covered files."
+    },
+    "hashes": {
+      "report_sha256": "38d0810ed6b3e2dda85c3bf4b470a99ee53a79f8c3cecd009d68c0433ff07a25",
+      "checker_sha256": "e1f8b789422a9eb24f8559096bf7ecb095c911f4c53ff693aad8e39ef0ed6366",
+      "receipt_sha256": "1c22a31e0b59b1a7445995ca387d09a50e80bbc41393d0ab1dccee450f220cd4",
+      "protected_source_sha256": {
+        "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+        "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682"
+      }
+    },
+    "gaps_reasons": "Readout-interface realizability is not full-encoder reachability or training prevalence. Gumbel probabilities are ideal continuous-law results. The attention percentage is before projection/nonlinear readout. Patient-level failure and correction efficacy remain unmeasured; existing historical negative gate-collapse observations remain valid.",
+    "next_action_user_inputs": "Use the Q2 failure as an engineering control within preserved A/B/C. Continue mathematical work on final-task selection calibration and explicit support-mass retention before a new method. Any mature-checkpoint 28-mask patient audit remains a future separately scoped execution, not performed here."
+  },
+  "latest_reconstruction_audit_20261027": {
+    "recorded_at": "2026-10-27T17:08:06.070757+08:00",
+    "route_task": "SlotSPE / P7.3 / original reconstruction audit and full-slot content-preservation design",
+    "status": "source_gaps_and_conditional_theorems_proved_candidate_not_implemented",
+    "user_steering": "Keep unselected slots available in prediction; investigate a substantial reconstruction module that complements later slot redundancy work and permits all slots in reconstruction.",
+    "completed_work": "Mapped native WSI/omics self reconstruction and joint WSI-to-omics reconstruction. Established that each native self head masks unselected slots, while joint reconstruction uses a separate WSI-derived slot set without that mask. Proved a constant trainable WSI target/head zero-loss construction, padding-loss decomposition, query-bypass risk, patient-level target separation, content-mass recovery, and conditional-variance boundary. Designed a fixed train-fold feature target with mass/first moments/optional second moments and an all-slot query-free reconstruction path, with optional conditional-distribution follow-up. Compared prior literature and existing V2; no module implemented.",
+    "paths_commit": {
+      "base_HEAD": "8ca17cb939c4ef936ef4ef5846abd24e92c7cb98",
+      "report": "docs/research/slotspe_eight_issues_20261019/重构模块问题与全槽内容重建方案_20261027.txt",
+      "arithmetic_checker": "docs/research/slotspe_eight_issues_20261019/check_reconstruction_theory_20261027.py",
+      "arithmetic_receipt": "docs/research/slotspe_eight_issues_20261019/reconstruction_theory_receipt_20261027.json",
+      "backup": "local_evidence/documentation_backups/reconstruction_audit_20261027",
+      "new_commit_or_push": false
+    },
+    "verdicts": {
+      "user_prediction_policy": "Preserve original all-slot cross and existing self/mean path; selected-only self pooling is a diagnostic comparison, not a default recommendation.",
+      "native_self_reconstruction": "Both WSI and omic self reconstruction consume only current top-K slot keys/values, as key_padding_mask in ReconstructionHead; direct gradient for a fixed unselected slot is zero, indirect/shared effects remain.",
+      "native_joint_reconstruction": "Unmasked WSI-derived slot set generated by omic slot attention, not an unmasked read of the existing patient omic slots.",
+      "WSI_target_shortcut": "Target-derived frozen query is an existing head-level construction; additionally native trainable WSI projection and decoder admit a nonzero constant zero-cosine-loss construction for the isolated reconstruction term.",
+      "omic_target": "detach cuts current target-side gradient but does not freeze encoder-produced target across updates; isolated losses admit constant targets.",
+      "padding": "Original patch reconstruction loss averages padded examples; exact term fraction is padding fraction, not a prediction/gradient-harm percentage.",
+      "candidate": "All-slot, query-free fixed-train-fold content distribution target with mass/first/optional second moments and a fixed-pathway-ID omic head; optional cross-modal conditional distribution is a separate later candidate.",
+      "theoretical_scope": "Patient-level permutation-invariant separation and Lipschitz target-statistic guarantees, target-query conditional-variance identity, cross-modal irreducible MSE and uncensored binary-event information gap; no intra-patient slot uniqueness or patient outcome gain follows.",
+      "prior_work": "Existing V2 already uses a fixed train-fold content reference and query-free matching; CODA, PIBD and LD-CVAE are strong nearby baselines. Novelty and efficacy unestablished."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "arithmetic_checks_passed": 8,
+      "arithmetic_checks_failed": 0,
+      "exact_patient_separation_cases": 729,
+      "exact_padding_decompositions": 72,
+      "conditional_mse_predictors": 64,
+      "source_hashes_matched": 4,
+      "formal_proof_assistant_used": false,
+      "neural_forwards": 0,
+      "neural_backwards": 0,
+      "patient_inputs_weights_arrays_loaded": 0,
+      "training_runs": 0,
+      "patient_inference_runs": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "original_source_modified": false,
+      "candidate_implementation_queue_or_abc_changed": false,
+      "historical_reports_modified": false,
+      "complete_prior_work_code_reproduction": false,
+      "metadata_validation": "Passed: report/checker/receipt hashes, JSON parse, unchanged original source/implementation/config scoped diff, CRLF-aware diff check, and delivery manifest check with 438 covered files."
+    },
+    "hashes": {
+      "report_sha256": "3e660819b508a7bae994767d36ea3089222b1f966347ce003a9cb2d9274a435d",
+      "checker_sha256": "d58f85e5e84d12684851a93221c8e32f8fff0c2cfb5dbdb8d2b6d335b8df22e3",
+      "receipt_sha256": "4fcdfd2cac98ab4508cb912e82467300e8063d9ba54bdc43f139101806347671",
+      "protected_source_sha256": {
+        "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+        "third_party/SlotSPE/models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+        "third_party/SlotSPE/dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3"
+      }
+    },
+    "gaps_reasons": "The theorem targets are feature proxies and require independent fixed train-fold references, Lipschitz conditions and low attainable reconstruction loss. All-slot reading does not guarantee each slot contributes. No natural shortcut rate, patient harm, new model implementation or correction benefit established.",
+    "next_action_user_inputs": "Continue mathematics-first evaluation of the all-slot reconstruction design and its differences from existing V2. Keep current prediction use of unselected slots. Patient inference/training remains a separate future action under specific authorization and matched inputs."
+  },
+  "latest_v2_crossview_theory_20261027": {
+    "recorded_at": "2026-10-27T17:26:23.010467+08:00",
+    "route_task": "SlotSPE / user-owned V2 / creative cross-view reconstruction and information audit",
+    "status": "candidate_defined_conditional_proofs_and_counterexamples_checked_no_model_implementation",
+    "user_steering": "V2 belongs to the user; explore boldly and try counterexamples while keeping the mathematics-first gate and retaining unselected slots in prediction/reconstruction.",
+    "completed_work": "Proposed extension of existing V2 using all slots to predict fixed-train-fold patient content statistics from a disjoint held-out patch view, while leaving the full-bag prediction forward unchanged. Derived finite-population sampling and L2 bounds, ideal conditional-information identities and finite-decoder KL correction, Shapley information allocation, and a permutation-invariant hard-code capacity bound. Constructed exact 8-slot V2-content matching duplication, fixed-decoder deletion false attribution, XOR synergy, weak-adversary bias and negative outer-weight collapse counterexamples. Reviewed nearby primary literature. Five successive receipts and the four preceding report/checker snapshots are retained.",
+    "paths_commit": {
+      "base_HEAD": "8ca17cb939c4ef936ef4ef5846abd24e92c7cb98",
+      "report": "docs/research/slotspe_eight_issues_20261019/V2跨视图重构与槽增量_理论试错_20261027.txt",
+      "checker": "docs/research/slotspe_eight_issues_20261019/check_crossview_theory_20261027.py",
+      "final_receipt": "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_v5_20261027.json",
+      "prior_receipts": [
+        "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_20261027.json",
+        "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_v2_20261027.json",
+        "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_v3_20261027.json",
+        "docs/research/slotspe_eight_issues_20261019/crossview_theory_receipt_v4_20261027.json"
+      ],
+      "prior_report_and_checker_snapshots": "local_evidence/documentation_backups/crossview_reconstruction_20261027",
+      "new_commit_or_push": false
+    },
+    "verdicts": {
+      "V2_ownership": "User-owned prior method; candidate is an extension and comparative baseline, not prior work belonging to another team.",
+      "V2_content_matching": "Eight distinct private slots can all carry the same two patient bits while a shared GELU head exactly matches eight distinct targets; target-matching loss alone does not prove slot-wise unique content. Interface construction, not observed training.",
+      "cross_view": "For a fixed real-token bag and disjoint random views, the mean of B is unbiased for that bag and has exact finite-population variance; no claim views are independent or that cross-view error guarantees clinical benefit.",
+      "dropout_true_information": "Ideal best log-loss difference equals average conditional MI for independently selected slot; finite decoder gap includes KL_drop-KL_full.",
+      "outer_weight_failure": "If beta<gamma in beta*R_all-gamma*R_drop, an uninformative representation can receive a lower objective than perfect duplication. beta>=gamma is necessary to avoid that exhibited failure; finite-decoder adversarial optimization remains unproved.",
+      "unordered_capacity": "With shared hard M-codebook, no bypass, permutation-invariant full multiset and independent uniform deletion, average drop conditional information has lower bound [H(T)-log C(M+K-2,K-1)-epsilon]+; K8/M4 uniform 165-class witness is feasible but limited and no per-patient/per-slot guarantee.",
+      "sample_size_limit": "With 289 distinct empirical training patients, K8/M5 yields 330 remaining multisets and cannot produce a positive certificate from empirical target entropy; population entropy and empirical entropy are distinct.",
+      "shapley_and_synergy": "Total Shapley information sums to joint MI; last-slot conditional contributions can overcount synergy. XOR proves positive conditional increments need not be independently interpretable.",
+      "clinical_and_novelty": "Patient predictive benefit, natural duplication prevalence, feasibility of cross-view prediction, conditional KL bounds and novelty relative to literature remain unestablished."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "final_arithmetic_checks_passed": 9,
+      "final_arithmetic_checks_failed": 0,
+      "independently_reviewed_theory_topics": [
+        "fixed-encoder and entropy identities",
+        "capacity bounds and adversarial counterexamples",
+        "primary literature"
+      ],
+      "exact_v2_counterexample_cases": 4,
+      "slots_per_v2_counterexample": 8,
+      "disjoint_view_allocations": 90,
+      "unordered_target_classes": 165,
+      "remaining_multisets": 120,
+      "formal_proof_assistant_used": false,
+      "neural_forwards": 0,
+      "neural_backwards": 0,
+      "patient_inputs_weights_arrays_loaded": 0,
+      "training_runs": 0,
+      "patient_inference_runs": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "original_source_modified": false,
+      "v2_implementation_queue_or_abc_changed": false,
+      "historical_reports_modified": false,
+      "full_paper_code_reproductions": false,
+      "metadata_validation": "Passed: report/checker/receipt hash consistency, JSON parse, unchanged original source/V2/config scoped diff, CRLF-aware diff check, and delivery manifest check with 445 covered files."
+    },
+    "hashes": {
+      "report_sha256": "ecfb57193a86fea7925d2b8eba1ef2a8e09f2f2b7e41ab059eca81b1eed80184",
+      "checker_sha256": "b9bf00c8f41f4681137109354e2113dce37aeae61d12f499d7c916877895f810",
+      "receipt_sha256": "d4d3d2f076405ae06688cddc76d8082c05f76833cbc2849b55fe4d5a2aa62ff2",
+      "source_sha256": {
+        "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+        "slotspe_proof/slot_disentanglement.py": "75ab77ac2cec6f16a4b73f37f027b574a4f41ca7f21e9cfb741fb13bfb8859ea",
+        "slotspe_proof/plugin_host.py": "e47761e4a33c1e924dae29b8534383dc7d20f2d647040e069c74d6e7311465a7"
+      }
+    },
+    "gaps_reasons": "Mathematics certifies conditional population proxies and hard-bottleneck constructions; real encoders may not reach them. Finite decoder KL upper bounds, true target entropy, biological relevance, rare-event cross-view predictability, training stability, innovation against strong baselines and patient benefits are not established.",
+    "next_action_user_inputs": "Keep V2 and native prediction intact. Continue an explicit math audit of attainability, target design and strong baselines before implementing the proposed research module. A concrete patient execution remains separately scoped and authorized."
+  },
+  "latest_crossview_math_and_implementation_20261027": {
+    "recorded_at": "2026-10-27T22:06:24.518322+08:00",
+    "route_task": "User-owned V2: mathematics-first all-slot cross-view reconstruction and controlled comparison",
+    "completed_work": "Proved conditional Dirichlet-multinomial MSE improvement and exhibited independence, finite-bag, and patient-identity counterexamples. Implemented same-sample finite-table deletion oracles with support caveats; implemented all-slot fixed-anchor mass and first-moment reconstruction without changing the native full-bag prediction; added four-arm queue and held-out own/train-constant/all-donor aggregate comparisons.",
+    "paths_commit": {
+      "base_HEAD": "8ca17cb939c4ef936ef4ef5846abd24e92c7cb98",
+      "paths": [
+        "docs/research/slotspe_eight_issues_20261019/跨视图可预测性与删槽判据_数学门槛_20261027.txt",
+        "docs/research/slotspe_eight_issues_20261019/跨视图模块合成验收与服务器交接_20261027.txt",
+        "scripts/check_crossview_math_gate.py",
+        "scripts/run_slotspe_crossview.py",
+        "slotspe_proof/crossview_reconstruction.py",
+        "slotspe_proof/crossview_diagnostic.py",
+        "slotspe_proof/crossview_queue.py",
+        "slotspe_proof/crossview_engine.py",
+        "tests/test_crossview_diagnostic.py",
+        "tests/test_crossview_reconstruction.py",
+        "tests/test_crossview_queue.py",
+        "tests/test_crossview_generated_smoke.py"
+      ],
+      "new_commit_or_push": false,
+      "sha256": {
+        "docs/research/slotspe_eight_issues_20261019/跨视图可预测性与删槽判据_数学门槛_20261027.txt": "502f0471d381d4bcf6c47619b4420f548f3355400119fcef7384148ba897ab19",
+        "docs/research/slotspe_eight_issues_20261019/跨视图模块合成验收与服务器交接_20261027.txt": "637dd72803b67a5f748b205f52fc87edb94f8d89ec5d4c140a2baa6b5b6850e8",
+        "scripts/check_crossview_math_gate.py": "dd5d5c6789cb8f8d7af77d530decca2ce3a4444ca3fdb2468a3d5fd4219f34a0",
+        "scripts/run_slotspe_crossview.py": "176833cdc14fa27d24402346a27bc1233eee61ebab0e96c2e05419596b544f36",
+        "slotspe_proof/crossview_reconstruction.py": "0e5cc487c90d3564225dafd2458761b77cd961eaf5cb853ef2143ce95cffa6a2",
+        "slotspe_proof/crossview_diagnostic.py": "003344adfeb8b01a7f12d115c55d34972131fe6258331161e52c715ef94adec4",
+        "slotspe_proof/crossview_queue.py": "54a2e0d8343eb5afc9ec339b7cc9070da0f38821519c62ec2485bc6b3e24de26",
+        "slotspe_proof/crossview_engine.py": "56f75a05f607a087f8e45963d3ce541e8c99e8c903041c5ca198aba7c4f84799",
+        "tests/test_crossview_diagnostic.py": "7a9407d1ddf1070fd4e4a7b24c66ee6999ab9ad3a1456d1fcb172e8b6d2d52a5",
+        "tests/test_crossview_reconstruction.py": "7676474c18586e96322420a56ef9a401b41d695b2b40877edad31d3565ba7dd4",
+        "tests/test_crossview_queue.py": "0ebfe5657be8c4542c6c0aad00f308790f42861554e5a32dc0c2f4941065e64e",
+        "tests/test_crossview_generated_smoke.py": "2ef3be0cf79ed189dacb3e71cb271f8bd686eadfc704f83719f1ba68635ac3cf"
+      }
+    },
+    "checks_actual_execution_raw_receipt": {
+      "pure_math_passed": 9,
+      "generated_input_tests_passed": 56,
+      "synthetic_smoke": "Each repeated smoke run used fabricated cases only, 4 arms, 1 optimizer update per arm, checkpoint save/reload and one synthetic evaluation; common V2 weights matched after update.",
+      "patient_feature_loads": 0,
+      "patient_training_runs": 0,
+      "patient_inference_runs": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "plan": "BLCA UNI2-h fold0 seed3, four arms, 30 epochs each, 4096 train patches, 20 eval repeats, fixed final epoch",
+      "source_v2_and_existing_queues_modified": false
+    },
+    "gaps_reasons": "Theory depends on explicit distribution assumptions; disjoint finite-bag views are dependent. Target proxies and synthetic forward/backward/one-step smoke do not establish patient-specific or clinical benefit; deletion oracle is same-sample discrete, not continuous-slot uniqueness or population proof. No patient observations, full configuration execution, independent cohorts, or server receipts. Final-checkpoint results are not comparable with older best-validation policy.",
+    "next_action_user_inputs": "Obtain server SSH alias/connection and repository path; verify metadata and feature root environment, dependencies and data protocol with plan/doctor, then run the user-requested matched patient queue if accessible. Inspect held-out own vs constant and donor plus survival and audit raw receipts; keep all private data under ignored local_evidence."
+  },
+  "latest_crossview_quick_delivery_20261029": {
+    "recorded_at": "2026-10-29T11:28:31.494936+08:00",
+    "route_task": "User-requested scoped delivery and quick four-arm patient pilot",
+    "completed_work": "Merged remote progress by semantic key, preserved unrelated local work, added independent fixed 3-epoch/256-patch/3-repeat quick profile with separate ignored output. Normal 30/4096/20 profile remains default. Each quick arm uses the same data and settings.",
+    "paths_commit": {
+      "base_remote_head": "ee1d506ae25496e06da2d4848a9b0f8c76c852b9",
+      "queue": "slotspe_proof/crossview_queue.py",
+      "runner": "scripts/run_slotspe_crossview.py",
+      "report": "docs/research/slotspe_eight_issues_20261019/跨视图模块合成验收与服务器交接_20261027.txt"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "generated_tests": "59 targeted tests including four-arm 1-step synthetic optimization and quick profile validation",
+      "patient_training_runs": 0,
+      "patient_inference_runs": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false
+    },
+    "gaps_reasons": "Quick pilot is one fold/seed, only 3 epochs, 256 training patches, 3 repeats and uses final checkpoint; cannot establish clinical benefit or compare with best-validation or 30/4096 results. Validation still uses all patches. Server access, runtime and patient artifacts must be verified before any execution.",
+    "next_action_user_inputs": "On an isolated checkout at the delivered commit, run --quick --plan and --quick --doctor, verify server and GPU availability, then run --quick --run under existing user request; audit raw receipts and compare all four arms."
   }
 }
