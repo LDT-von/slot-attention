@@ -5980,5 +5980,66 @@
     },
     "gaps_reasons": "The probe reads only the held-out fold, so the codebook cannot be fitted on the training fold and the absolute deletion gaps are weaker than the cross-view diagnostic's; a stricter version would have to re-run the training fold's forward pass to recover a held-out-codebook estimate. The permutation null uses 8 repeats, so the null max itself carries sampling noise, and with 300 cells a handful of exceptions is within the range expected from chance under a null that is only approximately exchangeable. The slot geometry varies strongly between folds, which means the five-fold geometry averages recorded earlier are means over a bimodal outcome rather than stable arm properties. Only repeat 0 was probed, so evaluation randomness in the slots is not characterized beyond the single observation that repeat 1 and 2 produce different slot tensors. No training, no model forward and no new checkpoint was produced, so this stage says nothing about whether a larger budget would create deletable patient information.",
     "next_action_user_inputs": "The probe answers the question it was built for, and the answer is negative for the reconstruction premise and reveals that slot quality is not a stable fold-level property. The remaining choice is between (a) investigating why the geometry is bimodal across folds, since the fold-0 and fold-4 R5 runs are qualitatively different from folds 1-3 and that instability, not the redundancy objective, is what blocks every conclusion about slot quality, (b) testing a larger seed or fold count to see whether the bimodality is a training-dynamics artifact, or (c) stopping this line and reporting that the slot mechanism's redundancy, its reading behaviour and its content information are three separate axes that none of the current interventions move together. The server side has the four-arm quick pilot to run; that remains independent of this probe."
+  },
+  "latest_annotated_roi_analysis_tool_20261029": {
+    "recorded_at": "2026-10-29T17:34:43.963327+08:00",
+    "route_task": "Original SlotSPE annotated tumor-region and pathway-token slot redundancy analysis, local implementation only",
+    "completed_work": "Added exact token-to-slide/feature-row/level0-coordinate manifest checks; union-based ROI overlap and 0.25/0.5/0.75 sensitivity; replay-verified native attention capture; all-slot/by-head and selected-slot overlap, uniform deviation, tumor and top-patch metrics; private plots, optional sparse WSI image reader and patient-level cohort aggregation; fabricated-only executable demo. Unknown regions remain unknown; pathway tokens are not single-gene attribution.",
+    "paths_commit": {
+      "base_HEAD": "ee1d506ae25496e06da2d4848a9b0f8c76c852b9",
+      "paths": [
+        "scripts/analyze_slotspe_annotated_roi.py",
+        "slotspe_proof/roi_alignment.py",
+        "slotspe_proof/roi_metrics.py",
+        "slotspe_proof/roi_trace.py",
+        "slotspe_proof/roi_visualization.py",
+        "slotspe_proof/roi_wsi_assets.py",
+        "slotspe_proof/roi_workflow.py",
+        "slotspe_proof/roi_cohort.py",
+        "slotspe_proof/roi_demo.py",
+        "tests/test_slotspe_roi_alignment.py",
+        "tests/test_slotspe_roi_metrics.py",
+        "tests/test_slotspe_roi_trace.py",
+        "tests/test_slotspe_roi_visualization.py",
+        "tests/test_slotspe_roi_wsi_assets.py",
+        "tests/test_slotspe_roi_workflow.py",
+        "tests/test_slotspe_roi_cohort.py",
+        "docs/research/slotspe_patch_slot_sharing_20261023/标注癌区分析工具使用说明_20261029.md"
+      ],
+      "sha256": {
+        "scripts/analyze_slotspe_annotated_roi.py": "63d0f5aeed57403066e1098a977b3921a368cb09ffdaa9325114deb7c54c80f1",
+        "slotspe_proof/roi_alignment.py": "9f82543149b45fdeaae9d5d80a0ac9077695f7beeb629cf4d61700147056d958",
+        "slotspe_proof/roi_metrics.py": "1b537a3843cc28626655cfb371f45eadcaad7923bdb91274e75a4eb14fed05bd",
+        "slotspe_proof/roi_trace.py": "39b72349d6ca1cd8a24593dd7e98d3bc297ef42820332f924fe63657e196eccc",
+        "slotspe_proof/roi_visualization.py": "e9e979cca5a1aca227ec9a352a9c88cc730397d3c654ea5b4384db453f5b698d",
+        "slotspe_proof/roi_wsi_assets.py": "d2e0ff4b20fb618efd134ba7c753e889f6cb573de03b812bd184ddbc1a8e658a",
+        "slotspe_proof/roi_workflow.py": "d6e25b377ee838fdfbad20a7e70efa06c8e00fcad7e49307c3a41bbcdf7622c8",
+        "slotspe_proof/roi_cohort.py": "99aa8b514455f86a972c12183790232f8aca27fca9e4d637867bb4c9e52e11d9",
+        "slotspe_proof/roi_demo.py": "24524887dcd3b252670fe2b06af0fd17d5d71ba20d903b59d314946e3642bce7",
+        "tests/test_slotspe_roi_alignment.py": "4f6b1928d13e722a8b1dd77d53dea1f503506a4187e88a95a0f09ddbf5d72f53",
+        "tests/test_slotspe_roi_metrics.py": "341b33c5c2c0976370f1db547464d9fd60633bb117459aca07d94a700f234c49",
+        "tests/test_slotspe_roi_trace.py": "a4de575050572145a07c7db9f97f46cc8423150efe95e89365b41fc9ef536761",
+        "tests/test_slotspe_roi_visualization.py": "7b87a95545a768daefff20c01f24da23db52c301514ef46813b64b1a80321eb0",
+        "tests/test_slotspe_roi_wsi_assets.py": "09bf918fdb5481a5081c799b027805d60bd9c1a9e021bb9038b9c7a32ceda0eb",
+        "tests/test_slotspe_roi_workflow.py": "c26e18a1036e188b0b798af6fc2fc5e68601fa1480019731262f9ea8dfac7cce",
+        "tests/test_slotspe_roi_cohort.py": "14d232538dd3547b0617c4a1fd90e3c321b459981db954518e8916622347fd18",
+        "docs/research/slotspe_patch_slot_sharing_20261023/标注癌区分析工具使用说明_20261029.md": "fd8c7bf2eed9257f741dd1e787f5119ccc4ed4edcf4bc4650ec9ed3cb59ed950"
+      },
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "generated_fixture_tests_passed": 109,
+      "fixture_test_method": "pytest --noconftest with fresh ignored basetemp; fake tensors and fake WSI reader only",
+      "generated_demo": "local_evidence/roi_synthetic_demo_20261029_run04; no patient and no checkpoint file; 5 figures; native synthetic-model forward only",
+      "patient_feature_loads": 0,
+      "patient_training_runs": 0,
+      "patient_inference_runs": 0,
+      "actual_wsi_loads": 0,
+      "server_connection_or_execution": false,
+      "new_server_raw_receipt": false,
+      "original_source_and_existing_queue_file_modified": false
+    },
+    "gaps_reasons": "Real annotation CSV format, WSI-to-feature rows, RNA/survival/checkpoint matching and OpenSlide against real WSI remain unverified. No end-to-end real-data loader or automatic annotation conversion exists. Hashes and caller attestations do not independently establish identity or provenance. Synthetic tests do not prove patient redundancy, survival harm or generalization.",
+    "next_action_user_inputs": "Independently check the exact slide/annotation/feature-row mapping and patient RNA, survival, validation split and frozen checkpoint; implement a schema-specific adapter after inspecting their real formats. Authorized patient capture and multi-patient evaluation require a separately scoped execution."
   }
 }
