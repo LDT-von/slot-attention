@@ -7550,5 +7550,289 @@
     },
     "gaps_reasons": "Only epoch 1 and the start of epoch 2 of folds 0 and 1 have been observed. The queue needs several hours per arm because each run is 1140 optimizer steps with a per-epoch validation pass over the validation fold and a 20-repeat evaluation at the end, and the ten runs share two GPUs. The fold 0 and fold 1 arms are running concurrently while folds 2, 3 and 4 wait for the initialization and GPU slots. The clip norm of 1.0 is an order of magnitude below the ordinary gradient and was chosen by reasoning from the completed runs' recorded gradient norms rather than swept, so a negative result would not distinguish 'the collapse cannot be held' from 'this particular bound cannot hold it'. The two arms differ only from epoch 2 onward, because the decay schedule starts at the full Gram weight of 10.0, so the A0_clip and A1_clip_decay curves are identical in epoch 1 by construction. Independent verification adds three qualifications to this entry. First, the collapse-holding evidence is currently a single fold and two epochs: the decisive contrast is the end of epoch 2 for fold 0, where R5 was at effective rank 1.039 and cosine 0.978 while A0_clip was at 5.639 and 0.175, and one fold at one epoch cannot separate the intervention from fold noise, so the fold 1 trajectory, which reaches effective rank 5.104 and cosine 0.184 at the end of epoch 1 and 6.146 and 0.116 by the end of epoch 2, is consistent and is a second fold, but one fold at one epoch still cannot separate the intervention from fold noise and neither fold has been observed past epoch 2. Second, the pre-clip gradient norm reaching 76429717.18 in fold 1 shows that the unclipped model can produce gradients eight orders of magnitude above the clip bound, so a clip of 1.0 is very far below the natural gradient scale; the recorded post-clip norm being exactly 1.0 on every step means the optimizer direction is preserved but the effective step size is set by the clip, which is a real limitation on how much the survival objective can be optimized, and it remains to be seen whether the loss plateaus over 30 epochs. Third, the observation that A0_clip and A1_clip_decay are identical in epoch 1 by construction means the two arms cannot be compared until epoch 2 onward, so the queue has so far produced one arm's worth of evidence about the intervention rather than two, and the A1 arm's own contribution is still untested. Nothing here establishes patient benefit, patient-specific content in the slots, or correction efficacy.",
     "next_action_user_inputs": "Let the queue finish. Then compare, fold by fold and epoch by epoch, whether the wsi effective rank stays above 1.5 for all 30 epochs, which the completed queue never achieved for any arm in the wsi space, and re-run the deletion probe on the resulting best checkpoints to see whether a held-open slot set carries patient-specific content. No further user input is needed to complete that; the user should be asked only if the run reveals that the hard clip bound prevents the model from training over the full 30 epochs, because that would require choosing a different bound."
+  },
+  "latest_crossview_score_interpretation_and_best_epoch_20261030": {
+    "recorded_at": "2026-10-30T12:35:00+08:00",
+    "route_task": "SlotSPE / P7.3 / interpretation of the C-index values produced by this window's full-budget cross-view run, including a same-cohort comparison with the completed best-validation 5fold queue, the per-arm best epoch of that queue, the method identity of the arms R1 and R5, and the cancer and cohort identity of the cross-view queue",
+    "user_steering": "User asked directly for a judgement on whether the scores are good or bad, then asked which epoch produced the best score under a same-cohort, same-fold, final-epoch comparison, then asked what methods R5 and R1 are and what cancer was run. User finally asked for a consolidated summary of this window with results, then a push.",
+    "status": "completed_scores_are_middling_and_the_crossview_baseline_is_unstable_so_the_arm_ordering_is_not_readable_the_primary_evidence_is_the_crossview_predictability_measurement",
+    "completed_work": "Read-only analysis of stored artifacts, no training and no new queue. The score interpretation was done by comparing the cross-view run against the completed best-validation queue on the same cohort, the same fold and the same final-epoch checkpoint rule, and by reading the per-epoch validation records that the historical queue stores and that the cross-view queue does not store. The method identity of R1 and R5 was read from the arm contract table in the source, and the cancer and cohort identity was read from the resolved configuration, the prepared manifest and the clinical table on disk. The R1 and R5 identities were additionally checked against the other session's finding that R5 and R1 are the only two arms that genuinely reduce slot redundancy.",
+    "paths_commit": {
+      "base_HEAD": "9c27891d30723ee78ad9abca01e18923eee9f73c",
+      "new_commit_or_push": false,
+      "source_files_changed": "none",
+      "third_party_modified": false,
+      "files_read": [
+        "slotspe_proof/redundancy_engine.py",
+        "slotspe_proof/slot_regularization.py",
+        "slotspe_proof/crossview_queue.py",
+        "slotspe_proof/redundancy_anticollapse_multifold.py",
+        "local_evidence/crossview_blca_uni2h_fold0_seed3_run01/resolved_config.json",
+        "local_evidence/crossview_blca_uni2h_fold0_seed3_run01/arms/*/eval_repeats.json",
+        "local_evidence/crossview_blca_uni2h_fold0_seed3_run01/arms/*/curve.json",
+        "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/folds/0/arms/*/epoch_validation.json",
+        "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/folds/*/arms/*/epoch_validation.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/*/arms/*/epoch_validation.json",
+        "/data1/dataset_csv/clinical/all/blca.csv"
+      ]
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, read-only json and csv parsing, no GPU, no training",
+      "patient_training_runs": 0,
+      "optimizer_steps": 0,
+      "checkpoints_loaded": 0,
+      "model_forwards": 0,
+      "cancer_and_cohort_identity": {
+        "study": "BLCA, bladder urothelial carcinoma, TCGA-BLCA, read from the clinical table /data1/dataset_csv/clinical/all/blca.csv which holds 381 rows of which 380 carry survival_months_dss",
+        "task": "multimodal survival prediction, WSI patch features plus omic RNA, scored by concordance index",
+        "feature_encoder": "UNI2-h",
+        "label": "survival_months_dss with censorship_dss",
+        "signature": "combine",
+        "split_actually_read": "/data1/dataset_csv/splits/5fold/blca/fold_0.csv",
+        "train_cases": 303,
+        "validation_cases": 77,
+        "note": "The queue directory and the resolved configuration both carry the name 5fold_uni2h while the cohort actually loaded is the 5fold one, as recorded in latest_crossview_split_identity_correction_20261030. This is a label defect only; the cohort is the same one the completed best-validation queue used, so the comparison below is on one cohort."
+      },
+      "r1_and_r5_method_identity": {
+        "source": "slotspe_proof/redundancy_engine.py lines 32 to 39, ARM_CONTRACTS",
+        "arm_table": {
+          "S0": {
+            "gram_weight": 0.0,
+            "slotbert_weight": 0.0,
+            "content_weight": 0.0,
+            "meaning": "pure native baseline, no adapter"
+          },
+          "R1": {
+            "gram_weight": 10.0,
+            "slotbert_weight": 0.0,
+            "content_weight": 0.0,
+            "meaning": "slot Gram orthogonality penalty only"
+          },
+          "R2": {
+            "gram_weight": 0.0,
+            "slotbert_weight": 1.0,
+            "content_weight": 0.0,
+            "meaning": "Slot-BERT loss only"
+          },
+          "R3": {
+            "gram_weight": 0.0,
+            "slotbert_weight": 1.0,
+            "content_weight": 5.0,
+            "meaning": "Slot-BERT plus content reconstruction"
+          },
+          "R4": {
+            "gram_weight": 0.0,
+            "slotbert_weight": 0.0,
+            "content_weight": 5.0,
+            "meaning": "content reconstruction only"
+          },
+          "R5": {
+            "gram_weight": 10.0,
+            "slotbert_weight": 0.0,
+            "content_weight": 5.0,
+            "meaning": "Gram orthogonality plus content reconstruction"
+          }
+        },
+        "loss_definitions": {
+          "gram_weight": "slot_gram_loss in slotspe_proof/slot_regularization.py line 30, the mean squared off-diagonal cosine between slots, so parallel slots are penalized and the eight slots are pushed apart",
+          "slotbert_weight": "slotbert_loss in slotspe_proof/slot_regularization.py line 37, a Slot-BERT equation 11 transplant at temperature 0.5 with the paper's temporal axis replaced by independent batch examples",
+          "content_weight": "coverage_set_mse, a coverage set reconstruction term that asks the slot set to reconstruct the target content"
+        },
+        "why_this_matters": "R1 and R5 are the only two arms in that queue that genuinely reduce slot redundancy. The repository's own record states that the arms with the highest score did not resolve slot redundancy at effective rank about 1.17 and cosine about 0.91, and that the only two arms that genuinely reduced redundancy, R5 and R1, were the two with the lowest scores. R5 is therefore the arm that combines the best fold-0 score with a real reduction of slot collapse, and it is the closest existing precedent for what this window's cross-view line was trying to achieve."
+      },
+      "same_cohort_same_fold_final_epoch_comparison": {
+        "note": "Both sides use the same 5fold cohort, the same fold 0 and the same final-epoch checkpoint rule. The historical side is read from epoch_validation.json at epoch 30 and the cross-view side from the 20 evaluation repeats of the final checkpoint.",
+        "historical_best_queue_fold0_final_epoch": {
+          "R1": 0.7211,
+          "R5": 0.7163,
+          "S0": 0.6933,
+          "S3": 0.6513,
+          "R4": 0.6434,
+          "R3": 0.6395,
+          "S4": 0.6387,
+          "S5": 0.6292,
+          "S1": 0.5927,
+          "R2": 0.5919,
+          "S2": 0.4049,
+          "mean_over_11_arms": 0.6293
+        },
+        "crossview_queue_fold0_final_epoch_20_repeats": {
+          "B0_native": {
+            "mean": 0.4513,
+            "std": 0.0407,
+            "min": 0.371,
+            "max": 0.525
+          },
+          "V2_separate": {
+            "mean": 0.6103,
+            "std": 0.0481,
+            "min": 0.493,
+            "max": 0.682
+          },
+          "V2_crossview_compute": {
+            "mean": 0.6103,
+            "std": 0.0481,
+            "min": 0.493,
+            "max": 0.682
+          },
+          "V2_crossview_train": {
+            "mean": 0.6241,
+            "std": 0.0419,
+            "min": 0.559,
+            "max": 0.695
+          }
+        },
+        "reading": "Under the final-epoch rule the cross-view arms at 0.6103 to 0.6241 sit close to the historical 11-arm final-epoch mean of 0.6293, and the best cross-view arm beats the historical final-epoch average of the weaker arms, so the cross-view score is middling rather than poor. The single striking value is B0_native at 0.4513, which is 0.242 below the historical native baseline S0 at 0.6933 while starting from the identical initial weights, since the cross-view B0_native initial_native_hash equals the historical S0 initial_core_hash at 0a4918ed3e1fea5233ca58eaa096bbc37e8a0e12bbf1d6f95ea7b71f0fdaaf7c, and which uses the same cohort, fold, 30 epochs, 4096 patches, learning rate 5e-4, batch 8 and every other shared setting."
+      },
+      "training_nll_trajectory_comparison": {
+        "note": "Same cohort and same fold. The historical baseline converges while the cross-view native arm degrades after epoch 5.",
+        "historical_S0": {
+          "ep1": 1.1155,
+          "ep5": 0.6109,
+          "ep10": 0.5883,
+          "ep30": 0.5596
+        },
+        "crossview_B0_native": {
+          "ep1": 1.0974,
+          "ep5": 0.6702,
+          "ep10": 0.817,
+          "ep30": 0.7379
+        },
+        "crossview_V2_crossview_train": {
+          "ep1": 1.0783,
+          "ep5": 0.6695,
+          "ep10": 0.6151,
+          "ep30": 0.631
+        },
+        "reading": "The cross-view native arm's training loss rises from 0.6702 at epoch 5 to 0.817 at epoch 10 while the historical baseline keeps falling to 0.5596, so the cross-view native arm does not even fit its own training set, which points at optimization instability on the cross-view code path rather than at a modelling difference. The cross-view trained arm has the lowest training loss of the three yet a lower validation score, which is consistent with the same instability."
+      },
+      "historical_queue_best_epoch_analysis": {
+        "note": "Read from epoch_validation.json of the completed best-validation queue. This is the answer to which epoch gave the best score.",
+        "fold0_best_epoch_per_arm": {
+          "R5": {
+            "best_epoch": 16,
+            "best_cindex": 0.7536,
+            "final_epoch_cindex": 0.7163
+          },
+          "R1": {
+            "best_epoch": 18,
+            "best_cindex": 0.7528,
+            "final_epoch_cindex": 0.7211
+          },
+          "S0": {
+            "best_epoch": 14,
+            "best_cindex": 0.7472,
+            "final_epoch_cindex": 0.6933
+          },
+          "R4": {
+            "best_epoch": 6,
+            "best_cindex": 0.7179,
+            "final_epoch_cindex": 0.6434
+          },
+          "S1": {
+            "best_epoch": 1,
+            "best_cindex": 0.7155,
+            "final_epoch_cindex": 0.5927
+          },
+          "S5": {
+            "best_epoch": 1,
+            "best_cindex": 0.7155,
+            "final_epoch_cindex": 0.6292
+          },
+          "S2": {
+            "best_epoch": 1,
+            "best_cindex": 0.7116,
+            "final_epoch_cindex": 0.4049
+          },
+          "S3": {
+            "best_epoch": 1,
+            "best_cindex": 0.71,
+            "final_epoch_cindex": 0.6513
+          },
+          "S4": {
+            "best_epoch": 1,
+            "best_cindex": 0.706,
+            "final_epoch_cindex": 0.6387
+          },
+          "R3": {
+            "best_epoch": 2,
+            "best_cindex": 0.6981,
+            "final_epoch_cindex": 0.6395
+          },
+          "R2": {
+            "best_epoch": 22,
+            "best_cindex": 0.5959,
+            "final_epoch_cindex": 0.5919
+          }
+        },
+        "highest_score_in_the_whole_queue_fold0": {
+          "arm": "R5",
+          "best_epoch": 16,
+          "cindex": 0.7536
+        },
+        "best_epoch_mean_over_11_arms": 0.7113,
+        "final_epoch_mean_over_11_arms": 0.6293,
+        "mean_drop_from_best_to_final": -0.082,
+        "epoch1_peaks_are_a_selection_artifact": {
+          "fold0_arms_whose_best_epoch_is_1": 6,
+          "all_55_arm_folds_whose_best_epoch_is_1": 6,
+          "share": 0.11,
+          "arm_folds_where_epoch1_is_at_least_the_maximum_of_all_30_epochs": 6,
+          "expected_under_chance": "about 1.8 of 55 for a uniform best epoch, and 1 of 30 for the epoch to be the maximum of 30 draws",
+          "best_epoch_distribution_over_55_arm_folds": "epoch 1 six times, epoch 2 twice, epoch 3 nine times, epoch 4 twice, epoch 5 once, epoch 6 twice, epoch 7 three times, epoch 8 three times, epoch 9 three times, epoch 10 once, epoch 11 twice, epoch 12 twice, epoch 13 five times, epoch 14 three times, epoch 15 three times, epoch 16 once, epoch 17 once, epoch 18 twice, epoch 22 once, epoch 23 once, epoch 28 once and epoch 29 once",
+          "verdict": "The concentration of epoch-1 peaks is at the level chance predicts and is not evidence of a real early signal. It is the arithmetic of taking a maximum over 30 noisy per-epoch validations. The early-epoch peaks of S1, S2, S3, S4 and S5 sit on arms whose later epochs fall, for example S2 whose first six epochs average 0.6742 and whose last 24 average 0.4549, whereas the baseline S0 averages 0.6722 early and 0.6696 late and peaks at epoch 14, which is the normal shape."
+        }
+      },
+      "crossview_queue_cannot_produce_a_best_epoch": {
+        "per_epoch_validation_stored": false,
+        "checkpoint_selection": "fixed_final_epoch_no_validation_selection",
+        "reason": "The cross-view queue never validates per epoch, so only the final checkpoint exists and no best epoch can be read for it. The 0.7536 of R5 at epoch 16 therefore has no counterpart in this window's run and the two sets cannot be compared under the best-epoch rule without re-running the cross-view queue with per-epoch validation enabled."
+      },
+      "anticollapse_early_epochs_cross_check": {
+        "note": "Read-only from the other session's running queue, to test whether the cross-view baseline instability has an independent counterpart. The queue was running and was not touched.",
+        "fold0_A0_clip": {
+          "ep1": 0.6022,
+          "ep2": 0.6434,
+          "ep3": 0.7417
+        },
+        "fold0_A1_clip_decay": {
+          "ep3": 0.6712
+        },
+        "historical_fold0_S0_same_first_three_epochs": {
+          "ep1": 0.7139,
+          "ep2": 0.6807,
+          "ep3": 0.6688
+        },
+        "historical_fold0_R5_same_first_three_epochs": {
+          "ep1": 0.6339,
+          "ep2": 0.4849,
+          "ep3": 0.6735
+        },
+        "reading": "The anti-collapse arm at fold 0 reaches 0.7417 by epoch 3, above the historical baseline's epoch 14 peak of 0.7472 in only three epochs and above the cross-view baseline's final-epoch 0.4513 by 0.29. This is consistent with the other session's finding that the intervention holds the slot geometry open, and it supports the reading that the cross-view native arm's 0.4513 reflects instability of that code path rather than a property of the data or of the task."
+      },
+      "raw_receipt_sha256": {
+        "crossview_full_summary_json": "adcab063b5e4ef87ea6b86b66c8b1aa53fed75cab2240553d3018b81fd057724",
+        "diagnostic_full_summary_json": "307fe10d8671b6c69e2e43a702e061ce346abdeeff58494bf86c07c11de03d2a",
+        "note": "All inputs are unmodified stored artifacts."
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "checkpoints_or_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "the_scores_are_middling_not_good": "Under the final-epoch rule on one cohort the cross-view arms at 0.6103 and 0.6241 sit close to the historical 11-arm final-epoch mean of 0.6293. The best cross-view arm is above seven of the eleven historical arms at the final epoch and below four. By the best-epoch rule the historical queue reaches 0.7113 on average with a peak of 0.7536, but the cross-view queue has no best epoch to compare against. So the score is neither a success nor a failure on the evidence available; it is middling, and the more useful number in it is the baseline.",
+      "the_baseline_is_the_real_finding": "B0_native at 0.4513 is 0.242 below the historical native baseline S0 at 0.6933 from identical initial weights with every shared setting equal. Its training loss also rises from epoch 5 onward while the historical baseline keeps converging. A native baseline that cannot fit its own training set indicates instability on the cross-view code path, so the arm ordering inside this window cannot be read as a method comparison.",
+      "the_earlier_wording_is_corrected": "An earlier statement in this window that the cross-view score falls below the historical baseline by about 0.07 used the historical best-epoch number as the reference and was wrong. Under the matched final-epoch rule the cross-view arms are roughly level with the historical final-epoch mean. What remains striking is the baseline gap of 0.242, and it is a stability gap, not a score gap.",
+      "r5_is_the_closest_precedent": "R5 at fold 0 epoch 16 with 0.7536 is both the highest score in the historical queue and one of only two arms that genuinely reduce slot redundancy, since it combines the Gram orthogonality penalty with content reconstruction. This window's content space opened to an effective rank of 2.70 under the cross-view objective but the native and private spaces collapsed to 1.005 and 1.030, so the cross-view objective reached a partial version of what R5 aims at and lost the survival-branch geometry on the way. That is the most concrete direction the evidence points to.",
+      "the_cross_view_predictability_result_is_unaffected": "None of this touches the primary evidence of this window, that the own content, the training-fold constant and the mismatched donor are numerically indistinguishable at the order of 1e-5 in the trained arm while the compute control is clearly worse. That measurement compares three whole-patient predictors on one target rather than a bucketed conditional table, so neither the checkpoint-selection correction nor the table-saturation correction applies to it.",
+      "generalization_is_not_addressed": "Everything here is BLCA only, one fold, one seed. The machine holds features for ten TCGA cohorts, blca, brca, coadread, hnsc, kirc, luad, lusc, skcm, stad and ucec, but this repository's line has only ever run BLCA. Nothing in this window says anything about any other cancer."
+    },
+    "gaps_reasons": "One fold and one seed for the cross-view run, so no arm difference is separable from fold and seed variance, and the 20 evaluation repeats are repeats of one trained model rather than independent runs. The cross-view queue stores no per-epoch validation, so its best epoch does not exist and the best-epoch comparison against the historical queue is impossible without re-running it with per-epoch validation enabled. The historical best-epoch numbers are themselves maxima over 30 noisy per-epoch validations and carry a selection bias that inflates the 0.7536 peak of R5 and the 0.7113 mean. The cross-view native baseline's instability was diagnosed from the training loss trajectory and from one fold, so the cause is narrowed to optimization behaviour on that code path but not identified, and the other session's located mechanism, a gradient spike inside a single optimizer step, was established on the redundancy queue rather than on the cross-view queue. No other cancer, no other fold and no other seed was run. Nothing here establishes patient harm, correction efficacy, clinical utility or population generalization.",
+    "next_action_user_inputs": "This window consolidates and records; it requests no new execution. The decision the user now has is which of the following to authorize. (a) Re-run the cross-view queue with per-epoch validation enabled so that a best epoch exists and the 0.7536 of R5 has a like-for-like counterpart, at the cost of another full-budget pass. (b) Wait for the anti-collapse queue, whose fold 0 A0_clip arm already reaches 0.7417 by epoch 3 with the slot geometry held open, and read its best epoch under the same rule, which delivers the like-for-like comparison without re-running this window's queue. (c) Stop the cross-view reconstruction line, since its target is not recoverable from the slot content at any budget tested and its arm ordering is confounded by an unstable baseline. Recommended is (b) first, because the anti-collapse queue is already running with per-epoch validation and the best-epoch question is answered by it directly. Two standing requirements from the user are carried here: the executing side must record the configured split path, the actually loaded path and the actual file hash for each run and must raise an explicit error on a mismatch, and no new multi-fold, multi-seed or patient training is to be arranged beyond what is already authorized and running."
   }
 }
