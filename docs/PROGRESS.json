@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "Local: implement and run an anti-collapse arm in the redundancy best engine (candidates: decaying or scheduled Gram weight, gradient clipping which is currently locked to null, lower learning rate, or an explicit constraint on the value paths), then re-run the deletion probe on the resulting checkpoint because the current negative result was measured on collapsed checkpoints. The oracle's detection power is already validated. Server: audit exact completed best-queue artifacts for conditional S0/R4/R3 reuse; execute the 20 SCM/SRO new arm-fold runs only after explicit authorization. No additional seeds.",
+  "next_action": "Server: produce an independent raw reuse-audit receipt for SCM/SRO, because the audit reported so far was executed locally and has no server receipt. Anti-collapse: the queue is still in its prepare stage with 0 of 10 planned runs completed and two earlier abandoned attempts, so there is no anti-collapse result to reconcile yet; wait for it and do not start SCM/SRO while the GPU is busy. V2 cross-view: it has already run at full budget on fold0/seed3; repeat it on two more folds and a second seed, and treat V2_crossview_compute as a bit-identical duplicate of V2_separate rather than an independent control. All three lines share the 5fold cohort, but the cross-view run used fixed_final_epoch checkpointing while SCM/SRO uses per-epoch best-checkpoint selection, so C-index must not be compared across those two families without accounting for the selection rule. Only one session may write docs/PROGRESS.json and DELIVERY_MANIFEST.json at a time, and the manifest must be verified on a clean checkout.",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -7160,5 +7160,269 @@
     },
     "gaps_reasons": "The queue is still running: the preparation stage caches roughly 380 patients and takes on the order of an hour before the ten training runs begin, and each training run is 30 epochs with a per-epoch validation pass and a 20-repeat evaluation. The clip norm and the decay floor were chosen by reasoning from the completed runs' recorded gradient norms and were not swept, so a negative result would not distinguish 'the mechanism cannot be held' from 'this particular setting cannot hold it'. The equivalence test uses a small generated manifest and two epochs, so it verifies the loss structure and the update rule but not the full-budget numerics. The engine records the pre-clip and post-clip gradient norms so the clip's effect is auditable, but it does not record the optimizer state, so the exact trajectory difference cannot be reconstructed offline.",
     "next_action_user_inputs": "Let the authorized queue finish, then re-run the deletion probe on the resulting best checkpoints and compare the slot geometry against the completed queue's bimodal outcome. The immediate question the queue answers is whether the effective rank stays above 1.5 for all 30 epochs in every fold, which the completed queue never achieved for any arm in the wsi space. No further user input is needed to complete that; the user should be asked only if the clip norm turns out to prevent training entirely, because that would need a different value."
+  },
+  "latest_cross_queue_reconciliation_20261030": {
+    "recorded_at": "2026-10-30T11:05:00+08:00",
+    "route_task": "SlotSPE / cross-queue reconciliation: (i) correct the commit-order attribution for the SCM/SRO reuse audit, (ii) establish the actual state of the anti-collapse and V2 cross-view queues against the artifacts on this machine, (iii) determine whether the V2 cross-view, anti-collapse and SCM/SRO lines can be compared under one protocol. Read-only audit plus one local read of stored artifacts. No training, no optimizer step, no new checkpoint, no server execution.",
+    "status": "completed_read_only_reconciliation_two_attribution_corrections_and_one_material_v2_finding_the_two_v2_control_arms_are_a_bit_identical_no_op",
+    "completed_work": "Three parts, all read-only, with 0 model forwards and 0 training runs. (1) Attribution correction. The reuse audit reported here was NOT produced by a remote server. It was executed on this machine, /data1/SlotSPE, by this session, against the real reference queue at local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01, and it was reported through the conversation rather than through a server receipt. Its own output records 0 checkpoint deserializations, 0 patient arrays parsed and 0 model forwards. The commit-order statement in the previous message was also wrong: 26caf04 is the OLDER commit and 7a6780b is the NEWER one, because 7a6780b descends from 26caf04 through c20415d, 3b52949, 1634d27, 4df15f1 and c51978b. The server report of 7a6780b was not early, it was the current remote head at that moment, and 26caf04 is retained as its ancestor. (2) Actual queue state on this machine. The anti-collapse queue is running now, not finished: the queue manifest at local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01 reports status running with exactly one record, prepare, still status running, with no fold or arm stage completed and no folds directory yet. The prepared patient cache is being written. There are also two retained abandoned attempts, anticollapse_abandoned_firstattempt_20261030_0229 and anticollapse_abandoned_attempt2_20261030_0340. So no anti-collapse training result exists yet; the earlier report that 10 patient trainings were running is true only in the sense that the run was launched, and zero of the 10 planned training runs have completed. The V2 cross-view line is NOT awaiting status: it has already run and reported at full budget. Its four arms are B0_native, V2_separate, V2_crossview_compute and V2_crossview_train, 30 epochs, 4096 patches, 20 repeats, fold0, seed3, 303 train and 77 validation patients, with final-epoch checkpointing rather than best-checkpoint selection. (3) Protocol comparability, and a material finding inside the V2 line. The V2 cross-view run and the SCM/SRO reuse target are compatible on split and cohort: the cross-view queue's own prepared manifest validation set of 77 patients is exactly equal to splits/5fold/blca/fold_0.csv and overlaps splits/5fold_uni2h in only 15 of 77, so both queues really did execute on the same 5fold cohort, and the naming 5fold_uni2h in the cross-view directory name is a mislabel. They differ in two protocol points that matter: the cross-view run used fixed_final_epoch_no_validation_selection while the SCM/SRO queue and its reused S0/R4/R3 baselines use per_epoch_validation_best_then_reload_and_reevaluate, and the cross-view run is fold0 only while SCM/SRO is five folds. Cross-arm C-index numbers are therefore not directly comparable without accounting for the checkpoint rule. The material finding is that V2_separate and V2_crossview_compute are a bit-identical no-op pair. Their eval_repeats.json files have the same SHA256, all 20 repeat C-indices are equal, all 1540 per-patient risks are bit-identical, and all 1485 core trunk tensors are exactly equal, even though the two arms have different parameter counts (33443534 against 33568598) and different view_mode values. The only difference anywhere in the 30 training curves is the diagnostic view_loss_observed and view_cases fields, which are 0 in V2_separate and nonzero in V2_crossview_compute; every loss, gradient and metric that could influence the optimizer is identical. The declared intent of the compute arm was to run the cross-view computation without letting it influence training, and view_loss_weight 0.0 confirms that intent, so this is not a bug, but it does mean the compute arm is an exact duplicate of the separate arm and not an independent control, and its apparent agreement is a tautology rather than evidence. The delete-probe diagnostics confirm the duplication independently: V2_separate and V2_crossview_compute have identical native, private and content geometry to the last digit, while V2_crossview_train differs on all three.",
+    "paths_commit": {
+      "anti_collapse_queue_root": "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01",
+      "anti_collapse_abandoned_attempts": [
+        "local_evidence/anticollapse_abandoned_firstattempt_20261030_0229",
+        "local_evidence/anticollapse_abandoned_attempt2_20261030_0340"
+      ],
+      "anti_collapse_config": "configs/slotspe_anticollapse_multifold_queue.json",
+      "crossview_run_root": "local_evidence/crossview_blca_uni2h_fold0_seed3_run01",
+      "crossview_deletion_diagnostics": "local_evidence/crossview_deletion_diagnostics_full_20261030",
+      "crossview_entries_read": [
+        "latest_crossview_quick_patient_run_20261029",
+        "latest_crossview_full_budget_and_deletion_20261030",
+        "latest_crossview_split_identity_correction_20261030",
+        "latest_anticollapse_protocol_implementation_20261030"
+      ],
+      "scm_sro_reuse_audit_target": "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01",
+      "note": "Read-only. No file was modified by this audit and no patient artifact was staged. The cross-view and anti-collapse products stay in ignored local_evidence."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "execution_host": "local machine /data1/SlotSPE, read-only inspection of stored artifacts; CPU only",
+      "model_forwards": 0,
+      "training_runs": 0,
+      "optimizer_steps": 0,
+      "patient_training_runs": 0,
+      "patient_inference_runs": 0,
+      "anti_collapse_runs_launched_by_concurrent_session": true,
+      "anti_collapse_runs_completed": 0,
+      "anti_collapse_planned_runs": 10,
+      "anti_collapse_arms": [
+        "A0_clip",
+        "A1_clip_decay"
+      ],
+      "anti_collapse_checkpoint_policy": "per_epoch_validation_best_then_reload_and_reevaluate",
+      "crossview_arms": [
+        "B0_native",
+        "V2_separate",
+        "V2_crossview_compute",
+        "V2_crossview_train"
+      ],
+      "crossview_repeat_cindex_mean": {
+        "B0_native": 0.4512678288431061,
+        "V2_separate": 0.6102614896988907,
+        "V2_crossview_compute": 0.6102614896988907,
+        "V2_crossview_train": 0.6240887480190174
+      },
+      "crossview_repeat_cindex_std": {
+        "B0_native": 0.0407266120026411,
+        "V2_separate": 0.048112858961928906,
+        "V2_crossview_compute": 0.048112858961928906,
+        "V2_crossview_train": 0.041911823784861045
+      },
+      "v2_separate_vs_compute_eval_repeats_sha256": "4f91c48e46e7236f077aa8da32fc42ef for both",
+      "v2_separate_vs_compute_core_tensors_equal": "1485 of 1485",
+      "v2_separate_vs_compute_patient_risks_bit_identical": true,
+      "v2_separate_vs_compute_risk_rows_compared": 1540,
+      "v2_curve_only_difference": "view_loss_observed and view_cases, diagnostic only",
+      "scm_sro_reuse_audit_origin": "local machine, this session, not a server receipt",
+      "scm_sro_reuse_audit_status": "reuse_verified",
+      "scm_sro_reuse_audit_splits_dir": "5fold",
+      "scm_sro_reuse_audit_reused_results": 15,
+      "scm_sro_reuse_audit_checkpoint_deserializations": 0,
+      "scm_sro_reuse_audit_patient_arrays_parsed": false,
+      "scm_sro_reuse_audit_model_forwards": 0
+    },
+    "gaps_reasons": "Nothing here measures patient benefit or establishes that any correction works. The anti-collapse queue has completed zero of its ten planned training runs, so there is no anti-collapse result to reconcile at all, and two abandoned attempts show the run has already failed twice before this one. The V2 numbers are one fold and one seed, so no arm difference can be separated from fold and seed variance, and the 0.041 to 0.048 repeat C-index standard deviation is far larger than the 0.014 gap between the V2 arms; the 20 repeats are evaluation repeats of one trained model and are not independent training runs. The V2_separate and V2_crossview_compute identity is established from stored artifacts, not from a source-level proof that no gradient path exists between the view computation and the optimizer; the curve evidence and the exactly equal core tensors are strong but indirect. It is also possible that the identity is intentional and the arm was designed as a no-op control, in which case the finding is a labelling and analysis problem rather than a defect: the arm must then not be counted as an independent control, and its agreement with V2_separate must not be read as a reproduced result. On comparability, the cross-view line and the SCM/SRO line agree on cohort and split but not on the checkpoint rule, so a direct C-index comparison between them would confound the selection rule with the intervention. The SCM/SRO reuse audit was executed locally and has no independent server receipt, so its result remains a local observation until the server produces its own raw audit receipt. The anticollapse arms A0_clip and A1_clip_decay add gradient clipping and a decaying Gram weight on top of the S0 adapter with content weight 5.0, so they are intervention arms whose own effects are unmeasured, and by their own decision boundary they do not establish patient-specific content in the slots; that requires re-running the deletion probe on the resulting checkpoints.",
+    "next_action_user_inputs": "Do not start SCM/SRO yet. The anti-collapse queue is still in its prepare stage with zero of ten runs completed, so there is nothing yet to reconcile, and waiting costs nothing while the GPU is busy. Two concrete items are needed from the server or the owning session before the three lines can be compared: the anti-collapse raw receipt with the per-fold and per-arm results and the exact checkpoint and split identity, and an independent server-side reuse-audit receipt for SCM/SRO, because the audit reported so far was produced locally and has no server receipt. For the V2 line the recommended next step is unchanged and now better motivated: repeat the same full-budget fold on two more folds and a second seed, because the arm ordering and the geometry split between the content space and the collapsed spaces are each single observations, and the C-index repeat standard deviation exceeds the between-arm gap. While repeating it, drop or relabel V2_crossview_compute as a duplicate of V2_separate rather than treating the pair as two independent arms, and if a control for the view computation is wanted, replace it with one whose view path is actually connected to the optimizer. For SCM/SRO, when authorization finally comes, record the checkpoint rule explicitly in the summary, because the reused S0/R4/R3 baselines and the cross-view arms differ in that respect, and keep the comparison inside the best-checkpoint family. The concurrency rule should be made explicit before any of this continues: only one session may write docs/PROGRESS.json and DELIVERY_MANIFEST.json at a time, and the manifest must be refreshed and verified on a clean checkout rather than in the shared working tree, because the manifest broke twice today precisely from that interleaving."
+  },
+  "latest_crossview_two_corrections_accepted_20261030": {
+    "recorded_at": "2026-10-30T11:05:00+08:00",
+    "route_task": "SlotSPE / P7.3 / acceptance and verification of two corrections to this window's interpretation, after a cross-session reconciliation by the user",
+    "user_steering": "User reconciled the two sessions' committed records, confirmed the split conclusions do not conflict, and issued two corrections to this window's interpretation: that a shared validation set makes the scores a descriptive same-queue reference rather than a fair improvement comparison because the checkpoint selection rules differ, and that a high multiset uniqueness rate does not strengthen a negative conclusion but can instead indicate insufficient instrument resolution. The user also asked that the executing side record the configured split path, the actually loaded path and the actual file hash, and error explicitly on a mismatch, that completed runs keep their original manifest with the correction explained by a record rather than by rewriting history, and that no new multi-fold, multi-seed or patient training be arranged until the anti-collapse checkpoints and their receipts exist.",
+    "status": "completed_both_corrections_verified_against_local_data_and_accepted_the_deletion_negative_result_is_reclassified_from_no_information_to_not_detectable",
+    "completed_work": "Read-only verification of both corrections against the local artifacts, then a reclassification of this window's deletion result. No training, no optimizer step, no checkpoint touched, no source change, no new queue. The verification used (a) the prepared manifests of the two cross-view runs and of the completed best-validation queue, (b) the two split CSV files parsed directly, (c) the resolved configuration of the cross-view queue, (d) the stored cross-view evaluation files, (e) the full-budget deletion diagnostic output, and (f) the other session's synthetic positive control output. Correction 1 was confirmed by reading the two checkpoint policies from the source: the cross-view queue uses CHECKPOINT_POLICY = 'fixed_final_epoch_no_validation_selection' in slotspe_proof/crossview_queue.py line 23, while the completed best-validation queue and the new anti-collapse multi-fold runner use 'per_epoch_validation_best_then_reload_and_reevaluate'. Correction 2 was confirmed by a new ratio analysis of the stored full-budget deletion output, namely the drop-oracle loss divided by the full-oracle loss in every cell, and by the structure of the other session's positive control, where the fully informative case already fails to exceed the null at codebook size 16 with a drop-bucket singleton fraction of 0.805.",
+    "paths_commit": {
+      "base_HEAD": "1634d27373c38d3ba4e8e378745c29cccf7aeafc",
+      "new_commit_or_push": false,
+      "source_files_changed": "none",
+      "third_party_modified": false,
+      "files_read": [
+        "slotspe_proof/crossview_queue.py",
+        "slotspe_proof/diversity_queue.py",
+        "slotspe_proof/redundancy_anticollapse_multifold.py",
+        "local_evidence/crossview_blca_uni2h_fold0_seed3_run01/resolved_config.json",
+        "local_evidence/crossview_blca_uni2h_fold0_seed3_run01/prepared/manifest.json",
+        "local_evidence/crossview_deletion_diagnostics_full_20261030/summary.json",
+        "local_evidence/slot_deletion_oracle_positive_control_20261030/summary.json",
+        "/data1/dataset_csv/splits/5fold/blca/fold_0.csv",
+        "/data1/dataset_csv/splits/5fold_uni2h/blca/fold_0.csv"
+      ]
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, read-only json and csv parsing, no GPU, no training",
+      "patient_training_runs": 0,
+      "optimizer_steps": 0,
+      "checkpoints_loaded": 0,
+      "model_forwards": 0,
+      "correction_1_checkpoint_policies": {
+        "crossview_queue": "fixed_final_epoch_no_validation_selection (slotspe_proof/crossview_queue.py line 23)",
+        "historical_best_queue": "per_epoch_validation_best_then_reload_and_reevaluate (slotspe_proof/diversity_queue.py line 26)",
+        "new_anticollapse_multifold_runner": "per_epoch_validation_best_then_reload_and_reevaluate (slotspe_proof/redundancy_anticollapse_multifold.py line 93)"
+      },
+      "correction_1_other_setting_differences": {
+        "note": "The cross-view queue and the historical best queue share epochs 30, patches 4096, batch 8, 20 evaluation repeats, lr 0.0005, native_alpha 0.5, native_reconstruction_weight 0.01, projection_dim 256, slot_iters 10, gradient_clip_norm null, label_col survival_months_dss, signature combine, feature_encoder UNI2-h and validation_patch_policy all_real. The differences found are the checkpoint selection rule, the fold count (one fold here against five in the historical queue) and the declared splits_dir label. The arms are also different interventions, so a score difference is not attributable to the method either way.",
+        "shared_settings_count": 13
+      },
+      "correction_2_drop_to_full_loss_ratio_analysis": {
+        "purpose": "The ratio drop_oracle_loss divided by full_oracle_loss measures whether the dropped-slot table also memorizes the target. A ratio near 1 means both tables memorize and the gap is uninformative about the presence of information; a large ratio means the drop side cannot memorize, so a real gap is measurable.",
+        "high_uniqueness_low_information_regime": {
+          "description": "Cells with high patient uniqueness and a low ratio, that is both the full and the dropped table memorize the target, so the small gap reflects instrument saturation rather than absence of information.",
+          "examples": {
+            "B0_native_native_codebook2_category": {
+              "full": 1.1,
+              "drop": 1.24,
+              "ratio": 1.13,
+              "gap_minus_null": 0.0729,
+              "unique_fraction": 0.01
+            },
+            "V2_separate_native_codebook4_category": {
+              "full": 0.803,
+              "drop": 1.03,
+              "ratio": 1.29,
+              "gap_minus_null": -0.0596,
+              "unique_fraction": 0.19
+            },
+            "V2_separate_content_codebook4_category": {
+              "full": 0.725,
+              "drop": 0.968,
+              "ratio": 1.34,
+              "gap_minus_null": 0.0064,
+              "unique_fraction": 0.26
+            },
+            "V2_crossview_train_content_codebook4_category": {
+              "full": 0.438,
+              "drop": 0.868,
+              "ratio": 1.98,
+              "gap_minus_null": 0.0242,
+              "unique_fraction": 0.32
+            },
+            "V2_crossview_train_native_codebook4_category": {
+              "full": 0.369,
+              "drop": 0.754,
+              "ratio": 2.04,
+              "gap_minus_null": -0.0506,
+              "unique_fraction": 0.45
+            }
+          }
+        },
+        "measurable_regime": {
+          "description": "Cells with a large ratio, where the drop side cannot memorize and the gap is therefore measurable.",
+          "examples": {
+            "V2_crossview_train_native_codebook8_category": {
+              "full": 0.018,
+              "drop": 0.112,
+              "ratio": 6.22,
+              "unique_fraction": 0.97
+            },
+            "V2_crossview_train_content_codebook8_category": {
+              "full": 0.018,
+              "drop": 0.1,
+              "ratio": 5.58,
+              "unique_fraction": 0.95
+            },
+            "V2_separate_content_codebook8_mse": {
+              "full": 0.000226,
+              "drop": 0.00214,
+              "ratio": 9.45,
+              "unique_fraction": 0.94
+            },
+            "V2_crossview_train_private_codebook8_mse": {
+              "full": 9.82e-05,
+              "drop": 0.00239,
+              "ratio": 24.3,
+              "unique_fraction": 0.97
+            }
+          }
+        },
+        "direction_note": "In this window's real data the instrument saturation runs in the opposite direction to the concern raised: the cells where both tables memorize are the small-codebook cells with LOW patient uniqueness, where the buckets are coarse, while the high-uniqueness codebook-8 cells have large ratios and are therefore the most measurable ones, not the least."
+      },
+      "correction_2_positive_control_saturation_evidence": {
+        "fully_informative_case": {
+          "codebook_4": {
+            "gap": 0.3337,
+            "null_mean": 0.039,
+            "exceeds_null": true,
+            "full_buckets": 6,
+            "drop_buckets": 7,
+            "drop_singleton_fraction": 0.0
+          },
+          "codebook_8": {
+            "gap": 0.1055,
+            "null_mean": 0.058,
+            "exceeds_null": true,
+            "full_buckets": 12,
+            "drop_buckets": 60,
+            "drop_singleton_fraction": 0.0
+          },
+          "codebook_16": {
+            "gap": 0.0352,
+            "null_mean": 0.1088,
+            "exceeds_null": false,
+            "full_buckets": 69,
+            "drop_buckets": 417,
+            "drop_singleton_fraction": 0.805
+          }
+        },
+        "one_slot_informative_case": {
+          "codebook_4": {
+            "gap": 0.3361,
+            "null_mean": 0.0838,
+            "exceeds_null": true
+          },
+          "codebook_8": {
+            "gap": 0.4078,
+            "null_mean": 0.109,
+            "exceeds_null": true
+          },
+          "codebook_16": {
+            "gap": 0.1208,
+            "null_mean": 0.3386,
+            "exceeds_null": false
+          }
+        },
+        "interpretation": "The other session's positive control already contains the saturation the correction describes. With a target that is an exact function of the code multiset, the oracle stops exceeding the null once the drop-side buckets become fragmented, at codebook size 16 with a drop singleton fraction of 0.805. The null rises to 0.1088 for the category target and 0.3047 for the MSE target and exceeds the true gap. So a small gap is a statement about the instrument's resolution at that bucket fragmentation, not a statement that the information is absent."
+      },
+      "anticollapse_queue_split_setting_verified": {
+        "commit": "c51978ba1d22685086d20f411486fe078a23eca4",
+        "file": "configs/slotspe_anticollapse_multifold_queue.json",
+        "splits_dir": "5fold",
+        "runner_guard": "slotspe_proof/redundancy_anticollapse_multifold.py line 121 raises ValueError('the queue uses the 5fold split family') if runtime splits_dir differs from 5fold",
+        "conclusion": "The new anti-collapse queue is correctly configured for 5fold and hard-fails on any other value, so it will not repeat the label mismatch found in the cross-view prepared manifest.",
+        "not_verified_here": "This is the committed configuration state. The user reports that the commit record states the queue was authorized and entered the preparation stage; this window did not connect to the server and did not independently verify any execution, and it ran no training."
+      },
+      "raw_receipt_sha256": {
+        "diagnostic_full_summary_json": "307fe10d8671b6c69e2e43a702e061ce346abdeeff58494bf86c07c11de03d2a",
+        "note": "All inputs are unmodified stored artifacts. The ratio analysis is derived from the stored full_oracle_loss and drop_oracle_loss values and introduces no new measurement."
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "checkpoints_or_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "correction_1_is_correct_and_is_now_applied": "The cross-view queue uses the fixed final-epoch checkpoint and the completed best-validation queue selects the best validation epoch, so the two C-index sets are not a fair improvement comparison and the difference may reflect the selection rule rather than the method. The shared settings are otherwise 13 in number, including epochs, patches, batch size, learning rate, native loss weights, projection dimension, slot iterations, gradient clip null, label column, signature, encoder and validation patch policy. The arm sets also differ, so no attribution is available in either direction. The cross-view numbers are therefore reclassified in this repository as a descriptive same-queue reference only, and the earlier wording that implied a like-for-like comparison against the historical band is withdrawn.",
+      "correction_2_is_correct_and_changes_the_conclusion": "The mechanism is real and is confirmed by the other session's own positive control, where a fully informative target stops exceeding the null at codebook size 16 once the drop side fragments into 417 buckets with a singleton fraction of 0.805. A small deletion gap can therefore mean that the instrument cannot resolve the information, not that the information is absent. This window's previous formulation, that the deletion gap was not above the permutation null and therefore did not establish patient-specific information, is reclassified: the correct statement is that the deletion diagnostic did not detect patient-specific information under the bucket fragmentation that was present, and it did not establish that the information is absent.",
+      "but_in_this_window_s_data_the_saturation_runs_the_other_way": "The correction's stated worry is that a high uniqueness rate makes both tables memorize and hides a real gap. The stored full-budget data shows the opposite ordering. The cells where both tables memorize and the ratio sits near 1 are the coarse-codebook cells, which have LOW patient uniqueness of 1 to 45 percent, while the high-uniqueness codebook-8 cells have ratios of 5.6 to 24.3 and a drop singleton fraction of 0.88 to 0.97, meaning the drop side cannot memorize and the gap is measurable there. So for this window's measurements the codebook-8 cells are the most informative ones rather than the least, and the codebook-2 and codebook-4 cells are the ones whose small gaps are least interpretable. This does not make the negative result stronger; it relocates which cells carry the weight.",
+      "which_cells_carry_the_weight_now": "On the corrected reading the deletion evidence rests on the high-ratio cells, and in those cells the gap does not exceed the permutation null. The strongest single argument in this window is therefore no longer the deletion oracle but the cross-view predictability measurement, where the own prediction, the training-fold constant and the mismatched donor are numerically indistinguishable at the order of 1e-5 with 77 eligible patients, and where the compute control is clearly worse. That measurement does not depend on the bucket fragmentation and is not affected by correction 2.",
+      "the_correction_does_not_apply_to_the_crossview_predictability_result": "The predictability comparison uses three whole-patient predictors on a single continuous or four-bin target, not a bucketed conditional table, so the table-saturation mechanism does not apply to it. The finding that the own content does not beat the constant stands on its own footing and is not reclassified.",
+      "anticollapse_queue_split_is_safe": "The new anti-collapse multi-fold queue declares splits_dir 5fold and its runner raises on any other value, so it will read the same 5fold cohort as the completed best-validation queue and can reuse those baselines, and its manifests will not carry the label mismatch found in the cross-view prepared manifest.",
+      "interpretation_boundary": "Read-only verification and reinterpretation of stored artifacts. No measurement changed, no arm difference established, and nothing here establishes patient harm, correction efficacy or generalization. The reclassification concerns what the deletion diagnostic is capable of concluding at a given bucket fragmentation, not what the slots contain."
+    },
+    "gaps_reasons": "The ratio analysis distinguishes instrument saturation from absent information using the stored full and drop losses, but it does not establish the bucket fragmentation at which the real data would have resolved the information, because that would require re-running the oracle on the same slots at codebook sizes whose drop side stays coarse, which was not done here. The positive control that demonstrates saturation uses a synthetic cluster-pair structure and not real slot geometry, so the saturation threshold it exhibits is not directly transferable to the real checkpoints. The reclassification therefore states what the measurement cannot conclude and does not claim the opposite. The cross-view predictability result remains limited to one fold, one seed and 77 patients, with a feature-proxy target. The checkpoint-policy difference means the historical best-queue numbers remain usable only as a same-queue descriptive reference and not as a comparison baseline for an improvement claim. The user's request that the executing side record the configured split path, the actually loaded path and the actual file hash and error on a mismatch is recorded here as a requirement for the execution side; this window did not implement it, because it would change the prepared-manifest writer that other running work depends on.",
+    "next_action_user_inputs": "This window records no new training, no new queue and no multi-fold, multi-seed or patient run. The required follow-ups are, first, on the execution side, to record the configured split path, the actually loaded path and the actual file hash for every run, to raise an explicit error when they disagree, and to keep the original manifest of the completed runs unchanged with the correction explained by a record rather than by rewriting the historical artifact; the cross-view prepared manifest stays as it is and is explained by latest_crossview_split_identity_correction_20261030. Second, to treat this window's deletion result as a non-detection rather than as a demonstration of absent information, and to let the anti-collapse checkpoints and their receipts decide whether the diagnostic is re-run at all, since the new queue already selects the 5fold family correctly and the re-run would only be meaningful if the slot geometry there is materially different. Third, to use the cross-view predictability measurement, not the deletion oracle, as this window's primary evidence, because it is not subject to the table-saturation limitation. The anti-collapse configuration in commit c51978b records the queue as authorized and in the preparation stage; this window did not verify that execution and does not request it."
   }
 }
