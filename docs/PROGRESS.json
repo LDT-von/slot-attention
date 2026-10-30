@@ -7015,5 +7015,93 @@
     },
     "gaps_reasons": "The SCM/SRO effectiveness question is entirely unmeasured. Every check above is code, synthetic or metadata-level; none of it says that either loss lowers slot redundancy or improves survival prediction, and the new arms have never been trained. Two mechanism facts constrain what the 20 runs can show, and both are already honestly recorded in the handoff but are confirmed here by direct measurement. First, both losses have positive value with exactly zero gradient at an exactly symmetric collapse, which was measured directly: SCM at 8 identical slots gives loss 1.0 with gradient norm 0.0, and SRO on identical readings gives loss 1.0 with gradient norm 0.0, while a perturbation of 1e-4 restores a small but nonzero gradient of about 4e-4. So the losses cannot escape a perfectly symmetric collapse and only act on the near-symmetry that the optimizer actually produces. Second, the SCM margin of 0.90 is well matched to the observed geometry: on the stored final-epoch curves, 87.1 percent of S0 and 85.8 percent of R4 slot pairs already exceed cosine 0.90, so the penalty will be active on most pairs rather than silently inactive. The reuse audit is metadata and byte-hash compatibility only. It does not hash the prepared cache contents, does not deserialize checkpoints, does not parse patient arrays and does not confirm that the reference training itself was sound; the receipt reports cache_content_hashes_verified false and best_checkpoint_bytes_hashed false by design. The full 116-test delivery set and the 94 new tests pass, but the complete repository suite was run only on this machine with its own CUDA limitation, and the delivery machine's 4 historical failures were not reproduced here except that this machine has 8.5 TiB free instead of the 19.1 GiB the delivery machine had. Finally, a concurrent session is actively writing to this same working tree: it created slotspe_proof/redundancy_anticollapse_engine.py, slotspe_proof/redundancy_anticollapse_multifold.py, configs/slotspe_anticollapse_multifold_queue.json and tests/test_slotspe_redundancy_anticollapse_engine.py during this audit, and it independently appended its own entry to docs/PROGRESS.json. Those files are untracked, are not part of the SCM/SRO delivery, are not covered by DELIVERY_MANIFEST.json and were not audited here; the delivery manifest check fails on the working tree for exactly that reason, while origin/main itself checks clean. Correction to the manifest state recorded with this entry: an earlier revision of DELIVERY_MANIFEST.json in this commit inventoried the five files that the concurrent session had created but not yet committed, so a clean checkout of that revision failed the delivery manifest check with five missing files. The manifest now covers tracked public files only, which is what a checkout of this commit actually contains, and it verifies clean on a clean worktree. The concurrent session's five untracked files stay untracked and unpublished until that session commits them, at which point the manifest must be refreshed again to include them.",
     "next_action_user_inputs": "Server: pull 26caf04, run --plan and --audit, and report the actual splits_dir together with the audit result. The split identity is now settled and should be reported as such: the completed best-queue reference and its prepared manifest both use splits_dir 5fold, not 5fold_uni2h, and the 15 reused S0/R4/R3 results were produced under 5fold. This is not merely a naming difference, because the two split families are materially different cohorts: per fold only 12 to 17 of the 76 validation patients are shared, and the 5fold cohort holds 381 patients against 380 for 5fold_uni2h. The AGENTS.md default of splits/5fold_uni2h therefore does not describe the reused baselines, and the new arms must inherit 5fold for the comparison to be a controlled one; the new entry deliberately inherits the verified reference splits instead of guessing from the encoder name. The AGENTS.md queue default should be corrected to say splits/5fold for this line, because the original loader hardcodes the 5fold directory in third_party/SlotSPE/dataset/dataset_survival.py _load_split and the splits_dir setting never reaches the cohort selection; the already recorded fold0 mislabel finding explains why the recorded split_csv said 5fold_uni2h while the executed cohort came from 5fold. Training still waits for explicit authorization. When it is given, the 20 runs should be read against the measured pre-registered expectation that both losses are active on the observed geometry but cannot escape an exactly symmetric collapse, and the four uncollapsed checkpoints already known from R5 folds 0 and 4 give the natural comparison for whether a loss changes anything at all."
+  },
+  "latest_crossview_split_identity_correction_20261030": {
+    "recorded_at": "2026-10-30T10:45:00+08:00",
+    "route_task": "SlotSPE / P7.3 / identity of the split cohort actually read by the cross-view queue, and whether it is comparable with the completed best-validation 5fold queue",
+    "user_steering": "User asked this window to record the actual split CSV path and SHA-256 of both runs, to mark them as not directly comparable with the historical 5fold queue, and to hand the split question to the other session for review rather than assume either side is wrong.",
+    "status": "completed_correction_my_earlier_split_description_was_wrong_the_crossview_queue_read_splits_5fold_and_the_manifest_hash_label_is_misleading",
+    "completed_work": "Read-only forensics. No training, no optimizer step, no checkpoint touched, no source change. Four checks were run. (1) The original loader hardcodes the split directory: third_party/SlotSPE/dataset/dataset_survival.py line 203 joins data_path with 'splits', '5fold', study and fold_N.csv, and no configuration value reaches that path. (2) The two split CSVs were parsed directly and compared: splits/5fold/blca/fold_0.csv has 304 train and 77 val, splits/5fold_uni2h/blca/fold_0.csv has 304 train and 76 val, and their fold-0 validation sets overlap in only 15 of 76 and 77 patients respectively. (3) The cross-view queue's own prepared manifest was compared against both CSVs. Its validation set of 77 patients is exactly equal to the set of splits/5fold/blca/fold_0.csv (77 of 77, identical set) and overlaps splits/5fold_uni2h only in 15 of 77. Its training set of 303 is a subset of the 5fold training set of 304, missing exactly TCGA-GV-A3QG, which is not present in the manifest patient table at all because that patient has no complete-case record. (4) The prepared manifest's own recorded input_csv_sha256 entry for the split is labelled with the 5fold_uni2h path but carries the sha256 cec9aa164adc..., which is the hash of the 5fold_uni2h file, while the cohort actually loaded is the 5fold cohort; the two facts disagree and the label is misleading.",
+    "paths_commit": {
+      "base_HEAD": "cad4bb3492a3c71bb7d23da7a3ef45f27995fc54",
+      "new_commit_or_push": false,
+      "source_files_changed": "none",
+      "third_party_modified": false,
+      "files_read": [
+        "third_party/SlotSPE/dataset/dataset_survival.py",
+        "local_evidence/crossview_quick_blca_uni2h_fold0_seed3_run01/prepared/manifest.json",
+        "local_evidence/crossview_blca_uni2h_fold0_seed3_run01/prepared/manifest.json",
+        "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/prepared/manifest.json",
+        "/data1/dataset_csv/splits/5fold/blca/fold_0.csv",
+        "/data1/dataset_csv/splits/5fold_uni2h/blca/fold_0.csv"
+      ]
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, read-only python and csv parsing, no GPU, no training",
+      "patient_training_runs": 0,
+      "optimizer_steps": 0,
+      "checkpoints_loaded": 0,
+      "split_csv_sha256": {
+        "/data1/dataset_csv/splits/5fold/blca/fold_0.csv": "b1e6f00d12edace1cf9be30013c7558a006da951495f56d6de5f4924e4b76414",
+        "/data1/dataset_csv/splits/5fold_uni2h/blca/fold_0.csv": "cec9aa164adc443f589f31c8debac7f2625d45c1efce3499a40ba3ebefad8ba8"
+      },
+      "split_csv_composition": {
+        "5fold_fold_0": {
+          "train": 304,
+          "val": 77
+        },
+        "5fold_uni2h_fold_0": {
+          "train": 304,
+          "val": 76
+        },
+        "val_overlap_between_the_two": 15,
+        "train_overlap_between_the_two": 242
+      },
+      "crossview_queue_manifest_val": 77,
+      "crossview_queue_manifest_train": 303,
+      "crossview_val_equals_5fold_val": true,
+      "crossview_val_overlap_with_5fold_uni2h_val": 15,
+      "crossview_train_subset_of_5fold_train": true,
+      "crossview_train_missing_from_5fold_train": [
+        "TCGA-GV-A3QG"
+      ],
+      "missing_patient_reason": "TCGA-GV-A3QG has no complete-case record in the manifest patient table, so it is absent from the cohort entirely and not merely excluded from the fold.",
+      "historical_best_queue_manifest": {
+        "splits_dir_setting": "5fold",
+        "split_csv": "/data1/dataset_csv/splits/5fold/blca/fold_0.csv",
+        "split_csv_sha256": "b1e6f00d12edace1cf9be30013c7558a006da951495f56d6de5f4924e4b76414",
+        "n_patients": 380,
+        "val_fold_0": 77
+      },
+      "crossview_queue_manifest_hash_label_defect": {
+        "recorded_key": "/data1/dataset_csv/splits/5fold_uni2h/blca/fold_0.csv",
+        "recorded_sha256": "cec9aa164adc443f589f31c8debac7f2625d45c1efce3499a40ba3ebefad8ba8",
+        "defect": "The manifest's splits_dir setting and its recorded split CSV hash both name 5fold_uni2h, but the cohort actually loaded is bit-identical to the 5fold cohort. The configuration label and the hash label therefore describe a file that was not the one whose cohort was used. This is a provenance defect in the manifest, not a change of cohort."
+      },
+      "raw_receipt_sha256": {
+        "crossview_full_manifest_json": "adcab063b5e4ef87ea6b86b66c8b1aa53fed75cab2240553d3018b81fd057724",
+        "crossview_quick_manifest_json": "not_recomputed_no_change",
+        "note": "The two prepared manifests are unmodified; this entry corrects how they must be read."
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "checkpoints_or_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "my_earlier_split_description_was_wrong": "In the previous entry and in the handoff note I described both cross-view runs as using splits/5fold_uni2h and stated that they were not comparable with the historical 5fold queue. The second half of that was right for the wrong reason and the first half was wrong. The manifest's own configuration label says 5fold_uni2h, and its recorded hash is the 5fold_uni2h file hash, but the cohort that was actually cached, trained and evaluated is the 5fold cohort: the validation set is exactly the 5fold validation set, 77 of 77 identical, and the training set is the 5fold training set minus the single incomplete-case patient TCGA-GV-A3QG.",
+      "the_loader_hardcode_explains_it": "The original loader resolves the split path itself, at third_party/SlotSPE/dataset/dataset_survival.py line 203, by joining data_path with 'splits', '5fold', the study and fold_N.csv. No queue configuration value reaches that path, so the cross-view queue could not have read 5fold_uni2h through the original dataset module even though its configuration and manifest label say so. This is consistent with the other session's finding, not in conflict with it.",
+      "the_two_queues_are_in_comparability": "The cross-view cohort and the historical best-validation cohort are the same 5fold fold-0 cohort. The cross-view cohort has 303 train and 77 val and the historical cohort has 304 train and 77 val on the same CSV; the single-patient difference is the incomplete case TCGA-GV-A3QG, which the historical queue also carries in its manifest. The validation sets are identical. So the C-index values from this window, 0.4513, 0.6103, 0.6103 and 0.6241, are directly comparable with the historical best-queue fold-0 results, and the earlier warning that they must not be compared was itself unnecessary.",
+      "what_the_defect_actually_is": "The defect is confined to provenance labelling. The cross-view prepared manifest records the split under the key splits/5fold_uni2h/blca/fold_0.csv with the hash of that file, while the cohort came from splits/5fold/blca/fold_0.csv. A reader who trusts the manifest label will attribute the run to the wrong cohort and will compute the wrong cohort identity, and the manifest's own guard, which compares input_csv_sha256 against the configured CSV paths, therefore passes on the wrong basis. The same labelling pattern is present in the quick-run manifest.",
+      "what_is_not_affected": "Nothing about the results changes. Every comparison made in this window is internally consistent, because the quick and full cross-view runs read the same cohort, the four arms share one cohort, and the deletion diagnostics read the checkpoints produced from that cohort. The geometry result, the cross-view predictability result and the deletion-gap-versus-null result stand as recorded.",
+      "the_anticollapse_multifold_work_is_also_affected": "Any queue that prepares its own cohort through the original dataset module will read splits/5fold regardless of its splits_dir setting. If the new anti-collapse multi-fold queue sets splits_dir to 5fold_uni2h, it will inherit the 5fold cohort and its manifests will carry the same misleading label. This should be checked before those runs are interpreted or compared against the historical 5fold baselines.",
+      "interpretation_boundary": "This is a read-only provenance finding about split identity. It does not change any measurement, does not establish or refute any arm difference, and says nothing about patient harm, correction efficacy or generalization. It identifies a labelling defect and states which cohort was really used."
+    },
+    "gaps_reasons": "Only fold 0 exists in the cross-view manifests, so the cross-view result is a single fold and its comparison with the historical best queue is limited to that fold. The historical best queue covers folds 0 to 4 under the same 5fold cohort, so a fold-0-only number cannot be compared with a five-fold average without stating that it is fold 0. The comparison between the two split CSVs was done by parsing them directly, which also exposes that 5fold_uni2h fold_0 has 76 validation patients against 77 for 5fold, so the two files are not even the same size and the 15-patient overlap is the correct comparison rather than a coincidence. No other fold of 5fold_uni2h was checked, so the size and overlap of the remaining folds is not established here. The reason the manifest label and the loaded cohort disagree is understood, but the same labelling pattern in other queues and in the new anti-collapse configuration was not audited exhaustively.",
+    "next_action_user_inputs": "Two items are handed to the other session for review rather than settled here. First, the split identity: the loader hardcode at dataset_survival.py line 203 is confirmed, and the cross-view queue demonstrably read the 5fold cohort, so the two paths do not conflict and the open question is only whether the prepared-manifest labelling defect should be repaired at the source for all queues, including the new anti-collapse multi-fold queue, and whether historical reports that relied on the 5fold_uni2h label need a correction note. Second, the deletion diagnostic interpretation boundary: the other session's uncollapsed checkpoints need their multiset uniqueness rate and bucket coverage reported, because this window found 90 to 97 percent uniqueness at codebook size 8 with 73 to 76 distinct multisets over 77 patients, and a high uniqueness rate would make those cells structurally uninterpretable rather than informative, which strengthens rather than weakens a negative result. No new multi-fold, multi-seed or patient training is arranged by this entry; the decision to re-run the diagnostics waits for the anti-collapse checkpoints and their receipts."
   }
 }
