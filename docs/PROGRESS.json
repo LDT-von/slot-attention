@@ -7834,5 +7834,104 @@
     },
     "gaps_reasons": "One fold and one seed for the cross-view run, so no arm difference is separable from fold and seed variance, and the 20 evaluation repeats are repeats of one trained model rather than independent runs. The cross-view queue stores no per-epoch validation, so its best epoch does not exist and the best-epoch comparison against the historical queue is impossible without re-running it with per-epoch validation enabled. The historical best-epoch numbers are themselves maxima over 30 noisy per-epoch validations and carry a selection bias that inflates the 0.7536 peak of R5 and the 0.7113 mean. The cross-view native baseline's instability was diagnosed from the training loss trajectory and from one fold, so the cause is narrowed to optimization behaviour on that code path but not identified, and the other session's located mechanism, a gradient spike inside a single optimizer step, was established on the redundancy queue rather than on the cross-view queue. No other cancer, no other fold and no other seed was run. Nothing here establishes patient harm, correction efficacy, clinical utility or population generalization.",
     "next_action_user_inputs": "This window consolidates and records; it requests no new execution. The decision the user now has is which of the following to authorize. (a) Re-run the cross-view queue with per-epoch validation enabled so that a best epoch exists and the 0.7536 of R5 has a like-for-like counterpart, at the cost of another full-budget pass. (b) Wait for the anti-collapse queue, whose fold 0 A0_clip arm already reaches 0.7417 by epoch 3 with the slot geometry held open, and read its best epoch under the same rule, which delivers the like-for-like comparison without re-running this window's queue. (c) Stop the cross-view reconstruction line, since its target is not recoverable from the slot content at any budget tested and its arm ordering is confounded by an unstable baseline. Recommended is (b) first, because the anti-collapse queue is already running with per-epoch validation and the best-epoch question is answered by it directly. Two standing requirements from the user are carried here: the executing side must record the configured split path, the actually loaded path and the actual file hash for each run and must raise an explicit error on a mismatch, and no new multi-fold, multi-seed or patient training is to be arranged beyond what is already authorized and running."
+  },
+  "latest_window_summary_anticollapse_scores_20261030": {
+    "recorded_at": "2026-10-30T12:30:00+08:00",
+    "route_task": "SlotSPE / P7.3 / this window's summary: the anti-collapse queue state with the checkpoint-selection question answered, the prediction scores read from the stored per-epoch validation files, the geometry read from the stored per-batch curves, the dataset identity, and the comparison against the completed queue's baselines. Read-only inspection of stored artifacts plus one documentation commit. No training, no optimizer step, no new checkpoint, no server execution, no patient intervention.",
+    "status": "completed_read_only_window_summary_four_arms_at_epoch_3_per_epoch_validation_scores_read_geometry_held_open_scores_not_yet_comparable_to_the_completed_queue",
+    "completed_work": "This window performed no execution. It read the artifacts the authorized anti-collapse queue produced, answered the checkpoint selection question directly from the source, and recorded the state. (1) The checkpoint selection rule, read from slotspe_proof/redundancy_anticollapse_engine.py lines 231 to 252, is per-epoch validation best, not the last epoch. After each epoch the engine writes epoch_validation.json and updates the retained best only when the new validation concordance index is greater than or equal to the retained best, saving the model and probe state into an in-memory best record. After the final epoch it writes last.pt with the final epoch state, and separately writes best.pt with the retained best epoch state, then reloads that best state into the model and the heads and runs the full 20-repeat evaluation contract on the reloaded best weights. The summary records best_epoch and best_epoch_cindex_single_pass. So the per-epoch numbers in epoch_validation.json are per-epoch single-pass validation indices for monitoring, the final reported score is the 20-repeat mean on the reloaded best epoch, and last.pt is retained only as the final-epoch state for reference and is not what is scored. (2) The dataset is TCGA-BLCA, bladder urothelial carcinoma. The queue configuration declares study blca and label_col survival_months_dss with the matching censorship_dss, the feature root is blca/uni2-h with UNI2-h features of 1536 dimensions, the clinical table is clinical/all/blca.csv with 381 patient rows, and the prepared cache holds 380 complete-case patients. The endpoint is disease-specific survival. The fold sizes are 303/77, 305/75, 304/76, 304/76 and 304/76 with one excluded patient per fold, so the validation fold holds 77 patients in fold 0. This is the same cohort, the same label column, the same 5fold split family and the same per-epoch best-checkpoint rule as the completed queue, so the two lines are directly comparable in protocol. (3) The prediction scores, read from the stored epoch_validation.json files of the four running arms. Fold 0 A0_clip is 0.6022, 0.6434 and 0.7417 for epochs 1, 2 and 3. Fold 0 A1_clip_decay is 0.6022, 0.5784 and 0.6712. Fold 1 A0_clip is 0.5457, 0.4670 and 0.4915. Fold 1 A1_clip_decay is 0.5457, 0.4222 and 0.5389. All twelve entries carry cindex_status computed. The two arms are identical in epoch 1 in each fold by construction, because the A1 Gram decay starts at the full weight of 10.0 and only begins to move in epoch 2. The epoch 3 values are the best of the three epochs in every arm, which is the expected behaviour of a still-rising curve and is not yet a converged result. (4) The geometry, read from the stored per-batch slot_metrics. In fold 0 A0_clip the wsi effective rank rose from 1.284 and 1.081 in the first two batches to 4.940 with mean cosine 0.182 and a fraction of slot pairs above cosine 0.9 of exactly 0.0, while the omic effective rank was 5.320 with cosine 0.109. The collapse signature of the completed queue, a high pairwise cosine with an effective rank near one, is absent and has not returned. The pre-clip core gradient norm is recorded on every row with gradient_was_clipped true, and the post-clip core gradient norm is exactly 1.0 everywhere, so the bound is binding and the intervention reaches the optimizer as designed. (5) The comparison against the completed queue, and its limit. The completed queue's fold 0 arms recorded 20-repeat validation means of R5 0.6703, S3 0.6569, R3 0.6326, S1 0.6235, S2 0.6200, S4 0.6154, S5 0.5898, R1 0.5294, R2 0.5256, S0 0.5239 and R4 0.4894, where R5 is S0 plus gram 10 plus content 5 and is the unmatched-clip counterpart of the two arms now running. The numbers now in hand are not yet comparable to those, because they are per-epoch single-pass monitoring values rather than the 20-repeat mean on the reloaded best epoch. The comparison becomes valid only when each arm writes its summary.json at the end of its thirty epochs. Until then the honest statement is that the geometry is held open and the scores are rising in fold 0 while falling in fold 1, with one fold each and three epochs each. Cross-reference: a concurrent session recorded the cross-view line's score interpretation, the best-epoch rule comparison across the two queues and the arm method identity in latest_crossview_score_interpretation_and_best_epoch_20261030. The two entries are complementary rather than competing. That entry analyses the cross-view run's scores against the completed best-validation queue and reads the R1 and R5 arm identities from the source contract table. This entry analyses the anti-collapse queue's own scores and answers the checkpoint selection question from the anti-collapse engine source, and it additionally reads the epoch 3 values that postdate that entry's snapshot. Neither entry claims a patient benefit.",
+    "paths_commit": {
+      "engine": "slotspe_proof/redundancy_anticollapse_engine.py",
+      "checkpoint_rule_source": "slotspe_proof/redundancy_anticollapse_engine.py:231-252",
+      "queue_root": "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01",
+      "read_artifacts": [
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/0/arms/A0_clip/epoch_validation.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/0/arms/A0_clip/curve.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/0/arms/A1_clip_decay/epoch_validation.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/1/arms/A0_clip/epoch_validation.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/1/arms/A1_clip_decay/epoch_validation.json",
+        "/data1/dataset_csv/clinical/all/blca.csv",
+        "/data1/dataset_csv/splits/5fold/blca/fold_0.csv"
+      ],
+      "queue_config": "configs/slotspe_anticollapse_multifold_queue.json",
+      "note": "Read-only. No patient artifact was staged and no concurrent session output was modified. The documentation and the delivery manifest are the only files written by this window."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "model_forwards": 0,
+      "training_runs": 0,
+      "optimizer_steps": 0,
+      "patient_training_runs": 0,
+      "patient_inference_runs": 0,
+      "read_only_inspection_of_concurrent_session_artifacts": true,
+      "checkpoint_selection_rule": "per_epoch_validation_best_then_reload_and_reevaluate",
+      "checkpoint_rule_source": "slotspe_proof/redundancy_anticollapse_engine.py:231-252",
+      "selection_condition": "value >= retained best updates the best record",
+      "last_pt_semantics": "final epoch state, retained for reference, not the scored artifact",
+      "best_pt_semantics": "retained best epoch state, reloaded before the 20-repeat evaluation",
+      "final_reported_score": "20-repeat mean on the reloaded best epoch",
+      "monitoring_scores_are": "per-epoch single-pass validation indices, not comparable to the completed queue's 20-repeat means",
+      "study": "blca",
+      "cancer": "TCGA bladder urothelial carcinoma, BLCA",
+      "endpoint": "survival_months_dss with censorship_dss",
+      "feature_encoder": "UNI2-h, 1536 dimensions",
+      "complete_case_patients": 380,
+      "clinical_table_rows": 381,
+      "fold_sizes_train_val": "303/77, 305/75, 304/76, 304/76, 304/76",
+      "excluded_per_fold": 1,
+      "epoch_validation_scores": {
+        "fold0_A0_clip": {
+          "1": 0.6022187004754358,
+          "2": 0.6434231378763867,
+          "3": 0.7416798732171157
+        },
+        "fold0_A1_clip_decay": {
+          "1": 0.6022187004754358,
+          "2": 0.5784469096671949,
+          "3": 0.6711568938193344
+        },
+        "fold1_A0_clip": {
+          "1": 0.5456852791878173,
+          "2": 0.467005076142132,
+          "3": 0.49153976311336717
+        },
+        "fold1_A1_clip_decay": {
+          "1": 0.5456852791878173,
+          "2": 0.42216582064297803,
+          "3": 0.538917089678511
+        }
+      },
+      "all_epoch_validation_status": "computed",
+      "geometry_fold0_A0_clip_late_epoch2_wsi": {
+        "effective_rank": 4.939806331948527,
+        "cosine": 0.18184270958251064,
+        "fraction_cosine_above_09": 0.0
+      },
+      "geometry_fold0_A0_clip_late_epoch2_omic": {
+        "effective_rank": 5.3199602867557765,
+        "cosine": 0.10934689197836057,
+        "fraction_cosine_above_09": 0.0
+      },
+      "post_clip_gradient_norm": "exactly 1.0 on every recorded row",
+      "completed_queue_fold0_20repeat_means": {
+        "R5": 0.6703,
+        "S3": 0.6569,
+        "R3": 0.6326,
+        "S1": 0.6235,
+        "S2": 0.62,
+        "S4": 0.6154,
+        "S5": 0.5898,
+        "R1": 0.5294,
+        "R2": 0.5256,
+        "S0": 0.5239,
+        "R4": 0.4894
+      },
+      "completed_queue_note": "R5 is the unmatched-clip counterpart of the running arms; its 0.6703 is a 20-repeat mean and is not comparable to the epoch-3 monitoring values yet",
+      "arms_completed": 0,
+      "arms_planned": 10
+    },
+    "gaps_reasons": "The scores in hand are monitoring values, not results, and they must not be read as final. A single fold's per-epoch single-pass concordance on 77 validation patients has a standard error of roughly 0.05, so the 0.6022 to 0.7417 spread across epochs in fold 0 and the 0.4222 to 0.5457 spread in fold 1 are within the noise of a single fold and are not separable from fold and seed variance. Fold 0 rises across three epochs and fold 1 falls across the same three epochs, and one fold each cannot tell whether that is the intervention, the fold, or the seed. The arms are at epoch 3 of 30 and folds 2, 3 and 4 have not started, so no arm has written its summary.json and no 20-repeat score exists for any of the ten runs. The comparison with the completed queue is therefore deferred, and when it becomes valid it must still separate two causes that are currently confounded: the completed queue's R5 was run without gradient clipping, so its 0.6703 differs from the running arms by the clip as well as by any queue implementation difference, and the clip value of 1.0 was chosen by reasoning from the completed runs' recorded gradient norms rather than by sweeping, so a negative result would not distinguish a collapse that cannot be held from a bound that cannot hold it. The pre-clip core gradient norm reached 76429717.18 in fold 1, so the bound sits far below the natural gradient scale, the post-clip norm is exactly 1.0 on every step, and the effective step size is set by the clip rather than by the data, which is a live constraint on how far the survival objective can be optimized. The queue's own decision boundary already states that holding the geometry open does not by itself establish patient-specific content in the slots, and the deletion oracle saturates at codebook size 16 even for a target that is an exact function of the code multiset, so a later negative deletion result must be read as a non-detection. Nothing in this window measures patient benefit, correction efficacy or generalization, and the A1 Gram decay has not yet been separated from A0 because the two are identical in epoch 1 by construction.",
+    "next_action_user_inputs": "Let the queue finish. It needs the remaining 27 epochs for folds 0 and 1 on two GPUs and then folds 2, 3 and 4, so the ten 20-repeat scores do not exist yet and no user input is needed for that. The one decision that would change the design rather than just wait is whether to add an unmatched-clip control arm on fold 0 that reuses the same prepared cache and the same fold initialization with clipping disabled, so that the effect of the clip can be separated from the queue implementation difference. Without it the clip effect stays confounded with the implementation difference. The clip value itself was reasoned rather than swept, so if the control arm is added a clip sweep over roughly 1, 10 and 50 would make a negative result interpretable. Separately, and independent of the queue, the SCM/SRO queue should stay unexecuted until the anti-collapse arms have written their summaries, because the GPU is occupied and because the SCM/SRO baseline choice depends on whether a held-open slot set is what the loss is meant to act on. If the anti-collapse arms hold the geometry open for all 30 epochs, the SCM/SRO comparison must be run against the collapsed and the held-open states, which changes what the two losses are being asked to correct."
   }
 }
