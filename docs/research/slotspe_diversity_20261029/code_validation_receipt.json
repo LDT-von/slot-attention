@@ -1,0 +1,98 @@
+{
+  "schema": "slotspe_diversity_code_validation_v1",
+  "recorded_at": "2026-10-30T09:52:02.509895+08:00",
+  "base_commit": "6527110a49adbec58536a99a9a3e93cc15765ee7",
+  "evidence_class": "source_and_generated_data_only",
+  "new_arms": [
+    "SCM",
+    "SRO",
+    "R4_SCM",
+    "R4_SRO"
+  ],
+  "conditional_reuse": [
+    "S0",
+    "R4",
+    "R3"
+  ],
+  "tests": {
+    "new_tests": {
+      "passed": 94,
+      "failed": 0
+    },
+    "delivery_new_plus_best_engine_plus_manifest": {
+      "passed": 116,
+      "failed": 0,
+      "duration_seconds": 34.76
+    },
+    "additional_historical_regressions": {
+      "passed": 80,
+      "failed": 4,
+      "duration_seconds": 18.06,
+      "failure_reasons": {
+        "disk_guard_exceeds_local_free_space": 3,
+        "server_inputs_not_present_on_local_machine": 1
+      },
+      "required_disk_gib": 86.8,
+      "available_disk_gib_at_test": 19.1
+    },
+    "full_repository_suite_run": false,
+    "method": "pytest --noconftest; fresh ignored basetemp; generated tensors and fake scheduler only"
+  },
+  "verified_behaviors": [
+    "four new arms complete generated best-selection training/reload/evaluation",
+    "zero diversity weight matches historical S0/R4 losses, core/probe states and Adam states",
+    "native allocation forward and random stream preserved",
+    "SRO uses graph-connected prediction-path reading; real-token mask only in loss",
+    "SCM has nonzero native Q/V gradients when generated slots exceed margin",
+    "exact symmetric collapse can have positive loss and zero gradient",
+    "reference protocol/hash drift refused with no retraining fallback",
+    "only 20 new stages launched by fake scheduler; verified resume preserves artifacts and attempt logs"
+  ],
+  "source_sha256": {
+    "configs/slotspe_diversity_queue.json": "1ed7caa888a5461f006f9639978a8cb491779247c3ecd79d0af189fc8a05f688",
+    "scripts/run_slotspe_diversity.py": "c4ffc63c0dab4e7a94ebf9bf986602911376dfd851ab5d85c1e966a9663b8fe5",
+    "slotspe_proof/slot_diversity_losses.py": "c3d70eb6856614dce872763f58462648d30ecf0e51a6a072f8b3464e8ea1560c",
+    "slotspe_proof/diversity_engine.py": "bf81b3532bf97050e3b7c593fc5239078c949ec83983e4fd34b0b2b1e5ba785b",
+    "slotspe_proof/diversity_reuse.py": "79e3cd7a1562f7d77d10ff1fb67dadd361d780d47ae700db401cba15622641fd",
+    "slotspe_proof/diversity_queue.py": "0db5e15045e56028e8b862b2378a3176c2f3488595b6bb5c56aa3d697db325ff",
+    "tests/test_slot_diversity_losses.py": "dc3311aaef1101995da0e5805c3d4aaa1cd3bf6a98a7848c18a82afec76cca2b",
+    "tests/test_diversity_engine.py": "40751911183ac28b795ff980ee59548bf3da3eeb9c7eadfd3ab8c9513b922431",
+    "tests/test_diversity_reuse.py": "17b1c7f788eb6ca29d6164fdd8dde7bce22867c9409997b7b541845b54d3f16a",
+    "tests/test_diversity_queue.py": "6fb234ea37b9b7b9460f4c43ed51e0a1c233ce3e6f9c4eb36a87a5f9e474a37d",
+    "docs/research/slotspe_diversity_20261029/参数与服务器交接.txt": "03584ecdaf989899997aabd61c89b0de6819e04a05eb1e2b603d81faf96f0a31"
+  },
+  "protected_source_sha256": {
+    "third_party/SlotSPE/README.md": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82",
+    "third_party/SlotSPE/dataset/dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+    "third_party/SlotSPE/models/SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+    "third_party/SlotSPE/models/omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+    "third_party/SlotSPE/models/slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+    "third_party/SlotSPE/models/transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+    "third_party/SlotSPE/requirements.txt": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+    "third_party/SlotSPE/scripts/SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+    "third_party/SlotSPE/utils/core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+    "third_party/SlotSPE/utils/loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+    "third_party/SlotSPE/utils/process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b"
+  },
+  "protected_original_files_equal": 11,
+  "plan": {
+    "new_training_runs": 20,
+    "reused_arm_fold_results": 15,
+    "patient_work_executed": false
+  },
+  "actual_patient_execution": {
+    "feature_loads": 0,
+    "training_runs": 0,
+    "inference_runs": 0,
+    "server_execution": false,
+    "server_raw_receipt": false,
+    "real_reference_audit": "not_run_local_reference_absent"
+  },
+  "limitations": [
+    "parameters provisional, not patient tuned",
+    "actual historical split name and hashes require server audit",
+    "full cache byte verification deferred to explicitly authorized run",
+    "does not prove lower redundancy or better patient prediction",
+    "four old queue tests not green on this machine; source files unchanged"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "slotspe_diversity_queue_v1",
+  "reference_root": "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01",
+  "output_root": "local_evidence/slotspe_diversity_scm_sro_v1",
+  "reuse_arms": ["S0", "R4", "R3"],
+  "new_arms": ["SCM", "SRO", "R4_SCM", "R4_SRO"],
+  "folds": [0, 1, 2, 3, 4],
+  "required_protocol": {
+    "study": "blca", "feature_encoder": "UNI2-h", "seeds": [3],
+    "epochs": 30, "patches": 4096, "batch_size": 8, "eval_repeats": 20,
+    "lr": 0.0005, "probe_lr": 0.0005, "projection_dim": 256,
+    "slot_iters": 10, "content_target_dim": 32, "content_clusters": 8,
+    "content_reference_seed": 731,
+    "checkpoint_selection": "per_epoch_validation_best_then_reload_and_reevaluate"
+  },
+  "split_policy": "inherit_verified_reference_config_and_prepared_split_hashes",
+  "diversity": {
+    "cosine_margin": 0.9,
+    "read_overlap_margin": 0.9,
+    "weight": 0.1,
+    "warmup_epochs": 5
+  },
+  "content_weight": 5.0,
+  "devices": ["cuda:0"],
+  "parameters_status": "provisional_model_adapted_defaults_not_patient_tuned",
+  "names": {
+    "SCM": "Slot Cosine Margin / 槽余弦间隔",
+    "SRO": "Slot Reading Overlap / 槽读取重叠",
+    "R4_SCM": "R4 content coverage + SCM",
+    "R4_SRO": "R4 content coverage + SRO"
+  },
+  "execution_authorized_by_config": false,
+  "default_action": "plan_only"
+}
