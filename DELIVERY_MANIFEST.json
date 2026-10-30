@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-30T10:56:56.154886+08:00",
-  "base_commit_before_delivery": "e6fcb7f5f5a04df107d0c3cba9292a08bad6c003",
+  "recorded_at": "2026-10-30T10:57:20.283756+08:00",
+  "base_commit_before_delivery": "7da2b8df56fead5c14232e729d9e1a833d1392b6",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
