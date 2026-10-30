@@ -7103,5 +7103,62 @@
     },
     "gaps_reasons": "Only fold 0 exists in the cross-view manifests, so the cross-view result is a single fold and its comparison with the historical best queue is limited to that fold. The historical best queue covers folds 0 to 4 under the same 5fold cohort, so a fold-0-only number cannot be compared with a five-fold average without stating that it is fold 0. The comparison between the two split CSVs was done by parsing them directly, which also exposes that 5fold_uni2h fold_0 has 76 validation patients against 77 for 5fold, so the two files are not even the same size and the 15-patient overlap is the correct comparison rather than a coincidence. No other fold of 5fold_uni2h was checked, so the size and overlap of the remaining folds is not established here. The reason the manifest label and the loaded cohort disagree is understood, but the same labelling pattern in other queues and in the new anti-collapse configuration was not audited exhaustively.",
     "next_action_user_inputs": "Two items are handed to the other session for review rather than settled here. First, the split identity: the loader hardcode at dataset_survival.py line 203 is confirmed, and the cross-view queue demonstrably read the 5fold cohort, so the two paths do not conflict and the open question is only whether the prepared-manifest labelling defect should be repaired at the source for all queues, including the new anti-collapse multi-fold queue, and whether historical reports that relied on the 5fold_uni2h label need a correction note. Second, the deletion diagnostic interpretation boundary: the other session's uncollapsed checkpoints need their multiset uniqueness rate and bucket coverage reported, because this window found 90 to 97 percent uniqueness at codebook size 8 with 73 to 76 distinct multisets over 77 patients, and a high uniqueness rate would make those cells structurally uninterpretable rather than informative, which strengthens rather than weakens a negative result. No new multi-fold, multi-seed or patient training is arranged by this entry; the decision to re-run the diagnostics waits for the anti-collapse checkpoints and their receipts."
+  },
+  "latest_anticollapse_protocol_implementation_20261030": {
+    "recorded_at": "2026-10-30T11:55:00+08:00",
+    "route_task": "SlotSPE / P7.3 / implement the anti-collapse intervention protocol and launch the authorized training queue",
+    "user_steering": "User authorized all follow-ups including new training runs on 2026-10-30 09:51.",
+    "status": "implemented_unit_verified_and_authorized_training_queue_launched",
+    "completed_work": "Implemented the anti-collapse intervention as a separate protocol that does not modify any file pinned by the completed queues. slotspe_proof/redundancy_anticollapse_engine.py adds two mechanisms to the completed best-checkpoint protocol: a core gradient clip applied after the backward pass and before the optimizer step, and an optional multiplicative decay of the Gram weight from 10.0 to 1.0 over the 30 epochs. Two arms are declared: A0_clip (clipping only) and A1_clip_decay (clipping plus the decay). Everything else, including the initialization, the patch budget, the loss structure, the evaluation contract and the original per-epoch best-validation checkpoint rule, is unchanged. slotspe_proof/redundancy_anticollapse_multifold.py is the queue runner, reusing the completed queue's preparation, fold initialization, device assignment, disk budget guard, wave scheduler and identity verification. configs/slotspe_anticollapse_multifold_queue.json declares the scope: BLCA, UNI2-h, seed 3, folds 0-4, 30 epochs, 4096 real patches, batch size 8, 20 repeated evaluations, the 5fold split family and the two anti-collapse arms, for 10 unique training runs. The decisive controlled-experiment property is unit-verified: with the clip disabled and no decay, the new engine reproduces the completed R5 arm's per-batch training rows exactly, so the anti-collapse arms differ from the completed arm in the declared interventions only. The clip is also verified to bound the gradient that reaches the optimizer and to leave a small gradient untouched, and the Gram schedule is verified to be monotone from 10.0 to the floor of 1.0. The authorized queue was launched and is running: the preparation stage is caching the real paired inputs.",
+    "paths_commit": {
+      "engine": "slotspe_proof/redundancy_anticollapse_engine.py",
+      "queue_runner": "slotspe_proof/redundancy_anticollapse_multifold.py",
+      "queue_config": "configs/slotspe_anticollapse_multifold_queue.json",
+      "tests": "tests/test_slotspe_redundancy_anticollapse_engine.py",
+      "output_root": "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01",
+      "note": "All patient features, weights, predictions and per-patient arrays stay in the ignored local_evidence directory. The two abandoned first attempts were preserved, not deleted, because the repository rule forbids deleting archives."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, 2x NVIDIA GeForce RTX 5090 (32 GB each), conda env trisurv (torch 2.10.0+cu128)",
+      "model_forwards": "in progress",
+      "training_runs": "in progress (10 planned)",
+      "optimizer_steps": "in progress",
+      "unit_tests": {
+        "anti_collapse_engine": "11 passed",
+        "full_suite": "822 passed, 2 skipped, 1 warning in 157.71s"
+      },
+      "decisive_equivalence_test": "The anti-collapse engine with clipping disabled and no decay reproduces the completed R5 arm's per-batch training rows exactly for epoch, batch_start, total_loss, main_nll, probe_loss, core_gradient_norm, gram_loss and content_loss. This is what makes the anti-collapse arms differ from the completed arm only in the declared interventions.",
+      "clip_verification": {
+        "large_gradient": "norm 20.0 is clipped to 1.0 and the pre-clip norm is returned for the record",
+        "small_gradient": "a norm below the limit is left untouched and reported as not clipped"
+      },
+      "gram_schedule_verification": {
+        "epoch_1": 10.0,
+        "epoch_2_of_3": 3.1622776601683795,
+        "epoch_3_of_3": 1.0,
+        "floor": 0.1,
+        "monotone": true
+      },
+      "launch_defects_found_and_fixed_before_execution": [
+        "The first launch produced a scheduler that never spawned a stage, because the wave loop's exit condition was inverted; it was replaced with the shared scheduler and only the spawn function is overridden, so the worker command names the anti-collapse module.",
+        "The second launch failed because source_root was relative and the patient preparation requires an absolute server path; the config now pins /data1/SlotSPE/third_party/SlotSPE.",
+        "A generator-consumption defect in the gradient clip was found by the unit tests: model.parameters() is a generator and was consumed twice, so the post-clip norm read back as zero work. The parameters are now materialized once before clipping."
+      ],
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "completed_queue_files_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "the_intervention_is_a_controlled_experiment_not_a_new_method": "The equivalence test establishes that the anti-collapse arms differ from the completed R5 arm only in the clip and the decay. Without that test the new arms would have been an uncontrolled comparison, because they use a separate engine.",
+      "nothing_is_known_yet_about_whether_the_collapse_can_be_held": "The queue is running and has produced no training result yet. The clip norm of 1.0 was chosen because the completed runs' median gradient norm was about 30-50 and their collapse-triggering spikes were 1e6-4.5e6, so a limit of 1.0 is far below the ordinary gradient and far below the spikes; whether that bound is too tight to train at all is not known and will be visible in the first epoch. The decay floor of 0.1 was chosen so the Gram term still acts in the last epoch rather than vanishing entirely.",
+      "interpretation_boundary": "Even a successful anti-collapse run would answer only whether the slot geometry can be held uncollapsed. It would not establish that the slots carry patient-specific content: the deletion probe already showed that the genuinely uncollapsed checkpoints of the completed queue carry no content above the permutation null, and that result stands regardless of what this queue does. Any claim that the slots are informative must come from a fresh probe on the new checkpoints, not from the geometry alone."
+    },
+    "gaps_reasons": "The queue is still running: the preparation stage caches roughly 380 patients and takes on the order of an hour before the ten training runs begin, and each training run is 30 epochs with a per-epoch validation pass and a 20-repeat evaluation. The clip norm and the decay floor were chosen by reasoning from the completed runs' recorded gradient norms and were not swept, so a negative result would not distinguish 'the mechanism cannot be held' from 'this particular setting cannot hold it'. The equivalence test uses a small generated manifest and two epochs, so it verifies the loss structure and the update rule but not the full-budget numerics. The engine records the pre-clip and post-clip gradient norms so the clip's effect is auditable, but it does not record the optimizer state, so the exact trajectory difference cannot be reconstructed offline.",
+    "next_action_user_inputs": "Let the authorized queue finish, then re-run the deletion probe on the resulting best checkpoints and compare the slot geometry against the completed queue's bimodal outcome. The immediate question the queue answers is whether the effective rank stays above 1.5 for all 30 epochs in every fold, which the completed queue never achieved for any arm in the wsi space. No further user input is needed to complete that; the user should be asked only if the clip norm turns out to prevent training entirely, because that would need a different value."
   }
 }

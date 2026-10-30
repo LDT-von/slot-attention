@@ -1,0 +1,109 @@
+{
+  "schema": "slotspe_anticollapse_multifold_queue_v1",
+  "recorded_at": "2026-10-30T11:45:00+08:00",
+  "route_task": "SlotSPE / P7.3 anti-collapse intervention queue: train two anti-collapse arms on all five declared BLCA folds under the original per-epoch best-validation checkpoint rule, so that the slot geometry can be held uncollapsed for the whole run instead of collapsing back after a few epochs.",
+  "status": "implemented_ready_for_explicit_execution_authorization",
+  "patient_execution": {
+    "training_executed": false,
+    "model_forwards_executed": false,
+    "note": "This file records the plan and the protocol. Nothing trains until --run is passed."
+  },
+  "server_execution": {
+    "performed": false,
+    "note": "This queue is a local protocol. It is not part of the server artifact set."
+  },
+  "authorization": "用户于2026-10-30 09:51明确授权全部后续项，包括新的训练运行。本配置记录该授权范围：两个反坍缩臂、五折、seed3、30 epoch、4096 real patch、20 次重复评估、原始 per-epoch best checkpoint 规则。",
+  "requested_scope": {
+    "study": "blca",
+    "folds": [0, 1, 2, 3, 4],
+    "new_folds": [0, 1, 2, 3, 4],
+    "reused_folds": [],
+    "seeds": [3],
+    "one_queue": true,
+    "selected_variants": ["A0_clip", "A1_clip_decay"],
+    "automatic_cross_fold_expansion": false,
+    "fold_seed_choice": "seed3 only, as instructed; no additional seeds are introduced.",
+    "feature_encoder": "UNI2-h"
+  },
+  "stages": [
+    {
+      "id": "anti_collapse_diagnostic",
+      "kind": "multi_fold_anti_collapse_diagnostic",
+      "status": "implemented_not_executed_on_patients",
+      "variants": ["A0_clip", "A1_clip_decay"],
+      "study": "blca",
+      "folds": [0, 1, 2, 3, 4],
+      "seeds": [3],
+      "epochs": 30,
+      "real_patches": 4096,
+      "batch_size": 8,
+      "eval_repeats": 20,
+      "splits_dir": "5fold",
+      "planned_unique_training_runs": 10,
+      "hyperparameters": "Locked core lr .0005, probe lr .0005, Gram weight 10, content weight 5; gradient clip norm 1.0; the decay arm scales the Gram weight from 10.0 to 1.0 over the 30 epochs. No held-out tuning.",
+      "purpose": "Test whether the slot geometry can be held uncollapsed for the whole run. The completed queue shows the collapse is an optimizer-step event that the Gram objective only delays, and that the collapse coincides with a gradient spike in three of five folds.",
+      "feature_encoder": "UNI2-h"
+    }
+  ],
+  "matched_protocol": [
+    "Same eligible patients per fold, same split hashes, same real-patch cache/order, and train-fold-only survival bins fitted independently per fold",
+    "Same seed-specific initial core/probe weights and data batches within each fold; both arms of a fold share one initialization and one sampling schedule",
+    "Same survival/auxiliary/reconstruction objectives plus the explicitly itemized experimental losses",
+    "Same repeated-evaluation seeds and the same 20-repeat evaluation contract",
+    "Every private feature, identifier, weight, raw prediction and per-case array stays under ignored local_evidence"
+  ],
+  "checkpoint_rule": {
+    "selection": "per_epoch_validation_best_then_reload_and_reevaluate",
+    "source": "third_party/SlotSPE/utils/core_utils.py:421-475",
+    "final": "after the final epoch the retained best weights are loaded and evaluated once more with the full 20-repeat contract",
+    "rng_isolation": "the per-epoch validation pass restores the python, numpy and torch CPU/CUDA global random streams"
+  },
+  "variant_catalog": {
+    "A0_clip": {
+      "family": "anti_collapse",
+      "adapter": "S0",
+      "gram_weight": 10.0,
+      "content_weight": 5.0,
+      "slotbert_weight": 0.0,
+      "gradient_clip_norm": 1.0,
+      "gram_weight_decay": false,
+      "rationale": "Isolate gradient clipping as the only intervention: the completed analysis localized the collapse to an optimizer step that follows a gradient spike in three of five folds."
+    },
+    "A1_clip_decay": {
+      "family": "anti_collapse",
+      "adapter": "S0",
+      "gram_weight": 10.0,
+      "content_weight": 5.0,
+      "slotbert_weight": 0.0,
+      "gradient_clip_norm": 1.0,
+      "gram_weight_decay": true,
+      "gram_decay_floor": 0.1,
+      "rationale": "Add a decaying Gram weight so the anti-collapse penalty acts early, where the completed analysis shows the uncollapsed window opens, and relaxes later so the survival objective is not fighting a permanently active penalty."
+    }
+  },
+  "decision_boundary": "This queue answers one question: can the slot geometry be held uncollapsed for the whole run? It does not by itself establish patient-specific content in the slots; that is answered by re-running the deletion probe on the resulting checkpoint, and the deletion oracle's detection power has already been validated on synthetic ground truth. No patient efficacy, no correction efficacy and no generalization claim follows from this queue.",
+  "execution": {
+    "source_root": "/data1/SlotSPE/third_party/SlotSPE",
+    "metadata_root": "${SLOTSPE_METADATA_ROOT}",
+    "features_root": "${SLOTSPE_FEATURES_ROOT}",
+    "device": "cuda:0",
+    "label_col": "survival_months_dss",
+    "signature": "combine",
+    "lr": 0.0005,
+    "probe_lr": 0.0005,
+    "torch_threads": 2,
+    "encoding_dim": null,
+    "projection_dim": 256,
+    "slot_iters": 10,
+    "content_target_dim": 32,
+    "content_clusters": 8,
+    "content_reference_seed": 731,
+    "dias_distance": 0.05,
+    "slotbert_temperature": 0.5,
+    "experiment": "original_audit",
+    "checkpoint_selection": "per_epoch_validation_best_then_reload_and_reevaluate",
+    "gradient_clip_norm": 1.0
+  },
+  "planning_entrypoint": "python -B -m slotspe_proof.redundancy_anticollapse_multifold --plan --config configs/slotspe_anticollapse_multifold_queue.json",
+  "execution_entrypoint": "python -B -m slotspe_proof.redundancy_anticollapse_multifold --run --config configs/slotspe_anticollapse_multifold_queue.json --devices 0 --workers 2"
+}
