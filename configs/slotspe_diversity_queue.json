@@ -21,7 +21,7 @@
     "warmup_epochs": 5
   },
   "content_weight": 5.0,
-  "devices": ["cuda:0"],
+  "devices": ["cuda:0", "cuda:1"],
   "parameters_status": "provisional_model_adapted_defaults_not_patient_tuned",
   "names": {
     "SCM": "Slot Cosine Margin / 槽余弦间隔",
@@ -29,6 +29,14 @@
     "R4_SCM": "R4 content coverage + SCM",
     "R4_SRO": "R4 content coverage + SRO"
   },
-  "execution_authorized_by_config": false,
-  "default_action": "plan_only"
+  "execution_authorized_by_config": true,
+  "authorization": "用户于2026-10-30 16:00明确授权：(1) 等反坍缩队列跑完后在 best checkpoint 上重跑 deletion probe；(2) 同时启动本 SCM/SRO 队列。授权范围：本配置声明的 4 个新臂 x 5 折 = 20 次训练，复用 S0/R4/R3 已完成基线，不重训基线，不引入额外 seed。",
+  "default_action": "run",
+  "execution_notes": {
+    "started_utc": "2026-10-30T08:31:00Z",
+    "concurrent_arms": 2,
+    "device_assignment": "cuda:0, cuda:1 各一个 worker",
+    "cpu_contention_disclosure": "本机 16 核在反坍缩队列运行期间已接近满载 (实测 user 97.7%, load 37)。实测单个额外 2 线程 CPU 消费者在 129 秒窗口内未使反坍缩速率下降 (111 -> 112 steps/h)，但该窗口仅 4 步，样本偏弱，不足以断言无竞争。两条队列并行期间的反坍缩实际速率将在启动后复测，如实记录。",
+    "boundary": "本队列回答'读取冗余能否被压下去'，不回答患者获益、槽内是否含患者特异内容或修正效力。"
+  }
 }
