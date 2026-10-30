@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-30T10:48:01.056487+08:00",
-  "base_commit_before_delivery": "c51978ba1d22685086d20f411486fe078a23eca4",
+  "recorded_at": "2026-10-30T10:56:56.154886+08:00",
+  "base_commit_before_delivery": "e6fcb7f5f5a04df107d0c3cba9292a08bad6c003",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -41,8 +41,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 22014,
-      "sha256": "5035a2277dfe21445a25229d976618127d6676205ce64f5798003bee008bcc97"
+      "bytes": 24574,
+      "sha256": "5401441869a09df0a0d1f5ac68ec0b0069eea79063790b1bf8d43aca76dcfb90"
     },
     {
       "path": "configs/slotspe_anticollapse_multifold_queue.json",
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 520374,
-      "sha256": "60ad88ad5a917219754430846ca8726e6af35045b5726fe3caa589e05fff3a0d"
+      "bytes": 552917,
+      "sha256": "4827d2399a181f126beba4527501af8d9692ec3d2acba247dac72164a8cb4128"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -2101,8 +2101,8 @@
     },
     {
       "path": "slotspe_proof/redundancy_anticollapse_multifold.py",
-      "bytes": 20748,
-      "sha256": "d18b116224efbd9aa0ce28ab45dc5d8cfe3972e050d0b0b0c67fdab10c8241c7"
+      "bytes": 22149,
+      "sha256": "212bc40e4f17ac32e2f49880e5d289cedde2291104f447893896e13f6a7eb4e5"
     },
     {
       "path": "slotspe_proof/redundancy_best_engine.py",
