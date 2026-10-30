@@ -6079,5 +6079,377 @@
     },
     "gaps_reasons": "No real reference artifacts here, so actual reuse audit, GPU memory, patient gradients and effectiveness remain unverified. Source best config names5fold; reuse inherits verified actual split hashes rather than silently claiming5fold_uni2h. New parameters are provisional; positive loss at exact symmetry need not yield escape gradients. No full repository suite claim.",
     "next_action_user_inputs": "Server safely pulls this delivery, reads handoff, runs --plan and --audit, reports actual split and reuse checks. After explicit authorization only: 20 new runs, BLCA/UNI2-h/fivefold/seed3/30epochs/4096patches/20evaluations, no baseline reruns or extra seeds."
+  },
+  "latest_crossview_full_budget_and_deletion_20261030": {
+    "recorded_at": "2026-10-30T12:05:00+08:00",
+    "route_task": "SlotSPE / P7.3 / full-budget single-fold four-arm cross-view run (30 epochs, 4096 patches, 20 evaluation repeats) followed by the identical slot-deletion oracle and slot-geometry diagnostics on the resulting checkpoints",
+    "user_steering": "User authorized one full-budget fold (four arms x 30 epochs) and provided one GPU, to test whether the observed slot collapse is an artifact of the tiny quick budget.",
+    "status": "completed_slot_geometry_is_budget_dependent_but_deletion_gap_still_not_above_permutation_null_and_crossview_target_only_ties_the_constant",
+    "completed_work": "Ran the default locked queue profile (30 epochs, 4096 real patches, 20 evaluation repeats, splits/5fold_uni2h, fold0, seed3, four matched arms) on one GPU, then ran the already committed deletion-diagnostic script against the new checkpoints. No source change, no new training code, no change to the arm definitions and no change to the diagnostic script were needed, so the full-budget and quick-budget numbers are directly comparable cell by cell. The diagnostic reused the committed module and runner unchanged.",
+    "paths_commit": {
+      "base_HEAD_at_run_time": "c6f3a31",
+      "HEAD_at_record_time": "26caf0405a01b5ce31693c653180c45203207ae8",
+      "new_commit_or_push": false,
+      "note": "Four later commits (3476d16, b3a70ee, 6527110, 26caf04) and concurrent uncommitted work exist in this repository. This entry records only the full-budget cross-view run and its deletion diagnostics; it does not claim, modify or supersede the later entries.",
+      "training_run_root": "local_evidence/crossview_blca_uni2h_fold0_seed3_run01",
+      "training_log": "local_evidence/crossview_full_run_20261029.log",
+      "diagnostic_output_root": "local_evidence/crossview_deletion_diagnostics_full_20261030",
+      "diagnostic_log": "local_evidence/crossview_deletion_diagnostics_full_20261030.log",
+      "source_files_changed": "none",
+      "third_party_modified": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, single NVIDIA GeForce RTX 5090 (32 GB, GPU 0), conda env trisurv, torch 2.10.0+cu128",
+      "preparation": "380 complete-case patients cached, fold=0 train=303 val=77 excluded=0, identical to the quick run",
+      "training_runs": 4,
+      "optimizer_steps_per_arm": 1140,
+      "epoch_budget": 120,
+      "checkpoint_policy": "fixed_final_epoch_no_validation_selection",
+      "wall_clock_seconds_per_arm": {
+        "B0_native": 3286,
+        "V2_separate": 4789,
+        "V2_crossview_compute": 5249,
+        "V2_crossview_train": 5155
+      },
+      "cuda_peak_gb": {
+        "B0_native": 2.23,
+        "V2_separate": 2.24,
+        "V2_crossview_compute": 2.69,
+        "V2_crossview_train": 2.69
+      },
+      "diagnostic_elapsed_seconds": 900,
+      "diagnostic_patient_inference_passes": 8,
+      "diagnostic_patient_training_runs": 0,
+      "c_index_full_budget": {
+        "B0_native": {
+          "mean": 0.4513,
+          "std_population": 0.0407
+        },
+        "V2_separate": {
+          "mean": 0.6103,
+          "std_population": 0.0481
+        },
+        "V2_crossview_compute": {
+          "mean": 0.6103,
+          "std_population": 0.0481
+        },
+        "V2_crossview_train": {
+          "mean": 0.6241,
+          "std_population": 0.0419
+        }
+      },
+      "c_index_quick_budget_for_comparison": {
+        "B0_native": {
+          "mean": 0.7007,
+          "std_population": 0.0032
+        },
+        "V2_separate": {
+          "mean": 0.7187,
+          "std_population": 0.0013
+        },
+        "V2_crossview_compute": {
+          "mean": 0.7187,
+          "std_population": 0.0013
+        },
+        "V2_crossview_train": {
+          "mean": 0.7205,
+          "std_population": 0.0007
+        }
+      },
+      "slot_geometry_validation_fold_wsi_quick_to_full": {
+        "B0_native_native": {
+          "cosine": [
+            0.9971,
+            0.9141
+          ],
+          "fraction_cosine_above_0.9": [
+            1.0,
+            0.786
+          ],
+          "effective_rank": [
+            1.005,
+            1.168
+          ]
+        },
+        "V2_separate_native": {
+          "cosine": [
+            0.9846,
+            0.9375
+          ],
+          "fraction_cosine_above_0.9": [
+            0.999,
+            0.952
+          ],
+          "effective_rank": [
+            1.028,
+            1.119
+          ]
+        },
+        "V2_separate_private": {
+          "cosine": [
+            0.9858,
+            0.948
+          ],
+          "fraction_cosine_above_0.9": [
+            0.998,
+            0.936
+          ],
+          "effective_rank": [
+            1.025,
+            1.097
+          ]
+        },
+        "V2_separate_content": {
+          "cosine": [
+            0.9828,
+            0.291
+          ],
+          "fraction_cosine_above_0.9": [
+            0.995,
+            0.112
+          ],
+          "effective_rank": [
+            1.031,
+            2.279
+          ]
+        },
+        "V2_crossview_compute_native": {
+          "cosine": [
+            0.9846,
+            0.9375
+          ],
+          "fraction_cosine_above_0.9": [
+            0.999,
+            0.952
+          ],
+          "effective_rank": [
+            1.028,
+            1.119
+          ]
+        },
+        "V2_crossview_compute_private": {
+          "cosine": [
+            0.9858,
+            0.948
+          ],
+          "fraction_cosine_above_0.9": [
+            0.998,
+            0.936
+          ],
+          "effective_rank": [
+            1.025,
+            1.097
+          ]
+        },
+        "V2_crossview_compute_content": {
+          "cosine": [
+            0.9828,
+            0.291
+          ],
+          "fraction_cosine_above_0.9": [
+            0.995,
+            0.112
+          ],
+          "effective_rank": [
+            1.031,
+            2.279
+          ]
+        },
+        "V2_crossview_train_native": {
+          "cosine": [
+            0.9815,
+            0.983
+          ],
+          "fraction_cosine_above_0.9": [
+            0.996,
+            1.0
+          ],
+          "effective_rank": [
+            1.033,
+            1.03
+          ]
+        },
+        "V2_crossview_train_private": {
+          "cosine": [
+            0.9817,
+            0.997
+          ],
+          "fraction_cosine_above_0.9": [
+            0.993,
+            1.0
+          ],
+          "effective_rank": [
+            1.033,
+            1.005
+          ]
+        },
+        "V2_crossview_train_content": {
+          "cosine": [
+            0.9771,
+            0.4648
+          ],
+          "fraction_cosine_above_0.9": [
+            0.979,
+            0.008
+          ],
+          "effective_rank": [
+            1.041,
+            2.7
+          ]
+        }
+      },
+      "crossview_predictability_full_budget": {
+        "V2_crossview_compute": {
+          "mass": {
+            "own_mse": 0.027352,
+            "training_constant_mse": 0.01598,
+            "donor_mse": 0.027314,
+            "constant_minus_own": -0.011372,
+            "donor_minus_own": -3.9e-05
+          },
+          "moment": {
+            "own_mse": 0.06903,
+            "training_constant_mse": 0.013574,
+            "donor_mse": 0.069189,
+            "constant_minus_own": -0.055455,
+            "donor_minus_own": 0.00016
+          }
+        },
+        "V2_crossview_train": {
+          "mass": {
+            "own_mse": 0.015969,
+            "training_constant_mse": 0.01598,
+            "donor_mse": 0.015984,
+            "constant_minus_own": 1.1e-05,
+            "donor_minus_own": 1.5e-05
+          },
+          "moment": {
+            "own_mse": 0.013574,
+            "training_constant_mse": 0.013574,
+            "donor_mse": 0.013578,
+            "constant_minus_own": 1e-06,
+            "donor_minus_own": 4e-06
+          }
+        }
+      },
+      "deletion_gap_versus_permutation_null_full_budget": {
+        "cells_exceeding_null": {
+          "B0_native": "2/6",
+          "V2_separate": "1/18",
+          "V2_crossview_compute": "1/18",
+          "V2_crossview_train": "1/18"
+        },
+        "quick_budget_for_comparison": {
+          "B0_native": "2/6",
+          "V2_separate": "1/18",
+          "V2_crossview_compute": "1/18",
+          "V2_crossview_train": "2/18"
+        },
+        "surviving_cells": {
+          "B0_native_native_codebook2_category": {
+            "gap": 0.139597,
+            "null_mean": 0.066715,
+            "gap_minus_null": 0.072882,
+            "distinct_multisets": 7,
+            "unique_patient_fraction": 0.01
+          },
+          "B0_native_native_codebook8_category": {
+            "gap": 0.125798,
+            "null_mean": 0.109062,
+            "gap_minus_null": 0.016737,
+            "distinct_multisets": 73,
+            "unique_patient_fraction": 0.9
+          },
+          "V2_separate_native_codebook2_mse": {
+            "gap": 0.000935,
+            "null_mean": 0.000635,
+            "gap_minus_null": 0.0003,
+            "distinct_multisets": 9,
+            "note": "identical in V2_crossview_compute"
+          },
+          "V2_crossview_train_native_codebook4_mse": {
+            "gap": 0.005989,
+            "null_mean": 0.004968,
+            "gap_minus_null": 0.001021,
+            "distinct_multisets": 50,
+            "unique_patient_fraction": 0.45
+          }
+        },
+        "note": "The two cells with the largest absolute gaps are both in the B0_native arm, which contains no reconstruction mechanism at all, and both use the four-bin category target over 77 patients."
+      },
+      "multiset_structure_full_budget_unique_patient_fraction": {
+        "B0_native": {
+          "native/cb2": 0.01,
+          "native/cb4": 0.23,
+          "native/cb8": 0.9
+        },
+        "V2_separate": {
+          "native/cb2": 0.01,
+          "native/cb4": 0.19,
+          "native/cb8": 0.68,
+          "private/cb2": 0.0,
+          "private/cb4": 0.29,
+          "private/cb8": 0.79,
+          "content/cb2": 0.01,
+          "content/cb4": 0.26,
+          "content/cb8": 0.94
+        },
+        "V2_crossview_compute": {
+          "native/cb2": 0.01,
+          "native/cb4": 0.19,
+          "native/cb8": 0.68,
+          "private/cb2": 0.0,
+          "private/cb4": 0.29,
+          "private/cb8": 0.79,
+          "content/cb2": 0.01,
+          "content/cb4": 0.26,
+          "content/cb8": 0.94
+        },
+        "V2_crossview_train": {
+          "native/cb2": 0.03,
+          "native/cb4": 0.45,
+          "native/cb8": 0.97,
+          "private/cb2": 0.01,
+          "private/cb4": 0.27,
+          "private/cb8": 0.97,
+          "content/cb2": 0.01,
+          "content/cb4": 0.32,
+          "content/cb8": 0.95
+        }
+      },
+      "raw_receipt_sha256": {
+        "training_summary.json": "adcab063b5e4ef87ea6b86b66c8b1aa53fed75cab2240553d3018b81fd057724",
+        "training_arms_B0_native_summary.json": "f13dab5476c0e71a1be483889b1a00734cb9f554ece2a6d1621deeccf94416c6",
+        "training_arms_V2_separate_summary.json": "30faf45ffa82f41c1960d9433f2c599e3e6e106ae537bacde5192e9a2ed9170b",
+        "training_arms_V2_crossview_compute_summary.json": "b5ff12d85b5547b6d11ebee2ffd32bfc3f60cd56a75a2d6f908840cc3e4abb3e",
+        "training_arms_V2_crossview_train_summary.json": "117f4ec7f2bcc579de0b6f88822e9a75f4c0ae9d036798df01c33f1961c41e29",
+        "training_arms_V2_crossview_compute_crossview_eval.json": "77c1b4d2fb65e3b14f38404f72bad6ce78c130578b6a80c7553b7384c34392eb",
+        "training_arms_V2_crossview_train_crossview_eval.json": "13cfb37ad5c8defef3b61617acd190ea9e007a76b9bed5d7cfa960c634fa5583",
+        "diagnostic_full_summary.json": "307fe10d8671b6c69e2e43a702e061ce346abdeeff58494bf86c07c11de03d2a",
+        "diagnostic_full_arm_B0_native.json": "8a962eb27a819a63c7b2a2c20511d2374b87e29a9cba50d6a8c62ae1ae59803b",
+        "diagnostic_full_arm_V2_separate.json": "da7f0a9a99892bd11b59ca524c8ee1b2d9a421d7f97a438965ba12548f9ac6e6",
+        "diagnostic_full_arm_V2_crossview_compute.json": "ad8121ccc7483fc445882941ed2f49cf90a1b8dc96f5202195bc9d301d18b234",
+        "diagnostic_full_arm_V2_crossview_train.json": "433e08f1b9d7eb47f497cd55176e66d30d6a2168a9d3b25541c69a2d527f037f"
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "checkpoints_or_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "slot_collapse_is_budget_dependent_not_fixed": "The near-total collapse at 3 epochs was largely a budget artifact, but not in the direction the reconstruction line hoped for. At full budget the content space opened up sharply in the V2 arms: mean cosine fell from 0.983 to 0.291 in V2_separate and V2_crossview_compute and from 0.977 to 0.465 in V2_crossview_train, with the fraction of slot pairs above cosine 0.9 falling from 0.995 to 0.112 and from 0.979 to 0.008, and the effective rank rising from 1.03 to 2.28 and to 2.70. The native and private spaces in V2_crossview_train went the other way and became slightly more collapsed (cosine 0.983 and 0.997, effective rank 1.030 and 1.005). The B0_native arm also opened up but only to cosine 0.914 and effective rank 1.168, far less than the V2 content space. So at full budget the V2 decomposition separates a diverse content space from a still-collapsed native and private space, while the native baseline has no such separation.",
+      "crossview_train_collapsed_the_native_and_private_spaces": "V2_crossview_train is the only arm whose native and private spaces became more collapsed at full budget, reaching effective rank 1.030 and 1.005, which is at the same level as the native baseline. The cross-view objective therefore appears to have pushed information into the content head while collapsing the spaces that feed the survival branch, rather than improving the slots as a whole.",
+      "crossview_target_now_only_ties_the_constant": "At full budget the own-versus-constant comparison changed character rather than sign. In the trained arm constant_minus_own is +0.000011 for mass and +0.000001 for moment, that is positive but of the order of one part in 100000, and donor_minus_own is likewise +0.000015 and +0.000004. The own prediction, the training-fold constant and the mismatched donor are all essentially identical predictors. The compute arm is clearly worse than the constant (-0.011372 and -0.055455). So the trained arm no longer loses to the constant but it does not beat it either, and the own-versus-donor difference has collapsed to zero. The cross-view target is not recoverable from the slot content at this checkpoint, and it is also not distinguishable from a global constant.",
+      "deletion_gap_is_still_not_established": "The number of cells exceeding the permutation null barely changed with the budget: 2 of 6 for B0_native and 1 of 18 for each V2 arm, against 2 of 6, 1 of 18, 1 of 18 and 2 of 18 at the quick budget. The two cells with the largest absolute gaps are both in B0_native, which contains no reconstruction mechanism, and both use the four-bin category target over 77 patients. The surviving V2 cells are small in absolute terms (order 1e-4 to 1e-3 in MSE) and sit at 45 percent or lower patient uniqueness, so they are not the fingerprint signature either.",
+      "fingerprint_collapse_is_now_the_dominant_risk_at_codebook_8": "At full budget and codebook size 8 the patient multiset is unique for 90 percent of the native baseline patients, 68 to 97 percent across the V2 arms and 94 to 95 percent in the V2 content spaces. At the quick budget the same numbers were 5 to 43 percent. A multiset that is unique per patient can produce a large deletion gap for purely structural reasons, because the deleted slot is then the only thing separating two otherwise identical buckets. The measured gaps are still at or near the permutation null, so this failure mode did not actually produce a spurious large gap here, but it does mean the codebook-8 cells can no longer be read as evidence of slot information at all.",
+      "c_index_regressed_with_the_larger_budget": "At full budget B0_native fell to 0.4513 from 0.7007 at the quick budget, while V2_crossview_train reached 0.6241 against 0.7205. The evaluation repeats also became far noisier, with the population standard deviation rising from 0.003 to 0.041 to 0.048. The quick-budget numbers were therefore not a reliable preview of the full-budget ordering, and the full-budget native baseline is near or below chance, which suggests the native arm is unstable under this configuration rather than that V2 is genuinely strong. These are single-fold numbers with 20 repeats of one trained model, not independent training runs.",
+      "interpretation_boundary": "Single fold, single seed, one trained model per arm, 20 evaluation repeats of the same model. The deletion gap is an in-sample empirical quantity over 77 held-out patients. The slot geometry and the C-index are descriptive; neither is a clinical endpoint. Nothing here establishes patient harm, correction efficacy, population generalization, or that the slots are information-free."
+    },
+    "gaps_reasons": "One fold and one seed, so no arm difference can be separated from fold and seed variance. Twenty evaluation repeats of one trained model are not independent training runs, and the 0.041 to 0.048 C-index standard deviation is far larger than the 0.014 gap between the V2 arms. The cross-view target remains a feature proxy rather than a biological label, and at full budget the own prediction, the training constant and the donor are numerically indistinguishable, so this measurement cannot show patient-specific content recovery. The deletion oracle quantizes into at most eight codes, so it cannot resolve continuous-slot uniqueness, and at codebook size 8 the patient multiset is now unique for most patients, which makes those cells structurally uninterpretable rather than informative. The B0_native arm being near or below chance at 0.4513 means the native collapse is not a clean control for the V2 arms at this budget. No multi-seed or multi-fold training was performed, so the arm ordering and the C-index drop are both unresolved. This entry is also independent of the later collapse-mechanism analysis in this file, which located the collapse at the optimizer step in the redundancy queue; that analysis concerns a different queue and was not re-run for this cross-view queue.",
+    "next_action_user_inputs": "The full-budget fold answered the question it was asked: the geometry is budget dependent, and the answer is more nuanced than expected, because the V2 content space opens at full budget while the native and private spaces in the trained arm become more collapsed and the cross-view target only ties the constant. Before spending more GPU time the choice is between (a) repeating the same full-budget fold on two more folds and a second seed, which is the only way to separate the arm differences from fold and seed noise given the 0.041 to 0.048 C-index standard deviation, (b) a capacity scan at fixed budget, which tests whether the collapse of the native and private spaces is a capacity or optimization problem rather than an architectural one, or (c) stopping the reconstruction line here and recording that the cross-view target is not recoverable from the slot content at any budget tested. Recommend (a) first, because the current single-fold C-index ordering and the geometry split between the content space and the collapsed spaces are both single observations, and the geometry result in particular says the reconstruction line is not obviously dead. The oracle population stays the held-out fold."
   }
 }
