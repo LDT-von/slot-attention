@@ -59,7 +59,7 @@ python -B scripts/check_delivery_manifest.py --check --require-tracked
 
 当前选定**11组统一单队列**：S0、S4、R1–R5、S1、S2、S3、S5，限定BLCA、UNI2-h预提取特征、fold0/seed3，不自动扩大fold或seed。S6仅保留登记；R0是S0别名。训练器、异构通路目标和S5变长内容探针已接入；当前远端配置为30轮、4096 patch、逻辑batch8、20次评估、固定末轮权重，划分为 `5fold_uni2h`；这与历史实际执行的3轮/256 patch须分开。见[可执行队列与服务器交接](docs/research/slotspe_native_assignment_training_20261022/十一组可执行队列与服务器交接.md)。
 
-本地已完成的两个十一臂队列：**末轮口径**（`fixed_final_epoch_no_selection`，五折）与 **best口径**（`per_epoch_validation_best_then_reload_and_reevaluate`，五折x十一臂共55次全新训练，无一折复用）。两口径的臂间排名互相矛盾：末轮下 R3 最高（0.6426）、基线 S0 第8（0.5778）；best下 R4 最高（0.7071）、S0 第2（0.7039）但两者差异不显著。best口径中分数最高的臂并未解决槽冗余（有效秩约1.17、余弦约0.91），唯二真正降低冗余的 R5/R1 恰是分数最低的两个；跨55点 Spearman 显示冗余与性能关系方向为负。单种子、未做多重比较校正、best峰值选择自带乐观偏差；这些数值不是泛化性能，也不构成患者获益。完整口径、逐折数值与更正记录见 [PROGRESS](docs/PROGRESS.json) 的 `best_multifold_five_fold_completed_20261028`。
+本地已完成的两个十一臂队列：**末轮口径**（`fixed_final_epoch_no_selection`，五折）与 **best口径**（`per_epoch_validation_best_then_reload_and_reevaluate`，五折x十一臂共55次全新训练，无一折复用）。**这两个已完成队列实际执行的划分是 `5fold`（不是上段配置里写的 `5fold_uni2h`）**：原版加载器在 `third_party/SlotSPE/dataset/dataset_survival.py` 的 `_load_split` 中硬编码了 `splits/5fold` 目录，`splits_dir` 设置到不了队列选择；completed best 队列的 prepared manifest 与队列身份都逐字节记录并校验了 `splits/5fold/blca/fold_*.csv`。两套划分是实质不同的队列（每折76名验证患者只重叠12–17名；5fold为381人，5fold_uni2h为380人），因此任何复用该基线的臂必须继承 `5fold`。两口径的臂间排名互相矛盾：末轮下 R3 最高（0.6426）、基线 S0 第8（0.5778）；best下 R4 最高（0.7071）、S0 第2（0.7039）但两者差异不显著。best口径中分数最高的臂并未解决槽冗余（有效秩约1.17、余弦约0.91），唯二真正降低冗余的 R5/R1 恰是分数最低的两个；跨55点 Spearman 显示冗余与性能关系方向为负。单种子、未做多重比较校正、best峰值选择自带乐观偏差；这些数值不是泛化性能，也不构成患者获益。完整口径、逐折数值与更正记录见 [PROGRESS](docs/PROGRESS.json) 的 `best_multifold_five_fold_completed_20261028`。
 
 默认计划入口（查看计划，不启动患者训练）：
 

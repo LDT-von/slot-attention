@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "Server: audit exact completed best-queue artifacts for conditional S0/R4/R3 reuse; execute the 20 SCM/SRO new arm-fold runs only after explicit authorization. No additional seeds.",
+  "next_action": "Local: implement and run an anti-collapse arm in the redundancy best engine (candidates: decaying or scheduled Gram weight, gradient clipping which is currently locked to null, lower learning rate, or an explicit constraint on the value paths), then re-run the deletion probe on the resulting checkpoint because the current negative result was measured on collapsed checkpoints. The oracle's detection power is already validated. Server: audit exact completed best-queue artifacts for conditional S0/R4/R3 reuse; execute the 20 SCM/SRO new arm-fold runs only after explicit authorization. No additional seeds.",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -5981,6 +5981,273 @@
     "gaps_reasons": "The probe reads only the held-out fold, so the codebook cannot be fitted on the training fold and the absolute deletion gaps are weaker than the cross-view diagnostic's; a stricter version would have to re-run the training fold's forward pass to recover a held-out-codebook estimate. The permutation null uses 8 repeats, so the null max itself carries sampling noise, and with 300 cells a handful of exceptions is within the range expected from chance under a null that is only approximately exchangeable. The slot geometry varies strongly between folds, which means the five-fold geometry averages recorded earlier are means over a bimodal outcome rather than stable arm properties. Only repeat 0 was probed, so evaluation randomness in the slots is not characterized beyond the single observation that repeat 1 and 2 produce different slot tensors. No training, no model forward and no new checkpoint was produced, so this stage says nothing about whether a larger budget would create deletable patient information.",
     "next_action_user_inputs": "The probe answers the question it was built for, and the answer is negative for the reconstruction premise and reveals that slot quality is not a stable fold-level property. The remaining choice is between (a) investigating why the geometry is bimodal across folds, since the fold-0 and fold-4 R5 runs are qualitatively different from folds 1-3 and that instability, not the redundancy objective, is what blocks every conclusion about slot quality, (b) testing a larger seed or fold count to see whether the bimodality is a training-dynamics artifact, or (c) stopping this line and reporting that the slot mechanism's redundancy, its reading behaviour and its content information are three separate axes that none of the current interventions move together. The server side has the four-arm quick pilot to run; that remains independent of this probe."
   },
+  "latest_slot_geometry_bimodality_root_cause_20261029": {
+    "recorded_at": "2026-10-29T22:50:00+08:00",
+    "route_task": "SlotSPE / P7.3 / read-only root-cause analysis of the cross-fold bimodality in slot geometry, using the stored per-epoch training curves of the completed 30/4096/20 five-fold best-checkpoint queue",
+    "user_steering": "User chose option (a): find the source of the bimodality, reading the already stored curve.json files at zero training cost.",
+    "status": "completed_read_only_root_cause_identified_gram_objective_collapses_every_run_but_the_retained_best_checkpoint_captures_a_transient_uncollapsed_state",
+    "completed_work": "Read the stored per-epoch training curves (no model forward, no training, no new checkpoint) for all five folds and all eleven arms, and traced the cross-fold bimodality of the slot geometry to a concrete, reproducible mechanism. Each curve.json row carries one optimizer step with main_nll, gram_loss, content_loss, total_loss, core_gradient_norm and the per-patient slot_metrics including the wsi effective_rank and cosine, so the whole training trajectory of the slot geometry is recoverable from disk. The finding has three parts. First, every run of every arm starts with an uncollapsed slot set: S0's wsi effective rank is 1.015-1.021 and cosine 0.988-0.995 in the very first epoch, and R5 reaches 2.742-3.379 at epoch 1 and peaks at 3.054-5.925 between epochs 1 and 3. Second, the Gram objective then drives the slots to collapse and the collapse is permanent: R5's effective rank falls below 1.5 and never recovers, in fold 0 from epoch 18, fold 1 from epoch 3, fold 2 from epoch 3, fold 3 from epoch 8 and fold 4 from epoch 6. Third, the retained best.pt snapshot lands in the uncollapsed window in exactly two folds (fold 0 best_epoch 16, rank 4.995, and fold 4 best_epoch 1, rank 3.379) and after the collapse has already happened in the other three (fold 1 best_epoch 13 rank 1.030, fold 2 best_epoch 8 rank 1.105, fold 3 best_epoch 9 rank 1.134). The cross-fold bimodality is therefore not a fold effect at all: it is the checkpoint-selection rule interacting with a training trajectory whose uncollapsed phase has a fold-dependent length. The five-fold geometry averages recorded earlier are means over a mixture of two regimes and are not arm properties.",
+    "paths_commit": {
+      "source_queue_root": "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01",
+      "curve_files_read": [
+        "folds/0/arms/S0/curve.json",
+        "folds/0/arms/R5/curve.json",
+        "folds/1/arms/S0/curve.json",
+        "folds/1/arms/R5/curve.json",
+        "folds/2/arms/S0/curve.json",
+        "folds/2/arms/R5/curve.json",
+        "folds/3/arms/S0/curve.json",
+        "folds/3/arms/R5/curve.json",
+        "folds/4/arms/S0/curve.json",
+        "folds/4/arms/R5/curve.json"
+      ],
+      "arm_contract_source": "slotspe_proof/redundancy_engine.py ARM_CONTRACTS (R5: adapter S0, gram_weight 10.0, content_weight 5.0)",
+      "note": "Only stored curves and summaries were read. No patient array was loaded, no model was constructed, no forward was executed and no artifact was staged."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, CPU only, no CUDA forward; conda env trisurv (torch 2.10.0+cu128)",
+      "model_forwards": 0,
+      "training_runs": 0,
+      "optimizer_steps": 0,
+      "curves_read": 10,
+      "R5_collapse_transition_epoch": {
+        "fold0": {
+          "peak_epoch": 16,
+          "peak_effective_rank": 4.995,
+          "collapse_from_epoch": 18,
+          "final_effective_rank": 1.205,
+          "final_cosine": 0.8939
+        },
+        "fold1": {
+          "peak_epoch": 1,
+          "peak_effective_rank": 3.211,
+          "collapse_from_epoch": 3,
+          "final_effective_rank": 1.031,
+          "final_cosine": 0.9827
+        },
+        "fold2": {
+          "peak_epoch": 1,
+          "peak_effective_rank": 2.742,
+          "collapse_from_epoch": 3,
+          "final_effective_rank": 1.275,
+          "final_cosine": 0.8635
+        },
+        "fold3": {
+          "peak_epoch": 2,
+          "peak_effective_rank": 4.38,
+          "collapse_from_epoch": 8,
+          "final_effective_rank": 1.03,
+          "final_cosine": 0.9835
+        },
+        "fold4": {
+          "peak_epoch": 3,
+          "peak_effective_rank": 5.925,
+          "collapse_from_epoch": 6,
+          "final_effective_rank": 1.15,
+          "final_cosine": 0.9214
+        }
+      },
+      "R5_best_epoch_versus_collapse": {
+        "fold0": {
+          "best_epoch": 16,
+          "rank_at_best": 4.995,
+          "collapse_from": 18,
+          "best_is_before_collapse": true
+        },
+        "fold1": {
+          "best_epoch": 13,
+          "rank_at_best": 1.03,
+          "collapse_from": 3,
+          "best_is_before_collapse": false
+        },
+        "fold2": {
+          "best_epoch": 8,
+          "rank_at_best": 1.105,
+          "collapse_from": 3,
+          "best_is_before_collapse": false
+        },
+        "fold3": {
+          "best_epoch": 9,
+          "rank_at_best": 1.134,
+          "collapse_from": 8,
+          "best_is_before_collapse": false
+        },
+        "fold4": {
+          "best_epoch": 1,
+          "rank_at_best": 3.379,
+          "collapse_from": 6,
+          "best_is_before_collapse": true
+        }
+      },
+      "gram_loss_and_effective_rank_are_anti_correlated_in_time": {
+        "fold0_epoch3": {
+          "gram": 0.5893,
+          "effective_rank": 1.05,
+          "cosine": 0.9726
+        },
+        "fold0_epoch16": {
+          "gram": 0.5285,
+          "effective_rank": 4.995,
+          "cosine": 0.1354
+        },
+        "fold0_epoch18": {
+          "gram": 0.9061,
+          "effective_rank": 1.163,
+          "cosine": 0.9142
+        },
+        "fold4_epoch3": {
+          "gram": 0.3944,
+          "effective_rank": 5.925,
+          "cosine": 0.1273
+        },
+        "fold4_epoch6": {
+          "gram": 0.9518,
+          "effective_rank": 1.077,
+          "cosine": 0.9584
+        }
+      },
+      "S0_never_collapses_because_its_gram_weight_is_zero": {
+        "fold0_S0_first_epoch": {
+          "effective_rank": 1.015,
+          "cosine": 0.992,
+          "gram_loss": 0.0
+        },
+        "fold0_S0_epoch30": {
+          "effective_rank": 1.057,
+          "cosine": 0.9686,
+          "gram_loss": 0.0
+        },
+        "fold3_S0_epoch30": {
+          "effective_rank": 1.017,
+          "cosine": 0.9902,
+          "gram_loss": 0.0
+        },
+        "note": "S0 is born collapsed and stays collapsed; the Gram objective is what un-collapses the slots temporarily and then re-collapses them."
+      },
+      "gradient_spikes_do_not_explain_the_bimodality": {
+        "fold0": {
+          "S0_max_core_gradient_norm": 29500000000.0,
+          "S0_steps_above_1e4": 15,
+          "R5_max_core_gradient_norm": 13600000.0,
+          "R5_steps_above_1e4": 6
+        },
+        "fold1": {
+          "S0_max_core_gradient_norm": 106000000.0,
+          "S0_steps_above_1e4": 4,
+          "R5_max_core_gradient_norm": 5910000000.0,
+          "R5_steps_above_1e4": 12
+        },
+        "fold4": {
+          "S0_max_core_gradient_norm": 449000000.0,
+          "S0_steps_above_1e4": 9,
+          "R5_max_core_gradient_norm": 517000000.0,
+          "R5_steps_above_1e4": 11
+        },
+        "note": "Large gradient spikes occur in every arm including the baseline and do not coincide with the collapse transition, so they are a separate training-stability observation, not the cause of the bimodality."
+      },
+      "all_arm_effective_rank_at_best_epoch": {
+        "S0": [
+          1.067,
+          1.009,
+          1.082,
+          1.178,
+          1.019
+        ],
+        "R1": [
+          1.852,
+          2.369,
+          1.539,
+          1.342,
+          1.232
+        ],
+        "R2": [
+          1.249,
+          1.056,
+          1.357,
+          1.602,
+          1.756
+        ],
+        "R3": [
+          1.242,
+          1.606,
+          1.361,
+          1.516,
+          1.283
+        ],
+        "R4": [
+          1.209,
+          1.089,
+          1.165,
+          1.387,
+          1.3
+        ],
+        "R5": [
+          4.995,
+          1.03,
+          1.105,
+          1.134,
+          3.379
+        ],
+        "S1": [
+          1.015,
+          1.01,
+          1.392,
+          1.058,
+          1.1
+        ],
+        "S2": [
+          1.015,
+          1.011,
+          1.058,
+          1.176,
+          1.225
+        ],
+        "S3": [
+          1.015,
+          1.01,
+          1.126,
+          1.158,
+          1.045
+        ],
+        "S5": [
+          1.006,
+          1.0,
+          1.423,
+          1.097,
+          1.342
+        ]
+      },
+      "raw_receipt_sha256": {
+        "curve/fold0_S0": "54a51a0e2655a92f23272efd62ea43342d8fefbb888b7b33776fa7d37608f1a5",
+        "curve/fold0_R5": "b384be906f07cff130afec72dae1dca49666ef3800e30e2404a4d4a8b92bf4b6",
+        "curve/fold1_S0": "0d21bc3b391a2bef42924af3fbe44e75243f9ce6afa81fbca0b8adae5abf4ffc",
+        "curve/fold1_R5": "31d581f8651a15218f13bd3a606f6fc2bbe4897038bcaede41407a1ea2cd7b97",
+        "curve/fold2_S0": "fcc51d0765b713434f14a290b796bd0b0bb31d3770caa357692c4e22212c3051",
+        "curve/fold2_R5": "751f74ca7e308bb6af0dc4726ed37d9818ef4d1d71b3b56028837a0943a66c4e",
+        "curve/fold3_S0": "df22f279232df265c850ebb84871b5533955ce0162f777fc89f831f5169b40ef",
+        "curve/fold3_R5": "6c67708a9285a0c01680d85ba40180a6fbee43a81a5cfb42ee3a93f9fff92797",
+        "curve/fold4_S0": "d89566546b18697419ccf46c6a6b42d9d366c87adabe53992e3f8e54ea555f88",
+        "curve/fold4_R5": "53a32d318dc8ca581ab3bc2c7e652433bc17d72c32674f1fa5406f8ba0abeeb7"
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "checkpoints_or_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "the_bimodality_is_a_checkpoint_selection_artifact_not_a_fold_property": "R5's uncollapsed slot state exists in every fold; what differs is only how long it lasts and whether the validation-selected best checkpoint happens to fall inside it. Folds 0 and 4 keep the uncollapsed snapshot (rank 4.995 and 3.379), folds 1, 2 and 3 do not (rank 1.030, 1.105, 1.134). This is why the five-fold averages of R5's effective rank (2.651) and cosine (0.634) are not arm properties, and it is why the earlier interpretation 'R5 solves redundancy' was reading a mixture of two regimes.",
+      "the_gram_objective_is_transient_and_then_destructive": "The Gram term does push the slots apart, but only for a short window. On fold 0 the effective rank rises from 1.050 at epoch 3 to 4.995 at epoch 16 while the Gram loss falls to 0.53, and then between epoch 16 and 18 the Gram loss jumps to 0.906 and the effective rank falls back to 1.163. On fold 4 the collapse is even faster: the rank peaks at 5.925 at epoch 3 and is already 1.077 by epoch 6 with the Gram loss at 0.952. So the mechanism un-collapses the slots, the slots then re-converge, and the final state is collapsed in all five folds.",
+      "the_baseline_is_born_collapsed_and_the_intervention_is_what_moves_it": "S0's slots are already collapsed in the first epoch (effective rank 1.015-1.021, cosine 0.988-0.995) and stay that way, because the baseline carries gram_weight 0. The Gram objective is the only thing in the whole eleven-arm catalogue that ever produced an uncollapsed slot set, and it produces it only transiently. This is the strongest direct evidence in this repository that the original slot mechanism's redundancy is not spontaneously escapable by the survival objective, and that the intervention that does un-collapse it cannot hold the state.",
+      "gradient_instability_is_separate_and_affects_the_baseline_too": "Core gradient norms reach 1e8-1e10 in single steps in every arm including S0, with 2-15 steps above 1e4 per run out of about 1140. These spikes do not line up with the collapse transitions, so training instability is a separate observation from the bimodality, but it means the trajectory that leads to the collapse is also a trajectory in which the optimizer is occasionally taking enormous steps.",
+      "interpretation_boundary": "This is a read-only reconstruction of training trajectories from stored curves. It identifies when and in which direction the slot geometry moved, and it shows that the retained checkpoints sample two different regimes. It does not establish that the collapse is caused by the Gram term alone rather than by its interaction with the survival loss, it does not test whether a different learning rate or a scheduled Gram weight would hold the uncollapsed state, and it says nothing about patient harm, correction efficacy or generalization. All numbers are single-seed."
+    },
+    "gaps_reasons": "The curves give per-step losses and per-patient slot geometry but not the optimizer state or the attention maps at each step, so the exact mechanism of the collapse transition cannot be localized beyond the epoch boundary. The analysis is single-seed per fold, so the fold-dependent length of the uncollapsed window could itself be seed noise rather than a fold effect; distinguishing those requires a second seed, which was not run. The curves record the wsi and omic geometries separately and the omic space behaves differently (S0 omic effective rank is already 1.64 at the full budget and R5 omic stays collapsed at 1.119), which was not analysed in depth here. Whether the collapse can be held by a decaying Gram weight, a lower learning rate or gradient clipping is not tested, and the configuration locks gradient_clip_norm to null. Nothing here measures whether a held uncollapsed state would carry patient-specific content, which is the question the deletion probe asked and answered negatively for the two folds that did keep an uncollapsed snapshot.",
+    "next_action_user_inputs": "The mechanism is now identified, which converts an unexplained bimodality into a specific, testable engineering question: the Gram objective un-collapses the slots transiently and the collapse is permanent, so the candidate interventions are (a) a decaying or scheduled Gram weight, (b) gradient clipping, which the configuration currently locks to null, (c) a lower learning rate, or (d) an explicit anti-collapse constraint on the value paths instead of a Gram penalty. Any of these needs a new training run and therefore explicit authorization. Independently, the earlier negative results should be restated with the corrected reading: the redundancy-to-performance correlation and the deletion probe were measured on checkpoints that were collapsed in every arm, so they do not test what happens when the slots are genuinely spread out. If the intervention direction is kept, the diagnostics should be re-run on a checkpoint that provably holds the uncollapsed state for the whole run."
+  },
   "latest_annotated_roi_analysis_tool_20261029": {
     "recorded_at": "2026-10-29T17:34:43.963327+08:00",
     "route_task": "Original SlotSPE annotated tumor-region and pathway-token slot redundancy analysis, local implementation only",
@@ -6079,6 +6346,253 @@
     },
     "gaps_reasons": "No real reference artifacts here, so actual reuse audit, GPU memory, patient gradients and effectiveness remain unverified. Source best config names5fold; reuse inherits verified actual split hashes rather than silently claiming5fold_uni2h. New parameters are provisional; positive loss at exact symmetry need not yield escape gradients. No full repository suite claim.",
     "next_action_user_inputs": "Server safely pulls this delivery, reads handoff, runs --plan and --audit, reports actual split and reuse checks. After explicit authorization only: 20 new runs, BLCA/UNI2-h/fivefold/seed3/30epochs/4096patches/20evaluations, no baseline reruns or extra seeds."
+  },
+  "latest_oracle_positive_control_and_collapse_mechanism_20261030": {
+    "recorded_at": "2026-10-30T11:30:00+08:00",
+    "route_task": "SlotSPE / P7.3 / (i) omic-space geometry and step-level collapse mechanism read from the stored curves, (ii) an independent re-run of the deletion probe, and (iii) a synthetic positive control establishing whether the deletion oracle can detect patient-specific information at all",
+    "user_steering": "User authorized all previously listed follow-ups, including new training runs.",
+    "status": "completed_read_only_analysis_plus_oracle_validation_no_patient_specific_slot_information_established_and_the_oracle_is_proven_capable_of_detecting_it",
+    "completed_work": "Three read-only parts, all with 0 model forwards and 0 training runs. (1) The omic slot space was analysed from the stored curves and it behaves differently from the wsi space: under R5 the omic slots start uncollapsed (effective rank 2.209-4.230 in epoch 1) and in three of five folds they never collapse at all, so the best checkpoint holds an uncollapsed omic slot set in folds 2, 3 and 4 with effective rank 3.902, 3.677 and 4.112 and cosine 0.204, 0.282 and 0.227, against the baseline S0 which is collapsed in the omic space in every fold (effective rank 1.009-1.657). (2) The collapse mechanism was localized to the optimizer step rather than the epoch. Scanning the per-step slot geometry of R5, the effective rank drops from above 2 to below 1.5 within a single step in every fold, and the collapsing step follows a large gradient spike: fold 1 step 80 has gradient norm 4.475e+06 and the rank goes 3.769 to 1.510, fold 2 step 72 has 2.659e+06 and the rank goes 3.078 to 1.402, fold 3 step 267 has 1.234e+06 and the rank goes 4.096 to 1.510. In folds 0 and 4 the terminal collapse happened at a normal gradient magnitude, so the spike is a sufficient but not a necessary trigger. (3) The probe was re-run over the same 25 arm-fold combinations and reproduced the earlier numbers exactly, including the new finding that the folds whose checkpoints are genuinely uncollapsed show no deletion gap above the permutation null either: R5 omic fold 2 (rank 3.955) gives category gap-minus-null of -0.031, +0.048 and -0.012 across the three codebook sizes, R5 omic fold 3 (rank 3.688) gives -0.024, -0.003 and -0.040, R5 wsi fold 0 (rank 5.152) gives -0.001, +0.001 and +0.013, and R5 wsi fold 4 (rank 4.958) gives +0.002, -0.026 and +0.015. Not one of the twelve cells of those four uncollapsed checkpoints exceeds the null maximum. (4) A synthetic positive control was then added, scripts/check_slotspe_deletion_oracle_positive_control.py, because a negative result is only interpretable if the instrument works. Using the identical oracle, codebook, bucket structure and permutation null on data with known ground truth, the oracle detected a target that is an exact function of the code multiset: category gap 0.334 against a null mean of 0.039 at codebook size 4 and 0.105 against 0.058 at size 8, and MSE gap 1.003 against 0.066 and 0.317 against 0.096, all exceeding the null maximum. On the identical geometry with an independent target the oracle reported no gap above the null in any of the six cells (category and MSE at codebook sizes 4, 8 and 16), so the null is correctly calibrated. The dilution case in which only one of the eight slots carries the information was also detected at codebook sizes 4 and 8 (MSE gap 0.336 against 0.084 and 0.408 against 0.109).",
+    "paths_commit": {
+      "positive_control_script": "scripts/check_slotspe_deletion_oracle_positive_control.py",
+      "positive_control_output": "local_evidence/slot_deletion_oracle_positive_control_20261030",
+      "probe_v2_output": "local_evidence/redundancy_slot_deletion_probe_all_20261029_v2",
+      "probe_script": "scripts/check_slotspe_redundancy_slot_deletion_probe.py",
+      "curve_source": "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/folds/<f>/arms/<arm>/curve.json",
+      "note": "No patient artifact was staged. All synthetic data is generated in memory and written only under the ignored local_evidence directory."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, CPU only for the read-only parts; conda env trisurv (torch 2.10.0+cu128)",
+      "model_forwards": 0,
+      "training_runs": 0,
+      "optimizer_steps": 0,
+      "merge_conflict_resolved": "docs/PROGRESS.json carried an unresolved stash-pop conflict (upstream side held the ROI and SCM/SRO delivery entries, stashed side held the bimodality root-cause entry). The two sides had distinct top-level keys and differed on shared keys only in recorded_at and next_action, so the resolution took HEAD's full history, added the bimodality entry, and left the divergent bookkeeping keys to be rewritten by the entries themselves. No historical entry was deleted or rewritten.",
+      "probe_v2": {
+        "arm_fold_results": 25,
+        "evaluated_cells": 300,
+        "cells_exceeding_null_max": {
+          "S0": {
+            "wsi_category": "2/15",
+            "wsi_mse": "0/15",
+            "omic_category": "3/15",
+            "omic_mse": "1/15"
+          },
+          "R4": {
+            "wsi_category": "0/15",
+            "wsi_mse": "1/15",
+            "omic_category": "0/15",
+            "omic_mse": "1/15"
+          },
+          "R5": {
+            "wsi_category": "0/15",
+            "wsi_mse": "2/15",
+            "omic_category": "0/15",
+            "omic_mse": "0/15"
+          },
+          "R1": {
+            "wsi_category": "0/15",
+            "wsi_mse": "3/15",
+            "omic_category": "2/15",
+            "omic_mse": "0/15"
+          },
+          "R3": {
+            "wsi_category": "1/15",
+            "wsi_mse": "0/15",
+            "omic_category": "2/15",
+            "omic_mse": "2/15"
+          }
+        },
+        "reproduced_first_probe_exactly": true
+      },
+      "uncollapsed_checkpoints_still_show_no_gap": {
+        "R5_omic_fold2": {
+          "effective_rank": 3.955,
+          "cosine": 0.206,
+          "category_gap_minus_null": [
+            "-0.03130",
+            "+0.04831",
+            "-0.01204"
+          ],
+          "cells_above_null": 0
+        },
+        "R5_omic_fold3": {
+          "effective_rank": 3.688,
+          "cosine": 0.271,
+          "category_gap_minus_null": [
+            "-0.02443",
+            "-0.00339",
+            "-0.04009"
+          ],
+          "cells_above_null": 0
+        },
+        "R5_wsi_fold0": {
+          "effective_rank": 5.152,
+          "cosine": 0.126,
+          "category_gap_minus_null": [
+            "-0.00088",
+            "+0.00081",
+            "+0.01322"
+          ],
+          "cells_above_null": 0
+        },
+        "R5_wsi_fold4": {
+          "effective_rank": 4.958,
+          "cosine": 0.178,
+          "category_gap_minus_null": [
+            "+0.00151",
+            "-0.02573",
+            "+0.01463"
+          ],
+          "cells_above_null": 0
+        }
+      },
+      "step_level_collapse": {
+        "fold1": {
+          "step": 80,
+          "epoch": 3,
+          "rank_before": 3.769,
+          "rank_after": 1.51,
+          "gradient_norm_at_step": 4475000.0
+        },
+        "fold2": {
+          "step": 72,
+          "epoch": 2,
+          "rank_before": 3.078,
+          "rank_after": 1.402,
+          "gradient_norm_at_step": 2659000.0
+        },
+        "fold3": {
+          "step": 267,
+          "epoch": 8,
+          "rank_before": 4.096,
+          "rank_after": 1.51,
+          "gradient_norm_at_step": 1234000.0
+        },
+        "fold0": {
+          "step": 626,
+          "epoch": 17,
+          "rank_before": 2.381,
+          "rank_after": 1.506,
+          "gradient_norm_at_step": 34.4,
+          "note": "terminal collapse at a normal gradient magnitude"
+        },
+        "fold4": {
+          "step": 173,
+          "epoch": 5,
+          "rank_before": 1.839,
+          "rank_after": 1.46,
+          "gradient_norm_at_step": 29.3,
+          "note": "terminal collapse at a normal gradient magnitude"
+        }
+      },
+      "baseline_collapses_from_the_start": {
+        "fold2_S0": {
+          "irreversible_collapse_step": 0
+        },
+        "fold3_S0": {
+          "irreversible_collapse_step": 0
+        },
+        "fold0_S0": {
+          "irreversible_collapse_step": 534,
+          "epoch": 15
+        },
+        "fold1_S0": {
+          "irreversible_collapse_step": 741,
+          "epoch": 20
+        },
+        "fold4_S0": {
+          "irreversible_collapse_step": 908,
+          "epoch": 24
+        },
+        "R5_delay": {
+          "fold0": "epoch17",
+          "fold1": "epoch3",
+          "fold2": "epoch2",
+          "fold3": "epoch8",
+          "fold4": "epoch5"
+        }
+      },
+      "positive_control": {
+        "fully_informative_category": {
+          "cb4_gap": 0.333695,
+          "cb4_null_mean": 0.0390112,
+          "cb4_exceeds": true,
+          "cb8_gap": 0.10546,
+          "cb8_null_mean": 0.0580054,
+          "cb8_exceeds": true,
+          "cb16_gap": 0.0351582,
+          "cb16_null_mean": 0.10885,
+          "cb16_exceeds": false
+        },
+        "fully_informative_mse": {
+          "cb4_gap": 1.00255,
+          "cb4_null_mean": 0.0659273,
+          "cb4_exceeds": true,
+          "cb8_gap": 0.31703,
+          "cb8_null_mean": 0.0955261,
+          "cb8_exceeds": true,
+          "cb16_gap": 0.112919,
+          "cb16_null_mean": 0.304738,
+          "cb16_exceeds": false
+        },
+        "uninformative_category": {
+          "cb4_gap": 0.0463593,
+          "cb4_null_mean": 0.0422473,
+          "cb4_exceeds": false,
+          "cb8_gap": 0.0563582,
+          "cb8_null_mean": 0.0544223,
+          "cb8_exceeds": false,
+          "cb16_gap": 0.105377,
+          "cb16_null_mean": 0.116378,
+          "cb16_exceeds": false
+        },
+        "uninformative_mse": {
+          "cb4_gap": 0.181604,
+          "cb4_null_mean": 0.177551,
+          "cb4_exceeds": false,
+          "cb8_gap": 0.252498,
+          "cb8_null_mean": 0.23687,
+          "cb8_exceeds": false,
+          "cb16_gap": 0.88905,
+          "cb16_null_mean": 0.886054,
+          "cb16_exceeds": false
+        },
+        "one_slot_informative_mse": {
+          "cb4_gap": 0.336066,
+          "cb4_null_mean": 0.083779,
+          "cb4_exceeds": true,
+          "cb8_gap": 0.40776,
+          "cb8_null_mean": 0.109013,
+          "cb8_exceeds": true,
+          "cb16_gap": 0.120803,
+          "cb16_null_mean": 0.338647,
+          "cb16_exceeds": false
+        },
+        "null_is_calibrated": true,
+        "note": "The codebook size 16 case is the dilution limit: with 16 codes the multiset of 8 slots no longer separates the groups well enough, so the gap falls back inside the null. This is a sensitivity limit of the instrument, not a failure."
+      },
+      "raw_receipt_sha256": {
+        "positive_control_summary": "62f38dd8d9ee202c90686909b288dcc0db85ceae16c97c829e8803bbaf7b56db",
+        "probe_v2_summary": "0a002e1c2bf3eee1662f93b29c00e5a610970831ce49554109c8d17e99ae7b03"
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "checkpoints_or_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "the_negative_result_is_now_unambiguous_because_the_instrument_is_valid": "The oracle detects a synthetic target that is an exact function of the code multiset, with a gap far above its permutation null, and reports no gap above the null when the target is independent of the slots. It therefore has the power to detect patient-specific slot content when that content exists in the code multiset, and it does not report it for any of the twelve cells of the four genuinely uncollapsed checkpoints. The earlier concern that the negative result might be an instrument failure is removed: on this cohort the slots do not carry patient-specific content in their code multiset, and the uncollapsed checkpoints are the strongest evidence because they are the ones where the slots really are spread out.",
+      "spreading_the_slots_does_not_create_information": "R5's omic space holds an uncollapsed slot set in three folds and its wsi space in two, so genuinely spread slot sets exist in this cohort and have now been measured directly. None of them shows a deletion gap above the null. Combined with the 55-arm result that lower redundancy goes with lower performance, the evidence is consistent with the redundancy and the content information being separate axes, and with the interventions moving the first without moving the second.",
+      "the_collapse_is_an_optimizer_step_event_not_an_epoch_event": "The effective rank falls from above 2 to below 1.5 within a single optimizer step, and in three of five folds the collapsing step is preceded by a gradient spike of 1e6-4.5e6 while the median gradient norm in the same run is about 30-50. In the remaining two folds the collapse happens at a normal gradient magnitude, so the spike is a sufficient trigger but not a necessary one. The Gram objective delays the collapse relative to the baseline (R5 survives to epoch 2-17, the baseline in folds 2 and 3 is already collapsed at its first step) but does not prevent it.",
+      "the_baseline_has_no_uncollapsed_phase_at_all": "S0's wsi effective rank is 1.015-1.021 in its very first epoch and never exceeds 1.77 across 1140 steps in any fold. The Gram objective is the only element of the eleven-arm catalogue that ever produced an uncollapsed slot set. This is direct evidence that the original slot mechanism's redundancy is not spontaneously escapable under the survival objective.",
+      "interpretation_boundary": "The positive control uses synthetic data with a designed cluster structure, so it establishes the oracle's detection power under a favourable structure and calibrated null; it does not establish what fraction of real signal the oracle would recover. The codebook is fitted on the evaluated population in the read-only probe, so the absolute gaps are weaker than a training-fold codebook would give. The content target is a feature proxy rather than a biological label. All numbers are single-seed. Nothing here establishes patient harm, correction efficacy, population generalization, or that the slots carry no information in any other encoding."
+    },
+    "gaps_reasons": "The codebook size 16 case shows the instrument loses sensitivity when the codebook is too fine for the cohort, so the negative result is strongest at codebook sizes 2 to 8 and weaker at 16; the probe reported sizes 2, 4 and 8, so it used the sensitive range. The probe still fits the codebook on the evaluated population rather than on the training fold, which weakens the absolute gaps; a stricter version would need the training fold's slots, which the redundancy queue did not store. Only repeat 0 was probed, so evaluation randomness in the slot tensors is not characterized. The omic space was only analysed at the level of the recorded geometry and the probe; the reason the omic space can hold an uncollapsed slot set while the wsi space collapses was not localized. Whether an intervention that prevents the collapse would change the deletion result is not known, because no such checkpoint exists yet. The user authorized new training runs, but no anti-collapse arm has been implemented and no anti-collapse queue has been run, so the authorized budget has not been spent.",
+    "next_action_user_inputs": "The read-only and validation stages are complete and the oracle is proven capable, so the remaining work is the anti-collapse intervention that the user's authorization covers. The concrete next step is to implement an anti-collapse arm in the redundancy best engine and run it, because the mechanism is now specific: the collapse is an optimizer step event, so the candidate interventions are a decaying or scheduled Gram weight, gradient clipping which the configuration currently locks to null, a lower learning rate, or an explicit constraint on the value paths. The queue must then re-run the deletion probe on the resulting checkpoint, since the current negative result was measured on checkpoints that were collapsed in every arm and therefore does not test what happens when the slots stay spread out for the whole run. Two decisions remain for the user: whether to test one intervention or several, and whether to run it on all five folds at the full 30/4096/20 budget or on a cheaper subset first."
   },
   "latest_crossview_full_budget_and_deletion_20261030": {
     "recorded_at": "2026-10-30T12:05:00+08:00",
@@ -6451,5 +6965,55 @@
     },
     "gaps_reasons": "One fold and one seed, so no arm difference can be separated from fold and seed variance. Twenty evaluation repeats of one trained model are not independent training runs, and the 0.041 to 0.048 C-index standard deviation is far larger than the 0.014 gap between the V2 arms. The cross-view target remains a feature proxy rather than a biological label, and at full budget the own prediction, the training constant and the donor are numerically indistinguishable, so this measurement cannot show patient-specific content recovery. The deletion oracle quantizes into at most eight codes, so it cannot resolve continuous-slot uniqueness, and at codebook size 8 the patient multiset is now unique for most patients, which makes those cells structurally uninterpretable rather than informative. The B0_native arm being near or below chance at 0.4513 means the native collapse is not a clean control for the V2 arms at this budget. No multi-seed or multi-fold training was performed, so the arm ordering and the C-index drop are both unresolved. This entry is also independent of the later collapse-mechanism analysis in this file, which located the collapse at the optimizer step in the redundancy queue; that analysis concerns a different queue and was not re-run for this cross-view queue.",
     "next_action_user_inputs": "The full-budget fold answered the question it was asked: the geometry is budget dependent, and the answer is more nuanced than expected, because the V2 content space opens at full budget while the native and private spaces in the trained arm become more collapsed and the cross-view target only ties the constant. Before spending more GPU time the choice is between (a) repeating the same full-budget fold on two more folds and a second seed, which is the only way to separate the arm differences from fold and seed noise given the 0.041 to 0.048 C-index standard deviation, (b) a capacity scan at fixed budget, which tests whether the collapse of the native and private spaces is a capacity or optimization problem rather than an architectural one, or (c) stopping the reconstruction line here and recording that the cross-view target is not recoverable from the slot content at any budget tested. Recommend (a) first, because the current single-fold C-index ordering and the geometry split between the content space and the collapsed spaces are both single observations, and the geometry result in particular says the reconstruction line is not obviously dead. The oracle population stays the held-out fold."
+  },
+  "latest_slotspe_scm_sro_independent_verification_20261030": {
+    "recorded_at": "2026-10-30T10:35:00+08:00",
+    "route_task": "SlotSPE / SCM+SRO delivery 26caf04 / independent read-only verification on this machine: pull reconciliation, hash and test verification, real reuse audit, loss-math re-derivation, guard-rail probing, and split-identity determination. No patient training, no patient inference, no server execution.",
+    "status": "completed_independent_audit_delivery_verified_reuse_audit_passes_locally_one_pre_existing_cuda_test_failure",
+    "completed_work": "Fetched origin/main and reconciled the local tree, which was two commits behind with uncommitted local work. The stash-pop produced one conflict in docs/PROGRESS.json; both sides appended distinct top-level keys and differed only on the shared bookkeeping keys recorded_at and next_action, so it was resolved programmatically by taking the upstream history and inserting the local entry, preserving every key from all three versions and changing no historical entry. Independently re-verified the delivery: all 11 new source hashes and all 11 protected original-source hashes in code_validation_receipt.json match byte for byte; the 94 new delivery tests pass and the 116-test delivery set passes, reproducing the claimed counts exactly; the delivery manifest is clean at origin/main with 499 covered files. The reference queue is present on this machine, so the reuse audit was executed for real rather than stubbed: it reports status reuse_verified with 15 reused arm-fold results, 67 completed reference stages, 15 initial-file hash verifications, 8 protected source files, 0 checkpoint deserializations, 0 patient arrays parsed and 0 model forwards, and the reference tree was byte-unchanged by the audit. All five folds of S0, R4 and R3 carry best.pt, last.pt, 20 raw validation repeats, epoch validation, curve, diagnostics and predictions. Re-derived the two new losses from their definitions rather than trusting the code: SCM reproduces h(x,m)=[max(0,x-m)/(1-m)]^2 exactly at cosines 0.50/0.85/0.89/0.90/0.95/1.00, is zero for orthogonal and antipodal pairs, is invariant to positive slot rescaling, and its warmup factor is exactly 0.2/0.4/0.6/0.8/1.0/1.0/1.0; SRO reproduces the Bhattacharyya coefficient on a hand-computed example (measured 0.707177 versus the exact 0.707107, the residual being the eps=1e-8 smoothing), gives loss 1 for identical readings and 0 for disjoint readings, excludes padded tokens from the loss only, and reports single-real-token cases separately as graph-zero rather than as success. Probed the guard rails: the reuse audit refuses a wrong epoch budget, a wrong seed, the queue refuses a CPU device, an output nested inside the reference, an output outside local_evidence, and a changed R4 content weight, in every case by refusing rather than by falling back to retraining a baseline.",
+    "paths_commit": {
+      "upstream_commit": "26caf0405a01b5ce31693c653180c45203207ae8",
+      "base_before_pull": "3476d16",
+      "merged_head_after_pull": "26caf04",
+      "local_entry_preserved": "docs/PROGRESS.json -> latest_slot_geometry_bimodality_root_cause_20261029",
+      "audited_files": [
+        "configs/slotspe_diversity_queue.json",
+        "scripts/run_slotspe_diversity.py",
+        "slotspe_proof/slot_diversity_losses.py",
+        "slotspe_proof/diversity_engine.py",
+        "slotspe_proof/diversity_reuse.py",
+        "slotspe_proof/diversity_queue.py",
+        "docs/research/slotspe_diversity_20261029/参数与服务器交接.txt",
+        "docs/research/slotspe_diversity_20261029/code_validation_receipt.json"
+      ],
+      "note": "No file was modified by this verification. The delivery manifest failure seen in the working tree is caused by two unpublished files created by a concurrent session, not by the delivery; origin/main itself checks clean."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "execution_host": "local machine /data1/SlotSPE, CPU only for all verification steps; torch 2.6.0+cu124 present with CUDA visible but unusable for this GPU",
+      "model_forwards": 0,
+      "training_runs": 0,
+      "optimizer_steps": 0,
+      "patient_training_runs": 0,
+      "patient_inference_runs": 0,
+      "patient_arrays_parsed": 0,
+      "checkpoint_deserializations": 0,
+      "delivery_tests_passed": 116,
+      "new_delivery_tests_passed": 94,
+      "full_repository_suite": "819 passed, 1 failed, 2 skipped",
+      "failing_test": "tests/test_crossview_reconstruction.py::test_cuda_auxiliary_preserves_cpu_and_current_device_rng",
+      "failure_is_pre_existing": true,
+      "failure_cause": "RTX 5090 is sm_120 and the installed torch cu124 supports up to sm_90, so no CUDA kernel image is available. The same test fails identically at base commit 3476d16, so this is an environment limit and not a regression from the delivery.",
+      "skipped_tests": "2 ROI tests skipped because shapely is not installed",
+      "protected_original_files_byte_equal": 11,
+      "original_source_history": "git log --all -- third_party/SlotSPE shows a single import commit, so the original source has never been edited",
+      "reuse_audit_status": "reuse_verified",
+      "reused_arm_fold_results": 15,
+      "reference_tree_unchanged_by_audit": true,
+      "delivery_manifest_at_origin_main": "ok true, 499 covered files"
+    },
+    "gaps_reasons": "The SCM/SRO effectiveness question is entirely unmeasured. Every check above is code, synthetic or metadata-level; none of it says that either loss lowers slot redundancy or improves survival prediction, and the new arms have never been trained. Two mechanism facts constrain what the 20 runs can show, and both are already honestly recorded in the handoff but are confirmed here by direct measurement. First, both losses have positive value with exactly zero gradient at an exactly symmetric collapse, which was measured directly: SCM at 8 identical slots gives loss 1.0 with gradient norm 0.0, and SRO on identical readings gives loss 1.0 with gradient norm 0.0, while a perturbation of 1e-4 restores a small but nonzero gradient of about 4e-4. So the losses cannot escape a perfectly symmetric collapse and only act on the near-symmetry that the optimizer actually produces. Second, the SCM margin of 0.90 is well matched to the observed geometry: on the stored final-epoch curves, 87.1 percent of S0 and 85.8 percent of R4 slot pairs already exceed cosine 0.90, so the penalty will be active on most pairs rather than silently inactive. The reuse audit is metadata and byte-hash compatibility only. It does not hash the prepared cache contents, does not deserialize checkpoints, does not parse patient arrays and does not confirm that the reference training itself was sound; the receipt reports cache_content_hashes_verified false and best_checkpoint_bytes_hashed false by design. The full 116-test delivery set and the 94 new tests pass, but the complete repository suite was run only on this machine with its own CUDA limitation, and the delivery machine's 4 historical failures were not reproduced here except that this machine has 8.5 TiB free instead of the 19.1 GiB the delivery machine had. Finally, a concurrent session is actively writing to this same working tree: it created slotspe_proof/redundancy_anticollapse_engine.py, slotspe_proof/redundancy_anticollapse_multifold.py, configs/slotspe_anticollapse_multifold_queue.json and tests/test_slotspe_redundancy_anticollapse_engine.py during this audit, and it independently appended its own entry to docs/PROGRESS.json. Those files are untracked, are not part of the SCM/SRO delivery, are not covered by DELIVERY_MANIFEST.json and were not audited here; the delivery manifest check fails on the working tree for exactly that reason, while origin/main itself checks clean.",
+    "next_action_user_inputs": "Server: pull 26caf04, run --plan and --audit, and report the actual splits_dir together with the audit result. The split identity is now settled and should be reported as such: the completed best-queue reference and its prepared manifest both use splits_dir 5fold, not 5fold_uni2h, and the 15 reused S0/R4/R3 results were produced under 5fold. This is not merely a naming difference, because the two split families are materially different cohorts: per fold only 12 to 17 of the 76 validation patients are shared, and the 5fold cohort holds 381 patients against 380 for 5fold_uni2h. The AGENTS.md default of splits/5fold_uni2h therefore does not describe the reused baselines, and the new arms must inherit 5fold for the comparison to be a controlled one; the new entry deliberately inherits the verified reference splits instead of guessing from the encoder name. The AGENTS.md queue default should be corrected to say splits/5fold for this line, because the original loader hardcodes the 5fold directory in third_party/SlotSPE/dataset/dataset_survival.py _load_split and the splits_dir setting never reaches the cohort selection; the already recorded fold0 mislabel finding explains why the recorded split_csv said 5fold_uni2h while the executed cohort came from 5fold. Training still waits for explicit authorization. When it is given, the 20 runs should be read against the measured pre-registered expectation that both losses are active on the observed geometry but cannot escape an exactly symmetric collapse, and the four uncollapsed checkpoints already known from R5 folds 0 and 4 give the natural comparison for whether a loss changes anything at all."
   }
 }

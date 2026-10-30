@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-10-30T09:52:07.286996+08:00",
-  "base_commit_before_delivery": "6527110a49adbec58536a99a9a3e93cc15765ee7",
+  "recorded_at": "2026-10-30T10:27:03.602970+08:00",
+  "base_commit_before_delivery": "cad4bb3492a3c71bb7d23da7a3ef45f27995fc54",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 499,
-  "repository_file_count_including_manifest": 500,
+  "covered_file_count": 504,
+  "repository_file_count_including_manifest": 505,
   "patient_data_included": false,
   "files": [
     {
@@ -26,8 +26,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 2319,
-      "sha256": "5f4c1fdcec19e08f1e397d9354cd5a2dd12e90c0543a776fb9e5cf1ea4aad69f"
+      "bytes": 2949,
+      "sha256": "1da93434e0ceb9e964ab33626c005e2e65f115a5fcef9bf818d5c42ebd2ee8ea"
     },
     {
       "path": "NOTICE.md",
@@ -41,8 +41,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 21429,
-      "sha256": "f121b746bc8147fa1a66907137f91cd5ea3eacd65860739af9af764de8ae4492"
+      "bytes": 22014,
+      "sha256": "5035a2277dfe21445a25229d976618127d6676205ce64f5798003bee008bcc97"
+    },
+    {
+      "path": "configs/slotspe_anticollapse_multifold_queue.json",
+      "bytes": 6010,
+      "sha256": "cde60c85a1f270a0c0087cba95228b1f3b925de8ebf03d49267815a139c3d466"
     },
     {
       "path": "configs/slotspe_attribution_server.json",
@@ -146,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 437271,
-      "sha256": "b6f077efc238afaebc4806985396ac36b4b70553fbfef4919500491827b560c7"
+      "bytes": 499143,
+      "sha256": "c1e9f7d6a95cf0aa045e8b3879b8116b67ddd70eddcd111d65f4a450634a9f2d"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -1595,6 +1600,11 @@
       "sha256": "3dc33fda8d91137dc9300d4e12849148eee6beeb6048cc2a0d06adcbc4f2b7ce"
     },
     {
+      "path": "scripts/check_slotspe_deletion_oracle_positive_control.py",
+      "bytes": 10483,
+      "sha256": "ae9680bd114f536c666bd565d40e476e81ced094b4fa5120d839ccbd82f80357"
+    },
+    {
       "path": "scripts/check_slotspe_direct_diversity.py",
       "bytes": 30226,
       "sha256": "268d31bc7d631ec086ec640787cd3f7c24ff09611e1822f8517320eff04b5b49"
@@ -2085,6 +2095,16 @@
       "sha256": "0ff71ba56d076d94eb5b22dea097c4d5f33c50d66ee6dda7a6228403b639354d"
     },
     {
+      "path": "slotspe_proof/redundancy_anticollapse_engine.py",
+      "bytes": 22071,
+      "sha256": "9573982643c3382efe65f2400b243d32c5f1866c261994c751f1f7e4f86fe402"
+    },
+    {
+      "path": "slotspe_proof/redundancy_anticollapse_multifold.py",
+      "bytes": 21421,
+      "sha256": "235e949372b4eef3ece023c445721da8fa016407b9e5e2b8f416a68649e7643a"
+    },
+    {
       "path": "slotspe_proof/redundancy_best_engine.py",
       "bytes": 19555,
       "sha256": "b2db18df729f7bc3145ee7ff4a4f4ec249632c9ae52810898555d1f3e1f285b4"
@@ -2378,6 +2398,11 @@
       "path": "tests/test_slotspe_prototype_assignment.py",
       "bytes": 6030,
       "sha256": "56b376be56b11a115b39fb68910fafa51b5faf9b2d577da973d65b474958434a"
+    },
+    {
+      "path": "tests/test_slotspe_redundancy_anticollapse_engine.py",
+      "bytes": 11990,
+      "sha256": "5004afd8b2a2ebc81dfee3e51bfe95e7dcb7ed80e1ea27ac434bac87bd359a78"
     },
     {
       "path": "tests/test_slotspe_redundancy_best_engine.py",
