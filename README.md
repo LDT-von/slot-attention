@@ -47,10 +47,6 @@ python -B scripts/check_delivery_manifest.py --check --require-tracked
 
 2026-10-27后续已实现独立的V2全槽跨视图候选、四臂计划和经验删槽诊断；56项生成输入检查、9项数学检查通过，包含四臂小尺寸假样本各更新一步并保存、重载及评估。该实现保持原预测路径，目标含参考锚的比例及加权特征一阶矩；验证折新目标诊断比较同患者、训练折常数和错配患者。患者实验和服务器执行均为0；[模块、命令和限制](docs/research/slotspe_eight_issues_20261019/跨视图模块合成验收与服务器交接_20261027.txt)。前面“候选未实现”描述的是当时理论阶段，不是当前状态。
 
-2026-10-30 V2跨视图已在**满预算**下跑完并回报（30轮/4096 patch/20次评估/fold0/seed3，四臂B0_native、V2_separate、V2_crossview_compute、V2_crossview_train，303训/77验）。**该队列实际划分同样是 `5fold`**：其prepared manifest的77名验证患者与`splits/5fold/blca/fold_0.csv`完全相等，与`5fold_uni2h`只重叠15/77，目录名里的`uni2h`是误标。但本队列用**固定末轮权重**，而SCM/SRO队列及其复用的S0/R4/R3基线用**每轮最优权重**，两者C-index不可直接比较。读回执时发现**V2_separate与V2_crossview_compute是逐位相同的重复臂**：eval_repeats.json的SHA256相同、20次评估C-index全等、1540条逐患者risk全等、1485个core主干张量全等（虽参数量33443534对33568598不同），30条训练曲线唯一差别只是诊断字段view_loss_observed/view_cases。该臂按设计view_loss_weight=0.0即不接优化器，故非缺陷，但它**不是独立对照**，其"一致"是恒等式而非复现。四臂C-index：B0_native 0.4513±0.0407、V2_separate与V2_crossview_compute 0.6103±0.0481、V2_crossview_train 0.6241±0.0419；单折单种子，重复标准差远大于臂间0.014的差。删槽探针显示内容空间在满预算下张开（有效秩2.28/2.70、余弦0.291/0.465），而native与private空间更塌缩。详见 [PROGRESS](docs/PROGRESS.json) 的 `latest_crossview_full_budget_and_deletion_20261030`、`latest_crossview_split_identity_correction_20261030` 与 `latest_cross_queue_reconciliation_20261030`。
-
-2026-10-30另有**反塌缩队列**已启动但尚未产出结果：A0_clip与A1_clip_decay两臂×五折×seed3共10次训练，manifest显示仍停在prepare阶段、已完成0/10，并保留两次abandoned尝试。其A0仅加梯度裁剪、A1再加Gram权重衰减，用于检验能否**保持**槽几何不塌缩；按其自身边界，即使跑通也不能推出槽内含患者特异内容，那需要再跑删槽探针。
-
 2026-10-26起按用户要求增加**数学前置门槛**：先证明具体结论及其假设，证明不成立则收紧或放弃。内容匹配的条件性分离与频率目标恢复界已推导；接通ST的普遍下降命题被反例否定，条件门控相对完整原版的严格优势未建立。[完整数学审查](docs/research/slotspe_eight_issues_20261019/theory_20261026/结论与验收.txt)。以下既有实现及协议保留，本轮不触发患者执行或新门控实现。
 
 ## 当前实验路线
