@@ -7424,5 +7424,118 @@
     },
     "gaps_reasons": "The ratio analysis distinguishes instrument saturation from absent information using the stored full and drop losses, but it does not establish the bucket fragmentation at which the real data would have resolved the information, because that would require re-running the oracle on the same slots at codebook sizes whose drop side stays coarse, which was not done here. The positive control that demonstrates saturation uses a synthetic cluster-pair structure and not real slot geometry, so the saturation threshold it exhibits is not directly transferable to the real checkpoints. The reclassification therefore states what the measurement cannot conclude and does not claim the opposite. The cross-view predictability result remains limited to one fold, one seed and 77 patients, with a feature-proxy target. The checkpoint-policy difference means the historical best-queue numbers remain usable only as a same-queue descriptive reference and not as a comparison baseline for an improvement claim. The user's request that the executing side record the configured split path, the actually loaded path and the actual file hash and error on a mismatch is recorded here as a requirement for the execution side; this window did not implement it, because it would change the prepared-manifest writer that other running work depends on.",
     "next_action_user_inputs": "This window records no new training, no new queue and no multi-fold, multi-seed or patient run. The required follow-ups are, first, on the execution side, to record the configured split path, the actually loaded path and the actual file hash for every run, to raise an explicit error when they disagree, and to keep the original manifest of the completed runs unchanged with the correction explained by a record rather than by rewriting the historical artifact; the cross-view prepared manifest stays as it is and is explained by latest_crossview_split_identity_correction_20261030. Second, to treat this window's deletion result as a non-detection rather than as a demonstration of absent information, and to let the anti-collapse checkpoints and their receipts decide whether the diagnostic is re-run at all, since the new queue already selects the 5fold family correctly and the re-run would only be meaningful if the slot geometry there is materially different. Third, to use the cross-view predictability measurement, not the deletion oracle, as this window's primary evidence, because it is not subject to the table-saturation limitation. The anti-collapse configuration in commit c51978b records the queue as authorized and in the preparation stage; this window did not verify that execution and does not request it."
+  },
+  "latest_anticollapse_queue_running_20261030": {
+    "recorded_at": "2026-10-30T03:30:00+08:00",
+    "route_task": "SlotSPE / P7.3 / anti-collapse queue: launch, cache reuse, scheduler repairs and first-epoch verification",
+    "status": "queue_running_training_verified_healthy_in_fold0_and_fold1",
+    "completed_work": "The authorized anti-collapse queue is running on two RTX 5090 GPUs with four concurrent training stages. The preparation stage cached the 380-patient BLCA cohort under the declared 4096-patch budget and verified the five fold splits, giving fold sizes of 303/77, 305/75, 304/76, 304/76 and 304/76 with one excluded patient per fold. The ten training runs (two arms on five folds) are now in progress, with fold 0 and fold 1 running A0_clip and A1_clip_decay concurrently. Training is verified healthy from the stored curves: in fold 0 arm A0_clip the survival loss falls from 1.148 at the first batch to 0.674 at batch 24 and 0.923 at batch 40, the pre-clip core gradient norm sits at 39.4, 43.5 and 46.8 exactly in the range predicted from the completed queue's median of 30-50, and the post-clip norm is exactly 1.0 on every step, confirming that the intervention reaches the optimizer as designed. The slot geometry under the clip starts collapsed and is rising rather than falling: the wsi effective rank goes 1.134, 1.176 then 1.491 over the first epoch while the cosine falls 0.931, 0.912 then 0.805, and the omic effective rank is 2.772. This is the opposite of the completed queue's fold 0 arm R5, whose first epoch fell to rank 1.050 by epoch 3.",
+    "paths_commit": {
+      "engine": "slotspe_proof/redundancy_anticollapse_engine.py",
+      "queue_runner": "slotspe_proof/redundancy_anticollapse_multifold.py",
+      "queue_config": "configs/slotspe_anticollapse_multifold_queue.json",
+      "tests": "tests/test_slotspe_redundancy_anticollapse_engine.py",
+      "output_root": "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01",
+      "preserved_attempts": [
+        "local_evidence/anticollapse_abandoned_firstattempt_20261030_0229",
+        "local_evidence/anticollapse_abandoned_attempt2_20261030_0340",
+        "local_evidence/anticollapse_abandoned_attempt3_20261030_0355"
+      ],
+      "note": "The abandoned attempts were preserved rather than deleted, per the repository rule that forbids deleting archives. Attempt 3's verified 380-patient preparation was reused by the final run instead of rebuilding it."
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, 2x NVIDIA GeForce RTX 5090 (32 GB each), conda env trisurv (torch 2.10.0+cu128)",
+      "model_forwards": "in progress; 4 concurrent training stages",
+      "training_runs": "in progress; 10 planned, 4 running",
+      "optimizer_steps": "in progress; 1140 steps per arm",
+      "preparation": {
+        "patients_cached": 380,
+        "fold_sizes": {
+          "fold0": [
+            303,
+            77
+          ],
+          "fold1": [
+            305,
+            75
+          ],
+          "fold2": [
+            304,
+            76
+          ],
+          "fold3": [
+            304,
+            76
+          ],
+          "fold4": [
+            304,
+            76
+          ]
+        },
+        "excluded_per_fold": 1
+      },
+      "scheduler_defects_found_and_fixed_before_training": [
+        "The wave loop's exit condition was inverted, so no stage was ever spawned; the shared scheduler is now used with only the spawn function overridden.",
+        "source_root was relative and the patient preparation requires an absolute server path; the config now pins the absolute path.",
+        "model.parameters() is a generator and was consumed twice, so the post-clip gradient norm read back as unchanged; the parameters are now materialized once before clipping.",
+        "The shared dependency helper names the eleven completed arms, so a fold summary in this queue could never become eligible; this queue now installs its own dependency rule for the duration of each wave.",
+        "The shared stage-memory helper has no entry for the new arm names, so it fell back to the conservative 8.9 GiB default; the measured R5 peak of 2.09 GiB is now used, which is a scheduling input only.",
+        "The queue's nonempty-output and partial-stage-folder guards rejected a complete, verifiable preparation; both guards now recognize a preparation whose manifest is present, and the preparation is still verified against the input hashes before reuse."
+      ],
+      "unit_tests": {
+        "anti_collapse_engine": "11 passed",
+        "full_suite": "822 passed, 2 skipped, 1 warning in 157.71s"
+      },
+      "live_training_evidence": {
+        "fold0_A0_clip_curve_rows_at_first_check": 13,
+        "fold0_A1_clip_decay_curve_rows_at_first_check": 13,
+        "fold1_A0_clip_curve_rows_at_first_check": 13,
+        "fold1_A1_clip_decay_curve_rows_at_first_check": 13,
+        "fold0_A0_clip_epoch1_survival_loss_by_batch": {
+          "batch0": 1.148,
+          "batch24": 0.674,
+          "batch32": 1.103,
+          "batch40": 0.923
+        },
+        "fold0_A0_clip_pre_clip_gradient_norm": [
+          39.412,
+          43.543,
+          46.833
+        ],
+        "fold0_A0_clip_post_clip_gradient_norm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "fold0_A0_clip_wsi_effective_rank": [
+          1.134,
+          1.176,
+          1.491
+        ],
+        "fold0_A0_clip_wsi_cosine": [
+          0.9309,
+          0.9124,
+          0.8051
+        ],
+        "fold0_A0_clip_omic_effective_rank": 2.772,
+        "epoch1_validation_recorded": false
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_crossview_modules_modified": false,
+      "completed_queue_files_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "the_clip_is_reaching_the_optimizer_as_designed": "Every recorded training step shows a pre-clip core gradient norm of 39-47 and a post-clip norm of exactly 1.0, which is what the intervention is supposed to do and is directly readable from the stored curve.",
+      "the_first_epoch_geometry_is_early_and_does_not_yet_answer_the_question": "The wsi effective rank is rising during epoch 1 rather than falling, which is the first sign that the collapse may be delayed, but this is 13 of 1140 steps. The completed queue's own uncollapsed phase took 1 to 3 epochs to appear, and its fold 0 arm R5 peaked at epoch 16. Nothing about the final geometry is established by this.",
+      "the_loss_is_falling_faster_than_the_completed_arm": "The survival loss at batch 24 is 0.674 against the completed arm R5's 1.398 at batch 8, but the two runs are not step-aligned in the same way and the comparison is not controlled, so this is not evidence that clipping improves the fit.",
+      "interpretation_boundary": "These are first-epoch readings from a queue that is still running. Nothing here establishes that the collapse is held, that the intervention improves any performance measure, or anything about patient harm, correction efficacy or generalization. The clip norm of 1.0 is an order of magnitude below the ordinary gradient, so if the run completes it will show what a hard gradient bound does to this training, which is a narrower question than whether the collapse can be held."
+    },
+    "gaps_reasons": "The queue needs several hours per arm: 1140 steps at roughly 38 steps per epoch, with a per-epoch validation pass and a 20-repeat evaluation at the end. Four stages run concurrently on two GPUs, so the ten runs will not all finish at the same time. Only epoch 1 of fold 0 and fold 1 has been observed so far. The per-epoch validation record had not been written at the time of the check, so the checkpoint rule has not yet been exercised on real data in this queue. The clip norm was chosen by reasoning from the completed runs' recorded gradient norms and was not swept, so a negative result would not distinguish 'the collapse cannot be held' from 'this particular bound cannot hold it'.",
+    "next_action_user_inputs": "Let the queue finish. Then compare, fold by fold and epoch by epoch, whether the wsi effective rank stays above 1.5 for all 30 epochs, which the completed queue never achieved for any arm in the wsi space, and re-run the deletion probe on the resulting best checkpoints. No further user input is needed to complete that; the user should be asked only if the run reveals that a hard clip norm of 1.0 prevents the model from training at all, because that would require choosing a different bound."
   }
 }

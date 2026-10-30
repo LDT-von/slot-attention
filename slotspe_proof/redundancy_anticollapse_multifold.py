@@ -250,13 +250,48 @@ def _run_wave(order, pending_ids, runtime, root, gpu_pool, workers):
     the worker command names this module and the arms train under the
     anti-collapse protocol.  Everything else about the wave, the device
     assignment and the dependency rule is the shared implementation.
+
+    The shared dependency helper names the eleven completed arms, so this
+    queue's own dependency rule is installed for the duration of the wave.
     """
-    original = base._spawn_stage
+    original_spawn = base._spawn_stage
+    original_dependencies = base.stage_dependencies
     base._spawn_stage = _spawn_stage
+    base.stage_dependencies = stage_dependencies
+    original_memory = base.stage_memory_gib
+
+    def memory_for(stage):
+        """Use the measured peak of the completed R5 arm for these arms.
+
+        The anti-collapse arms keep the completed R5 loss structure and the
+        same model, so the measured R5 peak applies.  It is a scheduling
+        input only and never enters the model computation.
+        """
+        if stage.get("kind") == "arm" and stage.get("arm") in ANTI_COLLAPSE_ARMS:
+            return base.ARM_PEAK_GIB["R5"] + base.CUDA_CONTEXT_GIB
+        return original_memory(stage)
+
+    base.stage_memory_gib = memory_for
     try:
         base._run_wave(order, pending_ids, runtime, root, gpu_pool, workers)
     finally:
-        base._spawn_stage = original
+        base._spawn_stage = original_spawn
+        base.stage_dependencies = original_dependencies
+        base.stage_memory_gib = original_memory
+
+
+def stage_dependencies(stage):
+    """This queue's dependency rule.
+
+    An arm needs that fold's shared initialization, a fold summary needs
+    that fold's anti-collapse arms, and nothing else is shared.
+    """
+    kind = stage.get("kind")
+    if kind == "arm":
+        return [f"init_fold_{stage['fold']}"]
+    if kind == "summarize_fold":
+        return [f"arm_fold_{stage['fold']}_{arm}" for arm in ANTI_COLLAPSE_ARMS]
+    return []
 
 
 def execute(config, output_root, resume=False, runtime_check=True, devices=None,
@@ -280,11 +315,29 @@ def execute(config, output_root, resume=False, runtime_check=True, devices=None,
         raise ValueError("workers must not oversubscribe the GPU pool")
     manifest_path = root / "queue_manifest.json"
     if root.exists() and any(root.iterdir()):
-        if not resume or not manifest_path.is_file():
-            raise RuntimeError("nonempty output: preserve it; use a fresh directory or verified --resume")
-        manifest = base.read(manifest_path)
-        if manifest.get("identity") != identity or base.read(root / "resolved_config.json") != runtime:
-            raise RuntimeError("configuration, input metadata or implementation drift; cannot resume")
+        # A directory that holds only a complete, verifiable preparation is
+        # an acceptable starting point: the preparation is the expensive
+        # part and it is verified against the input hashes before reuse.
+        # Anything else must be preserved and re-run in a fresh directory.
+        entries = [entry for entry in root.iterdir() if entry.name != "prepared"]
+        if entries or not (root / "prepared" / "manifest.json").is_file():
+            if not resume or not manifest_path.is_file():
+                raise RuntimeError("nonempty output: preserve it; use a fresh directory or verified --resume")
+            manifest = base.read(manifest_path)
+            if manifest.get("identity") != identity or base.read(root / "resolved_config.json") != runtime:
+                raise RuntimeError("configuration, input metadata or implementation drift; cannot resume")
+        else:
+            root.mkdir(parents=True, exist_ok=True)
+            base.write(root / "resolved_config.json", runtime)
+            manifest = {"schema": "slotspe_anticollapse_multifold_queue_v1",
+                        "identity": identity, "identity_payload": identity_payload,
+                        "config": runtime, "stages": plan["stages"], "status": "running",
+                        "records": {}, "device_assignment": device_pool,
+                        "max_concurrent_stages": workers, "disk_budget": disk_budget,
+                        "anti_collapse_arms": {arm: ARM_CONTRACTS_ANTI[arm]
+                                               for arm in ANTI_COLLAPSE_ARMS},
+                        "started_utc": datetime.now(timezone.utc).isoformat()}
+            base.write(manifest_path, manifest)
     else:
         root.mkdir(parents=True, exist_ok=True)
         base.write(root / "resolved_config.json", runtime)
@@ -325,7 +378,12 @@ def execute(config, output_root, resume=False, runtime_check=True, devices=None,
                 raise RuntimeError(f"partial/failed stage retained: {stage['id']}; use a fresh batch")
             folder = best._stage_folder(stage)
             if folder and (root / folder).exists() and any((root / folder).iterdir()):
-                raise RuntimeError(f"unrecorded partial stage folder retained: {folder}")
+                # A complete, verifiable preparation is the one partial
+                # folder that may be present before the queue starts: the
+                # prepare stage verifies it against the input hashes and
+                # reuses it instead of rebuilding it.
+                if not (folder == "prepared" and (root / "prepared" / "manifest.json").is_file()):
+                    raise RuntimeError(f"unrecorded partial stage folder retained: {folder}")
             pending.append(stage)
         if not pending:
             continue
