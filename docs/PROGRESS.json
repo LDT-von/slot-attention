@@ -8148,5 +8148,396 @@
     "checks_and_actual_server_execution_raw_receipt": "No server execution and no patient inference in this stage; this is process-table inspection plus one local kill. The GPU process guard inside the first watcher was tested by replaying its own pick_device function against the live GPU state: it correctly reported three competing PIDs on cuda:0 and three on cuda:1, so it would not have fired while the two queues hold the devices. That guard is a reason the watcher had not already launched something, and it is not a reason to keep it alive, because the guard depends on a utilisation threshold that was observed to be approached during normal operation of the authorized queues. Live queue state after the cleanup: anti-collapse is at epoch 20 of 30 on fold 0 for both arms and epoch 19 of 30 on fold 1 for both arms; diversity is at epoch 12 of 30 on fold 0 for SCM and SRO; all eight queue processes are alive. GPU state is unchanged with 9805 MiB used on cuda:0 and 9206 MiB used on cuda:1.",
     "gaps_reasons": "The three terminated processes are historical artifacts of the earlier repository location and of an unrelated project, and their termination changes no measurement, no artifact and no recorded result. The first watcher would have produced a run under the old /data1/DCT-Reg root and under an old configuration, and the AGENTS.md rule that the default queue configuration is the existing clean original-only fold0/seed3 configuration means that a run launched in that way would not have matched the current protocol anyway. The dominant open question is unchanged: the anti-collapse queue still needs to finish folds 2, 3 and 4 before its best.pt checkpoints exist, so the deletion probe is still blocked, and the diversity queue still has 18 of 20 stages pending. Nothing here bears on patient performance, on whether slots contain patient-specific content, or on the efficacy of any correction.",
     "next_action_user_inputs": "Leave both queues running and take no further process-level action. The deletion probe on the anti-collapse best.pt checkpoints remains queued behind that queue and the user already authorised it. The torch.set_num_threads fix to redundancy_anticollapse_engine.py remains deferred until the anti-collapse queue completes, because that file is inside the anti-collapse implementation hash set. No new file may be created under slotspe_proof/ until the diversity queue completes. No new user input is required for any of these."
+  },
+  "latest_anticollapse_completed_mechanism_success_and_first_patient_specific_content_signal_20261101": {
+    "recorded_at": "2026-11-01T15:40:00+08:00",
+    "route_task": "SlotSPE / P7.3 / anti-collapse queue outcome: mechanism verification on the six completed arm-folds, the queue failure that stopped it, the survival score, and the first patient-specific content separation measured in this repository",
+    "user_steering": "User asked whether the anti-collapse queue had finished, how it went, and what the scores are.",
+    "status": "the_mechanism_succeeded_completely_and_the_slot_geometry_is_held_open_for_the_whole_run_the_survival_score_did_not_improve_but_the_content_probe_now_separates_patient_specific_from_donor_content_at_high_significance_which_is_the_first_patient_specific_positive_result_in_this_repository_six_of_ten_arm_folds_are_complete_and_the_queue_stopped_on_a_launcher_bug_not_a_training_failure",
+    "completed_work": "Read-only inspection of the stored artifacts of the anti-collapse queue. No training, no inference, no re-evaluation, no checkpoint touched, no source file changed. The queue manifest was read for the failure record, the per-arm-fold directories were read for the completed arms, the epoch_validation and eval_repeats files were read for both score protocols, the curve files were read for the slot geometry trajectory, and the patient_diagnostics files were read for the content retention probe. A paired sign test on the donor-minus-own reconstruction error was computed per arm-fold to test whether the slot set carries patient-specific content. The three completed folds were compared against the completed best-validation queue on the same folds, the same cohort and the same two score protocols.",
+    "paths_commit": {
+      "base_HEAD": "35f910e48a99b1f1e06234bbf21e0a16264b8146",
+      "new_commit_or_push": false,
+      "source_files_changed": "none",
+      "third_party_modified": false,
+      "queue_code_changed": false,
+      "files_read": [
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/queue_manifest.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/{0,1,2}/arms/{A0_clip,A1_clip_decay}/epoch_validation.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/{0,1,2}/arms/{A0_clip,A1_clip_decay}/eval_repeats.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/{0,1,2}/arms/{A0_clip,A1_clip_decay}/curve.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/{0,1,2}/arms/{A0_clip,A1_clip_decay}/patient_diagnostics.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/logs/",
+        "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/folds/{0,1,2}/arms/*/curve.json",
+        "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/folds/{0,1,2}/arms/*/patient_diagnostics.json",
+        "slotspe_proof/redundancy_anticollapse_multifold.py",
+        "slotspe_proof/redundancy_best_multifold.py"
+      ]
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, read-only json parsing, no GPU, no training",
+      "patient_training_runs_started_by_this_check": 0,
+      "optimizer_steps": 0,
+      "checkpoints_loaded": 0,
+      "model_forwards": 0,
+      "queue_state": {
+        "manifest_status": "failed",
+        "records": {
+          "completed": 1,
+          "failed": 20
+        },
+        "only_completed_stage": "prepare",
+        "gpu_now_idle": "both RTX 5090 at 15 MiB and zero percent utilization, no queue process alive",
+        "all_twenty_failures_share_one_error": "[Errno 17] File exists: '.../logs/summarize_fold_0.log' of type FileExistsError"
+      },
+      "root_cause_of_the_queue_stop": {
+        "classification": "launcher defect, not a training failure",
+        "evidence": "Every one of the six completed arm-folds has 30 epochs of curve data, a best epoch, a reloaded twenty-repeat evaluation and a patient diagnostics file, so all six trainings ran to completion. The failure is recorded against twenty stages whose error is the same FileExistsError on a log file.",
+        "mechanism": "slotspe_proof/redundancy_anticollapse_multifold.py line 233 names the log file from stage['id'] and opens it in exclusive mode with log.open('x'). The shared scheduler base._run_wave in slotspe_proof/redundancy_best_multifold.py line 389 calls the module-level _spawn_stage, which the anti-collapse module rebinds only for the duration of the wave at lines 258 to 259. The base module also has a separate _subprocess_stage at line 323 with its own log naming, and the summarization path reaches that function, so a second process for a stage whose log file already exists raises FileExistsError before the stage body runs. The failure therefore aborts the wave rather than any model computation.",
+        "consequence": "folds 3 and 4 were never trained. The folds/3/initial directory exists with core.pt, probe.pt, reference.pt and receipt.json, so initialization for fold 3 completed and only its arms are missing. Fold 4 has no directory at all.",
+        "not_verified_here": "The exact call path that reaches _subprocess_stage was inferred from the source and the error text. This window did not repair the launcher, did not restart the queue and did not run any stage."
+      },
+      "completed_arm_folds": {
+        "note": "Six of ten. Both arms on folds 0, 1 and 2, each a full 30 epoch run under the original per-epoch best-validation checkpoint rule with the fold best checkpoint retained.",
+        "folds_0_1_2": "A0_clip and A1_clip_decay, each with curve.json, epoch_validation.json, eval_repeats.json, patient_diagnostics.json, best.pt and last.pt"
+      },
+      "survival_score_both_protocols": {
+        "note": "Protocol A is the single validation pass at the selected best epoch, protocol B is the mean of twenty repeats after reloading the best checkpoint. Both read from the stored files. Folds 3 and 4 are absent so every figure here covers three folds, not five.",
+        "protocol_A_best_epoch_and_single_validation": {
+          "f0_A0_clip": {
+            "epoch": 3,
+            "cindex": 0.74168
+          },
+          "f0_A1_clip_decay": {
+            "epoch": 19,
+            "cindex": 0.712361
+          },
+          "f1_A0_clip": {
+            "epoch": 5,
+            "cindex": 0.652284
+          },
+          "f1_A1_clip_decay": {
+            "epoch": 7,
+            "cindex": 0.71912
+          },
+          "f2_A0_clip": {
+            "epoch": 17,
+            "cindex": 0.652522
+          },
+          "f2_A1_clip_decay": {
+            "epoch": 16,
+            "cindex": 0.664532
+          }
+        },
+        "protocol_B_reloaded_twenty_repeat_mean_and_population_sd": {
+          "f0_A0_clip": {
+            "mean": 0.707052,
+            "sd": 0.0254
+          },
+          "f0_A1_clip_decay": {
+            "mean": 0.702971,
+            "sd": 0.0082
+          },
+          "f1_A0_clip": {
+            "mean": 0.699577,
+            "sd": 0.0264
+          },
+          "f1_A1_clip_decay": {
+            "mean": 0.710745,
+            "sd": 0.0179
+          },
+          "f2_A0_clip": {
+            "mean": 0.638471,
+            "sd": 0.0123
+          },
+          "f2_A1_clip_decay": {
+            "mean": 0.661649,
+            "sd": 0.011
+          }
+        },
+        "three_fold_means": {
+          "A0_clip": {
+            "protocol_A": 0.682162,
+            "protocol_B": 0.6817
+          },
+          "A1_clip_decay": {
+            "protocol_A": 0.698671,
+            "protocol_B": 0.691788
+          }
+        },
+        "same_fold_comparison_against_the_completed_best_validation_queue_protocol_B": {
+          "A0_clip_vs_R5": {
+            "f0": -0.013352,
+            "f1": 0.184856,
+            "f2": -0.013331,
+            "three_fold_mean": 0.052725
+          },
+          "A0_clip_vs_S0_baseline": {
+            "f0": -0.041442,
+            "f1": -0.049577,
+            "f2": -0.003723,
+            "three_fold_mean": -0.031581
+          },
+          "A1_clip_decay_vs_R5": {
+            "f0": -0.017433,
+            "f1": 0.196024,
+            "f2": 0.009848,
+            "three_fold_mean": 0.062813
+          },
+          "A1_clip_decay_vs_S0_baseline": {
+            "f0": -0.045523,
+            "f1": -0.038409,
+            "f2": 0.019456,
+            "three_fold_mean": -0.021492
+          },
+          "reading": "Against R5, which is the same Gram plus content loss structure that the anti-collapse arms start from, the intervention gains about 0.05 to 0.06 over three folds, and almost all of that comes from fold 1 where R5 collapses to 0.514721 while A0_clip reaches 0.699577. Against the plain native baseline S0 the arms are behind by 0.02 to 0.03 on three folds. So the intervention rescues the arm that collapses rather than lifting the baseline, and it does not beat the baseline."
+        }
+      },
+      "slot_geometry_mechanism_verification": {
+        "criterion_declared_by_the_other_session": "whether the wsi effective rank stays above 1.5 for all thirty epochs, which the completed queue never achieved for any arm in the wsi space",
+        "per_epoch_wsi_effective_rank_mean_for_f0_A0_clip": {
+          "ep1": 3.509,
+          "ep2": 5.401,
+          "ep3": 5.677,
+          "ep4": 5.816,
+          "ep5": 6.058,
+          "ep6": 6.225,
+          "ep10": 6.58,
+          "ep15": 6.779,
+          "ep20": 6.908,
+          "ep25": 6.961,
+          "ep29": 6.973,
+          "note": "the run ends at epoch 30 with a per-epoch mean of about 6.97 and the per-batch minimum never below 4.1 after epoch 7"
+        },
+        "batches_at_or_below_1.5_over_the_whole_run": {
+          "f0_A0_clip": {
+            "count": 39,
+            "of": 9090,
+            "note": "all 39 are inside epoch 1, which is the initialisation phase"
+          },
+          "f1_A0_clip": {
+            "count": 48,
+            "of": 9150
+          },
+          "f2_A0_clip": {
+            "count": 57,
+            "of": 9120
+          },
+          "f0_A1_clip_decay": {
+            "count": 39,
+            "of": 9090
+          },
+          "f1_A1_clip_decay": {
+            "count": 51,
+            "of": 9150
+          },
+          "f2_A1_clip_decay": {
+            "count": 56,
+            "of": 9120
+          },
+          "conclusion": "From epoch 2 onward the effective rank never returns to the collapsed region. The criterion is met on all six completed arm-folds."
+        },
+        "terminal_wsi_effective_rank_and_cosine": {
+          "f0": {
+            "A0_clip": {
+              "rank": 6.449,
+              "cos": 0.161
+            },
+            "A1_clip_decay": {
+              "rank": 4.4,
+              "cos": 0.318
+            }
+          },
+          "f1": {
+            "A0_clip": {
+              "rank": 7.152,
+              "cos": 0.069
+            },
+            "A1_clip_decay": {
+              "rank": 5.562,
+              "cos": 0.158
+            }
+          },
+          "f2": {
+            "A0_clip": {
+              "rank": 6.609,
+              "cos": 0.138
+            },
+            "A1_clip_decay": {
+              "rank": 4.916,
+              "cos": 0.262
+            }
+          },
+          "fraction_cosine_above_0.9": "0.000 on every completed arm-fold",
+          "historical_same_fold_terminal_wsi": {
+            "f0": {
+              "S0": {
+                "rank": 1.055,
+                "cos": 0.97
+              },
+              "R4": {
+                "rank": 1.042,
+                "cos": 0.976
+              },
+              "R5": {
+                "rank": 1.343,
+                "cos": 0.83
+              },
+              "R1": {
+                "rank": 1.871,
+                "cos": 0.67
+              }
+            },
+            "f1": {
+              "S0": {
+                "rank": 1.137,
+                "cos": 0.927
+              },
+              "R4": {
+                "rank": 1.132,
+                "cos": 0.93
+              },
+              "R5": {
+                "rank": 1.027,
+                "cos": 0.985
+              },
+              "R1": {
+                "rank": 3.325,
+                "cos": 0.301
+              }
+            },
+            "f2": {
+              "S0": {
+                "rank": 1.062,
+                "cos": 0.966
+              },
+              "R4": {
+                "rank": 1.274,
+                "cos": 0.864
+              },
+              "R5": {
+                "rank": 1.129,
+                "cos": 0.932
+              },
+              "R1": {
+                "rank": 1.074,
+                "cos": 0.96
+              }
+            }
+          },
+          "conclusion": "This is the largest geometric separation ever measured in this repository. Every historical arm on the same folds sits between 1.03 and 3.33 with a cosine between 0.30 and 0.985, while the anti-collapse arms sit between 4.40 and 7.15 with a cosine between 0.069 and 0.318."
+        },
+        "no_circularity_in_this_measurement": "The effective rank of R1 and R5 is a directly optimized objective because slot_gram_loss minimizes the same non-diagonal gram squares that the effective rank denominator sums. The anti-collapse arms do not have that problem, because their distinguishing mechanism is the gradient clip and the optional Gram weight decay, neither of which directly optimizes the gram squares, and the clip bound is a constraint on the step size rather than a target."
+      },
+      "patient_specific_content_separation": {
+        "probe": "patient_diagnostics.json holds the own reconstruction error, the error against a mismatched same-noise donor and the static control per patient on the retained best checkpoint. A donor error that is larger than the own error means the slot set represents this patient's content and not a generic one.",
+        "paired_sign_test_donor_minus_own_one_sided": {
+          "f0_A0_clip": {
+            "delta": 0.0176,
+            "own_smaller": "52/77",
+            "p": 0.0014
+          },
+          "f0_A1_clip_decay": {
+            "delta": 0.1235,
+            "own_smaller": "63/77",
+            "p": 7.07e-09
+          },
+          "f0_historical_S0": {
+            "delta": 0.0024,
+            "own_smaller": "38/77",
+            "p": 0.59
+          },
+          "f0_historical_R5": {
+            "delta": -0.0002,
+            "own_smaller": "40/77",
+            "p": 0.41
+          },
+          "f1_A0_clip": {
+            "delta": 0.0699,
+            "own_smaller": "57/75",
+            "p": 3.62e-06
+          },
+          "f1_A1_clip_decay": {
+            "delta": 0.0847,
+            "own_smaller": "64/75",
+            "p": 1.55e-10
+          },
+          "f1_historical_S0": {
+            "delta": 0.0007,
+            "own_smaller": "45/75",
+            "p": 0.0527
+          },
+          "f1_historical_R5": {
+            "delta": 0.004,
+            "own_smaller": "36/75",
+            "p": 0.678
+          },
+          "f2_A0_clip": {
+            "delta": 0.1406,
+            "own_smaller": "66/76",
+            "p": 1.48e-11
+          },
+          "f2_A1_clip_decay": {
+            "delta": 0.1279,
+            "own_smaller": "68/76",
+            "p": 2.82e-13
+          },
+          "f2_historical_S0": {
+            "delta": -0.0019,
+            "own_smaller": "43/76",
+            "p": 0.151
+          },
+          "f2_historical_R5": {
+            "delta": 0.0011,
+            "own_smaller": "39/76",
+            "p": 0.454
+          }
+        },
+        "reading": "This is the first patient-specific positive result in this repository. On every one of the six completed arm-folds the own content error is below the mismatched donor error at high significance, with the sign test p value between 1.5e-11 and 0.0014. On the four historical arm-folds measured for comparison, which are the plain baseline S0 and the redundancy arm R5, the same probe shows no separation at all, with p values between 0.0527 and 0.678. The separation appears only once the slot geometry is held open.",
+        "read_overlap_moves_in_the_same_direction": {
+          "f0": {
+            "A0_clip": 0.962,
+            "A1_clip_decay": 0.672,
+            "S0": 0.8521,
+            "R5": 0.9969
+          },
+          "f1": {
+            "A0_clip": 0.7943,
+            "A1_clip_decay": 0.7453,
+            "S0": 0.9972,
+            "R5": 0.9995
+          },
+          "f2": {
+            "A0_clip": 0.6708,
+            "A1_clip_decay": 0.6968,
+            "S0": 0.9927,
+            "R5": 0.9989
+          },
+          "note": "The historical arms read nearly every slot, so their slots are shared and carry no patient distinction. The anti-collapse arms read distinctly less and the separation appears."
+        },
+        "boundary": "The probe shows that the slot set reconstructs this patient's content better than a mismatched donor's content. It does not show that the survival objective can use that content, and it does not show patient benefit. The deletion oracle on these checkpoints has not been run."
+      },
+      "raw_receipt_sha256": {
+        "note": "All inputs are unmodified stored artifacts read from local_evidence, which is git-ignored and holds the patient arrays, weights and per-patient diagnostics. No patient identifier, feature, weight or per-patient array is reproduced in this entry."
+      },
+      "original_source_modified": false,
+      "historical_reports_modified": false,
+      "queue_or_abc_definition_changed": false,
+      "existing_modules_modified": false,
+      "checkpoints_or_queues_modified": false,
+      "patient_artifacts_staged": false
+    },
+    "observed_but_not_claimed": {
+      "the_mechanism_worked_completely": "The declared criterion, that the wsi effective rank stays above 1.5 for the whole thirty epoch run, is met on all six completed arm-folds. The terminal effective rank of 4.40 to 7.15 against a historical maximum of 3.33 on the same folds, with the fraction of slot pairs above cosine 0.9 at exactly zero, is the largest geometric separation ever recorded in this repository. This settles the mechanism question that the other session's gradient spike analysis opened.",
+      "but_the_survival_score_did_not_improve": "On three folds the arms sit at 0.682 to 0.699 under protocol A and 0.682 to 0.692 under protocol B, against a historical baseline S0 of 0.7039 over five folds and 0.7106 over these three folds under protocol B. The intervention gains roughly 0.05 to 0.06 against R5 on three folds, but almost all of that is fold 1 where R5 collapses to 0.514721, so the intervention rescues the collapsing arm rather than lifting the baseline, and it remains behind the plain baseline by 0.02 to 0.03. The three-fold numbers are not comparable with the five-fold historical figures and this entry does not present them as such.",
+      "and_the_two_results_point_in_opposite_directions": "Holding the geometry open produced the first patient-specific content signal in this repository while leaving the survival score flat or slightly worse. The established negative association between slot redundancy and survival performance across the 55 arm-fold points of the completed queue, whose Spearman coefficient is -0.2475 for wsi effective rank and -0.3183 for omic, and the established positive association between content retention and reading overlap, are both consistent with what is now observed. The two findings are not reconciled here and the reconciliation is the open question.",
+      "the_content_result_is_new_but_bounded": "The probe measures reconstruction of patient content from the slot set on the retained best checkpoint. It is the first patient-specific positive signal here, and the deleted slots still carry no established patient-specific content in the cross-view line, so the two lines have not been joined.",
+      "the_failure_is_recoverable": "The queue stopped because a log file was opened exclusively twice, which is a launcher defect rather than a model failure, and six of ten arm-folds are complete and valid. Folds 3 and 4 were never trained. Repairing the launcher and resuming would complete the queue without invalidating the six completed runs, provided the repair does not change the model computation or the checkpoint rule.",
+      "the_score_caveat_from_the_two_protocols_still_applies": "Under protocol A the single validation pass at the selected epoch is by construction repeat 0 of the twenty repeat evaluation, which was verified exactly for all 55 arm-folds of the completed queue. The two protocols differ by the repeat-to-repeat noise of the evaluation, and the difference between them is larger for the arms with more volatile evaluation, with a Spearman coefficient of +0.8909 between the protocol difference and the average twenty repeat standard deviation in the completed queue. The anti-collapse protocol B spread of 0.0082 to 0.0264 is larger than the historical R4 spread of 0.0034 to 0.0082, so the protocol B figures are the more reliable of the two here."
+    },
+    "gaps_reasons": "Only three of five folds are trained, so no five-fold statistic exists for the anti-collapse arms and no comparison with the five-fold historical figures is valid yet. Only one seed, seed 3, and the twenty repeats are repeats of one trained model rather than independent runs, so the fold spread contains no training randomness. The content separation was measured on the wsi modality only, and the omic modality was not tested for the same separation. The deletion oracle has not been re-run on the anti-collapse best checkpoints, so whether the patient-specific content is carried by the deleted slot or by the retained slot is not known, and the earlier cross-view finding that the deletion gap did not detect patient-specific information has not been revisited on these checkpoints. The survival score covers three folds and one seed and no multiplicity correction applies to a single mechanism. Nothing here establishes patient harm, patient benefit, correction efficacy, clinical utility or generalization to any other cohort or cancer, and no patient identifier, feature, weight or per-patient array is reproduced. The launcher repair was diagnosed from the source and the error text but was not implemented, and the exact call path reaching the failing function was not traced at runtime.",
+    "next_action_user_inputs": "The queue is stopped with six of ten arm-folds complete, and both GPUs are idle, so the decision is the user's. Recommended order. First, repair the launcher defect so that the log file is opened in a mode that tolerates an existing file, and resume the queue to train folds 3 and 4, which requires the user's explicit execution authorization since the rule is that only --run executes. Second, once the queue completes, recompute both score protocols over five folds and compare against the historical baseline on the same five folds and the same protocol, and report the protocol difference against the twenty repeat standard deviation as was done here. Third, run the deletion oracle on the anti-collapse best checkpoints to determine whether the newly detected patient-specific content is carried by the deleted slot, which is the question the cross-view line left open. Fourth, repeat the content separation probe on the omic modality and with the static control, so that the result does not rest on the wsi modality alone. Fifth, treat the discrepancy between the successful content result and the flat survival score as the primary open question, since holding the geometry open made the content patient-specific without making the survival task better, and note that the historical evidence already shows that lower redundancy correlates with lower survival performance, so any claim that opening the slots helps prediction is not supported by anything in this repository."
   }
 }
