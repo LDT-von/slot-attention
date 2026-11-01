@@ -8540,34 +8540,82 @@
     "gaps_reasons": "Only three of five folds are trained, so no five-fold statistic exists for the anti-collapse arms and no comparison with the five-fold historical figures is valid yet. Only one seed, seed 3, and the twenty repeats are repeats of one trained model rather than independent runs, so the fold spread contains no training randomness. The content separation was measured on the wsi modality only, and the omic modality was not tested for the same separation. The deletion oracle has not been re-run on the anti-collapse best checkpoints, so whether the patient-specific content is carried by the deleted slot or by the retained slot is not known, and the earlier cross-view finding that the deletion gap did not detect patient-specific information has not been revisited on these checkpoints. The survival score covers three folds and one seed and no multiplicity correction applies to a single mechanism. Nothing here establishes patient harm, patient benefit, correction efficacy, clinical utility or generalization to any other cohort or cancer, and no patient identifier, feature, weight or per-patient array is reproduced. The launcher repair was diagnosed from the source and the error text but was not implemented, and the exact call path reaching the failing function was not traced at runtime.",
     "next_action_user_inputs": "The queue is stopped with six of ten arm-folds complete, and both GPUs are idle, so the decision is the user's. Recommended order. First, repair the launcher defect so that the log file is opened in a mode that tolerates an existing file, and resume the queue to train folds 3 and 4, which requires the user's explicit execution authorization since the rule is that only --run executes. Second, once the queue completes, recompute both score protocols over five folds and compare against the historical baseline on the same five folds and the same protocol, and report the protocol difference against the twenty repeat standard deviation as was done here. Third, run the deletion oracle on the anti-collapse best checkpoints to determine whether the newly detected patient-specific content is carried by the deleted slot, which is the question the cross-view line left open. Fourth, repeat the content separation probe on the omic modality and with the static control, so that the result does not rest on the wsi modality alone. Fifth, treat the discrepancy between the successful content result and the flat survival score as the primary open question, since holding the geometry open made the content patient-specific without making the survival task better, and note that the historical evidence already shows that lower redundancy correlates with lower survival performance, so any claim that opening the slots helps prediction is not supported by anything in this repository."
   },
-"latest_common_private_architecture_20261101":{
-  "route_task": "User-requested complete slot disentanglement / conditional MI architecture, synthetic-only local implementation",
-  "completed_work": "Implemented token-to-hazard conditional private-slot VIB, paired common representations, selection-free Deep Sets and censored NLL; tested interfaces and 12 generated-data trainings.",
-  "paths_commit": {
-    "model": "slotspe_proof/common_private_survival.py",
-    "checker": "scripts/check_common_private_survival_synthetic.py",
-    "design": "docs/research/slotspe_common_private_20261101/architecture.md",
-    "receipt": "docs/research/slotspe_common_private_20261101/synthetic_receipt.json",
-    "commit": null,
-    "publication_branch": "codex/common-private-survival"
-  },
-  "checks_actual_execution_raw_receipt": {
-    "checks": {
-      "readout_slot_permutation": true,
-      "token_permutation": true,
-      "masked_padding": true,
-      "analytic_kl": true,
-      "censor_likelihood": true,
-      "finite_gradients": true
+  "latest_common_private_architecture_20261101": {
+    "route_task": "User-requested complete slot disentanglement / conditional MI architecture, synthetic-only local implementation",
+    "completed_work": "Implemented token-to-hazard conditional private-slot VIB, paired common representations, selection-free Deep Sets and censored NLL; tested interfaces and 12 generated-data trainings.",
+    "paths_commit": {
+      "model": "slotspe_proof/common_private_survival.py",
+      "checker": "scripts/check_common_private_survival_synthetic.py",
+      "design": "docs/research/slotspe_common_private_20261101/architecture.md",
+      "receipt": "docs/research/slotspe_common_private_20261101/synthetic_receipt.json",
+      "commit": null,
+      "publication_branch": "codex/common-private-survival"
     },
-    "synthetic_training_runs": 12,
-    "steps_per_run": 80,
-    "patient_training": 0,
-    "patient_inference": 0,
-    "server_execution": false,
-    "new_server_raw_receipt": false
+    "checks_actual_execution_raw_receipt": {
+      "checks": {
+        "readout_slot_permutation": true,
+        "token_permutation": true,
+        "masked_padding": true,
+        "analytic_kl": true,
+        "censor_likelihood": true,
+        "finite_gradients": true
+      },
+      "synthetic_training_runs": 12,
+      "steps_per_run": 80,
+      "patient_training": 0,
+      "patient_inference": 0,
+      "server_execution": false,
+      "new_server_raw_receipt": false
+    },
+    "gaps_reasons": "No patient loader or full-size resource validation. Common/private semantic leakage, private branch use and slot complementarity are not established. Small KL did not establish predictive improvement; strong KL worsened mean toy holdout NLL. Research prototype; public delivery manifest refreshed for this scoped publication.",
+    "next_action_user_inputs": "Complete semantic leakage and synthetic counterexample diagnostics, then freeze a patient protocol only with separate execution authorization."
   },
-  "gaps_reasons": "No patient loader or full-size resource validation. Common/private semantic leakage, private branch use and slot complementarity are not established. Small KL did not establish predictive improvement; strong KL worsened mean toy holdout NLL. Research prototype; public delivery manifest refreshed for this scoped publication.",
-  "next_action_user_inputs": "Complete semantic leakage and synthetic counterexample diagnostics, then freeze a patient protocol only with separate execution authorization."
-}
+  "latest_common_private_semantics_20261101": {
+    "recorded_at": "2026-11-01T16:45:00+08:00",
+    "route_task": "SlotSPE / new architecture line / semantic verification of the conditional common-private slot bottleneck: whether the private slots carry usable information beyond the common representation, and how the KL weight trades that increment against duplication",
+    "user_steering": "User fixed the architecture as the main line and asked to proceed along it, with the next step being verification that the private slots actually retain effective information beyond the common representation. User also stated that shared information may contain irrelevant factors and private information may contain key prognostic signal, so the target is learning shared content and compressing private information while the survival supervision retains the useful part, not eliminating private information.",
+    "status": "the_core_question_is_answered_on_generated_data_yes_the_private_slots_do_carry_information_that_the_common_representation_does_not_carry_partial_probe_residual_r2_0_65_to_0_80_at_small_kl_weight_and_the_readout_consumes_it_per_patient_likelihood_changes_for_100_percent_of_patients_with_the_private_branch_effect_about_an_order_of_magnitude_larger_than_the_common_branch_but_the_private_branch_is_a_superset_not_a_complementary_decomposition_it_carries_the_shared_factor_at_raw_r2_about_0_96_while_the_common_branch_reaches_only_0_57_and_a_model_free_duplication_probe_confirms_strong_kl_pushes_the_private_branch_to_0_66_to_0_99_predictable_from_the_common_branch_second_finding_is_that_the_previous_beta_0_001_result_was_a_null_result_for_the_wrong_reason_the_kl_term_contributed_0_05_to_0_09_percent_of_the_objective_so_it_was_numerically_inert_and_not_evidence_against_compression_third_finding_is_that_the_kl_term_cannot_separate_redundancy_from_increment_because_it_bounds_information_above_the_common_representation_so_strong_kl_destroys_the_private_increment_0_655_to_0_210_first_and_the_redundant_common_copy_second_no_patient_data_no_patient_training_no_patient_inference_and_no_server_execution",
+    "completed_work": "Read the repository rules, the README and the progress record, then fetched and checked out the published branch codex/common-private-survival at commit a5bf69b, which carries the prototype, the synthetic checker, the design note and the first synthetic receipt. Read the prototype implementation, the synthetic checker and the design note in full. Built a new diagnostics module slotspe_proof/common_private_diagnostics.py with six instruments: closed-form ridge probes, a partial probe that regresses the target on the common representation before predicting the residual from the private branch, a swap ablation, a per-patient branch sensitivity measurement, a model-free duplication probe that regresses the private branch on the common branch, and a conditional-prior substitution ablation. Built scripts/check_common_private_semantics.py with three generated tasks, two seeds and three KL weights, and scripts/check_common_private_kl_tradeoff.py sweeping seven KL weights on a log scale over two tasks and two seeds. Added tests/test_slotspe_common_private_diagnostics.py with twenty-one tests covering every instrument on data with a known answer. Ran the eighteen semantic trainings and the twenty-eight KL sweep trainings on CPU with generated tensors only. No third-party source was edited, no original queue was touched, no patient file or checkpoint was read.",
+    "paths_commit": {
+      "base_commit": "a5bf69b1124f70054eca6e2c803cb878d937903b",
+      "branch": "codex/common-private-survival",
+      "new_commit_or_push": false,
+      "source_files_changed": [
+        "slotspe_proof/common_private_diagnostics.py (new)",
+        "scripts/check_common_private_semantics.py (new)",
+        "scripts/check_common_private_kl_tradeoff.py (new)",
+        "tests/test_slotspe_common_private_diagnostics.py (new)",
+        "docs/research/slotspe_common_private_20261101/architecture.md (design note extended)",
+        "docs/research/slotspe_common_private_20261101/semantics_receipt.json (new)",
+        "docs/research/slotspe_common_private_20261101/kl_tradeoff_receipt.json (new)",
+        "docs/PROGRESS.json (this entry)"
+      ],
+      "third_party_modified": false,
+      "original_model_modified": false,
+      "queue_code_changed": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "patient_training_runs_started": 0,
+      "patient_inference": 0,
+      "checkpoints_loaded": 0,
+      "optimizer_steps_on_patient_data": 0,
+      "input_scope": "generated tensors only; no patient file, no checkpoint, no network run",
+      "unit_tests": "tests/test_slotspe_common_private_diagnostics.py 21 passed",
+      "repository_test_baseline": "python -m pytest tests -q gives 821 passed, 1 failed, 2 skipped before this change; the single failure is tests/test_crossview_reconstruction.py::test_cuda_auxiliary_preserves_cpu_and_current_device_rng and is a pre-existing CUDA RNG case unrelated to this change and not caused by it",
+      "semantics_diagnostics": "18 trainings = 3 generated tasks x 2 seeds x 3 KL weights, 300 steps each, CPU; receipt docs/research/slotspe_common_private_20261101/semantics_receipt.json",
+      "kl_tradeoff_diagnostics": "28 trainings = 2 generated tasks x 2 seeds x 7 KL weights in {0, 0.01, 0.03, 0.1, 0.3, 1, 3}, 300 steps each, CPU; receipt docs/research/slotspe_common_private_20261101/kl_tradeoff_receipt.json",
+      "finding_private_increment_exists": "partial probe residual held-out R2 at beta 0 and beta 0.001: shared_and_private WSI 0.655 and 0.651, OMIC 0.670 and 0.947; private_only WSI 0.799 and 0.750, OMIC 0.499 and 0.795. The same target explained by the common branch alone reaches only R2 0.12 to 0.57. This answers the user question in the affirmative on generated data.",
+      "finding_readout_consumes_private": "per-patient branch sensitivity: replacing or zeroing the private slots changes the likelihood for 100 percent of patients in all eighteen runs; mean absolute per-patient delta NLL of the private branch 0.10 to 1.09 against 0.02 to 0.16 for the common branch. Replacing the private slots by their own per-patient mean changes NLL by at most 0.003, so the effect is not sampling noise.",
+      "finding_private_is_a_superset_not_complementary": "raw probe R2 of the private WSI branch on its own modality-private factor is about 0.96 while the common branch reaches 0.57. Model-free duplication probe, held-out R2 predicting the private branch from the common branch: at beta 0 to 0.03 roughly 0.19 to 0.85 depending on task and seed, at beta 1 and 3 it rises to 0.66 to 0.99. Strong KL therefore turns the private branch into a deterministic function of the common representation.",
+      "finding_prior_substitution_causal_evidence": "substituting the conditional prior mean for the private slots degrades NLL by 0.06 to 0.22 at beta 0 with the prior retaining only 0.02 to 0.16 of the private effect; at beta 1 the prior retains 0.67 to 1.15 of the effect. This is direct causal evidence that the private slots carry content absent from the common representation at small KL and that this is lost at strong KL.",
+      "finding_kl_weight_zero_point_001_was_inert": "the KL term contributes 0.0005 to 0.0009 of the objective at beta 0.001, that is 0.05 to 0.09 percent, so beta 0.001 is numerically indistinguishable from beta 0. The previously reported absence of a predictive advantage at small KL is a too-small-weight null result and must not be read as evidence against compression.",
+      "finding_operative_kl_window": "beta 0.1 to 0.3 gives a KL term of 2 to 4 percent of the objective, keeps the validation NLL close to beta 0 (0.8935 to 1.0225 against 0.9098 to 1.1185) and still retains a private increment residual R2 of 0.21 to 0.73. The trade-off point is not located precisely because it is unstable across two seeds.",
+      "controls_that_must_show_nothing": "label-shuffled control: the maximum test R2 over all branches and factors is between -0.03 and 0.07; input upper bound probes recover the injected factors at R2 0.99; cross-modality probes stay near zero (private WSI factor from the OMIC input R2 -0.05 to 0.06 and vice versa), confirming the factors are genuinely modality-specific",
+      "claim_boundary": "All numbers describe the internal behaviour of one research prototype on invented data. They do not measure patient performance, do not establish that common and private correspond to biological factors, do not establish generalization to real features, and do not support any patient benefit, harm or clinical claim."
+    },
+    "gaps_reasons": "Common and private semantics are not identified: what is measured is information relative to the common representation, not a shared-versus-specific biological factorisation, and the cross-mean prediction and alignment terms are only inductive biases. The monotone rise of duplication with the KL weight rests on two seeds, one generated dataset per seed, a small model and no significance test, so the exact trade-off location is not established. The slot-level complementarity, the noise-inflation confound, the distribution-shift task and the synergistic task remain unmeasured. The real omics adapter is missing, because omics tokens must carry pathway identity before they enter the network and the current interface does not provide that adapter. The prototype has no patient loader, no full-size resource validation and no patient execution entry point. Nothing here bears on patient performance, patient benefit, correction efficacy or clinical utility.",
+    "next_action_user_inputs": "The first decision is the user's, because it changes the architecture rather than only its hyperparameter. The measured problem is that the KL term bounds the total information of the private slots relative to the common representation, so it cannot distinguish a redundant copy of the common content from a genuinely complementary increment, and it therefore removes the increment first. If the objective is to compress redundancy while preserving the increment, the penalty has to act on the part of the private branch that is predictable from the common branch, for example by predicting the private branch from the common branch and penalising only that predictable part, rather than penalising the private information budget as a whole. That is a new module and the user has said not to add modules without agreement, so it needs explicit approval. Second, regardless of that decision, the beta window needs more seeds, because the trade-off point is unstable at two seeds and the earlier beta 0.001 point was inert. Third, the patient stage needs separate explicit execution authorisation and must inherit the actual 5fold cohort identity that the original loader hardcodes in _load_split, not the 5fold_uni2h directory name. No new patient input is required for the first two items."
+  }
 }

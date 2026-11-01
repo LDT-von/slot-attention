@@ -1,0 +1,1476 @@
+{
+  "schema": "slotspe_common_private_kl_tradeoff_v1",
+  "status": "completed",
+  "patient_execution": false,
+  "patient_inference": false,
+  "server_execution": false,
+  "steps_per_run": 300,
+  "betas": [
+    0.0,
+    0.01,
+    0.03,
+    0.1,
+    0.3,
+    1.0,
+    3.0
+  ],
+  "results": [
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 0.0,
+      "steps": 300,
+      "survival_nll_validation": 0.9097602963447571,
+      "kl_joint_mean": 65.156005859375,
+      "kl_term_in_objective": 0.0,
+      "kl_share_of_objective": 0.0,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.6551859865730383,
+        "private_omic_readout_on_private_wsi": 0.2224465688659263,
+        "private_wsi_readout_on_private_omic": -0.018249823081994743,
+        "private_omic_readout_on_private_omic": 0.6697079294839658
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.5731305835923282,
+        "private_omic": 0.5690142206208721
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9569016284862993,
+        "private_omic_on_private_omic": 0.9446589517313808
+      },
+      "prior_retains_fraction_of_private_effect": 0.06858410520431533,
+      "duplication_from_common": {
+        "private_wsi": 0.6486743367923381,
+        "private_omic": 0.5903573746328652
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.6808820988591888,
+          "across_patient_variance_share": 0.6404551469543985,
+          "per_feature_std_mean": 0.26261051693048754
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.5287740441266804,
+          "across_patient_variance_share": 0.7301335041030234,
+          "per_feature_std_mean": 0.8208650021681774
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 4.310067348377702,
+          "across_patient_variance_share": 0.5680553043554908,
+          "per_feature_std_mean": 0.8825011786367118
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 0.01,
+      "steps": 300,
+      "survival_nll_validation": 0.9049654006958008,
+      "kl_joint_mean": 19.477231979370117,
+      "kl_term_in_objective": 0.006086634993553162,
+      "kl_share_of_objective": 0.006680886222868343,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.6287295028069372,
+        "private_omic_readout_on_private_wsi": 0.15354081005476328,
+        "private_wsi_readout_on_private_omic": 0.041801259698262094,
+        "private_omic_readout_on_private_omic": 0.4768947013684549
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.7260189206664912,
+        "private_omic": 0.5896071151348595
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9521393651825044,
+        "private_omic_on_private_omic": 0.943023718559753
+      },
+      "prior_retains_fraction_of_private_effect": -0.11250320147151273,
+      "duplication_from_common": {
+        "private_wsi": 0.828530740261728,
+        "private_omic": 0.6527455290573868
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7104460478270984,
+          "across_patient_variance_share": 0.679373261283801,
+          "per_feature_std_mean": 0.2802545139296931
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.363070883147879,
+          "across_patient_variance_share": 0.6787367511219399,
+          "per_feature_std_mean": 0.745230392665423
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.855050740366492,
+          "across_patient_variance_share": 0.5893248896159778,
+          "per_feature_std_mean": 0.8043427442481564
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 0.03,
+      "steps": 300,
+      "survival_nll_validation": 0.9110050201416016,
+      "kl_joint_mean": 13.595234870910645,
+      "kl_term_in_objective": 0.012745532691478729,
+      "kl_share_of_objective": 0.013797591408621131,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.4740414073100824,
+        "private_omic_readout_on_private_wsi": 0.21880825491140143,
+        "private_wsi_readout_on_private_omic": 0.09067570909990696,
+        "private_omic_readout_on_private_omic": 0.6701896725554608
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.7672282739934781,
+        "private_omic": 0.46517103055083553
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9377504358010499,
+        "private_omic_on_private_omic": 0.9535850945711346
+      },
+      "prior_retains_fraction_of_private_effect": -0.35316425158612047,
+      "duplication_from_common": {
+        "private_wsi": 0.8468081902305975,
+        "private_omic": 0.6023969656369625
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7380185324300156,
+          "across_patient_variance_share": 0.7146928447116153,
+          "per_feature_std_mean": 0.2953295935935132
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.220258784420735,
+          "across_patient_variance_share": 0.6222721737124618,
+          "per_feature_std_mean": 0.6645139123007626
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.435863155312646,
+          "across_patient_variance_share": 0.607205043167442,
+          "per_feature_std_mean": 0.7374188389017347
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 0.1,
+      "steps": 300,
+      "survival_nll_validation": 0.9110101461410522,
+      "kl_joint_mean": 8.36709976196289,
+      "kl_term_in_objective": 0.026147186756134033,
+      "kl_share_of_objective": 0.027900530506762403,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.6039643965855832,
+        "private_omic_readout_on_private_wsi": 0.08928464461138885,
+        "private_wsi_readout_on_private_omic": 0.134512393858208,
+        "private_omic_readout_on_private_omic": 0.7271155447514556
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.7291732201426339,
+        "private_omic": 0.500691695541722
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9396636973720898,
+        "private_omic_on_private_omic": 0.957429186323609
+      },
+      "prior_retains_fraction_of_private_effect": -0.4394458803705876,
+      "duplication_from_common": {
+        "private_wsi": 0.8255643203344485,
+        "private_omic": 0.6502127677899531
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7070228311204325,
+          "across_patient_variance_share": 0.8049401096773875,
+          "per_feature_std_mean": 0.31413635427329867
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.7591982959348096,
+          "across_patient_variance_share": 0.5678221037465393,
+          "per_feature_std_mean": 0.522607386192619
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.1670184843208444,
+          "across_patient_variance_share": 0.5570652914782124,
+          "per_feature_std_mean": 0.6423598485589653
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 0.3,
+      "steps": 300,
+      "survival_nll_validation": 0.8934716582298279,
+      "kl_joint_mean": 3.802436351776123,
+      "kl_term_in_objective": 0.035647840797901155,
+      "kl_share_of_objective": 0.038367336855167286,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.33199366212609016,
+        "private_omic_readout_on_private_wsi": 0.32535095818798665,
+        "private_wsi_readout_on_private_omic": 0.3193291171748298,
+        "private_omic_readout_on_private_omic": 0.5029618622534748
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.5153885752262803,
+        "private_omic": 0.8083482141016085
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9121897067720458,
+        "private_omic_on_private_omic": 0.9618117728585299
+      },
+      "prior_retains_fraction_of_private_effect": 0.32702130861640066,
+      "duplication_from_common": {
+        "private_wsi": 0.6532172228013269,
+        "private_omic": 0.9254863173657413
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.8310889749390173,
+          "across_patient_variance_share": 0.8806538796071524,
+          "per_feature_std_mean": 0.40911331917620114
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.133683104010399,
+          "across_patient_variance_share": 0.5076729505451404,
+          "per_feature_std_mean": 0.3725153536349995
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.737764347484583,
+          "across_patient_variance_share": 0.4863903492773577,
+          "per_feature_std_mean": 0.5014589520926898
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 1.0,
+      "steps": 300,
+      "survival_nll_validation": 0.887167751789093,
+      "kl_joint_mean": 0.12229365110397339,
+      "kl_term_in_objective": 0.0038216765969991684,
+      "kl_share_of_objective": 0.004289250214698532,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.2095373126650768,
+        "private_omic_readout_on_private_wsi": 0.166864069745291,
+        "private_wsi_readout_on_private_omic": -0.030149978617529882,
+        "private_omic_readout_on_private_omic": 0.06957617269207705
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.9419175956554219,
+        "private_omic": 0.9529919511501209
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9368006695116341,
+        "private_omic_on_private_omic": 0.7867912704152726
+      },
+      "prior_retains_fraction_of_private_effect": 0.8651274103007851,
+      "duplication_from_common": {
+        "private_wsi": 0.9816657039428649,
+        "private_omic": 0.9919764697055783
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.625415158342943,
+          "across_patient_variance_share": 0.6178384419630002,
+          "per_feature_std_mean": 0.2619273772443371
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.2637733157590985,
+          "across_patient_variance_share": 0.25881476765759087,
+          "per_feature_std_mean": 0.27820046729517206
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.7764540655807939,
+          "across_patient_variance_share": 0.07968290976535826,
+          "per_feature_std_mean": 0.11176221954426478
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 3.0,
+      "steps": 300,
+      "survival_nll_validation": 0.8876659274101257,
+      "kl_joint_mean": 0.015556879341602325,
+      "kl_term_in_objective": 0.001458457438275218,
+      "kl_share_of_objective": 0.0016403300405756958,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.10027829705356717,
+        "private_omic_readout_on_private_wsi": 0.1529670234643119,
+        "private_wsi_readout_on_private_omic": -0.03534112241182252,
+        "private_omic_readout_on_private_omic": 0.021532337920156186
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.9232899778632067,
+        "private_omic": 0.9312662350692215
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.7599296333994439,
+        "private_omic_on_private_omic": 0.828550113812867
+      },
+      "prior_retains_fraction_of_private_effect": 1.1453977171569307,
+      "duplication_from_common": {
+        "private_wsi": 0.9899043053633083,
+        "private_omic": 0.9944683656952026
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.6374561965599832,
+          "across_patient_variance_share": 0.5209063574033203,
+          "per_feature_std_mean": 0.2509988551503426
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.144764920458924,
+          "across_patient_variance_share": 0.15038138601877693,
+          "per_feature_std_mean": 0.1873518969735058
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.3281384731113932,
+          "across_patient_variance_share": 0.012054120962095615,
+          "per_feature_std_mean": 0.03189994426891971
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 0.0,
+      "steps": 300,
+      "survival_nll_validation": 1.0075713396072388,
+      "kl_joint_mean": 37.233253479003906,
+      "kl_term_in_objective": 0.0,
+      "kl_share_of_objective": 0.0,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.6508394045044656,
+        "private_omic_readout_on_private_wsi": 0.11978805704197448,
+        "private_wsi_readout_on_private_omic": 0.06280064645321437,
+        "private_omic_readout_on_private_omic": 0.9467197323372777
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.35945489132502195,
+        "private_omic": -0.06431995309714611
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9361169990567211,
+        "private_omic_on_private_omic": 0.9852331110115274
+      },
+      "prior_retains_fraction_of_private_effect": -0.0020854894266710746,
+      "duplication_from_common": {
+        "private_wsi": 0.6720481886288819,
+        "private_omic": -0.01294172841965091
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7485882294156079,
+          "across_patient_variance_share": 0.8171038527685976,
+          "per_feature_std_mean": 0.329455434645096
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.05157525244418,
+          "across_patient_variance_share": 0.6208342789835183,
+          "per_feature_std_mean": 0.6188649753173142
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.821947917976091,
+          "across_patient_variance_share": 0.6603641195912509,
+          "per_feature_std_mean": 0.5957511697393287
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 0.01,
+      "steps": 300,
+      "survival_nll_validation": 1.0121054649353027,
+      "kl_joint_mean": 13.684717178344727,
+      "kl_term_in_objective": 0.004276474118232727,
+      "kl_share_of_objective": 0.004207546350356266,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.41556570605442744,
+        "private_omic_readout_on_private_wsi": 0.2353502985053254,
+        "private_wsi_readout_on_private_omic": 0.07919601827186162,
+        "private_omic_readout_on_private_omic": 0.9256043348412427
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.3819931233694691,
+        "private_omic": -0.09263331552932041
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9395350800138487,
+        "private_omic_on_private_omic": 0.9859846722744481
+      },
+      "prior_retains_fraction_of_private_effect": 0.10200051602284665,
+      "duplication_from_common": {
+        "private_wsi": 0.6407447657093568,
+        "private_omic": -0.0319092234362508
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7349759466329565,
+          "across_patient_variance_share": 0.8479659537093471,
+          "per_feature_std_mean": 0.3342570596706001
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.979095301497326,
+          "across_patient_variance_share": 0.5807060204356936,
+          "per_feature_std_mean": 0.5777076978473901
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.5923584789950653,
+          "across_patient_variance_share": 0.6785705528704602,
+          "per_feature_std_mean": 0.5571345374100305
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 0.03,
+      "steps": 300,
+      "survival_nll_validation": 1.0146548748016357,
+      "kl_joint_mean": 9.831665992736816,
+      "kl_term_in_objective": 0.009217186868190765,
+      "kl_share_of_objective": 0.009002283794284329,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.35978831648628495,
+        "private_omic_readout_on_private_wsi": 0.38971711146062427,
+        "private_wsi_readout_on_private_omic": 0.016990108023265726,
+        "private_omic_readout_on_private_omic": 0.9726857724482523
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.47062645649957124,
+        "private_omic": -0.022923830629091535
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9513921337575142,
+        "private_omic_on_private_omic": 0.9860217850669053
+      },
+      "prior_retains_fraction_of_private_effect": 0.050106193247739496,
+      "duplication_from_common": {
+        "private_wsi": 0.700348531605967,
+        "private_omic": 0.027095585988504367
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7458622322967872,
+          "across_patient_variance_share": 0.872222308161518,
+          "per_feature_std_mean": 0.3531467137772667
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.8836939408600646,
+          "across_patient_variance_share": 0.5361941235617246,
+          "per_feature_std_mean": 0.5331288962704009
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.407240027936421,
+          "across_patient_variance_share": 0.6758935329336415,
+          "per_feature_std_mean": 0.5191811820344425
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 0.1,
+      "steps": 300,
+      "survival_nll_validation": 1.0189614295959473,
+      "kl_joint_mean": 5.769728183746338,
+      "kl_term_in_objective": 0.018030400574207305,
+      "kl_share_of_objective": 0.017387215645902235,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.6550461279345039,
+        "private_omic_readout_on_private_wsi": 0.4748604854992897,
+        "private_wsi_readout_on_private_omic": 0.020142899241649137,
+        "private_omic_readout_on_private_omic": 0.7396517037670953
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.20439795689938567,
+        "private_omic": 0.3498133983779589
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9573022912659408,
+        "private_omic_on_private_omic": 0.97716598278532
+      },
+      "prior_retains_fraction_of_private_effect": -0.04986879718919074,
+      "duplication_from_common": {
+        "private_wsi": 0.5155613657955479,
+        "private_omic": 0.3590592909467123
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7582783837384953,
+          "across_patient_variance_share": 0.8567728423644269,
+          "per_feature_std_mean": 0.3650013800452392
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.5462687637937673,
+          "across_patient_variance_share": 0.4947303717432247,
+          "per_feature_std_mean": 0.4502458068402463
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.2391487507983054,
+          "across_patient_variance_share": 0.6251397406428402,
+          "per_feature_std_mean": 0.46715888014102547
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 0.3,
+      "steps": 300,
+      "survival_nll_validation": 1.0224766731262207,
+      "kl_joint_mean": 2.4507479667663574,
+      "kl_term_in_objective": 0.0229757621884346,
+      "kl_share_of_objective": 0.02197686036430674,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.20980657625744814,
+        "private_omic_readout_on_private_wsi": 0.28756442832851925,
+        "private_wsi_readout_on_private_omic": 0.07833303883176423,
+        "private_omic_readout_on_private_omic": 0.10019699590531539
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.8350860254156891,
+        "private_omic": 0.9400758045528723
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9452680321163859,
+        "private_omic_on_private_omic": 0.94331965881447
+      },
+      "prior_retains_fraction_of_private_effect": 0.1563911622005967,
+      "duplication_from_common": {
+        "private_wsi": 0.8982904993400169,
+        "private_omic": 0.9388313240063929
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.6917302092608131,
+          "across_patient_variance_share": 0.8470826631258876,
+          "per_feature_std_mean": 0.3453292243013562
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.920644320125667,
+          "across_patient_variance_share": 0.38739200997252554,
+          "per_feature_std_mean": 0.29079409653741783
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.885564241165567,
+          "across_patient_variance_share": 0.4914223559319226,
+          "per_feature_std_mean": 0.33825865765183316
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 1.0,
+      "steps": 300,
+      "survival_nll_validation": 1.0086331367492676,
+      "kl_joint_mean": 0.06721644848585129,
+      "kl_term_in_objective": 0.0021005140151828527,
+      "kl_share_of_objective": 0.002078207264192863,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.2865280848692813,
+        "private_omic_readout_on_private_wsi": 0.24388360520473207,
+        "private_wsi_readout_on_private_omic": 0.13349160805409632,
+        "private_omic_readout_on_private_omic": -0.05181876339644376
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.7976557061043037,
+        "private_omic": 0.9588223286355987
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.7783398105069907,
+        "private_omic_on_private_omic": 0.9040791537943543
+      },
+      "prior_retains_fraction_of_private_effect": 0.9220069109830111,
+      "duplication_from_common": {
+        "private_wsi": 0.9693413738649853,
+        "private_omic": 0.9464692687414514
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.5954229641981102,
+          "across_patient_variance_share": 0.7467526976432587,
+          "per_feature_std_mean": 0.2848352724707388
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.5929420604644104,
+          "across_patient_variance_share": 0.09150271037497973,
+          "per_feature_std_mean": 0.10480441547781812
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.1451506473749755,
+          "across_patient_variance_share": 0.0998123394240993,
+          "per_feature_std_mean": 0.08045819591877983
+        }
+      }
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 3.0,
+      "steps": 300,
+      "survival_nll_validation": 1.0060924291610718,
+      "kl_joint_mean": 0.013078517280519009,
+      "kl_term_in_objective": 0.001226110995048657,
+      "kl_share_of_objective": 0.0012172028471337645,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.02947668187450747,
+        "private_omic_readout_on_private_wsi": 0.15335706096859314,
+        "private_wsi_readout_on_private_omic": 0.026347024140480513,
+        "private_omic_readout_on_private_omic": 0.07767996430983948
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.754976039294564,
+        "private_omic": 0.9315078452655311
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.5401487446250233,
+        "private_omic_on_private_omic": 0.7758382446923451
+      },
+      "prior_retains_fraction_of_private_effect": 0.9580097625915243,
+      "duplication_from_common": {
+        "private_wsi": 0.982659909446447,
+        "private_omic": 0.9705439330471343
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.5278611457778281,
+          "across_patient_variance_share": 0.6505737823985382,
+          "per_feature_std_mean": 0.24221675399142334
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.531670875204451,
+          "across_patient_variance_share": 0.057035343654744525,
+          "per_feature_std_mean": 0.07642714830787811
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.0329749299320268,
+          "across_patient_variance_share": 0.030234604853132376,
+          "per_feature_std_mean": 0.037540542665628666
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 0.0,
+      "steps": 300,
+      "survival_nll_validation": 0.9153198599815369,
+      "kl_joint_mean": 57.71369552612305,
+      "kl_term_in_objective": 0.0,
+      "kl_share_of_objective": 0.0,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.7987076350776354,
+        "private_omic_readout_on_private_wsi": 0.18273576231051125,
+        "private_wsi_readout_on_private_omic": 0.01176216712561795,
+        "private_omic_readout_on_private_omic": 0.4992900467144641
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.42047243421889424,
+        "private_omic": 0.3564154756132143
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9768025643254642,
+        "private_omic_on_private_omic": 0.8283387018550973
+      },
+      "prior_retains_fraction_of_private_effect": 0.02155601969987121,
+      "duplication_from_common": {
+        "private_wsi": 0.558719356095266,
+        "private_omic": 0.5368510564462454
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.8385192486442687,
+          "across_patient_variance_share": 0.6013158722431784,
+          "per_feature_std_mean": 0.30909861334574207
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.6961803229341244,
+          "across_patient_variance_share": 0.5605923311215965,
+          "per_feature_std_mean": 0.7841251005260188
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.0272772855550643,
+          "across_patient_variance_share": 0.2731298518509112,
+          "per_feature_std_mean": 0.24347873620974267
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 0.01,
+      "steps": 300,
+      "survival_nll_validation": 0.9112025499343872,
+      "kl_joint_mean": 12.719444274902344,
+      "kl_term_in_objective": 0.003974826335906983,
+      "kl_share_of_objective": 0.004343230546307815,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.8172449508645163,
+        "private_omic_readout_on_private_wsi": 0.04394060221029161,
+        "private_wsi_readout_on_private_omic": 0.03743359410951863,
+        "private_omic_readout_on_private_omic": 0.7873432692016276
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.5061105801848549,
+        "private_omic": 0.06970373727748091
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.978085052165771,
+        "private_omic_on_private_omic": 0.8253845363672085
+      },
+      "prior_retains_fraction_of_private_effect": 0.10543759429084806,
+      "duplication_from_common": {
+        "private_wsi": 0.6486908241133613,
+        "private_omic": 0.3333366990265587
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.8803391679632491,
+          "across_patient_variance_share": 0.5990954691776221,
+          "per_feature_std_mean": 0.3214930235372905
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.721384793965703,
+          "across_patient_variance_share": 0.5657540527912486,
+          "per_feature_std_mean": 0.8019332925742807
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.618179056567005,
+          "across_patient_variance_share": 0.04799854128569287,
+          "per_feature_std_mean": 0.08158539669304185
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 0.03,
+      "steps": 300,
+      "survival_nll_validation": 0.9144054651260376,
+      "kl_joint_mean": 9.12224006652832,
+      "kl_term_in_objective": 0.0085521000623703,
+      "kl_share_of_objective": 0.009265973198480168,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.5847285524123473,
+        "private_omic_readout_on_private_wsi": 0.06708868626976927,
+        "private_wsi_readout_on_private_omic": 0.05531484036165557,
+        "private_omic_readout_on_private_omic": 0.6585440536938043
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.6429641444552057,
+        "private_omic": 0.2646185010979315
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.973659921393352,
+        "private_omic_on_private_omic": 0.8961141076071074
+      },
+      "prior_retains_fraction_of_private_effect": 0.11393047891790148,
+      "duplication_from_common": {
+        "private_wsi": 0.6938759372505938,
+        "private_omic": 0.5789430614814814
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.900506763522272,
+          "across_patient_variance_share": 0.597746528911175,
+          "per_feature_std_mean": 0.3504385594153918
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.6986475229631193,
+          "across_patient_variance_share": 0.5536192607852143,
+          "per_feature_std_mean": 0.779672516908962
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.3096830382287699,
+          "across_patient_variance_share": 0.011992548983245496,
+          "per_feature_std_mean": 0.03289273392785784
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 0.1,
+      "steps": 300,
+      "survival_nll_validation": 0.9157700538635254,
+      "kl_joint_mean": 5.245372772216797,
+      "kl_term_in_objective": 0.016391789913177492,
+      "kl_share_of_objective": 0.01758470379646231,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.28897808271627845,
+        "private_omic_readout_on_private_wsi": 0.01164654759701178,
+        "private_wsi_readout_on_private_omic": 0.03039285412115844,
+        "private_omic_readout_on_private_omic": 0.2685399954775203
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.7116367843488498,
+        "private_omic": 0.6432333139386198
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9815416508193133,
+        "private_omic_on_private_omic": 0.9367288063945522
+      },
+      "prior_retains_fraction_of_private_effect": 0.19955570913093176,
+      "duplication_from_common": {
+        "private_wsi": 0.6369618421513165,
+        "private_omic": 0.9497174952600158
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.8889969526980377,
+          "across_patient_variance_share": 0.6320587029477417,
+          "per_feature_std_mean": 0.3390512465614566
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.4562276487389423,
+          "across_patient_variance_share": 0.5145809773183251,
+          "per_feature_std_mean": 0.6763694577551775
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.0816263178403878,
+          "across_patient_variance_share": 0.0036309671473509723,
+          "per_feature_std_mean": 0.014357754124174732
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 0.3,
+      "steps": 300,
+      "survival_nll_validation": 0.9179543852806091,
+      "kl_joint_mean": 2.586872100830078,
+      "kl_term_in_objective": 0.02425192594528198,
+      "kl_share_of_objective": 0.025739507002164045,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.9146612879246523,
+        "private_omic_readout_on_private_wsi": 0.08225657595505897,
+        "private_wsi_readout_on_private_omic": 0.14931273860406358,
+        "private_omic_readout_on_private_omic": 0.2559498018420765
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.3792492621594983,
+        "private_omic": 0.8413349210154543
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9759153639287064,
+        "private_omic_on_private_omic": 0.7270289624751719
+      },
+      "prior_retains_fraction_of_private_effect": 0.3645986258950411,
+      "duplication_from_common": {
+        "private_wsi": 0.3565542369212713,
+        "private_omic": 0.9870904990060626
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.8296768290166843,
+          "across_patient_variance_share": 0.6768460839836993,
+          "per_feature_std_mean": 0.320801759714784
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.30307812148519,
+          "across_patient_variance_share": 0.45585953863030804,
+          "per_feature_std_mean": 0.6153607358846623
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.0446303591972481,
+          "across_patient_variance_share": 0.0029212415610968584,
+          "per_feature_std_mean": 0.01176056494619996
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 1.0,
+      "steps": 300,
+      "survival_nll_validation": 0.9214559197425842,
+      "kl_joint_mean": 0.8843886852264404,
+      "kl_term_in_objective": 0.027637146413326263,
+      "kl_share_of_objective": 0.029119532529369697,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.6533744377774686,
+        "private_omic_readout_on_private_wsi": 0.09430708942670574,
+        "private_wsi_readout_on_private_omic": 0.13200697141307338,
+        "private_omic_readout_on_private_omic": 0.3731001851638168
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.8780652106524478,
+        "private_omic": 0.8100735616320944
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9701189724608217,
+        "private_omic_on_private_omic": 0.35777911813965957
+      },
+      "prior_retains_fraction_of_private_effect": 0.6724965411466702,
+      "duplication_from_common": {
+        "private_wsi": 0.9159738336403577,
+        "private_omic": 0.9911228316652386
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.8309746073424156,
+          "across_patient_variance_share": 0.6805894331251748,
+          "per_feature_std_mean": 0.32228173900994284
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.935731306348529,
+          "across_patient_variance_share": 0.3465444145427535,
+          "per_feature_std_mean": 0.4622186570984015
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 0.972716802668582,
+          "across_patient_variance_share": 0.00623625679392331,
+          "per_feature_std_mean": 0.015652313340181193
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 3.0,
+      "steps": 300,
+      "survival_nll_validation": 0.9256011843681335,
+      "kl_joint_mean": 0.09051454067230225,
+      "kl_term_in_objective": 0.008485738188028336,
+      "kl_share_of_objective": 0.00908452734228075,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.40579643320400516,
+        "private_omic_readout_on_private_wsi": 0.10947207005691573,
+        "private_wsi_readout_on_private_omic": 0.13840530697475295,
+        "private_omic_readout_on_private_omic": 0.3103821277584924
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.9559187273567978,
+        "private_omic": 0.8180386865843501
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.96507250034729,
+        "private_omic_on_private_omic": 0.04875894821230753
+      },
+      "prior_retains_fraction_of_private_effect": 0.8891639527477678,
+      "duplication_from_common": {
+        "private_wsi": 0.9775427900541563,
+        "private_omic": 0.9916755304182857
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.9233621224545301,
+          "across_patient_variance_share": 0.6009791912886355,
+          "per_feature_std_mean": 0.34612733573181864
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.6153568802820235,
+          "across_patient_variance_share": 0.23561267786524237,
+          "per_feature_std_mean": 0.31962997189330344
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.079532175761046,
+          "across_patient_variance_share": 0.0069690528064417865,
+          "per_feature_std_mean": 0.018802049130988718
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 0.0,
+      "steps": 300,
+      "survival_nll_validation": 1.1184892654418945,
+      "kl_joint_mean": 21.35177230834961,
+      "kl_term_in_objective": 0.0,
+      "kl_share_of_objective": 0.0,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.750680902415352,
+        "private_omic_readout_on_private_wsi": 0.11222695367535962,
+        "private_wsi_readout_on_private_omic": 0.09001133943659301,
+        "private_omic_readout_on_private_omic": 0.794547621444277
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.12462482260923602,
+        "private_omic": 0.1550942186886577
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9099564997499006,
+        "private_omic_on_private_omic": 0.909877844379797
+      },
+      "prior_retains_fraction_of_private_effect": 0.09474011644047979,
+      "duplication_from_common": {
+        "private_wsi": 0.18735169166154308,
+        "private_omic": 0.6316201415140981
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.6939213213737566,
+          "across_patient_variance_share": 0.7436704327820765,
+          "per_feature_std_mean": 0.29635766329993796
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.1748005717775483,
+          "across_patient_variance_share": 0.5283375272053114,
+          "per_feature_std_mean": 0.5900715972031115
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.6106982204998819,
+          "across_patient_variance_share": 0.32031953222075277,
+          "per_feature_std_mean": 0.21757489852916884
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 0.01,
+      "steps": 300,
+      "survival_nll_validation": 1.1108617782592773,
+      "kl_joint_mean": 8.317387580871582,
+      "kl_term_in_objective": 0.0025991836190223695,
+      "kl_share_of_objective": 0.002334328465937235,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.774646400938245,
+        "private_omic_readout_on_private_wsi": 0.24842790265591952,
+        "private_wsi_readout_on_private_omic": 0.11062150727592113,
+        "private_omic_readout_on_private_omic": 0.47457216169952876
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.11223196197677343,
+        "private_omic": 0.17765761431467475
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.917463362653475,
+        "private_omic_on_private_omic": 0.6181964291957547
+      },
+      "prior_retains_fraction_of_private_effect": -0.17029142519264956,
+      "duplication_from_common": {
+        "private_wsi": 0.14359913429951754,
+        "private_omic": 0.6346477884289898
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7139089888428745,
+          "across_patient_variance_share": 0.7606286081316437,
+          "per_feature_std_mean": 0.30627911843090805
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.01665552972681,
+          "across_patient_variance_share": 0.5201580832260302,
+          "per_feature_std_mean": 0.5582388736760532
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.4224833555125969,
+          "across_patient_variance_share": 0.2936870695213843,
+          "per_feature_std_mean": 0.1826893820450842
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 0.03,
+      "steps": 300,
+      "survival_nll_validation": 1.1025832891464233,
+      "kl_joint_mean": 6.617844104766846,
+      "kl_term_in_objective": 0.006204228848218918,
+      "kl_share_of_objective": 0.005595507477789714,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.7637182308827016,
+        "private_omic_readout_on_private_wsi": 0.19082681766304388,
+        "private_wsi_readout_on_private_omic": 0.13707058099525848,
+        "private_omic_readout_on_private_omic": 0.36232657851807215
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.12582638972020166,
+        "private_omic": 0.3139544258346302
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9258476649367203,
+        "private_omic_on_private_omic": 0.7631116376568203
+      },
+      "prior_retains_fraction_of_private_effect": -0.17992723084095916,
+      "duplication_from_common": {
+        "private_wsi": 0.18023458432317319,
+        "private_omic": 0.7988480200271694
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.743143504285821,
+          "across_patient_variance_share": 0.7618113734799032,
+          "per_feature_std_mean": 0.32592546410773926
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 3.028526833625708,
+          "across_patient_variance_share": 0.4902565176589574,
+          "per_feature_std_mean": 0.5441776784759476
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.2748341351554937,
+          "across_patient_variance_share": 0.24187841644157043,
+          "per_feature_std_mean": 0.14838036578416233
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 0.1,
+      "steps": 300,
+      "survival_nll_validation": 1.1178621053695679,
+      "kl_joint_mean": 3.462620258331299,
+      "kl_term_in_objective": 0.01082068830728531,
+      "kl_share_of_objective": 0.009587005638701462,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.5674776153931691,
+        "private_omic_readout_on_private_wsi": 0.5066226011075009,
+        "private_wsi_readout_on_private_omic": 0.1911172888669953,
+        "private_omic_readout_on_private_omic": 0.187749012628601
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.2539176401351366,
+        "private_omic": 0.1830042112591581
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9192328733273063,
+        "private_omic_on_private_omic": 0.4600932158468394
+      },
+      "prior_retains_fraction_of_private_effect": -0.12479050063390952,
+      "duplication_from_common": {
+        "private_wsi": 0.33789213738282475,
+        "private_omic": 0.7501174639889694
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7510840606579678,
+          "across_patient_variance_share": 0.7918908061770715,
+          "per_feature_std_mean": 0.3373194467750357
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.8698310098152153,
+          "across_patient_variance_share": 0.4180187706916359,
+          "per_feature_std_mean": 0.4716342301531761
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.1415937486858807,
+          "across_patient_variance_share": 0.039727629390903595,
+          "per_feature_std_mean": 0.04818431268077997
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 0.3,
+      "steps": 300,
+      "survival_nll_validation": 1.1216933727264404,
+      "kl_joint_mean": 1.8274383544921875,
+      "kl_term_in_objective": 0.01713223457336426,
+      "kl_share_of_objective": 0.01504377357125415,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.48665298623495845,
+        "private_omic_readout_on_private_wsi": 0.39441784165603144,
+        "private_wsi_readout_on_private_omic": 0.23222291788318894,
+        "private_omic_readout_on_private_omic": 0.33590671879769196
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.41844987819548163,
+        "private_omic": 0.15060209999535668
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9533518966870113,
+        "private_omic_on_private_omic": 0.5151691003632858
+      },
+      "prior_retains_fraction_of_private_effect": -0.0753738747523576,
+      "duplication_from_common": {
+        "private_wsi": 0.4556857017983861,
+        "private_omic": 0.8506256964810259
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7452557492350415,
+          "across_patient_variance_share": 0.8160388827551363,
+          "per_feature_std_mean": 0.3356283420685672
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.5278622108373794,
+          "across_patient_variance_share": 0.37455414985593327,
+          "per_feature_std_mean": 0.390765436974061
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.0715553030347829,
+          "across_patient_variance_share": 0.004733279926987929,
+          "per_feature_std_mean": 0.015281215079013864
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 1.0,
+      "steps": 300,
+      "survival_nll_validation": 1.1297624111175537,
+      "kl_joint_mean": 0.6506036520004272,
+      "kl_term_in_objective": 0.02033136412501335,
+      "kl_share_of_objective": 0.017678005535440144,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.3488078736629916,
+        "private_omic_readout_on_private_wsi": 0.01125666142638937,
+        "private_wsi_readout_on_private_omic": 0.19125487344813819,
+        "private_omic_readout_on_private_omic": 0.15055807848475078
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.6257483772716878,
+        "private_omic": 0.10365397500386409
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.940267926766313,
+        "private_omic_on_private_omic": 0.29533339294414696
+      },
+      "prior_retains_fraction_of_private_effect": 0.24219887221858236,
+      "duplication_from_common": {
+        "private_wsi": 0.6628038014435398,
+        "private_omic": 0.886294869911048
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7479656646278385,
+          "across_patient_variance_share": 0.7524989086560743,
+          "per_feature_std_mean": 0.3275018019595369
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 2.258948641690169,
+          "across_patient_variance_share": 0.258129755872523,
+          "per_feature_std_mean": 0.2817841040811847
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 0.9356459276385666,
+          "across_patient_variance_share": 0.0019527854029210312,
+          "per_feature_std_mean": 0.009407400793542688
+        }
+      }
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 3.0,
+      "steps": 300,
+      "survival_nll_validation": 1.139496088027954,
+      "kl_joint_mean": 0.1236155703663826,
+      "kl_term_in_objective": 0.011588959721848369,
+      "kl_share_of_objective": 0.010067857057567584,
+      "private_increment_residual_r2": {
+        "private_wsi_readout_on_private_wsi": 0.33622284661953183,
+        "private_omic_readout_on_private_wsi": 0.11788795757718373,
+        "private_wsi_readout_on_private_omic": 0.03920722730395787,
+        "private_omic_readout_on_private_omic": 0.1035319733779474
+      },
+      "common_branch_only_r2_on_private_factor": {
+        "private_wsi": 0.8180818158569597,
+        "private_omic": 0.4040289245780454
+      },
+      "private_branch_raw_r2": {
+        "private_wsi_on_private_wsi": 0.9215575827477562,
+        "private_omic_on_private_omic": 0.3897998171815864
+      },
+      "prior_retains_fraction_of_private_effect": 0.449638585885136,
+      "duplication_from_common": {
+        "private_wsi": 0.8917036171665242,
+        "private_omic": 0.928846305164101
+      },
+      "representation_variance": {
+        "common": {
+          "n_patients": 512,
+          "feature_dim": 4,
+          "mean_feature_norm": 0.7271644387276391,
+          "across_patient_variance_share": 0.7351478158190038,
+          "per_feature_std_mean": 0.31464147782140284
+        },
+        "private_wsi_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 1.9884392474633,
+          "across_patient_variance_share": 0.1674698158445427,
+          "per_feature_std_mean": 0.19110346176150414
+        },
+        "private_omic_readout": {
+          "n_patients": 512,
+          "feature_dim": 16,
+          "mean_feature_norm": 0.8950510688446182,
+          "across_patient_variance_share": 0.0015571120382672967,
+          "per_feature_std_mean": 0.008163558722381696
+        }
+      }
+    }
+  ],
+  "claim_boundary": "Generated-data trade-off between the KL term size and the private increment that survives it, for one prototype. It locates a usable operating point on invented data. It says nothing about patient performance and does not establish that the operating point transfers to real features."
+}
