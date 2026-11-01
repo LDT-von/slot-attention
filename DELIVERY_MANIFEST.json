@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-01T16:23:28.599434+08:00",
-  "base_commit_before_delivery": "a5bf69b1124f70054eca6e2c803cb878d937903b",
+  "recorded_at": "2026-11-01T16:28:01.960766+08:00",
+  "base_commit_before_delivery": "2af838882b174e789b5e9eb1fa2b2daa036753c0",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 515,
-  "repository_file_count_including_manifest": 516,
+  "covered_file_count": 516,
+  "repository_file_count_including_manifest": 517,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 696356,
-      "sha256": "978b385ec86ec55a61abc4e3754d769ce45e90f6814cde4a395d286a466a427a"
+      "bytes": 696791,
+      "sha256": "86cc30cae6078ec1817046bf088ef78e2091dd0e9d31e6181f77793b69b17093"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -286,13 +286,18 @@
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/architecture.md",
-      "bytes": 11642,
-      "sha256": "e3a90ae2580c07bfd336ea2321c0064c2c14ea7ad15c175b1a7f2aae3b12404d"
+      "bytes": 14915,
+      "sha256": "1289489c643df21684cb8ce56b4cb1adc7e709971975dc1f6bafd44b1410d5f7"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/kl_tradeoff_receipt.json",
       "bytes": 55524,
       "sha256": "4930dd7bce32c5782f8068081e2853531d69fee311f637ccbd3faf2a39995366"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/open_decisions.json",
+      "bytes": 6638,
+      "sha256": "35f0cbd488910d0f7d800bdffbf66748abc087421ae979a7a9fb26b2176507b9"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/semantics_receipt.json",

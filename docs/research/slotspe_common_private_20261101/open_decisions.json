@@ -1,0 +1,97 @@
+{
+  "schema": "slotspe_common_private_open_decisions_v1",
+  "recorded_at": "2026-11-01T17:10:00+08:00",
+  "branch": "codex/common-private-survival",
+  "base_commit": "2af8388",
+  "purpose": "Three decisions that this repository does not make on its own. Each entry states the measured fact, the candidate options, and the input that is needed. No option is selected. The measurements that justify every option are in semantics_receipt.json and kl_tradeoff_receipt.json.",
+  "scope_boundary": "Every fact below comes from generated tensors on CPU. No patient file, no checkpoint, no patient training and no patient inference were involved. None of these facts concerns patient performance.",
+  "decisions": [
+    {
+      "id": "Q1_constraint_target",
+      "question": "Should the compression constraint act on the total information of the private slots relative to the common representation, or only on the part of the private branch that is predictable from the common representation?",
+      "why_it_is_open": "The current conditional KL bounds the total information. It cannot distinguish a redundant copy of the common content from a genuinely complementary increment, so the two options are not reachable by tuning the KL weight alone.",
+      "measured_facts": {
+        "duplication_probe_heldout_r2_private_from_common": {
+          "beta_0_to_0.03": "0.19 to 0.85 depending on task and seed",
+          "beta_1_to_3": "0.66 to 0.99"
+        },
+        "private_increment_residual_r2": {
+          "beta_0": "0.65 to 0.80",
+          "beta_1": "0.21 to 0.03"
+        },
+        "direction": "Strong constraint removes the private increment first and the redundant common copy second, which is the opposite of the stated objective of compressing redundancy while preserving useful private signal.",
+        "prior_substitution": "At beta 0 the conditional prior retains only 0.02 to 0.16 of the private effect, so the private content is genuinely absent from the common representation. At beta 1 the prior retains 0.67 to 1.15 of it, so the private branch has become a function of the common representation."
+      },
+      "options": {
+        "A_keep_current_and_tune_beta_only": {
+          "change": "none",
+          "cost": "Measured direction is opposite to the objective, and no beta satisfies both goals: beta 0 has no compression, beta at or above 1 over-compresses."
+        },
+        "B_add_a_redundancy_specific_term": {
+          "change": "Predict the private branch from the common representation with a ridge fit and penalise only the predictable residual, keeping the existing information budget term as an additional term.",
+          "cost": "Introduces a new module and a new hyperparameter."
+        },
+        "C_replace_the_kl_term": {
+          "change": "Use the redundancy-specific term in place of the conditional KL.",
+          "cost": "Gives up the information budget interpretation of the loss."
+        },
+        "D_keep_the_architecture_and_change_the_research_goal": {
+          "change": "none",
+          "cost": "Abandons the disentanglement framing and reframes the work as quantifying the increment and testing its predictive value."
+        }
+      },
+      "input_needed": "One of A, B, C or D. If B or C, also the range of the redundancy term weight and whether the existing KL term is kept alongside.",
+      "decision_made": null
+    },
+    {
+      "id": "Q2_beta_zero_point_zero_one_thousand",
+      "question": "How should the beta 0.001 operating point be treated?",
+      "why_it_is_open": "The earlier synthetic receipt reported that a small KL weight gave no predictive advantage. The sweep shows that this point is numerically inert, so that earlier result is a too-small-weight null rather than evidence about compression.",
+      "measured_facts": {
+        "kl_term_share_of_objective_at_beta_0_001": "0.0005 to 0.0009, that is 0.05 to 0.09 percent",
+        "operative_window": "beta 0.1 to 0.3 gives a KL term of 2 to 4 percent of the objective, keeps the validation NLL close to beta 0 (0.8935 to 1.0225 against 0.9098 to 1.1185) and retains a private increment residual R2 of 0.21 to 0.73"
+      },
+      "options": {
+        "A_retire_0_001": {
+          "change": "Use 0.1 and 0.3 as the formal operating points. Keep the original receipt and the inertness explanation in the record."
+        },
+        "B_keep_0_001_as_an_inert_control": {
+          "change": "Keep 0.001 in the matrix as the explicit unconstrained arm and add 0.1 and 0.3.",
+          "cost": "None identified; the inert arm documents the difference between constrained and unconstrained regimes."
+        },
+        "C_keep_only_0_001": {
+          "change": "none",
+          "cost": "Leaves every future comparison in the unconstrained regime."
+        }
+      },
+      "input_needed": "One of A, B or C.",
+      "decision_made": null
+    },
+    {
+      "id": "Q3_seed_confirmation_before_patients",
+      "question": "Should the operating point be confirmed with more seeds on generated data before the patient stage is frozen?",
+      "why_it_is_open": "Every conclusion so far rests on two training seeds, one generated dataset per seed, a small model and no significance test.",
+      "measured_facts": {
+        "seeds_used": 2,
+        "tradeoff_point_stability": "The observation that a KL weight around 0.1 to 0.3 keeps the survival NLL flat while retaining the increment is not stable in position between the two seeds.",
+        "missing": "No significance test, no seed sweep, no distribution-shift task, no synergistic task, no slot-level complementarity check, no omics pathway-identity adapter."
+      },
+      "options": {
+        "A_expand_seeds_first": {
+          "change": "Run the generated-data sweep with roughly five to eight seeds and fix the KL window and the trade-off point before freezing a patient protocol.",
+          "cost": "Local CPU time only."
+        },
+        "B_go_straight_to_the_patient_stage": {
+          "change": "none",
+          "cost": "The KL weight would have no basis, and patient data can only be run once."
+        },
+        "C_do_both": {
+          "change": "Expand seeds locally on CPU while the patient stage is prepared separately.",
+          "cost": "The patient stage still needs separate explicit execution authorisation."
+        }
+      },
+      "input_needed": "One of A, B or C. The patient stage needs separate execution authorisation in any case and must inherit the actual 5fold cohort identity that the original loader hardcodes in _load_split, not the 5fold_uni2h directory name.",
+      "decision_made": null
+    }
+  ]
+}
