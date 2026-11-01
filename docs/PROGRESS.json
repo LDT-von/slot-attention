@@ -8539,5 +8539,35 @@
     },
     "gaps_reasons": "Only three of five folds are trained, so no five-fold statistic exists for the anti-collapse arms and no comparison with the five-fold historical figures is valid yet. Only one seed, seed 3, and the twenty repeats are repeats of one trained model rather than independent runs, so the fold spread contains no training randomness. The content separation was measured on the wsi modality only, and the omic modality was not tested for the same separation. The deletion oracle has not been re-run on the anti-collapse best checkpoints, so whether the patient-specific content is carried by the deleted slot or by the retained slot is not known, and the earlier cross-view finding that the deletion gap did not detect patient-specific information has not been revisited on these checkpoints. The survival score covers three folds and one seed and no multiplicity correction applies to a single mechanism. Nothing here establishes patient harm, patient benefit, correction efficacy, clinical utility or generalization to any other cohort or cancer, and no patient identifier, feature, weight or per-patient array is reproduced. The launcher repair was diagnosed from the source and the error text but was not implemented, and the exact call path reaching the failing function was not traced at runtime.",
     "next_action_user_inputs": "The queue is stopped with six of ten arm-folds complete, and both GPUs are idle, so the decision is the user's. Recommended order. First, repair the launcher defect so that the log file is opened in a mode that tolerates an existing file, and resume the queue to train folds 3 and 4, which requires the user's explicit execution authorization since the rule is that only --run executes. Second, once the queue completes, recompute both score protocols over five folds and compare against the historical baseline on the same five folds and the same protocol, and report the protocol difference against the twenty repeat standard deviation as was done here. Third, run the deletion oracle on the anti-collapse best checkpoints to determine whether the newly detected patient-specific content is carried by the deleted slot, which is the question the cross-view line left open. Fourth, repeat the content separation probe on the omic modality and with the static control, so that the result does not rest on the wsi modality alone. Fifth, treat the discrepancy between the successful content result and the flat survival score as the primary open question, since holding the geometry open made the content patient-specific without making the survival task better, and note that the historical evidence already shows that lower redundancy correlates with lower survival performance, so any claim that opening the slots helps prediction is not supported by anything in this repository."
-  }
+  },
+"latest_common_private_architecture_20261101":{
+  "route_task": "User-requested complete slot disentanglement / conditional MI architecture, synthetic-only local implementation",
+  "completed_work": "Implemented token-to-hazard conditional private-slot VIB, paired common representations, selection-free Deep Sets and censored NLL; tested interfaces and 12 generated-data trainings.",
+  "paths_commit": {
+    "model": "slotspe_proof/common_private_survival.py",
+    "checker": "scripts/check_common_private_survival_synthetic.py",
+    "design": "docs/research/slotspe_common_private_20261101/architecture.md",
+    "receipt": "docs/research/slotspe_common_private_20261101/synthetic_receipt.json",
+    "commit": null,
+    "publication_branch": "codex/common-private-survival"
+  },
+  "checks_actual_execution_raw_receipt": {
+    "checks": {
+      "readout_slot_permutation": true,
+      "token_permutation": true,
+      "masked_padding": true,
+      "analytic_kl": true,
+      "censor_likelihood": true,
+      "finite_gradients": true
+    },
+    "synthetic_training_runs": 12,
+    "steps_per_run": 80,
+    "patient_training": 0,
+    "patient_inference": 0,
+    "server_execution": false,
+    "new_server_raw_receipt": false
+  },
+  "gaps_reasons": "No patient loader or full-size resource validation. Common/private semantic leakage, private branch use and slot complementarity are not established. Small KL did not establish predictive improvement; strong KL worsened mean toy holdout NLL. Research prototype; public delivery manifest refreshed for this scoped publication.",
+  "next_action_user_inputs": "Complete semantic leakage and synthetic counterexample diagnostics, then freeze a patient protocol only with separate execution authorization."
+}
 }

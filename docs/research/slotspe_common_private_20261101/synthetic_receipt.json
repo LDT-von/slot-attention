@@ -1,0 +1,123 @@
+{
+  "checks": {
+    "readout_slot_permutation": true,
+    "token_permutation": true,
+    "masked_padding": true,
+    "analytic_kl": true,
+    "censor_likelihood": true,
+    "finite_gradients": true
+  },
+  "runs": [
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 0.0,
+      "initial_train_meanmode_nll": 1.396605134010315,
+      "final_train_meanmode_nll": 0.928730845451355,
+      "holdout_expected_sample_nll": 0.9059582591056824,
+      "kl_joint": 48.37181091308594
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 0.001,
+      "initial_train_meanmode_nll": 1.396605134010315,
+      "final_train_meanmode_nll": 0.9286702871322632,
+      "holdout_expected_sample_nll": 0.9055920600891113,
+      "kl_joint": 27.42135238647461
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 3,
+      "beta": 1.0,
+      "initial_train_meanmode_nll": 1.396605134010315,
+      "final_train_meanmode_nll": 1.0092872381210327,
+      "holdout_expected_sample_nll": 0.9780698180198669,
+      "kl_joint": 0.6044670939445496
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 0.0,
+      "initial_train_meanmode_nll": 1.378393292427063,
+      "final_train_meanmode_nll": 0.9207597970962524,
+      "holdout_expected_sample_nll": 0.9172342419624329,
+      "kl_joint": 36.229122161865234
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 0.001,
+      "initial_train_meanmode_nll": 1.378393292427063,
+      "final_train_meanmode_nll": 0.9207824468612671,
+      "holdout_expected_sample_nll": 0.9170379638671875,
+      "kl_joint": 25.563175201416016
+    },
+    {
+      "task": "shared_and_private",
+      "seed": 13,
+      "beta": 1.0,
+      "initial_train_meanmode_nll": 1.378393292427063,
+      "final_train_meanmode_nll": 1.0000711679458618,
+      "holdout_expected_sample_nll": 0.937239694595337,
+      "kl_joint": 0.635686993598938
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 0.0,
+      "initial_train_meanmode_nll": 1.4445521831512451,
+      "final_train_meanmode_nll": 1.019322156906128,
+      "holdout_expected_sample_nll": 0.9834521651268006,
+      "kl_joint": 41.866302490234375
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 0.001,
+      "initial_train_meanmode_nll": 1.4445521831512451,
+      "final_train_meanmode_nll": 1.0191973447799683,
+      "holdout_expected_sample_nll": 0.9831188559532166,
+      "kl_joint": 20.83901596069336
+    },
+    {
+      "task": "private_only",
+      "seed": 3,
+      "beta": 1.0,
+      "initial_train_meanmode_nll": 1.4445521831512451,
+      "final_train_meanmode_nll": 1.0675534009933472,
+      "holdout_expected_sample_nll": 1.0240983009338378,
+      "kl_joint": 0.48318469524383545
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 0.0,
+      "initial_train_meanmode_nll": 1.4259543418884277,
+      "final_train_meanmode_nll": 1.0173066854476929,
+      "holdout_expected_sample_nll": 1.0021620273590088,
+      "kl_joint": 26.495153427124023
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 0.001,
+      "initial_train_meanmode_nll": 1.4259543418884277,
+      "final_train_meanmode_nll": 1.017284870147705,
+      "holdout_expected_sample_nll": 1.001863706111908,
+      "kl_joint": 16.397747039794922
+    },
+    {
+      "task": "private_only",
+      "seed": 13,
+      "beta": 1.0,
+      "initial_train_meanmode_nll": 1.4259543418884277,
+      "final_train_meanmode_nll": 1.0505658388137817,
+      "holdout_expected_sample_nll": 0.997348427772522,
+      "kl_joint": 0.8996365070343018
+    }
+  ],
+  "patient_execution": false,
+  "steps_per_run": 80,
+  "note": "12 toy trainings, not patient evidence; five sampling repeats are not independent trainings. No architecture search or best-epoch selection."
+}
