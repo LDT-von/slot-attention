@@ -9165,4 +9165,72 @@
     "gaps_reasons": "Actual patient manifold, shared/private semantic identification and useful MI target remain unresolved. Native residual can bypass auxiliary branches; interface invertibility does not ensure upstream preservation, head access, stability or prediction benefit. Norm computation cost and trainable API are not accepted yet.",
     "next_action_user_inputs": "Design minimal bounded-residual API and known-answer gradient/permutation/numerical acceptance before a new training protocol. Keep all-slot readout a separate controlled increment; do not add losses, sweep eta, run patients or affect server queues. No Q1/Q2/Q3 user choice is needed."
   }
+,
+
+  "latest_bounded_native_residual_api_and_bypass_20261102": {
+    "recorded_at": "2026-11-02",
+    "route_task": "Independent bounded V2 native residual API, CPU cost and task-semantic bypass audit",
+    "completed_work": "Implemented standalone differentiable composed/factor Frobenius-bounded residual with strict configuration/state and dtype scope. Passed14 new known-answer items and7 prior tests. Measured24 paired cost cells without optimization; exact8-state nuisance partition passes separation but contains no target information, while residual privileged inverse recovers target.",
+    "paths_commit": {
+      "branch": "codex/common-private-mechanism-review",
+      "parent_commit": "a03a4fb2b4ccea3d9c234e4ef9ac130e604ff513",
+      "report": "docs/research/slotspe_common_private_20261101/bounded_residual_review_20261102.md",
+      "adapter": "slotspe_proof/bounded_native_residual.py",
+      "plan": "docs/research/slotspe_common_private_20261101/bounded_residual_plan_20261102.json",
+      "receipt": "docs/research/slotspe_common_private_20261101/bounded_residual_receipt.json",
+      "pushed": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "schema": "slotspe_bounded_residual_validation_v1",
+      "recorded_at": "2026-11-02",
+      "base_commit": "a03a4fb2b4ccea3d9c234e4ef9ac130e604ff513",
+      "previous_goal_turn_classification": "progress:a03a4fb completed source rank/collision and HSIC counterexamples, selected a bounded residual interface prerequisite without training",
+      "focused_tests": "21 passed in4.06s",
+      "new_parametrized_test_items": 14,
+      "retained_prior_test_items": 7,
+      "full_repository_tests_rerun": false,
+      "plan_and_source_pins_verified": true,
+      "old_manifest_entries_hash_verified": 655,
+      "historical_research_files_hash_verified": 76,
+      "protected_original_files_hash_verified": 11,
+      "historical_reports_or_receipts_modified": false,
+      "live_navigation_updated_intentionally": true,
+      "timing_cells": 24,
+      "timing_forward_backward_calls": 480,
+      "semantic_score_autograd_calls": 1,
+      "source_adapter_forward_calls_excluding_tests": 505,
+      "timed_seconds_sum_excluding_warmup_and_diagnostics": 1.1233404999948107,
+      "parameter_count_each_arm": [
+        175072
+      ],
+      "finite_timing_gradients": true,
+      "maximum_inverse_error_all_dtype_cases": 2.384185791015625e-07,
+      "composed_median_cost_ratio_range": [
+        2.381391102430065,
+        3.9233289025682474
+      ],
+      "semantic_exact_population_states": 8,
+      "semantic_full_content_reference_gate_passed": false,
+      "semantic_decision": "Interface preserved native signal while C/U can be wholly task irrelevant despite valid low HSIC and variance. Keep as preservation control, not the new MI mechanism.",
+      "neural_training_runs": 0,
+      "optimizer_updates": 0,
+      "patient_training": 0,
+      "patient_inference": 0,
+      "patient_checkpoint_reads": 0,
+      "server_execution": false,
+      "queue_modified": false,
+      "new_preset_or_patient_cli": false,
+      "original_or_v2_source_changed": false,
+      "main_research_architecture_or_objective_changed": false,
+      "standalone_candidate_adapter_implemented": true,
+      "new_mi_estimator": false,
+      "remote_snapshot": "0245876bdfa0e2f3d04b14eff54248dc1444e6f5",
+      "remote_snapshot_changed": false,
+      "merged_or_pushed": false,
+      "report": "docs/research/slotspe_common_private_20261101/bounded_residual_review_20261102.md",
+      "limits": "Exact-real bound plus finite CPU float32/64 acceptance, not interval certification, AMP/CUDA or patient throughput. Inverse head is a privileged existence counterexample; actual fixed content targets not tested. No prediction or semantic success."
+    },
+    "gaps_reasons": "Interface API passed but task-related common/private identification and a valid MI mechanism remain incomplete. Residual shortcut and conservative normalization remain limits. No fixed content-reference success, trained full architecture, patient adapter or independent generalization.",
+    "next_action_user_inputs": "Freeze this component as a native-information control; stop norm/fee variants. Revisit observable task-related common/private content and cooperation with known-answer acceptance before any new training. Keep all-slot readout separate and original baseline matched; patient/server execution still requires specific authorization. No user research-choice input needed."
+  }
 }

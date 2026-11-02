@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T19:54:55.120023+08:00",
-  "base_commit_before_delivery": "cb3f89a80d9f37d3165aaca37730b32efe6e09d5",
+  "recorded_at": "2026-11-02T20:08:52.156826+08:00",
+  "base_commit_before_delivery": "a03a4fb2b4ccea3d9c234e4ef9ac130e604ff513",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 657,
-  "repository_file_count_including_manifest": 658,
+  "covered_file_count": 664,
+  "repository_file_count_including_manifest": 665,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 736101,
-      "sha256": "df31f5345a4b3c52a924e09ed124ab4233f7626211d377a4e70345226818872a"
+      "bytes": 740618,
+      "sha256": "63a6654424dd7451cd344472658e091d5bdc93fc1595cba2854a1c99c045ace4"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -291,8 +291,8 @@
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/README.md",
-      "bytes": 1734,
-      "sha256": "56c845a6aeef1c165fd7ed161f8dbc6e4be16e9769fef0c69d3521a729b77d0d"
+      "bytes": 2042,
+      "sha256": "a1014c6e8f82bcab6f2215271475e67acc586b2e4cd2b71883ecd81a8ac8403e"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/SERVER_HANDOFF_20261102.md",
@@ -303,6 +303,26 @@
       "path": "docs/research/slotspe_common_private_20261101/architecture.md",
       "bytes": 14915,
       "sha256": "1289489c643df21684cb8ce56b4cb1adc7e709971975dc1f6bafd44b1410d5f7"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/bounded_residual_plan_20261102.json",
+      "bytes": 1748,
+      "sha256": "447de9dfde1d2471dc5c2496be980e56b10b5454e30da27fb75c5dffa5f69819"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/bounded_residual_receipt.json",
+      "bytes": 34435,
+      "sha256": "8bdfc1dc9f3481aecf09c75cfb83b5f4e9827e294fc5487127ae5a8fa74fbecc"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/bounded_residual_review_20261102.md",
+      "bytes": 12075,
+      "sha256": "7393716aee95cb06edfe1a7a08d8ef1abf38f0b750ef6c6340c63d66e495057a"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/bounded_residual_validation.json",
+      "bytes": 2435,
+      "sha256": "f942bf4b47aea3017a82e714c250ae8ab9ee583292e2c2bbe15abe47bdcd4f5d"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/claims_counterexamples_receipt.json",
@@ -1975,6 +1995,11 @@
       "sha256": "19feaadce6a11b28fbad62cbaa107e877f5497e016fd14eb7da2b46ea8a27557"
     },
     {
+      "path": "scripts/check_bounded_native_residual.py",
+      "bytes": 8115,
+      "sha256": "10058903e9062a0934d2048b8c17dc28996f275fb81e0ce286335327b662f9bc"
+    },
+    {
       "path": "scripts/check_club_copy_gradient.py",
       "bytes": 2008,
       "sha256": "550dd18c74349e16dcc62d92b3caa8461f7570b0bf95aa42440ff8b5dd7d8a1f"
@@ -2510,6 +2535,11 @@
       "sha256": "be526f12d1ac455ce903e0fa264df0a58116b2b59424d4f4dca6576256f789e6"
     },
     {
+      "path": "slotspe_proof/bounded_native_residual.py",
+      "bytes": 6122,
+      "sha256": "6e0bc351bc9412970fed3af20e0aa8e2e475ad2d45c6949bfb45fb482301ef72"
+    },
+    {
       "path": "slotspe_proof/checks.py",
       "bytes": 33019,
       "sha256": "de78846021c7c1ca7c8a6dfe2a8f45f80c7b8b66a5480239388886084f881a76"
@@ -2908,6 +2938,11 @@
       "path": "survot_rank/research/slotspe_proof/__init__.py",
       "bytes": 4015,
       "sha256": "39fbe30d5dc58d0965ccb9e7a07b040189fecf6507091d6e389252feebb0fc13"
+    },
+    {
+      "path": "tests/test_bounded_native_residual.py",
+      "bytes": 9117,
+      "sha256": "aedd8b66e2941db5e0d6ca2ac95fb780ac1d701404207228f084bc64dfbd58a2"
     },
     {
       "path": "tests/test_common_private_club.py",
