@@ -1,0 +1,432 @@
+{
+  "status": "completed",
+  "source_sha256": "9f81d89d47eb2868d6b21096d5bc57bc3a6cca16eaa443b09dee518e3c621f85",
+  "gaussian_oracle_cases": 36,
+  "all_identities_passed": true,
+  "rows": [
+    {
+      "private_coefficient": 0.0,
+      "noise_sd": 0.5,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 0.0,
+      "true_conditional_mi_nats": 0.0,
+      "reference_mismatch_nats": 0.0
+    },
+    {
+      "private_coefficient": 0.0,
+      "noise_sd": 0.5,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 0.0,
+      "true_conditional_mi_nats": 0.0,
+      "reference_mismatch_nats": 0.0
+    },
+    {
+      "private_coefficient": 0.0,
+      "noise_sd": 0.5,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.0,
+      "true_conditional_mi_nats": 0.0,
+      "reference_mismatch_nats": 0.0
+    },
+    {
+      "private_coefficient": 0.0,
+      "noise_sd": 1.0,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 0.0,
+      "true_conditional_mi_nats": 0.0,
+      "reference_mismatch_nats": 0.0
+    },
+    {
+      "private_coefficient": 0.0,
+      "noise_sd": 1.0,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 0.0,
+      "true_conditional_mi_nats": 0.0,
+      "reference_mismatch_nats": 0.0
+    },
+    {
+      "private_coefficient": 0.0,
+      "noise_sd": 1.0,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.0,
+      "true_conditional_mi_nats": 0.0,
+      "reference_mismatch_nats": 0.0
+    },
+    {
+      "private_coefficient": 0.0,
+      "noise_sd": 2.0,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 0.0,
+      "true_conditional_mi_nats": 0.0,
+      "reference_mismatch_nats": 0.0
+    },
+    {
+      "private_coefficient": 0.0,
+      "noise_sd": 2.0,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 0.0,
+      "true_conditional_mi_nats": 0.0,
+      "reference_mismatch_nats": 0.0
+    },
+    {
+      "private_coefficient": 0.0,
+      "noise_sd": 2.0,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.0,
+      "true_conditional_mi_nats": 0.0,
+      "reference_mismatch_nats": 0.0
+    },
+    {
+      "private_coefficient": 0.2,
+      "noise_sd": 0.5,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 0.16000000000000003,
+      "true_conditional_mi_nats": 0.07421000255913666,
+      "reference_mismatch_nats": 0.08578999744086346
+    },
+    {
+      "private_coefficient": 0.2,
+      "noise_sd": 0.5,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 0.08000000000000002,
+      "true_conditional_mi_nats": 0.0566643426535016,
+      "reference_mismatch_nats": 0.02333565734649845
+    },
+    {
+      "private_coefficient": 0.2,
+      "noise_sd": 0.5,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.016,
+      "true_conditional_mi_nats": 0.014973538183976056,
+      "reference_mismatch_nats": 0.0010264618160239491
+    },
+    {
+      "private_coefficient": 0.2,
+      "noise_sd": 1.0,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 0.04000000000000001,
+      "true_conditional_mi_nats": 0.01961035657664065,
+      "reference_mismatch_nats": 0.02038964342335936
+    },
+    {
+      "private_coefficient": 0.2,
+      "noise_sd": 1.0,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 0.020000000000000004,
+      "true_conditional_mi_nats": 0.014779401120772204,
+      "reference_mismatch_nats": 0.005220598879227767
+    },
+    {
+      "private_coefficient": 0.2,
+      "noise_sd": 1.0,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.004,
+      "true_conditional_mi_nats": 0.003785632748159037,
+      "reference_mismatch_nats": 0.00021436725184087457
+    },
+    {
+      "private_coefficient": 0.2,
+      "noise_sd": 2.0,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 0.010000000000000002,
+      "true_conditional_mi_nats": 0.0049751654265840425,
+      "reference_mismatch_nats": 0.005024834573415959
+    },
+    {
+      "private_coefficient": 0.2,
+      "noise_sd": 2.0,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 0.005000000000000001,
+      "true_conditional_mi_nats": 0.0037360074193504983,
+      "reference_mismatch_nats": 0.0012639925806494645
+    },
+    {
+      "private_coefficient": 0.2,
+      "noise_sd": 2.0,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.001,
+      "true_conditional_mi_nats": 0.0009490986415401263,
+      "reference_mismatch_nats": 5.090135845986499e-05
+    },
+    {
+      "private_coefficient": 1.0,
+      "noise_sd": 0.5,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 4.0,
+      "true_conditional_mi_nats": 0.8047189562170501,
+      "reference_mismatch_nats": 3.1952810437829497
+    },
+    {
+      "private_coefficient": 1.0,
+      "noise_sd": 0.5,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 2.0,
+      "true_conditional_mi_nats": 0.6931471805599453,
+      "reference_mismatch_nats": 1.3068528194400546
+    },
+    {
+      "private_coefficient": 1.0,
+      "noise_sd": 0.5,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.3999999999999999,
+      "true_conditional_mi_nats": 0.2826569045250302,
+      "reference_mismatch_nats": 0.11734309547496968
+    },
+    {
+      "private_coefficient": 1.0,
+      "noise_sd": 1.0,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 1.0,
+      "true_conditional_mi_nats": 0.34657359027997264,
+      "reference_mismatch_nats": 0.6534264097200273
+    },
+    {
+      "private_coefficient": 1.0,
+      "noise_sd": 1.0,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 0.5,
+      "true_conditional_mi_nats": 0.27980789396771133,
+      "reference_mismatch_nats": 0.22019210603228867
+    },
+    {
+      "private_coefficient": 1.0,
+      "noise_sd": 1.0,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.09999999999999998,
+      "true_conditional_mi_nats": 0.08697665356171899,
+      "reference_mismatch_nats": 0.013023346438280958
+    },
+    {
+      "private_coefficient": 1.0,
+      "noise_sd": 2.0,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 0.25,
+      "true_conditional_mi_nats": 0.11157177565710488,
+      "reference_mismatch_nats": 0.13842822434289515
+    },
+    {
+      "private_coefficient": 1.0,
+      "noise_sd": 2.0,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 0.125,
+      "true_conditional_mi_nats": 0.08592512846332961,
+      "reference_mismatch_nats": 0.03907487153667033
+    },
+    {
+      "private_coefficient": 1.0,
+      "noise_sd": 2.0,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.024999999999999994,
+      "true_conditional_mi_nats": 0.023203186407077865,
+      "reference_mismatch_nats": 0.001796813592922164
+    },
+    {
+      "private_coefficient": 3.0,
+      "noise_sd": 0.5,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 36.0,
+      "true_conditional_mi_nats": 1.8054589563221122,
+      "reference_mismatch_nats": 34.19454104367789
+    },
+    {
+      "private_coefficient": 3.0,
+      "noise_sd": 0.5,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 18.0,
+      "true_conditional_mi_nats": 1.666102255087602,
+      "reference_mismatch_nats": 16.3338977449124
+    },
+    {
+      "private_coefficient": 3.0,
+      "noise_sd": 0.5,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 3.599999999999999,
+      "true_conditional_mi_nats": 1.0296194171811581,
+      "reference_mismatch_nats": 2.5703805828188404
+    },
+    {
+      "private_coefficient": 3.0,
+      "noise_sd": 1.0,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 9.0,
+      "true_conditional_mi_nats": 1.151292546497023,
+      "reference_mismatch_nats": 7.848707453502977
+    },
+    {
+      "private_coefficient": 3.0,
+      "noise_sd": 1.0,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 4.5,
+      "true_conditional_mi_nats": 1.0238464216826277,
+      "reference_mismatch_nats": 3.4761535783173723
+    },
+    {
+      "private_coefficient": 3.0,
+      "noise_sd": 1.0,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.8999999999999998,
+      "true_conditional_mi_nats": 0.49847431744580467,
+      "reference_mismatch_nats": 0.4015256825541951
+    },
+    {
+      "private_coefficient": 3.0,
+      "noise_sd": 2.0,
+      "private_correlation": 0.0,
+      "expected_cross_kl_nats": 2.25,
+      "true_conditional_mi_nats": 0.5893274981708231,
+      "reference_mismatch_nats": 1.6606725018291768
+    },
+    {
+      "private_coefficient": 3.0,
+      "noise_sd": 2.0,
+      "private_correlation": 0.5,
+      "expected_cross_kl_nats": 1.125,
+      "true_conditional_mi_nats": 0.4943056967268906,
+      "reference_mismatch_nats": 0.6306943032731094
+    },
+    {
+      "private_coefficient": 3.0,
+      "noise_sd": 2.0,
+      "private_correlation": 0.9,
+      "expected_cross_kl_nats": 0.22499999999999995,
+      "true_conditional_mi_nats": 0.17796233127401406,
+      "reference_mismatch_nats": 0.047037668725985804
+    }
+  ],
+  "sampling_bypass_and_repeat_controls": [
+    {
+      "epsilon": 1.0,
+      "draws": 1,
+      "single_direction_rate_nats": 0.5,
+      "joint_draw_rate_upper_bound_nats": 0.5,
+      "actual_sample_mean_bayes_bit_error": 0.2397500610934767,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 1.0,
+      "draws": 5,
+      "single_direction_rate_nats": 0.5,
+      "joint_draw_rate_upper_bound_nats": 2.5,
+      "actual_sample_mean_bayes_bit_error": 0.05692314900332902,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 1.0,
+      "draws": 20,
+      "single_direction_rate_nats": 0.5,
+      "joint_draw_rate_upper_bound_nats": 10.0,
+      "actual_sample_mean_bayes_bit_error": 0.0007827011290012744,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 0.1,
+      "draws": 1,
+      "single_direction_rate_nats": 0.005000000000000001,
+      "joint_draw_rate_upper_bound_nats": 0.005000000000000001,
+      "actual_sample_mean_bayes_bit_error": 0.4718140111014917,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 0.1,
+      "draws": 5,
+      "single_direction_rate_nats": 0.005000000000000001,
+      "joint_draw_rate_upper_bound_nats": 0.025000000000000005,
+      "actual_sample_mean_bayes_bit_error": 0.4371835305814459,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 0.1,
+      "draws": 20,
+      "single_direction_rate_nats": 0.005000000000000001,
+      "joint_draw_rate_upper_bound_nats": 0.10000000000000002,
+      "actual_sample_mean_bayes_bit_error": 0.3759148170229246,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 0.01,
+      "draws": 1,
+      "single_direction_rate_nats": 5e-05,
+      "joint_draw_rate_upper_bound_nats": 5e-05,
+      "actual_sample_mean_bayes_bit_error": 0.4971790755899842,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 0.01,
+      "draws": 5,
+      "single_direction_rate_nats": 5e-05,
+      "joint_draw_rate_upper_bound_nats": 0.00025,
+      "actual_sample_mean_bayes_bit_error": 0.4936924315113983,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 0.01,
+      "draws": 20,
+      "single_direction_rate_nats": 5e-05,
+      "joint_draw_rate_upper_bound_nats": 0.001,
+      "actual_sample_mean_bayes_bit_error": 0.4873864396849802,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 0.001,
+      "draws": 1,
+      "single_direction_rate_nats": 5e-07,
+      "joint_draw_rate_upper_bound_nats": 5e-07,
+      "actual_sample_mean_bayes_bit_error": 0.49971790523173404,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 0.001,
+      "draws": 5,
+      "single_direction_rate_nats": 5e-07,
+      "joint_draw_rate_upper_bound_nats": 2.4999999999999998e-06,
+      "actual_sample_mean_bayes_bit_error": 0.4993692171323212,
+      "noiseless_posterior_mean_bit_error": 0.0
+    },
+    {
+      "epsilon": 0.001,
+      "draws": 20,
+      "single_direction_rate_nats": 5e-07,
+      "joint_draw_rate_upper_bound_nats": 9.999999999999999e-06,
+      "actual_sample_mean_bayes_bit_error": 0.4987384358415972,
+      "noiseless_posterior_mean_bit_error": 0.0
+    }
+  ],
+  "required_degeneracy_controls": [
+    {
+      "case": "useful_shared",
+      "posterior_means": "a*S in both views",
+      "cross_kl": 0.0,
+      "conclusion": "matched shared signal is allowed; cross KL does not certify usefulness"
+    },
+    {
+      "case": "constant_collapse",
+      "posterior_means": "zero in both views",
+      "cross_kl": 0.0,
+      "conclusion": "content/task preservation must be independently verified"
+    },
+    {
+      "case": "shared_nuisance",
+      "posterior_means": "a*H in both views, H independent of outcome",
+      "cross_kl": 0.0,
+      "conclusion": "cross predictability cannot distinguish useful common content from common nuisance"
+    },
+    {
+      "case": "wrong_reference_sees_own_input",
+      "posterior_means": "b*P; reference also sees P",
+      "cross_kl": 0.0,
+      "true_conditional_mi_if_b_tau_one": 0.34657359027997264,
+      "conclusion": "the other-only reference restriction is essential"
+    },
+    {
+      "case": "xor_private_synergy",
+      "I_Y_P": 0.0,
+      "I_Y_Q": 0.0,
+      "I_Y_PQ": 0.6931471805599453,
+      "conclusion": "joint survival utility must remain; do not require each private slot to predict Y alone"
+    }
+  ],
+  "neural_training": 0,
+  "patient_execution": false,
+  "scope": "population identities under explicit generative assumptions; finite training KL is not a measured patient MI certificate",
+  "repeat_boundary": "one-draw information bound does not transfer unchanged to multi-draw averaged prediction or deterministic posterior predictive expectation"
+}

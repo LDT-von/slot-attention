@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T10:29:41.257885+08:00",
-  "base_commit_before_delivery": "6ad3aab4c32417c72458e61a69e55876ef1f72e0",
+  "recorded_at": "2026-11-02T11:07:39.097037+08:00",
+  "base_commit_before_delivery": "5cf76b7a3b1ffd1ae7b7f086b69199330c7907ac",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 583,
-  "repository_file_count_including_manifest": 584,
+  "covered_file_count": 596,
+  "repository_file_count_including_manifest": 597,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 709469,
-      "sha256": "424bb08ff37355c9052dc33cd52c1cf19f148e8d8c45b26cea3672a4f01a4f0f"
+      "bytes": 712671,
+      "sha256": "c8077e265d5ce820f3ebee2136090b9b3ec93ab0795b0f682723e89264f5290f"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -348,6 +348,41 @@
       "path": "docs/research/slotspe_common_private_20261101/content_rate_bound_receipt.json",
       "bytes": 2664,
       "sha256": "d0b9665fc5c72f68ae240457767cbeeb71b7080b455dd77db8c39b95ac2a6eeb"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_probe_controls_receipt.json",
+      "bytes": 17663,
+      "sha256": "91d848d052860a7fa9dd11dea77241f7467e6ddfa9ccec10ec9e24bbecb5fb7b"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_rate_math_receipt.json",
+      "bytes": 13886,
+      "sha256": "97371bbf9cdbbe4af22f225c3f59744ce205a8c6dfafa6132e720b6aee192ee4"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_rate_neural_receipt.json",
+      "bytes": 325124,
+      "sha256": "0abedac2966d0f264ca65db9911513008aaf2be6f34716df00619ed87419f4ae"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_rate_plan_20261102.json",
+      "bytes": 2892,
+      "sha256": "ce76fd0bc58444c4686ef823f1b430ef2d72315f1a709bf8fdb07c8dc88723e9"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_rate_stage_summary.json",
+      "bytes": 20815,
+      "sha256": "a671d9c0549add23009c64cc0853fde4f31e42adaf11616cfd7ba0bc6a526e6b"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_rate_validation_receipt.json",
+      "bytes": 2588,
+      "sha256": "edbf80331c827b1067d387445be033dd324cf8f8ddf7a552464095a42934a97e"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/crossmodal_shared_bottleneck_review_20261102.md",
+      "bytes": 14660,
+      "sha256": "8959799e0a04de19b971c1bef885ef7628da3ad96a628a809b2e2ad2ce05c88b"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/direct_club_method_20261102.md",
@@ -1810,6 +1845,16 @@
       "sha256": "37ee21d4094f2e1768b785a44463402bf3ce10e7d16a1cca52ec14d98618a498"
     },
     {
+      "path": "scripts/check_crossmodal_conditional_rate.py",
+      "bytes": 3884,
+      "sha256": "9f81d89d47eb2868d6b21096d5bc57bc3a6cca16eaa443b09dee518e3c621f85"
+    },
+    {
+      "path": "scripts/check_crossmodal_probe_controls.py",
+      "bytes": 3214,
+      "sha256": "a280fde419b5c124336734074c9ebbcb119a3800aae01d0c6c7031e9caa45463"
+    },
+    {
       "path": "scripts/check_crossview_math_gate.py",
       "bytes": 6885,
       "sha256": "dd5d5c6789cb8f8d7af77d530decca2ce3a4444ca3fdb2468a3d5fd4219f34a0"
@@ -2005,6 +2050,11 @@
       "sha256": "8b8186c42f275f77f7a211358a5a39582dcb104c8ae7ad0525e1ddd64df05a5d"
     },
     {
+      "path": "scripts/compare_crossmodal_shared_bottleneck.py",
+      "bytes": 10375,
+      "sha256": "7b06f3cbb6e45eeb3cd2c73a07b8a4b8ad14bb380606368566cbad1aab49c369"
+    },
+    {
       "path": "scripts/compare_frozen_content_targets.py",
       "bytes": 10175,
       "sha256": "c156f1c20d564f2d79ce8295ca64036f39b0fea954e846f2c9a1939228a90198"
@@ -2195,6 +2245,11 @@
       "sha256": "66c33376bab3f856cf7b9ae56e2a8687a8f1cacd3a361847e2998433f2ac36f1"
     },
     {
+      "path": "scripts/summarize_crossmodal_shared_stage.py",
+      "bytes": 5375,
+      "sha256": "c72a61d28ff7788a03fa47006f33c5f45910a774ea37ebf48de99497091f8d8a"
+    },
+    {
       "path": "scripts/summarize_frozen_content_stage.py",
       "bytes": 4526,
       "sha256": "d06ed2c1b96c47e4ae4e25ff74cded042b0806f3f66a33038056bb885d9b309a"
@@ -2246,8 +2301,8 @@
     },
     {
       "path": "slotspe_proof/common_private_diagnostics.py",
-      "bytes": 23153,
-      "sha256": "f2bd99321420250bf42e4c3f58c91b0d44dc53fcb7a1188946ab701dd1622164"
+      "bytes": 23286,
+      "sha256": "4a73f4071dbd9d5d13d244908b823e431862cb23c68d7065ec10e13dd9bcb971"
     },
     {
       "path": "slotspe_proof/common_private_survival.py",
@@ -2258,6 +2313,11 @@
       "path": "slotspe_proof/content_budget_slots.py",
       "bytes": 3633,
       "sha256": "714e2266f00f225caaf9668f25c1fe6a72b3867cd3bd81e64a36e1deda0d4b4d"
+    },
+    {
+      "path": "slotspe_proof/crossmodal_shared_bottleneck.py",
+      "bytes": 6791,
+      "sha256": "4f8d4a4e98cd61437b8e6ae4968e70e544dc0a792262e79c8576e08ccf763970"
     },
     {
       "path": "slotspe_proof/crossview_deletion.py",
@@ -2593,6 +2653,11 @@
       "path": "tests/test_content_budget_slots.py",
       "bytes": 2192,
       "sha256": "cd31d061f8d7cc568692e9eeac32d6149d62b357863d26e0907354f74b9ced07"
+    },
+    {
+      "path": "tests/test_crossmodal_shared_bottleneck.py",
+      "bytes": 5121,
+      "sha256": "a4f80936576c1025cc96846e14edf7488c2c40e70dfcf76853c6d32860e657e4"
     },
     {
       "path": "tests/test_crossview_deletion.py",

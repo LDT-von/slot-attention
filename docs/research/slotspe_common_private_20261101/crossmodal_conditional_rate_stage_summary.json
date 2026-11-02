@@ -1,0 +1,610 @@
+{
+  "schema": "slotspe_crossmodal_conditional_rate_summary_v1",
+  "source_receipt_sha256": "0abedac2966d0f264ca65db9911513008aaf2be6f34716df00619ed87419f4ae",
+  "neural_trainings": 48,
+  "steps_per_run": 500,
+  "core_updates": 24000,
+  "paired_initialization_groups": 12,
+  "cache_hashes_verified": 48,
+  "source_pins_before_execution_reverified": true,
+  "training_seconds_excluding_probes": 390.9887729000038,
+  "summary": [
+    {
+      "task": "shared_only",
+      "shared_weight": 0.0,
+      "private_weight": 0.0,
+      "nll_mean": 0.8495581348737081,
+      "nll_sd": 0.020152905234498274,
+      "posterior_means_nll_diagnostic": 0.8440683682759603,
+      "shared_rate_nats": 81.25293223063152,
+      "private_rate_nats": 25.205983916918438,
+      "shared_factor_r2_sample": 0.9154245854326786,
+      "shared_factor_r2_mean": 0.953126446666147,
+      "planted_wsi_bit_r2_shared_sample": -0.012379857751161571,
+      "planted_wsi_bit_r2_shared_mean": -0.009845789377829576,
+      "pooled_private_risk_increment": 0.03213253763893289,
+      "mean_coordinate_all_vs_single_gain": 0.003257273428335873,
+      "private_mean_rank_by_modality": [
+        1.1497557631754745,
+        1.3549992955268775
+      ],
+      "private_sample_rank_by_modality": [
+        2.3078644178651477,
+        2.3427724437680646
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9842570562199441,
+        0.900721808584624
+      ],
+      "gradient_norm_max": 8.85838794708252,
+      "parameter_count": 7444
+    },
+    {
+      "task": "shared_only",
+      "shared_weight": 0.0,
+      "private_weight": 0.3,
+      "nll_mean": 0.8265962998072307,
+      "nll_sd": 0.0034623640452893837,
+      "posterior_means_nll_diagnostic": 0.8248184124628702,
+      "shared_rate_nats": 75.77335516611735,
+      "private_rate_nats": 0.7151704505085945,
+      "shared_factor_r2_sample": 0.9458462452675298,
+      "shared_factor_r2_mean": 0.9562919254400379,
+      "planted_wsi_bit_r2_shared_sample": -0.009017834408709624,
+      "planted_wsi_bit_r2_shared_mean": 0.009127139943245951,
+      "pooled_private_risk_increment": 0.0018638812723183896,
+      "mean_coordinate_all_vs_single_gain": -0.005061847615996274,
+      "private_mean_rank_by_modality": [
+        1.2536862426525297,
+        1.3808418717760673
+      ],
+      "private_sample_rank_by_modality": [
+        3.0866495932818228,
+        3.089813148321903
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9544143418316898,
+        0.8770738819243895
+      ],
+      "gradient_norm_max": 5.009139537811279,
+      "parameter_count": 7444
+    },
+    {
+      "task": "shared_only",
+      "shared_weight": 0.1,
+      "private_weight": 0.0,
+      "nll_mean": 0.8390811244646708,
+      "nll_sd": 0.00467059959066427,
+      "posterior_means_nll_diagnostic": 0.8326706091562907,
+      "shared_rate_nats": 0.0063744725193828344,
+      "private_rate_nats": 12.707633376121521,
+      "shared_factor_r2_sample": 0.19120562085956858,
+      "shared_factor_r2_mean": 0.9680131940856481,
+      "planted_wsi_bit_r2_shared_sample": -0.020698885998935213,
+      "planted_wsi_bit_r2_shared_mean": -0.018149408736088057,
+      "pooled_private_risk_increment": 0.7605360891867238,
+      "mean_coordinate_all_vs_single_gain": 0.0006035352504887548,
+      "private_mean_rank_by_modality": [
+        1.260407880415908,
+        1.2399807320279115
+      ],
+      "private_sample_rank_by_modality": [
+        2.3723767828667577,
+        2.4146986110956603
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9251851083178685,
+        0.9287930372666767
+      ],
+      "gradient_norm_max": 2.839426279067993,
+      "parameter_count": 7444
+    },
+    {
+      "task": "shared_only",
+      "shared_weight": 0.1,
+      "private_weight": 0.3,
+      "nll_mean": 0.8229446291923523,
+      "nll_sd": 0.013249258524003963,
+      "posterior_means_nll_diagnostic": 0.814369002978007,
+      "shared_rate_nats": 0.0626958558956782,
+      "private_rate_nats": 0.769363559782505,
+      "shared_factor_r2_sample": 0.8844908485808423,
+      "shared_factor_r2_mean": 0.9851852120317786,
+      "planted_wsi_bit_r2_shared_sample": -0.02463184958333568,
+      "planted_wsi_bit_r2_shared_mean": -0.025120431902973566,
+      "pooled_private_risk_increment": 0.07408309347351598,
+      "mean_coordinate_all_vs_single_gain": -0.0006070352303939879,
+      "private_mean_rank_by_modality": [
+        1.4371211181277321,
+        1.235542897434692
+      ],
+      "private_sample_rank_by_modality": [
+        3.0765654289233955,
+        3.0928837330310333
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9277743557339504,
+        0.9896211393631053
+      ],
+      "gradient_norm_max": 2.677706480026245,
+      "parameter_count": 7444
+    },
+    {
+      "task": "private_only",
+      "shared_weight": 0.0,
+      "private_weight": 0.0,
+      "nll_mean": 0.7998801549275716,
+      "nll_sd": 0.020301564268401982,
+      "posterior_means_nll_diagnostic": 0.7956382632255554,
+      "shared_rate_nats": 94.91326649983723,
+      "private_rate_nats": 14.00308421254158,
+      "shared_factor_r2_sample": 0.36724696514942046,
+      "shared_factor_r2_mean": 0.5941685663795988,
+      "planted_wsi_bit_r2_shared_sample": 0.8423380376510646,
+      "planted_wsi_bit_r2_shared_mean": 0.915082990195674,
+      "pooled_private_risk_increment": 0.021123688856843095,
+      "mean_coordinate_all_vs_single_gain": 0.0167663323328961,
+      "private_mean_rank_by_modality": [
+        1.3767369615137037,
+        1.571365203758044
+      ],
+      "private_sample_rank_by_modality": [
+        2.1843071803471945,
+        2.7069391408606425
+      ],
+      "private_mean_cosine_by_modality": [
+        0.5413627489839818,
+        0.7881363671041727
+      ],
+      "gradient_norm_max": 5.637850284576416,
+      "parameter_count": 7444
+    },
+    {
+      "task": "private_only",
+      "shared_weight": 0.0,
+      "private_weight": 0.3,
+      "nll_mean": 0.784080425898234,
+      "nll_sd": 0.01649213763478382,
+      "posterior_means_nll_diagnostic": 0.7765646179517111,
+      "shared_rate_nats": 297.6069793701172,
+      "private_rate_nats": 0.5797704830765724,
+      "shared_factor_r2_sample": 0.14046500135627168,
+      "shared_factor_r2_mean": 0.6546891094297054,
+      "planted_wsi_bit_r2_shared_sample": 0.8587158018088223,
+      "planted_wsi_bit_r2_shared_mean": 0.905450348138008,
+      "pooled_private_risk_increment": 0.002236184220511228,
+      "mean_coordinate_all_vs_single_gain": -0.01563109047933459,
+      "private_mean_rank_by_modality": [
+        1.9530552586253356,
+        1.764137623205036
+      ],
+      "private_sample_rank_by_modality": [
+        3.0807217016946193,
+        3.119401879779686
+      ],
+      "private_mean_cosine_by_modality": [
+        0.6568599040096359,
+        0.786594828768475
+      ],
+      "gradient_norm_max": 26.466171264648438,
+      "parameter_count": 7444
+    },
+    {
+      "task": "private_only",
+      "shared_weight": 0.1,
+      "private_weight": 0.0,
+      "nll_mean": 0.7964551289876303,
+      "nll_sd": 0.030967952649784743,
+      "posterior_means_nll_diagnostic": 0.7915365894635519,
+      "shared_rate_nats": 0.002449417719617486,
+      "private_rate_nats": 9.88566251595815,
+      "shared_factor_r2_sample": -0.015748870654506697,
+      "shared_factor_r2_mean": 0.35406842767203967,
+      "planted_wsi_bit_r2_shared_sample": -0.014684391299271978,
+      "planted_wsi_bit_r2_shared_mean": 0.47879716338913075,
+      "pooled_private_risk_increment": 0.9115225035081308,
+      "mean_coordinate_all_vs_single_gain": -0.01188466547466649,
+      "private_mean_rank_by_modality": [
+        1.3991544336839261,
+        1.3633988670705397
+      ],
+      "private_sample_rank_by_modality": [
+        2.180887196409568,
+        2.9282532124845373
+      ],
+      "private_mean_cosine_by_modality": [
+        0.4682856235859659,
+        0.9599736137643368
+      ],
+      "gradient_norm_max": 24.951339721679688,
+      "parameter_count": 7444
+    },
+    {
+      "task": "private_only",
+      "shared_weight": 0.1,
+      "private_weight": 0.3,
+      "nll_mean": 0.7949527144432068,
+      "nll_sd": 0.010607236132140969,
+      "posterior_means_nll_diagnostic": 0.779514213403066,
+      "shared_rate_nats": 0.003710312768816948,
+      "private_rate_nats": 0.7182325248916944,
+      "shared_factor_r2_sample": -0.011910050440319083,
+      "shared_factor_r2_mean": 0.4111233006763411,
+      "planted_wsi_bit_r2_shared_sample": -0.019118005443258257,
+      "planted_wsi_bit_r2_shared_mean": 0.37236213128332024,
+      "pooled_private_risk_increment": 0.8647522159653035,
+      "mean_coordinate_all_vs_single_gain": 0.0011810203345391896,
+      "private_mean_rank_by_modality": [
+        1.5122673769435147,
+        1.3629077369823714
+      ],
+      "private_sample_rank_by_modality": [
+        3.085088724243649,
+        3.1161814103528456
+      ],
+      "private_mean_cosine_by_modality": [
+        0.7224568921417567,
+        0.9743224423677461
+      ],
+      "gradient_norm_max": 62.822349548339844,
+      "parameter_count": 7444
+    },
+    {
+      "task": "private_xor",
+      "shared_weight": 0.0,
+      "private_weight": 0.0,
+      "nll_mean": 1.1575297276178995,
+      "nll_sd": 0.018099607338365558,
+      "posterior_means_nll_diagnostic": 1.1564833720525105,
+      "shared_rate_nats": 97.10056940714519,
+      "private_rate_nats": 3.2869235972563424,
+      "shared_factor_r2_sample": 0.5717888253211656,
+      "shared_factor_r2_mean": 0.8274576280452236,
+      "planted_wsi_bit_r2_shared_sample": 0.002924281388115143,
+      "planted_wsi_bit_r2_shared_mean": 0.060810748702622076,
+      "pooled_private_risk_increment": 0.04859094835066565,
+      "mean_coordinate_all_vs_single_gain": 0.009943383980988141,
+      "private_mean_rank_by_modality": [
+        1.2378245027687902,
+        1.7159471136592288
+      ],
+      "private_sample_rank_by_modality": [
+        2.6525591796260874,
+        2.915537471185639
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9048248341206278,
+        0.841108123042006
+      ],
+      "gradient_norm_max": 3.982008218765259,
+      "parameter_count": 7444
+    },
+    {
+      "task": "private_xor",
+      "shared_weight": 0.0,
+      "private_weight": 0.3,
+      "nll_mean": 1.1614006598790487,
+      "nll_sd": 0.029666036785437774,
+      "posterior_means_nll_diagnostic": 1.15946364402771,
+      "shared_rate_nats": 174.17779286702475,
+      "private_rate_nats": 0.5944824479520321,
+      "shared_factor_r2_sample": 0.6766457453053673,
+      "shared_factor_r2_mean": 0.8324841475295521,
+      "planted_wsi_bit_r2_shared_sample": -0.014812613484595913,
+      "planted_wsi_bit_r2_shared_mean": 0.019881736865484705,
+      "pooled_private_risk_increment": 0.0006966033101668629,
+      "mean_coordinate_all_vs_single_gain": -0.0054728535287192825,
+      "private_mean_rank_by_modality": [
+        1.8749570546550975,
+        1.4942782479620027
+      ],
+      "private_sample_rank_by_modality": [
+        3.0753047783828036,
+        3.1111891672480634
+      ],
+      "private_mean_cosine_by_modality": [
+        0.8173270844714624,
+        0.8451378324956077
+      ],
+      "gradient_norm_max": 2.1469929218292236,
+      "parameter_count": 7444
+    },
+    {
+      "task": "private_xor",
+      "shared_weight": 0.1,
+      "private_weight": 0.0,
+      "nll_mean": 1.148317249615987,
+      "nll_sd": 0.024246080117821048,
+      "posterior_means_nll_diagnostic": 1.1458799441655476,
+      "shared_rate_nats": 0.008513186282167831,
+      "private_rate_nats": 2.8568813850482306,
+      "shared_factor_r2_sample": 0.3443853941669357,
+      "shared_factor_r2_mean": 0.9721840433758038,
+      "planted_wsi_bit_r2_shared_sample": -0.021831931810657974,
+      "planted_wsi_bit_r2_shared_mean": -0.009168474379366742,
+      "pooled_private_risk_increment": -0.0004171373465896745,
+      "mean_coordinate_all_vs_single_gain": 0.0010307445916193073,
+      "private_mean_rank_by_modality": [
+        1.2947654220220455,
+        1.5285923563783124
+      ],
+      "private_sample_rank_by_modality": [
+        2.7569884346334717,
+        2.9466950434495582
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9476295133766793,
+        0.877823017037501
+      ],
+      "gradient_norm_max": 1.3282759189605713,
+      "parameter_count": 7444
+    },
+    {
+      "task": "private_xor",
+      "shared_weight": 0.1,
+      "private_weight": 0.3,
+      "nll_mean": 1.143905528386434,
+      "nll_sd": 0.022251031357739554,
+      "posterior_means_nll_diagnostic": 1.141904393831889,
+      "shared_rate_nats": 0.009615343529731035,
+      "private_rate_nats": 0.6082684795061747,
+      "shared_factor_r2_sample": 0.5204523507487229,
+      "shared_factor_r2_mean": 0.9817640335020911,
+      "planted_wsi_bit_r2_shared_sample": -0.024801015481973332,
+      "planted_wsi_bit_r2_shared_mean": -0.00899724953637219,
+      "pooled_private_risk_increment": 0.0024395453031442705,
+      "mean_coordinate_all_vs_single_gain": 0.002802638363930203,
+      "private_mean_rank_by_modality": [
+        1.3196776956169687,
+        1.3983960788155196
+      ],
+      "private_sample_rank_by_modality": [
+        3.0814409780159373,
+        3.1231984206856227
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9411551475590259,
+        0.9437186393126119
+      ],
+      "gradient_norm_max": 1.2250912189483643,
+      "parameter_count": 7444
+    },
+    {
+      "task": "shared_nuisance_shift",
+      "shared_weight": 0.0,
+      "private_weight": 0.0,
+      "nll_mean": 3.2532540957132974,
+      "nll_sd": 0.5652272216901605,
+      "posterior_means_nll_diagnostic": 3.214385747909546,
+      "shared_rate_nats": 40.35188102722168,
+      "private_rate_nats": 17.923529307047527,
+      "shared_factor_r2_sample": 0.9421317197503623,
+      "shared_factor_r2_mean": 0.9664914409066175,
+      "planted_wsi_bit_r2_shared_sample": -2.911423210371286,
+      "planted_wsi_bit_r2_shared_mean": -2.8932460263938897,
+      "pooled_private_risk_increment": -0.00793111100685791,
+      "mean_coordinate_all_vs_single_gain": -0.006465836690424848,
+      "private_mean_rank_by_modality": [
+        1.3523657920322603,
+        1.1408463730304186
+      ],
+      "private_sample_rank_by_modality": [
+        2.365394646588891,
+        2.30962235612706
+      ],
+      "private_mean_cosine_by_modality": [
+        0.8700607965791087,
+        0.95092272692495
+      ],
+      "gradient_norm_max": 3.160263776779175,
+      "parameter_count": 7444
+    },
+    {
+      "task": "shared_nuisance_shift",
+      "shared_weight": 0.0,
+      "private_weight": 0.3,
+      "nll_mean": 3.33795116742452,
+      "nll_sd": 0.988153759864856,
+      "posterior_means_nll_diagnostic": 3.2487597465515137,
+      "shared_rate_nats": 37.467363357543945,
+      "private_rate_nats": 0.6879583969712257,
+      "shared_factor_r2_sample": 0.9639994717294218,
+      "shared_factor_r2_mean": 0.9856955558649606,
+      "planted_wsi_bit_r2_shared_sample": -3.0082063396792735,
+      "planted_wsi_bit_r2_shared_mean": -2.9871607842268277,
+      "pooled_private_risk_increment": 0.0,
+      "mean_coordinate_all_vs_single_gain": -0.0004308621713711119,
+      "private_mean_rank_by_modality": [
+        1.3687679793370808,
+        1.2262572469342998
+      ],
+      "private_sample_rank_by_modality": [
+        3.0640933265060895,
+        3.1029432700536757
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9369120989333333,
+        0.9965769944049844
+      ],
+      "gradient_norm_max": 2.1386849880218506,
+      "parameter_count": 7444
+    },
+    {
+      "task": "shared_nuisance_shift",
+      "shared_weight": 0.1,
+      "private_weight": 0.0,
+      "nll_mean": 3.0245870113372804,
+      "nll_sd": 0.46046950650641266,
+      "posterior_means_nll_diagnostic": 2.9773648579915366,
+      "shared_rate_nats": 0.007208695402368903,
+      "private_rate_nats": 10.819236914316813,
+      "shared_factor_r2_sample": 0.7203082859173878,
+      "shared_factor_r2_mean": 0.9929760260142811,
+      "planted_wsi_bit_r2_shared_sample": -2.19044943185748,
+      "planted_wsi_bit_r2_shared_mean": -3.003176910523064,
+      "pooled_private_risk_increment": -0.7275692836943665,
+      "mean_coordinate_all_vs_single_gain": 0.0026687334558209625,
+      "private_mean_rank_by_modality": [
+        1.155238078949627,
+        1.114302996395519
+      ],
+      "private_sample_rank_by_modality": [
+        2.3300566012391553,
+        2.561650469450965
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9758989084914369,
+        0.9991157924568521
+      ],
+      "gradient_norm_max": 1.6966060400009155,
+      "parameter_count": 7444
+    },
+    {
+      "task": "shared_nuisance_shift",
+      "shared_weight": 0.1,
+      "private_weight": 0.3,
+      "nll_mean": 3.041120402018229,
+      "nll_sd": 0.5046419104617383,
+      "posterior_means_nll_diagnostic": 3.015885670979818,
+      "shared_rate_nats": 0.03552311581249038,
+      "private_rate_nats": 0.6950969994068146,
+      "shared_factor_r2_sample": 0.9314398227988999,
+      "shared_factor_r2_mean": 0.9939887619795307,
+      "planted_wsi_bit_r2_shared_sample": -2.81830993080961,
+      "planted_wsi_bit_r2_shared_mean": -2.9879273393241865,
+      "pooled_private_risk_increment": 0.01520223745542202,
+      "mean_coordinate_all_vs_single_gain": -0.0014146878538691286,
+      "private_mean_rank_by_modality": [
+        1.2472349601036097,
+        1.1755382593635284
+      ],
+      "private_sample_rank_by_modality": [
+        3.0822412867322666,
+        3.096393610395631
+      ],
+      "private_mean_cosine_by_modality": [
+        0.9701788063507405,
+        0.9991265110090486
+      ],
+      "gradient_norm_max": 1.8072320222854614,
+      "parameter_count": 7444
+    }
+  ],
+  "paired_shared_KL_contrasts": [
+    {
+      "task": "shared_only",
+      "private_weight": 0.0,
+      "shared_KL_on_minus_off_nll": [
+        -0.015885543823242143,
+        -0.031387722492218106,
+        0.015842235088348366
+      ],
+      "mean": -0.010477010409037294,
+      "descriptive_t95": [
+        -0.07028266573083645,
+        0.04932864491276187
+      ]
+    },
+    {
+      "task": "shared_only",
+      "private_weight": 0.3,
+      "shared_KL_on_minus_off_nll": [
+        0.007810127735137895,
+        -0.02001456022262571,
+        0.0012494206428527166
+      ],
+      "mean": -0.003651670614878366,
+      "descriptive_t95": [
+        -0.039784462272807374,
+        0.03248112104305064
+      ]
+    },
+    {
+      "task": "private_only",
+      "private_weight": 0.0,
+      "shared_KL_on_minus_off_nll": [
+        -0.007144272327423096,
+        -0.01613637208938601,
+        0.01300556659698493
+      ],
+      "mean": -0.0034250259399413916,
+      "descriptive_t95": [
+        -0.040495131661413,
+        0.03364507978153021
+      ]
+    },
+    {
+      "task": "private_only",
+      "private_weight": 0.3,
+      "shared_KL_on_minus_off_nll": [
+        -0.002442967891693071,
+        0.030470979213714555,
+        0.004588854312896795
+      ],
+      "mean": 0.01087228854497276,
+      "descriptive_t95": [
+        -0.03218600483167835,
+        0.05393058192162387
+      ]
+    },
+    {
+      "task": "private_xor",
+      "private_weight": 0.0,
+      "shared_KL_on_minus_off_nll": [
+        0.0022406101226806197,
+        -0.0030042171478272817,
+        -0.02687382698059082
+      ],
+      "mean": -0.009212478001912494,
+      "descriptive_t95": [
+        -0.04776222066394649,
+        0.0293372646601215
+      ]
+    },
+    {
+      "task": "private_xor",
+      "private_weight": 0.3,
+      "shared_KL_on_minus_off_nll": [
+        -0.02452652454376225,
+        -0.007582306861877441,
+        -0.02037656307220459
+      ],
+      "mean": -0.017495131492614762,
+      "descriptive_t95": [
+        -0.03943495000232128,
+        0.004444687017091754
+      ]
+    },
+    {
+      "task": "shared_nuisance_shift",
+      "private_weight": 0.0,
+      "shared_KL_on_minus_off_nll": [
+        -0.2390750408172604,
+        -0.34306797981262216,
+        -0.10385823249816895
+      ],
+      "mean": -0.22866708437601715,
+      "descriptive_t95": [
+        -0.5266245688658053,
+        0.06929040011377105
+      ]
+    },
+    {
+      "task": "shared_nuisance_shift",
+      "private_weight": 0.3,
+      "shared_KL_on_minus_off_nll": [
+        0.11960101127624512,
+        -0.842100477218628,
+        -0.16799283027648926
+      ],
+      "mean": -0.2968307654062907,
+      "descriptive_t95": [
+        -1.523066282437778,
+        0.9294047516251966
+      ]
+    }
+  ],
+  "limitations": "3 paired data/training seeds; exploratory, no multiple-comparison correction; planted WSI factor in nuisance-shift task is statistically shared through confounding, and OOD probe failure is not absence of information. Single-draw rates do not bound unlimited mean predictions.",
+  "patient_execution": false,
+  "server_execution": false
+}
