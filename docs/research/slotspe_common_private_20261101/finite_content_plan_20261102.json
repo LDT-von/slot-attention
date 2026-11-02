@@ -1,0 +1,18 @@
+{
+  "schema": "slotspe_finite_multifactor_content_audit_v1",
+  "base_commit": "610679b9302cd389930859cc4a125719ad7ce5f0",
+  "scope": "Exact finite-population mathematics and survival-law controls; no neural training or loss implementation",
+  "plan_timing": "Written before aggregate audit execution; known-answer unit fixtures already passed16 tests. This is not a preregistered independent empirical confirmation.",
+  "sample_unit": "One hypothetical patient state contains shared bit, four private factors and four slots. Slots are variables within a patient, never independent patients.",
+  "distribution": "Five independent fair bits: S, two WSI factors, two omic factors; all32 states enumerated. Noise codes add independent or shared encoder randomness, enumerated exactly.",
+  "codings": ["factorwise", "duplicated_patient", "concentrated", "conditional_reencoding", "within_modality_synergy", "shared_copy", "constant", "independent_noise", "correlated_posterior_noise"],
+  "information": "Exact entropy/CMI/TC in nats from declared masses, not minibatch MI estimation. Matched marginal reference q(Vk) is a population oracle and is not the neural N0 prior.",
+  "rate_identity": "sum expected marginal KL = I(A;V_all|G) + TC(V_all|G) - E TC(V_all|A,G) + sum expected marginal-reference mismatch. Factorized posterior removes the negative posterior-TC correction.",
+  "survival": "Four distinct hazard bins each depend on one private factor and S; independent censor-bin distribution [.1,.1,.1,.7]. Compute event/survival distribution mixtures, never mean hazards.",
+  "subset_control": "Known-population oracle best one slot per modality; no fitted probe or test-set model selection claim.",
+  "additional_controls": ["Noisy common G=S XOR flip(.25) with constant V versus V=noise correction", "XOR task: summed leave-one-out information can double count synergy", "Conditioning TC on task can penalize useful XOR", "Mask-conditioned decoder can sabotage leave-one-out loss", "Gaussian per-slot rate.5 below capacity1 gives no hinge pressure even with copied latent factor"],
+  "acceptance": "Rate identity residual <1e-10; factorwise whole beats oracle one-slot-per-modality; duplicate whole ties one-slot; conditional recoding matches joint content/prediction/rate despite different standalone semantics; local content penalizes cooperative code; correlated encoder noise requires posterior-TC correction.",
+  "limits": "Privileged synthetic factors and exactly known population only. No clinical semantic identifiability, finite-probe sensitivity or neural optimization claim.",
+  "patient_execution": false,
+  "server_execution": false
+}

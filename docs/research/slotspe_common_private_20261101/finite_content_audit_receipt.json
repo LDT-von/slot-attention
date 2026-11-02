@@ -1,0 +1,341 @@
+{
+  "schema": "slotspe_finite_content_audit_receipt_v1",
+  "status": "completed",
+  "plan": {
+    "schema": "slotspe_finite_multifactor_content_audit_v1",
+    "base_commit": "610679b9302cd389930859cc4a125719ad7ce5f0",
+    "scope": "Exact finite-population mathematics and survival-law controls; no neural training or loss implementation",
+    "plan_timing": "Written before aggregate audit execution; known-answer unit fixtures already passed16 tests. This is not a preregistered independent empirical confirmation.",
+    "sample_unit": "One hypothetical patient state contains shared bit, four private factors and four slots. Slots are variables within a patient, never independent patients.",
+    "distribution": "Five independent fair bits: S, two WSI factors, two omic factors; all32 states enumerated. Noise codes add independent or shared encoder randomness, enumerated exactly.",
+    "codings": [
+      "factorwise",
+      "duplicated_patient",
+      "concentrated",
+      "conditional_reencoding",
+      "within_modality_synergy",
+      "shared_copy",
+      "constant",
+      "independent_noise",
+      "correlated_posterior_noise"
+    ],
+    "information": "Exact entropy/CMI/TC in nats from declared masses, not minibatch MI estimation. Matched marginal reference q(Vk) is a population oracle and is not the neural N0 prior.",
+    "rate_identity": "sum expected marginal KL = I(A;V_all|G) + TC(V_all|G) - E TC(V_all|A,G) + sum expected marginal-reference mismatch. Factorized posterior removes the negative posterior-TC correction.",
+    "survival": "Four distinct hazard bins each depend on one private factor and S; independent censor-bin distribution [.1,.1,.1,.7]. Compute event/survival distribution mixtures, never mean hazards.",
+    "subset_control": "Known-population oracle best one slot per modality; no fitted probe or test-set model selection claim.",
+    "additional_controls": [
+      "Noisy common G=S XOR flip(.25) with constant V versus V=noise correction",
+      "XOR task: summed leave-one-out information can double count synergy",
+      "Conditioning TC on task can penalize useful XOR",
+      "Mask-conditioned decoder can sabotage leave-one-out loss",
+      "Gaussian per-slot rate.5 below capacity1 gives no hinge pressure even with copied latent factor"
+    ],
+    "acceptance": "Rate identity residual <1e-10; factorwise whole beats oracle one-slot-per-modality; duplicate whole ties one-slot; conditional recoding matches joint content/prediction/rate despite different standalone semantics; local content penalizes cooperative code; correlated encoder noise requires posterior-TC correction.",
+    "limits": "Privileged synthetic factors and exactly known population only. No clinical semantic identifiability, finite-probe sensitivity or neural optimization claim.",
+    "patient_execution": false,
+    "server_execution": false
+  },
+  "plan_sha256": "c74bb975f5e39a079901dae67ec0520665774b02450948f556a3b7d8612d0c65",
+  "source_sha256": {
+    "scripts/check_finite_content_audit.py": "c3736d377e982972ca688af5884d5c7b9b0a3842db3dbca4739c942af089eacb",
+    "slotspe_proof/finite_content_audit.py": "7df79fd019b4f9e9f37b91807d992ebead7a248c35cd498eb1532d49b919cb4d",
+    "slotspe_proof/crossmodal_shared_bottleneck.py": "4f8d4a4e98cd61437b8e6ae4968e70e544dc0a792262e79c8576e08ccf763970"
+  },
+  "rows": [
+    {
+      "coding": "factorwise",
+      "enumerated_states": 32,
+      "rate_to_matched_marginals": 2.772588722239781,
+      "joint_conditional_information": 2.7725887222397794,
+      "conditional_total_correlation": 0.0,
+      "posterior_conditional_tc": 0.0,
+      "conditional_marginal_reference_mismatch": 0.0,
+      "identity_residual": 1.7763568394002505e-15,
+      "target_entropy_given_common": 2.7725887222397794,
+      "target_entropy_given_all": 0.0,
+      "all_slot_conditional_content_mse": 0.0,
+      "per_slot_conditional_content_mse": 0.0,
+      "own_factor_entropy_given_corresponding_private_alone": 0.0,
+      "survival_nll_common": 1.3878804301463221,
+      "survival_nll_all": 1.1175190587315413,
+      "oracle_best_one_slot_per_modality_nll": 1.2323226173166821,
+      "whole_minus_oracle_best_single_nll": -0.1148035585851408,
+      "leave_one_out_target_information": [
+        0.6931471805599436,
+        0.6931471805599436,
+        0.6931471805599436,
+        0.6931471805599436
+      ]
+    },
+    {
+      "coding": "duplicated_patient",
+      "enumerated_states": 32,
+      "rate_to_matched_marginals": 5.545177444479562,
+      "joint_conditional_information": 2.7725887222397794,
+      "conditional_total_correlation": 2.772588722239782,
+      "posterior_conditional_tc": 0.0,
+      "conditional_marginal_reference_mismatch": 0.0,
+      "identity_residual": 8.881784197001252e-16,
+      "target_entropy_given_common": 2.7725887222397794,
+      "target_entropy_given_all": 0.0,
+      "all_slot_conditional_content_mse": 0.0,
+      "per_slot_conditional_content_mse": 0.0,
+      "own_factor_entropy_given_corresponding_private_alone": 0.0,
+      "survival_nll_common": 1.3878804301463221,
+      "survival_nll_all": 1.1175190587315413,
+      "oracle_best_one_slot_per_modality_nll": 1.1175190587315413,
+      "whole_minus_oracle_best_single_nll": 0.0,
+      "leave_one_out_target_information": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "coding": "concentrated",
+      "enumerated_states": 32,
+      "rate_to_matched_marginals": 2.772588722239781,
+      "joint_conditional_information": 2.7725887222397794,
+      "conditional_total_correlation": 0.0,
+      "posterior_conditional_tc": 0.0,
+      "conditional_marginal_reference_mismatch": 0.0,
+      "identity_residual": 1.7763568394002505e-15,
+      "target_entropy_given_common": 2.7725887222397794,
+      "target_entropy_given_all": 0.0,
+      "all_slot_conditional_content_mse": 0.0,
+      "per_slot_conditional_content_mse": 2.0,
+      "own_factor_entropy_given_corresponding_private_alone": 0.34657359027997264,
+      "survival_nll_common": 1.3878804301463221,
+      "survival_nll_all": 1.1175190587315413,
+      "oracle_best_one_slot_per_modality_nll": 1.1175190587315413,
+      "whole_minus_oracle_best_single_nll": 0.0,
+      "leave_one_out_target_information": [
+        1.386294361119889,
+        0.0,
+        1.386294361119889,
+        0.0
+      ]
+    },
+    {
+      "coding": "conditional_reencoding",
+      "enumerated_states": 32,
+      "rate_to_matched_marginals": 2.772588722239781,
+      "joint_conditional_information": 2.7725887222397794,
+      "conditional_total_correlation": 0.0,
+      "posterior_conditional_tc": 0.0,
+      "conditional_marginal_reference_mismatch": 0.0,
+      "identity_residual": 1.7763568394002505e-15,
+      "target_entropy_given_common": 2.7725887222397794,
+      "target_entropy_given_all": 0.0,
+      "all_slot_conditional_content_mse": 0.0,
+      "per_slot_conditional_content_mse": 0.0,
+      "own_factor_entropy_given_corresponding_private_alone": 0.6931471805599453,
+      "survival_nll_common": 1.3878804301463221,
+      "survival_nll_all": 1.1175190587315413,
+      "oracle_best_one_slot_per_modality_nll": 1.2323226173166821,
+      "whole_minus_oracle_best_single_nll": -0.1148035585851408,
+      "leave_one_out_target_information": [
+        0.6931471805599436,
+        0.6931471805599436,
+        0.6931471805599436,
+        0.6931471805599436
+      ]
+    },
+    {
+      "coding": "within_modality_synergy",
+      "enumerated_states": 32,
+      "rate_to_matched_marginals": 2.772588722239781,
+      "joint_conditional_information": 2.7725887222397794,
+      "conditional_total_correlation": 0.0,
+      "posterior_conditional_tc": 0.0,
+      "conditional_marginal_reference_mismatch": 0.0,
+      "identity_residual": 1.7763568394002505e-15,
+      "target_entropy_given_common": 2.7725887222397794,
+      "target_entropy_given_all": 0.0,
+      "all_slot_conditional_content_mse": 0.0,
+      "per_slot_conditional_content_mse": 2.0,
+      "own_factor_entropy_given_corresponding_private_alone": 0.34657359027997264,
+      "survival_nll_common": 1.3878804301463221,
+      "survival_nll_all": 1.1175190587315413,
+      "oracle_best_one_slot_per_modality_nll": 1.2730768715611807,
+      "whole_minus_oracle_best_single_nll": -0.15555781282963932,
+      "leave_one_out_target_information": [
+        0.6931471805599436,
+        0.6931471805599436,
+        0.6931471805599436,
+        0.6931471805599436
+      ]
+    },
+    {
+      "coding": "shared_copy",
+      "enumerated_states": 32,
+      "rate_to_matched_marginals": 2.772588722239781,
+      "joint_conditional_information": 0.0,
+      "conditional_total_correlation": 0.0,
+      "posterior_conditional_tc": 0.0,
+      "conditional_marginal_reference_mismatch": 2.772588722239781,
+      "identity_residual": 0.0,
+      "target_entropy_given_common": 2.7725887222397794,
+      "target_entropy_given_all": 2.7725887222397794,
+      "all_slot_conditional_content_mse": 4.0,
+      "per_slot_conditional_content_mse": 4.0,
+      "own_factor_entropy_given_corresponding_private_alone": 0.6931471805599453,
+      "survival_nll_common": 1.3878804301463221,
+      "survival_nll_all": 1.3878804301463221,
+      "oracle_best_one_slot_per_modality_nll": 1.3878804301463221,
+      "whole_minus_oracle_best_single_nll": 0.0,
+      "leave_one_out_target_information": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "coding": "constant",
+      "enumerated_states": 32,
+      "rate_to_matched_marginals": 0.0,
+      "joint_conditional_information": 0.0,
+      "conditional_total_correlation": 0.0,
+      "posterior_conditional_tc": 0.0,
+      "conditional_marginal_reference_mismatch": 0.0,
+      "identity_residual": 0.0,
+      "target_entropy_given_common": 2.7725887222397794,
+      "target_entropy_given_all": 2.7725887222397794,
+      "all_slot_conditional_content_mse": 4.0,
+      "per_slot_conditional_content_mse": 4.0,
+      "own_factor_entropy_given_corresponding_private_alone": 0.6931471805599453,
+      "survival_nll_common": 1.3878804301463221,
+      "survival_nll_all": 1.3878804301463221,
+      "oracle_best_one_slot_per_modality_nll": 1.3878804301463221,
+      "whole_minus_oracle_best_single_nll": 0.0,
+      "leave_one_out_target_information": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "coding": "independent_noise",
+      "enumerated_states": 512,
+      "rate_to_matched_marginals": -2.708944180085382e-14,
+      "joint_conditional_information": 0.0,
+      "conditional_total_correlation": 0.0,
+      "posterior_conditional_tc": 0.0,
+      "conditional_marginal_reference_mismatch": 0.0,
+      "identity_residual": -2.708944180085382e-14,
+      "target_entropy_given_common": 2.7725887222397794,
+      "target_entropy_given_all": 2.7725887222398318,
+      "all_slot_conditional_content_mse": 4.0,
+      "per_slot_conditional_content_mse": 4.0,
+      "own_factor_entropy_given_corresponding_private_alone": 0.6931471805599453,
+      "survival_nll_common": 1.3878804301463223,
+      "survival_nll_all": 1.3878804301463201,
+      "oracle_best_one_slot_per_modality_nll": 1.3878804301463228,
+      "whole_minus_oracle_best_single_nll": -2.6645352591003757e-15,
+      "leave_one_out_target_information": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "coding": "correlated_posterior_noise",
+      "enumerated_states": 64,
+      "rate_to_matched_marginals": -2.708944180085382e-14,
+      "joint_conditional_information": 0.0,
+      "conditional_total_correlation": 2.0794415416798357,
+      "posterior_conditional_tc": 2.079441541679856,
+      "conditional_marginal_reference_mismatch": 0.0,
+      "identity_residual": -6.661338147750939e-15,
+      "target_entropy_given_common": 2.7725887222397794,
+      "target_entropy_given_all": 2.772588722239786,
+      "all_slot_conditional_content_mse": 4.0,
+      "per_slot_conditional_content_mse": 4.0,
+      "own_factor_entropy_given_corresponding_private_alone": 0.6931471805599453,
+      "survival_nll_common": 1.3878804301463223,
+      "survival_nll_all": 1.3878804301463223,
+      "oracle_best_one_slot_per_modality_nll": 1.3878804301463223,
+      "whole_minus_oracle_best_single_nll": 0.0,
+      "leave_one_out_target_information": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "parity_synergy_control": {
+    "joint_information": 0.6931471805599454,
+    "sum_leave_one_out": 1.3862943611198904,
+    "tc_given_common": 0.0,
+    "tc_given_common_and_task": 0.6931471805599452
+  },
+  "noisy_shared_control": [
+    {
+      "noise_correction_code": false,
+      "shared_target_entropy_given_g": 0.5623351446188082,
+      "shared_target_entropy_given_g_v": 0.5623351446188082,
+      "mi_g_v": 0.0,
+      "mi_s_v": 0.0
+    },
+    {
+      "noise_correction_code": true,
+      "shared_target_entropy_given_g": 0.5623351446188082,
+      "shared_target_entropy_given_g_v": 0.0,
+      "mi_g_v": 0.0,
+      "mi_s_v": 0.0
+    }
+  ],
+  "leave_one_out_decoder_sabotage": [
+    {
+      "omitted_decoder_nll": 2.0,
+      "constant_full_decoder_nll": 0.6931471805599453,
+      "objective_full_minus_point1_delta": 0.5624618986159398
+    },
+    {
+      "omitted_decoder_nll": 10.0,
+      "constant_full_decoder_nll": 0.6931471805599453,
+      "objective_full_minus_point1_delta": -0.23753810138406017
+    },
+    {
+      "omitted_decoder_nll": 100.0,
+      "constant_full_decoder_nll": 0.6931471805599453,
+      "objective_full_minus_point1_delta": -9.237538101384061
+    }
+  ],
+  "flat_budget_control": [
+    {
+      "active_same_factor_copies": 1,
+      "per_active_slot_gaussian_rate": 0.5,
+      "capacity": 1.0,
+      "sum_rate": 0.5,
+      "mean_hinge": 0.0,
+      "rate_gradient_of_hinge_strictly_below_capacity": 0.0
+    },
+    {
+      "active_same_factor_copies": 2,
+      "per_active_slot_gaussian_rate": 0.5,
+      "capacity": 1.0,
+      "sum_rate": 1.0,
+      "mean_hinge": 0.0,
+      "rate_gradient_of_hinge_strictly_below_capacity": 0.0
+    }
+  ],
+  "probability_table_arrays_published": false,
+  "max_rate_identity_residual": 2.708944180085382e-14,
+  "neural_training_runs": 0,
+  "optimizer_updates": 0,
+  "patient_execution": false,
+  "server_execution": false,
+  "decision": "Do not add per-slot content, target-conditioned TC, or naive leave-one-out reward. Existing rate already mixes conditional TC with useful information and marginal mismatch. Next minimal ablation should compare flat versus continuous private rate on the multi-factor task; this has not been run or implemented.",
+  "limitations": [
+    "All entropies concern declared finite population, not learned neural representations.",
+    "Oracle matched-marginal rate is not current Gaussian-prior KL; their marginal mismatch differs.",
+    "Known-population best subset is an oracle bound, not validated finite-probe selection.",
+    "All-slot sufficiency does not identify individual slot semantics or force every slot to be used."
+  ]
+}
