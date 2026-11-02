@@ -1,0 +1,2557 @@
+{
+  "status": "completed",
+  "plan": {
+    "schema": "slotspe_controlled_readout_factorial_v1",
+    "recorded_before_execution": true,
+    "base_commit": "63325d18f5ee6155199cec724da100b5bb7c82f7",
+    "scope": "One bounded synthetic-only readout attribution gate; no encoder training or main-model change",
+    "seeds": [
+      419,
+      431,
+      449
+    ],
+    "conditions": [
+      "single_total1",
+      "noise_only"
+    ],
+    "phi_shapes": [
+      "full",
+      "block"
+    ],
+    "role_access": [
+      "blind",
+      "signed"
+    ],
+    "scales": [
+      "mean",
+      "sum"
+    ],
+    "executions": 48,
+    "steps_per_execution": 500,
+    "optimizer": "Adam .003, batch32, no clipping, fixed final update, 512 synthetic training rows",
+    "factor_control": "Within each phi shape all arms have exactly the same weights, head, additive role offsets, parameter count, batches and random noise initially. Only fixed +/- Hadamard role projection or factor4 pooling scale differs. Full vs block has1396 vs1402 parameters; their phi initialization and capacity are only near-matched, not identical.",
+    "semantic_boundary": "Fixed role IDs correspond to slot coordinates, not semantic supervision; paired value-ID permutation invariant, value-only permutation generally not invariant. All roles retained; no dynamic weighting or attention. This is a typed pooling control, not claimed globally novel.",
+    "data": "Reuse previous XOR schedules for attribution, not independent confirmation. Each modality sees its own bit; G sees true shared S; fixed total Gaussian rate1 nat per modality, or pure-noise negative control.",
+    "primary_gate": "For full phi, signed-minus-blind test NLL must be negative for all3 seeds and mean <=-.03 at BOTH mean and sum scales. This is an exploratory engineering gate, not significance or clinical superiority. Noise control absolute mean signed-minus-blind difference must be <.02 at both scales. No best-of-shapes selection.",
+    "secondary": "Block-shape contrasts and role-by-scale interaction reported descriptively; role benefit restricted to shape or scale is conditional, not a robust main-model recommendation.",
+    "evaluation": "Five exact paired stochastic draws, average per-draw censored-survival NLL, not averaged predictions or independent training. Fixed-head donor/zero/role-only permutations are sensitivity controls, not causal or MI proofs.",
+    "stability": "Finite losses, maximum pre-update gradient L2, mean late gradient L2, and max absolute parameter value. No clipping or regularizer changes.",
+    "old_repeats": "Six full/blind/mean executions must exactly match historical receipt NLL; they are deterministic repeats, not six new independent trainings.",
+    "outputs": "Fresh ignored local_evidence output; publish aggregate receipt only",
+    "patient_execution": false,
+    "server_execution": false
+  },
+  "plan_sha256": "dbf2ddb08a41a66adba6676ea07cc810ee74f2559624db5fe8c5f8a0ca9890da",
+  "source_sha256_before_execution": {
+    "scripts/check_controlled_slot_readout.py": "240a141d7fdb899f4925992b281877cb21cc9ed8b3275d348643ee6bf78319c3",
+    "slotspe_proof/controlled_slot_readout.py": "614509440a32dacda3f7b13b06dad63b5a691ae25d8a9dee0671924bef87ef27",
+    "scripts/check_xor_readout_capacity.py": "4a0107b5e8ae7a7d5951e51493189b47214be2d468ca8db07c30af8c709ad3c1",
+    "scripts/compare_crossmodal_shared_bottleneck.py": "7b06f3cbb6e45eeb3cd2c73a07b8a4b8ad14bb380606368566cbad1aab49c369",
+    "scripts/compare_common_private_club.py": "a33e1beaa279f83802988b386bc22ef8517868a65fcb711ba3c13d7dc2f1c682",
+    "slotspe_proof/common_private_survival.py": "51a8f2c5052c064dddf2f6fc610dc785cd1fba412082ebf80cb53fc6ff4ec910",
+    "slotspe_proof/crossmodal_shared_bottleneck.py": "4f8d4a4e98cd61437b8e6ae4968e70e544dc0a792262e79c8576e08ccf763970",
+    "slotspe_proof/slot_pooling_diagnostics.py": "1f5ce06dab83308e57f0acac4aa36908e5cb2329853a2bc8d54cad6c665da163"
+  },
+  "old_receipt_sha256": "2e51ead2c62ec94b0cdd963616e0ae1a0a48196e848b3644f585a9078d8d69cc",
+  "rows": [
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "7b4fd617563bb24525fcf637629634a96f1b76b228a5ea72480a4dd399d9d35a",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 3.2629014999984065,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4067842960357666,
+          "pre_update_gradient_l2": 0.40359872728471696
+        },
+        {
+          "step": 99,
+          "nll": 1.1959339380264282,
+          "pre_update_gradient_l2": 0.30376915844649793
+        },
+        {
+          "step": 299,
+          "nll": 1.0555084943771362,
+          "pre_update_gradient_l2": 0.2881839791649186
+        },
+        {
+          "step": 499,
+          "nll": 1.139190435409546,
+          "pre_update_gradient_l2": 0.2778072795805944
+        }
+      ],
+      "expected_nll": 1.1713603019714356,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "per_draw_nll": [
+        1.1714494228363037,
+        1.1762067079544067,
+        1.1685854196548462,
+        1.1695420742034912,
+        1.1710178852081299
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.000211882591247603,
+        "private_zero": 0.00019414424896235793,
+        "value_only_role_permutation": 5.602836608886719e-05
+      },
+      "max_gradient_l2": 0.9434164744830772,
+      "last100_mean_gradient_l2": 0.359927774126426,
+      "max_parameter_abs": 0.6344296932220459,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "7b4fd617563bb24525fcf637629634a96f1b76b228a5ea72480a4dd399d9d35a",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 2.090283700003056,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.416157603263855,
+          "pre_update_gradient_l2": 0.6368080219007302
+        },
+        {
+          "step": 99,
+          "nll": 1.2211663722991943,
+          "pre_update_gradient_l2": 0.5563753581615818
+        },
+        {
+          "step": 299,
+          "nll": 1.0640716552734375,
+          "pre_update_gradient_l2": 0.43547017801356963
+        },
+        {
+          "step": 499,
+          "nll": 1.1467013359069824,
+          "pre_update_gradient_l2": 0.4302585582470988
+        }
+      ],
+      "expected_nll": 1.166417694091797,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "per_draw_nll": [
+        1.1662167310714722,
+        1.1722185611724854,
+        1.1631617546081543,
+        1.1645110845565796,
+        1.165980339050293
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.00021383762359605818,
+        "private_zero": -0.0027668237686158115,
+        "value_only_role_permutation": 0.0001456737518310547
+      },
+      "max_gradient_l2": 1.4316956270821943,
+      "last100_mean_gradient_l2": 0.5397345475476105,
+      "max_parameter_abs": 0.5654765367507935,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "7b4fd617563bb24525fcf637629634a96f1b76b228a5ea72480a4dd399d9d35a",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 2.53587740000512,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4086415767669678,
+          "pre_update_gradient_l2": 0.38871402602557115
+        },
+        {
+          "step": 99,
+          "nll": 1.1833161115646362,
+          "pre_update_gradient_l2": 0.2727975262011524
+        },
+        {
+          "step": 299,
+          "nll": 1.0616687536239624,
+          "pre_update_gradient_l2": 0.26431103927092525
+        },
+        {
+          "step": 499,
+          "nll": 1.0000054836273193,
+          "pre_update_gradient_l2": 0.6133906204654981
+        }
+      ],
+      "expected_nll": 1.0895305633544923,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "per_draw_nll": [
+        1.1022173166275024,
+        1.0759326219558716,
+        1.086124300956726,
+        1.0862658023834229,
+        1.097112774848938
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.1451147317886352,
+        "private_zero": 0.11102130413055411,
+        "value_only_role_permutation": 0.13452310562133785
+      },
+      "max_gradient_l2": 1.0414704370195547,
+      "last100_mean_gradient_l2": 0.41648594239523845,
+      "max_parameter_abs": 0.9372056126594543,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "7b4fd617563bb24525fcf637629634a96f1b76b228a5ea72480a4dd399d9d35a",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 2.227101299999049,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4146854877471924,
+          "pre_update_gradient_l2": 0.4774970832267248
+        },
+        {
+          "step": 99,
+          "nll": 1.1835448741912842,
+          "pre_update_gradient_l2": 0.45138818863386687
+        },
+        {
+          "step": 299,
+          "nll": 1.0665570497512817,
+          "pre_update_gradient_l2": 0.5074524598621658
+        },
+        {
+          "step": 499,
+          "nll": 0.9375651478767395,
+          "pre_update_gradient_l2": 1.3798606141259444
+        }
+      ],
+      "expected_nll": 0.9885506987571716,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "per_draw_nll": [
+        0.9960536956787109,
+        0.9850779175758362,
+        0.982111930847168,
+        0.974266529083252,
+        1.0052434206008911
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.46759487390518195,
+        "private_zero": 0.30274232625961306,
+        "value_only_role_permutation": 0.3627935290336609
+      },
+      "max_gradient_l2": 2.9035822704938936,
+      "last100_mean_gradient_l2": 1.1174761784486902,
+      "max_parameter_abs": 0.96772700548172,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "04c0bc025e0126bc160ef54fa694a02e2b450d00c7a2234ae49b970e231baad9",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 1.9734800000005635,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4006215333938599,
+          "pre_update_gradient_l2": 0.41455859854605537
+        },
+        {
+          "step": 99,
+          "nll": 1.162092924118042,
+          "pre_update_gradient_l2": 0.3570344387117779
+        },
+        {
+          "step": 299,
+          "nll": 1.058969259262085,
+          "pre_update_gradient_l2": 0.32166086159867757
+        },
+        {
+          "step": 499,
+          "nll": 1.1181644201278687,
+          "pre_update_gradient_l2": 0.31308402691850196
+        }
+      ],
+      "expected_nll": 1.1683878660202027,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "per_draw_nll": [
+        1.1659168004989624,
+        1.1682876348495483,
+        1.1703801155090332,
+        1.166490077972412,
+        1.1708647012710571
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0002755641937257636,
+        "private_zero": -0.002759552001953214,
+        "value_only_role_permutation": 9.634494781485259e-05
+      },
+      "max_gradient_l2": 1.2518566153858661,
+      "last100_mean_gradient_l2": 0.4406631484599243,
+      "max_parameter_abs": 0.589706540107727,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "04c0bc025e0126bc160ef54fa694a02e2b450d00c7a2234ae49b970e231baad9",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 1.9364362000051187,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3921095132827759,
+          "pre_update_gradient_l2": 0.8960572545384276
+        },
+        {
+          "step": 99,
+          "nll": 1.1796691417694092,
+          "pre_update_gradient_l2": 0.6285243272021495
+        },
+        {
+          "step": 299,
+          "nll": 1.0596468448638916,
+          "pre_update_gradient_l2": 0.5215907033982999
+        },
+        {
+          "step": 499,
+          "nll": 1.1328487396240234,
+          "pre_update_gradient_l2": 0.5169960443561349
+        }
+      ],
+      "expected_nll": 1.1662561416625976,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "per_draw_nll": [
+        1.161422610282898,
+        1.1681404113769531,
+        1.168380856513977,
+        1.1642965078353882,
+        1.169040322303772
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0007395267486571822,
+        "private_zero": -0.00096960067749019,
+        "value_only_role_permutation": 5.168914794917434e-05
+      },
+      "max_gradient_l2": 1.788627803771842,
+      "last100_mean_gradient_l2": 0.663625235704636,
+      "max_parameter_abs": 0.5240730047225952,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "04c0bc025e0126bc160ef54fa694a02e2b450d00c7a2234ae49b970e231baad9",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 2.073747899994487,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4055310487747192,
+          "pre_update_gradient_l2": 0.39108030547473255
+        },
+        {
+          "step": 99,
+          "nll": 1.1674672365188599,
+          "pre_update_gradient_l2": 0.31374307443213356
+        },
+        {
+          "step": 299,
+          "nll": 1.053206443786621,
+          "pre_update_gradient_l2": 0.30988706649319053
+        },
+        {
+          "step": 499,
+          "nll": 1.1053138971328735,
+          "pre_update_gradient_l2": 0.35447720275210826
+        }
+      ],
+      "expected_nll": 1.1575649738311768,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "per_draw_nll": [
+        1.1570602655410767,
+        1.1592599153518677,
+        1.1585314273834229,
+        1.1534806489944458,
+        1.1594926118850708
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.03134307861328112,
+        "private_zero": 0.008156561851501376,
+        "value_only_role_permutation": 0.017130160331725985
+      },
+      "max_gradient_l2": 1.0304981028822957,
+      "last100_mean_gradient_l2": 0.4093020813803529,
+      "max_parameter_abs": 0.642765998840332,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "04c0bc025e0126bc160ef54fa694a02e2b450d00c7a2234ae49b970e231baad9",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 2.118703700005426,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4068942070007324,
+          "pre_update_gradient_l2": 0.510321205216434
+        },
+        {
+          "step": 99,
+          "nll": 1.1777132749557495,
+          "pre_update_gradient_l2": 0.5015451787756618
+        },
+        {
+          "step": 299,
+          "nll": 1.062506914138794,
+          "pre_update_gradient_l2": 0.4577605592144998
+        },
+        {
+          "step": 499,
+          "nll": 0.8723336458206177,
+          "pre_update_gradient_l2": 1.4745352570312475
+        }
+      ],
+      "expected_nll": 0.9716630697250366,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "per_draw_nll": [
+        0.9842649102210999,
+        0.9669844508171082,
+        0.970616340637207,
+        0.9585990309715271,
+        0.977850615978241
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.5124785900115967,
+        "private_zero": 0.24023454189300542,
+        "value_only_role_permutation": 0.3699781894683838
+      },
+      "max_gradient_l2": 2.620920918369169,
+      "last100_mean_gradient_l2": 1.1521097991234206,
+      "max_parameter_abs": 0.9009110927581787,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "7b4fd617563bb24525fcf637629634a96f1b76b228a5ea72480a4dd399d9d35a",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 3.5145041000068886,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4063518047332764,
+          "pre_update_gradient_l2": 0.4031937571070255
+        },
+        {
+          "step": 99,
+          "nll": 1.2126553058624268,
+          "pre_update_gradient_l2": 0.3109448869754807
+        },
+        {
+          "step": 299,
+          "nll": 1.0499435663223267,
+          "pre_update_gradient_l2": 0.30198409640432317
+        },
+        {
+          "step": 499,
+          "nll": 1.132442593574524,
+          "pre_update_gradient_l2": 0.2703920648680005
+        }
+      ],
+      "expected_nll": 1.1714987754821777,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "per_draw_nll": [
+        1.1714942455291748,
+        1.1744465827941895,
+        1.1699918508529663,
+        1.1704438924789429,
+        1.1711173057556152
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.002232480049133345,
+        "private_zero": -0.003499150276184082,
+        "value_only_role_permutation": -2.0551681518599096e-05
+      },
+      "max_gradient_l2": 0.9307687360122723,
+      "last100_mean_gradient_l2": 0.3555459013008449,
+      "max_parameter_abs": 0.5948574542999268,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "7b4fd617563bb24525fcf637629634a96f1b76b228a5ea72480a4dd399d9d35a",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 3.9265733000065666,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4145668745040894,
+          "pre_update_gradient_l2": 0.6339749327643666
+        },
+        {
+          "step": 99,
+          "nll": 1.2401812076568604,
+          "pre_update_gradient_l2": 0.5692945136531374
+        },
+        {
+          "step": 299,
+          "nll": 1.0560343265533447,
+          "pre_update_gradient_l2": 0.4555594609502933
+        },
+        {
+          "step": 499,
+          "nll": 1.1401594877243042,
+          "pre_update_gradient_l2": 0.41151883483902313
+        }
+      ],
+      "expected_nll": 1.1692093849182128,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "per_draw_nll": [
+        1.1675595045089722,
+        1.1714576482772827,
+        1.1669106483459473,
+        1.1693166494369507,
+        1.1708024740219116
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.002110385894775302,
+        "private_zero": -0.006321215629577548,
+        "value_only_role_permutation": -4.601478576660156e-05
+      },
+      "max_gradient_l2": 1.4253586407485435,
+      "last100_mean_gradient_l2": 0.5342471913854364,
+      "max_parameter_abs": 0.5392845869064331,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "7b4fd617563bb24525fcf637629634a96f1b76b228a5ea72480a4dd399d9d35a",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.221188700001221,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4082179069519043,
+          "pre_update_gradient_l2": 0.3885751611320168
+        },
+        {
+          "step": 99,
+          "nll": 1.1935604810714722,
+          "pre_update_gradient_l2": 0.2783935986568336
+        },
+        {
+          "step": 299,
+          "nll": 1.0548202991485596,
+          "pre_update_gradient_l2": 0.2597893458058107
+        },
+        {
+          "step": 499,
+          "nll": 1.1216601133346558,
+          "pre_update_gradient_l2": 0.2548424017613242
+        }
+      ],
+      "expected_nll": 1.1737239599227904,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "per_draw_nll": [
+        1.1749953031539917,
+        1.1732040643692017,
+        1.1734318733215332,
+        1.1729761362075806,
+        1.1740124225616455
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0008258104324339044,
+        "private_zero": -0.00460495948791495,
+        "value_only_role_permutation": -0.00045521259307856887
+      },
+      "max_gradient_l2": 0.8911873335312509,
+      "last100_mean_gradient_l2": 0.322325742660365,
+      "max_parameter_abs": 0.6487542390823364,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "7b4fd617563bb24525fcf637629634a96f1b76b228a5ea72480a4dd399d9d35a",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.019905900000595,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.413190484046936,
+          "pre_update_gradient_l2": 0.4767581276098558
+        },
+        {
+          "step": 99,
+          "nll": 1.1988290548324585,
+          "pre_update_gradient_l2": 0.47297643119137467
+        },
+        {
+          "step": 299,
+          "nll": 1.0545984506607056,
+          "pre_update_gradient_l2": 0.4199416607808564
+        },
+        {
+          "step": 499,
+          "nll": 1.1251952648162842,
+          "pre_update_gradient_l2": 0.36657060460089425
+        }
+      ],
+      "expected_nll": 1.1700950622558595,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "per_draw_nll": [
+        1.1697492599487305,
+        1.1703420877456665,
+        1.169913649559021,
+        1.1689549684524536,
+        1.1715153455734253
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0017917156219482422,
+        "private_zero": -0.004008030891418546,
+        "value_only_role_permutation": -0.001365327835083141
+      },
+      "max_gradient_l2": 1.3452758437129804,
+      "last100_mean_gradient_l2": 0.4868246763437725,
+      "max_parameter_abs": 0.5834311842918396,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "04c0bc025e0126bc160ef54fa694a02e2b450d00c7a2234ae49b970e231baad9",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.221075099994778,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4022159576416016,
+          "pre_update_gradient_l2": 0.4126024997778873
+        },
+        {
+          "step": 99,
+          "nll": 1.1787306070327759,
+          "pre_update_gradient_l2": 0.3483288844035102
+        },
+        {
+          "step": 299,
+          "nll": 1.05624258518219,
+          "pre_update_gradient_l2": 0.36038402691607496
+        },
+        {
+          "step": 499,
+          "nll": 1.1170860528945923,
+          "pre_update_gradient_l2": 0.31220999373920416
+        }
+      ],
+      "expected_nll": 1.1694120645523072,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "per_draw_nll": [
+        1.1679099798202515,
+        1.1684393882751465,
+        1.1708368062973022,
+        1.1685329675674438,
+        1.1713411808013916
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0028304100036622426,
+        "private_zero": -0.003904628753662154,
+        "value_only_role_permutation": 5.481243133531599e-05
+      },
+      "max_gradient_l2": 1.2296224249649308,
+      "last100_mean_gradient_l2": 0.4355579919067302,
+      "max_parameter_abs": 0.5849185585975647,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "04c0bc025e0126bc160ef54fa694a02e2b450d00c7a2234ae49b970e231baad9",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.103484099992784,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3983889818191528,
+          "pre_update_gradient_l2": 0.8747945557326244
+        },
+        {
+          "step": 99,
+          "nll": 1.198492407798767,
+          "pre_update_gradient_l2": 0.6205860086773287
+        },
+        {
+          "step": 299,
+          "nll": 1.0515071153640747,
+          "pre_update_gradient_l2": 0.5677857809949612
+        },
+        {
+          "step": 499,
+          "nll": 1.1273421049118042,
+          "pre_update_gradient_l2": 0.5146121336897198
+        }
+      ],
+      "expected_nll": 1.1686058282852172,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "per_draw_nll": [
+        1.1659293174743652,
+        1.1696585416793823,
+        1.169238567352295,
+        1.1669780015945435,
+        1.1712247133255005
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0031646966934202325,
+        "private_zero": -0.001289033889770419,
+        "value_only_role_permutation": 7.815361022966982e-05
+      },
+      "max_gradient_l2": 1.786379738252089,
+      "last100_mean_gradient_l2": 0.6532414175648321,
+      "max_parameter_abs": 0.5219899415969849,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "04c0bc025e0126bc160ef54fa694a02e2b450d00c7a2234ae49b970e231baad9",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.1399707999953534,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4070581197738647,
+          "pre_update_gradient_l2": 0.3904639475431574
+        },
+        {
+          "step": 99,
+          "nll": 1.1848301887512207,
+          "pre_update_gradient_l2": 0.2961005006321753
+        },
+        {
+          "step": 299,
+          "nll": 1.0495760440826416,
+          "pre_update_gradient_l2": 0.3112726138136144
+        },
+        {
+          "step": 499,
+          "nll": 1.1192516088485718,
+          "pre_update_gradient_l2": 0.27308765931256834
+        }
+      ],
+      "expected_nll": 1.172617506980896,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "per_draw_nll": [
+        1.1707748174667358,
+        1.170993685722351,
+        1.1738544702529907,
+        1.1712855100631714,
+        1.176179051399231
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.001567506790161044,
+        "private_zero": -0.003979992866516069,
+        "value_only_role_permutation": 0.001012301445007413
+      },
+      "max_gradient_l2": 0.9795397411211169,
+      "last100_mean_gradient_l2": 0.374053839279782,
+      "max_parameter_abs": 0.6468552350997925,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "04c0bc025e0126bc160ef54fa694a02e2b450d00c7a2234ae49b970e231baad9",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.698262200006866,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4123508930206299,
+          "pre_update_gradient_l2": 0.49837538093487266
+        },
+        {
+          "step": 99,
+          "nll": 1.1899813413619995,
+          "pre_update_gradient_l2": 0.4792373352039719
+        },
+        {
+          "step": 299,
+          "nll": 1.0537914037704468,
+          "pre_update_gradient_l2": 0.49255329399840175
+        },
+        {
+          "step": 499,
+          "nll": 1.1197049617767334,
+          "pre_update_gradient_l2": 0.3895499183702039
+        }
+      ],
+      "expected_nll": 1.1688583135604858,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "per_draw_nll": [
+        1.1639705896377563,
+        1.1696223020553589,
+        1.1680055856704712,
+        1.1683270931243896,
+        1.1743659973144531
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 4.506111145019531e-05,
+        "private_zero": -0.001965427398681552,
+        "value_only_role_permutation": 0.002075052261352628
+      },
+      "max_gradient_l2": 1.4672532826324172,
+      "last100_mean_gradient_l2": 0.5382166804608199,
+      "max_parameter_abs": 0.5958170890808105,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "cb931d4930e1c239b6260492f6db02951eaf663b776b26006ac5e21a09660cd1",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 3.8248888999951305,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3208307027816772,
+          "pre_update_gradient_l2": 0.4868251334788539
+        },
+        {
+          "step": 99,
+          "nll": 1.0640476942062378,
+          "pre_update_gradient_l2": 0.14285897186734406
+        },
+        {
+          "step": 299,
+          "nll": 1.1163126230239868,
+          "pre_update_gradient_l2": 0.4049999227064637
+        },
+        {
+          "step": 499,
+          "nll": 1.023585319519043,
+          "pre_update_gradient_l2": 0.42873390586214855
+        }
+      ],
+      "expected_nll": 1.1196973085403443,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "per_draw_nll": [
+        1.117271900177002,
+        1.1195520162582397,
+        1.122815728187561,
+        1.1212295293807983,
+        1.1176173686981201
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0008047819137573242,
+        "private_zero": 0.007399702072143466,
+        "value_only_role_permutation": -0.00022165775299076707
+      },
+      "max_gradient_l2": 0.9121120335611137,
+      "last100_mean_gradient_l2": 0.30653393484886043,
+      "max_parameter_abs": 0.5912389159202576,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "cb931d4930e1c239b6260492f6db02951eaf663b776b26006ac5e21a09660cd1",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 3.9188757999945665,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3796608448028564,
+          "pre_update_gradient_l2": 1.0910351611768023
+        },
+        {
+          "step": 99,
+          "nll": 1.0631169080734253,
+          "pre_update_gradient_l2": 0.18228163815269452
+        },
+        {
+          "step": 299,
+          "nll": 1.1104435920715332,
+          "pre_update_gradient_l2": 0.5341008918531862
+        },
+        {
+          "step": 499,
+          "nll": 1.0219969749450684,
+          "pre_update_gradient_l2": 0.6344087471900735
+        }
+      ],
+      "expected_nll": 1.121166181564331,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "per_draw_nll": [
+        1.1194254159927368,
+        1.1208873987197876,
+        1.1237926483154297,
+        1.1229196786880493,
+        1.1188057661056519
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0012583017349243608,
+        "private_zero": 0.004492568969726607,
+        "value_only_role_permutation": -0.00011856555938716262
+      },
+      "max_gradient_l2": 1.442635839308904,
+      "last100_mean_gradient_l2": 0.44383344098298466,
+      "max_parameter_abs": 0.539362907409668,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "cb931d4930e1c239b6260492f6db02951eaf663b776b26006ac5e21a09660cd1",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.12355010000465,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3095474243164062,
+          "pre_update_gradient_l2": 0.446206199669073
+        },
+        {
+          "step": 99,
+          "nll": 1.0621368885040283,
+          "pre_update_gradient_l2": 0.11471803940766684
+        },
+        {
+          "step": 299,
+          "nll": 1.1198813915252686,
+          "pre_update_gradient_l2": 0.35346385742367703
+        },
+        {
+          "step": 499,
+          "nll": 1.009615421295166,
+          "pre_update_gradient_l2": 0.40884496500512607
+        }
+      ],
+      "expected_nll": 1.1131291151046754,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "per_draw_nll": [
+        1.1138252019882202,
+        1.1178081035614014,
+        1.1156107187271118,
+        1.1147685050964355,
+        1.1036330461502075
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.016322326660156206,
+        "private_zero": 0.006743812561035067,
+        "value_only_role_permutation": 0.007553315162658558
+      },
+      "max_gradient_l2": 0.6961011043757399,
+      "last100_mean_gradient_l2": 0.27711609359214123,
+      "max_parameter_abs": 0.7557380795478821,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "cb931d4930e1c239b6260492f6db02951eaf663b776b26006ac5e21a09660cd1",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.184381200000644,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.324171781539917,
+          "pre_update_gradient_l2": 0.5729266781726937
+        },
+        {
+          "step": 99,
+          "nll": 1.062240719795227,
+          "pre_update_gradient_l2": 0.22444509393755446
+        },
+        {
+          "step": 299,
+          "nll": 1.128255009651184,
+          "pre_update_gradient_l2": 0.5117330079056517
+        },
+        {
+          "step": 499,
+          "nll": 1.0275342464447021,
+          "pre_update_gradient_l2": 0.6233443622774208
+        }
+      ],
+      "expected_nll": 1.1108211994171142,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "per_draw_nll": [
+        1.1097060441970825,
+        1.1135026216506958,
+        1.1156072616577148,
+        1.1145037412643433,
+        1.1007863283157349
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.017849588394165172,
+        "private_zero": 0.009321498870849654,
+        "value_only_role_permutation": 0.008783054351806596
+      },
+      "max_gradient_l2": 1.1887358051616022,
+      "last100_mean_gradient_l2": 0.41733222628509625,
+      "max_parameter_abs": 0.6647257208824158,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "fb4f36c5076e8eae26bf395d3c660f8c83045ff29c0f3a3d95f9f3350cc62226",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 3.107110199998715,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.31008780002594,
+          "pre_update_gradient_l2": 0.47294589688783095
+        },
+        {
+          "step": 99,
+          "nll": 1.0697548389434814,
+          "pre_update_gradient_l2": 0.19206834828362015
+        },
+        {
+          "step": 299,
+          "nll": 1.1077157258987427,
+          "pre_update_gradient_l2": 0.4874800727227202
+        },
+        {
+          "step": 499,
+          "nll": 1.0255874395370483,
+          "pre_update_gradient_l2": 0.5145211228429211
+        }
+      ],
+      "expected_nll": 1.1195961475372314,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "per_draw_nll": [
+        1.1180838346481323,
+        1.1194897890090942,
+        1.121116042137146,
+        1.1206034421920776,
+        1.118687629699707
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.0006304502487184394,
+        "private_zero": 0.007709479331970304,
+        "value_only_role_permutation": -0.00014977455139142393
+      },
+      "max_gradient_l2": 1.210434906601976,
+      "last100_mean_gradient_l2": 0.36138500112511496,
+      "max_parameter_abs": 0.5857754945755005,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "fb4f36c5076e8eae26bf395d3c660f8c83045ff29c0f3a3d95f9f3350cc62226",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 3.292579500004649,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3488882780075073,
+          "pre_update_gradient_l2": 0.9765506917641918
+        },
+        {
+          "step": 99,
+          "nll": 1.0699585676193237,
+          "pre_update_gradient_l2": 0.21375065910514693
+        },
+        {
+          "step": 299,
+          "nll": 1.1117525100708008,
+          "pre_update_gradient_l2": 0.6132367653121127
+        },
+        {
+          "step": 499,
+          "nll": 1.030143141746521,
+          "pre_update_gradient_l2": 0.7792625954738677
+        }
+      ],
+      "expected_nll": 1.1177953004837036,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "per_draw_nll": [
+        1.1179617643356323,
+        1.1174098253250122,
+        1.117763876914978,
+        1.116524338722229,
+        1.1193166971206665
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.0006075143814088246,
+        "private_zero": 0.0035560607910156694,
+        "value_only_role_permutation": -0.0001326322555541548
+      },
+      "max_gradient_l2": 1.7879339310157767,
+      "last100_mean_gradient_l2": 0.5414288443944484,
+      "max_parameter_abs": 0.551325798034668,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "fb4f36c5076e8eae26bf395d3c660f8c83045ff29c0f3a3d95f9f3350cc62226",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.702019499993185,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3026126623153687,
+          "pre_update_gradient_l2": 0.44235486149475095
+        },
+        {
+          "step": 99,
+          "nll": 1.0506600141525269,
+          "pre_update_gradient_l2": 0.1350048532115548
+        },
+        {
+          "step": 299,
+          "nll": 1.2099323272705078,
+          "pre_update_gradient_l2": 0.7527199970686261
+        },
+        {
+          "step": 499,
+          "nll": 0.8225559592247009,
+          "pre_update_gradient_l2": 0.5529326099918586
+        }
+      ],
+      "expected_nll": 0.9337808728218079,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "per_draw_nll": [
+        0.9287967681884766,
+        0.9199661612510681,
+        0.944718062877655,
+        0.9387699961662292,
+        0.9366533756256104
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.39914041757583607,
+        "private_zero": 0.2100981831550598,
+        "value_only_role_permutation": 0.31843799352645863
+      },
+      "max_gradient_l2": 1.4268277830470812,
+      "last100_mean_gradient_l2": 0.7450923163491968,
+      "max_parameter_abs": 1.2474356889724731,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "fb4f36c5076e8eae26bf395d3c660f8c83045ff29c0f3a3d95f9f3350cc62226",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.4813183000078425,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3011507987976074,
+          "pre_update_gradient_l2": 0.5843596431834315
+        },
+        {
+          "step": 99,
+          "nll": 1.0487663745880127,
+          "pre_update_gradient_l2": 0.22121469732321206
+        },
+        {
+          "step": 299,
+          "nll": 1.1097434759140015,
+          "pre_update_gradient_l2": 1.396259151483338
+        },
+        {
+          "step": 499,
+          "nll": 0.859674870967865,
+          "pre_update_gradient_l2": 0.9849195639207289
+        }
+      ],
+      "expected_nll": 0.9179827451705933,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "per_draw_nll": [
+        0.9132754802703857,
+        0.8956449627876282,
+        0.9216511845588684,
+        0.9244462847709656,
+        0.9348958134651184
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.49818410873413077,
+        "private_zero": 0.20358223915100093,
+        "value_only_role_permutation": 0.40719220638275133
+      },
+      "max_gradient_l2": 2.1676075344476047,
+      "last100_mean_gradient_l2": 1.0790258813464964,
+      "max_parameter_abs": 0.9538459777832031,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "cb931d4930e1c239b6260492f6db02951eaf663b776b26006ac5e21a09660cd1",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 3.8809693999937735,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3208332061767578,
+          "pre_update_gradient_l2": 0.4872436258789286
+        },
+        {
+          "step": 99,
+          "nll": 1.0596027374267578,
+          "pre_update_gradient_l2": 0.13692719240592616
+        },
+        {
+          "step": 299,
+          "nll": 1.1118857860565186,
+          "pre_update_gradient_l2": 0.39251067409532214
+        },
+        {
+          "step": 499,
+          "nll": 1.0309555530548096,
+          "pre_update_gradient_l2": 0.41669041739829077
+        }
+      ],
+      "expected_nll": 1.1184587478637695,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "per_draw_nll": [
+        1.1172120571136475,
+        1.1177901029586792,
+        1.1205776929855347,
+        1.1196593046188354,
+        1.1170545816421509
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0013867139816283736,
+        "private_zero": 0.006381630897521973,
+        "value_only_role_permutation": -6.093978881827056e-05
+      },
+      "max_gradient_l2": 0.9547222353424033,
+      "last100_mean_gradient_l2": 0.30463147817736175,
+      "max_parameter_abs": 0.5751329064369202,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "cb931d4930e1c239b6260492f6db02951eaf663b776b26006ac5e21a09660cd1",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 3.8445056000055047,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.380667805671692,
+          "pre_update_gradient_l2": 1.096828681314708
+        },
+        {
+          "step": 99,
+          "nll": 1.0578255653381348,
+          "pre_update_gradient_l2": 0.1806833020839413
+        },
+        {
+          "step": 299,
+          "nll": 1.100174069404602,
+          "pre_update_gradient_l2": 0.5203050329070031
+        },
+        {
+          "step": 499,
+          "nll": 1.0305497646331787,
+          "pre_update_gradient_l2": 0.6184465034765996
+        }
+      ],
+      "expected_nll": 1.1193888425827025,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "per_draw_nll": [
+        1.1184459924697876,
+        1.118181824684143,
+        1.1215211153030396,
+        1.121289849281311,
+        1.117505431175232
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0020346879959105557,
+        "private_zero": 0.003907299041748136,
+        "value_only_role_permutation": -1.9884109496937086e-05
+      },
+      "max_gradient_l2": 1.4715717513067388,
+      "last100_mean_gradient_l2": 0.44044684455442495,
+      "max_parameter_abs": 0.5398408770561218,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "cb931d4930e1c239b6260492f6db02951eaf663b776b26006ac5e21a09660cd1",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.083652599991183,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3093998432159424,
+          "pre_update_gradient_l2": 0.44615986508405164
+        },
+        {
+          "step": 99,
+          "nll": 1.060437560081482,
+          "pre_update_gradient_l2": 0.10928304904894752
+        },
+        {
+          "step": 299,
+          "nll": 1.1088017225265503,
+          "pre_update_gradient_l2": 0.3364245062859033
+        },
+        {
+          "step": 499,
+          "nll": 1.0226114988327026,
+          "pre_update_gradient_l2": 0.36196201187986377
+        }
+      ],
+      "expected_nll": 1.1173904418945313,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "per_draw_nll": [
+        1.1154173612594604,
+        1.1176402568817139,
+        1.1191253662109375,
+        1.1187916994094849,
+        1.1159775257110596
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0014813899993897373,
+        "private_zero": 0.004809451103210405,
+        "value_only_role_permutation": 4.973411560049712e-05
+      },
+      "max_gradient_l2": 0.7272900598884664,
+      "last100_mean_gradient_l2": 0.2667243278282294,
+      "max_parameter_abs": 0.6337561011314392,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "cb931d4930e1c239b6260492f6db02951eaf663b776b26006ac5e21a09660cd1",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.361611000000266,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3232319355010986,
+          "pre_update_gradient_l2": 0.571369128202687
+        },
+        {
+          "step": 99,
+          "nll": 1.0605648756027222,
+          "pre_update_gradient_l2": 0.20493488375665458
+        },
+        {
+          "step": 299,
+          "nll": 1.1048088073730469,
+          "pre_update_gradient_l2": 0.4695672243687309
+        },
+        {
+          "step": 499,
+          "nll": 1.0285778045654297,
+          "pre_update_gradient_l2": 0.551494064847045
+        }
+      ],
+      "expected_nll": 1.119437074661255,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "per_draw_nll": [
+        1.117983341217041,
+        1.1184099912643433,
+        1.1221994161605835,
+        1.120496153831482,
+        1.1180964708328247
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0029720783233644354,
+        "private_zero": 0.0035863161087035245,
+        "value_only_role_permutation": -0.0007819890975953037
+      },
+      "max_gradient_l2": 1.231579897999211,
+      "last100_mean_gradient_l2": 0.39553363510508094,
+      "max_parameter_abs": 0.5698390007019043,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "fb4f36c5076e8eae26bf395d3c660f8c83045ff29c0f3a3d95f9f3350cc62226",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 3.99820990000444,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3110089302062988,
+          "pre_update_gradient_l2": 0.47319788001981306
+        },
+        {
+          "step": 99,
+          "nll": 1.063125491142273,
+          "pre_update_gradient_l2": 0.18411265863184198
+        },
+        {
+          "step": 299,
+          "nll": 1.105283498764038,
+          "pre_update_gradient_l2": 0.4632903156775703
+        },
+        {
+          "step": 499,
+          "nll": 1.0320920944213867,
+          "pre_update_gradient_l2": 0.4856161602653001
+        }
+      ],
+      "expected_nll": 1.1186856508255005,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "per_draw_nll": [
+        1.1184171438217163,
+        1.1174516677856445,
+        1.1202375888824463,
+        1.1190906763076782,
+        1.118231177330017
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0006510972976685458,
+        "private_zero": 0.0071218729019164595,
+        "value_only_role_permutation": -1.2350082397416529e-05
+      },
+      "max_gradient_l2": 1.2768822501352564,
+      "last100_mean_gradient_l2": 0.3528273955105232,
+      "max_parameter_abs": 0.5908285975456238,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "fb4f36c5076e8eae26bf395d3c660f8c83045ff29c0f3a3d95f9f3350cc62226",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.363622800010489,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3503624200820923,
+          "pre_update_gradient_l2": 0.982989342379665
+        },
+        {
+          "step": 99,
+          "nll": 1.0647976398468018,
+          "pre_update_gradient_l2": 0.2109226055048289
+        },
+        {
+          "step": 299,
+          "nll": 1.1112607717514038,
+          "pre_update_gradient_l2": 0.6019084050929887
+        },
+        {
+          "step": 499,
+          "nll": 1.0355045795440674,
+          "pre_update_gradient_l2": 0.6912982077135565
+        }
+      ],
+      "expected_nll": 1.117377233505249,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "per_draw_nll": [
+        1.1182485818862915,
+        1.115539312362671,
+        1.1178240776062012,
+        1.1176486015319824,
+        1.1176255941390991
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0010524988174438477,
+        "private_zero": 0.0032803297042847124,
+        "value_only_role_permutation": -4.744529723987867e-06
+      },
+      "max_gradient_l2": 1.8257680924856512,
+      "last100_mean_gradient_l2": 0.5203321381486846,
+      "max_parameter_abs": 0.5523017048835754,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "fb4f36c5076e8eae26bf395d3c660f8c83045ff29c0f3a3d95f9f3350cc62226",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.335902399994666,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.303635597229004,
+          "pre_update_gradient_l2": 0.44279793046499183
+        },
+        {
+          "step": 99,
+          "nll": 1.050171136856079,
+          "pre_update_gradient_l2": 0.13201502528450443
+        },
+        {
+          "step": 299,
+          "nll": 1.1107540130615234,
+          "pre_update_gradient_l2": 0.36764596098668023
+        },
+        {
+          "step": 499,
+          "nll": 1.0213452577590942,
+          "pre_update_gradient_l2": 0.41285501302411265
+        }
+      ],
+      "expected_nll": 1.1197189569473267,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "per_draw_nll": [
+        1.1178324222564697,
+        1.1182674169540405,
+        1.1222392320632935,
+        1.1212959289550781,
+        1.1189597845077515
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0035778760910034624,
+        "private_zero": 0.005167436599731401,
+        "value_only_role_permutation": -0.0023395061492921254
+      },
+      "max_gradient_l2": 0.909600320961711,
+      "last100_mean_gradient_l2": 0.29143254343115715,
+      "max_parameter_abs": 0.6710847020149231,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "fb4f36c5076e8eae26bf395d3c660f8c83045ff29c0f3a3d95f9f3350cc62226",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.512421999999788,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3039883375167847,
+          "pre_update_gradient_l2": 0.5913289469216311
+        },
+        {
+          "step": 99,
+          "nll": 1.0529289245605469,
+          "pre_update_gradient_l2": 0.20561299813096456
+        },
+        {
+          "step": 299,
+          "nll": 1.110150933265686,
+          "pre_update_gradient_l2": 0.4847465383210171
+        },
+        {
+          "step": 499,
+          "nll": 1.0188264846801758,
+          "pre_update_gradient_l2": 0.6331549736868276
+        }
+      ],
+      "expected_nll": 1.1224994659423828,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "per_draw_nll": [
+        1.1211049556732178,
+        1.1196931600570679,
+        1.1250357627868652,
+        1.1247708797454834,
+        1.1218925714492798
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.004657363891601651,
+        "private_zero": 0.003933906555175781,
+        "value_only_role_permutation": -0.0029181480407713956
+      },
+      "max_gradient_l2": 1.4358257142888646,
+      "last100_mean_gradient_l2": 0.4313120125811942,
+      "max_parameter_abs": 0.6125643253326416,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "886465f6d3f3191ff92167f31d5faa0c7d56d56e6dfb37dcb88015d613407f02",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.028377900001942,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3535957336425781,
+          "pre_update_gradient_l2": 0.4192380488171161
+        },
+        {
+          "step": 99,
+          "nll": 1.0510835647583008,
+          "pre_update_gradient_l2": 0.27272689931550176
+        },
+        {
+          "step": 299,
+          "nll": 1.164472222328186,
+          "pre_update_gradient_l2": 0.2983393985256523
+        },
+        {
+          "step": 499,
+          "nll": 1.011398434638977,
+          "pre_update_gradient_l2": 0.5560512462316985
+        }
+      ],
+      "expected_nll": 1.138345217704773,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "per_draw_nll": [
+        1.139907717704773,
+        1.1401857137680054,
+        1.1390873193740845,
+        1.1389316320419312,
+        1.1336137056350708
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0035859823226929155,
+        "private_zero": -0.015703415870666593,
+        "value_only_role_permutation": -3.2782554626464844e-05
+      },
+      "max_gradient_l2": 1.0498587017662866,
+      "last100_mean_gradient_l2": 0.31958702649671894,
+      "max_parameter_abs": 0.5774607062339783,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "886465f6d3f3191ff92167f31d5faa0c7d56d56e6dfb37dcb88015d613407f02",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 3.9722269999911077,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3157882690429688,
+          "pre_update_gradient_l2": 0.7352680042307066
+        },
+        {
+          "step": 99,
+          "nll": 1.0468981266021729,
+          "pre_update_gradient_l2": 0.37564650617528594
+        },
+        {
+          "step": 299,
+          "nll": 1.1682491302490234,
+          "pre_update_gradient_l2": 0.4610489568550476
+        },
+        {
+          "step": 499,
+          "nll": 1.030102252960205,
+          "pre_update_gradient_l2": 0.8802569769061711
+        }
+      ],
+      "expected_nll": 1.136276078224182,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "per_draw_nll": [
+        1.1383225917816162,
+        1.1387362480163574,
+        1.1385936737060547,
+        1.1350159645080566,
+        1.1307119131088257
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0027097463607788086,
+        "private_zero": -0.01218481063842769,
+        "value_only_role_permutation": 6.866455078080591e-06
+      },
+      "max_gradient_l2": 1.5868970574788328,
+      "last100_mean_gradient_l2": 0.47112818587997274,
+      "max_parameter_abs": 0.5287455916404724,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "886465f6d3f3191ff92167f31d5faa0c7d56d56e6dfb37dcb88015d613407f02",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.333405299999868,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3599696159362793,
+          "pre_update_gradient_l2": 0.3947218920715216
+        },
+        {
+          "step": 99,
+          "nll": 1.0496197938919067,
+          "pre_update_gradient_l2": 0.2229692503322142
+        },
+        {
+          "step": 299,
+          "nll": 1.155866026878357,
+          "pre_update_gradient_l2": 0.26793355247993667
+        },
+        {
+          "step": 499,
+          "nll": 1.0154950618743896,
+          "pre_update_gradient_l2": 0.7068303888869454
+        }
+      ],
+      "expected_nll": 1.138653564453125,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "per_draw_nll": [
+        1.1386703252792358,
+        1.137228012084961,
+        1.1477329730987549,
+        1.14064621925354,
+        1.1289902925491333
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.039345741271972656,
+        "private_zero": -0.003065752983093306,
+        "value_only_role_permutation": 0.014557051658630416
+      },
+      "max_gradient_l2": 0.8487338856357924,
+      "last100_mean_gradient_l2": 0.3023860187899694,
+      "max_parameter_abs": 0.6936712861061096,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "886465f6d3f3191ff92167f31d5faa0c7d56d56e6dfb37dcb88015d613407f02",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.283469600006356,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3430562019348145,
+          "pre_update_gradient_l2": 0.4636583201677262
+        },
+        {
+          "step": 99,
+          "nll": 1.0595149993896484,
+          "pre_update_gradient_l2": 0.343668133458188
+        },
+        {
+          "step": 299,
+          "nll": 1.1566320657730103,
+          "pre_update_gradient_l2": 0.4015068975999295
+        },
+        {
+          "step": 499,
+          "nll": 0.7358830571174622,
+          "pre_update_gradient_l2": 1.3624284127495971
+        }
+      ],
+      "expected_nll": 0.9440656065940857,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "per_draw_nll": [
+        0.9610031247138977,
+        0.9335017204284668,
+        0.9292513728141785,
+        0.9667558670043945,
+        0.929815948009491
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.6517114520072936,
+        "private_zero": 0.19375141859054568,
+        "value_only_role_permutation": 0.48698569536209113
+      },
+      "max_gradient_l2": 1.5951444806938613,
+      "last100_mean_gradient_l2": 0.8565768068390315,
+      "max_parameter_abs": 0.8312649726867676,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "51977e1441482d604268b2d44874c475428b2b26cb8e4267643b7ba9f6a800e4",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.212877099998877,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3759288787841797,
+          "pre_update_gradient_l2": 0.41858246343337246
+        },
+        {
+          "step": 99,
+          "nll": 1.0571256875991821,
+          "pre_update_gradient_l2": 0.326480728135345
+        },
+        {
+          "step": 299,
+          "nll": 1.1724951267242432,
+          "pre_update_gradient_l2": 0.36290423829154167
+        },
+        {
+          "step": 499,
+          "nll": 1.0178637504577637,
+          "pre_update_gradient_l2": 0.6893185277622409
+        }
+      ],
+      "expected_nll": 1.1375745296478272,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "per_draw_nll": [
+        1.1411877870559692,
+        1.138389229774475,
+        1.1392066478729248,
+        1.1381908655166626,
+        1.130898118019104
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.00354766845703125,
+        "private_zero": -0.018240904808044522,
+        "value_only_role_permutation": -0.0002529382705689365
+      },
+      "max_gradient_l2": 1.3557317057047067,
+      "last100_mean_gradient_l2": 0.3849196569431343,
+      "max_parameter_abs": 0.5862138271331787,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "51977e1441482d604268b2d44874c475428b2b26cb8e4267643b7ba9f6a800e4",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 3.045768699987093,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.405705213546753,
+          "pre_update_gradient_l2": 0.6734118403721459
+        },
+        {
+          "step": 99,
+          "nll": 1.054050326347351,
+          "pre_update_gradient_l2": 0.46690690861291784
+        },
+        {
+          "step": 299,
+          "nll": 1.1801857948303223,
+          "pre_update_gradient_l2": 0.5493838557053357
+        },
+        {
+          "step": 499,
+          "nll": 1.0211213827133179,
+          "pre_update_gradient_l2": 0.9518397908206331
+        }
+      ],
+      "expected_nll": 1.1388002634048462,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "per_draw_nll": [
+        1.1407700777053833,
+        1.1392301321029663,
+        1.1445740461349487,
+        1.1390823125839233,
+        1.1303447484970093
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0054496288299561435,
+        "private_zero": -0.018232107162475586,
+        "value_only_role_permutation": -0.0005859136581420898
+      },
+      "max_gradient_l2": 2.067687122944858,
+      "last100_mean_gradient_l2": 0.5607021024341446,
+      "max_parameter_abs": 0.5839458703994751,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "51977e1441482d604268b2d44874c475428b2b26cb8e4267643b7ba9f6a800e4",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.661784899988561,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3653724193572998,
+          "pre_update_gradient_l2": 0.39793552070638016
+        },
+        {
+          "step": 99,
+          "nll": 1.0506867170333862,
+          "pre_update_gradient_l2": 0.2541345591296726
+        },
+        {
+          "step": 299,
+          "nll": 1.1763043403625488,
+          "pre_update_gradient_l2": 0.31329065138520923
+        },
+        {
+          "step": 499,
+          "nll": 0.7976254820823669,
+          "pre_update_gradient_l2": 1.2616496806276216
+        }
+      ],
+      "expected_nll": 0.9990190029144287,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "per_draw_nll": [
+        1.0007730722427368,
+        0.9934227466583252,
+        1.013942837715149,
+        1.00431489944458,
+        0.9826414585113525
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.40250594615936286,
+        "private_zero": 0.1679504156112671,
+        "value_only_role_permutation": 0.35709524154663097
+      },
+      "max_gradient_l2": 1.4186434773444898,
+      "last100_mean_gradient_l2": 0.5775887990049061,
+      "max_parameter_abs": 0.9543629884719849,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "51977e1441482d604268b2d44874c475428b2b26cb8e4267643b7ba9f6a800e4",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.795942400000058,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3651933670043945,
+          "pre_update_gradient_l2": 0.48466494270833615
+        },
+        {
+          "step": 99,
+          "nll": 1.0539681911468506,
+          "pre_update_gradient_l2": 0.424757491736088
+        },
+        {
+          "step": 299,
+          "nll": 0.9900232553482056,
+          "pre_update_gradient_l2": 1.0491617557755353
+        },
+        {
+          "step": 499,
+          "nll": 0.7327209711074829,
+          "pre_update_gradient_l2": 1.4405583065605927
+        }
+      ],
+      "expected_nll": 0.9480943441390991,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "per_draw_nll": [
+        0.9631492495536804,
+        0.9396650791168213,
+        0.9367178082466125,
+        0.9638715386390686,
+        0.9370680451393127
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": 0.7036904811859132,
+        "private_zero": 0.19134953022003176,
+        "value_only_role_permutation": 0.5303937196731568
+      },
+      "max_gradient_l2": 2.2157550896632157,
+      "last100_mean_gradient_l2": 1.0365319189315914,
+      "max_parameter_abs": 0.8320710062980652,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "886465f6d3f3191ff92167f31d5faa0c7d56d56e6dfb37dcb88015d613407f02",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 3.7760199999902397,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.353529930114746,
+          "pre_update_gradient_l2": 0.419154845485271
+        },
+        {
+          "step": 99,
+          "nll": 1.050532341003418,
+          "pre_update_gradient_l2": 0.2742353707375859
+        },
+        {
+          "step": 299,
+          "nll": 1.1590955257415771,
+          "pre_update_gradient_l2": 0.3012382592987015
+        },
+        {
+          "step": 499,
+          "nll": 1.009482741355896,
+          "pre_update_gradient_l2": 0.5639951204486783
+        }
+      ],
+      "expected_nll": 1.1364959716796874,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "per_draw_nll": [
+        1.1387253999710083,
+        1.1384987831115723,
+        1.133658528327942,
+        1.1383646726608276,
+        1.1332324743270874
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0023481369018554243,
+        "private_zero": -0.013246798515319735,
+        "value_only_role_permutation": -3.790855407714844e-05
+      },
+      "max_gradient_l2": 0.9849804170921986,
+      "last100_mean_gradient_l2": 0.31913813076971626,
+      "max_parameter_abs": 0.5792211890220642,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "886465f6d3f3191ff92167f31d5faa0c7d56d56e6dfb37dcb88015d613407f02",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.04180500000075,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3155707120895386,
+          "pre_update_gradient_l2": 0.7366435012783575
+        },
+        {
+          "step": 99,
+          "nll": 1.0499050617218018,
+          "pre_update_gradient_l2": 0.3795767477013495
+        },
+        {
+          "step": 299,
+          "nll": 1.156888723373413,
+          "pre_update_gradient_l2": 0.43703815945296104
+        },
+        {
+          "step": 499,
+          "nll": 1.0213062763214111,
+          "pre_update_gradient_l2": 0.8325291432693814
+        }
+      ],
+      "expected_nll": 1.1365659475326537,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "per_draw_nll": [
+        1.139389157295227,
+        1.138252854347229,
+        1.13499116897583,
+        1.136984944343567,
+        1.133211612701416
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0025020837783813477,
+        "private_zero": -0.009471559524536044,
+        "value_only_role_permutation": -5.578994750843336e-06
+      },
+      "max_gradient_l2": 1.4933643116687834,
+      "last100_mean_gradient_l2": 0.463570323379575,
+      "max_parameter_abs": 0.5317326784133911,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "886465f6d3f3191ff92167f31d5faa0c7d56d56e6dfb37dcb88015d613407f02",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.369008499998017,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3598909378051758,
+          "pre_update_gradient_l2": 0.39455360729230704
+        },
+        {
+          "step": 99,
+          "nll": 1.0484672784805298,
+          "pre_update_gradient_l2": 0.22529779619847068
+        },
+        {
+          "step": 299,
+          "nll": 1.1573545932769775,
+          "pre_update_gradient_l2": 0.26418591529041946
+        },
+        {
+          "step": 499,
+          "nll": 1.0027621984481812,
+          "pre_update_gradient_l2": 0.45936436048634427
+        }
+      ],
+      "expected_nll": 1.1392099142074585,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "per_draw_nll": [
+        1.1408954858779907,
+        1.1397547721862793,
+        1.1381503343582153,
+        1.1409673690795898,
+        1.1362816095352173
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0023004293441772905,
+        "private_zero": -0.012811946868896529,
+        "value_only_role_permutation": 0.0004893064498900923
+      },
+      "max_gradient_l2": 0.7949338523770952,
+      "last100_mean_gradient_l2": 0.2711000739125468,
+      "max_parameter_abs": 0.6520050764083862,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "phi_shape": "full",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "886465f6d3f3191ff92167f31d5faa0c7d56d56e6dfb37dcb88015d613407f02",
+      "parameters": 1396,
+      "steps": 500,
+      "training_seconds": 4.144421199991484,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.342650294303894,
+          "pre_update_gradient_l2": 0.4627059683140349
+        },
+        {
+          "step": 99,
+          "nll": 1.0568422079086304,
+          "pre_update_gradient_l2": 0.3513366238510011
+        },
+        {
+          "step": 299,
+          "nll": 1.163676381111145,
+          "pre_update_gradient_l2": 0.3741863385778117
+        },
+        {
+          "step": 499,
+          "nll": 1.0098395347595215,
+          "pre_update_gradient_l2": 0.6760259545844759
+        }
+      ],
+      "expected_nll": 1.1389804363250733,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "per_draw_nll": [
+        1.140683650970459,
+        1.1400188207626343,
+        1.1395931243896484,
+        1.1398241519927979,
+        1.1347824335098267
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0025475263595582387,
+        "private_zero": -0.008332657814025923,
+        "value_only_role_permutation": 0.00048465728759761184
+      },
+      "max_gradient_l2": 1.323863442419148,
+      "last100_mean_gradient_l2": 0.41116332226825775,
+      "max_parameter_abs": 0.6084204316139221,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "mean",
+      "initial_state_hash": "51977e1441482d604268b2d44874c475428b2b26cb8e4267643b7ba9f6a800e4",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.065529300001799,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.375880241394043,
+          "pre_update_gradient_l2": 0.41977120577330546
+        },
+        {
+          "step": 99,
+          "nll": 1.052878975868225,
+          "pre_update_gradient_l2": 0.31852230948241045
+        },
+        {
+          "step": 299,
+          "nll": 1.1610596179962158,
+          "pre_update_gradient_l2": 0.3704762517176529
+        },
+        {
+          "step": 499,
+          "nll": 1.0138102769851685,
+          "pre_update_gradient_l2": 0.6955548433636306
+        }
+      ],
+      "expected_nll": 1.1347155809402465,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "per_draw_nll": [
+        1.1385020017623901,
+        1.1350528001785278,
+        1.1332505941390991,
+        1.1376817226409912,
+        1.1290907859802246
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0022992372512815606,
+        "private_zero": -0.015395307540893466,
+        "value_only_role_permutation": -7.603168487535505e-05
+      },
+      "max_gradient_l2": 1.2361421467094056,
+      "last100_mean_gradient_l2": 0.3827433753092154,
+      "max_parameter_abs": 0.5915546417236328,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "blind",
+      "scale": "sum",
+      "initial_state_hash": "51977e1441482d604268b2d44874c475428b2b26cb8e4267643b7ba9f6a800e4",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.384065200007171,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4061198234558105,
+          "pre_update_gradient_l2": 0.6831229793884191
+        },
+        {
+          "step": 99,
+          "nll": 1.0577802658081055,
+          "pre_update_gradient_l2": 0.47599312898259316
+        },
+        {
+          "step": 299,
+          "nll": 1.1648832559585571,
+          "pre_update_gradient_l2": 0.5503599036008027
+        },
+        {
+          "step": 499,
+          "nll": 1.0256168842315674,
+          "pre_update_gradient_l2": 1.0238769320069794
+        }
+      ],
+      "expected_nll": 1.1343897104263305,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "per_draw_nll": [
+        1.1371701955795288,
+        1.1355637311935425,
+        1.1343344449996948,
+        1.1361514329910278,
+        1.1287287473678589
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0021843194961548296,
+        "private_zero": -0.012831640243530229,
+        "value_only_role_permutation": -0.00010018348693852097
+      },
+      "max_gradient_l2": 1.9345638034798072,
+      "last100_mean_gradient_l2": 0.5718834035258078,
+      "max_parameter_abs": 0.5798316597938538,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "mean",
+      "initial_state_hash": "51977e1441482d604268b2d44874c475428b2b26cb8e4267643b7ba9f6a800e4",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.7314599999954225,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.365310788154602,
+          "pre_update_gradient_l2": 0.39865449324056473
+        },
+        {
+          "step": 99,
+          "nll": 1.0444976091384888,
+          "pre_update_gradient_l2": 0.2444597868454377
+        },
+        {
+          "step": 299,
+          "nll": 1.16438627243042,
+          "pre_update_gradient_l2": 0.3073100466000081
+        },
+        {
+          "step": 499,
+          "nll": 1.0034801959991455,
+          "pre_update_gradient_l2": 0.5111993226718045
+        }
+      ],
+      "expected_nll": 1.135924220085144,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "per_draw_nll": [
+        1.141477108001709,
+        1.1345888376235962,
+        1.1340734958648682,
+        1.1384690999984741,
+        1.1310125589370728
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0004847764968871626,
+        "private_zero": -0.014753341674804688,
+        "value_only_role_permutation": 0.0008680343627929243
+      },
+      "max_gradient_l2": 0.9026490902995662,
+      "last100_mean_gradient_l2": 0.3020554030619546,
+      "max_parameter_abs": 0.6062215566635132,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "phi_shape": "block",
+      "role_access": "signed",
+      "scale": "sum",
+      "initial_state_hash": "51977e1441482d604268b2d44874c475428b2b26cb8e4267643b7ba9f6a800e4",
+      "parameters": 1402,
+      "steps": 500,
+      "training_seconds": 4.871192999999039,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3655071258544922,
+          "pre_update_gradient_l2": 0.4890814260401121
+        },
+        {
+          "step": 99,
+          "nll": 1.0491394996643066,
+          "pre_update_gradient_l2": 0.4095330718145306
+        },
+        {
+          "step": 299,
+          "nll": 1.17526376247406,
+          "pre_update_gradient_l2": 0.459164635928691
+        },
+        {
+          "step": 499,
+          "nll": 1.0177218914031982,
+          "pre_update_gradient_l2": 0.8065736394943983
+        }
+      ],
+      "expected_nll": 1.1344524383544923,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "per_draw_nll": [
+        1.1394227743148804,
+        1.1336829662322998,
+        1.1339911222457886,
+        1.1352976560592651,
+        1.129867672920227
+      ],
+      "fixed_head_nll_deltas": {
+        "private_donor": -0.0012969732284546787,
+        "private_zero": -0.012782907485962003,
+        "value_only_role_permutation": 0.0007712841033935547
+      },
+      "max_gradient_l2": 1.4534898010494397,
+      "last100_mean_gradient_l2": 0.46777100089377127,
+      "max_parameter_abs": 0.5917376279830933,
+      "finite_optimization": true,
+      "encoder_parameters_in_optimizer": 0
+    }
+  ],
+  "verified_old_repeats": 6,
+  "patient_execution": false,
+  "server_execution": false
+}

@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T16:22:20.388195+08:00",
-  "base_commit_before_delivery": "fc86691c56bdb11d9cacbe3d91ba4ada2160aac5",
+  "recorded_at": "2026-11-02T16:45:05.607577+08:00",
+  "base_commit_before_delivery": "63325d18f5ee6155199cec724da100b5bb7c82f7",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 616,
-  "repository_file_count_including_manifest": 617,
+  "covered_file_count": 625,
+  "repository_file_count_including_manifest": 626,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 720027,
-      "sha256": "874a21b73b3ecdf668f305d31bd7ac55570d70edd73bba1a462449d9151c7e56"
+      "bytes": 723947,
+      "sha256": "fd54f6bd902573e1ce8098402d1a3f76448bd48f3367178ad1d9146b4a7925ca"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -358,6 +358,31 @@
       "path": "docs/research/slotspe_common_private_20261101/content_rate_bound_receipt.json",
       "bytes": 2664,
       "sha256": "d0b9665fc5c72f68ae240457767cbeeb71b7080b455dd77db8c39b95ac2a6eeb"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/controlled_readout_neural_receipt.json",
+      "bytes": 80471,
+      "sha256": "a3b3f03bdb41a35e0da25a9dcacb085b13957dfeb69be7460fad7c6b237b293e"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/controlled_readout_plan_20261102.json",
+      "bytes": 2706,
+      "sha256": "dbf2ddb08a41a66adba6676ea07cc810ee74f2559624db5fe8c5f8a0ca9890da"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/controlled_readout_review_20261102.md",
+      "bytes": 8391,
+      "sha256": "3260641e471f342519e4660e18014c922f4819a51f4095a9775c5832044ccb0b"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/controlled_readout_stage_summary.json",
+      "bytes": 11449,
+      "sha256": "f68960a2d71ac1355b40cb9135fe8cecbaa58bb9153a305d9e78a049ad40082b"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/controlled_readout_validation_receipt.json",
+      "bytes": 2138,
+      "sha256": "a45edfee1579204f70f01cd97d07ba6c975ac87586d387316808ef4c26377938"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_probe_controls_receipt.json",
@@ -1900,6 +1925,11 @@
       "sha256": "37ee21d4094f2e1768b785a44463402bf3ce10e7d16a1cca52ec14d98618a498"
     },
     {
+      "path": "scripts/check_controlled_slot_readout.py",
+      "bytes": 7622,
+      "sha256": "240a141d7fdb899f4925992b281877cb21cc9ed8b3275d348643ee6bf78319c3"
+    },
+    {
       "path": "scripts/check_crossmodal_conditional_rate.py",
       "bytes": 3884,
       "sha256": "9f81d89d47eb2868d6b21096d5bc57bc3a6cca16eaa443b09dee518e3c621f85"
@@ -2310,6 +2340,11 @@
       "sha256": "66c33376bab3f856cf7b9ae56e2a8687a8f1cacd3a361847e2998433f2ac36f1"
     },
     {
+      "path": "scripts/summarize_controlled_readout.py",
+      "bytes": 5655,
+      "sha256": "d7ce7a5d969357ab235764be7ea10d13289d4a9b3a394e9f25c5b7b098d197b3"
+    },
+    {
       "path": "scripts/summarize_crossmodal_shared_stage.py",
       "bytes": 5375,
       "sha256": "c72a61d28ff7788a03fa47006f33c5f45910a774ea37ebf48de99497091f8d8a"
@@ -2383,6 +2418,11 @@
       "path": "slotspe_proof/content_budget_slots.py",
       "bytes": 3633,
       "sha256": "714e2266f00f225caaf9668f25c1fe6a72b3867cd3bd81e64a36e1deda0d4b4d"
+    },
+    {
+      "path": "slotspe_proof/controlled_slot_readout.py",
+      "bytes": 3435,
+      "sha256": "614509440a32dacda3f7b13b06dad63b5a691ae25d8a9dee0671924bef87ef27"
     },
     {
       "path": "slotspe_proof/crossmodal_shared_bottleneck.py",
@@ -2738,6 +2778,11 @@
       "path": "tests/test_content_budget_slots.py",
       "bytes": 2192,
       "sha256": "cd31d061f8d7cc568692e9eeac32d6149d62b357863d26e0907354f74b9ced07"
+    },
+    {
+      "path": "tests/test_controlled_slot_readout.py",
+      "bytes": 5773,
+      "sha256": "05db4a79c9c99643bd0a03c76523d6f4880db379699a70f397cc40ae0c7f0039"
     },
     {
       "path": "tests/test_crossmodal_shared_bottleneck.py",

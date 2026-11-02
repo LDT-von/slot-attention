@@ -8930,4 +8930,64 @@
   "gaps_reasons": "Overall method not complete: slot complementarity, stable prediction gain, controlled readout attribution, clinical adapter and independent evaluation remain missing. Local fc86691 and remote8a1d6f6 diverge; no overwrite or merge performed. Old semantic/geometry claims do not fill these gaps.",
   "next_action_user_inputs": "Maintain the existing architecture; one bounded fixed-rate readout attribution gate followed by genuinely multi-factor validation is justified. Do not rerun completed old scans or queues; no Q1/Q2/Q3 response required. Patient execution remains a later explicitly authorized stage."
 }
+,
+"latest_controlled_readout_gate_20261102":{
+  "recorded_at": "2026-11-02",
+  "route_task": "One bounded all-slot role/phi/scale attribution gate",
+  "completed_work": "Completed48 locked synthetic readout executions with exact initialization/data/noise pairing;6 old repeats matched exactly. Prespecified primary gate failed at mean scale. Preserved conditional sum-scale gains and negative controls; did not promote any secondary shape. Added mathematical capacity, equivalent-head and Adam-coordinate controls.",
+  "paths_commit": {
+    "branch": "codex/common-private-mechanism-review",
+    "parent_commit": "63325d18f5ee6155199cec724da100b5bb7c82f7",
+    "report": "docs/research/slotspe_common_private_20261101/controlled_readout_review_20261102.md",
+    "plan": "docs/research/slotspe_common_private_20261101/controlled_readout_plan_20261102.json",
+    "receipt": "docs/research/slotspe_common_private_20261101/controlled_readout_neural_receipt.json",
+    "pushed": false
+  },
+  "checks_actual_execution_raw_receipt": {
+    "schema": "slotspe_controlled_readout_validation_v1",
+    "recorded_at": "2026-11-02",
+    "base_commit": "63325d18f5ee6155199cec724da100b5bb7c82f7",
+    "previous_goal_turn_classification": "progress: current-state inventory and remote/public evidence reconciliation committed in63325d1",
+    "focused_tests": "28 passed in12.61s",
+    "full_repository_tests_rerun": false,
+    "neural_optimizer_executions": 48,
+    "old_deterministic_readout_repeats": 6,
+    "new_arm_executions": 42,
+    "steps_each": 500,
+    "neural_optimizer_updates": 24000,
+    "cpu_threads": 2,
+    "analytic_optimizer_one_step_unit_fixtures": 4,
+    "analytic_fixtures_are_neural_trainings": false,
+    "exact_initialization_groups": 12,
+    "source_pins_reverified": true,
+    "raw_copy_hash_equal": true,
+    "primary_gate_passed": false,
+    "secondary_best_model_selected": false,
+    "extra_optimizer_or_scale_scan": false,
+    "all_neural_optimizations_finite": true,
+    "max_observed_gradient_l2": 2.9035822704938936,
+    "timer_seconds_total": 183.79647019997356,
+    "timer_scope": "each run training plus its evaluation, not training-only time",
+    "mathematical_unit_acceptance": [
+      "GELU identity in actual phi preserves all raw coordinates under signed role map",
+      "Block signed pooling and role bank are equivalent after first-head transformation, including private-code gradient",
+      "Orthogonal two-dimensional reparameterization preserves one-step SGD but can change Adam"
+    ],
+    "protected_original_files_hash_verified": 11,
+    "main_architecture_changed": false,
+    "third_party_modified": false,
+    "historical_receipts_modified": false,
+    "patient_training": 0,
+    "patient_inference": 0,
+    "patient_checkpoint_reads": 0,
+    "server_execution": false,
+    "queue_modified": false,
+    "remote_live_status": "lookup failed this turn;8a1d6f6 is prior snapshot only",
+    "merged_or_pushed": false,
+    "report": "docs/research/slotspe_common_private_20261101/controlled_readout_review_20261102.md",
+    "limitations": "Exploratory old XOR data, privileged fixed signal role, only one necessary bit per modality. Failed gate is not proof of no information, no capacity, or Adam causality."
+  },
+  "gaps_reasons": "Explicit role effect depends on scale/phi/optimization; full mean has one non-improving seed. Engineering gate failure does not prove absent information. Stable multi-slot factor complementarity, role identity, patient adapter and independent prediction evidence remain unproved.",
+  "next_action_user_inputs": "Keep current main architecture unchanged and do not broaden XOR/optimizer scans or choose the best secondary shape. Develop known-answer multi-factor content and noisy-G conditional-content acceptance with observable target assumptions. No research-choice answer needed; patient/server execution still requires specific authorization."
+}
 }
