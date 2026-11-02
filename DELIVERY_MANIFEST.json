@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T11:54:14.687065+08:00",
-  "base_commit_before_delivery": "8a1d6f66bd9bffea963283e023e5778364922177",
+  "recorded_at": "2026-11-02T12:14:33.210501+08:00",
+  "base_commit_before_delivery": "9440f69f4302adaacc308012263accd5cdf25d9e",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 748057,
-      "sha256": "6b4affa977e2ab4f7e38f3fcb337baa682447714e5e03f0ee975b9192bb56c8c"
+      "bytes": 749510,
+      "sha256": "0f6ed08d67f7f60dde9b51840c5959e59c77a10edbaeb781707fbd8649c36509"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -2546,8 +2546,8 @@
     },
     {
       "path": "slotspe_proof/redundancy_anticollapse_multifold.py",
-      "bytes": 42718,
-      "sha256": "8a2da75bf4c8581a0b4d8555e37badf123b52a05d37e613f6a79a3237a77f0b0"
+      "bytes": 44480,
+      "sha256": "aeac05d415b67d8891631430d0d809b56b15a786b4f401d86088fff512edcba8"
     },
     {
       "path": "slotspe_proof/redundancy_best_engine.py",
@@ -2916,8 +2916,8 @@
     },
     {
       "path": "tests/test_slotspe_redundancy_anticollapse_multifold.py",
-      "bytes": 12755,
-      "sha256": "3cff89e65c2f8f0071bcbe5d6696650b81aa12464a58c1ccc69356876a217b54"
+      "bytes": 15376,
+      "sha256": "7d559c9983ce64d17d478febf39937bf38b75103748ce568e5f507f9c5bf9d7e"
     },
     {
       "path": "tests/test_slotspe_redundancy_best_engine.py",
