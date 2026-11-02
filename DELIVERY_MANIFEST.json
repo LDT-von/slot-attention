@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T16:03:07.057515+08:00",
-  "base_commit_before_delivery": "eb3b65941da4c66f3761c50ebea2a9cebc050889",
+  "recorded_at": "2026-11-02T16:22:20.388195+08:00",
+  "base_commit_before_delivery": "fc86691c56bdb11d9cacbe3d91ba4ada2160aac5",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 614,
-  "repository_file_count_including_manifest": 615,
+  "covered_file_count": 616,
+  "repository_file_count_including_manifest": 617,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 717997,
-      "sha256": "d08347746dc4d3b24d9fd9759fdd25aa23173d59c363808ecaff8e49edd18c0c"
+      "bytes": 720027,
+      "sha256": "874a21b73b3ecdf668f305d31bd7ac55570d70edd73bba1a462449d9151c7e56"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -285,6 +285,11 @@
       "sha256": "64b47bccda0443565a730f16f47883229c7fa2990637dab37c19fbad885a6f2b"
     },
     {
+      "path": "docs/research/slotspe_common_private_20261101/CURRENT_RESEARCH_STATE_20261102.md",
+      "bytes": 9939,
+      "sha256": "5ff379173fea2a8c9c5cf1ae76feb9a0acb2620d251818ec6e7705a5e422da2c"
+    },
+    {
       "path": "docs/research/slotspe_common_private_20261101/SERVER_HANDOFF_20261102.md",
       "bytes": 4011,
       "sha256": "fb2854fb9d0e51c27ec4621aa8f14e9380667572ceb1c73dd888d1ffe032406d"
@@ -388,6 +393,11 @@
       "path": "docs/research/slotspe_common_private_20261101/crossmodal_shared_bottleneck_review_20261102.md",
       "bytes": 14660,
       "sha256": "8959799e0a04de19b971c1bef885ef7628da3ad96a628a809b2e2ad2ce05c88b"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/current_state_audit_receipt_20261102.json",
+      "bytes": 4941,
+      "sha256": "303e6ad5b8a52442af50638fc3f684694a4a942bea802b92bf20c1c72ddd0136"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/direct_club_method_20261102.md",

@@ -8900,4 +8900,34 @@
   "gaps_reasons": "Current role-bank control changes phi shape and scale, fails seed419, and does not improve all conditions. Old learned-feature refit mean NLL1.15713 versus original about1.1439 is not recovery. Same synthetic data, no independent confirmation or multi-factor slot coverage. Remote update check unavailable; no patient adapter.",
   "next_action_user_inputs": "Keep existing main model. Before adding content loss, isolate fixed-role access, pooling scale and phi shape with capacity/optimization controls; test multi-factor content and noisy-G conditional-content counterexamples. No research-choice answer required; patient/server execution remains unauthorized."
 }
+,
+"latest_current_state_inventory_20261102":{
+  "recorded_at": "2026-11-02",
+  "route_task": "User-requested current research inventory and completion audit",
+  "completed_work": "Created a single current-state map from original receipts, source and fresh remote commits. Closed stale Q1/Q2/Q3 requests. Verified SCM/SRO aggregate arithmetic and 6-of-10 anti-collapse reported training count; distinguished scheduler fix from unproved resumed execution. No model or queue changed.",
+  "paths_commit": {
+    "branch": "codex/common-private-mechanism-review",
+    "base_local": "fc86691c56bdb11d9cacbe3d91ba4ada2160aac5",
+    "remote_read_only": "8a1d6f66bd9bffea963283e023e5778364922177",
+    "report": "docs/research/slotspe_common_private_20261101/CURRENT_RESEARCH_STATE_20261102.md",
+    "receipt": "docs/research/slotspe_common_private_20261101/current_state_audit_receipt_20261102.json",
+    "pushed": false
+  },
+  "checks_actual_execution_raw_receipt": {
+    "latest_source_pins_reverified": true,
+    "third_party_hashes_verified": 11,
+    "diversity_public_fold_means_recomputed": 7,
+    "anti_collapse_reported_completed": 6,
+    "anti_collapse_reported_missing": 4,
+    "remote_fetch_only": true,
+    "new_training": 0,
+    "patient_training": 0,
+    "patient_inference": 0,
+    "patient_checkpoint_reads": 0,
+    "server_execution": false,
+    "raw_patient_artifacts_reaudited": false
+  },
+  "gaps_reasons": "Overall method not complete: slot complementarity, stable prediction gain, controlled readout attribution, clinical adapter and independent evaluation remain missing. Local fc86691 and remote8a1d6f6 diverge; no overwrite or merge performed. Old semantic/geometry claims do not fill these gaps.",
+  "next_action_user_inputs": "Maintain the existing architecture; one bounded fixed-rate readout attribution gate followed by genuinely multi-factor validation is justified. Do not rerun completed old scans or queues; no Q1/Q2/Q3 response required. Patient execution remains a later explicitly authorized stage."
+}
 }
