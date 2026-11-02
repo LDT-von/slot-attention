@@ -28,14 +28,16 @@ class PriorNormalizedSlotSurvival(CommonPrivateSurvival):
         finally:
             for h in handles:h.remove()
             self._normalizing=False
-        raw=out['private'];normalized=[];kl=[]
+        raw=out['private'];normalized=[];kl=[];per_slot=[]
         for j,u in enumerate(raw):
             pm,plv=priors[j].unsqueeze(1).chunk(2,-1);plv=plv.clamp(-8,4)
             qm,qlv=posteriors[j].chunk(2,-1);qlv=qlv.clamp(-8,4)
             vm,vlv=normalize_gaussian(qm,qlv,pm,plv)
             normalized.append((u-pm)*torch.exp(-.5*plv))
-            kl.append(gaussian_kl(vm,vlv,torch.zeros_like(vm),torch.zeros_like(vlv)).sum((1,2)))
+            rates=gaussian_kl(vm,vlv,torch.zeros_like(vm),torch.zeros_like(vlv))
+            kl.append(rates.sum((1,2)));per_slot.append(rates.sum(-1))
         out['raw_private']=raw;out['private']=normalized
         out['normalized_kl_joint']=torch.stack(kl).sum(0)
+        out['normalized_kl_per_slot']=per_slot
         out['logits']=self.readout(out['common'],normalized)
         return out

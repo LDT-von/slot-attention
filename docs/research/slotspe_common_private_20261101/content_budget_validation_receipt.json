@@ -1,0 +1,34 @@
+{
+  "schema": "slotspe_content_budget_stage_validation_v1",
+  "recorded_at": "2026-11-02",
+  "base_commit": "abed03bae9f19e30dbef22f86bf1e10a0c4fbc0b",
+  "focused_tests": {
+    "result": "51 passed in 3.55s",
+    "command": "python -B -m pytest -q tests/test_common_private_club.py tests/test_slotspe_common_private_diagnostics.py tests/test_incremental_probe.py tests/test_slot_increment_probe.py tests/test_prior_normalized_slots.py tests/test_content_budget_slots.py tests/test_role_preserving_readout.py",
+    "full_repository_tests_rerun": false
+  },
+  "source_sha256_at_validation": {
+    "slotspe_proof/content_budget_slots.py": "714e2266f00f225caaf9668f25c1fe6a72b3867cd3bd81e64a36e1deda0d4b4d",
+    "slotspe_proof/role_preserving_readout.py": "8202c7a134163cab48360a1ed84b9ba8b3f56dbcf34c093e2961c4ef8f564620",
+    "slotspe_proof/prior_normalized_slots.py": "62d52eefa1d561920f091e9f1f714def0fcdb104c4f3b25deb712451993785e9",
+    "scripts/check_content_rate_bound.py": "37ee21d4094f2e1768b785a44463402bf3ce10e7d16a1cca52ec14d98618a498",
+    "scripts/compare_content_budget_slots.py": "8b8186c42f275f77f7a211358a5a39582dcb104c8ae7ad0525e1ddd64df05a5d",
+    "scripts/compare_role_preserving_readout.py": "eaf4d601030aad378536d72491ac180c4ce2cf1b4fa7660e2ffdd02e3f19d0f5",
+    "scripts/summarize_content_budget_stage.py": "66c33376bab3f856cf7b9ae56e2a8687a8f1cacd3a361847e2998433f2ac36f1"
+  },
+  "original_third_party_hashes_verified": 11,
+  "synthetic_training_runs": 72,
+  "core_updates": 36000,
+  "finite_math_cases": 7,
+  "synthetic_cache_hashes_verified": 36,
+  "patient_training": 0,
+  "patient_inference": 0,
+  "patient_checkpoint_loads": 0,
+  "server_execution": false,
+  "remote_research_observed": "dd48570c01d00baa74c8441a08d9d19cea301ab4",
+  "remote_main_observed": "80cf64e4824ca4ebb866b0008ab8bd766daad535",
+  "remote_changes_merged": false,
+  "remote_queue_reports": "read-only public recomputed aggregate; no local re-audit of raw server artifacts",
+  "execution_provenance_limit": "Current source hashes were pinned after training; the typed-token input guard was narrowed after the first pilot without changing its valid input calculations. Receipts do not establish exact runtime source identity for the entire first pilot.",
+  "initial_test_command_error": "First command named nonexistent test_common_private_diagnostics.py; pytest collected no tests. Corrected actual filename and passed 51 tests."
+}

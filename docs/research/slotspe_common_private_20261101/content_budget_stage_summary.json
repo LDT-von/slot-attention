@@ -1,0 +1,403 @@
+{
+  "schema": "slotspe_synthetic_content_budget_stage_v1",
+  "source_sha256": {
+    "content_budget_pilot_receipt.json": "cf76724af706d3c9bb417497877018b4e6fed13fb043d4db682d1e3ee36d8510",
+    "role_readout_comparison_receipt.json": "74b1532d433ff2e7747148b43987bc3cc4f38f522140696ac9677febf8187efe"
+  },
+  "pilot_training_runs": 36,
+  "readout_training_runs": 36,
+  "steps_per_run": 500,
+  "new_core_updates": 36000,
+  "same_initialization_groups": 18,
+  "verified_synthetic_cache_hashes": 36,
+  "pilot": [
+    {
+      "task": "all_useful",
+      "anchor": 0,
+      "budget": 0,
+      "nll": 1.0780486822128295,
+      "content_ce": 0.7861490870515505,
+      "rate_nats": 7.665366361538569,
+      "own_r2": 0.16769952262632384,
+      "other_r2": 0.03857173874685127,
+      "whole_vs_single_risk_gain": -5.082864511035251e-05
+    },
+    {
+      "task": "all_useful",
+      "anchor": 1,
+      "budget": 0,
+      "nll": 1.051417624950409,
+      "content_ce": 0.05387712903514815,
+      "rate_nats": 29.03554360071818,
+      "own_r2": 0.9537400806107065,
+      "other_r2": -0.012303161963071211,
+      "whole_vs_single_risk_gain": 0.18043079048821395
+    },
+    {
+      "task": "all_useful",
+      "anchor": 0,
+      "budget": 1,
+      "nll": 1.0683441440264385,
+      "content_ce": 0.730190155406793,
+      "rate_nats": 0.7096245189507803,
+      "own_r2": 0.11369167402869657,
+      "other_r2": 0.05378046075350717,
+      "whole_vs_single_risk_gain": -0.023417963859369725
+    },
+    {
+      "task": "all_useful",
+      "anchor": 1,
+      "budget": 1,
+      "nll": 1.0255571524302165,
+      "content_ce": 0.17598115435491005,
+      "rate_nats": 0.9929791788260142,
+      "own_r2": 0.9107209357157752,
+      "other_r2": 0.04050065530956518,
+      "whole_vs_single_risk_gain": 0.13647489831202989
+    },
+    {
+      "task": "selective",
+      "anchor": 0,
+      "budget": 0,
+      "nll": 0.7551101605097452,
+      "content_ce": 0.7497685899337133,
+      "rate_nats": 12.011904383699099,
+      "own_r2": 0.11183183467233752,
+      "other_r2": 0.06289660642543654,
+      "whole_vs_single_risk_gain": -0.010101456147218666
+    },
+    {
+      "task": "selective",
+      "anchor": 1,
+      "budget": 0,
+      "nll": 0.7778716365496318,
+      "content_ce": 0.24538022349588573,
+      "rate_nats": 20.268431107203167,
+      "own_r2": 0.7386242447685645,
+      "other_r2": 0.0035358688287795356,
+      "whole_vs_single_risk_gain": -0.024635980395872465
+    },
+    {
+      "task": "selective",
+      "anchor": 0,
+      "budget": 1,
+      "nll": 0.7722410440444947,
+      "content_ce": 0.7159348602096239,
+      "rate_nats": 0.6432625713447729,
+      "own_r2": 0.15463515364424033,
+      "other_r2": 0.08795635795276777,
+      "whole_vs_single_risk_gain": -0.0075016115535575505
+    },
+    {
+      "task": "selective",
+      "anchor": 1,
+      "budget": 1,
+      "nll": 0.7745777050654093,
+      "content_ce": 0.3648655600845814,
+      "rate_nats": 1.0058344354232152,
+      "own_r2": 0.6541564836810917,
+      "other_r2": 0.05236108096040182,
+      "whole_vs_single_risk_gain": -0.0288666435478612
+    },
+    {
+      "task": "synergy",
+      "anchor": 0,
+      "budget": 0,
+      "nll": 1.1049829641977946,
+      "content_ce": 0.7331589510043462,
+      "rate_nats": 4.890686760346095,
+      "own_r2": 0.0807412970379165,
+      "other_r2": 0.02378367757718373,
+      "whole_vs_single_risk_gain": 0.032876794567989066
+    },
+    {
+      "task": "synergy",
+      "anchor": 1,
+      "budget": 0,
+      "nll": 1.0870731433232625,
+      "content_ce": 0.055053434101864696,
+      "rate_nats": 31.733997623125713,
+      "own_r2": 0.9481190013063187,
+      "other_r2": -0.024933827163100337,
+      "whole_vs_single_risk_gain": -0.7356886544547349
+    },
+    {
+      "task": "synergy",
+      "anchor": 0,
+      "budget": 1,
+      "nll": 1.09292950630188,
+      "content_ce": 0.7177018572886785,
+      "rate_nats": 0.4329206670324008,
+      "own_r2": 0.12570582768635585,
+      "other_r2": 0.04286465965297989,
+      "whole_vs_single_risk_gain": 0.002462415417489971
+    },
+    {
+      "task": "synergy",
+      "anchor": 1,
+      "budget": 1,
+      "nll": 1.0900875727335613,
+      "content_ce": 0.20041935161376992,
+      "rate_nats": 0.9830985938509306,
+      "own_r2": 0.8811502737461395,
+      "other_r2": -0.012071475224760663,
+      "whole_vs_single_risk_gain": -0.7233213542900058
+    }
+  ],
+  "readout": [
+    {
+      "task": "all_useful",
+      "readout": "mean_pool",
+      "constraints": 0,
+      "nll": 1.0855992317199707,
+      "content_ce": 0.7437707806626955,
+      "rate_nats": 3.1070886800686517,
+      "own_r2": 0.06799006417059505,
+      "other_r2": 0.009018588876100263,
+      "pooled_vs_common_risk_gain": 0.09172967418358197,
+      "parameters": 7358,
+      "phi_parameters": 704
+    },
+    {
+      "task": "all_useful",
+      "readout": "mean_pool",
+      "constraints": 1,
+      "nll": 1.035869590441386,
+      "content_ce": 0.1666484223678708,
+      "rate_nats": 0.9953037972251574,
+      "own_r2": 0.9210369083001397,
+      "other_r2": 0.006768662123856476,
+      "pooled_vs_common_risk_gain": 0.3470477689070911,
+      "parameters": 7358,
+      "phi_parameters": 704
+    },
+    {
+      "task": "all_useful",
+      "readout": "role_concat",
+      "constraints": 0,
+      "nll": 1.0764868259429932,
+      "content_ce": 0.7677223483721415,
+      "rate_nats": 6.2676992664734525,
+      "own_r2": 0.08398013402422191,
+      "other_r2": 0.01383625870028134,
+      "pooled_vs_common_risk_gain": 0.09873951261882255,
+      "parameters": 7346,
+      "phi_parameters": 692
+    },
+    {
+      "task": "all_useful",
+      "readout": "role_concat",
+      "constraints": 1,
+      "nll": 1.0420910358428954,
+      "content_ce": 0.11894876013199489,
+      "rate_nats": 1.0271460091074307,
+      "own_r2": 0.9690292805091344,
+      "other_r2": -0.01352269263371865,
+      "pooled_vs_common_risk_gain": 0.4617211978695418,
+      "parameters": 7346,
+      "phi_parameters": 692
+    },
+    {
+      "task": "selective",
+      "readout": "mean_pool",
+      "constraints": 0,
+      "nll": 0.7801326394081116,
+      "content_ce": 0.7492691899339358,
+      "rate_nats": 9.209466581543287,
+      "own_r2": 0.13884171079351837,
+      "other_r2": 0.03854136603104725,
+      "pooled_vs_common_risk_gain": 0.33958336112912757,
+      "parameters": 7358,
+      "phi_parameters": 704
+    },
+    {
+      "task": "selective",
+      "readout": "mean_pool",
+      "constraints": 1,
+      "nll": 0.7844069321950277,
+      "content_ce": 0.2844635983929038,
+      "rate_nats": 1.0091697374979656,
+      "own_r2": 0.7452381494757223,
+      "other_r2": 0.031210196111137792,
+      "pooled_vs_common_risk_gain": 0.3310102325688126,
+      "parameters": 7358,
+      "phi_parameters": 704
+    },
+    {
+      "task": "selective",
+      "readout": "role_concat",
+      "constraints": 0,
+      "nll": 0.8246397097905477,
+      "content_ce": 0.7232824340462685,
+      "rate_nats": 7.167486255367597,
+      "own_r2": 0.11314123301856692,
+      "other_r2": 0.033038678002139894,
+      "pooled_vs_common_risk_gain": 0.278263491083698,
+      "parameters": 7346,
+      "phi_parameters": 692
+    },
+    {
+      "task": "selective",
+      "readout": "role_concat",
+      "constraints": 1,
+      "nll": 0.7887074788411458,
+      "content_ce": 0.2032782930570344,
+      "rate_nats": 1.0533553659915924,
+      "own_r2": 0.8586613020884521,
+      "other_r2": 0.003292097080235763,
+      "pooled_vs_common_risk_gain": 0.6809740892756408,
+      "parameters": 7346,
+      "phi_parameters": 692
+    },
+    {
+      "task": "synergy",
+      "readout": "mean_pool",
+      "constraints": 0,
+      "nll": 1.1872174898783365,
+      "content_ce": 0.72682935744524,
+      "rate_nats": 2.68520624935627,
+      "own_r2": 0.08517099495263711,
+      "other_r2": 0.021245980296054904,
+      "pooled_vs_common_risk_gain": -2.415112299957548e-05,
+      "parameters": 7358,
+      "phi_parameters": 704
+    },
+    {
+      "task": "synergy",
+      "readout": "mean_pool",
+      "constraints": 1,
+      "nll": 1.1608489990234374,
+      "content_ce": 0.10558848362416029,
+      "rate_nats": 1.0207253694534302,
+      "own_r2": 0.9620256058962156,
+      "other_r2": -0.0008776986658637758,
+      "pooled_vs_common_risk_gain": 0.07822499352357629,
+      "parameters": 7358,
+      "phi_parameters": 704
+    },
+    {
+      "task": "synergy",
+      "readout": "role_concat",
+      "constraints": 0,
+      "nll": 1.1941882928212484,
+      "content_ce": 0.7548146372040113,
+      "rate_nats": 3.3327936368683972,
+      "own_r2": 0.0764253346539967,
+      "other_r2": 0.020531723244530155,
+      "pooled_vs_common_risk_gain": -0.01546335565594141,
+      "parameters": 7346,
+      "phi_parameters": 692
+    },
+    {
+      "task": "synergy",
+      "readout": "role_concat",
+      "constraints": 1,
+      "nll": 1.1743801275889079,
+      "content_ce": 0.10066562176992495,
+      "rate_nats": 1.0093951200445492,
+      "own_r2": 0.9619282592329299,
+      "other_r2": -0.013311408958065813,
+      "pooled_vs_common_risk_gain": 0.7165270533846698,
+      "parameters": 7346,
+      "phi_parameters": 692
+    }
+  ],
+  "paired_readout_deltas": [
+    {
+      "task": "all_useful",
+      "constraints": 0,
+      "concat_minus_mean_nll_by_seed": [
+        -0.01505324840545641,
+        0.02903623580932635,
+        -0.041320204734802246
+      ],
+      "mean": -0.009112405776977436,
+      "descriptive_t95": [
+        -0.09742961163839915,
+        0.07920480008444429
+      ],
+      "caution": "three paired exploratory seeds, no multiple-comparison correction; not clinical inference"
+    },
+    {
+      "task": "all_useful",
+      "constraints": 1,
+      "concat_minus_mean_nll_by_seed": [
+        0.0013945579528809038,
+        -0.019629979133605868,
+        0.03689975738525386
+      ],
+      "mean": 0.006221445401509633,
+      "descriptive_t95": [
+        -0.06475610785571975,
+        0.07719899865873903
+      ],
+      "caution": "three paired exploratory seeds, no multiple-comparison correction; not clinical inference"
+    },
+    {
+      "task": "selective",
+      "constraints": 0,
+      "concat_minus_mean_nll_by_seed": [
+        0.09120967388153067,
+        -0.0020114779472351074,
+        0.04432301521301274
+      ],
+      "mean": 0.0445070703824361,
+      "descriptive_t95": [
+        -0.07128069606416015,
+        0.16029483682903237
+      ],
+      "caution": "three paired exploratory seeds, no multiple-comparison correction; not clinical inference"
+    },
+    {
+      "task": "selective",
+      "constraints": 1,
+      "concat_minus_mean_nll_by_seed": [
+        0.013200306892395042,
+        -0.0068898439407348855,
+        0.006591176986694314
+      ],
+      "mean": 0.004300546646118157,
+      "descriptive_t95": [
+        -0.02113474071246358,
+        0.029735834004699896
+      ],
+      "caution": "three paired exploratory seeds, no multiple-comparison correction; not clinical inference"
+    },
+    {
+      "task": "synergy",
+      "constraints": 0,
+      "concat_minus_mean_nll_by_seed": [
+        0.026103711128234952,
+        0.0014652013778686523,
+        -0.006656503677368031
+      ],
+      "mean": 0.006970802942911858,
+      "descriptive_t95": [
+        -0.03540844481224766,
+        0.04935005069807138
+      ],
+      "caution": "three paired exploratory seeds, no multiple-comparison correction; not clinical inference"
+    },
+    {
+      "task": "synergy",
+      "constraints": 1,
+      "concat_minus_mean_nll_by_seed": [
+        0.015168714523315474,
+        0.008652234077453747,
+        0.016772437095642134
+      ],
+      "mean": 0.013531128565470452,
+      "descriptive_t95": [
+        0.0028476929295894026,
+        0.0242145642013515
+      ],
+      "caution": "three paired exploratory seeds, no multiple-comparison correction; not clinical inference"
+    }
+  ],
+  "patient_training": 0,
+  "patient_inference": 0,
+  "patient_checkpoints_read": 0,
+  "server_execution": false,
+  "scope": "optimistic fixed synthetic role metadata, three exploratory tasks; no clinical target adapter",
+  "metric_distinction": "pilot whole-versus-selected-single is not readout pooled-versus-common; do not compare them as the same diagnostic"
+}

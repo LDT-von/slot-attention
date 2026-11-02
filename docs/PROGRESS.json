@@ -8725,5 +8725,37 @@
   },
   "gaps_reasons": "No stable whole-set predictive increment established in mean mode; finite probes cannot prove absent information. Prior normalization fixes coordinate/rate interpretation but has no consistent prediction gain. Per-slot fixed content targets and entropy/budget assumptions remain unverified.",
   "next_action_user_inputs": "Audit content-anchored per-slot information budget inequality on known finite factors, preserve target-overlap and shared-information counterexamples, then implement a minimal candidate only if the assumptions and controls are meaningful. No patient execution authorization inferred."
+},
+"latest_content_budget_and_readout_20261102":{
+  "recorded_at": "2026-11-02",
+  "route_task": "Fixed content targets, per-slot normalized variational information budgets and controlled all-slot readout",
+  "completed_work": "Proved conditional chain-rule bound with explicit target/entropy assumptions; retained seven exact finite counterexamples. Implemented fixed-content auxiliary heads and soft rate budgets. Completed 36 anchor-by-budget and 36 readout-by-constraint exploratory synthetic trainings; retained nuisance harm and readout prediction failures. Mean pooling remains current default; role concatenation only diagnostic.",
+  "paths_commit": {
+    "parent_commit": "abed03bae9f19e30dbef22f86bf1e10a0c4fbc0b",
+    "branch": "codex/common-private-mechanism-review",
+    "report": "docs/research/slotspe_common_private_20261101/content_budget_architecture_20261102.md",
+    "summary": "docs/research/slotspe_common_private_20261101/content_budget_stage_summary.json",
+    "validation_receipt": "docs/research/slotspe_common_private_20261101/content_budget_validation_receipt.json",
+    "new_local_commit_prepared": true,
+    "push": false
+  },
+  "checks_actual_execution_raw_receipt": {
+    "new_synthetic_training_runs": 72,
+    "steps_per_run": 500,
+    "core_updates": 36000,
+    "paired_initialization_groups": 18,
+    "finite_math_checks": 7,
+    "focused_tests_passed": 51,
+    "synthetic_cache_hashes_verified": 36,
+    "third_party_files_sha256_preserved": 11,
+    "patient_training": 0,
+    "patient_inference": 0,
+    "patient_checkpoint_loads": 0,
+    "server_execution": false,
+    "remote_public_queue_aggregate_read_at": "dd48570",
+    "server_raw_artifact_audit_this_stage": false
+  },
+  "gaps_reasons": "Known synthetic role metadata is optimistic; no clinical content-target adapter or default-size patient validation. Content retention is not task utility, and three seeds do not establish generalization. Shared G can re-encode private information. Population KL bound is not an empirical MI certificate. Full suite not rerun; training source pins added post-run. Remote research branch advanced without architecture overlap and was not merged.",
+  "next_action_user_inputs": "Continue autonomously on a fully synthetic train-only frozen-content target adapter without oracle types, with shuffled/constant/oracle target controls and content/utility counterexamples. Freeze independent confirmation only after that gate. No user research decision needed; patient/server execution requires separate authorization."
 }
 }
