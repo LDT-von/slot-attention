@@ -212,6 +212,75 @@ def test_the_resume_reconciliation_refuses_an_incomplete_stage(tmp_path):
     assert reconciled["arm_fold_0_A0_clip"]["status"] == "failed"
 
 
+def test_the_reconciliation_recovers_a_stage_interrupted_while_running(tmp_path):
+    """A queue killed mid-wave leaves its stages recorded as running.
+
+    The stage that had already finished and written its artifacts must be
+    recovered as completed, so that the resume does not re-run it and does
+    not refuse the whole queue.
+    """
+    root = tmp_path / "queue"
+    _make_arm_folder(root, 0, "A0_clip", [0.70, 0.71])
+    stage = {"id": "arm_fold_0_A0_clip", "kind": "arm", "fold": 0, "arm": "A0_clip"}
+
+    reconciled = queue._reconcile_failed_records(root, {"arm_fold_0_A0_clip": {
+        "status": "running"}}, [stage])
+
+    assert reconciled["arm_fold_0_A0_clip"]["status"] == "completed"
+    assert reconciled["arm_fold_0_A0_clip"]["reconciled_from"] == "running"
+
+
+def test_an_interrupted_stage_with_incomplete_artifacts_is_not_reconciled(tmp_path):
+    """A stage that was interrupted before it finished stays unreconciled.
+
+    Its artifacts are incomplete, so it must not be mistaken for a
+    completed arm.
+    """
+    root = tmp_path / "queue"
+    folder = root / "folds" / "0" / "arms" / "A0_clip"
+    folder.mkdir(parents=True)
+    (folder / "summary.json").write_text(json.dumps({"status": "completed"}), encoding="utf-8")
+    stage = {"id": "arm_fold_0_A0_clip", "kind": "arm", "fold": 0, "arm": "A0_clip"}
+
+    reconciled = queue._reconcile_failed_records(root, {"arm_fold_0_A0_clip": {
+        "status": "running"}}, [stage])
+
+    assert reconciled["arm_fold_0_A0_clip"]["status"] == "running"
+
+
+def test_a_live_worker_is_detected_so_a_running_stage_is_not_released(tmp_path):
+    """A live worker of this queue must be found.
+
+    The resume must not release a stage whose worker is still alive, or a
+    second attempt would write into the same output folder while the first
+    one is still using it.
+    """
+    import subprocess
+    import sys
+    import time
+
+    marker = time.time()
+    process = subprocess.Popen(
+        [sys.executable, "-c",
+         "import time; time.sleep(60)",
+         "--worker-stage", "arm_fold_0_A0_clip",
+         "-m", queue.WORKER_MODULE])
+    try:
+        # The helper looks for the queue's own worker command line.  The
+        # child is started with that command line, so it must be found.
+        deadline = marker + 20
+        found = False
+        while time.time() < deadline:
+            if queue._queue_worker_alive():
+                found = True
+                break
+            time.sleep(0.2)
+        assert found, "a live worker of this queue must be detected"
+    finally:
+        process.terminate()
+        process.wait(timeout=30)
+
+
 def test_the_release_quarantines_the_incomplete_folder_instead_of_deleting_it(tmp_path):
     """A genuinely failed stage must be re-runnable without losing data.
 

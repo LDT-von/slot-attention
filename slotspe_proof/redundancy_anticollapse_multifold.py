@@ -299,8 +299,33 @@ def _arm_view_anti(root, fold, arm):
     return view
 
 
+def _queue_worker_alive():
+    """Whether a worker of this queue is still running.
+
+    The resume must not release a stage whose worker is still alive, or it
+    would let a second attempt write into the same output folder while the
+    first one is still using it.  The check reads the process table from
+    /proc, so it needs no third-party package.  The worker command line
+    names this module and the queue's own worker flag, which is what
+    distinguishes a worker of this queue from any other process.
+    """
+    for entry in Path("/proc").iterdir():
+        if not entry.name.isdigit():
+            continue
+        try:
+            raw = (entry / "cmdline").read_bytes()
+        except (OSError, PermissionError):
+            continue
+        parts = [part for part in raw.split(b"\0") if part]
+        if not any(b"--worker-stage" in part for part in parts):
+            continue
+        if any(WORKER_MODULE.encode() in part for part in parts):
+            return True
+    return False
+
+
 def _reconcile_failed_records(root, records, stages):
-    """Recover the stages that failed on a launcher error but finished.
+    """Recover the stages whose recorded status does not match their artifacts.
 
     The first wave of this queue failed in its launcher, before the stage
     bodies could run, because the retained log of an earlier attempt was
@@ -309,16 +334,20 @@ def _reconcile_failed_records(root, records, stages):
     completed and whose artifacts are complete on disk.
 
     A stage is therefore reconciled to completed when its full artifact
-    set is present and every artifact can be hashed.  A stage whose
-    artifacts are incomplete or missing stays failed, so a half-trained
-    arm is never mistaken for a completed one.  Nothing is deleted and no
-    artifact is rewritten: the artifacts are hashed exactly as they are,
-    and the reconciliation is recorded in the stage's own record.
+    set is present and every artifact can be hashed.  This applies to a
+    stage recorded as failed and to a stage recorded as running, because a
+    queue that is killed mid-wave leaves every stage of that wave recorded
+    as running even when the stage had already finished and written its
+    artifacts.  A stage whose artifacts are incomplete or missing keeps
+    its recorded status, so a half-trained arm is never mistaken for a
+    completed one.  Nothing is deleted and no artifact is rewritten: the
+    artifacts are hashed exactly as they are, and the reconciliation is
+    recorded in the stage's own record.
     """
     index = {stage["id"]: stage for stage in stages}
     result = {}
     for stage_id, record in records.items():
-        if record.get("status") != "failed":
+        if record.get("status") not in ("failed", "running"):
             result[stage_id] = record
             continue
         stage = index.get(stage_id)
@@ -330,7 +359,7 @@ def _reconcile_failed_records(root, records, stages):
         except Exception:
             result[stage_id] = record
             continue
-        result[stage_id] = {"status": "completed", "reconciled_from": "failed",
+        result[stage_id] = {"status": "completed", "reconciled_from": record.get("status"),
                             "reconciled_error_type": record.get("type"),
                             "reconciled_error": record.get("error"),
                             "artifact_sha256": hashes}
@@ -668,17 +697,24 @@ def execute(config, output_root, resume=False, runtime_check=True, devices=None,
             record = manifest["records"].get(stage["id"], {})
             if record.get("status") == "completed":
                 continue
-            if record.get("status") == "running":
-                # An interrupted stage whose process may still have been
-                # alive is never released automatically.  A stage that was
-                # recorded as failed, on the other hand, has a terminated
-                # process and may be released.
-                raise RuntimeError(f"partial stage retained: {stage['id']}; use a fresh batch")
-            if record.get("status") == "failed":
+            if record.get("status") in ("running", "failed"):
                 # A stage that failed with incomplete artifacts is released
                 # so that it can be re-run from scratch.  The incomplete
                 # folder is quarantined rather than deleted, so the failed
                 # attempt stays inspectable.
+                #
+                # A stage recorded as running is released on the same
+                # terms, but only when no worker process for this queue is
+                # alive.  A queue that is killed mid-wave leaves every
+                # stage of that wave recorded as running even though some
+                # of them had already finished and written their
+                # artifacts; those are reconciled to completed above, and
+                # the ones that did not finish are released here.  While a
+                # worker is alive the stage is left alone, so that a live
+                # run is never disturbed.
+                if record.get("status") == "running" and _queue_worker_alive():
+                    raise RuntimeError(
+                        f"stage still running: {stage['id']}; a worker of this queue is alive")
                 quarantine = _clear_failed_stage(root, stage, record)
                 manifest["records"][stage["id"]] = {
                     "status": "released_for_rerun",
