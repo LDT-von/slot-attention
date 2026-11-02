@@ -9360,5 +9360,53 @@
     },
     "gaps_reasons": "This is a smoke check and it carries no scientific weight. One epoch at 256 patches and 2 evaluation repeats is far below the declared budget of 30 epochs, 4096 patches and 20 repeats, so the validation C-index of about 0.73 and its standard deviation of about 0.002 describe a barely trained model and must not be compared with, or quoted next to, the completed 30/4096/20 results or the server baselines. Two repeats cannot establish evaluation variability, one epoch cannot exercise the per-epoch best checkpoint rule, and one fold cannot say anything about cohort level behaviour. Nothing here bears on patient benefit, on correction efficacy, on the anti-collapse question or on the common/private mechanism line, and the pipeline success says nothing about clinical utility. The environment defect is real and still open: the default interpreter cannot use the installed GPUs, so every future run must either use the repository virtual environment or a newer PyTorch.",
     "next_action_user_inputs": "The pipeline is confirmed runnable, so the next decision is what to run. The server queue stays as it is and continuous research stays paused. If a real result is wanted, the honest options are to restart the declared protocol, namely 30 epochs, 4096 patches and 20 repeats over the five folds with seed 3, or to first let the anti-collapse queue resume with the scheduler repair that was just merged, which would cover folds 3 and 4 that never started. Both need explicit execution authorization, and both should run in the repository virtual environment so the sm_120 GPUs are actually used."
+  },
+  "latest_release_branch_acceptance_and_smoke_20261102": {
+    "recorded_at": "2026-11-02T23:10:00+08:00",
+    "route_task": "SlotSPE / accept and smoke-test the pushed research release branch codex/common-private-research-release-20261102",
+    "status": "release_branch_accepted_and_smoke_tested_passed_with_two_documented_platform_limits",
+    "completed_work": "Fetched the new branch and confirmed its head at 0cb956f. Created a detached worktree at /data1/slotspe-cp-research-release-20261102 as the release document instructs, leaving the existing checkout and any running queue directories untouched. The delivery manifest check passed with 666 public files and the four focused tests the release document names passed, 35 in total. I then ran the nine new test files of that branch, 59 passed. The smoke test of the synthetic research entry points found that seven scripts expose a plan mode and five of them execute, that compare_private_rate_multifactor produces the cache the two private-rate checks need, and that check_private_rate_effects then passes with a role-placed effect of 0.772 against a shuffled control of 0.010 and zero for the duplicate control. The patient path was then exercised end to end: the original_audit queue ran fold 0 and seed 3 for one epoch with 256 patches, batch size 8 and two evaluation repeats on GPU 1, all four stages completed with exit code 0 and the full artifact set was produced.",
+    "paths_commit": {
+      "release_branch": "codex/common-private-research-release-20261102",
+      "release_head": "0cb956f5cc4a946b8f7e05bf2a115c7c80089205",
+      "worktree": "/data1/slotspe-cp-research-release-20261102",
+      "patient_output_root": "local_evidence/smoke_release_1epoch_run5_20261102 (inside the release worktree)",
+      "synthetic_output_roots": [
+        "local_evidence/private_rate_multifactor_20261102",
+        "local_evidence/finite_content_audit_20261102"
+      ],
+      "entrypoint": "python -B -m slotspe_proof.queue --run --config configs/slotspe_clean_original_server.json --metadata-root /data1/dataset_csv --features-root /data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files --splits-dir 5fold --folds 0 --seeds 3 --epochs 1 --patches 256 --batch-size 8 --eval-repeats 2 --device cuda:1",
+      "interpreter": ".venv_slot_spe/bin/python with torch 2.10.0+cu128; the default interpreter with torch 2.6.0+cu124 cannot run on sm_120",
+      "source_files_changed": [
+        "third_party_modified: false",
+        "release_branch_code_modified: false",
+        "main_checkout_code_modified: false"
+      ],
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "patient_training_runs_started": 1,
+      "patient_inference_runs": 1,
+      "patient_features_read": true,
+      "patient_checkpoints_loaded": true,
+      "queue_exit_code": 0,
+      "stage_status": "protocol, prepare, the fold 0 seed 3 pair and summarize all reported completed",
+      "cohort": "fold 0: train 303, validation 77, excluded 1; 380 patient patch caches prepared",
+      "optimizer_steps": 38,
+      "parameter_count": 33093390,
+      "peak_cuda_bytes": 1066917376,
+      "peak_host_resident_kbytes": 3871640,
+      "single_pass_val_cindex": 0.7353407290015848,
+      "validation_cindex_mean_exploratory": 0.7317749603803487,
+      "validation_cindex_std_population": 0.0019809825673534065,
+      "patient_risk_std_mean": 0.0032267121525553916,
+      "cross_check_against_main_checkout": "The same one-epoch run in the main checkout produced the identical single-pass C-index, the identical repeat mean, the identical repeat standard deviation, the identical patient risk standard deviation, the identical optimizer step count and the identical CUDA peak; the final weights hash byte for byte to 90b17a0d06cc3c3d8868945e57cc9d7f in both places. Only the checkpoint file hash differs because torch.save embeds serialization metadata.",
+      "synthetic_runs": "24 multi-factor synthetic runs completed for the private-rate effect probe; 35 focused and 59 branch tests passed",
+      "git_state_after_run": "release worktree clean; all outputs under ignored local_evidence; the main checkout was not modified by the release smoke test"
+    },
+    "gaps_reasons": "Two limits are measured and neither is a code defect. First, the exact replay of the historical XOR rows cannot complete on this Linux host: the historical receipts were produced on Windows with torch 2.6.0+cu124 and the initial weight hash differs here, so the replay assertion trips. A diagnostic that relaxed only that assertion showed the loss trace agreeing bit for bit through step 298 and diverging by about 1e-7 from step 299, which is floating point accumulation and not a code change; the published code was not modified and the diagnostic file was removed. Second, the release branch stores its replay paths with Windows separators, so check_slot_pooling_rate cannot resolve its upstream cache on Linux. The release branch also has no patient adapter for the new common-private network, so the patient smoke test used the original_audit queue that the branch still carries, and it says nothing about the new network. The same one epoch, 256 patches and two repeats remain far below the declared budget of 30, 4096 and 20, so the C-index near 0.73 describes a barely trained model and must not be compared with the completed baselines; nothing here bears on patient benefit, on correction efficacy or on the common-private research claims.",
+    "next_action_user_inputs": "The release branch is accepted and its patient pipeline runs, so the open items are the two platform limits and the research gap the release document names. The Windows path separators should be normalized so the slot pooling rate check can run on Linux, and the exact replay needs either a Windows host or a documented tolerance instead of an equality assertion on the initial hash. The research gap itself is unchanged: the shared branch is learned from cross-content and distribution constraints and a joint survival loss does not guarantee that it carries prognostically relevant common information, so the task-relevant partition needs a mathematical and known-answer screen before any implementation. A patient stage for the new network still needs a data adapter, matched baselines, training-fold preprocessing and binning, checkpoint selection and separate authorization."
   }
 }
