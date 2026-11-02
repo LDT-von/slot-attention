@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T10:04:29.260541+08:00",
-  "base_commit_before_delivery": "abed03bae9f19e30dbef22f86bf1e10a0c4fbc0b",
+  "recorded_at": "2026-11-02T10:29:41.257885+08:00",
+  "base_commit_before_delivery": "6ad3aab4c32417c72458e61a69e55876ef1f72e0",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 568,
-  "repository_file_count_including_manifest": 569,
+  "covered_file_count": 583,
+  "repository_file_count_including_manifest": 584,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 706537,
-      "sha256": "7675d56ae74a7ac1b86a0bca8f7ee78ba5e756dda2b6d26f87ae04f3409ff064"
+      "bytes": 709469,
+      "sha256": "424bb08ff37355c9052dc33cd52c1cf19f148e8d8c45b26cea3672a4f01a4f0f"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -355,6 +355,41 @@
       "sha256": "7345c26fcc3ece651bce674e17416476fee254d8ea7fc25955b2f33cb8332304"
     },
     {
+      "path": "docs/research/slotspe_common_private_20261101/frozen_target_counterexamples_receipt.json",
+      "bytes": 1786,
+      "sha256": "d492af126ff419b0f6c8f3e18d56c31b0c85ee3df9f9d641826c90013bd46033"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/frozen_target_gate_plan_20261102.json",
+      "bytes": 2586,
+      "sha256": "ec17bd7af8b554b369257f29f3902024e1b6df211dcf39b7577f52315f53b0c7"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/frozen_target_gate_receipt.json",
+      "bytes": 15888,
+      "sha256": "068956d9a6851854d8789e6878a01224b672a91ffe109939e01ab08a4e285da9"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/frozen_target_neural_receipt.json",
+      "bytes": 101572,
+      "sha256": "ca8e3056960df0ed9b7a4ff94b39b1cd516a0e10432cfd7a0777174ffa1785d7"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/frozen_target_review_20261102.md",
+      "bytes": 11242,
+      "sha256": "47fa5fc5f6e61d07fbfdd93344a59150dd58775bae7a203e372cea7bb0520880"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/frozen_target_stage_summary.json",
+      "bytes": 12333,
+      "sha256": "e3150ca75d97ade7c0c8c4f6be85a8f1c9c75604f9a3d1968426ed0186ae4d2a"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/frozen_target_validation_receipt.json",
+      "bytes": 2468,
+      "sha256": "06661da5c4a073d9584f4018e1f0f5f6de98911bc77cb5d111e8ed1157426ae3"
+    },
+    {
       "path": "docs/research/slotspe_common_private_20261101/incremental_probe_receipt.json",
       "bytes": 20354,
       "sha256": "d2c8b2fda45fdf9f4545fc3443690cfa11d3c20f29f590ae6f343fcd90d87c24"
@@ -403,6 +438,11 @@
       "path": "docs/research/slotspe_common_private_20261101/semantics_receipt.json",
       "bytes": 532913,
       "sha256": "b0e6a6cb7f0afec04b08196fecd3720908f038804df5c395f39b085cbf5fb35d"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/shared_path_leakage_receipt.json",
+      "bytes": 2781,
+      "sha256": "432d4cc53ea4b5f2c347490aca926f80ccf3ae4cec59c244848a13f2a7b56758"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/slot_complementarity_audit_receipt.json",
@@ -1780,9 +1820,24 @@
       "sha256": "b351630f9bdac62ba87dd7383a3402301220c9473316deaf06fbdd33c5f37170"
     },
     {
+      "path": "scripts/check_frozen_content_targets.py",
+      "bytes": 7381,
+      "sha256": "e0a1232613f62cdccf5f7293519facc1f6d9619b70d8bbcd65a569dd454712cb"
+    },
+    {
+      "path": "scripts/check_frozen_target_counterexamples.py",
+      "bytes": 1696,
+      "sha256": "14fc1125038ce1f05019545db2a36e9b2d1eb88a0a435cc569a02264c5b791a3"
+    },
+    {
       "path": "scripts/check_incremental_probe.py",
       "bytes": 2377,
       "sha256": "92addda6f1122230258aa63d2478e26a1ae62640e40433caace6215e94313068"
+    },
+    {
+      "path": "scripts/check_shared_path_leakage.py",
+      "bytes": 3242,
+      "sha256": "f8fad3ef5cb5adb5d252a365572c8491fff989d1a97b20d56dce0b3e589aa464"
     },
     {
       "path": "scripts/check_slot_increment_probe.py",
@@ -1948,6 +2003,11 @@
       "path": "scripts/compare_content_budget_slots.py",
       "bytes": 7315,
       "sha256": "8b8186c42f275f77f7a211358a5a39582dcb104c8ae7ad0525e1ddd64df05a5d"
+    },
+    {
+      "path": "scripts/compare_frozen_content_targets.py",
+      "bytes": 10175,
+      "sha256": "c156f1c20d564f2d79ce8295ca64036f39b0fea954e846f2c9a1939228a90198"
     },
     {
       "path": "scripts/compare_prior_normalized_slots.py",
@@ -2135,6 +2195,11 @@
       "sha256": "66c33376bab3f856cf7b9ae56e2a8687a8f1cacd3a361847e2998433f2ac36f1"
     },
     {
+      "path": "scripts/summarize_frozen_content_stage.py",
+      "bytes": 4526,
+      "sha256": "d06ed2c1b96c47e4ae4e25ff74cded042b0806f3f66a33038056bb885d9b309a"
+    },
+    {
       "path": "scripts/summarize_slotspe_direct_diversity.py",
       "bytes": 13873,
       "sha256": "1431054c3b492358e66018a796fb91862befd3d5b682fff6c1395e71afc2ed09"
@@ -2238,6 +2303,11 @@
       "path": "slotspe_proof/fixed_slot_pair.py",
       "bytes": 39041,
       "sha256": "de013b9194b5c80f77c7c0dca3a7826da8a6586ca933aaaf1cb35efcca090821"
+    },
+    {
+      "path": "slotspe_proof/frozen_prototype_targets.py",
+      "bytes": 7081,
+      "sha256": "4d776c40e9896e7f6a7013d96819c72f122d48b197a28fc427a39ed3bba44aa6"
     },
     {
       "path": "slotspe_proof/gate_pair.py",
@@ -2568,6 +2638,11 @@
       "path": "tests/test_diversity_reuse.py",
       "bytes": 13116,
       "sha256": "17b1c7f788eb6ca29d6164fdd8dde7bce22867c9409997b7b541845b54d3f16a"
+    },
+    {
+      "path": "tests/test_frozen_prototype_targets.py",
+      "bytes": 3226,
+      "sha256": "2beb62e5ddc49400bc730ef0aed612142151ef98905a63e2216043d8a9b3cc82"
     },
     {
       "path": "tests/test_incremental_probe.py",

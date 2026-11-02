@@ -1,0 +1,53 @@
+{
+  "status": "completed",
+  "source_sha256": "f8fad3ef5cb5adb5d252a365572c8491fff989d1a97b20d56dce0b3e589aa464",
+  "source_route": "CommonPrivateSurvival.forward averages modality summaries; alignment MSE and no bound on readout weights",
+  "rows": [
+    {
+      "epsilon": 1.0,
+      "deterministic_shared_alignment_mse": 2.0,
+      "task_reconstruction_mse": 0.0,
+      "shared_head_largest_absolute_weight": 4.0,
+      "analytic_gaussian_conditional_rate_fixed_noise": 0.5,
+      "analytic_gaussian_conditional_rate_co_scaled_noise": 0.5
+    },
+    {
+      "epsilon": 0.1,
+      "deterministic_shared_alignment_mse": 0.020000000000000004,
+      "task_reconstruction_mse": 0.0,
+      "shared_head_largest_absolute_weight": 40.0,
+      "analytic_gaussian_conditional_rate_fixed_noise": 0.005000000000000001,
+      "analytic_gaussian_conditional_rate_co_scaled_noise": 0.5
+    },
+    {
+      "epsilon": 0.01,
+      "deterministic_shared_alignment_mse": 0.0002,
+      "task_reconstruction_mse": 0.0,
+      "shared_head_largest_absolute_weight": 400.0,
+      "analytic_gaussian_conditional_rate_fixed_noise": 5e-05,
+      "analytic_gaussian_conditional_rate_co_scaled_noise": 0.5
+    },
+    {
+      "epsilon": 0.001,
+      "deterministic_shared_alignment_mse": 2e-06,
+      "task_reconstruction_mse": 0.0,
+      "shared_head_largest_absolute_weight": 4000.0,
+      "analytic_gaussian_conditional_rate_fixed_noise": 5e-07,
+      "analytic_gaussian_conditional_rate_co_scaled_noise": 0.5
+    }
+  ],
+  "checks_passed": true,
+  "neural_training": 0,
+  "patient_execution": false,
+  "source_fact_vs_construction": "This is an allowed representation/readout construction, not evidence that any trained model learned it.",
+  "shared_candidate": {
+    "variables": "q(Cw|Xw), q(Co|Xo); each posterior must depend only on its own modality",
+    "rate": "E KL(q(Cw|Xw)||r(Cw|Xo)) and reverse",
+    "identity": "R_w = I(Cw;Xw|Xo) + E_Xo KL(q(Cw|Xo)||r(Cw|Xo)) >= I(Cw;Xw|Xo)",
+    "assumptions": "fixed population/network; Markov Cw-Xw-Xo; normalized densities and finite terms",
+    "readout_requirement": "Use actual noisy C samples in survival; a deterministic posterior mean bypass is not covered by this bound.",
+    "collapse": "q=r=constant gives zero rate. Task/cross-view information preservation and independent content controls remain necessary.",
+    "scope": "standard variational conditional-information identity, not a new theorem or guarantee of task-relevant common factors"
+  },
+  "gaussian_scope": "The rate examples use an ideal independent unit-Gaussian private factor, not the fair-bit task construction; they illustrate noise/SNR scaling. No actual MI was estimated. Co-scaled variance is analytic and unconstrained, not an assertion about bounded log-variance code."
+}

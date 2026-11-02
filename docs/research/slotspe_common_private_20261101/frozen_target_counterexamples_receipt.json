@@ -1,0 +1,39 @@
+{
+  "schema": "slotspe_frozen_target_counterexamples_v1",
+  "exact_finite_cases": 3,
+  "checks_passed": true,
+  "cases": [
+    {
+      "name": "outcome_free_target_has_no_universal_task_utility",
+      "input_distribution": "two independent fair bits A,B",
+      "target_and_private": "T=V=B",
+      "target_entropy_nats": 0.6931471805599453,
+      "content_ce": 0.0,
+      "I_V_target": 0.6931471805599453,
+      "I_V_outcome_A": 0.0,
+      "same_input_alternate_outcome_B_information": 0.6931471805599453,
+      "conclusion": "A frozen input-only target cannot certify utility for all possible outcome laws. A supervised encoder or common bypass may still predict; this is not a whole-network impossibility."
+    },
+    {
+      "name": "perfect_nuisance_target_consumes_capacity",
+      "fixed_target": "B",
+      "G": "constant in this counterexample",
+      "target_entropy_nats": 0.6931471805599453,
+      "minimum_rate_for_perfect_recovery_of_independent_task_A_and_target_B": 1.3862943611198906,
+      "trial_cap_nats": 1.0,
+      "remaining_conditional_input_information_bound_if_zero_ce": 0.3068528194400547,
+      "conclusion": "Cap 1 nat cannot perfectly preserve both independent bits; no empirical guarantee that soft training hinge achieves the cap."
+    },
+    {
+      "name": "common_target_forces_copy",
+      "target": "T=G, fair bit",
+      "content_ce": 0.0,
+      "minimum_I_G_V_nats": 0.6931471805599453,
+      "H_T_given_G": 0.0,
+      "conclusion": "A content head that sees V only and perfectly recovers G forces common information into V. Prior normalization and per-slot budget do not automatically remove it."
+    }
+  ],
+  "neural_training": 0,
+  "patient_execution": false,
+  "scope": "exact constructions and entropy identities; no estimated patient MI"
+}

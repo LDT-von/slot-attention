@@ -1,0 +1,2771 @@
+{
+  "status": "completed",
+  "plan": {
+    "conditions": [
+      "separated_informative",
+      "dominant_private_nuisance"
+    ],
+    "seeds": [
+      373,
+      389,
+      401
+    ],
+    "arms": [
+      "budget_only",
+      "oracle_content",
+      "frozen_content",
+      "shuffled_train_content",
+      "constant_content"
+    ],
+    "steps_per_run": 500,
+    "runs": 30,
+    "settings": "same ContentBudgetSlotSurvival, width16, K4/modal, private4, common4, Adam .003, batch32, content1, budget cap1 nat/slot weight.3, all-slot mean readout",
+    "selection": "fixed last step; no architecture/hyperparameter selection on these exploratory tests; 5 stochastic forward evaluations per model are not new trainings",
+    "utility_control": "latent risk always uses original informative role amplitudes; in nuisance condition dominant within-role variance is independent of risk",
+    "oracle_control": "oracle type-to-learned-prototype permutation is fitted on training rows only for this upper-bound arm and diagnostic scoring; frozen_content never uses latent roles or outcomes"
+  },
+  "plan_sha256": "ec17bd7af8b554b369257f29f3902024e1b6df211dcf39b7577f52315f53b0c7",
+  "source_sha256_before_execution": {
+    "scripts/compare_frozen_content_targets.py": "c156f1c20d564f2d79ce8295ca64036f39b0fea954e846f2c9a1939228a90198",
+    "scripts/check_frozen_content_targets.py": "e0a1232613f62cdccf5f7293519facc1f6d9619b70d8bbcd65a569dd454712cb",
+    "slotspe_proof/frozen_prototype_targets.py": "4d776c40e9896e7f6a7013d96819c72f122d48b197a28fc427a39ed3bba44aa6",
+    "slotspe_proof/content_budget_slots.py": "714e2266f00f225caaf9668f25c1fe6a72b3867cd3bd81e64a36e1deda0d4b4d",
+    "slotspe_proof/prior_normalized_slots.py": "62d52eefa1d561920f091e9f1f714def0fcdb104c4f3b25deb712451993785e9",
+    "slotspe_proof/common_private_survival.py": "51a8f2c5052c064dddf2f6fc610dc785cd1fba412082ebf80cb53fc6ff4ec910"
+  },
+  "rows": [
+    {
+      "condition": "separated_informative",
+      "seed": 373,
+      "arm": "budget_only",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "ea2b1960ecad93fde662ddda9149caa91a6c326ebd4359b643415dee48671321",
+        "aa1bd3b58635ca599d64bfb0ecd065990c40c635d74b5a6aa517e84429310999"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0536358594894408,
+      "test_deterministic_nll": 1.0676478147506714,
+      "test_expected_oracle_content_ce": 0.7129668593406677,
+      "test_expected_frozen_target_ce": 0.7145552039146423,
+      "test_expected_arm_target_ce": 0.7145552039146423,
+      "rate_nats_per_slot": [
+        0.6861279606819153,
+        0.633806049823761,
+        0.9223983883857727,
+        0.8215718865394592,
+        0.6664479374885559,
+        0.6009120941162109,
+        0.6725371479988098,
+        0.6859366297721863
+      ],
+      "own_true_bit_linear_r2": 0.1531927749650276,
+      "other_true_bits_linear_r2": 0.07297936364305732,
+      "common_true_bits_linear_r2": 0.04062884865621064,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.36514965282962325,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 14.984629994835212,
+          "test_mse": 0.38382694518016464
+        },
+        "joint": {
+          "validation_mse": 0.19076516372255561,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 21.45286403727372,
+          "test_mse": 0.22004825213118637
+        },
+        "test_mse_gain": 0.16377869304897827,
+        "gain_relative_to_fit_mean_baseline": 0.2726062163861636,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.032247199997073,
+      "gradient_norm_max": 5.283402442932129,
+      "gradient_norm_mean": 0.6387538174688816,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 1.3250315189361572,
+          "content_loss": 0.7057577967643738,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.4478324353694916
+        },
+        {
+          "step": 99,
+          "loss": 0.9489194750785828,
+          "content_loss": 0.740479588508606,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.26790398359298706
+        },
+        {
+          "step": 299,
+          "loss": 0.8969069123268127,
+          "content_loss": 0.7420717477798462,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.8030635118484497
+        },
+        {
+          "step": 499,
+          "loss": 0.955249011516571,
+          "content_loss": 0.7468128800392151,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.7880748510360718
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_373_budget_only.pt",
+      "synthetic_cache_sha256": "d95469a48f5f421c40ab12b42982ba74dba628b07349109d551e4ceefcf745f0"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 373,
+      "arm": "oracle_content",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "ea2b1960ecad93fde662ddda9149caa91a6c326ebd4359b643415dee48671321",
+        "aa1bd3b58635ca599d64bfb0ecd065990c40c635d74b5a6aa517e84429310999"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0333484411239624,
+      "test_deterministic_nll": 1.026779294013977,
+      "test_expected_oracle_content_ce": 0.2360718458890915,
+      "test_expected_frozen_target_ce": 0.2536655515432358,
+      "test_expected_arm_target_ce": 0.2360718458890915,
+      "rate_nats_per_slot": [
+        1.001330852508545,
+        1.0271300077438354,
+        1.022739291191101,
+        0.9900393486022949,
+        0.9935676455497742,
+        0.9965665936470032,
+        0.9847976565361023,
+        0.9809778332710266
+      ],
+      "own_true_bit_linear_r2": 0.8774253896499165,
+      "other_true_bits_linear_r2": 0.03305146341436861,
+      "common_true_bits_linear_r2": 0.1787795002049345,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.19088732763265542,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 12.143256909604169,
+          "test_mse": 0.1753759049721035
+        },
+        "joint": {
+          "validation_mse": 0.09142346334840229,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 20.940043557191473,
+          "test_mse": 0.10126242318246588
+        },
+        "test_mse_gain": 0.07411348178963763,
+        "gain_relative_to_fit_mean_baseline": 0.12336034363051107,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.075849100001506,
+      "gradient_norm_max": 6.948861598968506,
+      "gradient_norm_mean": 0.9771132084727288,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.030111074447632,
+          "content_loss": 0.7050796151161194,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.4564259350299835
+        },
+        {
+          "step": 99,
+          "loss": 1.4157135486602783,
+          "content_loss": 0.46795880794525146,
+          "budget_hinge": 0.00714227557182312,
+          "gradient_norm": 0.9102931022644043
+        },
+        {
+          "step": 299,
+          "loss": 1.2299436330795288,
+          "content_loss": 0.23702433705329895,
+          "budget_hinge": 0.06782709062099457,
+          "gradient_norm": 0.9815981388092041
+        },
+        {
+          "step": 499,
+          "loss": 1.1048645973205566,
+          "content_loss": 0.17902524769306183,
+          "budget_hinge": 0.030443891882896423,
+          "gradient_norm": 1.308569073677063
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_373_oracle_content.pt",
+      "synthetic_cache_sha256": "f3ff43812664266afb3a808c6c57f0b36b47e36b49d630df61cfeb89414de3dc"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 373,
+      "arm": "frozen_content",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "ea2b1960ecad93fde662ddda9149caa91a6c326ebd4359b643415dee48671321",
+        "aa1bd3b58635ca599d64bfb0ecd065990c40c635d74b5a6aa517e84429310999"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.033249831199646,
+      "test_deterministic_nll": 1.025713324546814,
+      "test_expected_oracle_content_ce": 0.21104762852191924,
+      "test_expected_frozen_target_ce": 0.19296266734600068,
+      "test_expected_arm_target_ce": 0.19296266734600068,
+      "rate_nats_per_slot": [
+        1.0011372566223145,
+        0.997899055480957,
+        1.007426381111145,
+        1.0388444662094116,
+        0.9839086532592773,
+        0.9869477152824402,
+        0.9882519245147705,
+        0.985833466053009
+      ],
+      "own_true_bit_linear_r2": 0.8844063119668538,
+      "other_true_bits_linear_r2": 0.04993276525622923,
+      "common_true_bits_linear_r2": 0.14789546978740442,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.23933500823125353,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 11.483278098123664,
+          "test_mse": 0.21104353264658546
+        },
+        "joint": {
+          "validation_mse": 0.10959122054303283,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 21.090163875744363,
+          "test_mse": 0.10667355549809916
+        },
+        "test_mse_gain": 0.1043699771484863,
+        "gain_relative_to_fit_mean_baseline": 0.17372164867777168,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.130790299997898,
+      "gradient_norm_max": 4.5546488761901855,
+      "gradient_norm_mean": 0.9672547976970672,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.030789375305176,
+          "content_loss": 0.7057577967643738,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.4581887423992157
+        },
+        {
+          "step": 99,
+          "loss": 1.434950590133667,
+          "content_loss": 0.4833599627017975,
+          "budget_hinge": 0.0056296586990356445,
+          "gradient_norm": 0.5981884002685547
+        },
+        {
+          "step": 299,
+          "loss": 1.2518019676208496,
+          "content_loss": 0.24303093552589417,
+          "budget_hinge": 0.044618114829063416,
+          "gradient_norm": 0.9995443224906921
+        },
+        {
+          "step": 499,
+          "loss": 1.1124919652938843,
+          "content_loss": 0.18628066778182983,
+          "budget_hinge": 0.04340328276157379,
+          "gradient_norm": 1.24947988986969
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_373_frozen_content.pt",
+      "synthetic_cache_sha256": "7ddaae1ce9e0b1ef17d1785b25f3c33c03dc22f0f0c1b5f2e6011266d09e09c6"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 373,
+      "arm": "shuffled_train_content",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "ea2b1960ecad93fde662ddda9149caa91a6c326ebd4359b643415dee48671321",
+        "aa1bd3b58635ca599d64bfb0ecd065990c40c635d74b5a6aa517e84429310999"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0598828792572021,
+      "test_deterministic_nll": 1.0576159954071045,
+      "test_expected_oracle_content_ce": 0.6931675434112549,
+      "test_expected_frozen_target_ce": 0.6932354211807251,
+      "test_expected_arm_target_ce": 0.6932354211807251,
+      "rate_nats_per_slot": [
+        0.7519226670265198,
+        0.8231344223022461,
+        0.7060642838478088,
+        0.7823012471199036,
+        0.5873334407806396,
+        0.7023264765739441,
+        0.5758741497993469,
+        0.666914701461792
+      ],
+      "own_true_bit_linear_r2": 0.1301596194255159,
+      "other_true_bits_linear_r2": 0.0706778346614741,
+      "common_true_bits_linear_r2": 0.0986666225625552,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.29638682659410354,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 13.481819357683415,
+          "test_mse": 0.289337995820115
+        },
+        "joint": {
+          "validation_mse": 0.2181409606058804,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 20.93958834044272,
+          "test_mse": 0.22745609853370738
+        },
+        "test_mse_gain": 0.06188189728640761,
+        "gain_relative_to_fit_mean_baseline": 0.10300112650795161,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 7.976930400007404,
+      "gradient_norm_max": 1.9408575296401978,
+      "gradient_norm_mean": 0.5360107882618904,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.069749355316162,
+          "content_loss": 0.7447177171707153,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.4741505980491638
+        },
+        {
+          "step": 99,
+          "loss": 1.651672601699829,
+          "content_loss": 0.6933567523956299,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.23144610226154327
+        },
+        {
+          "step": 299,
+          "loss": 1.6871157884597778,
+          "content_loss": 0.6923859119415283,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.7841435670852661
+        },
+        {
+          "step": 499,
+          "loss": 1.5813050270080566,
+          "content_loss": 0.6955506205558777,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.49415865540504456
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_373_shuffled_train_content.pt",
+      "synthetic_cache_sha256": "16d15a9856fe24965a9497016c232a17b27530319ad5ff8daa08b478af86da24"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 373,
+      "arm": "constant_content",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "ea2b1960ecad93fde662ddda9149caa91a6c326ebd4359b643415dee48671321",
+        "aa1bd3b58635ca599d64bfb0ecd065990c40c635d74b5a6aa517e84429310999"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.018663501739502,
+      "test_deterministic_nll": 1.0189279317855835,
+      "test_expected_oracle_content_ce": 2.4620296478271486,
+      "test_expected_frozen_target_ce": 2.451757621765137,
+      "test_expected_arm_target_ce": 0.04416532143950462,
+      "rate_nats_per_slot": [
+        0.9777970314025879,
+        0.9410691261291504,
+        0.9105165600776672,
+        0.9224836826324463,
+        0.9706676602363586,
+        0.9089234471321106,
+        0.8960115909576416,
+        0.9463590979576111
+      ],
+      "own_true_bit_linear_r2": 0.186720776935269,
+      "other_true_bits_linear_r2": 0.09630398755324188,
+      "common_true_bits_linear_r2": 0.14025491805550327,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.2476567179350388,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 12.857246743941733,
+          "test_mse": 0.23939656112939808
+        },
+        "joint": {
+          "validation_mse": 0.2083853021849223,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 0.0001,
+          "effective_df": 39.66223787557464,
+          "test_mse": 0.2176975505120968
+        },
+        "test_mse_gain": 0.021699010617301284,
+        "gain_relative_to_fit_mean_baseline": 0.03611755029658663,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.385530600004131,
+      "gradient_norm_max": 1.5379855632781982,
+      "gradient_norm_mean": 0.5017849848866462,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.224968910217285,
+          "content_loss": 0.8999374508857727,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.7309362292289734
+        },
+        {
+          "step": 99,
+          "loss": 1.3231751918792725,
+          "content_loss": 0.33106285333633423,
+          "budget_hinge": 0.02266465127468109,
+          "gradient_norm": 0.403239369392395
+        },
+        {
+          "step": 299,
+          "loss": 1.1787956953048706,
+          "content_loss": 0.13069483637809753,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5437741279602051
+        },
+        {
+          "step": 499,
+          "loss": 1.0337018966674805,
+          "content_loss": 0.04611573368310928,
+          "budget_hinge": 0.0029170960187911987,
+          "gradient_norm": 0.4805201292037964
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_373_constant_content.pt",
+      "synthetic_cache_sha256": "e460c8fce020bcc2ea3b188aa43b20f7afe9afb0b8f94ca00f5a6ec434ad5e31"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 389,
+      "arm": "budget_only",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "0ed3567dc7b0e6acad5517c018e547402b32835ad101a43ed097989d51755269",
+        "a025b166e8f95b99a5e3cd09c881dd4c3ea25d490244d6b77991f15c0ac398d5"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 0.9643237829208374,
+      "test_deterministic_nll": 0.9636318683624268,
+      "test_expected_oracle_content_ce": 0.7304922103881836,
+      "test_expected_frozen_target_ce": 0.7319686412811279,
+      "test_expected_arm_target_ce": 0.7319686412811279,
+      "rate_nats_per_slot": [
+        0.7807779312133789,
+        0.8477863669395447,
+        0.8407314419746399,
+        0.8044164180755615,
+        0.7658087611198425,
+        0.6474401354789734,
+        0.7898243069648743,
+        0.6405869126319885
+      ],
+      "own_true_bit_linear_r2": 0.14728729147275224,
+      "other_true_bits_linear_r2": 0.06453653089981676,
+      "common_true_bits_linear_r2": 0.03013524994667749,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.39332917577050275,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 13.432608968014884,
+          "test_mse": 0.4211472563358189
+        },
+        "joint": {
+          "validation_mse": 0.2879921673522563,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 22.966774519980707,
+          "test_mse": 0.30713751796647076
+        },
+        "test_mse_gain": 0.11400973836934813,
+        "gain_relative_to_fit_mean_baseline": 0.15631170189047527,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.865906899998663,
+      "gradient_norm_max": 18.088294982910156,
+      "gradient_norm_mean": 0.5062857230454684,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 1.297988772392273,
+          "content_loss": 0.7281687259674072,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.35659095644950867
+        },
+        {
+          "step": 99,
+          "loss": 0.9847846031188965,
+          "content_loss": 0.7067922353744507,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.16132961213588715
+        },
+        {
+          "step": 299,
+          "loss": 1.0706474781036377,
+          "content_loss": 0.7169322967529297,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.45303571224212646
+        },
+        {
+          "step": 499,
+          "loss": 0.9646501541137695,
+          "content_loss": 0.726806104183197,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5485584139823914
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_389_budget_only.pt",
+      "synthetic_cache_sha256": "ff37baa69a82c412b96190a5363509c6967936b2369bf57a693c624f17ecffe1"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 389,
+      "arm": "oracle_content",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "0ed3567dc7b0e6acad5517c018e547402b32835ad101a43ed097989d51755269",
+        "a025b166e8f95b99a5e3cd09c881dd4c3ea25d490244d6b77991f15c0ac398d5"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0098379492759704,
+      "test_deterministic_nll": 0.9922428131103516,
+      "test_expected_oracle_content_ce": 0.11077075749635697,
+      "test_expected_frozen_target_ce": 0.14890690445899962,
+      "test_expected_arm_target_ce": 0.11077075749635697,
+      "rate_nats_per_slot": [
+        1.0761297941207886,
+        1.0748438835144043,
+        1.0244604349136353,
+        1.072059154510498,
+        1.0215917825698853,
+        0.9854326248168945,
+        1.0307680368423462,
+        1.0213680267333984
+      ],
+      "own_true_bit_linear_r2": 0.9580626857998075,
+      "other_true_bits_linear_r2": 0.00749011375747471,
+      "common_true_bits_linear_r2": 0.06503796517365446,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.22679503094136436,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 18.60597669984008,
+          "test_mse": 0.26288485884413154
+        },
+        "joint": {
+          "validation_mse": 0.05380530512276738,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 20.27005440933065,
+          "test_mse": 0.047781489002569934
+        },
+        "test_mse_gain": 0.21510336984156161,
+        "gain_relative_to_fit_mean_baseline": 0.29491492834923055,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.011925900005735,
+      "gradient_norm_max": 4.068044185638428,
+      "gradient_norm_mean": 0.789161887511611,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.0164244174957275,
+          "content_loss": 0.7184356451034546,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.3708285689353943
+        },
+        {
+          "step": 99,
+          "loss": 1.466531753540039,
+          "content_loss": 0.46707725524902344,
+          "budget_hinge": 0.027415305376052856,
+          "gradient_norm": 0.3039665222167969
+        },
+        {
+          "step": 299,
+          "loss": 1.151046872138977,
+          "content_loss": 0.1875062733888626,
+          "budget_hinge": 0.007896989583969116,
+          "gradient_norm": 0.7668092846870422
+        },
+        {
+          "step": 499,
+          "loss": 1.0178195238113403,
+          "content_loss": 0.10591988265514374,
+          "budget_hinge": 0.035870254039764404,
+          "gradient_norm": 4.068044185638428
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_389_oracle_content.pt",
+      "synthetic_cache_sha256": "999db3695c96a86f133e44dc02497c19feb157ceea1606a93cc728d0f30beb7e"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 389,
+      "arm": "frozen_content",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "0ed3567dc7b0e6acad5517c018e547402b32835ad101a43ed097989d51755269",
+        "a025b166e8f95b99a5e3cd09c881dd4c3ea25d490244d6b77991f15c0ac398d5"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 0.9983099102973938,
+      "test_deterministic_nll": 0.9837682843208313,
+      "test_expected_oracle_content_ce": 0.1541707009077072,
+      "test_expected_frozen_target_ce": 0.12529105246067046,
+      "test_expected_arm_target_ce": 0.12529105246067046,
+      "rate_nats_per_slot": [
+        1.0155434608459473,
+        1.0176583528518677,
+        1.0015246868133545,
+        1.0146414041519165,
+        1.0051652193069458,
+        1.01628577709198,
+        1.002663493156433,
+        1.0124388933181763
+      ],
+      "own_true_bit_linear_r2": 0.9279006037465446,
+      "other_true_bits_linear_r2": 0.009892535531053417,
+      "common_true_bits_linear_r2": 0.14857923433474318,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.18338672458480487,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 12.200782627519697,
+          "test_mse": 0.2154734607314601
+        },
+        "joint": {
+          "validation_mse": 0.05941478277350776,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 20.336382746139478,
+          "test_mse": 0.06533933960346584
+        },
+        "test_mse_gain": 0.15013412112799424,
+        "gain_relative_to_fit_mean_baseline": 0.20583960915093993,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.343243800001801,
+      "gradient_norm_max": 8.761380195617676,
+      "gradient_norm_mean": 0.8607305252104998,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.0261573791503906,
+          "content_loss": 0.7281687259674072,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.37500742077827454
+        },
+        {
+          "step": 99,
+          "loss": 1.5006492137908936,
+          "content_loss": 0.48867863416671753,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.27491891384124756
+        },
+        {
+          "step": 299,
+          "loss": 1.200307846069336,
+          "content_loss": 0.23913165926933289,
+          "budget_hinge": 0.02284376323223114,
+          "gradient_norm": 1.103838562965393
+        },
+        {
+          "step": 499,
+          "loss": 0.982517421245575,
+          "content_loss": 0.096901535987854,
+          "budget_hinge": 0.01833939552307129,
+          "gradient_norm": 0.831040620803833
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_389_frozen_content.pt",
+      "synthetic_cache_sha256": "9461866cba49ad9cdc276f8f5cc83f4c16477e5ab0650f93dd957f614bd2a84e"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 389,
+      "arm": "shuffled_train_content",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "0ed3567dc7b0e6acad5517c018e547402b32835ad101a43ed097989d51755269",
+        "a025b166e8f95b99a5e3cd09c881dd4c3ea25d490244d6b77991f15c0ac398d5"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 0.9983534812927246,
+      "test_deterministic_nll": 0.9951183199882507,
+      "test_expected_oracle_content_ce": 0.6899652242660522,
+      "test_expected_frozen_target_ce": 0.6897833943367004,
+      "test_expected_arm_target_ce": 0.6897833943367004,
+      "rate_nats_per_slot": [
+        0.9213449358940125,
+        0.98236483335495,
+        0.8612804412841797,
+        0.8941212296485901,
+        0.6651098132133484,
+        0.6355398297309875,
+        0.6568519473075867,
+        0.6234683394432068
+      ],
+      "own_true_bit_linear_r2": 0.2677926764826136,
+      "other_true_bits_linear_r2": 0.06147650329672711,
+      "common_true_bits_linear_r2": 0.09570925195775348,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.3132663985156552,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.996988218535924,
+          "test_mse": 0.3714770281579885
+        },
+        "joint": {
+          "validation_mse": 0.2393695004747241,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 22.25772307177517,
+          "test_mse": 0.3161190179579911
+        },
+        "test_mse_gain": 0.05535801019999742,
+        "gain_relative_to_fit_mean_baseline": 0.0758979444334757,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.012904699993669,
+      "gradient_norm_max": 1.5854346752166748,
+      "gradient_norm_mean": 0.45416903141140935,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 1.9872394800186157,
+          "content_loss": 0.6892507076263428,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.36099350452423096
+        },
+        {
+          "step": 99,
+          "loss": 1.6720783710479736,
+          "content_loss": 0.6927653551101685,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.172294020652771
+        },
+        {
+          "step": 299,
+          "loss": 1.7556568384170532,
+          "content_loss": 0.6936948299407959,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.38480445742607117
+        },
+        {
+          "step": 499,
+          "loss": 1.5452433824539185,
+          "content_loss": 0.6907174587249756,
+          "budget_hinge": 0.003070831298828125,
+          "gradient_norm": 0.5311260223388672
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_389_shuffled_train_content.pt",
+      "synthetic_cache_sha256": "80bacf6f6c542ed65a0613c81173779c5fe16a5a74a77ab5cb72b7bb255ab68e"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 389,
+      "arm": "constant_content",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "0ed3567dc7b0e6acad5517c018e547402b32835ad101a43ed097989d51755269",
+        "a025b166e8f95b99a5e3cd09c881dd4c3ea25d490244d6b77991f15c0ac398d5"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 0.9758569121360778,
+      "test_deterministic_nll": 0.9733140468597412,
+      "test_expected_oracle_content_ce": 2.272498083114624,
+      "test_expected_frozen_target_ce": 2.2366851806640624,
+      "test_expected_arm_target_ce": 0.06566392928361893,
+      "rate_nats_per_slot": [
+        0.856612503528595,
+        0.867918074131012,
+        0.866513729095459,
+        0.866375207901001,
+        0.9810797572135925,
+        0.9279398918151855,
+        0.9646539688110352,
+        0.9716108441352844
+      ],
+      "own_true_bit_linear_r2": 0.13429244198589058,
+      "other_true_bits_linear_r2": 0.08070309323140236,
+      "common_true_bits_linear_r2": 0.08113169927627994,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.37627635536635684,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 11.504391221807683,
+          "test_mse": 0.4118800406764973
+        },
+        "joint": {
+          "validation_mse": 0.37627635536635684,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 11.504391221807683,
+          "test_mse": 0.4118800406764973
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.351141599996481,
+      "gradient_norm_max": 1.0898025035858154,
+      "gradient_norm_mean": 0.4948269242048264,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.1842141151428223,
+          "content_loss": 0.8862254619598389,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.6537758708000183
+        },
+        {
+          "step": 99,
+          "loss": 1.393615961074829,
+          "content_loss": 0.3304879069328308,
+          "budget_hinge": 0.10553708672523499,
+          "gradient_norm": 0.4788305461406708
+        },
+        {
+          "step": 299,
+          "loss": 1.2431888580322266,
+          "content_loss": 0.12306611239910126,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.3872193992137909
+        },
+        {
+          "step": 499,
+          "loss": 1.040206789970398,
+          "content_loss": 0.06498636305332184,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.3956783413887024
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_389_constant_content.pt",
+      "synthetic_cache_sha256": "992007a19ef3e418d4c06f2f775e5f839511696c5d16be65059af4d8dbfadb8d"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 401,
+      "arm": "budget_only",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "c61d2067b2959f8f1e312b1d8cbca773be4e3ea5fb254f1e3fc0ba35d2053c6f",
+        "b9000decfa8e7c2835328780878c72666e5935d00148ea3850ea2f82bdbcbd89"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.093292760848999,
+      "test_deterministic_nll": 1.0825573205947876,
+      "test_expected_oracle_content_ce": 0.7085707783699036,
+      "test_expected_frozen_target_ce": 0.7081549406051636,
+      "test_expected_arm_target_ce": 0.7081549406051636,
+      "rate_nats_per_slot": [
+        0.7483354210853577,
+        0.7491567730903625,
+        0.5442995429039001,
+        0.5524141192436218,
+        0.6473984122276306,
+        0.5792220234870911,
+        0.5866031646728516,
+        0.6426729559898376
+      ],
+      "own_true_bit_linear_r2": 0.20598140355384337,
+      "other_true_bits_linear_r2": 0.10770889595688056,
+      "common_true_bits_linear_r2": 0.1117916467674428,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.2768826594955811,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 6.459736062407508,
+          "test_mse": 0.2725310360671772
+        },
+        "joint": {
+          "validation_mse": 0.22265407893391526,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 1e-06,
+          "effective_df": 19.320390996366786,
+          "test_mse": 0.2389380837924263
+        },
+        "test_mse_gain": 0.033592952274750926,
+        "gain_relative_to_fit_mean_baseline": 0.042517149002522334,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.202826799999457,
+      "gradient_norm_max": 2.3140926361083984,
+      "gradient_norm_mean": 0.599890082731843,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 1.6229852437973022,
+          "content_loss": 0.7085201740264893,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5765318274497986
+        },
+        {
+          "step": 99,
+          "loss": 0.7904890179634094,
+          "content_loss": 0.6866384148597717,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5916838049888611
+        },
+        {
+          "step": 299,
+          "loss": 0.8826175332069397,
+          "content_loss": 0.7021225690841675,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.6465312242507935
+        },
+        {
+          "step": 499,
+          "loss": 1.1241225004196167,
+          "content_loss": 0.7069262266159058,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.7265846729278564
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_401_budget_only.pt",
+      "synthetic_cache_sha256": "9b71d04ad254ab23b1ba7cb04c0d3776024578d283d6b809c88e60f2fbd9d73d"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 401,
+      "arm": "oracle_content",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "c61d2067b2959f8f1e312b1d8cbca773be4e3ea5fb254f1e3fc0ba35d2053c6f",
+        "b9000decfa8e7c2835328780878c72666e5935d00148ea3850ea2f82bdbcbd89"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0250686883926392,
+      "test_deterministic_nll": 1.0204784870147705,
+      "test_expected_oracle_content_ce": 0.14214074611663818,
+      "test_expected_frozen_target_ce": 0.14841215014457704,
+      "test_expected_arm_target_ce": 0.14214074611663818,
+      "rate_nats_per_slot": [
+        0.995692789554596,
+        1.0147544145584106,
+        0.9612240791320801,
+        1.0086312294006348,
+        0.9958516955375671,
+        1.0167754888534546,
+        1.00822114944458,
+        1.0046099424362183
+      ],
+      "own_true_bit_linear_r2": 0.9447224670837004,
+      "other_true_bits_linear_r2": 0.01775212775350082,
+      "common_true_bits_linear_r2": 0.14518103728541765,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.17800533782099465,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 6.226740973052433,
+          "test_mse": 0.1845985512515347
+        },
+        "joint": {
+          "validation_mse": 0.09055128145405722,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 20.454787942476468,
+          "test_mse": 0.08250635111046205
+        },
+        "test_mse_gain": 0.10209220014107266,
+        "gain_relative_to_fit_mean_baseline": 0.12921368892771726,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.21610239999427,
+      "gradient_norm_max": 254.8151397705078,
+      "gradient_norm_mean": 1.3812446421384812,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.3290042877197266,
+          "content_loss": 0.7060189247131348,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5839924812316895
+        },
+        {
+          "step": 99,
+          "loss": 1.3283920288085938,
+          "content_loss": 0.5053126215934753,
+          "budget_hinge": 0.004462286829948425,
+          "gradient_norm": 0.5273087024688721
+        },
+        {
+          "step": 299,
+          "loss": 1.074493408203125,
+          "content_loss": 0.17067395150661469,
+          "budget_hinge": 0.024930477142333984,
+          "gradient_norm": 0.8634564876556396
+        },
+        {
+          "step": 499,
+          "loss": 1.1968847513198853,
+          "content_loss": 0.1396367847919464,
+          "budget_hinge": 0.010889917612075806,
+          "gradient_norm": 1.1822943687438965
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_401_oracle_content.pt",
+      "synthetic_cache_sha256": "29184794984ae81e1b5dc9a9f8457e11644478a6a9baa347001abeaff32b2580"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 401,
+      "arm": "frozen_content",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "c61d2067b2959f8f1e312b1d8cbca773be4e3ea5fb254f1e3fc0ba35d2053c6f",
+        "b9000decfa8e7c2835328780878c72666e5935d00148ea3850ea2f82bdbcbd89"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.018447184562683,
+      "test_deterministic_nll": 1.0161659717559814,
+      "test_expected_oracle_content_ce": 0.12045742720365524,
+      "test_expected_frozen_target_ce": 0.10713394284248352,
+      "test_expected_arm_target_ce": 0.10713394284248352,
+      "rate_nats_per_slot": [
+        1.003787875175476,
+        1.0040940046310425,
+        0.9669211506843567,
+        0.9998095035552979,
+        1.018789291381836,
+        1.020504117012024,
+        1.0238109827041626,
+        1.0400413274765015
+      ],
+      "own_true_bit_linear_r2": 0.9629680286785738,
+      "other_true_bits_linear_r2": 0.020399406097552735,
+      "common_true_bits_linear_r2": 0.16319352164737733,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.1285265451911335,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999439150305008,
+          "test_mse": 0.12282550376726102
+        },
+        "joint": {
+          "validation_mse": 0.06745125118539402,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 20.622905296316738,
+          "test_mse": 0.05650334822213201
+        },
+        "test_mse_gain": 0.06632215554512902,
+        "gain_relative_to_fit_mean_baseline": 0.08394108819069612,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.326507399993716,
+      "gradient_norm_max": 6.108806133270264,
+      "gradient_norm_mean": 0.9037210655808449,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.331505298614502,
+          "content_loss": 0.7085201740264893,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5853359699249268
+        },
+        {
+          "step": 99,
+          "loss": 1.3161072731018066,
+          "content_loss": 0.4921374022960663,
+          "budget_hinge": 0.00017970800399780273,
+          "gradient_norm": 0.5162702798843384
+        },
+        {
+          "step": 299,
+          "loss": 1.0306860208511353,
+          "content_loss": 0.13745158910751343,
+          "budget_hinge": 0.021895870566368103,
+          "gradient_norm": 0.7642661333084106
+        },
+        {
+          "step": 499,
+          "loss": 1.1941125392913818,
+          "content_loss": 0.10815570503473282,
+          "budget_hinge": 0.015940681099891663,
+          "gradient_norm": 1.4946081638336182
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_401_frozen_content.pt",
+      "synthetic_cache_sha256": "1bbfdd586f75312aabc05379b03b20ed0cbd14f11be3e3c29000b329adf4c915"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 401,
+      "arm": "shuffled_train_content",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "c61d2067b2959f8f1e312b1d8cbca773be4e3ea5fb254f1e3fc0ba35d2053c6f",
+        "b9000decfa8e7c2835328780878c72666e5935d00148ea3850ea2f82bdbcbd89"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0911028146743775,
+      "test_deterministic_nll": 1.0793761014938354,
+      "test_expected_oracle_content_ce": 0.6958506822586059,
+      "test_expected_frozen_target_ce": 0.6959275722503662,
+      "test_expected_arm_target_ce": 0.6959275722503662,
+      "rate_nats_per_slot": [
+        0.6652543544769287,
+        0.6593223810195923,
+        0.7356178760528564,
+        0.6489079594612122,
+        0.9083061218261719,
+        0.8538853526115417,
+        0.8869852423667908,
+        0.8871914744377136
+      ],
+      "own_true_bit_linear_r2": 0.14910763233100222,
+      "other_true_bits_linear_r2": 0.06775578187838319,
+      "common_true_bits_linear_r2": 0.10757472445898253,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.3342086689990067,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 14.899194949529742,
+          "test_mse": 0.3482774004372262
+        },
+        "joint": {
+          "validation_mse": 0.31775403122598966,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 22.12566489882419,
+          "test_mse": 0.3137474469153286
+        },
+        "test_mse_gain": 0.03452995352189764,
+        "gain_relative_to_fit_mean_baseline": 0.04370307101719532,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.208389200008241,
+      "gradient_norm_max": 9.98150634765625,
+      "gradient_norm_mean": 0.7594949934184552,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.3402931690216064,
+          "content_loss": 0.7173079252243042,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5868388414382935
+        },
+        {
+          "step": 99,
+          "loss": 1.4915771484375,
+          "content_loss": 0.6960688829421997,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5500659346580505
+        },
+        {
+          "step": 299,
+          "loss": 1.6171715259552002,
+          "content_loss": 0.6938740015029907,
+          "budget_hinge": 0.025670230388641357,
+          "gradient_norm": 0.7864477634429932
+        },
+        {
+          "step": 499,
+          "loss": 1.7748138904571533,
+          "content_loss": 0.6926572322845459,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.8685469627380371
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_401_shuffled_train_content.pt",
+      "synthetic_cache_sha256": "bfdd4b50be3c3753e6a112dd152a4c36cdf55077e5f0315a6bb541f702827855"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 401,
+      "arm": "constant_content",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "c61d2067b2959f8f1e312b1d8cbca773be4e3ea5fb254f1e3fc0ba35d2053c6f",
+        "b9000decfa8e7c2835328780878c72666e5935d00148ea3850ea2f82bdbcbd89"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0365489959716796,
+      "test_deterministic_nll": 1.0301874876022339,
+      "test_expected_oracle_content_ce": 2.304879140853882,
+      "test_expected_frozen_target_ce": 2.3110005855560303,
+      "test_expected_arm_target_ce": 0.06620230823755265,
+      "rate_nats_per_slot": [
+        0.9684187769889832,
+        1.007380485534668,
+        1.0234450101852417,
+        1.0103776454925537,
+        0.7924888134002686,
+        0.7975119948387146,
+        0.9994447231292725,
+        0.8253381252288818
+      ],
+      "own_true_bit_linear_r2": 0.07475257242411626,
+      "other_true_bits_linear_r2": 0.12752364044985334,
+      "common_true_bits_linear_r2": 0.14700580194066737,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.2683885167114255,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 3.0120529571643333,
+          "test_mse": 0.25008734323111964
+        },
+        "joint": {
+          "validation_mse": 0.23989218596013107,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 58.411694846431374,
+          "test_mse": 0.2739263187752887
+        },
+        "test_mse_gain": -0.023838975544169083,
+        "gain_relative_to_fit_mean_baseline": -0.030171961874298762,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.163418800002546,
+      "gradient_norm_max": 3.2019894123077393,
+      "gradient_norm_mean": 0.6593421617746353,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.5040650367736816,
+          "content_loss": 0.8810798525810242,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.8078523278236389
+        },
+        {
+          "step": 99,
+          "loss": 1.1710293292999268,
+          "content_loss": 0.32045286893844604,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5730265974998474
+        },
+        {
+          "step": 299,
+          "loss": 1.0193344354629517,
+          "content_loss": 0.12807179987430573,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.6282617449760437
+        },
+        {
+          "step": 499,
+          "loss": 1.2247968912124634,
+          "content_loss": 0.06629672646522522,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.8246983289718628
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\separated_informative_401_constant_content.pt",
+      "synthetic_cache_sha256": "15e3b3e3b8007fbd1f2e7ed3ad4bba810db8b34b0fb3481decf8c850574f8d05"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 373,
+      "arm": "budget_only",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "522bb92818254d5659bfcadb55b19c0719a6177ca77734116a79677f6d3661e5",
+        "3d731b860cc7afbc350bf60423e7d4eb3935057546a7f1e04c25394c26eddf09"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.1237213373184205,
+      "test_deterministic_nll": 1.1349290609359741,
+      "test_expected_oracle_content_ce": 0.7096477270126342,
+      "test_expected_frozen_target_ce": 0.711189866065979,
+      "test_expected_arm_target_ce": 0.711189866065979,
+      "rate_nats_per_slot": [
+        0.7459273338317871,
+        0.7289531230926514,
+        0.7276320457458496,
+        0.6919261813163757,
+        0.7482725977897644,
+        0.7224979400634766,
+        0.7841420769691467,
+        0.8014386296272278
+      ],
+      "own_true_bit_linear_r2": 0.0886792495227207,
+      "other_true_bits_linear_r2": 0.020202974212499957,
+      "common_true_bits_linear_r2": 0.034218487865009584,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.40045759868713715,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 5.171165108453461,
+          "test_mse": 0.363778227879669
+        },
+        "joint": {
+          "validation_mse": 0.3725536403548194,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 18.287169635685586,
+          "test_mse": 0.3348225551116351
+        },
+        "test_mse_gain": 0.028955672768033902,
+        "gain_relative_to_fit_mean_baseline": 0.04819611299406958,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.257629200001247,
+      "gradient_norm_max": 4.812929630279541,
+      "gradient_norm_mean": 0.6745557406544685,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 1.3600231409072876,
+          "content_loss": 0.7334166169166565,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.44777369499206543
+        },
+        {
+          "step": 99,
+          "loss": 0.9856395125389099,
+          "content_loss": 0.724534273147583,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.22154054045677185
+        },
+        {
+          "step": 299,
+          "loss": 0.8726381063461304,
+          "content_loss": 0.7183465957641602,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5976936221122742
+        },
+        {
+          "step": 499,
+          "loss": 0.9690579771995544,
+          "content_loss": 0.7249775528907776,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.4024727940559387
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_373_budget_only.pt",
+      "synthetic_cache_sha256": "79cbffd0334002d6bb13cd9c2abad166371359c9d3d80dccecc7d3833955b432"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 373,
+      "arm": "oracle_content",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "522bb92818254d5659bfcadb55b19c0719a6177ca77734116a79677f6d3661e5",
+        "3d731b860cc7afbc350bf60423e7d4eb3935057546a7f1e04c25394c26eddf09"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.042880129814148,
+      "test_deterministic_nll": 1.038399338722229,
+      "test_expected_oracle_content_ce": 0.17642497420310974,
+      "test_expected_frozen_target_ce": 2.216408205032349,
+      "test_expected_arm_target_ce": 0.17642497420310974,
+      "rate_nats_per_slot": [
+        1.067686915397644,
+        1.0584739446640015,
+        1.0500229597091675,
+        1.0413984060287476,
+        1.005387306213379,
+        1.0013813972473145,
+        0.9879935383796692,
+        0.9909288287162781
+      ],
+      "own_true_bit_linear_r2": 0.916429147099239,
+      "other_true_bits_linear_r2": 0.03754002422362287,
+      "common_true_bits_linear_r2": 0.14114710507645867,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.24184328905640165,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 12.50077385469708,
+          "test_mse": 0.22478428100489045
+        },
+        "joint": {
+          "validation_mse": 0.08941251041214837,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 1e-06,
+          "effective_df": 18.7623984264703,
+          "test_mse": 0.09999225859315887
+        },
+        "test_mse_gain": 0.12479202241173158,
+        "gain_relative_to_fit_mean_baseline": 0.2077137167938324,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.26486969999678,
+      "gradient_norm_max": 3.840632915496826,
+      "gradient_norm_mean": 0.8483189062774181,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.0652823448181152,
+          "content_loss": 0.7052591443061829,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.4566401541233063
+        },
+        {
+          "step": 99,
+          "loss": 1.4589208364486694,
+          "content_loss": 0.4907294511795044,
+          "budget_hinge": 0.006925329566001892,
+          "gradient_norm": 0.4149899184703827
+        },
+        {
+          "step": 299,
+          "loss": 1.244373083114624,
+          "content_loss": 0.19088004529476166,
+          "budget_hinge": 0.08578473329544067,
+          "gradient_norm": 0.9428156018257141
+        },
+        {
+          "step": 499,
+          "loss": 1.0609227418899536,
+          "content_loss": 0.11545129120349884,
+          "budget_hinge": 0.0423797070980072,
+          "gradient_norm": 0.9521223306655884
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_373_oracle_content.pt",
+      "synthetic_cache_sha256": "1c587f1b23056188b63ffae061d630368e178ebe0766922ecf1cdc2853567c64"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 373,
+      "arm": "frozen_content",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "522bb92818254d5659bfcadb55b19c0719a6177ca77734116a79677f6d3661e5",
+        "3d731b860cc7afbc350bf60423e7d4eb3935057546a7f1e04c25394c26eddf09"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.040796446800232,
+      "test_deterministic_nll": 1.0403589010238647,
+      "test_expected_oracle_content_ce": 1.888625192642212,
+      "test_expected_frozen_target_ce": 0.1789615511894226,
+      "test_expected_arm_target_ce": 0.1789615511894226,
+      "rate_nats_per_slot": [
+        0.9899299144744873,
+        0.9860092997550964,
+        0.9857911467552185,
+        0.97943514585495,
+        0.9457951188087463,
+        1.0112669467926025,
+        0.9414255023002625,
+        0.9124169945716858
+      ],
+      "own_true_bit_linear_r2": 0.026686055355448268,
+      "other_true_bits_linear_r2": -0.01815702716267914,
+      "common_true_bits_linear_r2": -0.014622232080357733,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.4185041680182969,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 5.937375809103701,
+          "test_mse": 0.3692926521408919
+        },
+        "joint": {
+          "validation_mse": 0.41096087380726953,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 0.01,
+          "effective_df": 6.10106202733162,
+          "test_mse": 0.36103829287444356
+        },
+        "test_mse_gain": 0.008254359266448352,
+        "gain_relative_to_fit_mean_baseline": 0.01373920872384561,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.246438599991961,
+      "gradient_norm_max": 5.3614654541015625,
+      "gradient_norm_mean": 0.8308733097612858,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.093439817428589,
+          "content_loss": 0.7334166169166565,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.4714394509792328
+        },
+        {
+          "step": 99,
+          "loss": 1.4515557289123535,
+          "content_loss": 0.42071712017059326,
+          "budget_hinge": 0.026050731539726257,
+          "gradient_norm": 1.0015448331832886
+        },
+        {
+          "step": 299,
+          "loss": 1.2690720558166504,
+          "content_loss": 0.18896237015724182,
+          "budget_hinge": 0.011420279741287231,
+          "gradient_norm": 0.8771584630012512
+        },
+        {
+          "step": 499,
+          "loss": 1.2482085227966309,
+          "content_loss": 0.1751924753189087,
+          "budget_hinge": 0.0035259276628494263,
+          "gradient_norm": 1.132893443107605
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_373_frozen_content.pt",
+      "synthetic_cache_sha256": "a2016003738c4c28e9b23e5cee77123e8418565f7538d7c15156ff63e4f9d632"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 373,
+      "arm": "shuffled_train_content",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "522bb92818254d5659bfcadb55b19c0719a6177ca77734116a79677f6d3661e5",
+        "3d731b860cc7afbc350bf60423e7d4eb3935057546a7f1e04c25394c26eddf09"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0632548809051514,
+      "test_deterministic_nll": 1.0735613107681274,
+      "test_expected_oracle_content_ce": 0.6898231387138367,
+      "test_expected_frozen_target_ce": 0.6932041883468628,
+      "test_expected_arm_target_ce": 0.6932041883468628,
+      "rate_nats_per_slot": [
+        0.8347490429878235,
+        0.7433745861053467,
+        1.0572724342346191,
+        0.8761763572692871,
+        0.9351174235343933,
+        0.9550526738166809,
+        0.9307994246482849,
+        0.9458441734313965
+      ],
+      "own_true_bit_linear_r2": 0.13122774357600214,
+      "other_true_bits_linear_r2": 0.029893108276137167,
+      "common_true_bits_linear_r2": 0.031537831441512676,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.34732406651402725,
+          "family": "rbf",
+          "bandwidth": 0.5,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 25.297179107588796,
+          "test_mse": 0.38430563684909985
+        },
+        "joint": {
+          "validation_mse": 0.2739507455589699,
+          "family": "rbf",
+          "bandwidth": 0.5,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 43.35102226415608,
+          "test_mse": 0.31700408252717804
+        },
+        "test_mse_gain": 0.06730155432192181,
+        "gain_relative_to_fit_mean_baseline": 0.11202203253093684,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.194188900000881,
+      "gradient_norm_max": 33.57912063598633,
+      "gradient_norm_mean": 0.7188766621053219,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.0899271965026855,
+          "content_loss": 0.7299039959907532,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.4678369164466858
+        },
+        {
+          "step": 99,
+          "loss": 1.694414496421814,
+          "content_loss": 0.699091911315918,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.20055381953716278
+        },
+        {
+          "step": 299,
+          "loss": 1.6827003955841064,
+          "content_loss": 0.6944855451583862,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.8082136511802673
+        },
+        {
+          "step": 499,
+          "loss": 1.6188633441925049,
+          "content_loss": 0.6873816251754761,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5713704824447632
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_373_shuffled_train_content.pt",
+      "synthetic_cache_sha256": "4b2767bc99f9f6783f0b1da4a9ebe28757fa7bbaedc634ad5f0ebac386200ff4"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 373,
+      "arm": "constant_content",
+      "initial_hash": "3f341fd86bb9de630f33eb3b5e873419c0a7a9bd5c69062952d160b0d0070254",
+      "teacher_hashes": [
+        "522bb92818254d5659bfcadb55b19c0719a6177ca77734116a79677f6d3661e5",
+        "3d731b860cc7afbc350bf60423e7d4eb3935057546a7f1e04c25394c26eddf09"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0277700185775758,
+      "test_deterministic_nll": 1.0296489000320435,
+      "test_expected_oracle_content_ce": 2.3818617820739747,
+      "test_expected_frozen_target_ce": 2.3418500900268553,
+      "test_expected_arm_target_ce": 0.04986721053719521,
+      "rate_nats_per_slot": [
+        0.9437932372093201,
+        0.9606719017028809,
+        0.9516811370849609,
+        0.9029081463813782,
+        0.9926804900169373,
+        0.9875147938728333,
+        0.9586293697357178,
+        0.9923270344734192
+      ],
+      "own_true_bit_linear_r2": 0.15597407536494612,
+      "other_true_bits_linear_r2": 0.07838948655026272,
+      "common_true_bits_linear_r2": 0.0755738336432904,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.3746459545861474,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 7.392197358802725,
+          "test_mse": 0.33301211343494935
+        },
+        "joint": {
+          "validation_mse": 0.35124491008450176,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 29.16713191064546,
+          "test_mse": 0.3167632240739475
+        },
+        "test_mse_gain": 0.016248889361001828,
+        "gain_relative_to_fit_mean_baseline": 0.02704593721391728,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.18364869999641,
+      "gradient_norm_max": 1.228937029838562,
+      "gradient_norm_mean": 0.5105757012069225,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.259857654571533,
+          "content_loss": 0.8998344540596008,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.7305949926376343
+        },
+        {
+          "step": 99,
+          "loss": 1.3420443534851074,
+          "content_loss": 0.33041879534721375,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.38501226902008057
+        },
+        {
+          "step": 299,
+          "loss": 1.2282683849334717,
+          "content_loss": 0.13184891641139984,
+          "budget_hinge": 0.003908604383468628,
+          "gradient_norm": 0.5703729391098022
+        },
+        {
+          "step": 499,
+          "loss": 1.0500568151474,
+          "content_loss": 0.05283337086439133,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.37666401267051697
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_373_constant_content.pt",
+      "synthetic_cache_sha256": "f8edffc72219009b78ad388197fc7d638a37a5bf9253b1efb7480d6e64d7ff80"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 389,
+      "arm": "budget_only",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "509475c5fe936c4f1c883e73f7372848ca7066ec41dbf9366e45571dd47e0032",
+        "bd939c94777a5a015072b28534b4317e89ee052e9e802693cd91b2f984777238"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0004366993904115,
+      "test_deterministic_nll": 0.9943947792053223,
+      "test_expected_oracle_content_ce": 0.7280690312385559,
+      "test_expected_frozen_target_ce": 0.7323368549346924,
+      "test_expected_arm_target_ce": 0.7323368549346924,
+      "rate_nats_per_slot": [
+        0.9148958325386047,
+        0.9343761801719666,
+        0.8989498019218445,
+        0.9050814509391785,
+        0.744865894317627,
+        0.8436220288276672,
+        0.7371650338172913,
+        0.8008778691291809
+      ],
+      "own_true_bit_linear_r2": 0.035257626837198464,
+      "other_true_bits_linear_r2": 0.016306163555489007,
+      "common_true_bits_linear_r2": 0.002741659807444674,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.42383884890000495,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 21.22648773722726,
+          "test_mse": 0.4662404801790269
+        },
+        "joint": {
+          "validation_mse": 0.36981505743373777,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 22.949826608087598,
+          "test_mse": 0.40013288236654726
+        },
+        "test_mse_gain": 0.06610759781247966,
+        "gain_relative_to_fit_mean_baseline": 0.0906360392520462,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.067195399999036,
+      "gradient_norm_max": 1.9675062894821167,
+      "gradient_norm_mean": 0.5207168880254031,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 1.3283169269561768,
+          "content_loss": 0.7180353403091431,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.35666972398757935
+        },
+        {
+          "step": 99,
+          "loss": 1.011710524559021,
+          "content_loss": 0.7192845344543457,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.18918025493621826
+        },
+        {
+          "step": 299,
+          "loss": 1.1087676286697388,
+          "content_loss": 0.7113922834396362,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.752448558807373
+        },
+        {
+          "step": 499,
+          "loss": 0.9261494874954224,
+          "content_loss": 0.721463680267334,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.6463145017623901
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_389_budget_only.pt",
+      "synthetic_cache_sha256": "45c2e191fe7c162e11e611040522fc6f1d3f47c8a9b77f5591daaf675f836ac4"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 389,
+      "arm": "oracle_content",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "509475c5fe936c4f1c883e73f7372848ca7066ec41dbf9366e45571dd47e0032",
+        "bd939c94777a5a015072b28534b4317e89ee052e9e802693cd91b2f984777238"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 0.9770384430885315,
+      "test_deterministic_nll": 0.9672679901123047,
+      "test_expected_oracle_content_ce": 0.13953969478607178,
+      "test_expected_frozen_target_ce": 2.136393928527832,
+      "test_expected_arm_target_ce": 0.13953969478607178,
+      "rate_nats_per_slot": [
+        0.9774854779243469,
+        1.0085786581039429,
+        0.9967255592346191,
+        1.013239860534668,
+        1.0026894807815552,
+        1.0134414434432983,
+        1.0145834684371948,
+        0.9732210040092468
+      ],
+      "own_true_bit_linear_r2": 0.9459866097804764,
+      "other_true_bits_linear_r2": 0.01158842781868472,
+      "common_true_bits_linear_r2": 0.06599982617620159,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.24945857416641237,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 14.478876577831432,
+          "test_mse": 0.28522011095313565
+        },
+        "joint": {
+          "validation_mse": 0.05698288898218691,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 20.857020556987038,
+          "test_mse": 0.04713475790621555
+        },
+        "test_mse_gain": 0.2380853530469201,
+        "gain_relative_to_fit_mean_baseline": 0.32642410431111246,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.345659800004796,
+      "gradient_norm_max": 14.655754089355469,
+      "gradient_norm_mean": 0.9029123888760805,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.044818878173828,
+          "content_loss": 0.7165018916130066,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.37042149901390076
+        },
+        {
+          "step": 99,
+          "loss": 1.5488531589508057,
+          "content_loss": 0.5254974365234375,
+          "budget_hinge": 0.012485146522521973,
+          "gradient_norm": 0.26631706953048706
+        },
+        {
+          "step": 299,
+          "loss": 1.2450424432754517,
+          "content_loss": 0.2296386957168579,
+          "budget_hinge": 0.05462491512298584,
+          "gradient_norm": 0.8644932508468628
+        },
+        {
+          "step": 499,
+          "loss": 1.0672448873519897,
+          "content_loss": 0.10513590276241302,
+          "budget_hinge": 0.014419689774513245,
+          "gradient_norm": 1.1584534645080566
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_389_oracle_content.pt",
+      "synthetic_cache_sha256": "10f447e8664747e22a0a51313c0ed56e072e1220cd507cdaae7c447d647f8995"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 389,
+      "arm": "frozen_content",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "509475c5fe936c4f1c883e73f7372848ca7066ec41dbf9366e45571dd47e0032",
+        "bd939c94777a5a015072b28534b4317e89ee052e9e802693cd91b2f984777238"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 0.9661873340606689,
+      "test_deterministic_nll": 0.9618796706199646,
+      "test_expected_oracle_content_ce": 1.8231765985488892,
+      "test_expected_frozen_target_ce": 0.23564383387565613,
+      "test_expected_arm_target_ce": 0.23564383387565613,
+      "rate_nats_per_slot": [
+        0.9944841265678406,
+        0.9988043308258057,
+        1.0085994005203247,
+        0.9944038987159729,
+        0.9583961963653564,
+        1.0276691913604736,
+        0.9890745282173157,
+        1.000451922416687
+      ],
+      "own_true_bit_linear_r2": 0.0579909539674935,
+      "other_true_bits_linear_r2": -0.019817238752096147,
+      "common_true_bits_linear_r2": 0.00018591882784269043,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.3797921322443537,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 6.593255860534012,
+          "test_mse": 0.40197602337619065
+        },
+        "joint": {
+          "validation_mse": 0.3797921322443537,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 6.593255860534012,
+          "test_mse": 0.40197602337619065
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.268348099998548,
+      "gradient_norm_max": 48.7169075012207,
+      "gradient_norm_mean": 0.9155937306582927,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.0463523864746094,
+          "content_loss": 0.7180353403091431,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.37379148602485657
+        },
+        {
+          "step": 99,
+          "loss": 1.5038732290267944,
+          "content_loss": 0.40426695346832275,
+          "budget_hinge": 0.009425356984138489,
+          "gradient_norm": 0.34382352232933044
+        },
+        {
+          "step": 299,
+          "loss": 1.3396390676498413,
+          "content_loss": 0.1728471964597702,
+          "budget_hinge": 0.024896636605262756,
+          "gradient_norm": 0.9042192101478577
+        },
+        {
+          "step": 499,
+          "loss": 1.2129284143447876,
+          "content_loss": 0.2612021863460541,
+          "budget_hinge": 0.003339707851409912,
+          "gradient_norm": 48.7169075012207
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_389_frozen_content.pt",
+      "synthetic_cache_sha256": "d590b4521c53a1a2a00e8fee77dc9c96817d2bca7162d7810417d6ec0f6aeb16"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 389,
+      "arm": "shuffled_train_content",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "509475c5fe936c4f1c883e73f7372848ca7066ec41dbf9366e45571dd47e0032",
+        "bd939c94777a5a015072b28534b4317e89ee052e9e802693cd91b2f984777238"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 0.9870970368385314,
+      "test_deterministic_nll": 0.9863824248313904,
+      "test_expected_oracle_content_ce": 0.6936104536056519,
+      "test_expected_frozen_target_ce": 0.6934769034385682,
+      "test_expected_arm_target_ce": 0.6934769034385682,
+      "rate_nats_per_slot": [
+        0.8029029965400696,
+        0.8220990300178528,
+        0.8024754524230957,
+        0.8301159739494324,
+        0.8342280387878418,
+        0.6559733748435974,
+        0.8139355182647705,
+        0.8258326649665833
+      ],
+      "own_true_bit_linear_r2": 0.060293568848390475,
+      "other_true_bits_linear_r2": 0.036940996211722275,
+      "common_true_bits_linear_r2": 0.028362854667940862,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.3745822825962334,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 3.4374256157673675,
+          "test_mse": 0.4599229444392455
+        },
+        "joint": {
+          "validation_mse": 0.2877762849247865,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 16.175664607147127,
+          "test_mse": 0.3520481337594981
+        },
+        "test_mse_gain": 0.10787481067974736,
+        "gain_relative_to_fit_mean_baseline": 0.14790048192056507,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.27975790000346,
+      "gradient_norm_max": 1.6973695755004883,
+      "gradient_norm_mean": 0.542669879540801,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.03602933883667,
+          "content_loss": 0.7077125310897827,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.3639724552631378
+        },
+        {
+          "step": 99,
+          "loss": 1.713579535484314,
+          "content_loss": 0.6996423006057739,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.18642030656337738
+        },
+        {
+          "step": 299,
+          "loss": 1.7412571907043457,
+          "content_loss": 0.6916573643684387,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.9601065516471863
+        },
+        {
+          "step": 499,
+          "loss": 1.5823359489440918,
+          "content_loss": 0.692723274230957,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5371180176734924
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_389_shuffled_train_content.pt",
+      "synthetic_cache_sha256": "0296c55d1055bdc3bebfbfaf04c2daddc0e36fb0fb49c805b78284623bba2beb"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 389,
+      "arm": "constant_content",
+      "initial_hash": "4e83fe6f0cbd52556aaac6ff11ec97dc0a3a7fd194dabf99d262f285f041955f",
+      "teacher_hashes": [
+        "509475c5fe936c4f1c883e73f7372848ca7066ec41dbf9366e45571dd47e0032",
+        "bd939c94777a5a015072b28534b4317e89ee052e9e802693cd91b2f984777238"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 0.9616763472557068,
+      "test_deterministic_nll": 0.9565269351005554,
+      "test_expected_oracle_content_ce": 2.3647054195404054,
+      "test_expected_frozen_target_ce": 2.324567699432373,
+      "test_expected_arm_target_ce": 0.06307639479637146,
+      "rate_nats_per_slot": [
+        1.0278929471969604,
+        1.0362359285354614,
+        1.0420769453048706,
+        1.0337417125701904,
+        0.9629582762718201,
+        0.9525043368339539,
+        0.9445541501045227,
+        0.9761831760406494
+      ],
+      "own_true_bit_linear_r2": 0.08429948669743181,
+      "other_true_bits_linear_r2": 0.04781464740070585,
+      "common_true_bits_linear_r2": 0.014653708490459216,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.38363348335657443,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 2.955512440024344,
+          "test_mse": 0.3816182501944596
+        },
+        "joint": {
+          "validation_mse": 0.35958589845915606,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 21.97645223224992,
+          "test_mse": 0.35552897240486914
+        },
+        "test_mse_gain": 0.02608927778959047,
+        "gain_relative_to_fit_mean_baseline": 0.03576939541052979,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.238227800000459,
+      "gradient_norm_max": 12.615139961242676,
+      "gradient_norm_mean": 0.5800596641600132,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.212108612060547,
+          "content_loss": 0.8837915658950806,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.6510725021362305
+        },
+        {
+          "step": 99,
+          "loss": 1.4084270000457764,
+          "content_loss": 0.3268194794654846,
+          "budget_hinge": 0.10168406367301941,
+          "gradient_norm": 0.5603108406066895
+        },
+        {
+          "step": 299,
+          "loss": 1.2439258098602295,
+          "content_loss": 0.12137989699840546,
+          "budget_hinge": 0.0013712793588638306,
+          "gradient_norm": 0.410529226064682
+        },
+        {
+          "step": 499,
+          "loss": 1.0239912271499634,
+          "content_loss": 0.06256188452243805,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.6235125064849854
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_389_constant_content.pt",
+      "synthetic_cache_sha256": "9bdc5aca03d71c969e8e2c3d392577573f89443e5ddd8d1a1b48df62bc6f3e9c"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 401,
+      "arm": "budget_only",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "a12c0874329c2461d8d43739713ad380c5a67823d20cae6227db6f9c96def6f2",
+        "8f393168ec13099afd1c41836274c868d920f30834c53146a9feadc1add3b956"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.1600275754928588,
+      "test_deterministic_nll": 1.1441569328308105,
+      "test_expected_oracle_content_ce": 0.7075207948684692,
+      "test_expected_frozen_target_ce": 0.7101449131965637,
+      "test_expected_arm_target_ce": 0.7101449131965637,
+      "rate_nats_per_slot": [
+        0.6770113110542297,
+        0.6707385182380676,
+        0.7131504416465759,
+        0.7642307281494141,
+        0.7770809531211853,
+        0.7481458783149719,
+        0.7540612816810608,
+        0.7306740880012512
+      ],
+      "own_true_bit_linear_r2": 0.025598927478343525,
+      "other_true_bits_linear_r2": 0.016441878667152788,
+      "common_true_bits_linear_r2": 0.026018029737498116,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.4848980066003115,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 5.1508038012837485,
+          "test_mse": 0.5106424534674886
+        },
+        "joint": {
+          "validation_mse": 0.38156250818019705,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 1e-06,
+          "effective_df": 19.55371201561441,
+          "test_mse": 0.4184859964314647
+        },
+        "test_mse_gain": 0.09215645703602388,
+        "gain_relative_to_fit_mean_baseline": 0.11663844794880346,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.385781999997562,
+      "gradient_norm_max": 5.246560573577881,
+      "gradient_norm_mean": 0.735428847849369,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 1.653771162033081,
+          "content_loss": 0.7142786383628845,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5765432715415955
+        },
+        {
+          "step": 99,
+          "loss": 0.8360240459442139,
+          "content_loss": 0.6841461658477783,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.48253804445266724
+        },
+        {
+          "step": 299,
+          "loss": 0.9361452460289001,
+          "content_loss": 0.7096657752990723,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.8134915828704834
+        },
+        {
+          "step": 499,
+          "loss": 1.2018126249313354,
+          "content_loss": 0.73089599609375,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.9594906568527222
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_401_budget_only.pt",
+      "synthetic_cache_sha256": "4db8852394b5ffa3ebd4cbeec7a64fef2221b9858bd2fabf641b74f144416685"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 401,
+      "arm": "oracle_content",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "a12c0874329c2461d8d43739713ad380c5a67823d20cae6227db6f9c96def6f2",
+        "8f393168ec13099afd1c41836274c868d920f30834c53146a9feadc1add3b956"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0220176458358765,
+      "test_deterministic_nll": 1.0152671337127686,
+      "test_expected_oracle_content_ce": 0.1741089016199112,
+      "test_expected_frozen_target_ce": 1.9167375802993774,
+      "test_expected_arm_target_ce": 0.1741089016199112,
+      "rate_nats_per_slot": [
+        0.9592218995094299,
+        0.972065269947052,
+        0.9579048752784729,
+        0.9791833758354187,
+        0.9901950359344482,
+        1.017384648323059,
+        1.0010932683944702,
+        1.011926531791687
+      ],
+      "own_true_bit_linear_r2": 0.9225701282282792,
+      "other_true_bits_linear_r2": 0.0256430620147008,
+      "common_true_bits_linear_r2": 0.1718367343825402,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.14528176299038348,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999652327969711,
+          "test_mse": 0.17623052115820936
+        },
+        "joint": {
+          "validation_mse": 0.08995212904253255,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 20.86591027833596,
+          "test_mse": 0.09318441639251114
+        },
+        "test_mse_gain": 0.08304610476569822,
+        "gain_relative_to_fit_mean_baseline": 0.1051078685053873,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.113312700006645,
+      "gradient_norm_max": 162.05410766601562,
+      "gradient_norm_mean": 1.3271624951064587,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.3599729537963867,
+          "content_loss": 0.7062016725540161,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5838740468025208
+        },
+        {
+          "step": 99,
+          "loss": 1.3390504121780396,
+          "content_loss": 0.48832523822784424,
+          "budget_hinge": 0.006360083818435669,
+          "gradient_norm": 0.5486258268356323
+        },
+        {
+          "step": 299,
+          "loss": 1.1872291564941406,
+          "content_loss": 0.25442200899124146,
+          "budget_hinge": 0.04104869067668915,
+          "gradient_norm": 0.7041166424751282
+        },
+        {
+          "step": 499,
+          "loss": 1.2673853635787964,
+          "content_loss": 0.1703462302684784,
+          "budget_hinge": 0.010726064443588257,
+          "gradient_norm": 1.8119251728057861
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_401_oracle_content.pt",
+      "synthetic_cache_sha256": "54dd3b6f9a2120795e9c2b27bc5795f23daf1e71f1123fccb148b37e4cab7547"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 401,
+      "arm": "frozen_content",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "a12c0874329c2461d8d43739713ad380c5a67823d20cae6227db6f9c96def6f2",
+        "8f393168ec13099afd1c41836274c868d920f30834c53146a9feadc1add3b956"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0586138248443604,
+      "test_deterministic_nll": 1.0528786182403564,
+      "test_expected_oracle_content_ce": 2.036838436126709,
+      "test_expected_frozen_target_ce": 0.1210177332162857,
+      "test_expected_arm_target_ce": 0.1210177332162857,
+      "rate_nats_per_slot": [
+        1.0115759372711182,
+        0.9888405203819275,
+        1.0046895742416382,
+        0.9853053092956543,
+        0.961184024810791,
+        0.9939925670623779,
+        0.9874715805053711,
+        0.9880771636962891
+      ],
+      "own_true_bit_linear_r2": 0.09083939302676562,
+      "other_true_bits_linear_r2": -0.012122584351930305,
+      "common_true_bits_linear_r2": 0.008606801400553143,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.4824223922552541,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 7.650631793758379,
+          "test_mse": 0.5200005625657141
+        },
+        "joint": {
+          "validation_mse": 0.4824223922552541,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 7.650631793758379,
+          "test_mse": 0.5200005625657141
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.731988499988802,
+      "gradient_norm_max": 39.19224166870117,
+      "gradient_norm_mean": 0.9286330070495605,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.3680498600006104,
+          "content_loss": 0.7142786383628845,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5828579068183899
+        },
+        {
+          "step": 99,
+          "loss": 1.225855827331543,
+          "content_loss": 0.315274178981781,
+          "budget_hinge": 0.0333736389875412,
+          "gradient_norm": 0.5604352355003357
+        },
+        {
+          "step": 299,
+          "loss": 1.1420392990112305,
+          "content_loss": 0.17614197731018066,
+          "budget_hinge": 0.025573372840881348,
+          "gradient_norm": 0.7480238676071167
+        },
+        {
+          "step": 499,
+          "loss": 1.3117139339447021,
+          "content_loss": 0.13825422525405884,
+          "budget_hinge": 0.002579614520072937,
+          "gradient_norm": 0.8267184495925903
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_401_frozen_content.pt",
+      "synthetic_cache_sha256": "e079290de96a5327710b72fafb214cbd60ba92e6d7d8f09b644a25f4898ed2c9"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 401,
+      "arm": "shuffled_train_content",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "a12c0874329c2461d8d43739713ad380c5a67823d20cae6227db6f9c96def6f2",
+        "8f393168ec13099afd1c41836274c868d920f30834c53146a9feadc1add3b956"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.097328209877014,
+      "test_deterministic_nll": 1.09074866771698,
+      "test_expected_oracle_content_ce": 0.6923718929290772,
+      "test_expected_frozen_target_ce": 0.6943991541862488,
+      "test_expected_arm_target_ce": 0.6943991541862488,
+      "rate_nats_per_slot": [
+        0.7894020080566406,
+        0.8422173857688904,
+        0.8674160838127136,
+        0.8028481006622314,
+        0.7497987151145935,
+        0.6950817704200745,
+        0.7800057530403137,
+        0.7084690928459167
+      ],
+      "own_true_bit_linear_r2": 0.11685087509251954,
+      "other_true_bits_linear_r2": 0.05188143672084048,
+      "common_true_bits_linear_r2": 0.06388251497647879,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.38495138594604306,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 4.270779319335289,
+          "test_mse": 0.4166800602468059
+        },
+        "joint": {
+          "validation_mse": 0.3396036348411681,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 7.791740960384351,
+          "test_mse": 0.39140548887852145
+        },
+        "test_mse_gain": 0.025274571368284426,
+        "gain_relative_to_fit_mean_baseline": 0.03198893351353119,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.969560100013041,
+      "gradient_norm_max": 3.665276527404785,
+      "gradient_norm_mean": 0.6618187973946333,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.352536678314209,
+          "content_loss": 0.6987656354904175,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.5811840891838074
+        },
+        {
+          "step": 99,
+          "loss": 1.5380480289459229,
+          "content_loss": 0.6963022947311401,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.48824265599250793
+        },
+        {
+          "step": 299,
+          "loss": 1.6184852123260498,
+          "content_loss": 0.6924171447753906,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.7231088280677795
+        },
+        {
+          "step": 499,
+          "loss": 1.8685392141342163,
+          "content_loss": 0.6922744512557983,
+          "budget_hinge": 0.0,
+          "gradient_norm": 1.836451530456543
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_401_shuffled_train_content.pt",
+      "synthetic_cache_sha256": "70c4a1deac3faf410927a880bbff413aa2895f05d4e43df8220ac4d63e445812"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 401,
+      "arm": "constant_content",
+      "initial_hash": "277ebc8f70db44377285dfd89717af939f37bcb7f641c9e62a1975e3fdef40f2",
+      "teacher_hashes": [
+        "a12c0874329c2461d8d43739713ad380c5a67823d20cae6227db6f9c96def6f2",
+        "8f393168ec13099afd1c41836274c868d920f30834c53146a9feadc1add3b956"
+      ],
+      "teacher_immutable": true,
+      "parameter_count": 7358,
+      "test_expected_nll": 1.0802876472473144,
+      "test_deterministic_nll": 1.0726286172866821,
+      "test_expected_oracle_content_ce": 2.2832825660705565,
+      "test_expected_frozen_target_ce": 2.2651965618133545,
+      "test_expected_arm_target_ce": 0.06612536162137986,
+      "rate_nats_per_slot": [
+        0.9719383716583252,
+        0.9924917221069336,
+        0.9254150390625,
+        0.9740373492240906,
+        0.9104929566383362,
+        0.961200475692749,
+        0.9694328308105469,
+        0.945406973361969
+      ],
+      "own_true_bit_linear_r2": 0.068540102444461,
+      "other_true_bits_linear_r2": 0.03062691979830271,
+      "common_true_bits_linear_r2": 0.07100518365660069,
+      "pooled_risk_increment_probe": {
+        "common": {
+          "validation_mse": 0.36452569686546976,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 7.745200774349963,
+          "test_mse": 0.390597176292969
+        },
+        "joint": {
+          "validation_mse": 0.3616215367570762,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 8.857634596337999,
+          "test_mse": 0.3902817843179589
+        },
+        "test_mse_gain": 0.0003153919750100709,
+        "gain_relative_to_fit_mean_baseline": 0.00039917800275571073,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "training_seconds": 8.667910500007565,
+      "gradient_norm_max": 2.1890785694122314,
+      "gradient_norm_mean": 0.691179090321064,
+      "trace": [
+        {
+          "step": 0,
+          "loss": 2.5337095260620117,
+          "content_loss": 0.8799384832382202,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.8063070178031921
+        },
+        {
+          "step": 99,
+          "loss": 1.20061457157135,
+          "content_loss": 0.3210771381855011,
+          "budget_hinge": 0.003969758749008179,
+          "gradient_norm": 0.59786456823349
+        },
+        {
+          "step": 299,
+          "loss": 1.0346357822418213,
+          "content_loss": 0.13012322783470154,
+          "budget_hinge": 0.0,
+          "gradient_norm": 0.7698901891708374
+        },
+        {
+          "step": 499,
+          "loss": 1.2226014137268066,
+          "content_loss": 0.06607567518949509,
+          "budget_hinge": 0.0031581073999404907,
+          "gradient_norm": 1.5523550510406494
+        }
+      ],
+      "synthetic_cache_path": "local_evidence\\synthetic_frozen_targets_20261102\\dominant_private_nuisance_401_constant_content.pt",
+      "synthetic_cache_sha256": "f4d46450745f0169ad4cfc0fa8d973bf53849c5e44fd94e667a91a2062b6322e"
+    }
+  ],
+  "patient_execution": false,
+  "server_execution": false,
+  "scope": "prespecified descriptor/content subspaces, synthetic only, no one-hot role metadata"
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "slotspe_frozen_content_target_gate_plan_v1",
+  "recorded_before_execution": true,
+  "base_commit": "6ad3aab4c32417c72458e61a69e55876ef1f72e0",
+  "scope": "synthetic CPU only, no patient loader or queue integration",
+  "candidate": "train-only weighted prototype clustering on a prespecified observed descriptor subspace, per-cluster patient-mean PCA and train-median binary target",
+  "not_claimed": "no generic biological identification or task utility guarantee; descriptor/content subspaces are structural assumptions",
+  "fit_rows": 512,
+  "heldout_rows": 512,
+  "clusters": 4,
+  "seeds": [317, 331, 353],
+  "fit": "3 seeded k-means++ initializations, at most 50 Lloyd steps, training inertia selection only; patient-equal token weights; per-cluster PCA unscaled content means",
+  "frozen": "centers, standardizer, PCA axes, content means and thresholds never refit on heldout data",
+  "conditions": ["separated_informative", "indistinguishable_roles", "dominant_common", "dominant_private_nuisance"],
+  "gate": {
+    "separated_informative_min_heldout_cluster_accuracy": 0.95,
+    "separated_informative_min_target_bit_accuracy": 0.90,
+    "min_target_crossview_agreement_when_both_observed": 0.90,
+    "min_target_entropy_nats_each_role": 0.50,
+    "must_preserve_nonidentifiability_counterexample": true,
+    "must_report_common_copy_and_nuisance_targets": true,
+    "rule": "Only separated_informative is a positive feasibility gate. Other cases are required failure/limitation controls, not reasons to tune PCA or claim task-aware targets."
+  },
+  "planned_neural_followup_if_gate_passes": {
+    "conditions": ["separated_informative", "dominant_private_nuisance"],
+    "seeds": [373, 389, 401],
+    "arms": ["budget_only", "oracle_content", "frozen_content", "shuffled_train_content", "constant_content"],
+    "steps_per_run": 500,
+    "runs": 30,
+    "settings": "same ContentBudgetSlotSurvival, width16, K4/modal, private4, common4, Adam .003, batch32, content1, budget cap1 nat/slot weight.3, all-slot mean readout",
+    "selection": "fixed last step; no architecture/hyperparameter selection on these exploratory tests; 5 stochastic forward evaluations per model are not new trainings",
+    "utility_control": "latent risk always uses original informative role amplitudes; in nuisance condition dominant within-role variance is independent of risk",
+    "oracle_control": "oracle type-to-learned-prototype permutation is fitted on training rows only for this upper-bound arm and diagnostic scoring; frozen_content never uses latent roles or outcomes"
+  }
+}
