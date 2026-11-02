@@ -16,6 +16,7 @@ import pytest
 from scripts.summarize_queue_results import (ANTICOLLAPSE_ARMS,
                                               DIVERSITY_NEW_ARMS,
                                               DIVERSITY_REUSED_ARMS,
+                                              content_separation,
                                               diversity_summary,
                                               fold_arm_score,
                                               geometry_of,
@@ -24,6 +25,28 @@ from scripts.summarize_queue_results import (ANTICOLLAPSE_ARMS,
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC_OUTPUTS = (ROOT / "docs" / "research" / "slotspe_queue_results_20261102")
+
+
+def test_content_separation_counts_the_share_of_patient_specific_reconstructions(tmp_path):
+    arm_dir = tmp_path / "arm"
+    arm_dir.mkdir()
+    records = [
+        {"patient_id": "TCGA-XX-YYYY",
+         "modalities": {"wsi": {"own_mse": 0.4, "donor_mse": 0.6}}},
+        {"patient_id": "TCGA-XX-YYYZ",
+         "modalities": {"wsi": {"own_mse": 0.7, "donor_mse": 0.5}}},
+    ]
+    (arm_dir / "patient_diagnostics.json").write_text(json.dumps(records), encoding="utf-8")
+    result = content_separation(arm_dir, "wsi")
+    assert result["n_patient_repeats"] == 2
+    assert result["own_beats_donor_share"] == pytest.approx(0.5)
+    assert result["mean_own_mse"] == pytest.approx(0.55)
+    assert result["mean_donor_mse"] == pytest.approx(0.55)
+    assert result["donor_to_own_mse_ratio"] == pytest.approx(1.0)
+
+
+def test_content_separation_returns_none_when_the_artifact_is_absent(tmp_path):
+    assert content_separation(tmp_path / "missing", "wsi") is None
 
 
 def test_repeat_cindices_reads_only_the_scalar_cindex_of_each_repeat(tmp_path):

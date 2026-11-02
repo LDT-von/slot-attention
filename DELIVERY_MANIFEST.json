@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T09:41:55.828167+08:00",
-  "base_commit_before_delivery": "c9d323c66883e190b4504de693f8d4a525a087fd",
+  "recorded_at": "2026-11-02T10:51:13.053555+08:00",
+  "base_commit_before_delivery": "dd48570c01d00baa74c8441a08d9d19cea301ab4",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 715165,
-      "sha256": "3c88f1f0267675979556c1d8e6b43c20319d39c560daddcf2dbf1f56db18df25"
+      "bytes": 717289,
+      "sha256": "f0e341b8f5d7bfc4b5046bde5b42371d5363a12429f90d73a6d9e1f30861bb75"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -1201,13 +1201,13 @@
     },
     {
       "path": "docs/research/slotspe_queue_results_20261102/results.json",
-      "bytes": 74516,
-      "sha256": "6411a76e0665051238ad090397ce04ca8e55b5d6252ab0d32f63049336783d37"
+      "bytes": 101270,
+      "sha256": "e1081a30f43fbd6921deb6d2967e9b1f237b2a4f995cb41c0f239e2111c81d8b"
     },
     {
       "path": "docs/research/slotspe_queue_results_20261102/results.md",
-      "bytes": 6295,
-      "sha256": "a82989803f093647c4ec7b4b19f63b430f04c3dac535721dc9180669a0fdbc4a"
+      "bytes": 8359,
+      "sha256": "524634be6a3bb85a0e09365017b4b435766f30f96a422822953f59f4b168f0d3"
     },
     {
       "path": "docs/research/slotspe_redundancy_methods_20261021/DCT_bridge_verification.json",
@@ -1946,8 +1946,8 @@
     },
     {
       "path": "scripts/summarize_queue_results.py",
-      "bytes": 17442,
-      "sha256": "d3ecfb46c0a4dc0a20eb960487a367f3520345eab61b6264d417830824677320"
+      "bytes": 22291,
+      "sha256": "ff8562d100b1c4a24f0a8382d03c8e1947971ccc8b1f07dd9ad274b7eb572595"
     },
     {
       "path": "scripts/summarize_slotspe_direct_diversity.py",
@@ -2476,8 +2476,8 @@
     },
     {
       "path": "tests/test_slotspe_queue_results_summary.py",
-      "bytes": 5712,
-      "sha256": "dd86b238271c04b1aa6ff03328a5311f8cf76e9d1e06ea080f237148c2e98701"
+      "bytes": 6742,
+      "sha256": "835167cc8d428cb17b3d3c67a83731f4f51d563f0ef6407061d699777090f4a0"
     },
     {
       "path": "tests/test_slotspe_redundancy_anticollapse_engine.py",

@@ -1535,33 +1535,111 @@
             "n_patient_repeats": 1540
           }
         },
+        "content": {
+          "fold": 0,
+          "arm": "A0_clip",
+          "wsi": {
+            "n_patient_repeats": 1540,
+            "own_beats_donor_share": 0.6298701298701299,
+            "mean_own_mse": 0.5238805946688373,
+            "mean_donor_mse": 0.5411886179795513,
+            "donor_to_own_mse_ratio": 1.0330381073222517
+          },
+          "omic": {
+            "n_patient_repeats": 1540,
+            "own_beats_donor_share": 0.5655844155844156,
+            "mean_own_mse": 4.254106824351595,
+            "mean_donor_mse": 4.279608260946614,
+            "donor_to_own_mse_ratio": 1.005994545423505
+          }
+        },
         "baseline_same_protocol": {
           "S0": {
-            "fold": 0,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.7484944532488114,
-            "cindex_repeat_std_population": 0.010414468307972253,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.7305863708399366,
-            "cindex_repeat_max": 0.7662440570522979
+            "score": {
+              "fold": 0,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.7484944532488114,
+              "cindex_repeat_std_population": 0.010414468307972253,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.7305863708399366,
+              "cindex_repeat_max": 0.7662440570522979
+            },
+            "content": {
+              "fold": 0,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.5064935064935064,
+                "mean_own_mse": 0.551091385952064,
+                "mean_donor_mse": 0.5546166086545238,
+                "donor_to_own_mse_ratio": 1.00639680240396
+              },
+              "omic": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.5188311688311689,
+                "mean_own_mse": 4.298893970270435,
+                "mean_donor_mse": 4.302814365633123,
+                "donor_to_own_mse_ratio": 1.0009119544212532
+              }
+            }
           },
           "R4": {
-            "fold": 0,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.7169572107765452,
-            "cindex_repeat_std_population": 0.008172027311793171,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.705229793977813,
-            "cindex_repeat_max": 0.7345483359746434
+            "score": {
+              "fold": 0,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.7169572107765452,
+              "cindex_repeat_std_population": 0.008172027311793171,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.705229793977813,
+              "cindex_repeat_max": 0.7345483359746434
+            },
+            "content": {
+              "fold": 0,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.5116883116883116,
+                "mean_own_mse": 0.5759186956596065,
+                "mean_donor_mse": 0.5781193966795872,
+                "donor_to_own_mse_ratio": 1.0038212008683973
+              },
+              "omic": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.538961038961039,
+                "mean_own_mse": 4.326558581459058,
+                "mean_donor_mse": 4.338890561403392,
+                "donor_to_own_mse_ratio": 1.0028502976932248
+              }
+            }
           },
           "R3": {
-            "fold": 0,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.6934033280507131,
-            "cindex_repeat_std_population": 0.01006079789258023,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6719492868462758,
-            "cindex_repeat_max": 0.7083993660855784
+            "score": {
+              "fold": 0,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.6934033280507131,
+              "cindex_repeat_std_population": 0.01006079789258023,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6719492868462758,
+              "cindex_repeat_max": 0.7083993660855784
+            },
+            "content": {
+              "fold": 0,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.7383116883116884,
+                "mean_own_mse": 0.4897105189983721,
+                "mean_donor_mse": 0.5449639027672154,
+                "donor_to_own_mse_ratio": 1.1128286643338918
+              },
+              "omic": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.5292207792207793,
+                "mean_own_mse": 4.329102588822315,
+                "mean_donor_mse": 4.331334810326625,
+                "donor_to_own_mse_ratio": 1.0005156314636834
+              }
+            }
           }
         }
       },
@@ -1604,33 +1682,111 @@
             "n_patient_repeats": 1540
           }
         },
+        "content": {
+          "fold": 0,
+          "arm": "A1_clip_decay",
+          "wsi": {
+            "n_patient_repeats": 1540,
+            "own_beats_donor_share": 0.8597402597402597,
+            "mean_own_mse": 0.43694302862534273,
+            "mean_donor_mse": 0.5552995173671803,
+            "donor_to_own_mse_ratio": 1.2708739606492783
+          },
+          "omic": {
+            "n_patient_repeats": 1540,
+            "own_beats_donor_share": 0.6051948051948052,
+            "mean_own_mse": 4.1561319476985314,
+            "mean_donor_mse": 4.183204199083439,
+            "donor_to_own_mse_ratio": 1.0065138094087458
+          }
+        },
         "baseline_same_protocol": {
           "S0": {
-            "fold": 0,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.7484944532488114,
-            "cindex_repeat_std_population": 0.010414468307972253,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.7305863708399366,
-            "cindex_repeat_max": 0.7662440570522979
+            "score": {
+              "fold": 0,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.7484944532488114,
+              "cindex_repeat_std_population": 0.010414468307972253,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.7305863708399366,
+              "cindex_repeat_max": 0.7662440570522979
+            },
+            "content": {
+              "fold": 0,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.5064935064935064,
+                "mean_own_mse": 0.551091385952064,
+                "mean_donor_mse": 0.5546166086545238,
+                "donor_to_own_mse_ratio": 1.00639680240396
+              },
+              "omic": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.5188311688311689,
+                "mean_own_mse": 4.298893970270435,
+                "mean_donor_mse": 4.302814365633123,
+                "donor_to_own_mse_ratio": 1.0009119544212532
+              }
+            }
           },
           "R4": {
-            "fold": 0,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.7169572107765452,
-            "cindex_repeat_std_population": 0.008172027311793171,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.705229793977813,
-            "cindex_repeat_max": 0.7345483359746434
+            "score": {
+              "fold": 0,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.7169572107765452,
+              "cindex_repeat_std_population": 0.008172027311793171,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.705229793977813,
+              "cindex_repeat_max": 0.7345483359746434
+            },
+            "content": {
+              "fold": 0,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.5116883116883116,
+                "mean_own_mse": 0.5759186956596065,
+                "mean_donor_mse": 0.5781193966795872,
+                "donor_to_own_mse_ratio": 1.0038212008683973
+              },
+              "omic": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.538961038961039,
+                "mean_own_mse": 4.326558581459058,
+                "mean_donor_mse": 4.338890561403392,
+                "donor_to_own_mse_ratio": 1.0028502976932248
+              }
+            }
           },
           "R3": {
-            "fold": 0,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.6934033280507131,
-            "cindex_repeat_std_population": 0.01006079789258023,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6719492868462758,
-            "cindex_repeat_max": 0.7083993660855784
+            "score": {
+              "fold": 0,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.6934033280507131,
+              "cindex_repeat_std_population": 0.01006079789258023,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6719492868462758,
+              "cindex_repeat_max": 0.7083993660855784
+            },
+            "content": {
+              "fold": 0,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.7383116883116884,
+                "mean_own_mse": 0.4897105189983721,
+                "mean_donor_mse": 0.5449639027672154,
+                "donor_to_own_mse_ratio": 1.1128286643338918
+              },
+              "omic": {
+                "n_patient_repeats": 1540,
+                "own_beats_donor_share": 0.5292207792207793,
+                "mean_own_mse": 4.329102588822315,
+                "mean_donor_mse": 4.331334810326625,
+                "donor_to_own_mse_ratio": 1.0005156314636834
+              }
+            }
           }
         }
       },
@@ -1673,33 +1829,111 @@
             "n_patient_repeats": 1500
           }
         },
+        "content": {
+          "fold": 1,
+          "arm": "A0_clip",
+          "wsi": {
+            "n_patient_repeats": 1500,
+            "own_beats_donor_share": 0.7713333333333333,
+            "mean_own_mse": 0.4892666843732198,
+            "mean_donor_mse": 0.5533907207647959,
+            "donor_to_own_mse_ratio": 1.1310615221506914
+          },
+          "omic": {
+            "n_patient_repeats": 1500,
+            "own_beats_donor_share": 0.5833333333333334,
+            "mean_own_mse": 2.3498358584046364,
+            "mean_donor_mse": 2.366388260781765,
+            "donor_to_own_mse_ratio": 1.0070440674900443
+          }
+        },
         "baseline_same_protocol": {
           "S0": {
-            "fold": 1,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.7491539763113367,
-            "cindex_repeat_std_population": 0.0012969297560707393,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.7470389170896785,
-            "cindex_repeat_max": 0.751269035532995
+            "score": {
+              "fold": 1,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.7491539763113367,
+              "cindex_repeat_std_population": 0.0012969297560707393,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.7470389170896785,
+              "cindex_repeat_max": 0.751269035532995
+            },
+            "content": {
+              "fold": 1,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.598,
+                "mean_own_mse": 0.570247349023819,
+                "mean_donor_mse": 0.5707392734090487,
+                "donor_to_own_mse_ratio": 1.0008626508936374
+              },
+              "omic": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.5313333333333333,
+                "mean_own_mse": 2.4960670441389086,
+                "mean_donor_mse": 2.5073255367477736,
+                "donor_to_own_mse_ratio": 1.0045104928712958
+              }
+            }
           },
           "R4": {
-            "fold": 1,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.7548646362098139,
-            "cindex_repeat_std_population": 0.0037633792618085244,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.7478849407783418,
-            "cindex_repeat_max": 0.760575296108291
+            "score": {
+              "fold": 1,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.7548646362098139,
+              "cindex_repeat_std_population": 0.0037633792618085244,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.7478849407783418,
+              "cindex_repeat_max": 0.760575296108291
+            },
+            "content": {
+              "fold": 1,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.748,
+                "mean_own_mse": 0.5435704122980436,
+                "mean_donor_mse": 0.5779398609598477,
+                "donor_to_own_mse_ratio": 1.0632290645042672
+              },
+              "omic": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.5773333333333334,
+                "mean_own_mse": 2.477847255488237,
+                "mean_donor_mse": 2.500133454799652,
+                "donor_to_own_mse_ratio": 1.0089941780156355
+              }
+            }
           },
           "R3": {
-            "fold": 1,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.7308798646362098,
-            "cindex_repeat_std_population": 0.0037061245539440645,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.7216582064297801,
-            "cindex_repeat_max": 0.7377326565143824
+            "score": {
+              "fold": 1,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.7308798646362098,
+              "cindex_repeat_std_population": 0.0037061245539440645,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.7216582064297801,
+              "cindex_repeat_max": 0.7377326565143824
+            },
+            "content": {
+              "fold": 1,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.802,
+                "mean_own_mse": 0.464761567791303,
+                "mean_donor_mse": 0.5629407383799553,
+                "donor_to_own_mse_ratio": 1.2112463193874472
+              },
+              "omic": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.55,
+                "mean_own_mse": 2.4280504881739615,
+                "mean_donor_mse": 2.4393530751864114,
+                "donor_to_own_mse_ratio": 1.0046550049381182
+              }
+            }
           }
         }
       },
@@ -1742,33 +1976,111 @@
             "n_patient_repeats": 1500
           }
         },
+        "content": {
+          "fold": 1,
+          "arm": "A1_clip_decay",
+          "wsi": {
+            "n_patient_repeats": 1500,
+            "own_beats_donor_share": 0.7993333333333333,
+            "mean_own_mse": 0.47527293507258095,
+            "mean_donor_mse": 0.5618427555163701,
+            "donor_to_own_mse_ratio": 1.182147591531945
+          },
+          "omic": {
+            "n_patient_repeats": 1500,
+            "own_beats_donor_share": 0.5553333333333333,
+            "mean_own_mse": 2.3854823038776716,
+            "mean_donor_mse": 2.399570618887742,
+            "donor_to_own_mse_ratio": 1.0059058560137586
+          }
+        },
         "baseline_same_protocol": {
           "S0": {
-            "fold": 1,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.7491539763113367,
-            "cindex_repeat_std_population": 0.0012969297560707393,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.7470389170896785,
-            "cindex_repeat_max": 0.751269035532995
+            "score": {
+              "fold": 1,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.7491539763113367,
+              "cindex_repeat_std_population": 0.0012969297560707393,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.7470389170896785,
+              "cindex_repeat_max": 0.751269035532995
+            },
+            "content": {
+              "fold": 1,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.598,
+                "mean_own_mse": 0.570247349023819,
+                "mean_donor_mse": 0.5707392734090487,
+                "donor_to_own_mse_ratio": 1.0008626508936374
+              },
+              "omic": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.5313333333333333,
+                "mean_own_mse": 2.4960670441389086,
+                "mean_donor_mse": 2.5073255367477736,
+                "donor_to_own_mse_ratio": 1.0045104928712958
+              }
+            }
           },
           "R4": {
-            "fold": 1,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.7548646362098139,
-            "cindex_repeat_std_population": 0.0037633792618085244,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.7478849407783418,
-            "cindex_repeat_max": 0.760575296108291
+            "score": {
+              "fold": 1,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.7548646362098139,
+              "cindex_repeat_std_population": 0.0037633792618085244,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.7478849407783418,
+              "cindex_repeat_max": 0.760575296108291
+            },
+            "content": {
+              "fold": 1,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.748,
+                "mean_own_mse": 0.5435704122980436,
+                "mean_donor_mse": 0.5779398609598477,
+                "donor_to_own_mse_ratio": 1.0632290645042672
+              },
+              "omic": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.5773333333333334,
+                "mean_own_mse": 2.477847255488237,
+                "mean_donor_mse": 2.500133454799652,
+                "donor_to_own_mse_ratio": 1.0089941780156355
+              }
+            }
           },
           "R3": {
-            "fold": 1,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.7308798646362098,
-            "cindex_repeat_std_population": 0.0037061245539440645,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.7216582064297801,
-            "cindex_repeat_max": 0.7377326565143824
+            "score": {
+              "fold": 1,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.7308798646362098,
+              "cindex_repeat_std_population": 0.0037061245539440645,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.7216582064297801,
+              "cindex_repeat_max": 0.7377326565143824
+            },
+            "content": {
+              "fold": 1,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.802,
+                "mean_own_mse": 0.464761567791303,
+                "mean_donor_mse": 0.5629407383799553,
+                "donor_to_own_mse_ratio": 1.2112463193874472
+              },
+              "omic": {
+                "n_patient_repeats": 1500,
+                "own_beats_donor_share": 0.55,
+                "mean_own_mse": 2.4280504881739615,
+                "mean_donor_mse": 2.4393530751864114,
+                "donor_to_own_mse_ratio": 1.0046550049381182
+              }
+            }
           }
         }
       },
@@ -1811,33 +2123,111 @@
             "n_patient_repeats": 1520
           }
         },
+        "content": {
+          "fold": 2,
+          "arm": "A0_clip",
+          "wsi": {
+            "n_patient_repeats": 1520,
+            "own_beats_donor_share": 0.8934210526315789,
+            "mean_own_mse": 0.4321165752842238,
+            "mean_donor_mse": 0.5705342148381628,
+            "donor_to_own_mse_ratio": 1.3203247629714159
+          },
+          "omic": {
+            "n_patient_repeats": 1520,
+            "own_beats_donor_share": 0.5421052631578948,
+            "mean_own_mse": 2.4354411301056023,
+            "mean_donor_mse": 2.4501047869850145,
+            "donor_to_own_mse_ratio": 1.0060209449114363
+          }
+        },
         "baseline_same_protocol": {
           "S0": {
-            "fold": 2,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.6421937550040032,
-            "cindex_repeat_std_population": 0.01089547898738038,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6253002401921537,
-            "cindex_repeat_max": 0.6653322658126501
+            "score": {
+              "fold": 2,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.6421937550040032,
+              "cindex_repeat_std_population": 0.01089547898738038,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6253002401921537,
+              "cindex_repeat_max": 0.6653322658126501
+            },
+            "content": {
+              "fold": 2,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5328947368421053,
+                "mean_own_mse": 0.5612832213899023,
+                "mean_donor_mse": 0.5585809258253951,
+                "donor_to_own_mse_ratio": 0.9951855044627639
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5723684210526315,
+                "mean_own_mse": 2.493395402547168,
+                "mean_donor_mse": 2.5019916204637602,
+                "donor_to_own_mse_ratio": 1.0034475951579163
+              }
+            }
           },
           "R4": {
-            "fold": 2,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.6967974379503603,
-            "cindex_repeat_std_population": 0.0033883272969573827,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.688550840672538,
-            "cindex_repeat_max": 0.7029623698959168
+            "score": {
+              "fold": 2,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.6967974379503603,
+              "cindex_repeat_std_population": 0.0033883272969573827,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.688550840672538,
+              "cindex_repeat_max": 0.7029623698959168
+            },
+            "content": {
+              "fold": 2,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.7690789473684211,
+                "mean_own_mse": 0.4578671836343251,
+                "mean_donor_mse": 0.5670333625062516,
+                "donor_to_own_mse_ratio": 1.2384232431890376
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5710526315789474,
+                "mean_own_mse": 2.47868746398507,
+                "mean_donor_mse": 2.508596383564566,
+                "donor_to_own_mse_ratio": 1.0120664343585337
+              }
+            }
           },
           "R3": {
-            "fold": 2,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.6698558847077662,
-            "cindex_repeat_std_population": 0.004711379962994323,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6621297037630104,
-            "cindex_repeat_max": 0.6789431545236189
+            "score": {
+              "fold": 2,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.6698558847077662,
+              "cindex_repeat_std_population": 0.004711379962994323,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6621297037630104,
+              "cindex_repeat_max": 0.6789431545236189
+            },
+            "content": {
+              "fold": 2,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.8072368421052631,
+                "mean_own_mse": 0.45127704087644815,
+                "mean_donor_mse": 0.5580539932180392,
+                "donor_to_own_mse_ratio": 1.2366106463874476
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5822368421052632,
+                "mean_own_mse": 2.447519538296681,
+                "mean_donor_mse": 2.459601314650162,
+                "donor_to_own_mse_ratio": 1.0049363349973048
+              }
+            }
           }
         }
       },
@@ -1880,33 +2270,111 @@
             "n_patient_repeats": 1520
           }
         },
+        "content": {
+          "fold": 2,
+          "arm": "A1_clip_decay",
+          "wsi": {
+            "n_patient_repeats": 1520,
+            "own_beats_donor_share": 0.8631578947368421,
+            "mean_own_mse": 0.4430565549060702,
+            "mean_donor_mse": 0.5714016881820403,
+            "donor_to_own_mse_ratio": 1.2896811521120137
+          },
+          "omic": {
+            "n_patient_repeats": 1520,
+            "own_beats_donor_share": 0.6276315789473684,
+            "mean_own_mse": 2.3991090904921295,
+            "mean_donor_mse": 2.4352011289643616,
+            "donor_to_own_mse_ratio": 1.015043933856642
+          }
+        },
         "baseline_same_protocol": {
           "S0": {
-            "fold": 2,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.6421937550040032,
-            "cindex_repeat_std_population": 0.01089547898738038,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6253002401921537,
-            "cindex_repeat_max": 0.6653322658126501
+            "score": {
+              "fold": 2,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.6421937550040032,
+              "cindex_repeat_std_population": 0.01089547898738038,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6253002401921537,
+              "cindex_repeat_max": 0.6653322658126501
+            },
+            "content": {
+              "fold": 2,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5328947368421053,
+                "mean_own_mse": 0.5612832213899023,
+                "mean_donor_mse": 0.5585809258253951,
+                "donor_to_own_mse_ratio": 0.9951855044627639
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5723684210526315,
+                "mean_own_mse": 2.493395402547168,
+                "mean_donor_mse": 2.5019916204637602,
+                "donor_to_own_mse_ratio": 1.0034475951579163
+              }
+            }
           },
           "R4": {
-            "fold": 2,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.6967974379503603,
-            "cindex_repeat_std_population": 0.0033883272969573827,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.688550840672538,
-            "cindex_repeat_max": 0.7029623698959168
+            "score": {
+              "fold": 2,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.6967974379503603,
+              "cindex_repeat_std_population": 0.0033883272969573827,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.688550840672538,
+              "cindex_repeat_max": 0.7029623698959168
+            },
+            "content": {
+              "fold": 2,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.7690789473684211,
+                "mean_own_mse": 0.4578671836343251,
+                "mean_donor_mse": 0.5670333625062516,
+                "donor_to_own_mse_ratio": 1.2384232431890376
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5710526315789474,
+                "mean_own_mse": 2.47868746398507,
+                "mean_donor_mse": 2.508596383564566,
+                "donor_to_own_mse_ratio": 1.0120664343585337
+              }
+            }
           },
           "R3": {
-            "fold": 2,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.6698558847077662,
-            "cindex_repeat_std_population": 0.004711379962994323,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6621297037630104,
-            "cindex_repeat_max": 0.6789431545236189
+            "score": {
+              "fold": 2,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.6698558847077662,
+              "cindex_repeat_std_population": 0.004711379962994323,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6621297037630104,
+              "cindex_repeat_max": 0.6789431545236189
+            },
+            "content": {
+              "fold": 2,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.8072368421052631,
+                "mean_own_mse": 0.45127704087644815,
+                "mean_donor_mse": 0.5580539932180392,
+                "donor_to_own_mse_ratio": 1.2366106463874476
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5822368421052632,
+                "mean_own_mse": 2.447519538296681,
+                "mean_donor_mse": 2.459601314650162,
+                "donor_to_own_mse_ratio": 1.0049363349973048
+              }
+            }
           }
         }
       },
@@ -1916,33 +2384,94 @@
         "trained": false,
         "score": null,
         "geometry": null,
+        "content": null,
         "baseline_same_protocol": {
           "S0": {
-            "fold": 3,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.699672131147541,
-            "cindex_repeat_std_population": 0.006544614173368244,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6863387978142077,
-            "cindex_repeat_max": 0.7092896174863388
+            "score": {
+              "fold": 3,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.699672131147541,
+              "cindex_repeat_std_population": 0.006544614173368244,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6863387978142077,
+              "cindex_repeat_max": 0.7092896174863388
+            },
+            "content": {
+              "fold": 3,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5769736842105263,
+                "mean_own_mse": 0.5722087524047024,
+                "mean_donor_mse": 0.5842364577674553,
+                "donor_to_own_mse_ratio": 1.0210197857201704
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5197368421052632,
+                "mean_own_mse": 3.8283992534699407,
+                "mean_donor_mse": 3.8323437237425853,
+                "donor_to_own_mse_ratio": 1.0010303184207001
+              }
+            }
           },
           "R4": {
-            "fold": 3,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.6812568306010929,
-            "cindex_repeat_std_population": 0.006097489018539778,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.66775956284153,
-            "cindex_repeat_max": 0.6918032786885245
+            "score": {
+              "fold": 3,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.6812568306010929,
+              "cindex_repeat_std_population": 0.006097489018539778,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.66775956284153,
+              "cindex_repeat_max": 0.6918032786885245
+            },
+            "content": {
+              "fold": 3,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.6263157894736842,
+                "mean_own_mse": 0.5291442292301278,
+                "mean_donor_mse": 0.5538867692904252,
+                "donor_to_own_mse_ratio": 1.0467595386919295
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5552631578947368,
+                "mean_own_mse": 3.799079620191141,
+                "mean_donor_mse": 3.804006272064228,
+                "donor_to_own_mse_ratio": 1.0012968014270884
+              }
+            }
           },
           "R3": {
-            "fold": 3,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.6607650273224044,
-            "cindex_repeat_std_population": 0.02533162650959127,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6076502732240437,
-            "cindex_repeat_max": 0.6994535519125683
+            "score": {
+              "fold": 3,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.6607650273224044,
+              "cindex_repeat_std_population": 0.02533162650959127,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6076502732240437,
+              "cindex_repeat_max": 0.6994535519125683
+            },
+            "content": {
+              "fold": 3,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.7440789473684211,
+                "mean_own_mse": 0.5016285798561416,
+                "mean_donor_mse": 0.5577378357221422,
+                "donor_to_own_mse_ratio": 1.1118541847876604
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5098684210526315,
+                "mean_own_mse": 3.8636141615870754,
+                "mean_donor_mse": 3.8710596213215274,
+                "donor_to_own_mse_ratio": 1.0019270712403108
+              }
+            }
           }
         }
       },
@@ -1952,33 +2481,94 @@
         "trained": false,
         "score": null,
         "geometry": null,
+        "content": null,
         "baseline_same_protocol": {
           "S0": {
-            "fold": 3,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.699672131147541,
-            "cindex_repeat_std_population": 0.006544614173368244,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6863387978142077,
-            "cindex_repeat_max": 0.7092896174863388
+            "score": {
+              "fold": 3,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.699672131147541,
+              "cindex_repeat_std_population": 0.006544614173368244,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6863387978142077,
+              "cindex_repeat_max": 0.7092896174863388
+            },
+            "content": {
+              "fold": 3,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5769736842105263,
+                "mean_own_mse": 0.5722087524047024,
+                "mean_donor_mse": 0.5842364577674553,
+                "donor_to_own_mse_ratio": 1.0210197857201704
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5197368421052632,
+                "mean_own_mse": 3.8283992534699407,
+                "mean_donor_mse": 3.8323437237425853,
+                "donor_to_own_mse_ratio": 1.0010303184207001
+              }
+            }
           },
           "R4": {
-            "fold": 3,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.6812568306010929,
-            "cindex_repeat_std_population": 0.006097489018539778,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.66775956284153,
-            "cindex_repeat_max": 0.6918032786885245
+            "score": {
+              "fold": 3,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.6812568306010929,
+              "cindex_repeat_std_population": 0.006097489018539778,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.66775956284153,
+              "cindex_repeat_max": 0.6918032786885245
+            },
+            "content": {
+              "fold": 3,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.6263157894736842,
+                "mean_own_mse": 0.5291442292301278,
+                "mean_donor_mse": 0.5538867692904252,
+                "donor_to_own_mse_ratio": 1.0467595386919295
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5552631578947368,
+                "mean_own_mse": 3.799079620191141,
+                "mean_donor_mse": 3.804006272064228,
+                "donor_to_own_mse_ratio": 1.0012968014270884
+              }
+            }
           },
           "R3": {
-            "fold": 3,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.6607650273224044,
-            "cindex_repeat_std_population": 0.02533162650959127,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6076502732240437,
-            "cindex_repeat_max": 0.6994535519125683
+            "score": {
+              "fold": 3,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.6607650273224044,
+              "cindex_repeat_std_population": 0.02533162650959127,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6076502732240437,
+              "cindex_repeat_max": 0.6994535519125683
+            },
+            "content": {
+              "fold": 3,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.7440789473684211,
+                "mean_own_mse": 0.5016285798561416,
+                "mean_donor_mse": 0.5577378357221422,
+                "donor_to_own_mse_ratio": 1.1118541847876604
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5098684210526315,
+                "mean_own_mse": 3.8636141615870754,
+                "mean_donor_mse": 3.8710596213215274,
+                "donor_to_own_mse_ratio": 1.0019270712403108
+              }
+            }
           }
         }
       },
@@ -1988,33 +2578,94 @@
         "trained": false,
         "score": null,
         "geometry": null,
+        "content": null,
         "baseline_same_protocol": {
           "S0": {
-            "fold": 4,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.6798042704626335,
-            "cindex_repeat_std_population": 0.005476410461392308,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6699288256227758,
-            "cindex_repeat_max": 0.6912811387900356
+            "score": {
+              "fold": 4,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.6798042704626335,
+              "cindex_repeat_std_population": 0.005476410461392308,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6699288256227758,
+              "cindex_repeat_max": 0.6912811387900356
+            },
+            "content": {
+              "fold": 4,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.6065789473684211,
+                "mean_own_mse": 0.5873966297428859,
+                "mean_donor_mse": 0.5938495702061214,
+                "donor_to_own_mse_ratio": 1.010985661368299
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5,
+                "mean_own_mse": 2.8864802531505886,
+                "mean_donor_mse": 2.9099109709458917,
+                "donor_to_own_mse_ratio": 1.0081174010353018
+              }
+            }
           },
           "R4": {
-            "fold": 4,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.685720640569395,
-            "cindex_repeat_std_population": 0.00577863926012748,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6752669039145908,
-            "cindex_repeat_max": 0.7019572953736655
+            "score": {
+              "fold": 4,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.685720640569395,
+              "cindex_repeat_std_population": 0.00577863926012748,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6752669039145908,
+              "cindex_repeat_max": 0.7019572953736655
+            },
+            "content": {
+              "fold": 4,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.6118421052631579,
+                "mean_own_mse": 0.5760041895273484,
+                "mean_donor_mse": 0.5939615303748532,
+                "donor_to_own_mse_ratio": 1.031175712215288
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5473684210526316,
+                "mean_own_mse": 2.842108884218492,
+                "mean_donor_mse": 2.8508370764161413,
+                "donor_to_own_mse_ratio": 1.0030710266753378
+              }
+            }
           },
           "R3": {
-            "fold": 4,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.7072953736654805,
-            "cindex_repeat_std_population": 0.013771368377857193,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6832740213523132,
-            "cindex_repeat_max": 0.7375444839857651
+            "score": {
+              "fold": 4,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.7072953736654805,
+              "cindex_repeat_std_population": 0.013771368377857193,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6832740213523132,
+              "cindex_repeat_max": 0.7375444839857651
+            },
+            "content": {
+              "fold": 4,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.6046052631578948,
+                "mean_own_mse": 0.5291865578607509,
+                "mean_donor_mse": 0.5473639822810104,
+                "donor_to_own_mse_ratio": 1.034349747079257
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5769736842105263,
+                "mean_own_mse": 3.0308151514514496,
+                "mean_donor_mse": 3.088006963639667,
+                "donor_to_own_mse_ratio": 1.018870108974092
+              }
+            }
           }
         }
       },
@@ -2024,33 +2675,94 @@
         "trained": false,
         "score": null,
         "geometry": null,
+        "content": null,
         "baseline_same_protocol": {
           "S0": {
-            "fold": 4,
-            "arm": "S0",
-            "cindex_mean_over_repeats": 0.6798042704626335,
-            "cindex_repeat_std_population": 0.005476410461392308,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6699288256227758,
-            "cindex_repeat_max": 0.6912811387900356
+            "score": {
+              "fold": 4,
+              "arm": "S0",
+              "cindex_mean_over_repeats": 0.6798042704626335,
+              "cindex_repeat_std_population": 0.005476410461392308,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6699288256227758,
+              "cindex_repeat_max": 0.6912811387900356
+            },
+            "content": {
+              "fold": 4,
+              "arm": "S0",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.6065789473684211,
+                "mean_own_mse": 0.5873966297428859,
+                "mean_donor_mse": 0.5938495702061214,
+                "donor_to_own_mse_ratio": 1.010985661368299
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5,
+                "mean_own_mse": 2.8864802531505886,
+                "mean_donor_mse": 2.9099109709458917,
+                "donor_to_own_mse_ratio": 1.0081174010353018
+              }
+            }
           },
           "R4": {
-            "fold": 4,
-            "arm": "R4",
-            "cindex_mean_over_repeats": 0.685720640569395,
-            "cindex_repeat_std_population": 0.00577863926012748,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6752669039145908,
-            "cindex_repeat_max": 0.7019572953736655
+            "score": {
+              "fold": 4,
+              "arm": "R4",
+              "cindex_mean_over_repeats": 0.685720640569395,
+              "cindex_repeat_std_population": 0.00577863926012748,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6752669039145908,
+              "cindex_repeat_max": 0.7019572953736655
+            },
+            "content": {
+              "fold": 4,
+              "arm": "R4",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.6118421052631579,
+                "mean_own_mse": 0.5760041895273484,
+                "mean_donor_mse": 0.5939615303748532,
+                "donor_to_own_mse_ratio": 1.031175712215288
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5473684210526316,
+                "mean_own_mse": 2.842108884218492,
+                "mean_donor_mse": 2.8508370764161413,
+                "donor_to_own_mse_ratio": 1.0030710266753378
+              }
+            }
           },
           "R3": {
-            "fold": 4,
-            "arm": "R3",
-            "cindex_mean_over_repeats": 0.7072953736654805,
-            "cindex_repeat_std_population": 0.013771368377857193,
-            "n_repeats": 20,
-            "cindex_repeat_min": 0.6832740213523132,
-            "cindex_repeat_max": 0.7375444839857651
+            "score": {
+              "fold": 4,
+              "arm": "R3",
+              "cindex_mean_over_repeats": 0.7072953736654805,
+              "cindex_repeat_std_population": 0.013771368377857193,
+              "n_repeats": 20,
+              "cindex_repeat_min": 0.6832740213523132,
+              "cindex_repeat_max": 0.7375444839857651
+            },
+            "content": {
+              "fold": 4,
+              "arm": "R3",
+              "wsi": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.6046052631578948,
+                "mean_own_mse": 0.5291865578607509,
+                "mean_donor_mse": 0.5473639822810104,
+                "donor_to_own_mse_ratio": 1.034349747079257
+              },
+              "omic": {
+                "n_patient_repeats": 1520,
+                "own_beats_donor_share": 0.5769736842105263,
+                "mean_own_mse": 3.0308151514514496,
+                "mean_donor_mse": 3.088006963639667,
+                "donor_to_own_mse_ratio": 1.018870108974092
+              }
+            }
           }
         }
       }

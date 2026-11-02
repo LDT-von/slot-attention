@@ -176,6 +176,59 @@ def diversity_summary():
             "reused_arms": list(DIVERSITY_REUSED_ARMS)}
 
 
+def content_separation(arm_dir, modality):
+    """Share of patient-repeats whose own reconstruction beats the donor's.
+
+    A value above one half means the slot set carries content specific to the
+    patient rather than content that any donor patient would explain equally
+    well. Only the aggregate counts are returned; the per-patient rows are
+    counted inside this function and never leave it.
+    """
+    path = arm_dir / "patient_diagnostics.json"
+    if not path.is_file():
+        return None
+    data = _read_json(path)
+    if not isinstance(data, list):
+        return None
+    pairs = 0
+    own_wins = 0
+    own_values = []
+    donor_values = []
+    for record in data:
+        block = record.get("modalities", {}).get(modality) if isinstance(record, dict) else None
+        if not isinstance(block, dict):
+            continue
+        own = block.get("own_mse")
+        donor = block.get("donor_mse")
+        if not isinstance(own, (int, float)) or not isinstance(donor, (int, float)):
+            continue
+        pairs += 1
+        own_values.append(float(own))
+        donor_values.append(float(donor))
+        if own < donor:
+            own_wins += 1
+    if not pairs:
+        return None
+    mean_own = statistics.fmean(own_values)
+    mean_donor = statistics.fmean(donor_values)
+    return {
+        "n_patient_repeats": pairs,
+        "own_beats_donor_share": own_wins / pairs,
+        "mean_own_mse": mean_own,
+        "mean_donor_mse": mean_donor,
+        "donor_to_own_mse_ratio": (mean_donor / mean_own) if mean_own else None,
+    }
+
+
+def fold_arm_content(root, fold, arm):
+    arm_dir = root / "folds" / str(fold) / "arms" / arm
+    wsi = content_separation(arm_dir, "wsi")
+    omic = content_separation(arm_dir, "omic")
+    if wsi is None and omic is None:
+        return None
+    return {"fold": fold, "arm": arm, "wsi": wsi, "omic": omic}
+
+
 def anticollapse_summary():
     """Fold-level aggregates of the stopped anti-collapse queue, with baseline."""
     manifest = _read_json(ANTICOLLAPSE_ROOT / "queue_manifest.json")
@@ -193,13 +246,16 @@ def anticollapse_summary():
         for arm in ANTICOLLAPSE_ARMS:
             score = fold_arm_score(ANTICOLLAPSE_ROOT, fold, arm)
             geometry = fold_arm_geometry(ANTICOLLAPSE_ROOT, fold, arm)
+            content = fold_arm_content(ANTICOLLAPSE_ROOT, fold, arm)
             baseline = {}
             for reference in DIVERSITY_REUSED_ARMS:
                 reference_score = fold_arm_score(BASELINE_ROOT, fold, reference)
+                reference_content = fold_arm_content(BASELINE_ROOT, fold, reference)
                 if reference_score:
-                    baseline[reference] = reference_score
+                    baseline[reference] = {"score": reference_score, "content": reference_content}
             folds.append({"fold": fold, "arm": arm, "trained": score is not None,
-                          "score": score, "geometry": geometry, "baseline_same_protocol": baseline})
+                          "score": score, "geometry": geometry, "content": content,
+                          "baseline_same_protocol": baseline})
     aggregate = []
     for arm in ANTICOLLAPSE_ARMS:
         values = [row["score"]["cindex_mean_over_repeats"]
@@ -319,11 +375,57 @@ def render_markdown(diversity, anticollapse):
             f"{row['cindex_mean_over_trained_folds']:.4f} | "
             f"{row['cindex_std_population_over_trained_folds']:.4f} |")
     add("")
+    add("### 槽几何（逐患者诊断的均值）")
+    add("")
+    add("| 臂 | 折 | WSI有效秩 | WSI余弦 | WSI读注重叠 | OMIC有效秩 | OMIC余弦 | OMIC读注重叠 |")
+    add("|---|---:|---:|---:|---:|---:|---:|---:|")
+    for row in anticollapse["folds"]:
+        geometry = row["geometry"]
+        if not geometry:
+            continue
+        wsi = geometry["wsi"] or {}
+        omic = geometry["omic"] or {}
+
+        def fmt(block, key, digits=3):
+            value = block.get(key)
+            return "—" if value is None else f"{value:.{digits}f}"
+
+        add(f"| {row['arm']} | {row['fold']} | {fmt(wsi, 'effective_rank', 2)} | {fmt(wsi, 'cosine')} | "
+            f"{fmt(wsi, 'read_overlap')} | {fmt(omic, 'effective_rank', 2)} | {fmt(omic, 'cosine')} | "
+            f"{fmt(omic, 'read_overlap')} |")
+    add("")
+    add("### 内容分离探针：own_mse 优于 donor_mse 的比例")
+    add("")
+    add("该比例高于 0.5 表示槽内内容是患者特异的，而不是任意供体患者都能同样解释的。"
+        "基线用同一探针在同一批存储工件上测得，探针本身对所有臂一致。")
+    add("")
+    add("| 折 | A0_clip WSI | A0_clip OMIC | A1_clip_decay WSI | A1_clip_decay OMIC | S0 WSI | S0 OMIC | R4 WSI | R4 OMIC |")
+    add("|---:|---:|---:|---:|---:|---:|---:|---:|---:|")
+    for fold in range(5):
+        cells = []
+
+        def share(root, arm, modality):
+            found = fold_arm_content(root, fold, arm)
+            if not found or not found.get(modality):
+                return "—"
+            return f"{found[modality]['own_beats_donor_share']:.4f}"
+
+        for arm in ANTICOLLAPSE_ARMS:
+            for modality in ("wsi", "omic"):
+                cells.append(share(ANTICOLLAPSE_ROOT, arm, modality))
+        for reference in ("S0", "R4"):
+            for modality in ("wsi", "omic"):
+                cells.append(share(BASELINE_ROOT, reference, modality))
+        add(f"| {fold} | " + " | ".join(cells) + " |")
+    add("")
     add("## 三、读法与边界")
     add("")
     add("- 多样性队列最佳新臂 SRO 为 0.7093，与复用基线 R4 的 0.7071、S0 的 0.7039 相差 0.002~0.006，远在折间离散度 0.024~0.047 之内，**没有任何新臂与基线分离**。")
     add("- 几何未朝目标方向移动：fold 0 上 SCM 与 SRO 的有效秩降至 1.02 与 1.01、余弦 0.988 与 0.995，比 S0 基线（秩 1.41、余弦 0.846）塌缩更甚。只有 R4_SCM 与 R4_SRO 组合在 fold 1/2 撑开了组学几何（组学余弦至 0.539）。")
     add("- 反塌缩队列在 fold 0 上 A0_clip 为 0.7071，对同协议 S0 的 0.7485 低 0.041，而该折基线的评估重复标准差为 0.0104，约为评估噪声的四倍。但这是 3 折 1 seed，不是五折统计。")
+    add("- 反塌缩队列的**几何目标已达成**：WSI 有效秩 5.54~6.81、余弦 0.096~0.192，而同协议 S0 基线的 WSI 有效秩约 1.0~1.4、余弦 0.85~0.99。槽不再塌缩。")
+    add("- 反塌缩队列的**内容分离在 WSI 上成立**：A0_clip 的 own 优于 donor 比例为 0.63/0.77/0.89，同协议 S0 基线为 0.51/0.60/0.53。该比例在组学模态上只有 0.54~0.63，接近 S0 基线的 0.52~0.57，**组学模态的患者特异内容未被证实**。")
+    add("- **机制成功与预测未改善同时成立**：槽几何撑开、WSI 内容变为患者特异，但生存分数没有超过基线。这与本仓库既有证据一致——冗余降低与生存表现呈负相关。")
     add("- 20 次评估重复是同一训练模型上的重复，不是 20 次独立训练；折间离散度不含训练随机性。")
     add("- 两个队列均为单种子 3，7 个臂比较未做多重比较校正。")
     add("- **以上没有任何数字构成患者获益、患者损害或修正有效性证据**，也不构成临床效用或对其他队列/癌种的泛化。")

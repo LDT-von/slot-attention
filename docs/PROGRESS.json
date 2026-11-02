@@ -8754,7 +8754,8 @@
         "docs/research/README.md (folder count)",
         "README.md (folder count)",
         "docs/PROGRESS.json (this entry)",
-        "DELIVERY_MANIFEST.json (refreshed)"
+        "DELIVERY_MANIFEST.json (refreshed)",
+        "scripts/summarize_queue_results.py (extended with the content separation probe and the anti-collapse geometry table)"
       ],
       "third_party_modified": false,
       "queue_code_changed": false,
@@ -8768,7 +8769,7 @@
       "checkpoints_loaded": 0,
       "mode": "read-only aggregation of stored artifacts",
       "summary_script_run": "python scripts/summarize_queue_results.py completed, wrote the markdown and the JSON under docs/research/slotspe_queue_results_20261102",
-      "unit_tests": "tests/test_slotspe_queue_results_summary.py 8 passed",
+      "unit_tests": "tests/test_slotspe_queue_results_summary.py 10 passed",
       "privacy_check": "a grep for the TCGA patient identifier pattern over the published markdown and JSON returns zero matches, and no 64-character hex digest is present in the published JSON. The JSON carries explicit false flags for patient_data_included, patient_identifiers_included and per_patient_arrays_included.",
       "delivery_manifest": "python scripts/check_delivery_manifest.py --check --require-tracked reports ok with the refreshed manifest",
       "recorded_results": {
@@ -8832,9 +8833,38 @@
           }
         }
       },
-      "claim_boundary": "C-index and slot geometry inside two research queues on TCGA-BLCA. These are not patient benefit, not patient harm, not correction efficacy and not clinical utility. Twenty evaluation repeats are repeats of one trained model and not twenty independent trainings, so the fold spread contains no training randomness. Both queues carry the single seed 3, and the seven-arm comparison carries no multiplicity correction."
+      "claim_boundary": "C-index and slot geometry inside two research queues on TCGA-BLCA. These are not patient benefit, not patient harm, not correction efficacy and not clinical utility. Twenty evaluation repeats are repeats of one trained model and not twenty independent trainings, so the fold spread contains no training randomness. Both queues carry the single seed 3, and the seven-arm comparison carries no multiplicity correction.",
+      "anti_collapse_geometry_and_content": {
+        "geometry": "WSI effective rank 5.54 to 6.81 with cosine 0.096 to 0.192 and read overlap 0.671 to 0.962, against a same-protocol S0 baseline whose WSI effective rank is about 1.0 to 1.4 with cosine 0.85 to 0.99. The slot collapse is fully prevented for the whole run, which is the mechanism goal.",
+        "content_separation_probe": "share of patient-repeats whose own reconstruction error is below the donor reconstruction error. A0_clip WSI 0.6299, 0.7713 and 0.8934 on folds 0 to 2, against the same-protocol S0 baseline at 0.5065, 0.5980 and 0.5329. The WSI content is patient-specific and the baseline is at chance.",
+        "content_separation_omic_is_not_established": "A0_clip OMIC 0.5656, 0.5833 and 0.5421 against the S0 baseline 0.5188, 0.5313 and 0.5724. The omic modality stays close to the baseline and the omic patient-specific content is not established.",
+        "reading": "The mechanism succeeded and the survival score did not improve at the same time. The geometry is held open, the WSI content became patient-specific, and the C-index did not exceed the baseline. This is consistent with the evidence already recorded in this repository that lower redundancy correlates with lower survival performance."
+      },
+      "anti_collapse_baseline_all_five_folds": {
+        "S0": {
+          "0": 0.7485,
+          "1": 0.7492,
+          "2": 0.6422,
+          "3": 0.6997,
+          "4": 0.6798
+        },
+        "R4": {
+          "0": 0.717,
+          "1": 0.7549,
+          "2": 0.6968,
+          "3": 0.6813,
+          "4": 0.6857
+        },
+        "R3": {
+          "0": 0.6934,
+          "1": 0.7309,
+          "2": 0.6699,
+          "3": 0.6608,
+          "4": 0.7073
+        }
+      }
     },
-    "gaps_reasons": "The published summary is a descriptive record, not an analysis. The diversity queue completed and needs no further action, but the best new arm exceeds the reused baseline by 0.002 to 0.006, far inside the fold spread of 0.024 to 0.047, so nothing separates from the baseline. The anti-collapse queue is still missing folds 3 and 4, ten of twenty possible arm-folds, and repairing the launcher is a source change inside the anti-collapse implementation hash set, so it waits for the authorisation the recorded rule requires. The three open decisions of the common-private architecture line are untouched by this stage. No patient stage exists for that line. Nothing in either queue establishes patient benefit, patient harm, correction efficacy, clinical utility or generalization to another cohort or cancer.",
+    "gaps_reasons": "The published summary is a descriptive record, not an analysis. The diversity queue completed and needs no further action, but the best new arm exceeds the reused baseline by 0.002 to 0.006, far inside the fold spread of 0.024 to 0.047, so nothing separates from the baseline. The anti-collapse queue is still missing folds 3 and 4, ten of twenty possible arm-folds, and repairing the launcher is a source change inside the anti-collapse implementation hash set, so it waits for the authorisation the recorded rule requires. The three open decisions of the common-private architecture line are untouched by this stage. No patient stage exists for that line. Nothing in either queue establishes patient benefit, patient harm, correction efficacy, clinical utility or generalization to another cohort or cancer. The content separation was measured on the WSI modality only in the earlier record; the same probe on the omic modality is now measured and is close to the baseline, so the omic patient-specific content is not established.",
     "next_action_user_inputs": "Nothing is pending for the diversity queue, which is completed and recorded. Two items remain for the user. First, whether to repair the launcher so the log file is opened in a mode that tolerates an existing file and then resume the anti-collapse queue for folds 3 and 4, which needs explicit execution authorisation because only --run executes and the file is inside the implementation hash set. Second, the three open decisions of the common-private line in docs/research/slotspe_common_private_20261101/open_decisions.json. The deletion oracle on the six completed anti-collapse best checkpoints remains an open question from the earlier stage and was already authorised in principle for the completed queue. No new patient input is required to read any existing artifact."
   }
 }
