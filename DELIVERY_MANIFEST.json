@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T11:42:42.144489+08:00",
-  "base_commit_before_delivery": "1c9a9bf2ea3570cee5ecf617ed16d43b7e175875",
+  "recorded_at": "2026-11-02T11:43:53.263886+08:00",
+  "base_commit_before_delivery": "375d9c392f3bd3fa334e97679ee714776fab5c28",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 607,
-  "repository_file_count_including_manifest": 608,
+  "covered_file_count": 608,
+  "repository_file_count_including_manifest": 609,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 735514,
-      "sha256": "a0427ac7e0be2caa60904c7d053544c944e28d06b220df1ed9bda4e3ff1be528"
+      "bytes": 739862,
+      "sha256": "a714359ca9eec08c8fd8d37783932a4568861f73fe84ac5a47182cd572cbf7bf"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -2546,8 +2546,8 @@
     },
     {
       "path": "slotspe_proof/redundancy_anticollapse_multifold.py",
-      "bytes": 23820,
-      "sha256": "48caf02dba1e72228bc403c01f0a1120c0d023d461dbf8f941c8bcc82386ad06"
+      "bytes": 42718,
+      "sha256": "8a2da75bf4c8581a0b4d8555e37badf123b52a05d37e613f6a79a3237a77f0b0"
     },
     {
       "path": "slotspe_proof/redundancy_best_engine.py",
@@ -2913,6 +2913,11 @@
       "path": "tests/test_slotspe_redundancy_anticollapse_engine.py",
       "bytes": 11990,
       "sha256": "5004afd8b2a2ebc81dfee3e51bfe95e7dcb7ed80e1ea27ac434bac87bd359a78"
+    },
+    {
+      "path": "tests/test_slotspe_redundancy_anticollapse_multifold.py",
+      "bytes": 12755,
+      "sha256": "3cff89e65c2f8f0071bcbe5d6696650b81aa12464a58c1ccc69356876a217b54"
     },
     {
       "path": "tests/test_slotspe_redundancy_best_engine.py",
