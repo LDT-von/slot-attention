@@ -1,0 +1,120 @@
+{
+  "schema": "slotspe_pooling_rate_stage_summary_v1",
+  "status": "completed",
+  "raw_receipt_sha256": "2e51ead2c62ec94b0cdd963616e0ae1a0a48196e848b3644f585a9078d8d69cc",
+  "summary": [
+    {
+      "condition": "clean_single",
+      "raw_mean_bayes_nll": 0.8774820399232566,
+      "existing_mean_mean_nll": 0.9199748635292053,
+      "role_bank_mean_nll": 0.9143460392951965,
+      "full_code_bayes_mean_nll": 0.8774820399232567,
+      "paired_bank_minus_mean_nll": [
+        0.00011390447616577148,
+        -0.017140209674835205,
+        0.0001398324966430664
+      ]
+    },
+    {
+      "condition": "single_total1",
+      "raw_mean_bayes_nll": 1.1066238587841781,
+      "existing_mean_mean_nll": 1.1431342760721843,
+      "role_bank_mean_nll": 1.0446826020876567,
+      "full_code_bayes_mean_nll": 0.8816005576531238,
+      "paired_bank_minus_mean_nll": [
+        0.0016881942749022993,
+        -0.10184526443481445,
+        -0.19519795179367072
+      ]
+    },
+    {
+      "condition": "repeated_total1",
+      "raw_mean_bayes_nll": 0.9463445570853909,
+      "existing_mean_mean_nll": 1.0239370902379354,
+      "role_bank_mean_nll": 1.0568232814470928,
+      "full_code_bayes_mean_nll": 0.9463445570853909,
+      "paired_bank_minus_mean_nll": [
+        0.12019453048706064,
+        -0.027872788906097457,
+        0.0063368320465087
+      ]
+    },
+    {
+      "condition": "repeated_total4",
+      "raw_mean_bayes_nll": 0.8774822460839237,
+      "existing_mean_mean_nll": 0.9243627707163492,
+      "role_bank_mean_nll": 0.9236823161443074,
+      "full_code_bayes_mean_nll": 0.8774822460839236,
+      "paired_bank_minus_mean_nll": [
+        0.0021987199783325417,
+        -0.008034110069274902,
+        0.003794026374816961
+      ]
+    },
+    {
+      "condition": "noise_only",
+      "raw_mean_bayes_nll": 1.1205531679990997,
+      "existing_mean_mean_nll": 1.142151165008545,
+      "role_bank_mean_nll": 1.1416465441385906,
+      "full_code_bayes_mean_nll": 1.1205531679990997,
+      "paired_bank_minus_mean_nll": [
+        2.379417419429153e-05,
+        0.0007304430007935014,
+        -0.0022680997848509854
+      ]
+    }
+  ],
+  "known_gaussian_channels": [
+    {
+      "channel": "single_known_role",
+      "snr": 6.38905609893065,
+      "binary_mi_nats": 0.6772102243485223,
+      "xor_mi_nats": 0.6617848176503554,
+      "quadrature_128_vs_256_max_difference": 1.0035819175691074e-08
+    },
+    {
+      "channel": "single_untyped_raw_mean",
+      "snr": 0.2757806226933383,
+      "binary_mi_nats": 0.1215703129967981,
+      "xor_mi_nats": 0.025371041233253955,
+      "quadrature_128_vs_256_max_difference": 1.1102230246251565e-16
+    },
+    {
+      "channel": "repeated_equal_total",
+      "snr": 2.5948850828005128,
+      "binary_mi_nats": 0.5573820747138876,
+      "xor_mi_nats": 0.4525712152884469,
+      "quadrature_128_vs_256_max_difference": 5.309758188687397e-11
+    },
+    {
+      "channel": "repeated_equal_per_slot",
+      "snr": 25.5562243957226,
+      "binary_mi_nats": 0.6931465331360588,
+      "xor_mi_nats": 0.6931458857135121,
+      "quadrature_128_vs_256_max_difference": 5.054665574988348e-10
+    }
+  ],
+  "old_readout_deterministic_repeats_verified": 12,
+  "new_readout_arm_fits": 18,
+  "old_refit_completion_executions": 1,
+  "total_optimizer_updates_this_stage": 15500,
+  "refit_nll_by_seed": {
+    "419": 1.1889414548873902,
+    "431": 1.1422269821166993,
+    "449": 1.1402177333831787
+  },
+  "refit_mean_nll": 1.1571287234624228,
+  "limitations": [
+    "Exploratory attribution on old synthetic data, not independent confirmation.",
+    "Role bank changes phi shape and pooling scale as well as role access; near-equal parameters do not isolate those factors.",
+    "Raw-mean analytic loss is not an impossibility theorem for nonlinear Deep Sets.",
+    "Quadrature is for known Gaussian channels and planted bits, not estimated neural-slot mutual information.",
+    "Single-total1 role bank fails at seed419; no stable superiority or patient benefit established."
+  ],
+  "source_sha256": {
+    "scripts/summarize_slot_pooling_rate.py": "5e5409fef1422ffdb5d5e9b00caa8d61a9e9288e538b03524aa017ce3449934f",
+    "slotspe_proof/gaussian_pooling_oracle.py": "e347705ad8131574f50de2b8162f3859108bd468923d828091d4c82a268083ed"
+  },
+  "patient_execution": false,
+  "server_execution": false
+}

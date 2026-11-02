@@ -1,0 +1,1246 @@
+{
+  "status": "completed",
+  "plan": {
+    "schema": "slotspe_equal_total_rate_pooling_v1",
+    "recorded_before_execution": true,
+    "base_commit": "eb3b65941da4c66f3761c50ebea2a9cebc050889",
+    "question": "Separate total-rate confounding, noisy-slot dilution and finite typed-readout access before adding content losses.",
+    "seeds": [
+      419,
+      431,
+      449
+    ],
+    "conditions": [
+      "clean_single",
+      "single_total1",
+      "repeated_total1",
+      "repeated_total4",
+      "noise_only"
+    ],
+    "readouts": [
+      "existing_mean",
+      "role_bank"
+    ],
+    "new_oracle_readout_trainings": 30,
+    "missing_old_refit_completion": "One 500-step refit of saved and hash-verified exact seed449 synthetic replay; old partial receipt stays unchanged.",
+    "updates_per_training": 500,
+    "optimizer": "Adam lr=.003, batch32, fixed last step; no clipping or validation selection",
+    "data": "Reuse exact original XOR train/test schedules for attribution, not independent confirmation; each modality gets only its own privileged planted bit, common gets true S.",
+    "paired_controls": "Same data, batches and explicit noise; same survival head and role-offset initialization. Phi shapes differ; phi initialization cannot be paired tensorwise.",
+    "readout_parameters": {
+      "existing_mean": 1396,
+      "role_bank": 1402
+    },
+    "role_bank": "Fixed one-hot role tensor product then sum; algebraically role-indexed concatenation, no patient-dependent attention/weight/selection. Requires paired value-role permutation and stable roles; not semantic identity or a novel contribution.",
+    "rate_units": "Gaussian rate nats per modality summed over all slots. Single_total1 = one slot x1; repeated_total1 = four slots x.25; repeated_total4 = four slots x1. Deterministic clean code has no finite rate claim.",
+    "known_math": "For code amplitude^2=1-exp(-2c), variance=exp(-2c), KL=c and raw repeated-bit Gaussian SNR=K*(exp(2C/K)-1) <= exp(2C)-1 for fixed total C. This concerns privileged scalar Gaussian codes, not arbitrary neural pooling.",
+    "evaluation": "Five paired noise draws scored as separate censored-survival NLL values, then averaged; proper survival-distribution Bayes mixture. Fixed-head perturbations retained from previous receipt.",
+    "outputs": "Fresh ignored local_evidence directory; public aggregate receipt only, no synthetic arrays or weights committed.",
+    "patient_execution": false,
+    "server_execution": false
+  },
+  "plan_sha256": "3c6a941e047a83aa631be4a5e5f1888e722aee03acd1c72210078e3dec87b1f0",
+  "historical_partial_receipt_sha256": "57349aed74bde796119010ef165ef765b38a13137e08cd9ab6ff8107d4800949",
+  "source_sha256_before_execution": {
+    "scripts/check_slot_pooling_rate.py": "ba0f743279e021b11ad689f2c11e736dfe91f6e2069de6d909a4732d29eda380",
+    "slotspe_proof/slot_pooling_diagnostics.py": "1f5ce06dab83308e57f0acac4aa36908e5cb2329853a2bc8d54cad6c665da163",
+    "scripts/check_xor_readout_capacity.py": "4a0107b5e8ae7a7d5951e51493189b47214be2d468ca8db07c30af8c709ad3c1",
+    "slotspe_proof/xor_readout_diagnostics.py": "3ead0f4247c73d02b8176115def9b0ddb9029de6cc0cbafe1c0dcad73b35628b",
+    "slotspe_proof/common_private_survival.py": "51a8f2c5052c064dddf2f6fc610dc785cd1fba412082ebf80cb53fc6ff4ec910",
+    "slotspe_proof/crossmodal_shared_bottleneck.py": "4f8d4a4e98cd61437b8e6ae4968e70e544dc0a792262e79c8576e08ccf763970",
+    "scripts/compare_crossmodal_shared_bottleneck.py": "7b06f3cbb6e45eeb3cd2c73a07b8a4b8ad14bb380606368566cbad1aab49c369"
+  },
+  "rows": [
+    {
+      "seed": 419,
+      "condition": "clean_single",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4074525833129883
+        },
+        {
+          "step": 99,
+          "nll": 1.1793285608291626
+        },
+        {
+          "step": 299,
+          "nll": 1.0330188274383545
+        },
+        {
+          "step": 499,
+          "nll": 0.9151453971862793
+        }
+      ],
+      "seconds": 1.9798788000043714,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9473006725311279,
+      "conditional_code_bayes_nll": 0.909016125682115,
+      "nll_by_noise_draw": [
+        0.9473006725311279,
+        0.9473006725311279,
+        0.9473006725311279,
+        0.9473006725311279,
+        0.9473006725311279
+      ],
+      "all_private_zero_nll_delta": 0.6481055021286011
+    },
+    {
+      "seed": 419,
+      "condition": "clean_single",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4030691385269165
+        },
+        {
+          "step": 99,
+          "nll": 1.1751132011413574
+        },
+        {
+          "step": 299,
+          "nll": 1.0177216529846191
+        },
+        {
+          "step": 499,
+          "nll": 0.8675289154052734
+        }
+      ],
+      "seconds": 2.2440636999963317,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9474145770072937,
+      "conditional_code_bayes_nll": 0.909016125682115,
+      "nll_by_noise_draw": [
+        0.9474145770072937,
+        0.9474145770072937,
+        0.9474145770072937,
+        0.9474145770072937,
+        0.9474145770072937
+      ],
+      "all_private_zero_nll_delta": 0.38679927587509155
+    },
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4067842960357666
+        },
+        {
+          "step": 99,
+          "nll": 1.1959339380264282
+        },
+        {
+          "step": 299,
+          "nll": 1.0555084943771362
+        },
+        {
+          "step": 499,
+          "nll": 1.139190435409546
+        }
+      ],
+      "seconds": 1.9760957000107737,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.1713603019714356,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "nll_by_noise_draw": [
+        1.1714494228363037,
+        1.1762067079544067,
+        1.1685854196548462,
+        1.1695420742034912,
+        1.1710178852081299
+      ],
+      "all_private_zero_nll_delta": 0.00019414424896235793
+    },
+    {
+      "seed": 419,
+      "condition": "single_total1",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4019386768341064
+        },
+        {
+          "step": 99,
+          "nll": 1.164171576499939
+        },
+        {
+          "step": 299,
+          "nll": 1.060691475868225
+        },
+        {
+          "step": 499,
+          "nll": 1.1263694763183594
+        }
+      ],
+      "seconds": 2.4190266999939922,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.173048496246338,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "nll_by_noise_draw": [
+        1.1732444763183594,
+        1.173203468322754,
+        1.174152135848999,
+        1.1666985750198364,
+        1.1779438257217407
+      ],
+      "all_private_zero_nll_delta": -0.0021060705184936523
+    },
+    {
+      "seed": 419,
+      "condition": "repeated_total1",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.407349705696106
+        },
+        {
+          "step": 99,
+          "nll": 1.1880806684494019
+        },
+        {
+          "step": 299,
+          "nll": 1.0784947872161865
+        },
+        {
+          "step": 499,
+          "nll": 0.9926769733428955
+        }
+      ],
+      "seconds": 2.153519800005597,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.0471346616744994,
+      "conditional_code_bayes_nll": 0.9774778839676574,
+      "nll_by_noise_draw": [
+        1.037907600402832,
+        1.0524955987930298,
+        1.029676079750061,
+        1.0521093606948853,
+        1.0634846687316895
+      ],
+      "all_private_zero_nll_delta": 0.14213452339172372
+    },
+    {
+      "seed": 419,
+      "condition": "repeated_total1",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3989818096160889
+        },
+        {
+          "step": 99,
+          "nll": 1.1548718214035034
+        },
+        {
+          "step": 299,
+          "nll": 1.0582549571990967
+        },
+        {
+          "step": 499,
+          "nll": 1.142872929573059
+        }
+      ],
+      "seconds": 3.0464276999991853,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.16732919216156,
+      "conditional_code_bayes_nll": 0.9774778839676574,
+      "nll_by_noise_draw": [
+        1.1683903932571411,
+        1.1622766256332397,
+        1.1689635515213013,
+        1.1674607992172241,
+        1.169554591178894
+      ],
+      "all_private_zero_nll_delta": -0.00026226043701171875
+    },
+    {
+      "seed": 419,
+      "condition": "repeated_total4",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.407749056816101
+        },
+        {
+          "step": 99,
+          "nll": 1.1883375644683838
+        },
+        {
+          "step": 299,
+          "nll": 1.104264259338379
+        },
+        {
+          "step": 499,
+          "nll": 0.8871476650238037
+        }
+      ],
+      "seconds": 1.9656070000055479,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9534489035606384,
+      "conditional_code_bayes_nll": 0.909016744153924,
+      "nll_by_noise_draw": [
+        0.9482523798942566,
+        0.9530416131019592,
+        0.9475046992301941,
+        0.9616105556488037,
+        0.9568352699279785
+      ],
+      "all_private_zero_nll_delta": 0.3091750025749207
+    },
+    {
+      "seed": 419,
+      "condition": "repeated_total4",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3976894617080688
+        },
+        {
+          "step": 99,
+          "nll": 1.1659334897994995
+        },
+        {
+          "step": 299,
+          "nll": 1.051338791847229
+        },
+        {
+          "step": 499,
+          "nll": 0.8838569521903992
+        }
+      ],
+      "seconds": 2.542743799989694,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9556476235389709,
+      "conditional_code_bayes_nll": 0.909016744153924,
+      "nll_by_noise_draw": [
+        0.9509503245353699,
+        0.9627945423126221,
+        0.9493169188499451,
+        0.9539214968681335,
+        0.9612548351287842
+      ],
+      "all_private_zero_nll_delta": 0.2624539971351624
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4063518047332764
+        },
+        {
+          "step": 99,
+          "nll": 1.2126553058624268
+        },
+        {
+          "step": 299,
+          "nll": 1.0499435663223267
+        },
+        {
+          "step": 499,
+          "nll": 1.132442593574524
+        }
+      ],
+      "seconds": 2.0107645000098273,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.1714987754821777,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "nll_by_noise_draw": [
+        1.1714942455291748,
+        1.1744465827941895,
+        1.1699918508529663,
+        1.1704438924789429,
+        1.1711173057556152
+      ],
+      "all_private_zero_nll_delta": -0.003499150276184082
+    },
+    {
+      "seed": 419,
+      "condition": "noise_only",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4030065536499023
+        },
+        {
+          "step": 99,
+          "nll": 1.1758354902267456
+        },
+        {
+          "step": 299,
+          "nll": 1.0445754528045654
+        },
+        {
+          "step": 499,
+          "nll": 1.13120698928833
+        }
+      ],
+      "seconds": 2.221680099988589,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.171522569656372,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "nll_by_noise_draw": [
+        1.1694098711013794,
+        1.1702193021774292,
+        1.1726129055023193,
+        1.1724070310592651,
+        1.1729637384414673
+      ],
+      "all_private_zero_nll_delta": -0.003517222404479936
+    },
+    {
+      "seed": 431,
+      "condition": "clean_single",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3158575296401978
+        },
+        {
+          "step": 99,
+          "nll": 1.0566301345825195
+        },
+        {
+          "step": 299,
+          "nll": 1.1256731748580933
+        },
+        {
+          "step": 499,
+          "nll": 0.8527851700782776
+        }
+      ],
+      "seconds": 2.737367699999595,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9011714458465576,
+      "conditional_code_bayes_nll": 0.8645833165458796,
+      "nll_by_noise_draw": [
+        0.9011714458465576,
+        0.9011714458465576,
+        0.9011714458465576,
+        0.9011714458465576,
+        0.9011714458465576
+      ],
+      "all_private_zero_nll_delta": 0.49581217765808105
+    },
+    {
+      "seed": 431,
+      "condition": "clean_single",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.30869460105896
+        },
+        {
+          "step": 99,
+          "nll": 1.052670955657959
+        },
+        {
+          "step": 299,
+          "nll": 0.9614377021789551
+        },
+        {
+          "step": 499,
+          "nll": 0.8075889348983765
+        }
+      ],
+      "seconds": 2.3668917000031797,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.8840312361717224,
+      "conditional_code_bayes_nll": 0.8645833165458796,
+      "nll_by_noise_draw": [
+        0.8840312361717224,
+        0.8840312361717224,
+        0.8840312361717224,
+        0.8840312361717224,
+        0.8840312361717224
+      ],
+      "all_private_zero_nll_delta": 0.4110485911369324
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3208307027816772
+        },
+        {
+          "step": 99,
+          "nll": 1.0640476942062378
+        },
+        {
+          "step": 299,
+          "nll": 1.1163126230239868
+        },
+        {
+          "step": 499,
+          "nll": 1.023585319519043
+        }
+      ],
+      "seconds": 2.086939100001473,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.1196973085403443,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "nll_by_noise_draw": [
+        1.117271900177002,
+        1.1195520162582397,
+        1.122815728187561,
+        1.1212295293807983,
+        1.1176173686981201
+      ],
+      "all_private_zero_nll_delta": 0.007399702072143466
+    },
+    {
+      "seed": 431,
+      "condition": "single_total1",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3153541088104248
+        },
+        {
+          "step": 99,
+          "nll": 1.0652915239334106
+        },
+        {
+          "step": 299,
+          "nll": 1.1193767786026
+        },
+        {
+          "step": 499,
+          "nll": 0.8867875337600708
+        }
+      ],
+      "seconds": 2.119989499988151,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.0178520441055299,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "nll_by_noise_draw": [
+        1.0081861019134521,
+        1.011142611503601,
+        1.028878092765808,
+        1.0189472436904907,
+        1.0221061706542969
+      ],
+      "all_private_zero_nll_delta": 0.10660877227783194
+    },
+    {
+      "seed": 431,
+      "condition": "repeated_total1",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3193211555480957
+        },
+        {
+          "step": 99,
+          "nll": 1.0545029640197754
+        },
+        {
+          "step": 299,
+          "nll": 1.1695735454559326
+        },
+        {
+          "step": 499,
+          "nll": 0.9768412113189697
+        }
+      ],
+      "seconds": 2.022422000009101,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.0365556478500366,
+      "conditional_code_bayes_nll": 0.9329190941221386,
+      "nll_by_noise_draw": [
+        1.0210944414138794,
+        1.033813714981079,
+        1.0350831747055054,
+        1.0452412366867065,
+        1.0475456714630127
+      ],
+      "all_private_zero_nll_delta": 0.08591198921203613
+    },
+    {
+      "seed": 431,
+      "condition": "repeated_total1",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.314088225364685
+        },
+        {
+          "step": 99,
+          "nll": 1.0605242252349854
+        },
+        {
+          "step": 299,
+          "nll": 1.2063463926315308
+        },
+        {
+          "step": 499,
+          "nll": 0.9559512138366699
+        }
+      ],
+      "seconds": 2.211629900004482,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.0086828589439392,
+      "conditional_code_bayes_nll": 0.9329190941221386,
+      "nll_by_noise_draw": [
+        0.9949973225593567,
+        1.0034692287445068,
+        1.0081003904342651,
+        1.01189386844635,
+        1.0249534845352173
+      ],
+      "all_private_zero_nll_delta": 0.11241530179977421
+    },
+    {
+      "seed": 431,
+      "condition": "repeated_total4",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3183362483978271
+        },
+        {
+          "step": 99,
+          "nll": 1.0523803234100342
+        },
+        {
+          "step": 299,
+          "nll": 0.9899308085441589
+        },
+        {
+          "step": 499,
+          "nll": 0.8528932929039001
+        }
+      ],
+      "seconds": 2.046748900000239,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9043831944465637,
+      "conditional_code_bayes_nll": 0.8645833165554461,
+      "nll_by_noise_draw": [
+        0.903266191482544,
+        0.9050445556640625,
+        0.9024686813354492,
+        0.9018746018409729,
+        0.90926194190979
+      ],
+      "all_private_zero_nll_delta": 0.27620040178298955
+    },
+    {
+      "seed": 431,
+      "condition": "repeated_total4",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.310051679611206
+        },
+        {
+          "step": 99,
+          "nll": 1.0439647436141968
+        },
+        {
+          "step": 299,
+          "nll": 0.9429524540901184
+        },
+        {
+          "step": 499,
+          "nll": 0.8096354007720947
+        }
+      ],
+      "seconds": 2.185302600002615,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.8963490843772888,
+      "conditional_code_bayes_nll": 0.8645833165554461,
+      "nll_by_noise_draw": [
+        0.8968523144721985,
+        0.8954185843467712,
+        0.8981571197509766,
+        0.8949191570281982,
+        0.8963982462882996
+      ],
+      "all_private_zero_nll_delta": 0.26719676256179814
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3208332061767578
+        },
+        {
+          "step": 99,
+          "nll": 1.0596027374267578
+        },
+        {
+          "step": 299,
+          "nll": 1.1118857860565186
+        },
+        {
+          "step": 499,
+          "nll": 1.0309555530548096
+        }
+      ],
+      "seconds": 1.6496658999967622,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.1184587478637695,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "nll_by_noise_draw": [
+        1.1172120571136475,
+        1.1177901029586792,
+        1.1205776929855347,
+        1.1196593046188354,
+        1.1170545816421509
+      ],
+      "all_private_zero_nll_delta": 0.006381630897521973
+    },
+    {
+      "seed": 431,
+      "condition": "noise_only",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3177543878555298
+        },
+        {
+          "step": 99,
+          "nll": 1.0642282962799072
+        },
+        {
+          "step": 299,
+          "nll": 1.1093239784240723
+        },
+        {
+          "step": 499,
+          "nll": 1.0253630876541138
+        }
+      ],
+      "seconds": 1.8601521000091452,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.119189190864563,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "nll_by_noise_draw": [
+        1.118432879447937,
+        1.1180869340896606,
+        1.1194090843200684,
+        1.1211276054382324,
+        1.1188894510269165
+      ],
+      "all_private_zero_nll_delta": 0.004425597190856889
+    },
+    {
+      "seed": 449,
+      "condition": "clean_single",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3546030521392822
+        },
+        {
+          "step": 99,
+          "nll": 1.0536854267120361
+        },
+        {
+          "step": 299,
+          "nll": 1.1626993417739868
+        },
+        {
+          "step": 499,
+          "nll": 0.6763811707496643
+        }
+      ],
+      "seconds": 1.6801756000058958,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9114524722099304,
+      "conditional_code_bayes_nll": 0.858846677541775,
+      "nll_by_noise_draw": [
+        0.9114524722099304,
+        0.9114524722099304,
+        0.9114524722099304,
+        0.9114524722099304,
+        0.9114524722099304
+      ],
+      "all_private_zero_nll_delta": 0.5659883618354797
+    },
+    {
+      "seed": 449,
+      "condition": "clean_single",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3730723857879639
+        },
+        {
+          "step": 99,
+          "nll": 1.0513757467269897
+        },
+        {
+          "step": 299,
+          "nll": 1.022722601890564
+        },
+        {
+          "step": 499,
+          "nll": 0.6602382063865662
+        }
+      ],
+      "seconds": 1.879259399996954,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9115923047065735,
+      "conditional_code_bayes_nll": 0.858846677541775,
+      "nll_by_noise_draw": [
+        0.9115923047065735,
+        0.9115923047065735,
+        0.9115923047065735,
+        0.9115923047065735,
+        0.9115923047065735
+      ],
+      "all_private_zero_nll_delta": 0.5056154131889343
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3535957336425781
+        },
+        {
+          "step": 99,
+          "nll": 1.0510835647583008
+        },
+        {
+          "step": 299,
+          "nll": 1.164472222328186
+        },
+        {
+          "step": 499,
+          "nll": 1.011398434638977
+        }
+      ],
+      "seconds": 1.754583999994793,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.138345217704773,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "nll_by_noise_draw": [
+        1.139907717704773,
+        1.1401857137680054,
+        1.1390873193740845,
+        1.1389316320419312,
+        1.1336137056350708
+      ],
+      "all_private_zero_nll_delta": -0.015703415870666593
+    },
+    {
+      "seed": 449,
+      "condition": "single_total1",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.376495122909546
+        },
+        {
+          "step": 99,
+          "nll": 1.0434317588806152
+        },
+        {
+          "step": 299,
+          "nll": 1.189976453781128
+        },
+        {
+          "step": 499,
+          "nll": 0.7523943185806274
+        }
+      ],
+      "seconds": 2.184539300011238,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9431472659111023,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "nll_by_noise_draw": [
+        0.9475476741790771,
+        0.9344778656959534,
+        0.9455194473266602,
+        0.9553330540657043,
+        0.9328582882881165
+      ],
+      "all_private_zero_nll_delta": 0.18160847425460813
+    },
+    {
+      "seed": 449,
+      "condition": "repeated_total1",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3544461727142334
+        },
+        {
+          "step": 99,
+          "nll": 1.0468857288360596
+        },
+        {
+          "step": 299,
+          "nll": 1.0729906558990479
+        },
+        {
+          "step": 499,
+          "nll": 0.7792081832885742
+        }
+      ],
+      "seconds": 1.8764264999917941,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9881209611892701,
+      "conditional_code_bayes_nll": 0.9286366931663764,
+      "nll_by_noise_draw": [
+        0.9685054421424866,
+        0.9648315906524658,
+        1.0241605043411255,
+        1.0014671087265015,
+        0.9816401600837708
+      ],
+      "all_private_zero_nll_delta": 0.1374843835830688
+    },
+    {
+      "seed": 449,
+      "condition": "repeated_total1",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3730294704437256
+        },
+        {
+          "step": 99,
+          "nll": 1.035192847251892
+        },
+        {
+          "step": 299,
+          "nll": 1.0539162158966064
+        },
+        {
+          "step": 499,
+          "nll": 0.8099467754364014
+        }
+      ],
+      "seconds": 1.9696006000012858,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9944577932357788,
+      "conditional_code_bayes_nll": 0.9286366931663764,
+      "nll_by_noise_draw": [
+        0.9849249720573425,
+        0.9655494689941406,
+        1.0120221376419067,
+        1.0293493270874023,
+        0.9804430603981018
+      ],
+      "all_private_zero_nll_delta": 0.12843887805938725
+    },
+    {
+      "seed": 449,
+      "condition": "repeated_total4",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3550281524658203
+        },
+        {
+          "step": 99,
+          "nll": 1.0471060276031494
+        },
+        {
+          "step": 299,
+          "nll": 0.9853507280349731
+        },
+        {
+          "step": 499,
+          "nll": 0.6508567333221436
+        }
+      ],
+      "seconds": 1.6726073999889195,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9152562141418457,
+      "conditional_code_bayes_nll": 0.8588466775424006,
+      "nll_by_noise_draw": [
+        0.9122934341430664,
+        0.9166730046272278,
+        0.9176722168922424,
+        0.9208778738975525,
+        0.9087645411491394
+      ],
+      "all_private_zero_nll_delta": 0.35008852481842045
+    },
+    {
+      "seed": 449,
+      "condition": "repeated_total4",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3712408542633057
+        },
+        {
+          "step": 99,
+          "nll": 1.0354392528533936
+        },
+        {
+          "step": 299,
+          "nll": 0.9691903591156006
+        },
+        {
+          "step": 499,
+          "nll": 0.6613752841949463
+        }
+      ],
+      "seconds": 1.868024499999592,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 0.9190502405166626,
+      "conditional_code_bayes_nll": 0.8588466775424006,
+      "nll_by_noise_draw": [
+        0.9156449437141418,
+        0.9125604629516602,
+        0.9178321957588196,
+        0.9382703304290771,
+        0.9109432697296143
+      ],
+      "all_private_zero_nll_delta": 0.25142607688903806
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "readout": "existing_mean",
+      "parameters": 1396,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.353529930114746
+        },
+        {
+          "step": 99,
+          "nll": 1.050532341003418
+        },
+        {
+          "step": 299,
+          "nll": 1.1590955257415771
+        },
+        {
+          "step": 499,
+          "nll": 1.009482741355896
+        }
+      ],
+      "seconds": 1.5594701999943936,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.1364959716796874,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "nll_by_noise_draw": [
+        1.1387253999710083,
+        1.1384987831115723,
+        1.133658528327942,
+        1.1383646726608276,
+        1.1332324743270874
+      ],
+      "all_private_zero_nll_delta": -0.013246798515319735
+    },
+    {
+      "seed": 449,
+      "condition": "noise_only",
+      "readout": "role_bank",
+      "parameters": 1402,
+      "steps": 500,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3755658864974976
+        },
+        {
+          "step": 99,
+          "nll": 1.0433813333511353
+        },
+        {
+          "step": 299,
+          "nll": 1.1669648885726929
+        },
+        {
+          "step": 499,
+          "nll": 1.021226167678833
+        }
+      ],
+      "seconds": 1.8091599000035785,
+      "frozen_encoder_unchanged": true,
+      "expected_nll": 1.1342278718948364,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "nll_by_noise_draw": [
+        1.136590838432312,
+        1.133839726448059,
+        1.1340359449386597,
+        1.1376116275787354,
+        1.129061222076416
+      ],
+      "all_private_zero_nll_delta": -0.014156579971313477
+    }
+  ],
+  "missing_refit": {
+    "seed": 449,
+    "verified_input_sha256": "dccd6e782203fe6213df4ea84128cae8c1da4ed5b6db692e4b8f3860bdcb3c10",
+    "before": {
+      "expected_nll": 1.134182381629944,
+      "conditional_code_bayes_nll": null,
+      "full_planted_factor_bayes_nll": 0.8588466644287109,
+      "shared_only_mixture_bayes_nll": 1.1156514648448415,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.0009145498275757724,
+        "all_private_zero": -0.009141683578491211,
+        "private_donor_permutation": -0.0015504598617555043,
+        "common_donor_permutation": 0.010016274452209428,
+        "common_zero": -0.002005720138549938
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.00017626285552974075,
+          0.0001094102859495738,
+          -0.00010449886322017043,
+          -3.483295440687151e-05
+        ],
+        [
+          -0.00045650005340580613,
+          -0.000369286537170499,
+          -0.0004555702209472212,
+          -0.0002676486968995473
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    "trainable_readout_parameters": 1396,
+    "trace": [
+      {
+        "step": 0,
+        "nll": 1.0813359022140503
+      },
+      {
+        "step": 99,
+        "nll": 1.033381462097168
+      },
+      {
+        "step": 299,
+        "nll": 1.1589138507843018
+      },
+      {
+        "step": 499,
+        "nll": 1.0049443244934082
+      }
+    ],
+    "training_seconds": 4.719195900004706,
+    "frozen_parameters_unchanged": true,
+    "expected_nll": 1.1402177333831787,
+    "conditional_code_bayes_nll": null,
+    "full_planted_factor_bayes_nll": 0.8588466644287109,
+    "shared_only_mixture_bayes_nll": 1.1156514648448415,
+    "forward_perturbation_nll_deltas": {
+      "all_private_prior_N0": -0.0014066696166992188,
+      "all_private_zero": -0.014125156402587935,
+      "private_donor_permutation": -0.002407264709472612,
+      "common_donor_permutation": 0.00901706218719478,
+      "common_zero": -0.006395912170410023
+    },
+    "one_slot_prior_nll_deltas": [
+      [
+        0.00033473968505859375,
+        0.00012543201446546526,
+        -2.9206275939941406e-05,
+        2.2649765014648438e-05
+      ],
+      [
+        -0.0007798194885253462,
+        -0.0007319211959837535,
+        -0.0008319139480590376,
+        -0.0005355358123779741
+      ]
+    ],
+    "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+  },
+  "patient_execution": false,
+  "server_execution": false
+}

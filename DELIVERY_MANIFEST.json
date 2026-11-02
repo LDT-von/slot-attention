@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T11:30:17.806354+08:00",
-  "base_commit_before_delivery": "718211f7c30866a2742ab18ca088b70c1da3c10f",
+  "recorded_at": "2026-11-02T16:03:07.057515+08:00",
+  "base_commit_before_delivery": "eb3b65941da4c66f3761c50ebea2a9cebc050889",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 603,
-  "repository_file_count_including_manifest": 604,
+  "covered_file_count": 614,
+  "repository_file_count_including_manifest": 615,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 714539,
-      "sha256": "25628cabe23bca59dc07029059c650bf4686e924fc9ec36d9e7a4b89234429e6"
+      "bytes": 717997,
+      "sha256": "d08347746dc4d3b24d9fd9759fdd25aa23173d59c363808ecaff8e49edd18c0c"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -498,6 +498,31 @@
       "path": "docs/research/slotspe_common_private_20261101/slot_increment_review_20261102.md",
       "bytes": 4452,
       "sha256": "b8d03d5de57b6e1c906404df86ced2efc667465130aa877d1ae001c210a0e417"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/slot_pooling_rate_neural_receipt.json",
+      "bytes": 34255,
+      "sha256": "2e51ead2c62ec94b0cdd963616e0ae1a0a48196e848b3644f585a9078d8d69cc"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/slot_pooling_rate_plan_20261102.json",
+      "bytes": 2318,
+      "sha256": "3c6a941e047a83aa631be4a5e5f1888e722aee03acd1c72210078e3dec87b1f0"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/slot_pooling_rate_review_20261102.md",
+      "bytes": 9563,
+      "sha256": "5b75b661a173755b81530d21fabc80250f12d2efcf7fd6c289f0348d74e77aef"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/slot_pooling_rate_stage_summary.json",
+      "bytes": 4432,
+      "sha256": "dd3fe2be15539f0ba0750b3949c1f9d3c00bd247f9e01b8afce266676e417b77"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/slot_pooling_rate_validation_receipt.json",
+      "bytes": 1623,
+      "sha256": "6c85fe59ab50b611880784c83651a18a536c5d6e305c064e4ca5560b184d081f"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/slot_set_information_receipt.json",
@@ -1910,6 +1935,11 @@
       "sha256": "14dd53eba2f9f32e75361b2805b64d455006bf482c755a26c8e79f6ba985cc12"
     },
     {
+      "path": "scripts/check_slot_pooling_rate.py",
+      "bytes": 7109,
+      "sha256": "ba0f743279e021b11ad689f2c11e736dfe91f6e2069de6d909a4732d29eda380"
+    },
+    {
       "path": "scripts/check_slot_set_information.py",
       "bytes": 3360,
       "sha256": "e5994b4c1f0ef654ff6522919002d34bf3ae2be92b067f8053bea8bbbd76970c"
@@ -2280,6 +2310,11 @@
       "sha256": "d06ed2c1b96c47e4ae4e25ff74cded042b0806f3f66a33038056bb885d9b309a"
     },
     {
+      "path": "scripts/summarize_slot_pooling_rate.py",
+      "bytes": 5374,
+      "sha256": "5e5409fef1422ffdb5d5e9b00caa8d61a9e9288e538b03524aa017ce3449934f"
+    },
+    {
       "path": "scripts/summarize_slotspe_direct_diversity.py",
       "bytes": 13873,
       "sha256": "1431054c3b492358e66018a796fb91862befd3d5b682fff6c1395e71afc2ed09"
@@ -2398,6 +2433,11 @@
       "path": "slotspe_proof/gate_pair.py",
       "bytes": 39201,
       "sha256": "6f6b8222a101e1ad543cf7aca9d2ed0127415ee36ce763129bd79014da99ee6b"
+    },
+    {
+      "path": "slotspe_proof/gaussian_pooling_oracle.py",
+      "bytes": 2565,
+      "sha256": "e347705ad8131574f50de2b8162f3859108bd468923d828091d4c82a268083ed"
     },
     {
       "path": "slotspe_proof/incremental_probe.py",
@@ -2630,6 +2670,11 @@
       "sha256": "2da7600ce537299fbd1cd70d3cd5bd7e9c5d0d1249150934400fae2acbc67570"
     },
     {
+      "path": "slotspe_proof/slot_pooling_diagnostics.py",
+      "bytes": 4159,
+      "sha256": "1f5ce06dab83308e57f0acac4aa36908e5cb2329853a2bc8d54cad6c665da163"
+    },
+    {
       "path": "slotspe_proof/slot_regularization.py",
       "bytes": 5786,
       "sha256": "a9178ba6bc358bc46dc23f65f71a9e73005bc27318c18140c0081d4043eb02c9"
@@ -2740,6 +2785,11 @@
       "sha256": "2beb62e5ddc49400bc730ef0aed612142151ef98905a63e2216043d8a9b3cc82"
     },
     {
+      "path": "tests/test_gaussian_pooling_oracle.py",
+      "bytes": 1585,
+      "sha256": "2633981025c4f1609e186149a59d26c3ad949c9bf2a1ecf4488e6c30b7023d9d"
+    },
+    {
       "path": "tests/test_incremental_probe.py",
       "bytes": 1628,
       "sha256": "71ad768af84b0e50022a3ee1688d45134527df75bc0586956d2915251c2d1644"
@@ -2773,6 +2823,11 @@
       "path": "tests/test_slot_increment_probe.py",
       "bytes": 1308,
       "sha256": "9a770f5bbeed247e643397bdac223785c442173b96588c84848cad06cc0fb2d5"
+    },
+    {
+      "path": "tests/test_slot_pooling_diagnostics.py",
+      "bytes": 2570,
+      "sha256": "c0dce9c684173606366fa29885a50ca47c6c31a65c9c9537714649fcf9bbd7d7"
     },
     {
       "path": "tests/test_slot_relations.py",

@@ -8854,4 +8854,50 @@
   "gaps_reasons": "Current architecture has no patient dataset adapter or patient --run entry. Raw partial receipt remains running as historical bytes; independent completion audit marks partial. Do not present code push as patient-ready or append to existing server queues.",
   "next_action_user_inputs": "Push isolated research branch and transfer SERVER_HANDOFF. Server can run fresh synthetic readout controls; patient adaptation, matched protocol and doctor remain necessary before concrete patient training. User asked whether to pause local continuing goal; await explicit response."
 }
+,
+"latest_equal_total_rate_pooling_20261102":{
+  "recorded_at": "2026-11-02",
+  "route_task": "Resume shared/private research: equal-total-rate XOR pooling attribution and missing refit acceptance",
+  "completed_work": "Completed seed449 frozen-encoder refit from hash-verified synthetic replay. Ran 30 readout executions, including 12 exact old repeats and 18 new readout/condition fits. Quantified total-rate confounding and known Gaussian raw-mean information loss. Kept role bank diagnostic-only; retained negative/unstable results and unchanged main architecture.",
+  "paths_commit": {
+    "branch": "codex/common-private-mechanism-review",
+    "parent_commit": "eb3b65941da4c66f3761c50ebea2a9cebc050889",
+    "report": "docs/research/slotspe_common_private_20261101/slot_pooling_rate_review_20261102.md",
+    "summary": "docs/research/slotspe_common_private_20261101/slot_pooling_rate_stage_summary.json",
+    "validation": "docs/research/slotspe_common_private_20261101/slot_pooling_rate_validation_receipt.json",
+    "local_commit_prepared": true,
+    "pushed": false
+  },
+  "checks_actual_execution_raw_receipt": {
+    "schema": "slotspe_pooling_rate_validation_v1",
+    "recorded_at": "2026-11-02",
+    "previous_goal_turn_classification": "Progress: prior version pushed and goal paused at explicit user request. User explicitly resumed current research turn.",
+    "base_commit": "eb3b65941da4c66f3761c50ebea2a9cebc050889",
+    "focused_tests": "21 passed in 4.19s",
+    "full_repository_tests_rerun": false,
+    "synthetic_readout_executions": 30,
+    "deterministic_old_readout_repeats": 12,
+    "new_readout_conditions_or_arms": 18,
+    "missing_old_refit_completed": 1,
+    "optimizer_updates_this_stage": 15500,
+    "steps_each": 500,
+    "evaluation_noise_draws": 5,
+    "original_files_hash_verified": 11,
+    "preexecution_source_pins_reverified": true,
+    "historical_partial_receipt_unchanged": true,
+    "raw_receipt": "docs/research/slotspe_common_private_20261101/slot_pooling_rate_neural_receipt.json",
+    "raw_receipt_sha256": "2e51ead2c62ec94b0cdd963616e0ae1a0a48196e848b3644f585a9078d8d69cc",
+    "known_model_mi": "Gaussian quadrature only, not learned-slot empirical MI. 128/256 convergence checked.",
+    "patient_training": 0,
+    "patient_inference": 0,
+    "patient_checkpoint_reads": 0,
+    "server_execution": false,
+    "remote_live_status": "git ls-remote failed in both network contexts; prior remote SHA is not a current verification",
+    "main_architecture_changed": false,
+    "new_components": "diagnostic-only role-bank and known-answer channel helpers",
+    "limitations": "Same exploratory data; near-matched parameters do not isolate phi shape/scale/optimization. No stable readout superiority or patient readiness."
+  },
+  "gaps_reasons": "Current role-bank control changes phi shape and scale, fails seed419, and does not improve all conditions. Old learned-feature refit mean NLL1.15713 versus original about1.1439 is not recovery. Same synthetic data, no independent confirmation or multi-factor slot coverage. Remote update check unavailable; no patient adapter.",
+  "next_action_user_inputs": "Keep existing main model. Before adding content loss, isolate fixed-role access, pooling scale and phi shape with capacity/optimization controls; test multi-factor content and noisy-G conditional-content counterexamples. No research-choice answer required; patient/server execution remains unauthorized."
+}
 }

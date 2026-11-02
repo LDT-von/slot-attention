@@ -1,0 +1,23 @@
+{
+  "schema": "slotspe_equal_total_rate_pooling_v1",
+  "recorded_before_execution": true,
+  "base_commit": "eb3b65941da4c66f3761c50ebea2a9cebc050889",
+  "question": "Separate total-rate confounding, noisy-slot dilution and finite typed-readout access before adding content losses.",
+  "seeds": [419, 431, 449],
+  "conditions": ["clean_single", "single_total1", "repeated_total1", "repeated_total4", "noise_only"],
+  "readouts": ["existing_mean", "role_bank"],
+  "new_oracle_readout_trainings": 30,
+  "missing_old_refit_completion": "One 500-step refit of saved and hash-verified exact seed449 synthetic replay; old partial receipt stays unchanged.",
+  "updates_per_training": 500,
+  "optimizer": "Adam lr=.003, batch32, fixed last step; no clipping or validation selection",
+  "data": "Reuse exact original XOR train/test schedules for attribution, not independent confirmation; each modality gets only its own privileged planted bit, common gets true S.",
+  "paired_controls": "Same data, batches and explicit noise; same survival head and role-offset initialization. Phi shapes differ; phi initialization cannot be paired tensorwise.",
+  "readout_parameters": {"existing_mean": 1396, "role_bank": 1402},
+  "role_bank": "Fixed one-hot role tensor product then sum; algebraically role-indexed concatenation, no patient-dependent attention/weight/selection. Requires paired value-role permutation and stable roles; not semantic identity or a novel contribution.",
+  "rate_units": "Gaussian rate nats per modality summed over all slots. Single_total1 = one slot x1; repeated_total1 = four slots x.25; repeated_total4 = four slots x1. Deterministic clean code has no finite rate claim.",
+  "known_math": "For code amplitude^2=1-exp(-2c), variance=exp(-2c), KL=c and raw repeated-bit Gaussian SNR=K*(exp(2C/K)-1) <= exp(2C)-1 for fixed total C. This concerns privileged scalar Gaussian codes, not arbitrary neural pooling.",
+  "evaluation": "Five paired noise draws scored as separate censored-survival NLL values, then averaged; proper survival-distribution Bayes mixture. Fixed-head perturbations retained from previous receipt.",
+  "outputs": "Fresh ignored local_evidence directory; public aggregate receipt only, no synthetic arrays or weights committed.",
+  "patient_execution": false,
+  "server_execution": false
+}
