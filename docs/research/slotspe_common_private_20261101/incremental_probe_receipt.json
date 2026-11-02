@@ -1,0 +1,637 @@
+{
+  "all_passed": true,
+  "results": [
+    {
+      "seed": 21,
+      "case": "quadratic_copy",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 1.2862154336178635e-11,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 2.999995717824722,
+        "test_mse": 1.3186887714374365e-11
+      },
+      "joint": {
+        "validation_mse": 6.729600421265428e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 4.999989620834262,
+        "test_mse": 7.033303889096269e-13
+      },
+      "test_mse_gain": 1.2483557325464738e-11,
+      "gain_relative_to_fit_mean_baseline": 8.873342912374182e-12,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 21,
+      "case": "nonlinear_copy",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 2.796418273964008e-08,
+        "family": "rbf",
+        "bandwidth": 0.5,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 13.440848185532237,
+        "test_mse": 2.2678383563045378e-08
+      },
+      "joint": {
+        "validation_mse": 5.092586033081462e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.9999783886556575,
+        "test_mse": 4.770574041878991e-13
+      },
+      "test_mse_gain": 2.267790650564119e-08,
+      "gain_relative_to_fit_mean_baseline": 5.334866259544608e-08,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 21,
+      "case": "noise_private",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 1.2862154336178635e-11,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 2.999995717824722,
+        "test_mse": 1.3186887714374365e-11
+      },
+      "joint": {
+        "validation_mse": 5.360389783287867e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.99999154093236,
+        "test_mse": 5.3118824875063884e-12
+      },
+      "test_mse_gain": 7.875005226867977e-12,
+      "gain_relative_to_fit_mean_baseline": 5.597572870691103e-12,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 21,
+      "case": "constant_private",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 1.2862154336178635e-11,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 2.999995717824722,
+        "test_mse": 1.3186887714374365e-11
+      },
+      "joint": {
+        "validation_mse": 5.063505364593711e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 2.9999973613549633,
+        "test_mse": 5.213493421217882e-12
+      },
+      "test_mse_gain": 7.973394293156483e-12,
+      "gain_relative_to_fit_mean_baseline": 5.667508058333919e-12,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 21,
+      "case": "private_signal",
+      "passed": true,
+      "threshold": 0.15,
+      "common": {
+        "validation_mse": 0.9830826523093434,
+        "family": "rbf",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1.0,
+        "effective_df": 0.7115886701516837,
+        "test_mse": 1.033048805571723
+      },
+      "joint": {
+        "validation_mse": 9.609969032417514e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.99999154093236,
+        "test_mse": 1.058378341982186e-12
+      },
+      "test_mse_gain": 1.0330488055706646,
+      "gain_relative_to_fit_mean_baseline": 0.9957149550433654,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 21,
+      "case": "xor",
+      "passed": true,
+      "threshold": 0.15,
+      "common": {
+        "validation_mse": 0.2403322375056857,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 1.9999990017151295,
+        "test_mse": 0.2559235761339039
+      },
+      "joint": {
+        "validation_mse": 9.685347525763918e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 3.9999964015397054,
+        "test_mse": 1.0183537249913628e-12
+      },
+      "test_mse_gain": 0.2559235761328855,
+      "gain_relative_to_fit_mean_baseline": 1.0235693571002555,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 21,
+      "case": "correlated_increment",
+      "passed": true,
+      "threshold": 0.15,
+      "common": {
+        "validation_mse": 0.3541643702869347,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 0.01,
+        "effective_df": 2.95829048611602,
+        "test_mse": 0.36738325216217504
+      },
+      "joint": {
+        "validation_mse": 4.564222424125811e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.999905323310383,
+        "test_mse": 4.992511569461251e-12
+      },
+      "test_mse_gain": 0.36738325215718254,
+      "gain_relative_to_fit_mean_baseline": 0.29053714769177114,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 37,
+      "case": "quadratic_copy",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 8.319889956595802e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 2.999996253329921,
+        "test_mse": 8.326040365012193e-12
+      },
+      "joint": {
+        "validation_mse": 6.216916777533685e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 4.9999898252224275,
+        "test_mse": 6.283454298313977e-13
+      },
+      "test_mse_gain": 7.697694935180795e-12,
+      "gain_relative_to_fit_mean_baseline": 5.581661245944286e-12,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 37,
+      "case": "nonlinear_copy",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 4.176609845778173e-08,
+        "family": "rbf",
+        "bandwidth": 0.5,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 14.047361408840331,
+        "test_mse": 4.1182844936059514e-08
+      },
+      "joint": {
+        "validation_mse": 5.179157524670468e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.9999794346518485,
+        "test_mse": 5.292542519650463e-13
+      },
+      "test_mse_gain": 4.1182315681807546e-08,
+      "gain_relative_to_fit_mean_baseline": 9.268043773507388e-08,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 37,
+      "case": "noise_private",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 8.319889956595802e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 2.999996253329921,
+        "test_mse": 8.326040365012193e-12
+      },
+      "joint": {
+        "validation_mse": 3.22684339393097e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.9999926678985505,
+        "test_mse": 3.257133340835181e-12
+      },
+      "test_mse_gain": 5.068907024177012e-12,
+      "gain_relative_to_fit_mean_baseline": 3.675505737027378e-12,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 37,
+      "case": "constant_private",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 8.319889956595802e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 2.999996253329921,
+        "test_mse": 8.326040365012193e-12
+      },
+      "joint": {
+        "validation_mse": 3.347887593817431e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 2.9999977088033845,
+        "test_mse": 3.293010880606941e-12
+      },
+      "test_mse_gain": 5.033029484405252e-12,
+      "gain_relative_to_fit_mean_baseline": 3.649490640946002e-12,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 37,
+      "case": "private_signal",
+      "passed": true,
+      "threshold": 0.15,
+      "common": {
+        "validation_mse": 0.9499127513423841,
+        "family": "rbf",
+        "bandwidth": 2.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 5.807321204398129,
+        "test_mse": 0.9700125368580872
+      },
+      "joint": {
+        "validation_mse": 9.818390164732722e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.9999926678985505,
+        "test_mse": 1.0322571054478081e-12
+      },
+      "test_mse_gain": 0.9700125368570549,
+      "gain_relative_to_fit_mean_baseline": 1.0237109414890029,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 37,
+      "case": "xor",
+      "passed": true,
+      "threshold": 0.15,
+      "common": {
+        "validation_mse": 0.24975907446395543,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 1.9999990015319744,
+        "test_mse": 0.2506912832262546
+      },
+      "joint": {
+        "validation_mse": 1.0068710681950813e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 3.999996383716165,
+        "test_mse": 1.0059200949785333e-12
+      },
+      "test_mse_gain": 0.2506912832252487,
+      "gain_relative_to_fit_mean_baseline": 1.0011153456492534,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 37,
+      "case": "correlated_increment",
+      "passed": true,
+      "threshold": 0.15,
+      "common": {
+        "validation_mse": 0.3418758492062733,
+        "family": "rbf",
+        "bandwidth": 2.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 5.807321204398129,
+        "test_mse": 0.3492513381607921
+      },
+      "joint": {
+        "validation_mse": 3.5344699635337508e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.999931627743968,
+        "test_mse": 3.775573829898066e-12
+      },
+      "test_mse_gain": 0.34925133815701653,
+      "gain_relative_to_fit_mean_baseline": 0.308940595071191,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 59,
+      "case": "quadratic_copy",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 1.0015833905074136e-11,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 2.9999959568407437,
+        "test_mse": 9.976459424130337e-12
+      },
+      "joint": {
+        "validation_mse": 5.407672677198277e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 4.999989780250595,
+        "test_mse": 5.728302570532518e-13
+      },
+      "test_mse_gain": 9.403629167077086e-12,
+      "gain_relative_to_fit_mean_baseline": 7.366671475328147e-12,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 59,
+      "case": "nonlinear_copy",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 6.215639329585993e-08,
+        "family": "rbf",
+        "bandwidth": 0.5,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 13.920960569020718,
+        "test_mse": 5.4502668551368337e-08
+      },
+      "joint": {
+        "validation_mse": 6.073612153279606e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.999976155615874,
+        "test_mse": 5.641407061937504e-13
+      },
+      "test_mse_gain": 5.450210441066214e-08,
+      "gain_relative_to_fit_mean_baseline": 1.1650559360153146e-07,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 59,
+      "case": "noise_private",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 1.0015833905074136e-11,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 2.9999959568407437,
+        "test_mse": 9.976459424130337e-12
+      },
+      "joint": {
+        "validation_mse": 4.334717511676044e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.999991857395401,
+        "test_mse": 4.264753702242293e-12
+      },
+      "test_mse_gain": 5.7117057218880444e-12,
+      "gain_relative_to_fit_mean_baseline": 4.474470320906934e-12,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 59,
+      "case": "constant_private",
+      "passed": true,
+      "threshold": 0.05,
+      "common": {
+        "validation_mse": 1.0015833905074136e-11,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 2.9999959568407437,
+        "test_mse": 9.976459424130337e-12
+      },
+      "joint": {
+        "validation_mse": 4.0289874577056655e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 2.9999975161341332,
+        "test_mse": 3.9312757356158584e-12
+      },
+      "test_mse_gain": 6.045183688514479e-12,
+      "gain_relative_to_fit_mean_baseline": 4.735712292570197e-12,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 59,
+      "case": "private_signal",
+      "passed": true,
+      "threshold": 0.15,
+      "common": {
+        "validation_mse": 1.0521895143483555,
+        "family": "rbf",
+        "bandwidth": 0.5,
+        "private_weight": 0.0,
+        "regularization": 0.0001,
+        "effective_df": 10.576874907413215,
+        "test_mse": 1.0885516175219527
+      },
+      "joint": {
+        "validation_mse": 1.0982798093462004e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.999991857395401,
+        "test_mse": 1.0970207357655502e-12
+      },
+      "test_mse_gain": 1.0885516175208556,
+      "gain_relative_to_fit_mean_baseline": 0.9900433818168282,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 59,
+      "case": "xor",
+      "passed": true,
+      "threshold": 0.15,
+      "common": {
+        "validation_mse": 0.24559390379362284,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 0.0,
+        "regularization": 1e-06,
+        "effective_df": 1.9999990020351812,
+        "test_mse": 0.25195598730509705
+      },
+      "joint": {
+        "validation_mse": 9.91583326566996e-13,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 3.9999963702770716,
+        "test_mse": 1.0197147380137173e-12
+      },
+      "test_mse_gain": 0.2519559873040773,
+      "gain_relative_to_fit_mean_baseline": 1.0000113604626943,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    },
+    {
+      "seed": 59,
+      "case": "correlated_increment",
+      "passed": true,
+      "threshold": 0.15,
+      "common": {
+        "validation_mse": 0.3791253032555429,
+        "family": "rbf",
+        "bandwidth": 0.5,
+        "private_weight": 0.0,
+        "regularization": 0.0001,
+        "effective_df": 10.576874907413215,
+        "test_mse": 0.3913082138131188
+      },
+      "joint": {
+        "validation_mse": 4.616875034827265e-12,
+        "family": "polynomial2",
+        "bandwidth": 1.0,
+        "private_weight": 1.0,
+        "regularization": 1e-06,
+        "effective_df": 5.9999212791487455,
+        "test_mse": 4.566665193423343e-12
+      },
+      "test_mse_gain": 0.39130821380855213,
+      "gain_relative_to_fit_mean_baseline": 0.3268427229643409,
+      "fit_rows": 256,
+      "validation_rows": 128,
+      "test_rows": 512,
+      "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+    }
+  ],
+  "scope": "21 fabricated probe fits; no neural training, patients, weights or servers",
+  "limitations": "predefined finite grid, simple scalar factors, not universal conditional independence test"
+}

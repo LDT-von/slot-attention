@@ -1,0 +1,41 @@
+{
+  "learned_gates": [
+    {
+      "case": "independent",
+      "ratio_nats_proxy": -0.00522768497467041,
+      "heldout_conditional_nll": 1.4158079624176025,
+      "passed": true,
+      "true_mi_nats": 0
+    },
+    {
+      "case": "linear",
+      "ratio_nats_proxy": 1.9507322311401367,
+      "heldout_conditional_nll": 0.9035395979881287,
+      "passed": true,
+      "true_mi_nats": 0.5108256237659908
+    },
+    {
+      "case": "quadratic",
+      "ratio_nats_proxy": 11.330323219299316,
+      "heldout_conditional_nll": 0.20620504021644592,
+      "passed": true,
+      "true_mi_nats": null
+    },
+    {
+      "case": "heteroskedastic",
+      "ratio_nats_proxy": 0.6723756790161133,
+      "heldout_conditional_nll": 1.5054054260253906,
+      "passed": true,
+      "true_mi_nats": null
+    }
+  ],
+  "oracle_gaussian": {
+    "estimated_ratio": 1.7394505739212036,
+    "population_ratio": 1.7777777777777788,
+    "true_mi": 0.5108256237659907,
+    "passed": true
+  },
+  "all_passed": true,
+  "scope": "fabricated CPU; four density-estimator fits, zero survival/patient trainings",
+  "limitations": "one density data seed; passing these cases does not certify the variational MI bound on moving network features"
+}

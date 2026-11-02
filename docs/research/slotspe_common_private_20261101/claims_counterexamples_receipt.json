@@ -1,0 +1,50 @@
+{
+  "scope": "analytic/fabricated arrays only; zero training, patient, checkpoint or server execution",
+  "conditional_kl_common_copy_invariance": {
+    "copy_scales": [
+      0,
+      1,
+      10,
+      100
+    ],
+    "kl": [
+      0.2503509612832791,
+      0.2503509612832791,
+      0.25035096128327905,
+      0.2503509612832789
+    ],
+    "conclusion": "shared predictable copy is free under a matching conditional prior"
+  },
+  "partial_probe_false_increment": {
+    "construction": "U=G^2; Y=G^2, so I(Y;U|G)=0 exactly",
+    "actual_repository_probe": {
+      "common_only_test_r2": -0.00012658003742416213,
+      "private_residual_test_r2": 0.9999999999969857,
+      "private_residual_test_pearson": 1.0,
+      "residual_variance_share_left_after_common": 1.0001265800374242,
+      "residual_train_variance_share_left_after_common": 1.0
+    }
+  },
+  "small_loss_large_gradient": {
+    "loss": 0.0002,
+    "gradient": 100.0
+  },
+  "conditional_mean_residual_not_independent": {
+    "conditional_variances": [
+      1.0,
+      4.0
+    ],
+    "conditional_means": [
+      0.0,
+      0.0
+    ]
+  },
+  "xor_synergy": {
+    "marginal_information_bits": 0,
+    "joint_information_bits": 1
+  },
+  "alignment_scaling_escape": {
+    "construction": "c_w=a*p, c_o=a*q; downstream weights /a preserve predictions; alignment scales a^2",
+    "qualified": "requires unconstrained downstream rescaling; not a claim of observed patient use"
+  }
+}

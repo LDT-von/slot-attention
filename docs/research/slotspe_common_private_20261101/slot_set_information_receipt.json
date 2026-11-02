@@ -1,0 +1,56 @@
+{
+  "status": "completed",
+  "rows": [
+    {
+      "seed": 3,
+      "slots_per_modality": 1,
+      "meanmode_test_nll": 0.6939181685447693,
+      "logit_std": 1.984394693010927e-08,
+      "parameter_count": 7045,
+      "core_updates": 500
+    },
+    {
+      "seed": 3,
+      "slots_per_modality": 4,
+      "meanmode_test_nll": 0.3650554120540619,
+      "logit_std": 3.9672353267669678,
+      "parameter_count": 7141,
+      "core_updates": 500
+    },
+    {
+      "seed": 13,
+      "slots_per_modality": 1,
+      "meanmode_test_nll": 0.6942588686943054,
+      "logit_std": 1.997464416092498e-08,
+      "parameter_count": 7045,
+      "core_updates": 500
+    },
+    {
+      "seed": 13,
+      "slots_per_modality": 4,
+      "meanmode_test_nll": 0.3626706004142761,
+      "logit_std": 5.691670894622803,
+      "parameter_count": 7141,
+      "core_updates": 500
+    },
+    {
+      "seed": 23,
+      "slots_per_modality": 1,
+      "meanmode_test_nll": 0.6980900168418884,
+      "logit_std": 0.0,
+      "parameter_count": 7045,
+      "core_updates": 500
+    },
+    {
+      "seed": 23,
+      "slots_per_modality": 4,
+      "meanmode_test_nll": 0.36469507217407227,
+      "logit_std": 5.45208740234375,
+      "parameter_count": 7141,
+      "core_updates": 500
+    }
+  ],
+  "scope": "6 generated CPU neural trainings; no patient or checkpoint reads",
+  "theory": "K1 with linear values and uniform token average sees identical means for all bags",
+  "limitation": "meanmode endpoint; K4 win demonstrates set-aggregation capacity, not private/common semantics or per-slot unique contribution"
+}
