@@ -1,0 +1,312 @@
+{
+  "schema": "slotspe_frozen_content_stage_summary_v1",
+  "source_receipt_sha256": "ca8e3056960df0ed9b7a4ff94b39b1cd516a0e10432cfd7a0777174ffa1785d7",
+  "new_neural_trainings": 30,
+  "steps_per_run": 500,
+  "core_updates": 15000,
+  "prototype_teacher_fits_neural_setup": 12,
+  "prototype_teacher_fits_gate": 12,
+  "paired_initialization_groups": 6,
+  "verified_cache_hashes": 30,
+  "summaries": [
+    {
+      "condition": "separated_informative",
+      "arm": "budget_only",
+      "test_expected_nll": 1.037084134419759,
+      "test_deterministic_nll": 1.0379456679026287,
+      "own_true_bit_linear_r2": 0.16882048999720772,
+      "other_true_bits_linear_r2": 0.08174159683325155,
+      "common_true_bits_linear_r2": 0.060851915123443644,
+      "test_expected_oracle_content_ce": 0.7173432826995849,
+      "test_expected_frozen_target_ce": 0.7182262619336446,
+      "test_expected_arm_target_ce": 0.7182262619336446,
+      "gradient_norm_mean": 0.581643207748731,
+      "training_seconds": 8.366993633331731,
+      "rate_nats_per_slot_mean": 0.7023838659127554,
+      "gradient_norm_max": 18.088294982910156,
+      "pooled_vs_common_risk_probe_gain": 0.15714502242638706,
+      "common_risk_probe_test_mse": 0.35916841252772025
+    },
+    {
+      "condition": "separated_informative",
+      "arm": "oracle_content",
+      "test_expected_nll": 1.0227516929308573,
+      "test_deterministic_nll": 1.013166864713033,
+      "own_true_bit_linear_r2": 0.9267368475111415,
+      "other_true_bits_linear_r2": 0.019431234975114713,
+      "common_true_bits_linear_r2": 0.12966616755466887,
+      "test_expected_oracle_content_ce": 0.1629944498340289,
+      "test_expected_frozen_target_ce": 0.1836615353822708,
+      "test_expected_arm_target_ce": 0.1629944498340289,
+      "gradient_norm_mean": 1.0491732460409402,
+      "training_seconds": 8.10129246666717,
+      "rate_nats_per_slot_mean": 1.0128984898328781,
+      "gradient_norm_max": 254.8151397705078,
+      "pooled_vs_common_risk_probe_gain": 0.1824963203024863,
+      "common_risk_probe_test_mse": 0.20761977168925658
+    },
+    {
+      "condition": "separated_informative",
+      "arm": "frozen_content",
+      "test_expected_nll": 1.016668975353241,
+      "test_deterministic_nll": 1.008549193541209,
+      "own_true_bit_linear_r2": 0.9250916481306574,
+      "other_true_bits_linear_r2": 0.026741568961611794,
+      "common_true_bits_linear_r2": 0.15322274192317498,
+      "test_expected_oracle_content_ce": 0.16189191887776055,
+      "test_expected_frozen_target_ce": 0.14179588754971822,
+      "test_expected_arm_target_ce": 0.14179588754971822,
+      "gradient_norm_mean": 0.910568796162804,
+      "training_seconds": 8.266847166664471,
+      "rate_nats_per_slot_mean": 1.0064136857787769,
+      "gradient_norm_max": 8.761380195617676,
+      "pooled_vs_common_risk_probe_gain": 0.15450078200646924,
+      "common_risk_probe_test_mse": 0.1831141657151022
+    },
+    {
+      "condition": "separated_informative",
+      "arm": "shuffled_train_content",
+      "test_expected_nll": 1.049779725074768,
+      "test_deterministic_nll": 1.0440368056297302,
+      "own_true_bit_linear_r2": 0.18235330941304392,
+      "other_true_bits_linear_r2": 0.0666367066121948,
+      "common_true_bits_linear_r2": 0.10065019965976374,
+      "test_expected_oracle_content_ce": 0.692994483311971,
+      "test_expected_frozen_target_ce": 0.6929821292559306,
+      "test_expected_arm_target_ce": 0.6929821292559306,
+      "gradient_norm_mean": 0.5832249376972516,
+      "training_seconds": 8.066074766669772,
+      "rate_nats_per_slot_mean": 0.7533926467100779,
+      "gradient_norm_max": 9.98150634765625,
+      "pooled_vs_common_risk_probe_gain": 0.07420071398620753,
+      "common_risk_probe_test_mse": 0.33636414147177657
+    },
+    {
+      "condition": "separated_informative",
+      "arm": "constant_content",
+      "test_expected_nll": 1.0103564699490866,
+      "test_deterministic_nll": 1.0074764887491863,
+      "own_true_bit_linear_r2": 0.1319219304484253,
+      "other_true_bits_linear_r2": 0.1015102404114992,
+      "common_true_bits_linear_r2": 0.12279747309081686,
+      "test_expected_oracle_content_ce": 2.3464689572652184,
+      "test_expected_frozen_target_ce": 2.3331477959950764,
+      "test_expected_arm_target_ce": 0.0586771863202254,
+      "gradient_norm_mean": 0.5519846902887027,
+      "training_seconds": 8.300030333334385,
+      "rate_nats_per_slot_mean": 0.9250390728314718,
+      "gradient_norm_max": 3.2019894123077393,
+      "pooled_vs_common_risk_probe_gain": 0.001981862807429289,
+      "common_risk_probe_test_mse": 0.3004546483456717
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "arm": "budget_only",
+      "test_expected_nll": 1.0947285374005635,
+      "test_deterministic_nll": 1.091160257657369,
+      "own_true_bit_linear_r2": 0.04984526794608756,
+      "other_true_bits_linear_r2": 0.017650338811713916,
+      "common_true_bits_linear_r2": 0.020992725803317458,
+      "test_expected_oracle_content_ce": 0.7150791843732198,
+      "test_expected_frozen_target_ce": 0.7178905447324117,
+      "test_expected_arm_target_ce": 0.7178905447324117,
+      "gradient_norm_mean": 0.6435671588430802,
+      "training_seconds": 8.236868866665949,
+      "rate_nats_per_slot_mean": 0.7735715508460999,
+      "gradient_norm_max": 5.246560573577881,
+      "pooled_vs_common_risk_probe_gain": 0.08515686673163975,
+      "common_risk_probe_test_mse": 0.4468870538420615
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "arm": "oracle_content",
+      "test_expected_nll": 1.0139787395795186,
+      "test_deterministic_nll": 1.006978154182434,
+      "own_true_bit_linear_r2": 0.9283286283693315,
+      "other_true_bits_linear_r2": 0.024923838019002796,
+      "common_true_bits_linear_r2": 0.12632788854506682,
+      "test_expected_oracle_content_ce": 0.16335785686969756,
+      "test_expected_frozen_target_ce": 2.0898465712865195,
+      "test_expected_arm_target_ce": 0.16335785686969756,
+      "gradient_norm_mean": 1.0261312634199857,
+      "training_seconds": 8.241280733336074,
+      "rate_nats_per_slot_mean": 1.0038422147432964,
+      "gradient_norm_max": 162.05410766601562,
+      "pooled_vs_common_risk_probe_gain": 0.2130818965367774,
+      "common_risk_probe_test_mse": 0.22874497103874517
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "arm": "frozen_content",
+      "test_expected_nll": 1.0218658685684203,
+      "test_deterministic_nll": 1.018372396628062,
+      "own_true_bit_linear_r2": 0.05850546744990246,
+      "other_true_bits_linear_r2": -0.016698950088901862,
+      "common_true_bits_linear_r2": -0.0019431706173206331,
+      "test_expected_oracle_content_ce": 1.9162134091059366,
+      "test_expected_frozen_target_ce": 0.1785410394271215,
+      "test_expected_arm_target_ce": 0.1785410394271215,
+      "gradient_norm_mean": 0.8917000158230464,
+      "training_seconds": 8.415591733326437,
+      "rate_nats_per_slot_mean": 0.985212097565333,
+      "gradient_norm_max": 48.7169075012207,
+      "pooled_vs_common_risk_probe_gain": 0.0045797362412818695,
+      "common_risk_probe_test_mse": 0.4304230793609322
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "arm": "shuffled_train_content",
+      "test_expected_nll": 1.049226709206899,
+      "test_deterministic_nll": 1.0502308011054993,
+      "own_true_bit_linear_r2": 0.10279072917230406,
+      "other_true_bits_linear_r2": 0.03957184706956664,
+      "common_true_bits_linear_r2": 0.041261067028644106,
+      "test_expected_oracle_content_ce": 0.691935161749522,
+      "test_expected_frozen_target_ce": 0.6936934153238933,
+      "test_expected_arm_target_ce": 0.6936934153238933,
+      "gradient_norm_mean": 0.6411217796802521,
+      "training_seconds": 8.481168966672461,
+      "rate_nats_per_slot_mean": 0.8292161698142687,
+      "gradient_norm_max": 33.57912063598633,
+      "pooled_vs_common_risk_probe_gain": 0.09730381598834437,
+      "common_risk_probe_test_mse": 0.42030288051171705
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "arm": "constant_content",
+      "test_expected_nll": 1.0232446710268657,
+      "test_deterministic_nll": 1.0196014841397603,
+      "own_true_bit_linear_r2": 0.1029378881689463,
+      "other_true_bits_linear_r2": 0.05227701791642376,
+      "common_true_bits_linear_r2": 0.053744241930116766,
+      "test_expected_oracle_content_ce": 2.343283255894979,
+      "test_expected_frozen_target_ce": 2.3105381170908608,
+      "test_expected_arm_target_ce": 0.05968965565164884,
+      "gradient_norm_mean": 0.5939381518959999,
+      "training_seconds": 8.363262333334811,
+      "rate_nats_per_slot_mean": 0.971532054245472,
+      "gradient_norm_max": 12.615139961242676,
+      "pooled_vs_common_risk_probe_gain": 0.021071503542400928,
+      "common_risk_probe_test_mse": 0.368409179974126
+    }
+  ],
+  "paired_nll_deltas": [
+    {
+      "condition": "separated_informative",
+      "contrast": "frozen_content_minus_budget_only",
+      "nll_deltas": [
+        -0.020386028289794744,
+        0.033986127376556374,
+        -0.07484557628631605
+      ],
+      "mean": -0.02041515906651814,
+      "descriptive_t95": [
+        -0.15559164325320182,
+        0.11476132512016554
+      ]
+    },
+    {
+      "condition": "separated_informative",
+      "contrast": "frozen_content_minus_oracle_content",
+      "nll_deltas": [
+        -9.860992431631743e-05,
+        -0.011528038978576571,
+        -0.006621503829956188
+      ],
+      "mean": -0.006082717577616359,
+      "descriptive_t95": [
+        -0.020326096915899768,
+        0.00816066176066705
+      ]
+    },
+    {
+      "condition": "separated_informative",
+      "contrast": "frozen_content_minus_shuffled_train_content",
+      "nll_deltas": [
+        -0.026633048057556064,
+        -4.357099533081055e-05,
+        -0.07265563011169451
+      ],
+      "mean": -0.03311074972152713,
+      "descriptive_t95": [
+        -0.12437021517253363,
+        0.058148715729479376
+      ]
+    },
+    {
+      "condition": "separated_informative",
+      "contrast": "frozen_content_minus_constant_content",
+      "nll_deltas": [
+        0.014586329460144043,
+        0.022452998161315962,
+        -0.018101811408996582
+      ],
+      "mean": 0.006312505404154474,
+      "descriptive_t95": [
+        -0.047111777918699464,
+        0.05973678872700842
+      ]
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "contrast": "frozen_content_minus_budget_only",
+      "nll_deltas": [
+        -0.08292489051818852,
+        -0.03424936532974254,
+        -0.10141375064849845
+      ],
+      "mean": -0.07286266883214317,
+      "descriptive_t95": [
+        -0.15904828261326626,
+        0.01332294494897994
+      ]
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "contrast": "frozen_content_minus_oracle_content",
+      "nll_deltas": [
+        -0.002083683013915927,
+        -0.010851109027862571,
+        0.03659617900848389
+      ],
+      "mean": 0.007887128988901796,
+      "descriptive_t95": [
+        -0.054828080217634835,
+        0.07060233819543843
+      ]
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "contrast": "frozen_content_minus_shuffled_train_content",
+      "nll_deltas": [
+        -0.022458434104919434,
+        -0.020909702777862527,
+        -0.038714385032653675
+      ],
+      "mean": -0.027360840638478545,
+      "descriptive_t95": [
+        -0.05186165173370296,
+        -0.0028600295432541292
+      ]
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "contrast": "frozen_content_minus_constant_content",
+      "nll_deltas": [
+        0.013026428222656206,
+        0.004510986804962092,
+        -0.021673822402954013
+      ],
+      "mean": -0.0013788024584452385,
+      "descriptive_t95": [
+        -0.046302842095302305,
+        0.04354523717841183
+      ]
+    }
+  ],
+  "training_seconds_total": 248.5182330000098,
+  "decision": "Do not promote unconditioned frozen PCA targets to the primary model. Retain as diagnostic; audit shared-path semantic leakage before further private objectives.",
+  "limits": "3 paired data/training seeds per condition, exploratory, no multiplicity correction or clinical inference; negative finite probes are not absence proofs. Source hashes match pre-execution pins.",
+  "patient_execution": false,
+  "server_execution": false
+}

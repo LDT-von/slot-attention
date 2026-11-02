@@ -1,7 +1,8 @@
 """Diagnostics for the common/private slot bottleneck prototype.
 
-Everything here operates on generated tensors only. No patient file, no
-checkpoint and no network run is touched by this module.
+These helpers accept tensors and do not load patient files or checkpoints.
+The research receipts in this project use generated inputs only; the helpers
+can call supplied readouts for controlled forward perturbations.
 
 The prototype in :mod:`slotspe_proof.common_private_survival` claims that the
 private slots carry prognostic information that the common representation does
@@ -14,16 +15,16 @@ instruments:
     synthetic factor. It reports held-out R^2 and Pearson correlation.
 
 ``partial_probe``
-    The same probe applied to the residual of the factor after the common
-    representation has been regressed out. This is the quantity that answers
-    the user's core question: does the private branch explain variation that
-    the common branch cannot?
+    Linear residual prediction after regressing out the common representation.
+    A nonlinear common copy can produce a false incremental signal. This is
+    not conditional MI or a conditional-independence test; use the later
+    fit/validation/test nonlinear incremental probe for bounded evidence.
 
 ``swap_ablation``
-    A causal intervention on the readout. The common representation of one
-    patient is exchanged with the common representation of another patient, or
-    the private slots are zeroed, and the survival likelihood is recomputed.
-    A branch that the readout ignores cannot change the likelihood.
+    Fixed-network readout perturbations: exchange common representations or
+    zero private slots and recompute likelihood. These measure forward
+    sensitivity, not patient-level causality. Off-manifold perturbations and
+    finite measurement resolution limit the interpretation of null effects.
 
 ``control ladder``
     Every measurement ships with instruments of known answer: an input upper

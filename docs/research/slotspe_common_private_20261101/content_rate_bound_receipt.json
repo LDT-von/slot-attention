@@ -1,0 +1,70 @@
+{
+  "all_valid_bounds_passed": true,
+  "rows": [
+    {
+      "case": "minimal",
+      "rate": 0.6931471805599453,
+      "target_conditional_entropy": 0.6931471805599453,
+      "bayes_content_ce": 0.0,
+      "extra_information_given_target_common": -4.440892098500626e-16,
+      "valid_upper_bound": 0.0,
+      "incorrect_unconditional_entropy_substitution": 0.0
+    },
+    {
+      "case": "copy_nuisance",
+      "rate": 1.3862943611198906,
+      "target_conditional_entropy": 0.6931471805599453,
+      "bayes_content_ce": 0.0,
+      "extra_information_given_target_common": 0.693147180559945,
+      "valid_upper_bound": 0.6931471805599453,
+      "incorrect_unconditional_entropy_substitution": 0.6931471805599453
+    },
+    {
+      "case": "uninformative",
+      "rate": 0.0,
+      "target_conditional_entropy": 0.6931471805599453,
+      "bayes_content_ce": 0.6931471805599452,
+      "extra_information_given_target_common": -4.440892098500626e-16,
+      "valid_upper_bound": -1.1102230246251565e-16,
+      "incorrect_unconditional_entropy_substitution": -1.1102230246251565e-16
+    },
+    {
+      "case": "mismatched_prior",
+      "rate": 0.14384103622589042,
+      "target_conditional_entropy": 0.6931471805599453,
+      "bayes_content_ce": 0.6931471805599452,
+      "extra_information_given_target_common": -4.440892098500626e-16,
+      "valid_upper_bound": 0.14384103622589028,
+      "incorrect_unconditional_entropy_substitution": 0.14384103622589028
+    },
+    {
+      "case": "target_known_by_common",
+      "rate": 0.6931471805599453,
+      "target_conditional_entropy": 0.0,
+      "bayes_content_ce": 0.0,
+      "extra_information_given_target_common": 0.693147180559945,
+      "valid_upper_bound": 0.6931471805599453,
+      "incorrect_unconditional_entropy_substitution": 0.0
+    },
+    {
+      "case": "overlapping_targets",
+      "rate": 0.6931471805599453,
+      "target_conditional_entropy": 0.6931471805599453,
+      "bayes_content_ce": 0.0,
+      "extra_information_given_target_common": -4.440892098500626e-16,
+      "valid_upper_bound": 0.0,
+      "incorrect_unconditional_entropy_substitution": 0.0
+    },
+    {
+      "case": "synergy_target",
+      "rate": 0.6931471805599453,
+      "target_conditional_entropy": 0.6931471805599453,
+      "bayes_content_ce": 0.0,
+      "extra_information_given_target_common": -4.440892098500626e-16,
+      "valid_upper_bound": 0.0,
+      "incorrect_unconditional_entropy_substitution": 0.0
+    }
+  ],
+  "scope": "exact enumeration, zero model/patient training",
+  "limitations": "conditional entropy known in finite construction; finite learned CE/rate cannot certify the population inequality numerically"
+}

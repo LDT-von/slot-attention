@@ -1,0 +1,13 @@
+{
+  "scope": "source hashes after CPU-only constructor and modality-count safety corrections; existing numerical receipts unchanged",
+  "files": {
+    "slotspe_proof/common_private_club.py": "2533ea6deb662907ee6c333e2c7e5d5db0a5879f80b8983cfd7b0d8ab386f8f1",
+    "scripts/check_common_private_club.py": "308fab15eef5bc83e9b0134260634d620f9fc768f62deda0cf01ef40917f0fa4",
+    "scripts/check_club_copy_gradient.py": "550dd18c74349e16dcc62d92b3caa8461f7570b0bf95aa42440ff8b5dd7d8a1f",
+    "scripts/compare_common_private_club.py": "a33e1beaa279f83802988b386bc22ef8517868a65fcb711ba3c13d7dc2f1c682",
+    "scripts/confirm_common_private_club.py": "95516930a7bcf3f6efe86e8202c6e5eb6ed104343d91b6b01e0ca1c2f9ba68d4",
+    "scripts/check_slot_set_information.py": "e5994b4c1f0ef654ff6522919002d34bf3ae2be92b067f8053bea8bbbd76970c",
+    "scripts/summarize_common_private_club.py": "4f6346349f1a20992de7dd45527ca772ffab96212d5a5aa9a1d61189b9b2b6f1",
+    "tests/test_common_private_club.py": "a9a716bfab1651f07cde1b0d343c34fc709cd28aaa2384a764c968a81e444368"
+  }
+}

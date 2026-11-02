@@ -1,0 +1,2192 @@
+{
+  "status": "completed",
+  "plan": {
+    "tasks": [
+      "all_useful",
+      "selective",
+      "synergy"
+    ],
+    "seeds": [
+      223,
+      251,
+      277
+    ],
+    "readouts": [
+      "mean_pool",
+      "role_concat"
+    ],
+    "constraints": [
+      0,
+      1
+    ],
+    "steps": 500,
+    "fixed_hyperparameters": "content 1, hinge .3, rate cap1 nat; unchanged after previous pilot",
+    "capacity": "phi parameter counts matched within 5%; same head and all non-phi initialization",
+    "metadata": "synthetic one-hot content identities; no clinical anchor validation",
+    "selection": "new exploratory seeds, fixed final step; no model/weight selection from these tests"
+  },
+  "rows": [
+    {
+      "task": "all_useful",
+      "seed": 223,
+      "readout": "mean_pool",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.0689549684524535,
+      "expected_content_ce_per_slot": [
+        0.714151918888092,
+        0.6987438797950745,
+        0.7102211713790894,
+        0.7125594615936279,
+        0.8176678419113159,
+        0.891360878944397,
+        1.1028850078582764,
+        0.8413974642753601
+      ],
+      "rate_nats_per_slot": [
+        1.1040550470352173,
+        1.1647430658340454,
+        1.1346304416656494,
+        1.1483997106552124,
+        2.0421135425567627,
+        4.834292888641357,
+        4.805678844451904,
+        4.544511318206787
+      ],
+      "own_bit_linear_r2": 0.07095567294669042,
+      "other_bits_linear_r2": 0.007700999891826631,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.48323965751427744,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 9.787061765479994,
+          "test_mse": 0.4072300940798283
+        },
+        "joint": {
+          "validation_mse": 0.447597505561286,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 0.0001,
+          "effective_df": 11.907657142200279,
+          "test_mse": 0.35507873243128024
+        },
+        "test_mse_gain": 0.052151361648548056,
+        "gain_relative_to_fit_mean_baseline": 0.08022228134501892,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_223_mean_pool_0.pt",
+      "synthetic_cache_sha256": "bc3c52fd727ebd0228a0e59c84cb4a258dc9ee504e249dae16bc89eaa0de0cde"
+    },
+    {
+      "task": "all_useful",
+      "seed": 223,
+      "readout": "mean_pool",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.0465641260147094,
+      "expected_content_ce_per_slot": [
+        0.1717585325241089,
+        0.176845520734787,
+        0.24285149574279785,
+        0.15446074306964874,
+        0.12196324020624161,
+        0.13973405957221985,
+        0.12602771818637848,
+        0.09809188544750214
+      ],
+      "rate_nats_per_slot": [
+        1.0160311460494995,
+        1.008584976196289,
+        1.0116456747055054,
+        1.0248055458068848,
+        1.0023787021636963,
+        0.9854305386543274,
+        0.995876133441925,
+        1.0033055543899536
+      ],
+      "own_bit_linear_r2": 0.9400063085080904,
+      "other_bits_linear_r2": -0.014222175784925463,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.48710910173786903,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 15.256455516201507,
+          "test_mse": 0.35433490753856517
+        },
+        "joint": {
+          "validation_mse": 0.10915657231838558,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 1e-06,
+          "effective_df": 99.48485308509667,
+          "test_mse": 0.09167092287261558
+        },
+        "test_mse_gain": 0.2626639846659496,
+        "gain_relative_to_fit_mean_baseline": 0.40404513728860986,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_223_mean_pool_1.pt",
+      "synthetic_cache_sha256": "ad7a3ef94d76bb94b40ce87e7ba822ddcca58857cb518f4013eb099d06cdc391"
+    },
+    {
+      "task": "all_useful",
+      "seed": 223,
+      "readout": "role_concat",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.0539017200469971,
+      "expected_content_ce_per_slot": [
+        0.7143335342407227,
+        0.6982825398445129,
+        0.705634593963623,
+        0.7092102766036987,
+        1.0177574157714844,
+        0.9329412579536438,
+        0.9449615478515625,
+        0.921245276927948
+      ],
+      "rate_nats_per_slot": [
+        1.1875287294387817,
+        1.2246443033218384,
+        1.2209186553955078,
+        1.3357468843460083,
+        12.94904613494873,
+        13.001567840576172,
+        10.636500358581543,
+        12.79668140411377
+      ],
+      "own_bit_linear_r2": 0.0746407809079429,
+      "other_bits_linear_r2": 0.009194705208115436,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.5035363435212061,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 13.654062730943888,
+          "test_mse": 0.3885119791289407
+        },
+        "joint": {
+          "validation_mse": 0.45476537506561976,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 1e-06,
+          "effective_df": 23.19843294462823,
+          "test_mse": 0.3798292055373615
+        },
+        "test_mse_gain": 0.008682773591579207,
+        "gain_relative_to_fit_mean_baseline": 0.013356351280200183,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_223_role_concat_0.pt",
+      "synthetic_cache_sha256": "d88fa453c1d0067719b684a498ecac2f29cb5ce5750e2952606fa1ee9f33e6dd"
+    },
+    {
+      "task": "all_useful",
+      "seed": 223,
+      "readout": "role_concat",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.0479586839675903,
+      "expected_content_ce_per_slot": [
+        0.11932474374771118,
+        0.15504106879234314,
+        0.09693486988544464,
+        0.10775232315063477,
+        0.08587757498025894,
+        0.08328437805175781,
+        0.10080716758966446,
+        0.09786640852689743
+      ],
+      "rate_nats_per_slot": [
+        1.0223625898361206,
+        1.0195382833480835,
+        1.0431636571884155,
+        1.0287866592407227,
+        1.0383373498916626,
+        1.0461219549179077,
+        1.0379652976989746,
+        1.046665906906128
+      ],
+      "own_bit_linear_r2": 0.9695047866199733,
+      "other_bits_linear_r2": -0.012333867358295073,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.4584035909461355,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 10.95614100317201,
+          "test_mse": 0.3509190082183349
+        },
+        "joint": {
+          "validation_mse": 0.03295278502922169,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 24.77303391708549,
+          "test_mse": 0.04922028525473723
+        },
+        "test_mse_gain": 0.3016987229635977,
+        "gain_relative_to_fit_mean_baseline": 0.46409065976309916,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_223_role_concat_1.pt",
+      "synthetic_cache_sha256": "e14d3e3292ed224d18c700eddaa886c09de990630e2d76747979a45dc162d69e"
+    },
+    {
+      "task": "all_useful",
+      "seed": 251,
+      "readout": "mean_pool",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.0588120460510253,
+      "expected_content_ce_per_slot": [
+        0.7582994699478149,
+        0.7527621984481812,
+        0.7006494998931885,
+        0.7499014139175415,
+        0.7039653062820435,
+        0.6927793622016907,
+        0.7238093614578247,
+        0.714712917804718
+      ],
+      "rate_nats_per_slot": [
+        4.425601005554199,
+        4.680586338043213,
+        3.63397479057312,
+        5.204611301422119,
+        1.393874168395996,
+        2.3137171268463135,
+        2.314267635345459,
+        2.3417346477508545
+      ],
+      "own_bit_linear_r2": 0.06333932124193294,
+      "other_bits_linear_r2": 0.00585432966440988,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.47996905117915023,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 13.033819172021673,
+          "test_mse": 0.4525113451557036
+        },
+        "joint": {
+          "validation_mse": 0.3899118962006749,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 25.16708129001771,
+          "test_mse": 0.3966055053571542
+        },
+        "test_mse_gain": 0.055905839798549406,
+        "gain_relative_to_fit_mean_baseline": 0.07471001722931572,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_251_mean_pool_0.pt",
+      "synthetic_cache_sha256": "916e9e617a609151caced9fe2afa6b82d5542180793e1ee23235510428a8df2c"
+    },
+    {
+      "task": "all_useful",
+      "seed": 251,
+      "readout": "mean_pool",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.0296406984329223,
+      "expected_content_ce_per_slot": [
+        0.24207863211631775,
+        0.2605167329311371,
+        0.1448821872472763,
+        0.14059314131736755,
+        0.14350631833076477,
+        0.13166019320487976,
+        0.10944299399852753,
+        0.13457684218883514
+      ],
+      "rate_nats_per_slot": [
+        0.9891882538795471,
+        1.0114381313323975,
+        0.9489548802375793,
+        0.9722846150398254,
+        1.0127365589141846,
+        1.0321751832962036,
+        1.04265558719635,
+        1.024603247642517
+      ],
+      "own_bit_linear_r2": 0.9313628321689804,
+      "other_bits_linear_r2": 0.015122282459312604,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.3410853729999106,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 13.648251811654024,
+          "test_mse": 0.29520536185409724
+        },
+        "joint": {
+          "validation_mse": 0.047022866099194136,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 22.216511149925346,
+          "test_mse": 0.056058279440138414
+        },
+        "test_mse_gain": 0.23914708241395882,
+        "gain_relative_to_fit_mean_baseline": 0.3195852653652658,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_251_mean_pool_1.pt",
+      "synthetic_cache_sha256": "a44bd1f22a5838995aa3d7acfb64c4740d636e31ef54c902164d6831f86d8a35"
+    },
+    {
+      "task": "all_useful",
+      "seed": 251,
+      "readout": "role_concat",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.0878482818603517,
+      "expected_content_ce_per_slot": [
+        0.7586065530776978,
+        0.7543157339096069,
+        0.6814673542976379,
+        0.7477205395698547,
+        0.6826182007789612,
+        0.6954741477966309,
+        0.7228206396102905,
+        0.7595822215080261
+      ],
+      "rate_nats_per_slot": [
+        3.7965242862701416,
+        4.161123752593994,
+        3.4087209701538086,
+        8.109700202941895,
+        6.47840690612793,
+        5.758664608001709,
+        5.525418758392334,
+        4.96577787399292
+      ],
+      "own_bit_linear_r2": 0.09429157437759332,
+      "other_bits_linear_r2": 0.010625513361723791,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.48148979210532605,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 4.937126946404984,
+          "test_mse": 0.4375699122079624
+        },
+        "joint": {
+          "validation_mse": 0.3657721130147721,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 25.427543194219226,
+          "test_mse": 0.3328568867839048
+        },
+        "test_mse_gain": 0.10471302542405758,
+        "gain_relative_to_fit_mean_baseline": 0.13993371643740346,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_251_role_concat_0.pt",
+      "synthetic_cache_sha256": "61119f3b79391d3f2dc52296747c6667047d4881510081909e0fef842e004f6c"
+    },
+    {
+      "task": "all_useful",
+      "seed": 251,
+      "readout": "role_concat",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.0100107192993164,
+      "expected_content_ce_per_slot": [
+        0.11449472606182098,
+        0.14213481545448303,
+        0.14816470444202423,
+        0.14190152287483215,
+        0.14565172791481018,
+        0.16934257745742798,
+        0.16022919118404388,
+        0.15498480200767517
+      ],
+      "rate_nats_per_slot": [
+        1.0314604043960571,
+        1.069045901298523,
+        1.0290460586547852,
+        1.0419944524765015,
+        1.033360481262207,
+        1.0559850931167603,
+        1.0480700731277466,
+        1.033992052078247
+      ],
+      "own_bit_linear_r2": 0.9725893141732755,
+      "other_bits_linear_r2": -0.025443787458106958,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.49951799377021544,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 15.610897935553014,
+          "test_mse": 0.37279416844090124
+        },
+        "joint": {
+          "validation_mse": 0.03509733408034564,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 52.52205426382136,
+          "test_mse": 0.034859447851505694
+        },
+        "test_mse_gain": 0.33793472058939555,
+        "gain_relative_to_fit_mean_baseline": 0.4516005642450402,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_251_role_concat_1.pt",
+      "synthetic_cache_sha256": "fc02bca0f8c8b27bd54d6d8eee8605690edcfa601c187c46d3df12948f0f5070"
+    },
+    {
+      "task": "all_useful",
+      "seed": 277,
+      "readout": "mean_pool",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.1290306806564332,
+      "expected_content_ce_per_slot": [
+        0.7288200259208679,
+        0.7111031413078308,
+        0.7096490263938904,
+        0.6980410218238831,
+        0.6700743436813354,
+        0.6884769201278687,
+        0.6800451278686523,
+        0.6784219741821289
+      ],
+      "rate_nats_per_slot": [
+        3.321199417114258,
+        3.4292144775390625,
+        2.44538950920105,
+        3.235468864440918,
+        4.72373628616333,
+        4.729477405548096,
+        3.1125259399414062,
+        2.4863245487213135
+      ],
+      "own_bit_linear_r2": 0.0696751983231618,
+      "other_bits_linear_r2": 0.013500437072064277,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.41141575609271785,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 28.441682323344015,
+          "test_mse": 0.49930005748261275
+        },
+        "joint": {
+          "validation_mse": 0.3651306959086055,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 13.97220655542339,
+          "test_mse": 0.41247827021318545
+        },
+        "test_mse_gain": 0.0868217872694273,
+        "gain_relative_to_fit_mean_baseline": 0.12025672397641124,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_277_mean_pool_0.pt",
+      "synthetic_cache_sha256": "d39405b46749f6380dda3cfe15ae31c2101c4cb0a7d390173cdc895bc39fb6c2"
+    },
+    {
+      "task": "all_useful",
+      "seed": 277,
+      "readout": "mean_pool",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.031403946876526,
+      "expected_content_ce_per_slot": [
+        0.14120009541511536,
+        0.3370403051376343,
+        0.2726583778858185,
+        0.21717536449432373,
+        0.11464647203683853,
+        0.19277124106884003,
+        0.09007228165864944,
+        0.0950077623128891
+      ],
+      "rate_nats_per_slot": [
+        0.9763801097869873,
+        0.90887850522995,
+        0.9277315139770508,
+        0.9447186589241028,
+        1.004671573638916,
+        1.0107107162475586,
+        1.0144473314285278,
+        1.017657995223999
+      ],
+      "own_bit_linear_r2": 0.8917415842233483,
+      "other_bits_linear_r2": 0.01940587969718229,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.2876505716450284,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 17.919781439902174,
+          "test_mse": 0.3117295717873543
+        },
+        "joint": {
+          "validation_mse": 0.07628544766034293,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 21.58449392336587,
+          "test_mse": 0.08249467413917755
+        },
+        "test_mse_gain": 0.22923489764817673,
+        "gain_relative_to_fit_mean_baseline": 0.31751290406739757,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_277_mean_pool_1.pt",
+      "synthetic_cache_sha256": "b9b0be0c05b135403ef1b01ec65c7d5a5a5d7bdf63a76162e4419d863d88a89f"
+    },
+    {
+      "task": "all_useful",
+      "seed": 277,
+      "readout": "role_concat",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.087710475921631,
+      "expected_content_ce_per_slot": [
+        0.8205335736274719,
+        0.7932040691375732,
+        0.7757524847984314,
+        0.7348170280456543,
+        0.6921156644821167,
+        0.7241553664207458,
+        0.7130946516990662,
+        0.7246916890144348
+      ],
+      "rate_nats_per_slot": [
+        6.080873012542725,
+        5.226782321929932,
+        5.695198059082031,
+        5.800537109375,
+        7.35763692855835,
+        7.836713790893555,
+        8.569805145263672,
+        7.300264358520508
+      ],
+      "own_bit_linear_r2": 0.08300804678712952,
+      "other_bits_linear_r2": 0.021688557531004793,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.3881220714698881,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 8.591379734434813,
+          "test_mse": 0.48144220333393584
+        },
+        "joint": {
+          "validation_mse": 0.2934028350731003,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 1e-06,
+          "effective_df": 24.033386818603145,
+          "test_mse": 0.37825208789743625
+        },
+        "test_mse_gain": 0.10319011543649959,
+        "gain_relative_to_fit_mean_baseline": 0.142928470138864,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_277_role_concat_0.pt",
+      "synthetic_cache_sha256": "d0c53c0659725e08df72f4bd8475699db98e0ded4c5dd77d052a4406724dd7cb"
+    },
+    {
+      "task": "all_useful",
+      "seed": 277,
+      "readout": "role_concat",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.0683037042617798,
+      "expected_content_ce_per_slot": [
+        0.08502892404794693,
+        0.10729026794433594,
+        0.11751087754964828,
+        0.09701526910066605,
+        0.09478472173213959,
+        0.15816468000411987,
+        0.08145350962877274,
+        0.08972939103841782
+      ],
+      "rate_nats_per_slot": [
+        0.9609766602516174,
+        0.96136873960495,
+        0.9813809394836426,
+        0.9673720002174377,
+        1.0234392881393433,
+        1.0398355722427368,
+        1.0562156438827515,
+        1.0350191593170166
+      ],
+      "own_bit_linear_r2": 0.9649937407341543,
+      "other_bits_linear_r2": -0.0027904230847539185,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.29985633475738116,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.996340321090498,
+          "test_mse": 0.3700522732418392
+        },
+        "joint": {
+          "validation_mse": 0.03260514329718891,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 24.84101791202879,
+          "test_mse": 0.031107149388950553
+        },
+        "test_mse_gain": 0.33894512385288866,
+        "gain_relative_to_fit_mean_baseline": 0.4694723696004861,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\all_useful_277_role_concat_1.pt",
+      "synthetic_cache_sha256": "99e1380d327da9a9eb93ffa891a02a7af00abc3b7225d862532383938da46e31"
+    },
+    {
+      "task": "selective",
+      "seed": 223,
+      "readout": "mean_pool",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 0.8414207577705384,
+      "expected_content_ce_per_slot": [
+        0.9380946159362793,
+        0.767298698425293,
+        0.7739469408988953,
+        0.7234748005867004,
+        0.8219960927963257,
+        0.812029242515564,
+        0.811108410358429,
+        0.7955965399742126
+      ],
+      "rate_nats_per_slot": [
+        17.9737491607666,
+        12.542149543762207,
+        14.051258087158203,
+        16.76640510559082,
+        3.8317947387695312,
+        3.6671228408813477,
+        3.6286118030548096,
+        3.8353383541107178
+      ],
+      "own_bit_linear_r2": 0.2049885360978239,
+      "other_bits_linear_r2": 0.0393028215003685,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 1.781422907391378,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 20.190019650200156,
+          "test_mse": 1.9174144498015853
+        },
+        "joint": {
+          "validation_mse": 0.2506028050603968,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 39.05075360692653,
+          "test_mse": 0.17132003912490756
+        },
+        "test_mse_gain": 1.7460944106766778,
+        "gain_relative_to_fit_mean_baseline": 0.43063600109174327,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_223_mean_pool_0.pt",
+      "synthetic_cache_sha256": "ad7fc627daf78dd87f2fe67f3f07e4345e04382e0a835f9bf9efe75c232dbdad"
+    },
+    {
+      "task": "selective",
+      "seed": 223,
+      "readout": "mean_pool",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 0.8256366372108459,
+      "expected_content_ce_per_slot": [
+        0.21196119487285614,
+        0.6742478609085083,
+        0.8464719653129578,
+        0.33254435658454895,
+        0.08143757283687592,
+        0.09314324706792831,
+        0.09043239802122116,
+        0.09783105552196503
+      ],
+      "rate_nats_per_slot": [
+        1.1543070077896118,
+        0.9679428935050964,
+        1.0063174962997437,
+        1.022395372390747,
+        1.0034376382827759,
+        0.9952883720397949,
+        0.9968649744987488,
+        0.9972593784332275
+      ],
+      "own_bit_linear_r2": 0.7260306673556118,
+      "other_bits_linear_r2": 0.04873623319872,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.9115117361084716,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.998437400602619,
+          "test_mse": 0.6969539609722416
+        },
+        "joint": {
+          "validation_mse": 0.20808545903303494,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 1e-06,
+          "effective_df": 17.825196977842566,
+          "test_mse": 0.16525059243753595
+        },
+        "test_mse_gain": 0.5317033685347057,
+        "gain_relative_to_fit_mean_baseline": 0.1311330080393879,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_223_mean_pool_1.pt",
+      "synthetic_cache_sha256": "e8dfde7ddb8d6a830e4ffd5d6b659731932922d391d65e5d77eac1370e6dee4a"
+    },
+    {
+      "task": "selective",
+      "seed": 223,
+      "readout": "role_concat",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 0.932630431652069,
+      "expected_content_ce_per_slot": [
+        0.5741428136825562,
+        0.7249914407730103,
+        0.669928789138794,
+        0.6956032514572144,
+        0.7619918584823608,
+        0.7641556859016418,
+        0.7526530027389526,
+        0.7450307607650757
+      ],
+      "rate_nats_per_slot": [
+        7.4437408447265625,
+        9.452510833740234,
+        8.130900382995605,
+        8.60329532623291,
+        1.3548334836959839,
+        1.3741663694381714,
+        1.355262279510498,
+        1.342633843421936
+      ],
+      "own_bit_linear_r2": 0.09613981946443277,
+      "other_bits_linear_r2": 0.0553018123155302,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.131524608345888,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 23.62188993472197,
+          "test_mse": 2.1596130460989276
+        },
+        "joint": {
+          "validation_mse": 1.7986599676594546,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.25,
+          "regularization": 1e-06,
+          "effective_df": 58.84548883279849,
+          "test_mse": 2.145593227193723
+        },
+        "test_mse_gain": 0.014019818905204762,
+        "gain_relative_to_fit_mean_baseline": 0.003457681733846261,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_223_role_concat_0.pt",
+      "synthetic_cache_sha256": "1196f7383326e5d97e535eb84888c02a592aee2f286acf508121660a8f20a3f3"
+    },
+    {
+      "task": "selective",
+      "seed": 223,
+      "readout": "role_concat",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 0.838836944103241,
+      "expected_content_ce_per_slot": [
+        0.11352497339248657,
+        0.45552390813827515,
+        0.6294372081756592,
+        0.16729173064231873,
+        0.06366436928510666,
+        0.07352416217327118,
+        0.07477223873138428,
+        0.10497190803289413
+      ],
+      "rate_nats_per_slot": [
+        1.469378113746643,
+        0.937570333480835,
+        1.0153228044509888,
+        1.0293952226638794,
+        0.9968636631965637,
+        0.9925861358642578,
+        0.9959502816200256,
+        0.9822790026664734
+      ],
+      "own_bit_linear_r2": 0.8325809822605206,
+      "other_bits_linear_r2": 0.023529086451894776,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.1234290124072333,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 11.662199449738894,
+          "test_mse": 2.1895442941890155
+        },
+        "joint": {
+          "validation_mse": 0.19586756264960942,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 0.0001,
+          "effective_df": 73.6894415969405,
+          "test_mse": 0.32756329946236384
+        },
+        "test_mse_gain": 1.8619809947266517,
+        "gain_relative_to_fit_mean_baseline": 0.4592168927264189,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_223_role_concat_1.pt",
+      "synthetic_cache_sha256": "eb332f77faefd29a7c3235956985f9bc11d33580fd1f37712b03d3be7421b743"
+    },
+    {
+      "task": "selective",
+      "seed": 251,
+      "readout": "mean_pool",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 0.7016213893890381,
+      "expected_content_ce_per_slot": [
+        0.7281121015548706,
+        0.7440428733825684,
+        0.7275587320327759,
+        0.7455936670303345,
+        0.7170429229736328,
+        0.73173987865448,
+        0.7188186645507812,
+        0.739681601524353
+      ],
+      "rate_nats_per_slot": [
+        9.589465141296387,
+        18.18567657470703,
+        17.36865234375,
+        17.082277297973633,
+        5.389900207519531,
+        4.158575057983398,
+        4.8487420082092285,
+        5.578920841217041
+      ],
+      "own_bit_linear_r2": 0.09326819169315227,
+      "other_bits_linear_r2": 0.059365768083645735,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.7262065227893344,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 51.659056851865344,
+          "test_mse": 0.9322873620806633
+        },
+        "joint": {
+          "validation_mse": 0.09848309676523533,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 57.6760200296291,
+          "test_mse": 0.1407385682864669
+        },
+        "test_mse_gain": 0.7915487937941964,
+        "gain_relative_to_fit_mean_baseline": 0.1956580217682468,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_251_mean_pool_0.pt",
+      "synthetic_cache_sha256": "d2fc03052a3950c6ba72162e7ca65297e6050223a43e9423e4760b93c0f226c2"
+    },
+    {
+      "task": "selective",
+      "seed": 251,
+      "readout": "mean_pool",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 0.7214527010917664,
+      "expected_content_ce_per_slot": [
+        0.3791744112968445,
+        0.6066563725471497,
+        0.7394610643386841,
+        0.7211140394210815,
+        0.09791863709688187,
+        0.11627168953418732,
+        0.106734499335289,
+        0.11863003671169281
+      ],
+      "rate_nats_per_slot": [
+        0.9133079648017883,
+        0.8629044890403748,
+        0.8393505215644836,
+        0.8290085792541504,
+        1.0170577764511108,
+        1.0225528478622437,
+        1.0290395021438599,
+        1.0242418050765991
+      ],
+      "own_bit_linear_r2": 0.6456464395731204,
+      "other_bits_linear_r2": 0.014175111487878225,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.1572925272505428,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 14.95779238424241,
+          "test_mse": 2.0577800717426555
+        },
+        "joint": {
+          "validation_mse": 0.12373765892537575,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 1e-06,
+          "effective_df": 66.23989262254506,
+          "test_mse": 0.1894200903012759
+        },
+        "test_mse_gain": 1.8683599814413796,
+        "gain_relative_to_fit_mean_baseline": 0.4618282799314385,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_251_mean_pool_1.pt",
+      "synthetic_cache_sha256": "cabfd20943a9172e68e4cb4a880ea2f29c92e9352f927d1845c921cf3cff9129"
+    },
+    {
+      "task": "selective",
+      "seed": 251,
+      "readout": "role_concat",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 0.699609911441803,
+      "expected_content_ce_per_slot": [
+        0.8047736287117004,
+        0.7117207050323486,
+        0.7198774814605713,
+        0.7186912298202515,
+        0.7060756087303162,
+        0.7183080911636353,
+        0.7151486277580261,
+        0.7165359258651733
+      ],
+      "rate_nats_per_slot": [
+        12.968403816223145,
+        13.001482963562012,
+        11.372607231140137,
+        12.089312553405762,
+        2.086514711380005,
+        2.0741500854492188,
+        2.1425063610076904,
+        2.140794038772583
+      ],
+      "own_bit_linear_r2": 0.10735699163674899,
+      "other_bits_linear_r2": 0.026034226778585908,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 0.8700915201030153,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 36.863522141970705,
+          "test_mse": 0.8426122309467033
+        },
+        "joint": {
+          "validation_mse": 0.03903940228226999,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 53.233713095102544,
+          "test_mse": 0.18048446441222712
+        },
+        "test_mse_gain": 0.6621277665344762,
+        "gain_relative_to_fit_mean_baseline": 0.16366724322448592,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_251_role_concat_0.pt",
+      "synthetic_cache_sha256": "dfaa7d8d51e82c71f8301f44df86c73f25a87ae07ee956e5889393acb5f7dc89"
+    },
+    {
+      "task": "selective",
+      "seed": 251,
+      "readout": "role_concat",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 0.7145628571510315,
+      "expected_content_ce_per_slot": [
+        0.24941949546337128,
+        0.8296581506729126,
+        0.3377397358417511,
+        0.4494852125644684,
+        0.10515105724334717,
+        0.14568328857421875,
+        0.11048070341348648,
+        0.1354038417339325
+      ],
+      "rate_nats_per_slot": [
+        1.154892086982727,
+        0.9350128769874573,
+        1.0068610906600952,
+        0.91339111328125,
+        1.0025678873062134,
+        1.013818621635437,
+        1.0237383842468262,
+        1.0037304162979126
+      ],
+      "own_bit_linear_r2": 0.7765891804707887,
+      "other_bits_linear_r2": -0.004606827566008468,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 3.2410729495019823,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 10.542898398514431,
+          "test_mse": 3.6998300721611517
+        },
+        "joint": {
+          "validation_mse": 0.1598406762642608,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 174.40281540340277,
+          "test_mse": 0.20491626622874703
+        },
+        "test_mse_gain": 3.4949138059324047,
+        "gain_relative_to_fit_mean_baseline": 0.8638860003077202,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_251_role_concat_1.pt",
+      "synthetic_cache_sha256": "4b1ad1f59f955f860970869b67c8cae0df4489c32ab71215d686efe3c7dec3b3"
+    },
+    {
+      "task": "selective",
+      "seed": 277,
+      "readout": "mean_pool",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 0.7973557710647583,
+      "expected_content_ce_per_slot": [
+        0.6431130170822144,
+        0.7021751999855042,
+        0.7156315445899963,
+        0.7377855777740479,
+        0.7094785571098328,
+        0.7201688289642334,
+        0.7411133050918579,
+        0.7168587446212769
+      ],
+      "rate_nats_per_slot": [
+        15.947665214538574,
+        14.772357940673828,
+        14.09389877319336,
+        15.256458282470703,
+        0.6251891255378723,
+        0.6152648329734802,
+        0.6104011535644531,
+        0.6073235273361206
+      ],
+      "own_bit_linear_r2": 0.11826840458957899,
+      "other_bits_linear_r2": 0.016955508509127505,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 1.4196411864363716,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 36.04200775043911,
+          "test_mse": 1.8564144841378643
+        },
+        "joint": {
+          "validation_mse": 0.21469545468283427,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 0.0001,
+          "effective_df": 31.47659383633473,
+          "test_mse": 0.287101252523772
+        },
+        "test_mse_gain": 1.5693132316140923,
+        "gain_relative_to_fit_mean_baseline": 0.3924560605273927,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_277_mean_pool_0.pt",
+      "synthetic_cache_sha256": "b6a182aa9b3be5cb86167054e41fb08453497120a117e35641bab919845123fe"
+    },
+    {
+      "task": "selective",
+      "seed": 277,
+      "readout": "mean_pool",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 0.8061314582824707,
+      "expected_content_ce_per_slot": [
+        0.06379346549510956,
+        0.24412961304187775,
+        0.15015944838523865,
+        0.21971265971660614,
+        0.164261132478714,
+        0.2689792811870575,
+        0.24195805191993713,
+        0.16010230779647827
+      ],
+      "rate_nats_per_slot": [
+        1.4880967140197754,
+        1.0075998306274414,
+        1.0276494026184082,
+        1.0137537717819214,
+        1.0021734237670898,
+        1.0030049085617065,
+        1.004754900932312,
+        0.9917641282081604
+      ],
+      "own_bit_linear_r2": 0.8640373414984348,
+      "other_bits_linear_r2": 0.030719243646815154,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 1.6954511719849497,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 19.6843722747993,
+          "test_mse": 1.7720819584700436
+        },
+        "joint": {
+          "validation_mse": 0.25767275465107353,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 19.9914602525267,
+          "test_mse": 0.1723252432381911
+        },
+        "test_mse_gain": 1.5997567152318526,
+        "gain_relative_to_fit_mean_baseline": 0.40006940973561145,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_277_mean_pool_1.pt",
+      "synthetic_cache_sha256": "f73aa8d7dd0e9256be23b6fb55f9f276a33452e5f5351a6f73cfe8c5ae754455"
+    },
+    {
+      "task": "selective",
+      "seed": 277,
+      "readout": "role_concat",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 0.841678786277771,
+      "expected_content_ce_per_slot": [
+        0.8069281578063965,
+        0.7345956563949585,
+        0.7129372358322144,
+        0.7275873422622681,
+        0.7113054394721985,
+        0.6938304901123047,
+        0.7520284652709961,
+        0.719936728477478
+      ],
+      "rate_nats_per_slot": [
+        14.829086303710938,
+        14.774032592773438,
+        14.822155952453613,
+        11.848036766052246,
+        4.6265788078308105,
+        5.265047550201416,
+        4.294018745422363,
+        4.627598285675049
+      ],
+      "own_bit_linear_r2": 0.13592688795451902,
+      "other_bits_linear_r2": 0.017779994912303584,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.414816697628459,
+          "family": "rbf",
+          "bandwidth": 0.5,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 33.042748688918586,
+          "test_mse": 2.876631412552863
+        },
+        "joint": {
+          "validation_mse": 0.17051990237848688,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 35.81025524653041,
+          "test_mse": 0.20683857556448823
+        },
+        "test_mse_gain": 2.6697928369883748,
+        "gain_relative_to_fit_mean_baseline": 0.6676655482927619,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_277_role_concat_0.pt",
+      "synthetic_cache_sha256": "0c898213f983c7d4a014b20aa9616cb01eba49afcb8aaffd1c72c57c80c7ef85"
+    },
+    {
+      "task": "selective",
+      "seed": 277,
+      "readout": "role_concat",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 0.812722635269165,
+      "expected_content_ce_per_slot": [
+        0.038403864949941635,
+        0.16740885376930237,
+        0.10956497490406036,
+        0.16256935894489288,
+        0.10143011808395386,
+        0.09293270856142044,
+        0.0804704800248146,
+        0.08016669005155563
+      ],
+      "rate_nats_per_slot": [
+        1.6252087354660034,
+        1.0011754035949707,
+        1.027189016342163,
+        1.0111826658248901,
+        1.0209721326828003,
+        1.0290744304656982,
+        1.056862473487854,
+        1.0355058908462524
+      ],
+      "own_bit_linear_r2": 0.966813743534047,
+      "other_bits_linear_r2": -0.00904596764517902,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.565477947658824,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.99532812016846,
+          "test_mse": 3.025856509319604
+        },
+        "joint": {
+          "validation_mse": 0.08280513290541928,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 41.393492295955895,
+          "test_mse": 0.14751627495939787
+        },
+        "test_mse_gain": 2.878340234360206,
+        "gain_relative_to_fit_mean_baseline": 0.7198193747927836,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\selective_277_role_concat_1.pt",
+      "synthetic_cache_sha256": "30cbfcaa523c29fd47ff428717573dfe7f5302d5feb61715e931eca6d57feb89"
+    },
+    {
+      "task": "synergy",
+      "seed": 223,
+      "readout": "mean_pool",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.2055705785751343,
+      "expected_content_ce_per_slot": [
+        0.7197245955467224,
+        0.6999600529670715,
+        0.7061945796012878,
+        0.7125043272972107,
+        0.785671055316925,
+        0.7836343050003052,
+        0.771477222442627,
+        0.7621942758560181
+      ],
+      "rate_nats_per_slot": [
+        7.205699443817139,
+        2.8846628665924072,
+        2.9781627655029297,
+        2.8694546222686768,
+        2.4934136867523193,
+        2.3252413272857666,
+        3.100987195968628,
+        3.4429023265838623
+      ],
+      "own_bit_linear_r2": 0.06566524213248823,
+      "other_bits_linear_r2": 0.02139229758578041,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.2569078838432945,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 2.814049531082708,
+          "test_mse": 2.2460683579038467
+        },
+        "joint": {
+          "validation_mse": 2.2569078838432945,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 2.814049531082708,
+          "test_mse": 2.2460683579038467
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_223_mean_pool_0.pt",
+      "synthetic_cache_sha256": "d4ff09fd3f091de10fe7a7e74ab09accf919cd63c7025d23264738737f20b64b"
+    },
+    {
+      "task": "synergy",
+      "seed": 223,
+      "readout": "mean_pool",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.1725642204284668,
+      "expected_content_ce_per_slot": [
+        0.0939575582742691,
+        0.07338269799947739,
+        0.0914991945028305,
+        0.08958885073661804,
+        0.06751339137554169,
+        0.06794466078281403,
+        0.07015851885080338,
+        0.08649171888828278
+      ],
+      "rate_nats_per_slot": [
+        1.0277243852615356,
+        1.0438852310180664,
+        1.0217844247817993,
+        1.0645288228988647,
+        0.9991295337677002,
+        0.9906026721000671,
+        0.9892828464508057,
+        0.9828702807426453
+      ],
+      "own_bit_linear_r2": 0.9723029113995358,
+      "other_bits_linear_r2": -0.009906031636144596,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.1872497291205857,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 12.204186814006867,
+          "test_mse": 2.2029127343613273
+        },
+        "joint": {
+          "validation_mse": 1.9449342307660933,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 25.000580300024804,
+          "test_mse": 2.0607140251403178
+        },
+        "test_mse_gain": 0.14219870922100952,
+        "gain_relative_to_fit_mean_baseline": 0.061501713203190124,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_223_mean_pool_1.pt",
+      "synthetic_cache_sha256": "8e617dc67be6c4a8d3c6973b9dc914a9ed402cd2290dd830e28074e24b6c42de"
+    },
+    {
+      "task": "synergy",
+      "seed": 223,
+      "readout": "role_concat",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.2316742897033692,
+      "expected_content_ce_per_slot": [
+        0.708636462688446,
+        0.7034649848937988,
+        0.6996127367019653,
+        0.7027330994606018,
+        0.7812903523445129,
+        0.7861046195030212,
+        0.7666586637496948,
+        0.7638205289840698
+      ],
+      "rate_nats_per_slot": [
+        2.8743112087249756,
+        5.961124897003174,
+        5.988636493682861,
+        5.352713108062744,
+        3.0557870864868164,
+        2.987433671951294,
+        3.684429883956909,
+        3.2742881774902344
+      ],
+      "own_bit_linear_r2": 0.04702256209346978,
+      "other_bits_linear_r2": 0.020581449473510212,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.273831523716458,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 3.1078982529628467,
+          "test_mse": 2.2577934602958503
+        },
+        "joint": {
+          "validation_mse": 2.273831523716458,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 3.1078982529628467,
+          "test_mse": 2.2577934602958503
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_223_role_concat_0.pt",
+      "synthetic_cache_sha256": "677595963bf42349314107c5fe10b9d21f43f889c4d5749721dbe356e3d1855b"
+    },
+    {
+      "task": "synergy",
+      "seed": 223,
+      "readout": "role_concat",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "f0a0965a2712f2726386d5f71c05cd6e705053ec4decd7315eaf8f092a81d78f",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.1877329349517822,
+      "expected_content_ce_per_slot": [
+        0.0890551209449768,
+        0.15766248106956482,
+        0.15776248276233673,
+        0.0912049412727356,
+        0.07050494104623795,
+        0.08917392790317535,
+        0.0756237655878067,
+        0.10756893455982208
+      ],
+      "rate_nats_per_slot": [
+        0.9877490997314453,
+        0.9788548350334167,
+        0.9785716533660889,
+        0.9944267272949219,
+        1.0349403619766235,
+        1.028686285018921,
+        1.0188812017440796,
+        1.01259446144104
+      ],
+      "own_bit_linear_r2": 0.9542470774539856,
+      "other_bits_linear_r2": -0.007040498101086613,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.147904163989284,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 12.50749339304743,
+          "test_mse": 2.237769420295486
+        },
+        "joint": {
+          "validation_mse": 0.6932538116863065,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 0.0001,
+          "effective_df": 90.59914829030056,
+          "test_mse": 0.5465981518618531
+        },
+        "test_mse_gain": 1.6911712684336329,
+        "gain_relative_to_fit_mean_baseline": 0.7314407486429795,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_223_role_concat_1.pt",
+      "synthetic_cache_sha256": "94bb56bd4306f7e529f4f33f8d3ca552155fa02ba219f0d85dc7f9ba599486b7"
+    },
+    {
+      "task": "synergy",
+      "seed": 251,
+      "readout": "mean_pool",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.1752552032470702,
+      "expected_content_ce_per_slot": [
+        0.7255824208259583,
+        0.7237116098403931,
+        0.716027021408081,
+        0.7319909930229187,
+        0.6999272108078003,
+        0.7287314534187317,
+        0.7083896994590759,
+        0.6998156905174255
+      ],
+      "rate_nats_per_slot": [
+        1.3337560892105103,
+        1.443463683128357,
+        1.38836669921875,
+        1.4008761644363403,
+        2.1621177196502686,
+        2.061929702758789,
+        1.8685566186904907,
+        2.1845757961273193
+      ],
+      "own_bit_linear_r2": 0.11046398808608886,
+      "other_bits_linear_r2": 0.022472836703931298,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.2769057648706665,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 1.02186469497872,
+          "test_mse": 2.254823670436591
+        },
+        "joint": {
+          "validation_mse": 2.2699226628005196,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1.0,
+          "effective_df": 1.7549778085529013,
+          "test_mse": 2.25499050580923
+        },
+        "test_mse_gain": -0.0001668353726387295,
+        "gain_relative_to_fit_mean_baseline": -7.245336899872644e-05,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_251_mean_pool_0.pt",
+      "synthetic_cache_sha256": "d58cd48ac1dde7bdf0ce437521b70dfd4e448597e1968241bd5a2086a3ca7e2a"
+    },
+    {
+      "task": "synergy",
+      "seed": 251,
+      "readout": "mean_pool",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.1748789072036743,
+      "expected_content_ce_per_slot": [
+        0.1346818059682846,
+        0.14586147665977478,
+        0.13760405778884888,
+        0.13640420138835907,
+        0.18616539239883423,
+        0.1258513629436493,
+        0.12279476970434189,
+        0.11180324852466583
+      ],
+      "rate_nats_per_slot": [
+        1.0391486883163452,
+        1.0330554246902466,
+        1.007953405380249,
+        1.018276572227478,
+        1.0273256301879883,
+        1.046226143836975,
+        1.051468849182129,
+        1.0437510013580322
+      ],
+      "own_bit_linear_r2": 0.9628352556957543,
+      "other_bits_linear_r2": -0.0077471240223811345,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.226356341173727,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 3.295056494617807,
+          "test_mse": 2.279322001628038
+        },
+        "joint": {
+          "validation_mse": 2.00280334468399,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 58.94133732656148,
+          "test_mse": 1.8609252819770357
+        },
+        "test_mse_gain": 0.41839671965100256,
+        "gain_relative_to_fit_mean_baseline": 0.18170158664358432,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_251_mean_pool_1.pt",
+      "synthetic_cache_sha256": "8e779c7713e32f520a910b5a6d7457a8b13bb0058ceda7049a5579a711b9e8a6"
+    },
+    {
+      "task": "synergy",
+      "seed": 251,
+      "readout": "role_concat",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.1767204046249389,
+      "expected_content_ce_per_slot": [
+        0.725874125957489,
+        0.7257441282272339,
+        0.7158129811286926,
+        0.7297636270523071,
+        0.7001051902770996,
+        0.6992971897125244,
+        0.7015647292137146,
+        0.7171615362167358
+      ],
+      "rate_nats_per_slot": [
+        1.5167322158813477,
+        1.6296005249023438,
+        1.533241868019104,
+        1.4189342260360718,
+        2.271336555480957,
+        2.2966253757476807,
+        2.209805727005005,
+        1.8733147382736206
+      ],
+      "own_bit_linear_r2": 0.11249387153784864,
+      "other_bits_linear_r2": 0.015358049795979946,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.273123030412141,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 2.7558412004669064,
+          "test_mse": 2.259116935020415
+        },
+        "joint": {
+          "validation_mse": 2.273123030412141,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 2.7558412004669064,
+          "test_mse": 2.259116935020415
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_251_role_concat_0.pt",
+      "synthetic_cache_sha256": "f1c134311a0d27b0b721f94ed76715e296ff3b452e305dfd0ce3b7526b85175a"
+    },
+    {
+      "task": "synergy",
+      "seed": 251,
+      "readout": "role_concat",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "7afa94cb49e94134df683c39b8cee2db25e9e752c2f5ec226303529bb9a5bf79",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.183531141281128,
+      "expected_content_ce_per_slot": [
+        0.07668056339025497,
+        0.11073575168848038,
+        0.07499141991138458,
+        0.0901779904961586,
+        0.1730937361717224,
+        0.16052570939064026,
+        0.13882151246070862,
+        0.12357725948095322
+      ],
+      "rate_nats_per_slot": [
+        1.0061384439468384,
+        1.0143613815307617,
+        1.0081239938735962,
+        1.014896273612976,
+        1.0297749042510986,
+        1.0379810333251953,
+        1.0461063385009766,
+        1.0404056310653687
+      ],
+      "own_bit_linear_r2": 0.9555003900669574,
+      "other_bits_linear_r2": -0.018216586746252778,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.244574846560657,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 8.06997323159669,
+          "test_mse": 2.316585057874716
+        },
+        "joint": {
+          "validation_mse": 0.6719762898295107,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 106.80283823454823,
+          "test_mse": 0.9001119761819192
+        },
+        "test_mse_gain": 1.4164730816927968,
+        "gain_relative_to_fit_mean_baseline": 0.6151468075471368,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_251_role_concat_1.pt",
+      "synthetic_cache_sha256": "73d601d8bf54870d00369b27891642d5588a0c5d60932dcd27da904442948fa6"
+    },
+    {
+      "task": "synergy",
+      "seed": 277,
+      "readout": "mean_pool",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.180826687812805,
+      "expected_content_ce_per_slot": [
+        0.7076658606529236,
+        0.7190630435943604,
+        0.7116692066192627,
+        0.6951177716255188,
+        0.7298262119293213,
+        0.7195278406143188,
+        0.741423487663269,
+        0.7440746426582336
+      ],
+      "rate_nats_per_slot": [
+        1.2888222932815552,
+        1.3143553733825684,
+        1.4173914194107056,
+        1.376947045326233,
+        2.1730620861053467,
+        5.7735066413879395,
+        4.357137203216553,
+        5.5995612144470215
+      ],
+      "own_bit_linear_r2": 0.07938375463933424,
+      "other_bits_linear_r2": 0.019872806598453006,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.1887203116104734,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 9.83065219370074,
+          "test_mse": 2.339887421419325
+        },
+        "joint": {
+          "validation_mse": 2.1887203116104734,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 9.83065219370074,
+          "test_mse": 2.339887421419325
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_277_mean_pool_0.pt",
+      "synthetic_cache_sha256": "2187bc641dcfaff51b3961e1c9d48402d5de17112bb25617f9fc0256d62d7fde"
+    },
+    {
+      "task": "synergy",
+      "seed": 277,
+      "readout": "mean_pool",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7358,
+      "phi_parameter_count": 704,
+      "test_expected_nll": 1.1351038694381714,
+      "expected_content_ce_per_slot": [
+        0.10171767324209213,
+        0.09724497050046921,
+        0.0512126162648201,
+        0.1310098022222519,
+        0.09306900203227997,
+        0.14697878062725067,
+        0.07391675561666489,
+        0.09727109968662262
+      ],
+      "rate_nats_per_slot": [
+        0.9952037334442139,
+        1.0152924060821533,
+        1.0054477453231812,
+        1.0015132427215576,
+        1.0239100456237793,
+        1.0348247289657593,
+        1.024490475654602,
+        1.00971257686615
+      ],
+      "own_bit_linear_r2": 0.9509386505933565,
+      "other_bits_linear_r2": 0.015020059660934403,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.240358471477835,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 4.549580785630114,
+          "test_mse": 2.3571382198993223
+        },
+        "joint": {
+          "validation_mse": 2.089646511021627,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 0.0001,
+          "effective_df": 45.79358500342898,
+          "test_mse": 2.3780949339209596
+        },
+        "test_mse_gain": -0.020956714021637346,
+        "gain_relative_to_fit_mean_baseline": -0.008528319276045582,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_277_mean_pool_1.pt",
+      "synthetic_cache_sha256": "77041ad7a9efe1f871f3d770fb9a0035b572c0cf963fedf529199d1f4daf50f8"
+    },
+    {
+      "task": "synergy",
+      "seed": 277,
+      "readout": "role_concat",
+      "content_budget_on": 0,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.174170184135437,
+      "expected_content_ce_per_slot": [
+        0.7087293863296509,
+        0.7166931629180908,
+        0.7136213183403015,
+        0.7015960216522217,
+        0.8367608785629272,
+        0.9667444229125977,
+        0.8529337644577026,
+        0.9908273816108704
+      ],
+      "rate_nats_per_slot": [
+        0.42782533168792725,
+        0.46915557980537415,
+        0.4766589105129242,
+        0.4575140178203583,
+        7.566850185394287,
+        4.6757493019104,
+        13.648658752441406,
+        4.336319446563721
+      ],
+      "own_bit_linear_r2": 0.0697595703306717,
+      "other_bits_linear_r2": 0.025655670464100302,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.1758112877566407,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 17.304404584708614,
+          "test_mse": 2.36566950116045
+        },
+        "joint": {
+          "validation_mse": 2.1423101088688665,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 19.49261703878603,
+          "test_mse": 2.4796642210368476
+        },
+        "test_mse_gain": -0.11399471987639753,
+        "gain_relative_to_fit_mean_baseline": -0.04639006696782423,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_277_role_concat_0.pt",
+      "synthetic_cache_sha256": "253c24917c89eb71ba493026b3df561b533df8d06a51bf09f583a423c4f918a6"
+    },
+    {
+      "task": "synergy",
+      "seed": 277,
+      "readout": "role_concat",
+      "content_budget_on": 1,
+      "shared_core_initial_hash": "2a22d35c76d1ecd403836c2e9e6c3b49f7806ddda8b7b156946d22ae21ea5418",
+      "parameter_count": 7346,
+      "phi_parameter_count": 692,
+      "test_expected_nll": 1.1518763065338136,
+      "expected_content_ce_per_slot": [
+        0.06051686406135559,
+        0.0849645584821701,
+        0.047384969890117645,
+        0.05737259238958359,
+        0.10743439197540283,
+        0.08816533535718918,
+        0.09105566143989563,
+        0.09192001074552536
+      ],
+      "rate_nats_per_slot": [
+        0.9904196262359619,
+        1.0014545917510986,
+        1.0070101022720337,
+        1.004045009613037,
+        0.9802582859992981,
+        0.997992217540741,
+        1.0077325105667114,
+        1.0040779113769531
+      ],
+      "own_bit_linear_r2": 0.9760373101778467,
+      "other_bits_linear_r2": -0.014677142026858048,
+      "risk_probe": {
+        "common": {
+          "validation_mse": 2.2244152045197447,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 0.0001,
+          "effective_df": 8.819479320789991,
+          "test_mse": 2.3700680142503767
+        },
+        "joint": {
+          "validation_mse": 0.35442036248174846,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 92.56875199903845,
+          "test_mse": 0.3968647634360976
+        },
+        "test_mse_gain": 1.9732032508142792,
+        "gain_relative_to_fit_mean_baseline": 0.8029936039638931,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "synthetic_cache_path": "local_evidence\\synthetic_role_readout_20261102\\synergy_277_role_concat_1.pt",
+      "synthetic_cache_sha256": "4da84e38bf04c74eae0cffe6ab4be3f35da6e0aef63a90ca43f8ece84ae132e1"
+    }
+  ],
+  "patient_execution": false,
+  "server_execution": false
+}

@@ -8866,5 +8866,240 @@
     },
     "gaps_reasons": "The published summary is a descriptive record, not an analysis. The diversity queue completed and needs no further action, but the best new arm exceeds the reused baseline by 0.002 to 0.006, far inside the fold spread of 0.024 to 0.047, so nothing separates from the baseline. The anti-collapse queue is still missing folds 3 and 4, ten of twenty possible arm-folds, and repairing the launcher is a source change inside the anti-collapse implementation hash set, so it waits for the authorisation the recorded rule requires. The three open decisions of the common-private architecture line are untouched by this stage. No patient stage exists for that line. Nothing in either queue establishes patient benefit, patient harm, correction efficacy, clinical utility or generalization to another cohort or cancer. The content separation was measured on the WSI modality only in the earlier record; the same probe on the omic modality is now measured and is close to the baseline, so the omic patient-specific content is not established.",
     "next_action_user_inputs": "Nothing is pending for the diversity queue, which is completed and recorded. Two items remain for the user. First, whether to repair the launcher so the log file is opened in a mode that tolerates an existing file and then resume the anti-collapse queue for folds 3 and 4, which needs explicit execution authorisation because only --run executes and the file is inside the implementation hash set. Second, the three open decisions of the common-private line in docs/research/slotspe_common_private_20261101/open_decisions.json. The deletion oracle on the six completed anti-collapse best checkpoints remains an open question from the earlier stage and was already authorised in principle for the completed queue. No new patient input is required to read any existing artifact."
+  },
+  "latest_common_private_objective_audit_20261101": {
+    "route_task": "Autonomous common/private mechanism research and Q1/Q2/Q3 decision",
+    "completed_work": "Audited 121a9e9 receipts; constructed conditional-KL shared-copy invariance and reproduced a false private-increment positive using the actual partial_probe. Selected direct cross-branch dependence as the replacement research target; instruments must pass before estimator selection.",
+    "paths_commit": {
+      "base": "121a9e9d8ac86b8e806f71acecf65c949f473796",
+      "report": "docs/research/slotspe_common_private_20261101/research_decisions_20261101.md",
+      "script": "scripts/check_common_private_claims.py",
+      "receipt": "docs/research/slotspe_common_private_20261101/claims_counterexamples_receipt.json",
+      "new_commit": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "fabricated_mathematical_checks": 5,
+      "additional_analytic_counterexample": 1,
+      "new_training_runs": 0,
+      "patient_execution": false,
+      "server_execution": false,
+      "received_existing_public_receipts": true,
+      "new_patient_raw_receipt": false
+    },
+    "gaps_reasons": "No validated new dependence estimator or corrected architecture yet. Finite probes cannot establish conditional independence. Existing patient results and full tests not rerun.",
+    "next_action_user_inputs": "Implement held-out nonlinear incremental-risk probe with known-answer gates, then controlled replacement objective; no user research choice required and no patient authorization inferred."
+  },
+  "latest_nonlinear_increment_reaudit_20261101": {
+    "route_task": "Nonlinear predictive increment instrument and controlled synthetic re-audit",
+    "completed_work": "Implemented fit/validation/test kernel probes with nested common baseline and effective degrees-of-freedom reporting. Passed known-answer gates and reran six generated neural trainings.",
+    "paths_commit": {
+      "report": "docs/research/slotspe_common_private_20261101/nonlinear_increment_review.md",
+      "instrument": "slotspe_proof/incremental_probe.py",
+      "receipts": [
+        "docs/research/slotspe_common_private_20261101/incremental_probe_receipt.json",
+        "docs/research/slotspe_common_private_20261101/nonlinear_reaudit_receipt.json"
+      ],
+      "base_commit": "121a9e9",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "known_answer_cases": 21,
+      "known_answer_passed": 21,
+      "unit_tests_passed": 6,
+      "new_generated_training_runs": 6,
+      "steps_per_run": 300,
+      "patient_execution": false,
+      "server_execution": false,
+      "new_patient_raw_receipt": false
+    },
+    "gaps_reasons": "Finite probe classes; joint and common effective capacities may differ. One neural training/data seed per task; no patient or full-scale evidence. Replacement dependence objective remains to be implemented and validated.",
+    "next_action_user_inputs": "Validate direct cross-branch dependence objective on known common copies and correlated useful factors; compare against unchanged beta0 and conditional-KL parents. Continue autonomously on synthetic inputs."
+  },
+  "latest_direct_club_confirmation_20261102": {
+    "recorded_at": "2026-11-02",
+    "route_task": "Direct common-private vCLUB mechanism, density gates, locked synthetic confirmation and slot-set capacity",
+    "completed_work": "Implemented direct patient-row vCLUB adaptation without changing core architecture; passed density gates and gradient/RNG contracts; completed 27 cue-stress pilot, 45 clean-factor confirmation and six mean-matched bag trainings. Kept negative predictive results and low-rank private-slot observations.",
+    "paths_commit": {
+      "base": "121a9e9d8ac86b8e806f71acecf65c949f473796",
+      "branch": "codex/common-private-mechanism-review",
+      "report": "docs/research/slotspe_common_private_20261101/direct_club_method_20261102.md",
+      "module": "slotspe_proof/common_private_club.py",
+      "summary": "docs/research/slotspe_common_private_20261101/club_stage_summary.json",
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "generated_neural_trainings": 78,
+      "core_optimizer_updates": 24600,
+      "density_estimator_fits": 4,
+      "analytic_scalar_optimizations": 3,
+      "focused_unit_tests_passed": 35,
+      "paired_core_initialization_groups": 24,
+      "patient_training": 0,
+      "patient_inference": 0,
+      "real_checkpoint_loads": 0,
+      "server_execution": false,
+      "new_patient_raw_receipt": false
+    },
+    "gaps_reasons": "No established predictive gain: all three IID paired descriptive t95 intervals include zero. Private slot uncentered effective rank remains about 1.18-1.32. Learned ratio not certified MI bound; pooled summary dependence does not enforce slot complementarity. High-dimensional/default patient model and protocol unverified.",
+    "next_action_user_inputs": "Implement capacity-controlled whole-set versus best-single-slot predictive increment diagnostic with duplicate, useful-factor, XOR and sampling-noise controls before adding a slot-level objective. No research choice needed from user; patient execution remains separately authorized."
+  },
+  "latest_slot_increment_and_prior_normalization_20261102": {
+    "recorded_at": "2026-11-02",
+    "route_task": "Whole-slot versus validation-selected single-slot information audit and prior-normalized private bottleneck",
+    "completed_work": "Passed 21 fabricated known-answer slot-increment gates, including denoising counterexample. Replayed 18 existing model configurations and cached generated features. Implemented exact prior-normalized readout without new parameters and completed a 36-run 2x2 coordinate/rate ablation. Both families preserve negative predictive and complementarity results.",
+    "paths_commit": {
+      "base": "121a9e9",
+      "branch": "codex/common-private-mechanism-review",
+      "reports": [
+        "docs/research/slotspe_common_private_20261101/slot_increment_review_20261102.md",
+        "docs/research/slotspe_common_private_20261101/prior_normalized_mechanism_20261102.md"
+      ],
+      "new_local_commit_prepared": true,
+      "remote_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "generated_training_executions": 54,
+      "replays_not_independent_new_trainings": 18,
+      "new_exploratory_trainings": 36,
+      "core_updates": 16200,
+      "focused_tests_passed": 43,
+      "known_answer_gate_cases": 21,
+      "paired_initialization_groups_in_new_ablation": 9,
+      "patient_training": 0,
+      "patient_inference": 0,
+      "real_checkpoint_loads": 0,
+      "server_execution": false,
+      "new_patient_raw_receipt": false
+    },
+    "gaps_reasons": "No stable whole-set predictive increment established in mean mode; finite probes cannot prove absent information. Prior normalization fixes coordinate/rate interpretation but has no consistent prediction gain. Per-slot fixed content targets and entropy/budget assumptions remain unverified.",
+    "next_action_user_inputs": "Audit content-anchored per-slot information budget inequality on known finite factors, preserve target-overlap and shared-information counterexamples, then implement a minimal candidate only if the assumptions and controls are meaningful. No patient execution authorization inferred."
+  },
+  "latest_content_budget_and_readout_20261102": {
+    "recorded_at": "2026-11-02",
+    "route_task": "Fixed content targets, per-slot normalized variational information budgets and controlled all-slot readout",
+    "completed_work": "Proved conditional chain-rule bound with explicit target/entropy assumptions; retained seven exact finite counterexamples. Implemented fixed-content auxiliary heads and soft rate budgets. Completed 36 anchor-by-budget and 36 readout-by-constraint exploratory synthetic trainings; retained nuisance harm and readout prediction failures. Mean pooling remains current default; role concatenation only diagnostic.",
+    "paths_commit": {
+      "parent_commit": "abed03bae9f19e30dbef22f86bf1e10a0c4fbc0b",
+      "branch": "codex/common-private-mechanism-review",
+      "report": "docs/research/slotspe_common_private_20261101/content_budget_architecture_20261102.md",
+      "summary": "docs/research/slotspe_common_private_20261101/content_budget_stage_summary.json",
+      "validation_receipt": "docs/research/slotspe_common_private_20261101/content_budget_validation_receipt.json",
+      "new_local_commit_prepared": true,
+      "push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "new_synthetic_training_runs": 72,
+      "steps_per_run": 500,
+      "core_updates": 36000,
+      "paired_initialization_groups": 18,
+      "finite_math_checks": 7,
+      "focused_tests_passed": 51,
+      "synthetic_cache_hashes_verified": 36,
+      "third_party_files_sha256_preserved": 11,
+      "patient_training": 0,
+      "patient_inference": 0,
+      "patient_checkpoint_loads": 0,
+      "server_execution": false,
+      "remote_public_queue_aggregate_read_at": "dd48570",
+      "server_raw_artifact_audit_this_stage": false
+    },
+    "gaps_reasons": "Known synthetic role metadata is optimistic; no clinical content-target adapter or default-size patient validation. Content retention is not task utility, and three seeds do not establish generalization. Shared G can re-encode private information. Population KL bound is not an empirical MI certificate. Full suite not rerun; training source pins added post-run. Remote research branch advanced without architecture overlap and was not merged.",
+    "next_action_user_inputs": "Continue autonomously on a fully synthetic train-only frozen-content target adapter without oracle types, with shuffled/constant/oracle target controls and content/utility counterexamples. Freeze independent confirmation only after that gate. No user research decision needed; patient/server execution requires separate authorization."
+  },
+  "latest_frozen_target_and_shared_path_20261102": {
+    "recorded_at": "2026-11-02",
+    "route_task": "Train-only frozen content-target feasibility, utility falsification and shared-path re-encoding audit",
+    "completed_work": "Implemented patient-equal frozen prototype/PCA target adapter without one-hot roles; 12 known-answer teacher fits passed feasibility and preserved common-copy/nuisance/nonidentifiability controls. Completed 30 locked synthetic trainings with oracle/shuffled/constant/budget controls. Reproduced three finite target/capacity counterexamples and four shared-path scaling checks. Decided not to promote unconditioned PCA targets; next repair is shared conditional information bottleneck, not yet implemented.",
+    "paths_commit": {
+      "parent_commit": "6ad3aab4c32417c72458e61a69e55876ef1f72e0",
+      "branch": "codex/common-private-mechanism-review",
+      "report": "docs/research/slotspe_common_private_20261101/frozen_target_review_20261102.md",
+      "plan": "docs/research/slotspe_common_private_20261101/frozen_target_gate_plan_20261102.json",
+      "summary": "docs/research/slotspe_common_private_20261101/frozen_target_stage_summary.json",
+      "validation": "docs/research/slotspe_common_private_20261101/frozen_target_validation_receipt.json",
+      "local_commit_prepared": true,
+      "push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "new_synthetic_trainings": 30,
+      "steps_per_training": 500,
+      "core_updates": 15000,
+      "research_teacher_fits": 24,
+      "paired_initialization_groups": 6,
+      "unit_tests_passed": 58,
+      "counterexamples": 3,
+      "shared_scaling_grid_points": 4,
+      "source_pins_and_synthetic_cache_hashes_verified": true,
+      "original_source_files_preserved": 11,
+      "patient_training": 0,
+      "patient_inference": 0,
+      "patient_checkpoint_reads": 0,
+      "server_execution": false,
+      "new_server_receipts": false
+    },
+    "gaps_reasons": "Frozen target stability/entropy does not establish prognosis utility; nuisance dominance directs the teacher to irrelevant factors. Finite probes do not identify all retained information; constant targets can match prediction scores. Small three-seed exploratory comparisons, no independent confirmation. Deterministic shared-path re-encoding remains allowed in the current prototype; proposed conditional shared bottleneck needs actual-sample readout and collapse/synergy gates. Original SlotSPE/V2 patient attribution is not established by this synthetic study.",
+    "next_action_user_inputs": "Continue local mathematical and synthetic implementation of symmetric cross-modal shared-posterior conditional KL plus cooperative all-slot private budgets. First enforce single-modality posterior inputs, noisy shared readout, no deterministic bypass, and shared/private/nuisance/XOR known-answer controls. Do not add PCA targets to the main model or start patient/server experiments; no research choice required from user."
+  },
+  "latest_crossmodal_shared_bottleneck_20261102": {
+    "recorded_at": "2026-11-02",
+    "route_task": "Own-modality shared Gaussian conditional-information rate and cooperative all-slot private budgets",
+    "completed_work": "Implemented sampled shared path with other-view-only references, normalized private slots, all-slot mean readout and guarded stochastic objective. Passed Gaussian population identities and gradient/RNG/permutation gates. Completed locked 48-run 2x2 synthetic matrix; 6 posthoc same-width XOR instrument controls without retraining. Corrected old diagnostic docstrings only. Kept weak prediction, XOR and mean-slot geometry results. Read remote anti-collapse aggregate update and narrowed its causal/content interpretation.",
+    "paths_commit": {
+      "parent_commit": "5cf76b7a3b1ffd1ae7b7f086b69199330c7907ac",
+      "branch": "codex/common-private-mechanism-review",
+      "report": "docs/research/slotspe_common_private_20261101/crossmodal_shared_bottleneck_review_20261102.md",
+      "plan": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_rate_plan_20261102.json",
+      "summary": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_rate_stage_summary.json",
+      "validation": "docs/research/slotspe_common_private_20261101/crossmodal_conditional_rate_validation_receipt.json",
+      "local_commit_prepared": true,
+      "push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "gaussian_oracle_cases": 36,
+      "sample_repeat_controls": 12,
+      "degeneracy_controls": 5,
+      "new_synthetic_trainings": 48,
+      "core_updates": 24000,
+      "paired_initialization_groups": 12,
+      "source_pins_and_cache_hashes_verified": true,
+      "xor_instrument_control_pairs_no_retraining": 6,
+      "unit_tests_passed": 68,
+      "third_party_files_preserved": 11,
+      "patient_training": 0,
+      "patient_inference": 0,
+      "patient_checkpoint_reads": 0,
+      "server_execution": false,
+      "received_public_anti_collapse_aggregate_at": "1c9a9bf",
+      "raw_server_receipts_reaudited": false
+    },
+    "gaps_reasons": "Shared sample private-factor linear accessibility changes as predicted, but posterior means are not covered by the single-sample rate and may retain signal. All eight shared-rate paired prediction intervals include zero. XOR effective private cooperation and multi-slot content benefit not established; sample rank is partly noise. Current tasks are low dimensional and cannot validate eight-slot semantic complementarity. Existing MIB/CEB/DisentangledSSL/PIBD are close foundations. Public anti-collapse update is partial three-fold and R5-based; own-versus-donor wins do not establish unique slot semantics or clip efficacy against S0.",
+    "next_action_user_inputs": "Before adding any module, run generated-factor readout capacity control for the exact XOR survival task and fixed-readout perturbation audit; distinguish encoder content, pooling access and optimization. If readout control succeeds, mathematically audit G-conditioned per-slot cross-view content targets as a separate increment. Do not promote PCA targets, tune on these exploratory tests, start patient work, or alter any server queue. No research choice needed from user."
+  },
+  "latest_research_server_push_handoff_20261102": {
+    "recorded_at": "2026-11-02",
+    "route_task": "Quota-saving push and server handoff of isolated common/private research",
+    "completed_work": "Preserved partial XOR experiment: 18 oracle controls, 3 exact replays, 2 accepted decoder refits; remaining seed449 unaccepted after interruption. Added plan-only and fresh ignored-output CLI for server synthetic execution. Wrote explicit handoff separating runnable synthetic training from missing patient integration.",
+    "paths_commit": {
+      "branch": "codex/common-private-mechanism-review",
+      "parent": "718211f7c30866a2742ab18ca088b70c1da3c10f",
+      "handoff": "docs/research/slotspe_common_private_20261101/SERVER_HANDOFF_20261102.md",
+      "receipt": "docs/research/slotspe_common_private_20261101/xor_readout_handoff_receipt.json",
+      "push_requested_by_user": true
+    },
+    "checks_actual_execution_raw_receipt": {
+      "focused_tests_passed": 15,
+      "plan_cli_passed": true,
+      "new_training_during_handoff": 0,
+      "oracle_completed": 18,
+      "exact_replays_completed": 3,
+      "decoder_refits_completed": 2,
+      "last_refit_accepted": false,
+      "patient_training": 0,
+      "patient_inference": 0,
+      "patient_checkpoint_reads": 0,
+      "server_execution": false
+    },
+    "gaps_reasons": "Current architecture has no patient dataset adapter or patient --run entry. Raw partial receipt remains running as historical bytes; independent completion audit marks partial. Do not present code push as patient-ready or append to existing server queues.",
+    "next_action_user_inputs": "Push isolated research branch and transfer SERVER_HANDOFF. Server can run fresh synthetic readout controls; patient adaptation, matched protocol and doctor remain necessary before concrete patient training. User asked whether to pause local continuing goal; await explicit response."
   }
 }

@@ -1,0 +1,1183 @@
+{
+  "status": "running",
+  "plan": {
+    "schema": "slotspe_xor_readout_capacity_plan_v1",
+    "recorded_before_execution": true,
+    "base_commit": "718211f7c30866a2742ab18ca088b70c1da3c10f",
+    "scope": "synthetic XOR survival diagnostic only; no new main-model module, patient adapter or server operation",
+    "seeds": [
+      419,
+      431,
+      449
+    ],
+    "data": "exact private_xor training/test data and noise schedules from the previous 48-run matrix; these are attribution controls, not independent confirmation",
+    "oracle_conditions": [
+      "after_phi_clean",
+      "before_phi_clean_single",
+      "before_phi_rate1_single",
+      "before_phi_rate1_repeated",
+      "before_phi_noise_only",
+      "before_phi_mismatched_repeated"
+    ],
+    "oracle_readout_trainings": 18,
+    "decoder_warmstart_refits": 3,
+    "deterministic_full_model_replays_not_new_independent_trainings": 3,
+    "updates_each_execution": 500,
+    "optimizer": "Adam .003, batch32, no clipping, fixed last update",
+    "oracle_shared_input": "true scalar shared factor in first G coordinate, no XOR/latent risk in G",
+    "oracle_private_code": "each modality receives only its own planted bit, never XOR; clean controls are deterministic capacity checks with no finite KL claim; rate1 Gaussian code uses mu=sqrt(1-exp(-2))*bit and variance exp(-2) in active dimension, standard normal elsewhere",
+    "parameters": "same initial phi, role constants and survival head as original model; after_phi trains head only, other oracle controls train full readout only; all encoders/posteriors frozen",
+    "noisy_code_qualification": "single uses one active slot per modality, repeated duplicates the same bit in all four slots; repeated is denoising/redundancy control, not complementary-slot evidence",
+    "replay_acceptance": "initial hash, all original cached shared/private/phi tensors and original test expected NLL must match before interpreting fixed-readout interventions",
+    "warmstart_refit": "from exact replayed model, freeze encoders/shared/private posterior and prior; add 500 readout-only updates on original training rows; extra optimization, not a fair new-method comparison",
+    "forward_perturbations": [
+      "own",
+      "all_private_prior_N0",
+      "all_private_zero",
+      "private_donor_permutation",
+      "common_donor_permutation",
+      "common_zero",
+      "one_slot_prior_replacement_each_modality"
+    ],
+    "bayes_controls": "proper mixture of survival distributions using noisy-bit posterior, not mean hazards or sigmoid of mean risk; independent censoring convention matches source survival_nll",
+    "evaluation": "five paired stochastic draws scored separately; average NLL, not averaged predictions; no validation checkpoint/hyperparameter selection",
+    "outputs": "public aggregates/hashes only; synthetic arrays and replayed model/readout states remain ignored",
+    "limits": "oracle role/bit/shared factors are privileged positive controls; null finite readout refits do not prove absent information; perturbations measure fixed-network sensitivity, not patient causality"
+  },
+  "plan_sha256": "83fea7af24cb2db23755662c937a1dfd764747e7c096af00fb2eeb50ed5f6d20",
+  "original_receipt_sha256": "0abedac2966d0f264ca65db9911513008aaf2be6f34716df00619ed87419f4ae",
+  "source_sha256_before_execution": {
+    "scripts/check_xor_readout_capacity.py": "f0206ea0fe498d7c92ac5d0681f8cd5da3cb3ee4807c61248bb29f4942a9cf48",
+    "slotspe_proof/xor_readout_diagnostics.py": "3ead0f4247c73d02b8176115def9b0ddb9029de6cc0cbafe1c0dcad73b35628b"
+  },
+  "oracle_rows": [
+    {
+      "seed": 419,
+      "mode": "after_phi_clean",
+      "trainable_readout_parameters": 660,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3998167514801025
+        },
+        {
+          "step": 99,
+          "nll": 1.1478583812713623
+        },
+        {
+          "step": 299,
+          "nll": 0.9697680473327637
+        },
+        {
+          "step": 499,
+          "nll": 0.8283047080039978
+        }
+      ],
+      "training_seconds": 0.7646498999965843,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 0.9345705509185791,
+      "conditional_code_bayes_nll": 0.909016125682115,
+      "full_planted_factor_bayes_nll": 0.9090161323547363,
+      "shared_only_mixture_bayes_nll": 1.138735131114688,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.44562995433807373,
+        "all_private_zero": 0.2832212448120117,
+        "private_donor_permutation": 0.5956307649612427,
+        "common_donor_permutation": 0.02001500129699707,
+        "common_zero": -0.0106392502784729
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.4839966297149658,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.4688014507293701,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 419,
+      "mode": "before_phi_clean_single",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4074525833129883
+        },
+        {
+          "step": 99,
+          "nll": 1.1793285608291626
+        },
+        {
+          "step": 299,
+          "nll": 1.0330188274383545
+        },
+        {
+          "step": 499,
+          "nll": 0.9151453971862793
+        }
+      ],
+      "training_seconds": 1.4007907000050182,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 0.9473006725311279,
+      "conditional_code_bayes_nll": 0.909016125682115,
+      "full_planted_factor_bayes_nll": 0.9090161323547363,
+      "shared_only_mixture_bayes_nll": 1.138735131114688,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.6833536624908447,
+        "all_private_zero": 0.6481055021286011,
+        "private_donor_permutation": 0.6073585748672485,
+        "common_donor_permutation": 0.016470611095428467,
+        "common_zero": -0.013145685195922852
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.46261980533599845,
+          0.1004621267318726,
+          0.11625831127166752,
+          0.12711617946624765
+        ],
+        [
+          0.4655802726745606,
+          0.12169489860534677,
+          0.1206352710723877,
+          0.10322341918945321
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 419,
+      "mode": "before_phi_rate1_single",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4067842960357666
+        },
+        {
+          "step": 99,
+          "nll": 1.1959339380264282
+        },
+        {
+          "step": 299,
+          "nll": 1.0555084943771362
+        },
+        {
+          "step": 499,
+          "nll": 1.139190435409546
+        }
+      ],
+      "training_seconds": 1.3873410999949556,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.1713603019714356,
+      "conditional_code_bayes_nll": 0.911806848571433,
+      "full_planted_factor_bayes_nll": 0.9090161323547363,
+      "shared_only_mixture_bayes_nll": 1.138735131114688,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.0014299869537353072,
+        "all_private_zero": 0.00019414424896235793,
+        "private_donor_permutation": -0.000211882591247603,
+        "common_donor_permutation": 0.018167495727539062,
+        "common_zero": -0.012906765937805265
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.0009606599807738814,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0005167484283445933,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 419,
+      "mode": "before_phi_rate1_repeated",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.407749056816101
+        },
+        {
+          "step": 99,
+          "nll": 1.1883375644683838
+        },
+        {
+          "step": 299,
+          "nll": 1.104264259338379
+        },
+        {
+          "step": 499,
+          "nll": 0.8871476650238037
+        }
+      ],
+      "training_seconds": 1.42117309999594,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 0.9534489035606384,
+      "conditional_code_bayes_nll": 0.909016744153924,
+      "full_planted_factor_bayes_nll": 0.9090161323547363,
+      "shared_only_mixture_bayes_nll": 1.138735131114688,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.40205765962600704,
+        "all_private_zero": 0.3091750025749207,
+        "private_donor_permutation": 0.6052943587303161,
+        "common_donor_permutation": 0.014532244205474942,
+        "common_zero": -0.0116158127784729
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.02023524045944214,
+          0.025064396858215376,
+          0.02560336589813239,
+          0.0289534330368042
+        ],
+        [
+          0.02592247724533081,
+          0.031113386154174805,
+          0.023603868484497137,
+          0.020521938800811768
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 419,
+      "mode": "before_phi_noise_only",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4063518047332764
+        },
+        {
+          "step": 99,
+          "nll": 1.2126553058624268
+        },
+        {
+          "step": 299,
+          "nll": 1.0499435663223267
+        },
+        {
+          "step": 499,
+          "nll": 1.132442593574524
+        }
+      ],
+      "training_seconds": 1.3332454999908805,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.1714987754821777,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "full_planted_factor_bayes_nll": 0.9090161323547363,
+      "shared_only_mixture_bayes_nll": 1.138735131114688,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.0,
+        "all_private_zero": -0.003499150276184082,
+        "private_donor_permutation": -0.002232480049133345,
+        "common_donor_permutation": 0.018327665328979448,
+        "common_zero": -0.012054967880249068
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 419,
+      "mode": "before_phi_mismatched_repeated",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.4067447185516357
+        },
+        {
+          "step": 99,
+          "nll": 1.2152246236801147
+        },
+        {
+          "step": 299,
+          "nll": 1.0389630794525146
+        },
+        {
+          "step": 499,
+          "nll": 1.1635793447494507
+        }
+      ],
+      "training_seconds": 1.4063953000004403,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.1678869724273682,
+      "conditional_code_bayes_nll": 1.138735131114688,
+      "full_planted_factor_bayes_nll": 0.9090161323547363,
+      "shared_only_mixture_bayes_nll": 1.138735131114688,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.003344297409057617,
+        "all_private_zero": 0.0038030147552490234,
+        "private_donor_permutation": -0.0026161909103392667,
+        "common_donor_permutation": 0.021120905876159668,
+        "common_zero": -0.012102746963500888
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.00032019615173339844,
+          0.00022292137145996094,
+          -0.0003622293472289595,
+          0.0005443096160888672
+        ],
+        [
+          -1.5592575073331005e-05,
+          -0.00029654502868647903,
+          -0.0004959344863890713,
+          0.00022366046905508696
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 431,
+      "mode": "after_phi_clean",
+      "trainable_readout_parameters": 660,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3195343017578125
+        },
+        {
+          "step": 99,
+          "nll": 1.0688786506652832
+        },
+        {
+          "step": 299,
+          "nll": 0.9725928902626038
+        },
+        {
+          "step": 499,
+          "nll": 0.7529618740081787
+        }
+      ],
+      "training_seconds": 0.6807157000002917,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 0.8808944225311279,
+      "conditional_code_bayes_nll": 0.8645833165458796,
+      "full_planted_factor_bayes_nll": 0.8645832538604736,
+      "shared_only_mixture_bayes_nll": 1.1072729080377692,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.41261105537414555,
+        "all_private_zero": 0.24664604663848877,
+        "private_donor_permutation": 0.594906210899353,
+        "common_donor_permutation": 0.043422162532806396,
+        "common_zero": 0.012340962886810303
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.5016611337661743,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.4750715017318725,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 431,
+      "mode": "before_phi_clean_single",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3158575296401978
+        },
+        {
+          "step": 99,
+          "nll": 1.0566301345825195
+        },
+        {
+          "step": 299,
+          "nll": 1.1256731748580933
+        },
+        {
+          "step": 499,
+          "nll": 0.8527851700782776
+        }
+      ],
+      "training_seconds": 1.367482800007565,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 0.9011714458465576,
+      "conditional_code_bayes_nll": 0.8645833165458796,
+      "full_planted_factor_bayes_nll": 0.8645832538604736,
+      "shared_only_mixture_bayes_nll": 1.1072729080377692,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.4950546741485595,
+        "all_private_zero": 0.49581217765808105,
+        "private_donor_permutation": 0.5111316442489624,
+        "common_donor_permutation": 0.03534895181655884,
+        "common_zero": 0.005038559436798096
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.38602836132049556,
+          0.08402974605560298,
+          0.06940782070159912,
+          0.0770579934120178
+        ],
+        [
+          0.39680752754211435,
+          0.1575435161590577,
+          0.11861153841018668,
+          0.13413431644439688
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 431,
+      "mode": "before_phi_rate1_single",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3208307027816772
+        },
+        {
+          "step": 99,
+          "nll": 1.0640476942062378
+        },
+        {
+          "step": 299,
+          "nll": 1.1163126230239868
+        },
+        {
+          "step": 499,
+          "nll": 1.023585319519043
+        }
+      ],
+      "training_seconds": 1.470621399988886,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.1196973085403443,
+      "conditional_code_bayes_nll": 0.8682428767418621,
+      "full_planted_factor_bayes_nll": 0.8645832538604736,
+      "shared_only_mixture_bayes_nll": 1.1072729080377692,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.0016103029251099965,
+        "all_private_zero": 0.007399702072143466,
+        "private_donor_permutation": -0.0008047819137573242,
+        "common_donor_permutation": 0.010891222953796298,
+        "common_zero": 0.005077028274536044
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          -0.00047035217285174014,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0010400295257568803,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 431,
+      "mode": "before_phi_rate1_repeated",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3183362483978271
+        },
+        {
+          "step": 99,
+          "nll": 1.0523803234100342
+        },
+        {
+          "step": 299,
+          "nll": 0.9899308085441589
+        },
+        {
+          "step": 499,
+          "nll": 0.8528932929039001
+        }
+      ],
+      "training_seconds": 1.4369867000059457,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 0.9043831944465637,
+      "conditional_code_bayes_nll": 0.8645833165554461,
+      "full_planted_factor_bayes_nll": 0.8645832538604736,
+      "shared_only_mixture_bayes_nll": 1.1072729080377692,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.38814898729324354,
+        "all_private_zero": 0.27620040178298955,
+        "private_donor_permutation": 0.558657419681549,
+        "common_donor_permutation": 0.037254619598388716,
+        "common_zero": 0.00502024888992314
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.02368971109390261,
+          0.0253759145736695,
+          0.0155426144599915,
+          0.01679372787475586
+        ],
+        [
+          0.016294980049133323,
+          0.020252299308776922,
+          0.01768325567245488,
+          0.017583167552948087
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 431,
+      "mode": "before_phi_noise_only",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3208332061767578
+        },
+        {
+          "step": 99,
+          "nll": 1.0596027374267578
+        },
+        {
+          "step": 299,
+          "nll": 1.1118857860565186
+        },
+        {
+          "step": 499,
+          "nll": 1.0309555530548096
+        }
+      ],
+      "training_seconds": 1.3506646000023466,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.1184587478637695,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "full_planted_factor_bayes_nll": 0.8645832538604736,
+      "shared_only_mixture_bayes_nll": 1.1072729080377692,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.0,
+        "all_private_zero": 0.006381630897521973,
+        "private_donor_permutation": -0.0013867139816283736,
+        "common_donor_permutation": 0.011227560043334917,
+        "common_zero": 0.005112814903259322
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 431,
+      "mode": "before_phi_mismatched_repeated",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.32039475440979
+        },
+        {
+          "step": 99,
+          "nll": 1.0587854385375977
+        },
+        {
+          "step": 299,
+          "nll": 1.1144905090332031
+        },
+        {
+          "step": 499,
+          "nll": 1.0169756412506104
+        }
+      ],
+      "training_seconds": 1.6019550999917556,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.130755400657654,
+      "conditional_code_bayes_nll": 1.1072729080377692,
+      "full_planted_factor_bayes_nll": 0.8645832538604736,
+      "shared_only_mixture_bayes_nll": 1.1072729080377692,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.008390188217163086,
+        "all_private_zero": 0.003072643280029208,
+        "private_donor_permutation": -0.014057803153991744,
+        "common_donor_permutation": 0.011255168914794833,
+        "common_zero": 0.005197429656982333
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          -0.0029781818389893466,
+          -0.0025592327117920366,
+          -0.0030665159225464755,
+          -0.003109502792358443
+        ],
+        [
+          0.00021722316741934478,
+          0.0002619028091430664,
+          0.00016965866088858306,
+          0.00044035911560058594
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 449,
+      "mode": "after_phi_clean",
+      "trainable_readout_parameters": 660,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3678269386291504
+        },
+        {
+          "step": 99,
+          "nll": 1.024863839149475
+        },
+        {
+          "step": 299,
+          "nll": 1.014497995376587
+        },
+        {
+          "step": 499,
+          "nll": 0.6564539670944214
+        }
+      ],
+      "training_seconds": 0.9032825000031153,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 0.8987794518470764,
+      "conditional_code_bayes_nll": 0.858846677541775,
+      "full_planted_factor_bayes_nll": 0.8588466644287109,
+      "shared_only_mixture_bayes_nll": 1.1156514648448415,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.5105357766151428,
+        "all_private_zero": 0.24879783391952515,
+        "private_donor_permutation": 0.7543488144874573,
+        "common_donor_permutation": 0.012393832206726074,
+        "common_zero": 0.005235195159912109
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.6121472001075745,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.5789885640144348,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 449,
+      "mode": "before_phi_clean_single",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3546030521392822
+        },
+        {
+          "step": 99,
+          "nll": 1.0536854267120361
+        },
+        {
+          "step": 299,
+          "nll": 1.1626993417739868
+        },
+        {
+          "step": 499,
+          "nll": 0.6763811707496643
+        }
+      ],
+      "training_seconds": 1.5955025000002934,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 0.9114524722099304,
+      "conditional_code_bayes_nll": 0.858846677541775,
+      "full_planted_factor_bayes_nll": 0.8588466644287109,
+      "shared_only_mixture_bayes_nll": 1.1156514648448415,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.39833680391311654,
+        "all_private_zero": 0.5659883618354797,
+        "private_donor_permutation": 0.5215620398521423,
+        "common_donor_permutation": 0.015298187732696533,
+        "common_zero": 0.010102570056915283
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.3970321774482728,
+          0.0690121054649353,
+          0.06532093286514284,
+          0.05898184776306148
+        ],
+        [
+          0.4174291729927062,
+          0.10536013841629033,
+          0.1048065304756165,
+          0.09331011772155762
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 449,
+      "mode": "before_phi_rate1_single",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3535957336425781
+        },
+        {
+          "step": 99,
+          "nll": 1.0510835647583008
+        },
+        {
+          "step": 299,
+          "nll": 1.164472222328186
+        },
+        {
+          "step": 499,
+          "nll": 1.011398434638977
+        }
+      ],
+      "training_seconds": 1.3415737000032095,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.138345217704773,
+      "conditional_code_bayes_nll": 0.864751947646076,
+      "full_planted_factor_bayes_nll": 0.8588466644287109,
+      "shared_only_mixture_bayes_nll": 1.1156514648448415,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.0015211582183838335,
+        "all_private_zero": -0.015703415870666593,
+        "private_donor_permutation": -0.0035859823226929155,
+        "common_donor_permutation": 0.01800503730773917,
+        "common_zero": 0.01017508506774889
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          -0.0006915807723999468,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          -0.0007850646972658026,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 449,
+      "mode": "before_phi_rate1_repeated",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3550281524658203
+        },
+        {
+          "step": 99,
+          "nll": 1.0471060276031494
+        },
+        {
+          "step": 299,
+          "nll": 0.9853507280349731
+        },
+        {
+          "step": 499,
+          "nll": 0.6508567333221436
+        }
+      ],
+      "training_seconds": 1.4360642000101507,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 0.9152562141418457,
+      "conditional_code_bayes_nll": 0.8588466775424006,
+      "full_planted_factor_bayes_nll": 0.8588466644287109,
+      "shared_only_mixture_bayes_nll": 1.1156514648448415,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.38493659496307386,
+        "all_private_zero": 0.35008852481842045,
+        "private_donor_permutation": 0.6944118738174438,
+        "common_donor_permutation": 0.01770737171173098,
+        "common_zero": 0.009181010723114058
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.01250048875808718,
+          0.0139748334884644,
+          0.011108446121215865,
+          0.006852543354034513
+        ],
+        [
+          0.02603391408920297,
+          0.03116828203201294,
+          0.02671360969543457,
+          0.024361252784729004
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 449,
+      "mode": "before_phi_noise_only",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.353529930114746
+        },
+        {
+          "step": 99,
+          "nll": 1.050532341003418
+        },
+        {
+          "step": 299,
+          "nll": 1.1590955257415771
+        },
+        {
+          "step": 499,
+          "nll": 1.009482741355896
+        }
+      ],
+      "training_seconds": 1.3344021999946563,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.1364959716796874,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "full_planted_factor_bayes_nll": 0.8588466644287109,
+      "shared_only_mixture_bayes_nll": 1.1156514648448415,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": 0.0,
+        "all_private_zero": -0.013246798515319735,
+        "private_donor_permutation": -0.0023481369018554243,
+        "common_donor_permutation": 0.01807179450988783,
+        "common_zero": 0.010007214546203791
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 449,
+      "mode": "before_phi_mismatched_repeated",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.3559788465499878
+        },
+        {
+          "step": 99,
+          "nll": 1.0451809167861938
+        },
+        {
+          "step": 299,
+          "nll": 1.1599292755126953
+        },
+        {
+          "step": 499,
+          "nll": 0.9978064298629761
+        }
+      ],
+      "training_seconds": 1.3803578999941237,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.1431777477264404,
+      "conditional_code_bayes_nll": 1.1156514648448415,
+      "full_planted_factor_bayes_nll": 0.8588466644287109,
+      "shared_only_mixture_bayes_nll": 1.1156514648448415,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.006588292121887163,
+        "all_private_zero": -0.02004873752593994,
+        "private_donor_permutation": -0.0018495798110962358,
+        "common_donor_permutation": 0.017483019828796298,
+        "common_zero": 0.00957932472228995
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          -0.002715802192688077,
+          -0.0023041725158692294,
+          -0.003013205528259233,
+          -0.0023916959762573242
+        ],
+        [
+          0.0001571178436279297,
+          0.00025200843811035156,
+          0.0007089376449584961,
+          -2.4008750915571753e-05
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    }
+  ],
+  "replay_rows": [
+    {
+      "seed": 419,
+      "replay_not_new_independent_training": true,
+      "cache_tensor_equalities": 39,
+      "trace_equalities": 4,
+      "model_state_path": "local_evidence\\synthetic_xor_readout_20261102\\original_replay_419.pt",
+      "model_state_sha256": "744fa03ab1dcd80f0604ab58a6b290c7de2aef4a0f39e3bb4413fb2eecf59ece",
+      "expected_nll": 1.169363307952881,
+      "conditional_code_bayes_nll": null,
+      "full_planted_factor_bayes_nll": 0.9090161323547363,
+      "shared_only_mixture_bayes_nll": 1.138735131114688,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.005673217773437544,
+        "all_private_zero": -0.00876696109771724,
+        "private_donor_permutation": -0.00010011196136483491,
+        "common_donor_permutation": -0.002494478225708141,
+        "common_zero": -0.0027043819427490234
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          -0.0012605428695680043,
+          -0.0013120174407958984,
+          -0.0009654998779298207,
+          -0.0017833709716796875
+        ],
+        [
+          -0.0020426988601685014,
+          -0.001704359054565563,
+          -0.0015435218811035156,
+          -0.0017597436904908115
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 431,
+      "replay_not_new_independent_training": true,
+      "cache_tensor_equalities": 39,
+      "trace_equalities": 4,
+      "model_state_path": "local_evidence\\synthetic_xor_readout_20261102\\original_replay_431.pt",
+      "model_state_sha256": "f28e08313da44297511302bd6a551193bda21c79cdf1f0d1f1fc0333e03575a3",
+      "expected_nll": 1.128170895576477,
+      "conditional_code_bayes_nll": null,
+      "full_planted_factor_bayes_nll": 0.8645832538604736,
+      "shared_only_mixture_bayes_nll": 1.1072729080377692,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.00949494838714604,
+        "all_private_zero": 0.0021784305572509766,
+        "private_donor_permutation": 0.011763191223144398,
+        "common_donor_permutation": -0.00014193058013911575,
+        "common_zero": 0.001480364799499423
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          -0.0006292104721070668,
+          -0.00015802383422847122,
+          -0.0005096673965454546,
+          -0.0003658294677735263
+        ],
+        [
+          -0.004593181610107466,
+          -0.0031751394271850586,
+          -0.005868864059448198,
+          -0.0050674200057982954
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 449,
+      "replay_not_new_independent_training": true,
+      "cache_tensor_equalities": 39,
+      "trace_equalities": 4,
+      "model_state_path": "local_evidence\\synthetic_xor_readout_20261102\\original_replay_449.pt",
+      "model_state_sha256": "dccd6e782203fe6213df4ea84128cae8c1da4ed5b6db692e4b8f3860bdcb3c10",
+      "expected_nll": 1.134182381629944,
+      "conditional_code_bayes_nll": null,
+      "full_planted_factor_bayes_nll": 0.8588466644287109,
+      "shared_only_mixture_bayes_nll": 1.1156514648448415,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.0009145498275757724,
+        "all_private_zero": -0.009141683578491211,
+        "private_donor_permutation": -0.0015504598617555043,
+        "common_donor_permutation": 0.010016274452209428,
+        "common_zero": -0.002005720138549938
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          0.00017626285552974075,
+          0.0001094102859495738,
+          -0.00010449886322017043,
+          -3.483295440687151e-05
+        ],
+        [
+          -0.00045650005340580613,
+          -0.000369286537170499,
+          -0.0004555702209472212,
+          -0.0002676486968995473
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    }
+  ],
+  "decoder_refit_rows": [
+    {
+      "seed": 419,
+      "mode": "learned_frozen_encoder_decoder_warmstart_500_extra_steps",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 1.0406389236450195
+        },
+        {
+          "step": 99,
+          "nll": 1.2454843521118164
+        },
+        {
+          "step": 299,
+          "nll": 1.0137782096862793
+        },
+        {
+          "step": 499,
+          "nll": 1.1269258260726929
+        }
+      ],
+      "training_seconds": 3.5082316999905743,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.1889414548873902,
+      "conditional_code_bayes_nll": null,
+      "full_planted_factor_bayes_nll": 0.9090161323547363,
+      "shared_only_mixture_bayes_nll": 1.138735131114688,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.016071987152099787,
+        "all_private_zero": -0.02064237594604501,
+        "private_donor_permutation": -0.006182646751403897,
+        "common_donor_permutation": -0.009108233451843306,
+        "common_zero": -0.006579661369323864
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          -0.0031794786453247514,
+          -0.003057909011840998,
+          -0.003592181205749556,
+          -0.0037308216094971147
+        ],
+        [
+          -0.004083704948425471,
+          -0.0042421102523804155,
+          -0.003979802131652832,
+          -0.0034694671630859375
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    },
+    {
+      "seed": 431,
+      "mode": "learned_frozen_encoder_decoder_warmstart_500_extra_steps",
+      "trainable_readout_parameters": 1396,
+      "trace": [
+        {
+          "step": 0,
+          "nll": 0.8637871146202087
+        },
+        {
+          "step": 99,
+          "nll": 1.0596396923065186
+        },
+        {
+          "step": 299,
+          "nll": 1.1036655902862549
+        },
+        {
+          "step": 499,
+          "nll": 1.0057964324951172
+        }
+      ],
+      "training_seconds": 4.5674808000039775,
+      "frozen_parameters_unchanged": true,
+      "expected_nll": 1.1422269821166993,
+      "conditional_code_bayes_nll": null,
+      "full_planted_factor_bayes_nll": 0.8645832538604736,
+      "shared_only_mixture_bayes_nll": 1.1072729080377692,
+      "forward_perturbation_nll_deltas": {
+        "all_private_prior_N0": -0.015935969352722124,
+        "all_private_zero": 0.013631749153137251,
+        "private_donor_permutation": 0.013812565803527743,
+        "common_donor_permutation": -5.7816505432128906e-05,
+        "common_zero": 0.0011536836624144176
+      },
+      "one_slot_prior_nll_deltas": [
+        [
+          -0.00025773048400878906,
+          0.0007453203201293057,
+          0.0001356840133666104,
+          3.619194030757278e-05
+        ],
+        [
+          -0.007215070724487349,
+          -0.005092191696167037,
+          -0.010684442520141557,
+          -0.008188509941101207
+        ]
+      ],
+      "interpretation": "paired fixed-readout sensitivity, potentially off manifold; not patient causality or unique slot information"
+    }
+  ],
+  "patient_execution": false,
+  "server_execution": false
+}

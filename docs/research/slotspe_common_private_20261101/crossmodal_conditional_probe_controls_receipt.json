@@ -1,0 +1,515 @@
+{
+  "status": "completed",
+  "control_pairs": 6,
+  "rows": [
+    {
+      "seed": 419,
+      "shared_weight": 0.0,
+      "private_weight": 0.3,
+      "feature_width": 32,
+      "oracle_tiled_xor_probe": {
+        "common": {
+          "validation_mse": 2.280799902391812,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 4.803674568353058,
+          "test_mse": 2.3507099476547157
+        },
+        "joint": {
+          "validation_mse": 0.04659212172768676,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 16.983340141180662,
+          "test_mse": 0.05255023172019699
+        },
+        "test_mse_gain": 2.298159715934519,
+        "gain_relative_to_fit_mean_baseline": 0.9638942981479974,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "mismatched_oracle_probe": {
+        "common": {
+          "validation_mse": 2.280799902391812,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 4.803674568353058,
+          "test_mse": 2.3507099476547157
+        },
+        "joint": {
+          "validation_mse": 2.26965757331081,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.25,
+          "regularization": 0.01,
+          "effective_df": 6.501096613213306,
+          "test_mse": 2.3450444988273205
+        },
+        "test_mse_gain": 0.005665448827395281,
+        "gain_relative_to_fit_mean_baseline": 0.00237620291719149,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "learned_actual_pooled_private_probe": {
+        "common": {
+          "validation_mse": 2.280799902391812,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 4.803674568353058,
+          "test_mse": 2.3507099476547157
+        },
+        "joint": {
+          "validation_mse": 2.280799902391812,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 0.01,
+          "effective_df": 4.803674568353058,
+          "test_mse": 2.3507099476547157
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      }
+    },
+    {
+      "seed": 419,
+      "shared_weight": 0.1,
+      "private_weight": 0.3,
+      "feature_width": 32,
+      "oracle_tiled_xor_probe": {
+        "common": {
+          "validation_mse": 2.3215513536565986,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 1.2867108631213808,
+          "test_mse": 2.363116077900169
+        },
+        "joint": {
+          "validation_mse": 0.05500183363041506,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 35.845939395550246,
+          "test_mse": 0.0568466685379718
+        },
+        "test_mse_gain": 2.3062694093621974,
+        "gain_relative_to_fit_mean_baseline": 0.9672956662950711,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "mismatched_oracle_probe": {
+        "common": {
+          "validation_mse": 2.3215513536565986,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 1.2867108631213808,
+          "test_mse": 2.363116077900169
+        },
+        "joint": {
+          "validation_mse": 2.314959254020646,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1.0,
+          "effective_df": 2.1307452170917887,
+          "test_mse": 2.3584078769031
+        },
+        "test_mse_gain": 0.004708200997069145,
+        "gain_relative_to_fit_mean_baseline": 0.001974713969679108,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "learned_actual_pooled_private_probe": {
+        "common": {
+          "validation_mse": 2.3215513536565986,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 1.2867108631213808,
+          "test_mse": 2.363116077900169
+        },
+        "joint": {
+          "validation_mse": 2.3187342525194303,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1.0,
+          "effective_df": 2.239946105871397,
+          "test_mse": 2.3586180832252506
+        },
+        "test_mse_gain": 0.004497994674918626,
+        "gain_relative_to_fit_mean_baseline": 0.001886549220314352,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      }
+    },
+    {
+      "seed": 431,
+      "shared_weight": 0.0,
+      "private_weight": 0.3,
+      "feature_width": 32,
+      "oracle_tiled_xor_probe": {
+        "common": {
+          "validation_mse": 2.303832647678104,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999909084941316,
+          "test_mse": 2.3597060212327916
+        },
+        "joint": {
+          "validation_mse": 0.017329992271928503,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.01,
+          "effective_df": 15.812770882030037,
+          "test_mse": 0.014956558410083419
+        },
+        "test_mse_gain": 2.3447494628227084,
+        "gain_relative_to_fit_mean_baseline": 0.9840213053681267,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "mismatched_oracle_probe": {
+        "common": {
+          "validation_mse": 2.303832647678104,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999909084941316,
+          "test_mse": 2.3597060212327916
+        },
+        "joint": {
+          "validation_mse": 2.258160085837283,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 6.999912792904025,
+          "test_mse": 2.347391188825189
+        },
+        "test_mse_gain": 0.012314832407602783,
+        "gain_relative_to_fit_mean_baseline": 0.005168167283224696,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "learned_actual_pooled_private_probe": {
+        "common": {
+          "validation_mse": 2.303832647678104,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999909084941316,
+          "test_mse": 2.3597060212327916
+        },
+        "joint": {
+          "validation_mse": 2.303832647678104,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999909084941316,
+          "test_mse": 2.3597060212327916
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      }
+    },
+    {
+      "seed": 431,
+      "shared_weight": 0.1,
+      "private_weight": 0.3,
+      "feature_width": 32,
+      "oracle_tiled_xor_probe": {
+        "common": {
+          "validation_mse": 2.3984273561629297,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999982874704509,
+          "test_mse": 2.4185106015891327
+        },
+        "joint": {
+          "validation_mse": 0.06837714539408636,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 25.94867946547636,
+          "test_mse": 0.07983152220135757
+        },
+        "test_mse_gain": 2.338679079387775,
+        "gain_relative_to_fit_mean_baseline": 0.9814737467796978,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "mismatched_oracle_probe": {
+        "common": {
+          "validation_mse": 2.3984273561629297,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999982874704509,
+          "test_mse": 2.4185106015891327
+        },
+        "joint": {
+          "validation_mse": 2.356188895630586,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1e-06,
+          "effective_df": 6.999980141060647,
+          "test_mse": 2.4141965861475696
+        },
+        "test_mse_gain": 0.004314015441563068,
+        "gain_relative_to_fit_mean_baseline": 0.0018104634092013976,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "learned_actual_pooled_private_probe": {
+        "common": {
+          "validation_mse": 2.3984273561629297,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999982874704509,
+          "test_mse": 2.4185106015891327
+        },
+        "joint": {
+          "validation_mse": 2.3984273561629297,
+          "family": "linear",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1e-06,
+          "effective_df": 4.999982874704509,
+          "test_mse": 2.4185106015891327
+        },
+        "test_mse_gain": 0.0,
+        "gain_relative_to_fit_mean_baseline": 0.0,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      }
+    },
+    {
+      "seed": 449,
+      "shared_weight": 0.0,
+      "private_weight": 0.3,
+      "feature_width": 32,
+      "oracle_tiled_xor_probe": {
+        "common": {
+          "validation_mse": 2.273850416548015,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 0.6300647801584697,
+          "test_mse": 2.387999131417126
+        },
+        "joint": {
+          "validation_mse": 0.03479020059172965,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 1.0,
+          "regularization": 0.0001,
+          "effective_df": 24.749305563985885,
+          "test_mse": 0.03359057268801632
+        },
+        "test_mse_gain": 2.3544085587291095,
+        "gain_relative_to_fit_mean_baseline": 0.9820722052013497,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "mismatched_oracle_probe": {
+        "common": {
+          "validation_mse": 2.273850416548015,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 0.6300647801584697,
+          "test_mse": 2.387999131417126
+        },
+        "joint": {
+          "validation_mse": 2.2722239804238007,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1.0,
+          "effective_df": 1.4024435597113238,
+          "test_mse": 2.3794102754747652
+        },
+        "test_mse_gain": 0.008588855942360585,
+        "gain_relative_to_fit_mean_baseline": 0.003582588359270939,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "learned_actual_pooled_private_probe": {
+        "common": {
+          "validation_mse": 2.273850416548015,
+          "family": "rbf",
+          "bandwidth": 2.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 0.6300647801584697,
+          "test_mse": 2.387999131417126
+        },
+        "joint": {
+          "validation_mse": 2.2719397868787796,
+          "family": "rbf",
+          "bandwidth": 0.5,
+          "private_weight": 1.0,
+          "regularization": 1.0,
+          "effective_df": 1.8372642846504965,
+          "test_mse": 2.3829890452336167
+        },
+        "test_mse_gain": 0.005010086183509177,
+        "gain_relative_to_fit_mean_baseline": 0.0020898099305005887,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      }
+    },
+    {
+      "seed": 449,
+      "shared_weight": 0.1,
+      "private_weight": 0.3,
+      "feature_width": 32,
+      "oracle_tiled_xor_probe": {
+        "common": {
+          "validation_mse": 2.2625720241214817,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 0.8030104560380404,
+          "test_mse": 2.3844841959526164
+        },
+        "joint": {
+          "validation_mse": 0.022082700022199888,
+          "family": "polynomial2",
+          "bandwidth": 1.0,
+          "private_weight": 0.25,
+          "regularization": 0.0001,
+          "effective_df": 25.691572227429937,
+          "test_mse": 0.022178502490483126
+        },
+        "test_mse_gain": 2.362305693462133,
+        "gain_relative_to_fit_mean_baseline": 0.9853662624257336,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "mismatched_oracle_probe": {
+        "common": {
+          "validation_mse": 2.2625720241214817,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 0.8030104560380404,
+          "test_mse": 2.3844841959526164
+        },
+        "joint": {
+          "validation_mse": 2.2622980050079438,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1.0,
+          "effective_df": 1.436035179946668,
+          "test_mse": 2.383271179238006
+        },
+        "test_mse_gain": 0.001213016714610493,
+        "gain_relative_to_fit_mean_baseline": 0.0005059742054737777,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      },
+      "learned_actual_pooled_private_probe": {
+        "common": {
+          "validation_mse": 2.2625720241214817,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 0.0,
+          "regularization": 1.0,
+          "effective_df": 0.8030104560380404,
+          "test_mse": 2.3844841959526164
+        },
+        "joint": {
+          "validation_mse": 2.253048273902163,
+          "family": "rbf",
+          "bandwidth": 1.0,
+          "private_weight": 1.0,
+          "regularization": 1.0,
+          "effective_df": 1.4670782289912614,
+          "test_mse": 2.371461374081798
+        },
+        "test_mse_gain": 0.01302282187081838,
+        "gain_relative_to_fit_mean_baseline": 0.005432086689118459,
+        "fit_rows": 192,
+        "validation_rows": 128,
+        "test_rows": 384,
+        "meaning": "finite probe predictive gain, not MI; negative is not proof of no information"
+      }
+    }
+  ],
+  "positive_min_relative_gain": 0.9638942981479974,
+  "mismatch_max_relative_gain": 0.005168167283224696,
+  "neural_training": 0,
+  "patient_execution": false,
+  "scope": "posthoc instrument validation on exactly the cached fit/validation/test rows; same width and hyperparameter grid but low-rank oracle lacks learned nuisance. Negative learned probes remain non-detection, not absence or a whole-network synergy impossibility."
+}

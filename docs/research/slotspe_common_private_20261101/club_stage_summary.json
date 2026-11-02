@@ -1,0 +1,337 @@
+{
+  "paired_initializations_verified": 15,
+  "total_neural_trainings_this_stage": 78,
+  "pilot_trainings": 27,
+  "clean_confirmation_trainings": 45,
+  "slot_set_capacity_trainings": 6,
+  "density_estimator_fits": 4,
+  "analytic_scalar_optimizations": 3,
+  "summary": [
+    {
+      "task": "independent",
+      "arm": "unconstrained",
+      "n_trainings": 5,
+      "mean_nll": {
+        "iid": 0.9164389753341674,
+        "shift": 0.8322554731369018
+      },
+      "mean_factor_increment": {
+        "private_wsi": 0.43028346094792896,
+        "private_omic": 0.5244800309003427
+      },
+      "mean_private_geometry": {
+        "private_mean_wsi": 1.2192721308317285,
+        "private_mean_omic": 1.274065446115618
+      },
+      "mean_training_critic_heldout_ratio": 0.7928572654724121,
+      "paired_difference_vs_unconstrained": {
+        "iid": {
+          "mean": 0.0,
+          "descriptive_t95": [
+            0.0,
+            0.0
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        },
+        "shift": {
+          "mean": 0.0,
+          "descriptive_t95": [
+            0.0,
+            0.0
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        }
+      }
+    },
+    {
+      "task": "independent",
+      "arm": "conditional_kl",
+      "n_trainings": 5,
+      "mean_nll": {
+        "iid": 0.9259586119651795,
+        "shift": 0.843748254776001
+      },
+      "mean_factor_increment": {
+        "private_wsi": 0.2058774082099454,
+        "private_omic": 0.3267123130046966
+      },
+      "mean_private_geometry": {
+        "private_mean_wsi": 1.2584283355361927,
+        "private_mean_omic": 1.294388483375253
+      },
+      "mean_training_critic_heldout_ratio": 1.7012015581130981,
+      "paired_difference_vs_unconstrained": {
+        "iid": {
+          "mean": 0.009519636631012008,
+          "descriptive_t95": [
+            -0.008756196022360052,
+            0.027795469284384068
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        },
+        "shift": {
+          "mean": 0.011492781639099125,
+          "descriptive_t95": [
+            -0.01422750732254107,
+            0.03721307060073932
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        }
+      }
+    },
+    {
+      "task": "independent",
+      "arm": "direct_club",
+      "n_trainings": 5,
+      "mean_nll": {
+        "iid": 0.9145316386222839,
+        "shift": 0.8307542729377747
+      },
+      "mean_factor_increment": {
+        "private_wsi": 0.4266520034860433,
+        "private_omic": 0.5328754934350456
+      },
+      "mean_private_geometry": {
+        "private_mean_wsi": 1.2158116064932887,
+        "private_mean_omic": 1.2659675331856297
+      },
+      "mean_training_critic_heldout_ratio": 0.5546034812927246,
+      "paired_difference_vs_unconstrained": {
+        "iid": {
+          "mean": -0.0019073367118835004,
+          "descriptive_t95": [
+            -0.006625093072999659,
+            0.0028104196492326583
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        },
+        "shift": {
+          "mean": -0.001501200199127184,
+          "descriptive_t95": [
+            -0.005609355317139695,
+            0.002606954918885327
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        }
+      }
+    },
+    {
+      "task": "correlated",
+      "arm": "unconstrained",
+      "n_trainings": 5,
+      "mean_nll": {
+        "iid": 0.8122378468513489,
+        "shift": 0.6846401453018188
+      },
+      "mean_factor_increment": {
+        "private_wsi": 0.09851733921810871,
+        "private_omic": 0.5121523137045377
+      },
+      "mean_private_geometry": {
+        "private_mean_wsi": 1.1921961208025484,
+        "private_mean_omic": 1.1903867623922137
+      },
+      "mean_training_critic_heldout_ratio": 2.3176513671875,
+      "paired_difference_vs_unconstrained": {
+        "iid": {
+          "mean": 0.0,
+          "descriptive_t95": [
+            0.0,
+            0.0
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        },
+        "shift": {
+          "mean": 0.0,
+          "descriptive_t95": [
+            0.0,
+            0.0
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        }
+      }
+    },
+    {
+      "task": "correlated",
+      "arm": "conditional_kl",
+      "n_trainings": 5,
+      "mean_nll": {
+        "iid": 0.8071089291572571,
+        "shift": 0.6838811421394348
+      },
+      "mean_factor_increment": {
+        "private_wsi": 0.05218968422663234,
+        "private_omic": 0.10519561872733132
+      },
+      "mean_private_geometry": {
+        "private_mean_wsi": 1.2062936705164409,
+        "private_mean_omic": 1.2155988829557782
+      },
+      "mean_training_critic_heldout_ratio": 3.543550205230713,
+      "paired_difference_vs_unconstrained": {
+        "iid": {
+          "mean": -0.005128917694091783,
+          "descriptive_t95": [
+            -0.011848594276335559,
+            0.0015907588881519923
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        },
+        "shift": {
+          "mean": -0.0007590031623840643,
+          "descriptive_t95": [
+            -0.028985879388924014,
+            0.027467873064155882
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        }
+      }
+    },
+    {
+      "task": "correlated",
+      "arm": "direct_club",
+      "n_trainings": 5,
+      "mean_nll": {
+        "iid": 0.8135787534713745,
+        "shift": 0.6892680978775024
+      },
+      "mean_factor_increment": {
+        "private_wsi": 0.1284198262801188,
+        "private_omic": 0.4764813829552565
+      },
+      "mean_private_geometry": {
+        "private_mean_wsi": 1.2176886147295398,
+        "private_mean_omic": 1.1760601819471976
+      },
+      "mean_training_critic_heldout_ratio": 0.9944775342941284,
+      "paired_difference_vs_unconstrained": {
+        "iid": {
+          "mean": 0.0013409066200256391,
+          "descriptive_t95": [
+            -0.003512785226830357,
+            0.006194598466881635
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        },
+        "shift": {
+          "mean": 0.004627952575683603,
+          "descriptive_t95": [
+            -0.0005367306987656573,
+            0.009792635850132863
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        }
+      }
+    },
+    {
+      "task": "synergy",
+      "arm": "unconstrained",
+      "n_trainings": 5,
+      "mean_nll": {
+        "iid": 1.114471378326416,
+        "shift": 1.1242283487319946
+      },
+      "mean_factor_increment": {
+        "private_wsi": 0.37687007567384334,
+        "private_omic": 0.5350120632654226
+      },
+      "mean_private_geometry": {
+        "private_mean_wsi": 1.3053193285857483,
+        "private_mean_omic": 1.307266006623377
+      },
+      "mean_training_critic_heldout_ratio": 0.7009813666343689,
+      "paired_difference_vs_unconstrained": {
+        "iid": {
+          "mean": 0.0,
+          "descriptive_t95": [
+            0.0,
+            0.0
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        },
+        "shift": {
+          "mean": 0.0,
+          "descriptive_t95": [
+            0.0,
+            0.0
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        }
+      }
+    },
+    {
+      "task": "synergy",
+      "arm": "conditional_kl",
+      "n_trainings": 5,
+      "mean_nll": {
+        "iid": 1.110186195373535,
+        "shift": 1.1222694492340088
+      },
+      "mean_factor_increment": {
+        "private_wsi": 0.28569845364593094,
+        "private_omic": 0.4927443180094641
+      },
+      "mean_private_geometry": {
+        "private_mean_wsi": 1.174853457655391,
+        "private_mean_omic": 1.2090720384846385
+      },
+      "mean_training_critic_heldout_ratio": 0.49194379448890685,
+      "paired_difference_vs_unconstrained": {
+        "iid": {
+          "mean": -0.004285182952880895,
+          "descriptive_t95": [
+            -0.01172339899618399,
+            0.0031530330904222005
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        },
+        "shift": {
+          "mean": -0.001958899497985822,
+          "descriptive_t95": [
+            -0.015402061356234682,
+            0.01148426236026304
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        }
+      }
+    },
+    {
+      "task": "synergy",
+      "arm": "direct_club",
+      "n_trainings": 5,
+      "mean_nll": {
+        "iid": 1.1127636194229127,
+        "shift": 1.1235081195831298
+      },
+      "mean_factor_increment": {
+        "private_wsi": 0.4587672283047553,
+        "private_omic": 0.4855017684439161
+      },
+      "mean_private_geometry": {
+        "private_mean_wsi": 1.3207362243628284,
+        "private_mean_omic": 1.3167351306308746
+      },
+      "mean_training_critic_heldout_ratio": 0.10507428646087646,
+      "paired_difference_vs_unconstrained": {
+        "iid": {
+          "mean": -0.001707758903503409,
+          "descriptive_t95": [
+            -0.004622839584295114,
+            0.0012073217772882961
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        },
+        "shift": {
+          "mean": -0.0007202291488647816,
+          "descriptive_t95": [
+            -0.0032293950224202717,
+            0.0017889367246907088
+          ],
+          "warning": "5 joint data/initialization seeds; descriptive t interval, not multiplicity-adjusted claim"
+        }
+      }
+    }
+  ],
+  "decision": "Do not advance to patients: no established broad predictive gain, private slot rank remains near one, per-slot content complementarity unproven.",
+  "scope": "all generated CPU; no patient training/inference or server queue activity"
+}

@@ -1,0 +1,473 @@
+{
+  "status": "completed",
+  "positive_feasibility_gate_passed": true,
+  "source_sha256": {
+    "slotspe_proof/frozen_prototype_targets.py": "4d776c40e9896e7f6a7013d96819c72f122d48b197a28fc427a39ed3bba44aa6",
+    "scripts/check_frozen_content_targets.py": "e0a1232613f62cdccf5f7293519facc1f6d9619b70d8bbcd65a569dd454712cb",
+    "docs/research/slotspe_common_private_20261101/frozen_target_gate_plan_20261102.json": "ec17bd7af8b554b369257f29f3902024e1b6df211dcf39b7577f52315f53b0c7"
+  },
+  "rows": [
+    {
+      "condition": "separated_informative",
+      "seed": 317,
+      "fit_rows": 512,
+      "teacher_hash": "1c25c8d67d9afd97752eb823f8ce7f756a9ce912729dcf355919da9bb783371f",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 1.0,
+      "heldout_informative_bit_accuracy": [
+        0.98046875,
+        0.978515625,
+        0.98828125,
+        0.990234375
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.51953125,
+        0.494140625,
+        0.478515625,
+        0.474609375
+      ],
+      "heldout_common_bit_accuracy": [
+        0.501953125,
+        0.53125,
+        0.51953125,
+        0.458984375
+      ],
+      "heldout_target_entropy_nats": [
+        0.6906732158907924,
+        0.6857973078148871,
+        0.6931395511460114,
+        0.6931166626713718
+      ],
+      "crossview_agreement_when_both_observed": 0.977135956287384,
+      "crossview_both_observed_fraction": 0.8115234375,
+      "cross_role_target_disagreement": 0.4973958333333333,
+      "target_risk_linear_probe_r2": 0.9254501038506926,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 331,
+      "fit_rows": 512,
+      "teacher_hash": "97dcd17b7e264d95775be3b6d4af06bfb83d58c7dd5409d07bd2ea466ef58c99",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 1.0,
+      "heldout_informative_bit_accuracy": [
+        0.9921875,
+        0.98828125,
+        0.962890625,
+        0.984375
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.4765625,
+        0.52734375,
+        0.482421875,
+        0.462890625
+      ],
+      "heldout_common_bit_accuracy": [
+        0.509765625,
+        0.48046875,
+        0.513671875,
+        0.5
+      ],
+      "heldout_target_entropy_nats": [
+        0.6930785144374709,
+        0.6931471805599453,
+        0.6903904349861226,
+        0.6900923107348644
+      ],
+      "crossview_agreement_when_both_observed": 0.9765059947967529,
+      "crossview_both_observed_fraction": 0.810546875,
+      "cross_role_target_disagreement": 0.5,
+      "target_risk_linear_probe_r2": 0.9580325443411424,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "separated_informative",
+      "seed": 353,
+      "fit_rows": 512,
+      "teacher_hash": "ae18aeb5f87d1e1cae482d2419d239e36f66511241b207a473eca52b0d07b547",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 1.0,
+      "heldout_informative_bit_accuracy": [
+        0.9921875,
+        0.994140625,
+        0.990234375,
+        0.951171875
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.4921875,
+        0.45703125,
+        0.53515625,
+        0.548828125
+      ],
+      "heldout_common_bit_accuracy": [
+        0.513671875,
+        0.49609375,
+        0.48828125,
+        0.462890625
+      ],
+      "heldout_target_entropy_nats": [
+        0.689778833950113,
+        0.692872497205584,
+        0.6916510729702123,
+        0.6857973078148871
+      ],
+      "crossview_agreement_when_both_observed": 0.980997622013092,
+      "crossview_both_observed_fraction": 0.822265625,
+      "cross_role_target_disagreement": 0.4895833333333333,
+      "target_risk_linear_probe_r2": 0.9501092017565853,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "indistinguishable_roles",
+      "seed": 317,
+      "fit_rows": 512,
+      "teacher_hash": "036bea5c44edbbff12419cd7e7c7f62cb988d80fccd5eca63db8f09cec215796",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 0.2469075471162796,
+      "heldout_informative_bit_accuracy": [
+        0.6484375,
+        0.59765625,
+        0.58203125,
+        0.62109375
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.5,
+        0.513671875,
+        0.4296875,
+        0.484375
+      ],
+      "heldout_common_bit_accuracy": [
+        0.513671875,
+        0.48828125,
+        0.513671875,
+        0.51953125
+      ],
+      "heldout_target_entropy_nats": [
+        0.693145123360192,
+        0.693145123360192,
+        0.6922684405792742,
+        0.6925961246304334
+      ],
+      "crossview_agreement_when_both_observed": 0.6331360936164856,
+      "crossview_both_observed_fraction": 0.66015625,
+      "cross_role_target_disagreement": 0.3873697916666667,
+      "target_risk_linear_probe_r2": 0.17685485893349895,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "indistinguishable_roles",
+      "seed": 331,
+      "fit_rows": 512,
+      "teacher_hash": "453b0c26a36359260d1fc90a00e6f56efaa5a5a4d1bc1ec442676458c7600961",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 0.2452799528837204,
+      "heldout_informative_bit_accuracy": [
+        0.61328125,
+        0.63671875,
+        0.64453125,
+        0.623046875
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.5390625,
+        0.478515625,
+        0.48828125,
+        0.509765625
+      ],
+      "heldout_common_bit_accuracy": [
+        0.48828125,
+        0.4921875,
+        0.505859375,
+        0.505859375
+      ],
+      "heldout_target_entropy_nats": [
+        0.6905193791272948,
+        0.6850259985526486,
+        0.6918916399710908,
+        0.692261380369418
+      ],
+      "crossview_agreement_when_both_observed": 0.6078717112541199,
+      "crossview_both_observed_fraction": 0.669921875,
+      "cross_role_target_disagreement": 0.3502604166666667,
+      "target_risk_linear_probe_r2": 0.2006063586804807,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "indistinguishable_roles",
+      "seed": 353,
+      "fit_rows": 512,
+      "teacher_hash": "e074b5d51a5e6c9bde83d7d19fb84e76c38c34c29edd6b14978cd893907918a0",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 0.2522786557674408,
+      "heldout_informative_bit_accuracy": [
+        0.640625,
+        0.6328125,
+        0.650390625,
+        0.63671875
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.5234375,
+        0.517578125,
+        0.521484375,
+        0.474609375
+      ],
+      "heldout_common_bit_accuracy": [
+        0.505859375,
+        0.458984375,
+        0.478515625,
+        0.498046875
+      ],
+      "heldout_target_entropy_nats": [
+        0.6929845217912654,
+        0.6867080664022529,
+        0.6931138607396445,
+        0.6923658368872574
+      ],
+      "crossview_agreement_when_both_observed": 0.6198106408119202,
+      "crossview_both_observed_fraction": 0.67041015625,
+      "cross_role_target_disagreement": 0.361328125,
+      "target_risk_linear_probe_r2": 0.1775888208119083,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "dominant_common",
+      "seed": 317,
+      "fit_rows": 512,
+      "teacher_hash": "3edab6d97dfa99437c732ff1d1139739da081e4b73d35db15a7d819235d5aa39",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 1.0,
+      "heldout_informative_bit_accuracy": [
+        0.515625,
+        0.498046875,
+        0.521484375,
+        0.4609375
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.51953125,
+        0.509765625,
+        0.4765625,
+        0.54296875
+      ],
+      "heldout_common_bit_accuracy": [
+        0.958984375,
+        0.9609375,
+        0.958984375,
+        0.95703125
+      ],
+      "heldout_target_entropy_nats": [
+        0.6931166626713718,
+        0.6931395511460114,
+        0.6931166626713718,
+        0.6930785144374709
+      ],
+      "crossview_agreement_when_both_observed": 0.9963898658752441,
+      "crossview_both_observed_fraction": 0.8115234375,
+      "cross_role_target_disagreement": 0.001953125,
+      "target_risk_linear_probe_r2": -0.006422213426949819,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "dominant_common",
+      "seed": 331,
+      "fit_rows": 512,
+      "teacher_hash": "5fe1d58499271307fa35437e758f10622451fc980b95d9799735d1606c611137",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 1.0,
+      "heldout_informative_bit_accuracy": [
+        0.515625,
+        0.490234375,
+        0.50390625,
+        0.501953125
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.48828125,
+        0.509765625,
+        0.44921875,
+        0.52734375
+      ],
+      "heldout_common_bit_accuracy": [
+        0.982421875,
+        0.982421875,
+        0.98046875,
+        0.982421875
+      ],
+      "heldout_target_entropy_nats": [
+        0.6929564335682172,
+        0.6929564335682172,
+        0.6930251052799065,
+        0.6929564335682172
+      ],
+      "crossview_agreement_when_both_observed": 0.9933735132217407,
+      "crossview_both_observed_fraction": 0.810546875,
+      "cross_role_target_disagreement": 0.0009765625,
+      "target_risk_linear_probe_r2": -0.0032093952077236754,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "dominant_common",
+      "seed": 353,
+      "fit_rows": 512,
+      "teacher_hash": "0fa9726d0da6d92ef4d680870ebd2a4047f6aaf0bef7c70d6559002eb9d13817",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 1.0,
+      "heldout_informative_bit_accuracy": [
+        0.509765625,
+        0.484375,
+        0.486328125,
+        0.490234375
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.490234375,
+        0.447265625,
+        0.515625,
+        0.513671875
+      ],
+      "heldout_common_bit_accuracy": [
+        0.953125,
+        0.955078125,
+        0.95703125,
+        0.955078125
+      ],
+      "heldout_target_entropy_nats": [
+        0.6796278941932445,
+        0.6802667709929271,
+        0.6808899872666533,
+        0.6802667709929271
+      ],
+      "crossview_agreement_when_both_observed": 0.995843231678009,
+      "crossview_both_observed_fraction": 0.822265625,
+      "cross_role_target_disagreement": 0.00390625,
+      "target_risk_linear_probe_r2": 0.0034055873868084063,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 317,
+      "fit_rows": 512,
+      "teacher_hash": "4d5acfe9b8c134bd5ce45f1af6a9739b59f0ce0c9905142661063477c1c205d4",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 1.0,
+      "heldout_informative_bit_accuracy": [
+        0.5390625,
+        0.494140625,
+        0.4765625,
+        0.466796875
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.95703125,
+        0.986328125,
+        0.978515625,
+        0.994140625
+      ],
+      "heldout_common_bit_accuracy": [
+        0.517578125,
+        0.51171875,
+        0.48046875,
+        0.537109375
+      ],
+      "heldout_target_entropy_nats": [
+        0.6920481450620646,
+        0.6931395511460114,
+        0.689778833950113,
+        0.692872497205584
+      ],
+      "crossview_agreement_when_both_observed": 0.9939831495285034,
+      "crossview_both_observed_fraction": 0.8115234375,
+      "cross_role_target_disagreement": 0.484375,
+      "target_risk_linear_probe_r2": -0.007769122550369101,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 331,
+      "fit_rows": 512,
+      "teacher_hash": "e11c8c3505e97fa195baf8237fe372441c46454ed8d19e34c3dc857807a9fa48",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 1.0,
+      "heldout_informative_bit_accuracy": [
+        0.486328125,
+        0.52734375,
+        0.48046875,
+        0.46875
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.974609375,
+        0.9921875,
+        0.98046875,
+        0.990234375
+      ],
+      "heldout_common_bit_accuracy": [
+        0.5,
+        0.51953125,
+        0.453125,
+        0.53515625
+      ],
+      "heldout_target_entropy_nats": [
+        0.6926588198060253,
+        0.6923840469627632,
+        0.6931166626713718,
+        0.6930251052799065
+      ],
+      "crossview_agreement_when_both_observed": 0.9915662407875061,
+      "crossview_both_observed_fraction": 0.810546875,
+      "cross_role_target_disagreement": 0.4986979166666667,
+      "target_risk_linear_probe_r2": -0.0038316070240957956,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    },
+    {
+      "condition": "dominant_private_nuisance",
+      "seed": 353,
+      "fit_rows": 512,
+      "teacher_hash": "8891b81f8f0d3461bc7b0ac36a1308c936496ff90ed1d45cf6f1f2e7d51fbf81",
+      "teacher_immutable_after_heldout": true,
+      "heldout_cluster_accuracy_train_matched": 1.0,
+      "heldout_informative_bit_accuracy": [
+        0.5,
+        0.44921875,
+        0.53125,
+        0.52734375
+      ],
+      "heldout_nuisance_bit_accuracy": [
+        0.96484375,
+        0.990234375,
+        0.978515625,
+        0.98828125
+      ],
+      "heldout_common_bit_accuracy": [
+        0.525390625,
+        0.455078125,
+        0.513671875,
+        0.50390625
+      ],
+      "heldout_target_entropy_nats": [
+        0.6927732936284448,
+        0.6931395511460114,
+        0.6929564335682172,
+        0.6931166626713718
+      ],
+      "crossview_agreement_when_both_observed": 0.9952493906021118,
+      "crossview_both_observed_fraction": 0.822265625,
+      "cross_role_target_disagreement": 0.5009765625,
+      "target_risk_linear_probe_r2": -0.002716381043625704,
+      "interpretation": "train-matched truth used only for diagnosis; entropy/PCA/cluster recovery do not imply biological identification or MI reduction"
+    }
+  ],
+  "permutation_collision": {
+    "same_unordered_bag": true,
+    "named_role_zero_target": [
+      0,
+      1
+    ],
+    "selective_risk": [
+      -2,
+      2
+    ],
+    "conclusion": "No deterministic permutation-invariant function of this bag can recover both named-role labels. It does not imply zero information about every symmetric outcome."
+  },
+  "prototype_teacher_fits": 12,
+  "neural_trainings": 0,
+  "patient_execution": false,
+  "server_execution": false,
+  "not_a_clinical_adapter": true,
+  "assumptions": "prespecified descriptor subspace plus dominant within-prototype PCA; no role one-hot input"
+}
