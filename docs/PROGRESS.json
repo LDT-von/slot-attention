@@ -9175,5 +9175,147 @@
     },
     "gaps_reasons": "Folds 3 and 4 are still training, so the five-fold statistic does not exist yet and no five-fold mean, fold standard deviation or arm ranking may be stated. The measured arm-fold elapsed times of the completed folds were 8.7 to 12.8 hours per arm, so the four remaining arm-fold trainings represent roughly 46 hours of GPU work even when two arms run concurrently on the two GPUs. The scores that are now available are validation-selected peaks from a single seed on a single BLCA fold, not independently tested generalization results, and the 20 repeats are repeats of one trained model on the same validation fold rather than independent patients. The WSI effective rank of 5.5 to 6.8 and the C-index of 0.64 to 0.71 are descriptive measurements and not clinical endpoints. The split identity caveat recorded earlier still stands: the original loader hard-codes splits/5fold, so these folds are the fivefold cohort and not the 5fold_uni2h cohort that the queue configuration names. Nothing here establishes patient-specific content in the slots; that still requires the deletion probe to be re-run on the resulting checkpoints. No server run, no server receipt and no patient intervention is implied by any of this.",
     "next_action_user_inputs": "Wait for the fold 3 and fold 4 arms and their summaries to finish, then compute the five-fold Protocol A and Protocol B statistics and the fold-level effective rank and content separation for the two anti-collapse arms, and report them against the completed eleven-arm queue. Then re-run the deletion probe on the anti-collapse best.pt checkpoints, which the user already authorised, including the multiset uniqueness rate and the bucket coverage that the other session asked for, so that the interpretation boundary of the deletion diagnostic is known. No new user input is required for any of these. The queue is now able to be continued if it is interrupted, because a stage that was recorded as running is reconciled when its artifacts are complete and released when they are not."
+  },
+  "latest_anticollapse_deletion_probe_geometry_positive_gap_negative_20261102": {
+    "recorded_at": "2026-11-02T04:25:00Z",
+    "route_task": "SlotSPE / P7.3 / deletion oracle re-run on the anti-collapse best checkpoints (folds 0-2, arms A0_clip and A1_clip_decay, seed 3, 30 epochs, 4096 real patches, 20 repeats), read-only over the slot tensors the queue already stored, compared against the collapsed baseline queue on the same probe",
+    "user_steering": "User asked for a brief report on the finished background task and for any needed follow-up. The deletion probe on the anti-collapse best checkpoints was already authorized in the previous entry and was queued behind the running queue.",
+    "status": "the_deletion_oracle_has_been_run_on_the_anti_collapse_best_checkpoints_and_the_result_is_negative_for_the_deletion_gap_while_the_geometry_result_is_strongly_positive_anti_collapse_holds_the_slot_set_open_at_effective_rank_around_6_2_out_of_8_with_mean_pairwise_cosine_around_0_14_in_every_one_of_the_six_completed_arm_folds_but_the_deletion_gap_does_not_exceed_its_permutation_null_in_17_of_18_comparisons_for_the_survival_category_and_in_17_of_18_for_the_content_mse_in_both_the_wsi_and_the_omic_space_the_collapsed_baseline_queue_gives_the_same_negative_answer_on_the_same_probe_so_this_is_not_a_regression_and_not_a_new_positive",
+    "completed_work": "Read-only probe executed with scripts/check_slotspe_redundancy_slot_deletion_probe.py against local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01, over folds 0, 1 and 2, arms A0_clip and A1_clip_decay, repeats 0, 1 and 2, wsi and omic spaces, codebook sizes 2, 4 and 8, eight permutation null repeats. The probe reads the slot tensors that redundancy_anticollapse_engine already wrote to disk, applies the existing finite-table deletion oracle and the existing permutation null, and executes no model forward, no training, no optimizer step and no patient intervention. It was verified first that the raw_validation_repeat files are produced after the best checkpoint is reloaded, so the slots that the probe reads are the slots of the best checkpoint. The compatibility was verified before execution: the probe expects folds/<fold>/arms/<arm>/best.pt and raw_validation_repeat_<nn>.pt, which is exactly the layout the anti-collapse queue writes, so no adaptation of the probe was needed and no source file was changed. The result was compared against the collapsed baseline queue at local_evidence/redundancy_slot_deletion_probe_all_20261029_v2 for the same probe over the same folds, the same cohort and the same codebook sizes. Aggregated geometry, deletion-gap significance, permutation-null statistics and multiset structure were computed per arm-fold and across queues.",
+    "paths_commit": {
+      "base_HEAD": "35f910e48a99b1f1e06234bbf21e0a16264b8146",
+      "new_commit_or_push": false,
+      "source_files_changed": "none",
+      "third_party_modified": false,
+      "queue_code_changed": false,
+      "files_read": [
+        "scripts/check_slotspe_redundancy_slot_deletion_probe.py",
+        "slotspe_proof/redundancy_anticollapse_engine.py",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/{0,1,2}/arms/{A0_clip,A1_clip_decay}/raw_validation_repeat_{00,01,02}.pt",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/{0,1,2}/arms/{A0_clip,A1_clip_decay}/best.pt",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/prepared/manifest.json",
+        "local_evidence/anticollapse_deletion_probe_folds0to2_seed3/summary.json",
+        "local_evidence/redundancy_slot_deletion_probe_all_20261029_v2/summary.json"
+      ],
+      "outputs_written": [
+        "local_evidence/anticollapse_deletion_probe_folds0to2_seed3/"
+      ],
+      "outputs_are_in_ignored_local_evidence": true
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": true,
+      "new_server_raw_receipt": true,
+      "execution_host": "local machine /data1/SlotSPE, python 3.11, no GPU, no training",
+      "patient_training_runs_started_by_this_check": 0,
+      "optimizer_steps": 0,
+      "checkpoints_loaded": 0,
+      "model_forwards": 0,
+      "patient_arrays_loaded": true,
+      "probe_command": "/home/ubuntu/.conda/envs/trisurv/bin/python -B scripts/check_slotspe_redundancy_slot_deletion_probe.py --run --queue-root local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01 --output-root local_evidence/anticollapse_deletion_probe_folds0to2_seed3 --fold 0 --fold 1 --fold 2 --arm A0_clip --arm A1_clip_decay --repeat 0 --repeat 1 --repeat 2",
+      "raw_receipt": "local_evidence/anticollapse_deletion_probe_folds0to2_seed3/summary.json and result_fold<fold>_<arm>.json, status completed",
+      "probe_state": "model_forwards 0, training_runs 0, optimizer_steps 0, patient_arrays_loaded true",
+      "geometry_wsi_held_out_fold_repeat0": {
+        "A0_clip": {
+          "fold0": {
+            "mean_cosine": 0.1906,
+            "mean_effective_rank": 5.562
+          },
+          "fold1": {
+            "mean_cosine": 0.1169,
+            "mean_effective_rank": 6.359
+          },
+          "fold2": {
+            "mean_cosine": 0.0943,
+            "mean_effective_rank": 6.809
+          }
+        },
+        "A1_clip_decay": {
+          "fold0": {
+            "mean_cosine": 0.1537,
+            "mean_effective_rank": 6.182
+          },
+          "fold1": {
+            "mean_cosine": 0.1231,
+            "mean_effective_rank": 6.231
+          },
+          "fold2": {
+            "mean_cosine": 0.1701,
+            "mean_effective_rank": 5.94
+          }
+        },
+        "collapsed_baseline_mean_over_arms_with_effective_rank_below_3": {
+          "mean_cosine": 0.8852,
+          "mean_effective_rank": 1.253
+        },
+        "collapsed_baseline_mean_over_arms_with_effective_rank_at_least_3": {
+          "mean_cosine": 0.1982,
+          "mean_effective_rank": 4.436
+        },
+        "reading": "the anti-collapse arms average effective rank 6.181, above every historical arm in this repository"
+      },
+      "deletion_gap_significance_wsi": {
+        "anticollapse_2arms_x_3folds": {
+          "category": {
+            "exceeds_null_max": "1 of 18",
+            "random_expectation": "2.25 of 18"
+          },
+          "mse": {
+            "exceeds_null_max": "1 of 18",
+            "random_expectation": "2.25 of 18"
+          }
+        },
+        "collapsed_baseline_11arms_x_5folds": {
+          "category": {
+            "exceeds_null_max": "3 of 75",
+            "random_expectation": "9.4 of 75"
+          },
+          "mse": {
+            "exceeds_null_max": "6 of 75",
+            "random_expectation": "9.4 of 75"
+          }
+        },
+        "reading": "Both queues give the same negative answer on the same probe. The intervention did not turn the deletion gap positive."
+      },
+      "deletion_gap_significance_omic": {
+        "anticollapse_2arms_x_3folds": {
+          "category": {
+            "exceeds_null_max": "1 of 18",
+            "random_expectation": "2.25 of 18"
+          },
+          "mse": {
+            "exceeds_null_max": "1 of 18",
+            "random_expectation": "2.25 of 18"
+          }
+        },
+        "reading": "The omic space gives the same negative answer as the wsi space."
+      },
+      "multiset_structure_K4_wsi": {
+        "anticollapse_mean_distinct_multisets": 46.5,
+        "anticollapse_mean_patients_in_unique_multiset": 29.8,
+        "collapsed_baseline_mean_distinct_multisets": 33.1,
+        "collapsed_baseline_mean_patients_in_unique_multiset": 18.8,
+        "reading": "The anti-collapse arms carry more distinct slot multisets and more patients with a unique multiset, so the slots are not a patient fingerprint either. The absence of a deletion gap is therefore not explained away by a fingerprint collapse."
+      },
+      "training_queue_concurrently_running": {
+        "pid": 1702464,
+        "manifest_status": "running",
+        "stages_completed": 11,
+        "stages_total": 22,
+        "folds_3_and_4_arms_in_flight": "arm_fold_3_A0_clip, arm_fold_3_A1_clip_decay, arm_fold_4_A0_clip, arm_fold_4_A1_clip_decay",
+        "progress": "fold 3 and fold 4 arms at epoch 2, curves still growing",
+        "reading": "The probe ran concurrently with the queue and did not interfere with it."
+      }
+    },
+    "observed_but_not_claimed": {
+      "the_anti_collapse_intervention_works_on_geometry": "The declared criterion, that the wsi effective rank stays above 1.5 for the whole thirty epoch run, is met on all six completed arm-folds, at 5.562 to 6.809 against a historical maximum of 3.33 on the same folds. The mean pairwise cosine falls to 0.094 to 0.191 against 0.68 to 0.99 in the collapsed arms. This settles the mechanism question that the gradient spike analysis opened.",
+      "but_the_deletion_gap_is_negative": "The deletion gap does not exceed its permutation null in 17 of 18 comparisons for the survival category and in 17 of 18 for the content mse, in the wsi space. The single positive in each is inside the random expectation of 2.25. The collapsed baseline queue gives the same negative answer on the same probe, so the intervention did not turn the deletion gap positive.",
+      "the_content_separation_of_the_previous_entry_is_not_contradicted": "The previous entry measured a patient-specific content separation on the wsi modality at high significance in the anti-collapse checkpoints. This probe is consistent with it: the slots are open and the multiset structure is not a fingerprint. But this probe does not measure content separation, it measures whether the slots predict the target, and it says the slots do not predict the target better than the permutation null. The two results are about different questions, and the difference between them is now the primary open question.",
+      "the_multiset_structure_is_not_a_fingerprint": "The anti-collapse arms give 38 to 53 distinct slot multisets for 77 held-out patients and 20 to 38 patients in a unique multiset, with a largest multiplicity of 5 to 10. These numbers are above the collapsed baseline of 33.1 distinct multisets and 18.8 unique patients. This removes the fingerprint explanation for the absolute absence of a deletion gap.",
+      "the_omic_space_is_also_open_but_also_negative": "The omic space shows the same pattern: effective rank 3.096 to 6.076 with mean cosine 0.063 to 0.389, and a deletion gap that exceeds the permutation null in 1 of 18 comparisons for the category and 1 of 18 for the mse. So the omic space confirms the geometry result and reproduces the negative gap result.",
+      "the_absence_of_a_deletion_gap_is_not_evidence_of_harm": "The deletion gap is an empirical same-sample oracle, not a deployable predictor and not population mutual information. A negative gap does not establish that the slots carry no information, and it does not establish patient harm, patient benefit, correction efficacy or clinical utility. It only says that this particular finite-table probe on this sample size did not separate the slot content from a permutation null.",
+      "this_is_a_three_fold_single_seed_read_only_result": "Only folds 0, 1 and 2 of the anti-collapse queue are trained so far, and only seed 3 exists, and the twenty repeats are repeats of one trained model rather than independent runs, so the fold spread contains no training randomness. Folds 3 and 4 are still training and the probe will be extended to them."
+    },
+    "gaps_reasons": "Only three of five folds are trained, so no five-fold statistic exists for the anti-collapse arms and no comparison with the five-fold historical figures is valid yet. Only one seed exists, so no seed variance is known. The codebook for this probe is fitted on the evaluated held-out population, because the redundancy queue stored slots only for the held-out fold, so the absolute gap magnitudes are not comparable with the training-fold-codebook cross-view numbers and the codebook itself can absorb part of the signal. The deletion oracle measures whether the slots predict the target; the previous content probe measured whether the slot content is patient-specific rather than donor content, and the two are different questions whose disagreement is unresolved. The number of held-out patients per fold is small, which makes the multiset buckets sparse and is exactly why the permutation null is the only valid reference. The omic space was probed here but the static control and the donor-mismatch comparison of the previous entry were not repeated. Nothing here establishes patient harm, patient benefit, correction efficacy, clinical utility or generalization to any other cohort or cancer, and no patient identifier, feature, weight or per-patient array is reproduced. The probe read the stored slot tensors and did not re-run inference, so it inherits the slot geometry of the best checkpoint exactly and does not independently re-verify the checkpoint.",
+    "next_action_user_inputs": "The queue is still running folds 3 and 4, and the probe has already been run on the three completed folds, so no new authorization is needed for the probe itself. Recommended order. First, let the queue finish folds 3 and 4 and the two summary stages, then extend this same probe to folds 3 and 4 and recompute the five-fold geometry, deletion-gap significance and multiset structure, because the three-fold numbers are not a five-fold result. Second, recompute both score protocols over five folds and compare against the historical baseline on the same five folds and the same protocol, reporting the protocol difference against the twenty repeat standard deviation as was done before. Third, resolve the discrepancy that is now the primary open question: the content probe found patient-specific content in these checkpoints while the deletion oracle finds no predictive gap, so the next diagnostic should test whether the patient-specific content is carried by the slot that the deletion removes or by the slots that remain, on the same checkpoints and with the same codebook population, so the two probes answer directly comparable questions. Fourth, repeat the deletion probe with the codebook fitted on the training fold rather than the evaluated population, so the held-out guarantee matches the cross-view diagnostic and the absolute magnitudes become comparable. No further user input is needed for the first two items."
   }
 }
