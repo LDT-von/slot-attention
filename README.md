@@ -13,7 +13,7 @@
 
 现行实现统一在 `slotspe_proof/`，旧包路径只保留兼容导入入口。12个独立检查/汇总脚本、研究导航、阅读材料与历史代码快照已纳入同一公开交付；原版源码与历史回执保持各自原始字节。临时渲染、备份、患者特征、权重和逐患者产物保存在忽略目录。
 
-当前文件范围、大小和SHA256以 **[DELIVERY_MANIFEST.json](DELIVERY_MANIFEST.json)** 为准。它覆盖全部公开文件，仅排除自身哈希以避免循环；提交/树SHA覆盖清单本身。**[PUBLICATION_MANIFEST.json](PUBLICATION_MANIFEST.json)** 保留为历史迁移快照，其旧哈希不用于当前完整性判断。历史整理回执的目录数同样保留，当前35个研究目录见[分类目录](docs/research/README.md)。
+当前文件范围、大小和SHA256以 **[DELIVERY_MANIFEST.json](DELIVERY_MANIFEST.json)** 为准。它覆盖全部公开文件，仅排除自身哈希以避免循环；提交/树SHA覆盖清单本身。**[PUBLICATION_MANIFEST.json](PUBLICATION_MANIFEST.json)** 保留为历史迁移快照，其旧哈希不用于当前完整性判断。历史整理回执的目录数同样保留，当前36个研究目录见[分类目录](docs/research/README.md)。
 
 ```powershell
 python -B scripts/check_delivery_manifest.py --check --require-tracked

@@ -1,0 +1,2116 @@
+{
+  "schema": "slotspe_queue_results_v1",
+  "recorded_at": "2026-11-02T09:40:00+08:00",
+  "mode": "read-only aggregation of stored artifacts; no training, no inference, no checkpoint loaded",
+  "patient_data_included": false,
+  "patient_identifiers_included": false,
+  "per_patient_arrays_included": false,
+  "diversity_queue": {
+    "manifest_status": "completed",
+    "folds": [
+      {
+        "fold": 0,
+        "arm": "S0",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 0,
+          "arm": "S0",
+          "cindex_mean_over_repeats": 0.7484944532488114,
+          "cindex_repeat_std_population": 0.010414468307972253,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.7305863708399366,
+          "cindex_repeat_max": 0.7662440570522979
+        },
+        "geometry": {
+          "fold": 0,
+          "arm": "S0",
+          "wsi": {
+            "effective_rank": 1.409290110683267,
+            "cosine": 0.8458108777653475,
+            "read_overlap": 0.849850161699421,
+            "own_mse": 0.551091385952064,
+            "donor_mse": 0.5546166086545238,
+            "static_mse": 0.779863540458301,
+            "fraction_cosine_above_09": 0.6843460111317254,
+            "donor_to_own_mse_ratio": 1.00639680240396,
+            "n_patient_repeats": 1540
+          },
+          "omic": {
+            "effective_rank": 1.6568832175861024,
+            "cosine": 0.7035831099192141,
+            "read_overlap": 0.8818166776044434,
+            "own_mse": 4.298893970270435,
+            "donor_mse": 4.302814365633123,
+            "static_mse": 25.130337489998688,
+            "fraction_cosine_above_09": 0.45375695732838583,
+            "donor_to_own_mse_ratio": 1.0009119544212532,
+            "n_patient_repeats": 1540
+          }
+        }
+      },
+      {
+        "fold": 0,
+        "arm": "R4",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 0,
+          "arm": "R4",
+          "cindex_mean_over_repeats": 0.7169572107765452,
+          "cindex_repeat_std_population": 0.008172027311793171,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.705229793977813,
+          "cindex_repeat_max": 0.7345483359746434
+        },
+        "geometry": {
+          "fold": 0,
+          "arm": "R4",
+          "wsi": {
+            "effective_rank": 1.0967345632229382,
+            "cosine": 0.9444353486474311,
+            "read_overlap": 0.8396068759929628,
+            "own_mse": 0.5759186956596065,
+            "donor_mse": 0.5781193966795872,
+            "static_mse": 0.779863540458301,
+            "fraction_cosine_above_09": 0.9288961038961039,
+            "donor_to_own_mse_ratio": 1.0038212008683973,
+            "n_patient_repeats": 1540
+          },
+          "omic": {
+            "effective_rank": 1.1939839705177036,
+            "cosine": 0.9066000249409009,
+            "read_overlap": 0.8887162214869191,
+            "own_mse": 4.326558581459058,
+            "donor_mse": 4.338890561403392,
+            "static_mse": 25.130337489998688,
+            "fraction_cosine_above_09": 0.7446196660482375,
+            "donor_to_own_mse_ratio": 1.0028502976932248,
+            "n_patient_repeats": 1540
+          }
+        }
+      },
+      {
+        "fold": 0,
+        "arm": "R3",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 0,
+          "arm": "R3",
+          "cindex_mean_over_repeats": 0.6934033280507131,
+          "cindex_repeat_std_population": 0.01006079789258023,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6719492868462758,
+          "cindex_repeat_max": 0.7083993660855784
+        },
+        "geometry": {
+          "fold": 0,
+          "arm": "R3",
+          "wsi": {
+            "effective_rank": 1.309492573554177,
+            "cosine": 0.8534264846650391,
+            "read_overlap": 0.8564050310025766,
+            "own_mse": 0.4897105189983721,
+            "donor_mse": 0.5449639027672154,
+            "static_mse": 0.779863540458301,
+            "fraction_cosine_above_09": 0.3827922077922078,
+            "donor_to_own_mse_ratio": 1.1128286643338918,
+            "n_patient_repeats": 1540
+          },
+          "omic": {
+            "effective_rank": 1.387058599994811,
+            "cosine": 0.8105619519154438,
+            "read_overlap": 0.9558415479024455,
+            "own_mse": 4.329102588822315,
+            "donor_mse": 4.331334810326625,
+            "static_mse": 25.130337489998688,
+            "fraction_cosine_above_09": 0.5815630797773654,
+            "donor_to_own_mse_ratio": 1.0005156314636834,
+            "n_patient_repeats": 1540
+          }
+        }
+      },
+      {
+        "fold": 0,
+        "arm": "SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 0,
+          "arm": "SCM",
+          "cindex_mean_over_repeats": 0.7124009508716324,
+          "cindex_repeat_std_population": 0.003925945617649857,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.7068145800316957,
+          "cindex_repeat_max": 0.7210776545166403
+        },
+        "geometry": {
+          "fold": 0,
+          "arm": "SCM",
+          "wsi": {
+            "effective_rank": 1.0209695289134497,
+            "cosine": 0.988181417226773,
+            "read_overlap": 0.9993343979911575,
+            "own_mse": 0.5686989265602904,
+            "donor_mse": 0.5691552260866413,
+            "static_mse": 0.779863540458301,
+            "fraction_cosine_above_09": 1.0,
+            "donor_to_own_mse_ratio": 1.000802356932711,
+            "n_patient_repeats": 1540
+          },
+          "omic": {
+            "effective_rank": 1.0047139362066284,
+            "cosine": 0.997315228906278,
+            "read_overlap": 0.9978166502752105,
+            "own_mse": 4.3399689812551845,
+            "donor_mse": 4.340917470528708,
+            "static_mse": 25.130337489998688,
+            "fraction_cosine_above_09": 1.0,
+            "donor_to_own_mse_ratio": 1.0002185474775558,
+            "n_patient_repeats": 1540
+          }
+        }
+      },
+      {
+        "fold": 0,
+        "arm": "SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 0,
+          "arm": "SRO",
+          "cindex_mean_over_repeats": 0.7111331220285262,
+          "cindex_repeat_std_population": 0.0039894057652813866,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.7012678288431062,
+          "cindex_repeat_max": 0.7194928684627575
+        },
+        "geometry": {
+          "fold": 0,
+          "arm": "SRO",
+          "wsi": {
+            "effective_rank": 1.0087026388950648,
+            "cosine": 0.9950549855542473,
+            "read_overlap": 0.9996487424240047,
+            "own_mse": 0.5640115650056244,
+            "donor_mse": 0.5645423631002376,
+            "static_mse": 0.779863540458301,
+            "fraction_cosine_above_09": 1.0,
+            "donor_to_own_mse_ratio": 1.0009411120756149,
+            "n_patient_repeats": 1540
+          },
+          "omic": {
+            "effective_rank": 1.0048721981521476,
+            "cosine": 0.9972254051636531,
+            "read_overlap": 0.9977857686148759,
+            "own_mse": 4.338321290968301,
+            "donor_mse": 4.339629979102643,
+            "static_mse": 25.130337489998688,
+            "fraction_cosine_above_09": 1.0,
+            "donor_to_own_mse_ratio": 1.0003016577257813,
+            "n_patient_repeats": 1540
+          }
+        }
+      },
+      {
+        "fold": 0,
+        "arm": "R4_SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 0,
+          "arm": "R4_SCM",
+          "cindex_mean_over_repeats": 0.7311806656101426,
+          "cindex_repeat_std_population": 0.005784333411343079,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.7210776545166403,
+          "cindex_repeat_max": 0.7456418383518225
+        },
+        "geometry": {
+          "fold": 0,
+          "arm": "R4_SCM",
+          "wsi": {
+            "effective_rank": 1.3122265504539958,
+            "cosine": 0.8543582240063345,
+            "read_overlap": 0.9198608374764261,
+            "own_mse": 0.48304565054449167,
+            "donor_mse": 0.5507822745999733,
+            "static_mse": 0.779863540458301,
+            "fraction_cosine_above_09": 0.22516233766233767,
+            "donor_to_own_mse_ratio": 1.140228204061311,
+            "n_patient_repeats": 1540
+          },
+          "omic": {
+            "effective_rank": 1.201147423575222,
+            "cosine": 0.8965992040620203,
+            "read_overlap": 0.9307838664141384,
+            "own_mse": 4.416393909361456,
+            "donor_mse": 4.452209290900788,
+            "static_mse": 25.130337489998688,
+            "fraction_cosine_above_09": 0.8221938775510204,
+            "donor_to_own_mse_ratio": 1.0081096438122092,
+            "n_patient_repeats": 1540
+          }
+        }
+      },
+      {
+        "fold": 0,
+        "arm": "R4_SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 0,
+          "arm": "R4_SRO",
+          "cindex_mean_over_repeats": 0.6196117274167987,
+          "cindex_repeat_std_population": 0.005276855676804215,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6038034865293186,
+          "cindex_repeat_max": 0.6259904912836767
+        },
+        "geometry": {
+          "fold": 0,
+          "arm": "R4_SRO",
+          "wsi": {
+            "effective_rank": 1.3315681885471735,
+            "cosine": 0.8423119681597582,
+            "read_overlap": 0.6540712883257456,
+            "own_mse": 0.4722284213772842,
+            "donor_mse": 0.5677280155385469,
+            "static_mse": 0.779863540458301,
+            "fraction_cosine_above_09": 0.5033627087198516,
+            "donor_to_own_mse_ratio": 1.2022317798719782,
+            "n_patient_repeats": 1540
+          },
+          "omic": {
+            "effective_rank": 1.052223681737195,
+            "cosine": 0.9705044980649296,
+            "read_overlap": 0.9887492443802353,
+            "own_mse": 4.280902115226566,
+            "donor_mse": 4.280187591329797,
+            "static_mse": 25.130337489998688,
+            "fraction_cosine_above_09": 0.9505797773654916,
+            "donor_to_own_mse_ratio": 0.9998330903446198,
+            "n_patient_repeats": 1540
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "arm": "S0",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 1,
+          "arm": "S0",
+          "cindex_mean_over_repeats": 0.7491539763113367,
+          "cindex_repeat_std_population": 0.0012969297560707393,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.7470389170896785,
+          "cindex_repeat_max": 0.751269035532995
+        },
+        "geometry": {
+          "fold": 1,
+          "arm": "S0",
+          "wsi": {
+            "effective_rank": 1.0080105445926162,
+            "cosine": 0.9954456152115913,
+            "read_overlap": 0.9973447918612688,
+            "own_mse": 0.570247349023819,
+            "donor_mse": 0.5707392734090487,
+            "static_mse": 0.825766129407522,
+            "fraction_cosine_above_09": 1.0,
+            "donor_to_own_mse_ratio": 1.0008626508936374,
+            "n_patient_repeats": 1500
+          },
+          "omic": {
+            "effective_rank": 1.0089865097351178,
+            "cosine": 0.9949203453730453,
+            "read_overlap": 0.9934001040264978,
+            "own_mse": 2.4960670441389086,
+            "donor_mse": 2.5073255367477736,
+            "static_mse": 15.866751074653646,
+            "fraction_cosine_above_09": 1.0,
+            "donor_to_own_mse_ratio": 1.0045104928712958,
+            "n_patient_repeats": 1500
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "arm": "R4",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 1,
+          "arm": "R4",
+          "cindex_mean_over_repeats": 0.7548646362098139,
+          "cindex_repeat_std_population": 0.0037633792618085244,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.7478849407783418,
+          "cindex_repeat_max": 0.760575296108291
+        },
+        "geometry": {
+          "fold": 1,
+          "arm": "R4",
+          "wsi": {
+            "effective_rank": 1.0755539612383223,
+            "cosine": 0.9585966804795332,
+            "read_overlap": 0.8997231248885933,
+            "own_mse": 0.5435704122980436,
+            "donor_mse": 0.5779398609598477,
+            "static_mse": 0.825766129407522,
+            "fraction_cosine_above_09": 0.9577142857142857,
+            "donor_to_own_mse_ratio": 1.0632290645042672,
+            "n_patient_repeats": 1500
+          },
+          "omic": {
+            "effective_rank": 1.253872324731002,
+            "cosine": 0.8717928490530292,
+            "read_overlap": 0.9566481099854862,
+            "own_mse": 2.477847255488237,
+            "donor_mse": 2.500133454799652,
+            "static_mse": 15.866751074653646,
+            "fraction_cosine_above_09": 0.7234047619047619,
+            "donor_to_own_mse_ratio": 1.0089941780156355,
+            "n_patient_repeats": 1500
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "arm": "R3",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 1,
+          "arm": "R3",
+          "cindex_mean_over_repeats": 0.7308798646362098,
+          "cindex_repeat_std_population": 0.0037061245539440645,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.7216582064297801,
+          "cindex_repeat_max": 0.7377326565143824
+        },
+        "geometry": {
+          "fold": 1,
+          "arm": "R3",
+          "wsi": {
+            "effective_rank": 1.582132770784512,
+            "cosine": 0.7502154991595594,
+            "read_overlap": 0.7973274287735284,
+            "own_mse": 0.464761567791303,
+            "donor_mse": 0.5629407383799553,
+            "static_mse": 0.825766129407522,
+            "fraction_cosine_above_09": 0.1672857142857143,
+            "donor_to_own_mse_ratio": 1.2112463193874472,
+            "n_patient_repeats": 1500
+          },
+          "omic": {
+            "effective_rank": 1.7501026308436158,
+            "cosine": 0.3762630290173313,
+            "read_overlap": 0.787045914901248,
+            "own_mse": 2.4280504881739615,
+            "donor_mse": 2.4393530751864114,
+            "static_mse": 15.866751074653646,
+            "fraction_cosine_above_09": 0.48307142857142854,
+            "donor_to_own_mse_ratio": 1.0046550049381182,
+            "n_patient_repeats": 1500
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "arm": "SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 1,
+          "arm": "SCM",
+          "cindex_mean_over_repeats": 0.733502538071066,
+          "cindex_repeat_std_population": 0.003415673305953686,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.727580372250423,
+          "cindex_repeat_max": 0.7428087986463621
+        },
+        "geometry": {
+          "fold": 1,
+          "arm": "SCM",
+          "wsi": {
+            "effective_rank": 1.0970883009976669,
+            "cosine": 0.9478697843941315,
+            "read_overlap": 0.9905519776022047,
+            "own_mse": 0.5597124001383782,
+            "donor_mse": 0.5611638031403223,
+            "static_mse": 0.825766129407522,
+            "fraction_cosine_above_09": 0.9352142857142857,
+            "donor_to_own_mse_ratio": 1.0025931228280547,
+            "n_patient_repeats": 1500
+          },
+          "omic": {
+            "effective_rank": 1.0423883483291794,
+            "cosine": 0.9772166120149177,
+            "read_overlap": 0.9865754330605963,
+            "own_mse": 2.4847733175357183,
+            "donor_mse": 2.4965962925752003,
+            "static_mse": 15.866751074653646,
+            "fraction_cosine_above_09": 0.952595238095238,
+            "donor_to_own_mse_ratio": 1.0047581704761734,
+            "n_patient_repeats": 1500
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "arm": "SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 1,
+          "arm": "SRO",
+          "cindex_mean_over_repeats": 0.75414551607445,
+          "cindex_repeat_std_population": 0.003181319065475998,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.748730964467005,
+          "cindex_repeat_max": 0.7648054145516074
+        },
+        "geometry": {
+          "fold": 1,
+          "arm": "SRO",
+          "wsi": {
+            "effective_rank": 1.0077128587689788,
+            "cosine": 0.9956155332140518,
+            "read_overlap": 0.9945981827369191,
+            "own_mse": 0.5698840825359026,
+            "donor_mse": 0.5708020928104719,
+            "static_mse": 0.825766129407522,
+            "fraction_cosine_above_09": 1.0,
+            "donor_to_own_mse_ratio": 1.0016108719346648,
+            "n_patient_repeats": 1500
+          },
+          "omic": {
+            "effective_rank": 1.0124540199195722,
+            "cosine": 0.9929741382978201,
+            "read_overlap": 0.9923963579111788,
+            "own_mse": 2.493809152563413,
+            "donor_mse": 2.5103583519061408,
+            "static_mse": 15.866751074653646,
+            "fraction_cosine_above_09": 0.9997619047619047,
+            "donor_to_own_mse_ratio": 1.006636113002359,
+            "n_patient_repeats": 1500
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "arm": "R4_SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 1,
+          "arm": "R4_SCM",
+          "cindex_mean_over_repeats": 0.7382402707275804,
+          "cindex_repeat_std_population": 0.016551389148354224,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.7089678510998308,
+          "cindex_repeat_max": 0.7741116751269036
+        },
+        "geometry": {
+          "fold": 1,
+          "arm": "R4_SCM",
+          "wsi": {
+            "effective_rank": 1.3529747369369043,
+            "cosine": 0.8016898945906202,
+            "read_overlap": 0.797565023937925,
+            "own_mse": 0.48847884089748067,
+            "donor_mse": 0.557939711044232,
+            "static_mse": 0.825766129407522,
+            "fraction_cosine_above_09": 0.5568333333333333,
+            "donor_to_own_mse_ratio": 1.142198319213031,
+            "n_patient_repeats": 1500
+          },
+          "omic": {
+            "effective_rank": 1.334862931174193,
+            "cosine": 0.5390476369129598,
+            "read_overlap": 0.8791817210859878,
+            "own_mse": 2.4501959271033606,
+            "donor_mse": 2.449281887888908,
+            "static_mse": 15.866751074653646,
+            "fraction_cosine_above_09": 0.6836666666666666,
+            "donor_to_own_mse_ratio": 0.9996269526023035,
+            "n_patient_repeats": 1500
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "arm": "R4_SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 1,
+          "arm": "R4_SRO",
+          "cindex_mean_over_repeats": 0.705160744500846,
+          "cindex_repeat_std_population": 0.004893060487621411,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6979695431472082,
+          "cindex_repeat_max": 0.7148900169204738
+        },
+        "geometry": {
+          "fold": 1,
+          "arm": "R4_SRO",
+          "wsi": {
+            "effective_rank": 1.1273028283764268,
+            "cosine": 0.9327664384792603,
+            "read_overlap": 0.9152290830381656,
+            "own_mse": 0.5396091337998709,
+            "donor_mse": 0.6058482248385747,
+            "static_mse": 0.825766129407522,
+            "fraction_cosine_above_09": 0.8327619047619047,
+            "donor_to_own_mse_ratio": 1.1227538358594027,
+            "n_patient_repeats": 1500
+          },
+          "omic": {
+            "effective_rank": 1.18062228326719,
+            "cosine": 0.9058575912432169,
+            "read_overlap": 0.9664685949571801,
+            "own_mse": 2.4929462943871816,
+            "donor_mse": 2.49414654926459,
+            "static_mse": 15.866751074653646,
+            "fraction_cosine_above_09": 0.7287142857142856,
+            "donor_to_own_mse_ratio": 1.0004814603828853,
+            "n_patient_repeats": 1500
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "arm": "S0",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 2,
+          "arm": "S0",
+          "cindex_mean_over_repeats": 0.6421937550040032,
+          "cindex_repeat_std_population": 0.01089547898738038,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6253002401921537,
+          "cindex_repeat_max": 0.6653322658126501
+        },
+        "geometry": {
+          "fold": 2,
+          "arm": "S0",
+          "wsi": {
+            "effective_rank": 1.0630155733107263,
+            "cosine": 0.9655507572733174,
+            "read_overlap": 0.9927187305908698,
+            "own_mse": 0.5612832213899023,
+            "donor_mse": 0.5585809258253951,
+            "static_mse": 0.5878424947880333,
+            "fraction_cosine_above_09": 0.9983317669172933,
+            "donor_to_own_mse_ratio": 0.9951855044627639,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.3593904533227934,
+            "cosine": 0.8456932975735375,
+            "read_overlap": 0.9259303215612069,
+            "own_mse": 2.493395402547168,
+            "donor_mse": 2.5019916204637602,
+            "static_mse": 16.33875711089346,
+            "fraction_cosine_above_09": 0.6422932330827067,
+            "donor_to_own_mse_ratio": 1.0034475951579163,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "arm": "R4",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 2,
+          "arm": "R4",
+          "cindex_mean_over_repeats": 0.6967974379503603,
+          "cindex_repeat_std_population": 0.0033883272969573827,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.688550840672538,
+          "cindex_repeat_max": 0.7029623698959168
+        },
+        "geometry": {
+          "fold": 2,
+          "arm": "R4",
+          "wsi": {
+            "effective_rank": 1.1595989587914317,
+            "cosine": 0.9178307239659321,
+            "read_overlap": 0.8920785750179344,
+            "own_mse": 0.4578671836343251,
+            "donor_mse": 0.5670333625062516,
+            "static_mse": 0.5878424947880333,
+            "fraction_cosine_above_09": 0.7691024436090225,
+            "donor_to_own_mse_ratio": 1.2384232431890376,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.0489063704621375,
+            "cosine": 0.9730357402397205,
+            "read_overlap": 0.9889523188709963,
+            "own_mse": 2.47868746398507,
+            "donor_mse": 2.508596383564566,
+            "static_mse": 16.33875711089346,
+            "fraction_cosine_above_09": 0.9575657894736842,
+            "donor_to_own_mse_ratio": 1.0120664343585337,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "arm": "R3",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 2,
+          "arm": "R3",
+          "cindex_mean_over_repeats": 0.6698558847077662,
+          "cindex_repeat_std_population": 0.004711379962994323,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6621297037630104,
+          "cindex_repeat_max": 0.6789431545236189
+        },
+        "geometry": {
+          "fold": 2,
+          "arm": "R3",
+          "wsi": {
+            "effective_rank": 1.4752112917959275,
+            "cosine": 0.7971908777395647,
+            "read_overlap": 0.8141459991628229,
+            "own_mse": 0.45127704087644815,
+            "donor_mse": 0.5580539932180392,
+            "static_mse": 0.5878424947880333,
+            "fraction_cosine_above_09": 0.29212875939849625,
+            "donor_to_own_mse_ratio": 1.2366106463874476,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.3152225797789872,
+            "cosine": 0.8492358223332991,
+            "read_overlap": 0.9297983315835672,
+            "own_mse": 2.447519538296681,
+            "donor_mse": 2.459601314650162,
+            "static_mse": 16.33875711089346,
+            "fraction_cosine_above_09": 0.39546522556390973,
+            "donor_to_own_mse_ratio": 1.0049363349973048,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "arm": "SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 2,
+          "arm": "SCM",
+          "cindex_mean_over_repeats": 0.6404323458767014,
+          "cindex_repeat_std_population": 0.014431309261847932,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.5972778222578062,
+          "cindex_repeat_max": 0.6653322658126501
+        },
+        "geometry": {
+          "fold": 2,
+          "arm": "SCM",
+          "wsi": {
+            "effective_rank": 1.1241210394671872,
+            "cosine": 0.9347252794801637,
+            "read_overlap": 0.9752571816133513,
+            "own_mse": 0.525330244838015,
+            "donor_mse": 0.5251821218352569,
+            "static_mse": 0.5878424947880333,
+            "fraction_cosine_above_09": 0.9602443609022555,
+            "donor_to_own_mse_ratio": 0.9997180383116837,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.1789155595902419,
+            "cosine": 0.9099914538531073,
+            "read_overlap": 0.8891162817567609,
+            "own_mse": 2.508748089865242,
+            "donor_mse": 2.5210749270884616,
+            "static_mse": 16.33875711089346,
+            "fraction_cosine_above_09": 0.6669407894736842,
+            "donor_to_own_mse_ratio": 1.0049135412491261,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "arm": "SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 2,
+          "arm": "SRO",
+          "cindex_mean_over_repeats": 0.6854683746997597,
+          "cindex_repeat_std_population": 0.012150956287001809,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6589271417133707,
+          "cindex_repeat_max": 0.7061649319455564
+        },
+        "geometry": {
+          "fold": 2,
+          "arm": "SRO",
+          "wsi": {
+            "effective_rank": 1.1038291330325287,
+            "cosine": 0.9463731444821937,
+            "read_overlap": 0.9598956068312562,
+            "own_mse": 0.5415850019376529,
+            "donor_mse": 0.5500411927700043,
+            "static_mse": 0.5878424947880333,
+            "fraction_cosine_above_09": 0.9464050751879699,
+            "donor_to_own_mse_ratio": 1.015613783251193,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.192317057358566,
+            "cosine": 0.9017224007937181,
+            "read_overlap": 0.8955274260062099,
+            "own_mse": 2.529823332593629,
+            "donor_mse": 2.5279126504730236,
+            "static_mse": 16.33875711089346,
+            "fraction_cosine_above_09": 0.5837640977443609,
+            "donor_to_own_mse_ratio": 0.9992447369363747,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "arm": "R4_SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 2,
+          "arm": "R4_SCM",
+          "cindex_mean_over_repeats": 0.610248198558847,
+          "cindex_repeat_std_population": 0.04256562194896787,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.5204163330664532,
+          "cindex_repeat_max": 0.6733386709367494
+        },
+        "geometry": {
+          "fold": 2,
+          "arm": "R4_SCM",
+          "wsi": {
+            "effective_rank": 1.4208210740034712,
+            "cosine": 0.7585652320386886,
+            "read_overlap": 0.7794875152439491,
+            "own_mse": 0.47594580228783584,
+            "donor_mse": 0.542532130007289,
+            "static_mse": 0.5878424947880333,
+            "fraction_cosine_above_09": 0.7452772556390976,
+            "donor_to_own_mse_ratio": 1.1399031725868316,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.7649014966068037,
+            "cosine": 0.5385503489642203,
+            "read_overlap": 0.7383353414284709,
+            "own_mse": 2.4765590142654745,
+            "donor_mse": 2.480045987293124,
+            "static_mse": 16.33875711089346,
+            "fraction_cosine_above_09": 0.21421522556390976,
+            "donor_to_own_mse_ratio": 1.0014079910906883,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "arm": "R4_SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 2,
+          "arm": "R4_SRO",
+          "cindex_mean_over_repeats": 0.6317654123298639,
+          "cindex_repeat_std_population": 0.02118835592860897,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.5852682145716573,
+          "cindex_repeat_max": 0.6717373899119295
+        },
+        "geometry": {
+          "fold": 2,
+          "arm": "R4_SRO",
+          "wsi": {
+            "effective_rank": 1.353991475574306,
+            "cosine": 0.8367227898417664,
+            "read_overlap": 0.8494154939215607,
+            "own_mse": 0.4963430149872836,
+            "donor_mse": 0.5152780978989444,
+            "static_mse": 0.5878424947880333,
+            "fraction_cosine_above_09": 0.19920112781954888,
+            "donor_to_own_mse_ratio": 1.0381491878396756,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.1130767172973437,
+            "cosine": 0.9393727068043364,
+            "read_overlap": 0.933484423888236,
+            "own_mse": 2.5340939596295358,
+            "donor_mse": 2.5637448273991286,
+            "static_mse": 16.33875711089346,
+            "fraction_cosine_above_09": 0.8358787593984962,
+            "donor_to_own_mse_ratio": 1.0117007767833233,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "arm": "S0",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 3,
+          "arm": "S0",
+          "cindex_mean_over_repeats": 0.699672131147541,
+          "cindex_repeat_std_population": 0.006544614173368244,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6863387978142077,
+          "cindex_repeat_max": 0.7092896174863388
+        },
+        "geometry": {
+          "fold": 3,
+          "arm": "S0",
+          "wsi": {
+            "effective_rank": 1.1884088452314177,
+            "cosine": 0.9045863151075867,
+            "read_overlap": 0.9182925372470576,
+            "own_mse": 0.5722087524047024,
+            "donor_mse": 0.5842364577674553,
+            "static_mse": 0.7234885567214929,
+            "fraction_cosine_above_09": 0.6456296992481202,
+            "donor_to_own_mse_ratio": 1.0210197857201704,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.1206259252728803,
+            "cosine": 0.9405495433282355,
+            "read_overlap": 0.9574822116099649,
+            "own_mse": 3.8283992534699407,
+            "donor_mse": 3.8323437237425853,
+            "static_mse": 5.5769959577007295,
+            "fraction_cosine_above_09": 0.8346804511278196,
+            "donor_to_own_mse_ratio": 1.0010303184207001,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "arm": "R4",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 3,
+          "arm": "R4",
+          "cindex_mean_over_repeats": 0.6812568306010929,
+          "cindex_repeat_std_population": 0.006097489018539778,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.66775956284153,
+          "cindex_repeat_max": 0.6918032786885245
+        },
+        "geometry": {
+          "fold": 3,
+          "arm": "R4",
+          "wsi": {
+            "effective_rank": 1.3794405432974182,
+            "cosine": 0.8201197923947019,
+            "read_overlap": 0.9895329742426562,
+            "own_mse": 0.5291442292301278,
+            "donor_mse": 0.5538867692904252,
+            "static_mse": 0.7234885567214929,
+            "fraction_cosine_above_09": 0.34577067669172934,
+            "donor_to_own_mse_ratio": 1.0467595386919295,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.1840258363106884,
+            "cosine": 0.9097935905955543,
+            "read_overlap": 0.9457759179143979,
+            "own_mse": 3.799079620191141,
+            "donor_mse": 3.804006272064228,
+            "static_mse": 5.5769959577007295,
+            "fraction_cosine_above_09": 0.7258928571428571,
+            "donor_to_own_mse_ratio": 1.0012968014270884,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "arm": "R3",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 3,
+          "arm": "R3",
+          "cindex_mean_over_repeats": 0.6607650273224044,
+          "cindex_repeat_std_population": 0.02533162650959127,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6076502732240437,
+          "cindex_repeat_max": 0.6994535519125683
+        },
+        "geometry": {
+          "fold": 3,
+          "arm": "R3",
+          "wsi": {
+            "effective_rank": 1.5948303384445215,
+            "cosine": 0.7434928178676212,
+            "read_overlap": 0.6610334113393942,
+            "own_mse": 0.5016285798561416,
+            "donor_mse": 0.5577378357221422,
+            "static_mse": 0.7234885567214929,
+            "fraction_cosine_above_09": 0.15747180451127818,
+            "donor_to_own_mse_ratio": 1.1118541847876604,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.8584146537234791,
+            "cosine": 0.46948017843868384,
+            "read_overlap": 0.7636078530191398,
+            "own_mse": 3.8636141615870754,
+            "donor_mse": 3.8710596213215274,
+            "static_mse": 5.5769959577007295,
+            "fraction_cosine_above_09": 0.31976033834586465,
+            "donor_to_own_mse_ratio": 1.0019270712403108,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "arm": "SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 3,
+          "arm": "SCM",
+          "cindex_mean_over_repeats": 0.6740983606557377,
+          "cindex_repeat_std_population": 0.020260184633166648,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6327868852459017,
+          "cindex_repeat_max": 0.7071038251366121
+        },
+        "geometry": {
+          "fold": 3,
+          "arm": "SCM",
+          "wsi": {
+            "effective_rank": 1.082248251029368,
+            "cosine": 0.9556745737571688,
+            "read_overlap": 0.9830269801045762,
+            "own_mse": 0.5707816623543438,
+            "donor_mse": 0.5780946448837456,
+            "static_mse": 0.7234885567214929,
+            "fraction_cosine_above_09": 0.9832941729323309,
+            "donor_to_own_mse_ratio": 1.012812224028427,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.7325947739748233,
+            "cosine": 0.6933742020804546,
+            "read_overlap": 0.8777833875102652,
+            "own_mse": 3.8032519725396443,
+            "donor_mse": 3.811389653129797,
+            "static_mse": 5.5769959577007295,
+            "fraction_cosine_above_09": 0.3327302631578947,
+            "donor_to_own_mse_ratio": 1.0021396638058453,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "arm": "SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 3,
+          "arm": "SRO",
+          "cindex_mean_over_repeats": 0.6913114754098361,
+          "cindex_repeat_std_population": 0.006829289491560504,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6808743169398908,
+          "cindex_repeat_max": 0.7027322404371584
+        },
+        "geometry": {
+          "fold": 3,
+          "arm": "SRO",
+          "wsi": {
+            "effective_rank": 1.1645368179995244,
+            "cosine": 0.9156299618277982,
+            "read_overlap": 0.9609844364442393,
+            "own_mse": 0.6316820842066878,
+            "donor_mse": 0.6313111022114754,
+            "static_mse": 0.7234885567214929,
+            "fraction_cosine_above_09": 0.8236137218045113,
+            "donor_to_own_mse_ratio": 0.9994127077457352,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.392090511098949,
+            "cosine": 0.790702416459286,
+            "read_overlap": 0.9379665212987623,
+            "own_mse": 3.8179598787701443,
+            "donor_mse": 3.8260416479879304,
+            "static_mse": 5.5769959577007295,
+            "fraction_cosine_above_09": 0.7115366541353383,
+            "donor_to_own_mse_ratio": 1.0021167768846198,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "arm": "R4_SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 3,
+          "arm": "R4_SCM",
+          "cindex_mean_over_repeats": 0.7131147540983607,
+          "cindex_repeat_std_population": 0.00821855016853364,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6961748633879782,
+          "cindex_repeat_max": 0.726775956284153
+        },
+        "geometry": {
+          "fold": 3,
+          "arm": "R4_SCM",
+          "wsi": {
+            "effective_rank": 1.2741512915138058,
+            "cosine": 0.8660724414683485,
+            "read_overlap": 0.8955382258460113,
+            "own_mse": 0.5266625804630549,
+            "donor_mse": 0.5659806332305858,
+            "static_mse": 0.7234885567214929,
+            "fraction_cosine_above_09": 0.4547227443609022,
+            "donor_to_own_mse_ratio": 1.074655109791475,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.153352241776266,
+            "cosine": 0.9282711772018524,
+            "read_overlap": 0.9756220152245485,
+            "own_mse": 3.8108651213642015,
+            "donor_mse": 3.8120512550794765,
+            "static_mse": 5.5769959577007295,
+            "fraction_cosine_above_09": 0.8330122180451127,
+            "donor_to_own_mse_ratio": 1.000311250510711,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "arm": "R4_SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 3,
+          "arm": "R4_SRO",
+          "cindex_mean_over_repeats": 0.6409836065573771,
+          "cindex_repeat_std_population": 0.004668854505637988,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6295081967213115,
+          "cindex_repeat_max": 0.6480874316939891
+        },
+        "geometry": {
+          "fold": 3,
+          "arm": "R4_SRO",
+          "wsi": {
+            "effective_rank": 1.0405908206139853,
+            "cosine": 0.9774405157310018,
+            "read_overlap": 0.9217391449435539,
+            "own_mse": 0.545239991302553,
+            "donor_mse": 0.603396054376897,
+            "static_mse": 0.7234885567214929,
+            "fraction_cosine_above_09": 0.9779840225563909,
+            "donor_to_own_mse_ratio": 1.1066614041560157,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.1786321739917842,
+            "cosine": 0.903363259707576,
+            "read_overlap": 0.94585601082644,
+            "own_mse": 3.8512519985045257,
+            "donor_mse": 3.8527241589893637,
+            "static_mse": 5.5769959577007295,
+            "fraction_cosine_above_09": 0.7955592105263158,
+            "donor_to_own_mse_ratio": 1.0003822550395065,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "arm": "S0",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 4,
+          "arm": "S0",
+          "cindex_mean_over_repeats": 0.6798042704626335,
+          "cindex_repeat_std_population": 0.005476410461392308,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6699288256227758,
+          "cindex_repeat_max": 0.6912811387900356
+        },
+        "geometry": {
+          "fold": 4,
+          "arm": "S0",
+          "wsi": {
+            "effective_rank": 1.0525551359346828,
+            "cosine": 0.971035688179215,
+            "read_overlap": 0.9872151154725511,
+            "own_mse": 0.5873966297428859,
+            "donor_mse": 0.5938495702061214,
+            "static_mse": 0.5793070389426827,
+            "fraction_cosine_above_09": 0.9997415413533834,
+            "donor_to_own_mse_ratio": 1.010985661368299,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.2399554844390748,
+            "cosine": 0.8857573541450378,
+            "read_overlap": 0.9477816530501791,
+            "own_mse": 2.8864802531505886,
+            "donor_mse": 2.9099109709458917,
+            "static_mse": 14.392144227580735,
+            "fraction_cosine_above_09": 0.6989426691729324,
+            "donor_to_own_mse_ratio": 1.0081174010353018,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "arm": "R4",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 4,
+          "arm": "R4",
+          "cindex_mean_over_repeats": 0.685720640569395,
+          "cindex_repeat_std_population": 0.00577863926012748,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6752669039145908,
+          "cindex_repeat_max": 0.7019572953736655
+        },
+        "geometry": {
+          "fold": 4,
+          "arm": "R4",
+          "wsi": {
+            "effective_rank": 1.1393492022079053,
+            "cosine": 0.9273530273289632,
+            "read_overlap": 0.9055334688062268,
+            "own_mse": 0.5760041895273484,
+            "donor_mse": 0.5939615303748532,
+            "static_mse": 0.5793070389426827,
+            "fraction_cosine_above_09": 0.8573073308270677,
+            "donor_to_own_mse_ratio": 1.031175712215288,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.4906003707137172,
+            "cosine": 0.7350092493136133,
+            "read_overlap": 0.8607423915238633,
+            "own_mse": 2.842108884218492,
+            "donor_mse": 2.8508370764161413,
+            "static_mse": 14.392144227580735,
+            "fraction_cosine_above_09": 0.49945958646616534,
+            "donor_to_own_mse_ratio": 1.0030710266753378,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "arm": "R3",
+        "origin": "reused_verified_reference",
+        "score": {
+          "fold": 4,
+          "arm": "R3",
+          "cindex_mean_over_repeats": 0.7072953736654805,
+          "cindex_repeat_std_population": 0.013771368377857193,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6832740213523132,
+          "cindex_repeat_max": 0.7375444839857651
+        },
+        "geometry": {
+          "fold": 4,
+          "arm": "R3",
+          "wsi": {
+            "effective_rank": 1.2838039783410733,
+            "cosine": 0.8640482608505591,
+            "read_overlap": 0.8777166194285717,
+            "own_mse": 0.5291865578607509,
+            "donor_mse": 0.5473639822810104,
+            "static_mse": 0.5793070389426827,
+            "fraction_cosine_above_09": 0.15737781954887217,
+            "donor_to_own_mse_ratio": 1.034349747079257,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 2.4000045873341316,
+            "cosine": 0.5145465399539988,
+            "read_overlap": 0.7277579685656249,
+            "own_mse": 3.0308151514514496,
+            "donor_mse": 3.088006963639667,
+            "static_mse": 14.392144227580735,
+            "fraction_cosine_above_09": 0.06287593984962406,
+            "donor_to_own_mse_ratio": 1.018870108974092,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "arm": "SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 4,
+          "arm": "SCM",
+          "cindex_mean_over_repeats": 0.6610320284697508,
+          "cindex_repeat_std_population": 0.032344477047499896,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.5969750889679716,
+          "cindex_repeat_max": 0.7268683274021353
+        },
+        "geometry": {
+          "fold": 4,
+          "arm": "SCM",
+          "wsi": {
+            "effective_rank": 1.2883017385633244,
+            "cosine": 0.8628676562865869,
+            "read_overlap": 0.927619211296352,
+            "own_mse": 0.5289648189160384,
+            "donor_mse": 0.5380286602009284,
+            "static_mse": 0.5793070389426827,
+            "fraction_cosine_above_09": 0.146828007518797,
+            "donor_to_own_mse_ratio": 1.01713505503724,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.346872791764471,
+            "cosine": 0.8344516801597387,
+            "read_overlap": 0.7666045553512165,
+            "own_mse": 2.8679194574489406,
+            "donor_mse": 2.875040942508923,
+            "static_mse": 14.392144227580735,
+            "fraction_cosine_above_09": 0.3492951127819549,
+            "donor_to_own_mse_ratio": 1.0024831537864447,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "arm": "SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 4,
+          "arm": "SRO",
+          "cindex_mean_over_repeats": 0.7045373665480427,
+          "cindex_repeat_std_population": 0.008340717674917612,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6841637010676157,
+          "cindex_repeat_max": 0.7153024911032029
+        },
+        "geometry": {
+          "fold": 4,
+          "arm": "SRO",
+          "wsi": {
+            "effective_rank": 1.086008775421179,
+            "cosine": 0.9536781805377135,
+            "read_overlap": 0.9779600215821015,
+            "own_mse": 0.5551148802042007,
+            "donor_mse": 0.5587373050419908,
+            "static_mse": 0.5793070389426827,
+            "fraction_cosine_above_09": 0.9875704887218045,
+            "donor_to_own_mse_ratio": 1.0065255408690497,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.180943901169336,
+            "cosine": 0.9140434471963113,
+            "read_overlap": 0.9523084274447916,
+            "own_mse": 2.848108539416602,
+            "donor_mse": 2.8487149743461293,
+            "static_mse": 14.392144227580735,
+            "fraction_cosine_above_09": 0.8298872180451127,
+            "donor_to_own_mse_ratio": 1.0002129254981453,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "arm": "R4_SCM",
+        "origin": "new_training",
+        "score": {
+          "fold": 4,
+          "arm": "R4_SCM",
+          "cindex_mean_over_repeats": 0.7128113879003559,
+          "cindex_repeat_std_population": 0.011241693783978306,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6930604982206405,
+          "cindex_repeat_max": 0.7357651245551602
+        },
+        "geometry": {
+          "fold": 4,
+          "arm": "R4_SCM",
+          "wsi": {
+            "effective_rank": 1.225796115676174,
+            "cosine": 0.8882063889228636,
+            "read_overlap": 0.8423166704030437,
+            "own_mse": 0.4458810126899104,
+            "donor_mse": 0.5596912840577333,
+            "static_mse": 0.5793070389426827,
+            "fraction_cosine_above_09": 0.5681860902255639,
+            "donor_to_own_mse_ratio": 1.2552480776905668,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.3181719321394227,
+            "cosine": 0.8484110356298973,
+            "read_overlap": 0.6616573622117022,
+            "own_mse": 2.964938946264355,
+            "donor_mse": 2.9746425310051756,
+            "static_mse": 14.392144227580735,
+            "fraction_cosine_above_09": 0.41097274436090225,
+            "donor_to_own_mse_ratio": 1.0032727772533214,
+            "n_patient_repeats": 1520
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "arm": "R4_SRO",
+        "origin": "new_training",
+        "score": {
+          "fold": 4,
+          "arm": "R4_SRO",
+          "cindex_mean_over_repeats": 0.6231316725978647,
+          "cindex_repeat_std_population": 0.007561754220952238,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6094306049822064,
+          "cindex_repeat_max": 0.6352313167259787
+        },
+        "geometry": {
+          "fold": 4,
+          "arm": "R4_SRO",
+          "wsi": {
+            "effective_rank": 1.1224493808222358,
+            "cosine": 0.9357766253599755,
+            "read_overlap": 0.8942071230789876,
+            "own_mse": 0.5258489160553406,
+            "donor_mse": 0.6058002152137066,
+            "static_mse": 0.5793070389426827,
+            "fraction_cosine_above_09": 0.8523261278195489,
+            "donor_to_own_mse_ratio": 1.1520423390013264,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 1.741643137041982,
+            "cosine": 0.3850265892289349,
+            "read_overlap": 0.9318190217716656,
+            "own_mse": 2.8159094453446176,
+            "donor_mse": 2.8153792537356677,
+            "static_mse": 14.392144227580735,
+            "fraction_cosine_above_09": 0.4829652255639097,
+            "donor_to_own_mse_ratio": 0.9998117156750809,
+            "n_patient_repeats": 1520
+          }
+        }
+      }
+    ],
+    "aggregate": [
+      {
+        "arm": "SRO",
+        "origin": "new_training",
+        "folds_trained": 5,
+        "cindex_five_fold_mean": 0.7093191709521229,
+        "cindex_std_population_over_folds": 0.024202044828930812,
+        "cindex_min_fold": 0.6854683746997597,
+        "cindex_max_fold": 0.75414551607445
+      },
+      {
+        "arm": "R4",
+        "origin": "reused_verified_reference",
+        "folds_trained": 5,
+        "cindex_five_fold_mean": 0.7071193512214414,
+        "cindex_std_population_over_folds": 0.026868987339423625,
+        "cindex_min_fold": 0.6812568306010929,
+        "cindex_max_fold": 0.7548646362098139
+      },
+      {
+        "arm": "S0",
+        "origin": "reused_verified_reference",
+        "folds_trained": 5,
+        "cindex_five_fold_mean": 0.7038637172348652,
+        "cindex_std_population_over_folds": 0.04109189890679112,
+        "cindex_min_fold": 0.6421937550040032,
+        "cindex_max_fold": 0.7491539763113367
+      },
+      {
+        "arm": "R4_SCM",
+        "origin": "new_training",
+        "folds_trained": 5,
+        "cindex_five_fold_mean": 0.7011190553790574,
+        "cindex_std_population_over_folds": 0.0465183943949685,
+        "cindex_min_fold": 0.610248198558847,
+        "cindex_max_fold": 0.7382402707275804
+      },
+      {
+        "arm": "R3",
+        "origin": "reused_verified_reference",
+        "folds_trained": 5,
+        "cindex_five_fold_mean": 0.6924398956765148,
+        "cindex_std_population_over_folds": 0.025347897263991708,
+        "cindex_min_fold": 0.6607650273224044,
+        "cindex_max_fold": 0.7308798646362098
+      },
+      {
+        "arm": "SCM",
+        "origin": "new_training",
+        "folds_trained": 5,
+        "cindex_five_fold_mean": 0.6842932447889776,
+        "cindex_std_population_over_folds": 0.03400116464794834,
+        "cindex_min_fold": 0.6404323458767014,
+        "cindex_max_fold": 0.733502538071066
+      },
+      {
+        "arm": "R4_SRO",
+        "origin": "new_training",
+        "folds_trained": 5,
+        "cindex_five_fold_mean": 0.64413063268055,
+        "cindex_std_population_over_folds": 0.031399395014636206,
+        "cindex_min_fold": 0.6196117274167987,
+        "cindex_max_fold": 0.705160744500846
+      }
+    ],
+    "new_arms": [
+      "SCM",
+      "SRO",
+      "R4_SCM",
+      "R4_SRO"
+    ],
+    "reused_arms": [
+      "S0",
+      "R4",
+      "R3"
+    ]
+  },
+  "anti_collapse_queue": {
+    "manifest_status": "failed",
+    "stage_status_counts": {
+      "completed": 1,
+      "failed": 20
+    },
+    "distinct_errors": [
+      "[Errno 17] File exists: '/data1/SlotSPE/local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/logs/summarize_fold_0.log'"
+    ],
+    "folds": [
+      {
+        "fold": 0,
+        "arm": "A0_clip",
+        "trained": true,
+        "score": {
+          "fold": 0,
+          "arm": "A0_clip",
+          "cindex_mean_over_repeats": 0.7070522979397781,
+          "cindex_repeat_std_population": 0.02544815574220554,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6426307448494454,
+          "cindex_repeat_max": 0.7416798732171157
+        },
+        "geometry": {
+          "fold": 0,
+          "arm": "A0_clip",
+          "wsi": {
+            "effective_rank": 5.537311089165426,
+            "cosine": 0.19179501009273484,
+            "read_overlap": 0.9621228542518752,
+            "own_mse": 0.5238805946688373,
+            "donor_mse": 0.5411886179795513,
+            "static_mse": 0.779863540458301,
+            "fraction_cosine_above_09": 0.0,
+            "donor_to_own_mse_ratio": 1.0330381073222517,
+            "n_patient_repeats": 1540
+          },
+          "omic": {
+            "effective_rank": 3.0579961673136182,
+            "cosine": 0.3955031260093965,
+            "read_overlap": 0.898742175143568,
+            "own_mse": 4.254106824351595,
+            "donor_mse": 4.279608260946614,
+            "static_mse": 25.130337489998688,
+            "fraction_cosine_above_09": 0.036525974025974024,
+            "donor_to_own_mse_ratio": 1.005994545423505,
+            "n_patient_repeats": 1540
+          }
+        },
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 0,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.7484944532488114,
+            "cindex_repeat_std_population": 0.010414468307972253,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.7305863708399366,
+            "cindex_repeat_max": 0.7662440570522979
+          },
+          "R4": {
+            "fold": 0,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.7169572107765452,
+            "cindex_repeat_std_population": 0.008172027311793171,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.705229793977813,
+            "cindex_repeat_max": 0.7345483359746434
+          },
+          "R3": {
+            "fold": 0,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.6934033280507131,
+            "cindex_repeat_std_population": 0.01006079789258023,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6719492868462758,
+            "cindex_repeat_max": 0.7083993660855784
+          }
+        }
+      },
+      {
+        "fold": 0,
+        "arm": "A1_clip_decay",
+        "trained": true,
+        "score": {
+          "fold": 0,
+          "arm": "A1_clip_decay",
+          "cindex_mean_over_repeats": 0.7029714738510301,
+          "cindex_repeat_std_population": 0.008163090513084937,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6846275752773375,
+          "cindex_repeat_max": 0.7194928684627575
+        },
+        "geometry": {
+          "fold": 0,
+          "arm": "A1_clip_decay",
+          "wsi": {
+            "effective_rank": 6.124547513226245,
+            "cosine": 0.16128663047210592,
+            "read_overlap": 0.6733911216189337,
+            "own_mse": 0.43694302862534273,
+            "donor_mse": 0.5552995173671803,
+            "static_mse": 0.779863540458301,
+            "fraction_cosine_above_09": 0.0,
+            "donor_to_own_mse_ratio": 1.2708739606492783,
+            "n_patient_repeats": 1540
+          },
+          "omic": {
+            "effective_rank": 4.92643293179593,
+            "cosine": 0.19178267190384699,
+            "read_overlap": 0.6582754885608567,
+            "own_mse": 4.1561319476985314,
+            "donor_mse": 4.183204199083439,
+            "static_mse": 25.130337489998688,
+            "fraction_cosine_above_09": 0.002713358070500927,
+            "donor_to_own_mse_ratio": 1.0065138094087458,
+            "n_patient_repeats": 1540
+          }
+        },
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 0,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.7484944532488114,
+            "cindex_repeat_std_population": 0.010414468307972253,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.7305863708399366,
+            "cindex_repeat_max": 0.7662440570522979
+          },
+          "R4": {
+            "fold": 0,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.7169572107765452,
+            "cindex_repeat_std_population": 0.008172027311793171,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.705229793977813,
+            "cindex_repeat_max": 0.7345483359746434
+          },
+          "R3": {
+            "fold": 0,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.6934033280507131,
+            "cindex_repeat_std_population": 0.01006079789258023,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6719492868462758,
+            "cindex_repeat_max": 0.7083993660855784
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "arm": "A0_clip",
+        "trained": true,
+        "score": {
+          "fold": 1,
+          "arm": "A0_clip",
+          "cindex_mean_over_repeats": 0.6995769881556684,
+          "cindex_repeat_std_population": 0.026396616981186338,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6345177664974619,
+          "cindex_repeat_max": 0.739424703891709
+        },
+        "geometry": {
+          "fold": 1,
+          "arm": "A0_clip",
+          "wsi": {
+            "effective_rank": 6.3507846569371695,
+            "cosine": 0.1162782287204869,
+            "read_overlap": 0.7947856036844729,
+            "own_mse": 0.4892666843732198,
+            "donor_mse": 0.5533907207647959,
+            "static_mse": 0.825766129407522,
+            "fraction_cosine_above_09": 0.0,
+            "donor_to_own_mse_ratio": 1.1310615221506914,
+            "n_patient_repeats": 1500
+          },
+          "omic": {
+            "effective_rank": 4.2101393547387636,
+            "cosine": 0.188556533730436,
+            "read_overlap": 0.7328055840808348,
+            "own_mse": 2.3498358584046364,
+            "donor_mse": 2.366388260781765,
+            "static_mse": 15.866751074653646,
+            "fraction_cosine_above_09": 0.004023809523809524,
+            "donor_to_own_mse_ratio": 1.0070440674900443,
+            "n_patient_repeats": 1500
+          }
+        },
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 1,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.7491539763113367,
+            "cindex_repeat_std_population": 0.0012969297560707393,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.7470389170896785,
+            "cindex_repeat_max": 0.751269035532995
+          },
+          "R4": {
+            "fold": 1,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.7548646362098139,
+            "cindex_repeat_std_population": 0.0037633792618085244,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.7478849407783418,
+            "cindex_repeat_max": 0.760575296108291
+          },
+          "R3": {
+            "fold": 1,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.7308798646362098,
+            "cindex_repeat_std_population": 0.0037061245539440645,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.7216582064297801,
+            "cindex_repeat_max": 0.7377326565143824
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "arm": "A1_clip_decay",
+        "trained": true,
+        "score": {
+          "fold": 1,
+          "arm": "A1_clip_decay",
+          "cindex_mean_over_repeats": 0.7107445008460237,
+          "cindex_repeat_std_population": 0.01793270894155923,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6692047377326565,
+          "cindex_repeat_max": 0.7436548223350253
+        },
+        "geometry": {
+          "fold": 1,
+          "arm": "A1_clip_decay",
+          "wsi": {
+            "effective_rank": 6.231518284189369,
+            "cosine": 0.12819135472852583,
+            "read_overlap": 0.7476988647632341,
+            "own_mse": 0.47527293507258095,
+            "donor_mse": 0.5618427555163701,
+            "static_mse": 0.825766129407522,
+            "fraction_cosine_above_09": 0.0,
+            "donor_to_own_mse_ratio": 1.182147591531945,
+            "n_patient_repeats": 1500
+          },
+          "omic": {
+            "effective_rank": 4.211884894280878,
+            "cosine": 0.19127679614507415,
+            "read_overlap": 0.6891349025036037,
+            "own_mse": 2.3854823038776716,
+            "donor_mse": 2.399570618887742,
+            "static_mse": 15.866751074653646,
+            "fraction_cosine_above_09": 0.006690476190476189,
+            "donor_to_own_mse_ratio": 1.0059058560137586,
+            "n_patient_repeats": 1500
+          }
+        },
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 1,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.7491539763113367,
+            "cindex_repeat_std_population": 0.0012969297560707393,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.7470389170896785,
+            "cindex_repeat_max": 0.751269035532995
+          },
+          "R4": {
+            "fold": 1,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.7548646362098139,
+            "cindex_repeat_std_population": 0.0037633792618085244,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.7478849407783418,
+            "cindex_repeat_max": 0.760575296108291
+          },
+          "R3": {
+            "fold": 1,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.7308798646362098,
+            "cindex_repeat_std_population": 0.0037061245539440645,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.7216582064297801,
+            "cindex_repeat_max": 0.7377326565143824
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "arm": "A0_clip",
+        "trained": true,
+        "score": {
+          "fold": 2,
+          "arm": "A0_clip",
+          "cindex_mean_over_repeats": 0.638470776621297,
+          "cindex_repeat_std_population": 0.01228526710604221,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6084867894315452,
+          "cindex_repeat_max": 0.6621297037630104
+        },
+        "geometry": {
+          "fold": 2,
+          "arm": "A0_clip",
+          "wsi": {
+            "effective_rank": 6.810941853099141,
+            "cosine": 0.09614080110457136,
+            "read_overlap": 0.6714664548949854,
+            "own_mse": 0.4321165752842238,
+            "donor_mse": 0.5705342148381628,
+            "static_mse": 0.5878424947880333,
+            "fraction_cosine_above_09": 2.3496240601503757e-05,
+            "donor_to_own_mse_ratio": 1.3203247629714159,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 6.145157206234406,
+            "cosine": 0.05727533927476463,
+            "read_overlap": 0.5939713066152641,
+            "own_mse": 2.4354411301056023,
+            "donor_mse": 2.4501047869850145,
+            "static_mse": 16.33875711089346,
+            "fraction_cosine_above_09": 0.0001644736842105263,
+            "donor_to_own_mse_ratio": 1.0060209449114363,
+            "n_patient_repeats": 1520
+          }
+        },
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 2,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.6421937550040032,
+            "cindex_repeat_std_population": 0.01089547898738038,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6253002401921537,
+            "cindex_repeat_max": 0.6653322658126501
+          },
+          "R4": {
+            "fold": 2,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.6967974379503603,
+            "cindex_repeat_std_population": 0.0033883272969573827,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.688550840672538,
+            "cindex_repeat_max": 0.7029623698959168
+          },
+          "R3": {
+            "fold": 2,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.6698558847077662,
+            "cindex_repeat_std_population": 0.004711379962994323,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6621297037630104,
+            "cindex_repeat_max": 0.6789431545236189
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "arm": "A1_clip_decay",
+        "trained": true,
+        "score": {
+          "fold": 2,
+          "arm": "A1_clip_decay",
+          "cindex_mean_over_repeats": 0.6616493194555645,
+          "cindex_repeat_std_population": 0.011031420111865387,
+          "n_repeats": 20,
+          "cindex_repeat_min": 0.6349079263410728,
+          "cindex_repeat_max": 0.6933546837469976
+        },
+        "geometry": {
+          "fold": 2,
+          "arm": "A1_clip_decay",
+          "wsi": {
+            "effective_rank": 5.940746996151791,
+            "cosine": 0.17024907972973377,
+            "read_overlap": 0.691529833764269,
+            "own_mse": 0.4430565549060702,
+            "donor_mse": 0.5714016881820403,
+            "static_mse": 0.5878424947880333,
+            "fraction_cosine_above_09": 4.6992481203007515e-05,
+            "donor_to_own_mse_ratio": 1.2896811521120137,
+            "n_patient_repeats": 1520
+          },
+          "omic": {
+            "effective_rank": 4.4773676955294786,
+            "cosine": 0.1965295184822427,
+            "read_overlap": 0.6716721855739918,
+            "own_mse": 2.3991090904921295,
+            "donor_mse": 2.4352011289643616,
+            "static_mse": 16.33875711089346,
+            "fraction_cosine_above_09": 0.0033599624060150373,
+            "donor_to_own_mse_ratio": 1.015043933856642,
+            "n_patient_repeats": 1520
+          }
+        },
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 2,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.6421937550040032,
+            "cindex_repeat_std_population": 0.01089547898738038,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6253002401921537,
+            "cindex_repeat_max": 0.6653322658126501
+          },
+          "R4": {
+            "fold": 2,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.6967974379503603,
+            "cindex_repeat_std_population": 0.0033883272969573827,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.688550840672538,
+            "cindex_repeat_max": 0.7029623698959168
+          },
+          "R3": {
+            "fold": 2,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.6698558847077662,
+            "cindex_repeat_std_population": 0.004711379962994323,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6621297037630104,
+            "cindex_repeat_max": 0.6789431545236189
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "arm": "A0_clip",
+        "trained": false,
+        "score": null,
+        "geometry": null,
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 3,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.699672131147541,
+            "cindex_repeat_std_population": 0.006544614173368244,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6863387978142077,
+            "cindex_repeat_max": 0.7092896174863388
+          },
+          "R4": {
+            "fold": 3,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.6812568306010929,
+            "cindex_repeat_std_population": 0.006097489018539778,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.66775956284153,
+            "cindex_repeat_max": 0.6918032786885245
+          },
+          "R3": {
+            "fold": 3,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.6607650273224044,
+            "cindex_repeat_std_population": 0.02533162650959127,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6076502732240437,
+            "cindex_repeat_max": 0.6994535519125683
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "arm": "A1_clip_decay",
+        "trained": false,
+        "score": null,
+        "geometry": null,
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 3,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.699672131147541,
+            "cindex_repeat_std_population": 0.006544614173368244,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6863387978142077,
+            "cindex_repeat_max": 0.7092896174863388
+          },
+          "R4": {
+            "fold": 3,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.6812568306010929,
+            "cindex_repeat_std_population": 0.006097489018539778,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.66775956284153,
+            "cindex_repeat_max": 0.6918032786885245
+          },
+          "R3": {
+            "fold": 3,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.6607650273224044,
+            "cindex_repeat_std_population": 0.02533162650959127,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6076502732240437,
+            "cindex_repeat_max": 0.6994535519125683
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "arm": "A0_clip",
+        "trained": false,
+        "score": null,
+        "geometry": null,
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 4,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.6798042704626335,
+            "cindex_repeat_std_population": 0.005476410461392308,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6699288256227758,
+            "cindex_repeat_max": 0.6912811387900356
+          },
+          "R4": {
+            "fold": 4,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.685720640569395,
+            "cindex_repeat_std_population": 0.00577863926012748,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6752669039145908,
+            "cindex_repeat_max": 0.7019572953736655
+          },
+          "R3": {
+            "fold": 4,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.7072953736654805,
+            "cindex_repeat_std_population": 0.013771368377857193,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6832740213523132,
+            "cindex_repeat_max": 0.7375444839857651
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "arm": "A1_clip_decay",
+        "trained": false,
+        "score": null,
+        "geometry": null,
+        "baseline_same_protocol": {
+          "S0": {
+            "fold": 4,
+            "arm": "S0",
+            "cindex_mean_over_repeats": 0.6798042704626335,
+            "cindex_repeat_std_population": 0.005476410461392308,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6699288256227758,
+            "cindex_repeat_max": 0.6912811387900356
+          },
+          "R4": {
+            "fold": 4,
+            "arm": "R4",
+            "cindex_mean_over_repeats": 0.685720640569395,
+            "cindex_repeat_std_population": 0.00577863926012748,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6752669039145908,
+            "cindex_repeat_max": 0.7019572953736655
+          },
+          "R3": {
+            "fold": 4,
+            "arm": "R3",
+            "cindex_mean_over_repeats": 0.7072953736654805,
+            "cindex_repeat_std_population": 0.013771368377857193,
+            "n_repeats": 20,
+            "cindex_repeat_min": 0.6832740213523132,
+            "cindex_repeat_max": 0.7375444839857651
+          }
+        }
+      }
+    ],
+    "aggregate": [
+      {
+        "arm": "A0_clip",
+        "folds_trained": 3,
+        "cindex_mean_over_trained_folds": 0.6817000209055811,
+        "cindex_std_population_over_trained_folds": 0.030719654242138815
+      },
+      {
+        "arm": "A1_clip_decay",
+        "folds_trained": 3,
+        "cindex_mean_over_trained_folds": 0.6917884313842061,
+        "cindex_std_population_over_trained_folds": 0.02154653163197602
+      },
+      {
+        "arm": "S0",
+        "origin": "reused_verified_reference",
+        "folds_trained": 5,
+        "cindex_mean_over_trained_folds": 0.7038637172348652,
+        "cindex_std_population_over_trained_folds": 0.04109189890679112,
+        "per_fold": {
+          "0": 0.7484944532488114,
+          "1": 0.7491539763113367,
+          "2": 0.6421937550040032,
+          "3": 0.699672131147541,
+          "4": 0.6798042704626335
+        }
+      },
+      {
+        "arm": "R4",
+        "origin": "reused_verified_reference",
+        "folds_trained": 5,
+        "cindex_mean_over_trained_folds": 0.7071193512214414,
+        "cindex_std_population_over_trained_folds": 0.026868987339423625,
+        "per_fold": {
+          "0": 0.7169572107765452,
+          "1": 0.7548646362098139,
+          "2": 0.6967974379503603,
+          "3": 0.6812568306010929,
+          "4": 0.685720640569395
+        }
+      },
+      {
+        "arm": "R3",
+        "origin": "reused_verified_reference",
+        "folds_trained": 5,
+        "cindex_mean_over_trained_folds": 0.6924398956765148,
+        "cindex_std_population_over_trained_folds": 0.025347897263991708,
+        "per_fold": {
+          "0": 0.6934033280507131,
+          "1": 0.7308798646362098,
+          "2": 0.6698558847077662,
+          "3": 0.6607650273224044,
+          "4": 0.7072953736654805
+        }
+      }
+    ]
+  },
+  "claim_boundary": "Aggregate queue scores and slot geometry for two research queues on TCGA-BLCA. These are not patient benefit, not patient harm, not correction efficacy and not clinical utility, and they do not generalize to another cohort or cancer."
+}

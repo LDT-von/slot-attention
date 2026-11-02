@@ -1,17 +1,17 @@
 {
   "schema": "slotspe_research_document_catalog_v1",
-  "updated_at": "2026-10-24T03:58:13+08:00",
+  "updated_at": "2026-11-02T09:45:00+08:00",
   "role": "Navigation only; task execution status is exclusively in docs/PROGRESS.json.",
   "source": "docs/research/README.md",
   "existing_folders_moved_or_deleted": 0,
   "groups": {
-    "A": "A．测量、机制证据与复核（11个）",
+    "A": "A．测量、机制证据与复核（12个）",
     "B": "B．文献问题与迁移条件（3个）",
     "C": "C．实验方案、对照与实现验收（5个）",
     "D": "D．原版来源与早期问题审查（10个）",
     "E": "E．交接、来源同步与验收历史（6个）"
   },
-  "folder_count": 35,
+  "folder_count": 36,
   "folders": [
     {
       "folder": "slotspe_local_redundancy_20261021",
@@ -470,6 +470,18 @@
       "total_bytes": 23648,
       "readable_documents": [
         "docs/research/slotspe_scoped_sync_20261021/同步收据.txt"
+      ]
+    },
+    {
+      "folder": "slotspe_queue_results_20261102",
+      "path": "docs/research/slotspe_queue_results_20261102",
+      "group": "A",
+      "purpose": "两条授权队列的数据结果汇总：多样性队列已完成、反塌缩队列被launcher缺陷打断。",
+      "reading_boundary": "C-index与槽几何是队列内描述性数值；不含患者获益、损害或修正有效性证据，不构成临床效用。",
+      "file_count": 2,
+      "total_bytes": 80811,
+      "readable_documents": [
+        "docs/research/slotspe_queue_results_20261102/results.md"
       ]
     }
   ]

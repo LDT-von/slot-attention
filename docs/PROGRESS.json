@@ -8734,5 +8734,107 @@
     },
     "gaps_reasons": "The anti-collapse queue cannot be completed without repairing the launcher, which is a source change inside the anti-collapse implementation hash set and therefore needs the authorisation the recorded rule already requires for a queue change. Folds 3 and 4 of that queue, ten of twenty possible arm-folds, were never trained. The diversity queue completed, but its twenty new trainings carry one seed, so the fold spread contains no training randomness, and no multiplicity correction applies to seven arms. The comparison of the anti-collapse arms with the baseline covers three folds of one seed, not five. Nothing in either queue establishes patient benefit, patient harm, correction efficacy or clinical utility, and neither queue changes the fact that the historical evidence in this repository already shows lower redundancy correlating with lower survival performance. The new architecture line has three unresolved decisions and no patient stage.",
     "next_action_user_inputs": "The decision is the user's and three items are on the table. First, whether to repair the launcher so that the log file is opened in a mode that tolerates an existing file, and then resume the anti-collapse queue for folds 3 and 4, which requires explicit execution authorisation because the rule is that only --run executes and because the file is inside the implementation hash set. Second, whether to run the deletion oracle on the six completed anti-collapse best checkpoints, which would determine whether the newly detected patient-specific content sits in the deleted slot or in the retained slot, the question the earlier cross-view line left open and which the user already authorised for the completed queue. Third, the three open decisions of the new architecture line in docs/research/slotspe_common_private_20261101/open_decisions.json, namely the constraint target, the treatment of the beta 0.001 point and whether to confirm the operating point with more seeds before the patient protocol is frozen. The diversity queue needs no further action: it is completed and recorded. No new patient input is required to read any of the existing artifacts."
+  },
+  "latest_queue_results_recorded_20261102": {
+    "recorded_at": "2026-11-02T09:45:00+08:00",
+    "route_task": "SlotSPE / record the data results of the two authorised queues as a public recomputed summary and push it",
+    "user_steering": "User advised to record the data results and then push.",
+    "status": "the_two_queue_results_are_now_recorded_as_a_public_document_that_is_recomputed_from_the_stored_artifacts_instead_of_copied_from_any_earlier_report_the_summary_contains_aggregate_statistics_only_and_no_patient_identifier_no_per_patient_array_no_weight_and_no_checkpoint_the_new_public_folder_is_indexed_the_delivery_manifest_is_refreshed_and_the_branch_is_pushed_no_training_no_inference_no_checkpoint_loaded_and_no_source_behaviour_changed",
+    "completed_work": "Wrote scripts/summarize_queue_results.py, which reads the private artifacts under local_evidence and recomputes every number it reports. It produces a public markdown document and a public JSON document. It refuses to write anywhere inside local_evidence. It reads only the scalar C-index of each evaluation repeat and only the aggregate geometry fields of each patient diagnostic record; the patient identifiers, per-patient risk values and per-patient prediction arrays inside those records are never copied. The two defects found while validating the first output were fixed: the three reused reference arms live under the baseline queue root rather than under the diversity root and were therefore missing from the diversity table, and the donor-to-own reconstruction ratio is not a stored field in the raw patient diagnostics and is now computed from the mean donor and mean own reconstruction errors, which is the same definition the queue summary uses. Added tests/test_slotspe_queue_results_summary.py with eight tests covering the read logic, the computed ratio, the absent-artifact path, the malformed-artifact path and the privacy property of the published output. Registered the new research folder in docs/research/INDEX.json and updated the folder count in README.md and docs/research/README.md from 35 to 36.",
+    "paths_commit": {
+      "base_commit": "c9d323c",
+      "new_commit_or_push": true,
+      "branch": "codex/common-private-survival",
+      "source_files_changed": [
+        "scripts/summarize_queue_results.py (new)",
+        "tests/test_slotspe_queue_results_summary.py (new)",
+        "docs/research/slotspe_queue_results_20261102/results.md (new)",
+        "docs/research/slotspe_queue_results_20261102/results.json (new)",
+        "docs/research/INDEX.json (new folder registered)",
+        "docs/research/README.md (folder count)",
+        "README.md (folder count)",
+        "docs/PROGRESS.json (this entry)",
+        "DELIVERY_MANIFEST.json (refreshed)"
+      ],
+      "third_party_modified": false,
+      "queue_code_changed": false,
+      "patient_data_in_public_tree": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "patient_training_runs_started": 0,
+      "patient_inference": 0,
+      "checkpoints_loaded": 0,
+      "mode": "read-only aggregation of stored artifacts",
+      "summary_script_run": "python scripts/summarize_queue_results.py completed, wrote the markdown and the JSON under docs/research/slotspe_queue_results_20261102",
+      "unit_tests": "tests/test_slotspe_queue_results_summary.py 8 passed",
+      "privacy_check": "a grep for the TCGA patient identifier pattern over the published markdown and JSON returns zero matches, and no 64-character hex digest is present in the published JSON. The JSON carries explicit false flags for patient_data_included, patient_identifiers_included and per_patient_arrays_included.",
+      "delivery_manifest": "python scripts/check_delivery_manifest.py --check --require-tracked reports ok with the refreshed manifest",
+      "recorded_results": {
+        "diversity_queue_manifest_status": "completed",
+        "diversity_new_arms_trained": "twenty trainings over five folds, all at epoch 30 of 30",
+        "diversity_five_fold_cindex_mean_over_20_repeats": {
+          "SRO": 0.7093,
+          "R4": 0.7071,
+          "S0": 0.7039,
+          "R4_SCM": 0.7011,
+          "R3": 0.6924,
+          "SCM": 0.6843,
+          "R4_SRO": 0.6441
+        },
+        "diversity_fold_std_population": {
+          "SRO": 0.0242,
+          "R4": 0.0269,
+          "S0": 0.0411,
+          "R4_SCM": 0.0465,
+          "R3": 0.0253,
+          "SCM": 0.034,
+          "R4_SRO": 0.0314
+        },
+        "diversity_geometry_reading": "on fold 0 the SCM and SRO effective rank fell to 1.02 and 1.01 with cosine 0.988 and 0.995, further collapsed than the S0 baseline at rank 1.41 and cosine 0.846. Only the R4_SCM and R4_SRO combinations hold the omic geometry open on folds 1 and 2, with omic cosine down to 0.385 to 0.539, while their WSI donor-to-own ratio rises to 1.12 to 1.20.",
+        "anti_collapse_queue_manifest_status": "failed",
+        "anti_collapse_stage_status_counts": "one completed stage, which is prepare, and twenty failed stages",
+        "anti_collapse_shared_error": "[Errno 17] File exists: .../logs/summarize_fold_0.log",
+        "anti_collapse_trained_arm_folds": "folds 0, 1 and 2 for both arms, six of ten, each at epoch 30 of 30",
+        "anti_collapse_never_trained": "folds 3 and 4, both arms",
+        "anti_collapse_per_fold_cindex": {
+          "A0_clip": {
+            "0": 0.7071,
+            "1": 0.6996,
+            "2": 0.6385
+          },
+          "A1_clip_decay": {
+            "0": 0.703,
+            "1": 0.7107,
+            "2": 0.6616
+          },
+          "S0_same_protocol": {
+            "0": 0.7485,
+            "1": 0.7492,
+            "2": 0.6422,
+            "3": 0.6997,
+            "4": 0.6798
+          },
+          "R4_same_protocol": {
+            "0": 0.717,
+            "1": 0.7549,
+            "2": 0.6968,
+            "3": 0.6813,
+            "4": 0.6857
+          },
+          "R3_same_protocol": {
+            "0": 0.6934,
+            "1": 0.7309,
+            "2": 0.6699,
+            "3": 0.6608,
+            "4": 0.7073
+          }
+        }
+      },
+      "claim_boundary": "C-index and slot geometry inside two research queues on TCGA-BLCA. These are not patient benefit, not patient harm, not correction efficacy and not clinical utility. Twenty evaluation repeats are repeats of one trained model and not twenty independent trainings, so the fold spread contains no training randomness. Both queues carry the single seed 3, and the seven-arm comparison carries no multiplicity correction."
+    },
+    "gaps_reasons": "The published summary is a descriptive record, not an analysis. The diversity queue completed and needs no further action, but the best new arm exceeds the reused baseline by 0.002 to 0.006, far inside the fold spread of 0.024 to 0.047, so nothing separates from the baseline. The anti-collapse queue is still missing folds 3 and 4, ten of twenty possible arm-folds, and repairing the launcher is a source change inside the anti-collapse implementation hash set, so it waits for the authorisation the recorded rule requires. The three open decisions of the common-private architecture line are untouched by this stage. No patient stage exists for that line. Nothing in either queue establishes patient benefit, patient harm, correction efficacy, clinical utility or generalization to another cohort or cancer.",
+    "next_action_user_inputs": "Nothing is pending for the diversity queue, which is completed and recorded. Two items remain for the user. First, whether to repair the launcher so the log file is opened in a mode that tolerates an existing file and then resume the anti-collapse queue for folds 3 and 4, which needs explicit execution authorisation because only --run executes and the file is inside the implementation hash set. Second, the three open decisions of the common-private line in docs/research/slotspe_common_private_20261101/open_decisions.json. The deletion oracle on the six completed anti-collapse best checkpoints remains an open question from the earlier stage and was already authorised in principle for the completed queue. No new patient input is required to read any existing artifact."
   }
 }
