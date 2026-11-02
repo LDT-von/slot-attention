@@ -9317,5 +9317,48 @@
     },
     "gaps_reasons": "Only three of five folds are trained, so no five-fold statistic exists for the anti-collapse arms and no comparison with the five-fold historical figures is valid yet. Only one seed exists, so no seed variance is known. The codebook for this probe is fitted on the evaluated held-out population, because the redundancy queue stored slots only for the held-out fold, so the absolute gap magnitudes are not comparable with the training-fold-codebook cross-view numbers and the codebook itself can absorb part of the signal. The deletion oracle measures whether the slots predict the target; the previous content probe measured whether the slot content is patient-specific rather than donor content, and the two are different questions whose disagreement is unresolved. The number of held-out patients per fold is small, which makes the multiset buckets sparse and is exactly why the permutation null is the only valid reference. The omic space was probed here but the static control and the donor-mismatch comparison of the previous entry were not repeated. Nothing here establishes patient harm, patient benefit, correction efficacy, clinical utility or generalization to any other cohort or cancer, and no patient identifier, feature, weight or per-patient array is reproduced. The probe read the stored slot tensors and did not re-run inference, so it inherits the slot geometry of the best checkpoint exactly and does not independently re-verify the checkpoint.",
     "next_action_user_inputs": "The queue is still running folds 3 and 4, and the probe has already been run on the three completed folds, so no new authorization is needed for the probe itself. Recommended order. First, let the queue finish folds 3 and 4 and the two summary stages, then extend this same probe to folds 3 and 4 and recompute the five-fold geometry, deletion-gap significance and multiset structure, because the three-fold numbers are not a five-fold result. Second, recompute both score protocols over five folds and compare against the historical baseline on the same five folds and the same protocol, reporting the protocol difference against the twenty repeat standard deviation as was done before. Third, resolve the discrepancy that is now the primary open question: the content probe found patient-specific content in these checkpoints while the deletion oracle finds no predictive gap, so the next diagnostic should test whether the patient-specific content is carried by the slot that the deletion removes or by the slots that remain, on the same checkpoints and with the same codebook population, so the two probes answer directly comparable questions. Fourth, repeat the deletion probe with the codebook fitted on the training fold rather than the evaluated population, so the held-out guarantee matches the cross-view diagnostic and the absolute magnitudes become comparable. No further user input is needed for the first two items."
+  },
+  "latest_smoke_run_original_audit_1epoch_20261102": {
+    "recorded_at": "2026-11-02T16:20:00+08:00",
+    "route_task": "SlotSPE / one-epoch smoke run of the original_audit queue to confirm the patient pipeline still runs end to end in this environment",
+    "status": "pipeline_ran_end_to_end_this_is_a_smoke_check_not_a_scientific_result",
+    "completed_work": "Ran the original_audit queue for fold 0 and seed 3 with 1 epoch, 256 patches, batch size 8 and 2 evaluation repeats on GPU 0. The doctor preflight confirmed the metadata, the split file, the feature directory and the original source hashes before anything trained. All four stages completed: protocol, prepare, the fold 0 seed 3 training and evaluation pair, and summarize. The run produced the full artifact set: curve, checkpoint, evaluation repeats, validation predictions, the patient slot intervention measurement, the native model audit and the natural gate observations. An environment defect was found and worked around: the default interpreter has torch 2.6.0+cu124, which does not support the sm_120 of the installed RTX 5090, so the run used the repository virtual environment with torch 2.10.0+cu128. No source file was changed to obtain this.",
+    "paths_commit": {
+      "output_root": "local_evidence/smoke_original_audit_1epoch_20261102",
+      "run_log": "local_evidence/smoke_original_audit_1epoch_20261102.log",
+      "config": "configs/slotspe_clean_original_server.json",
+      "entrypoint": "python -B -m slotspe_proof.queue --run --config configs/slotspe_clean_original_server.json --metadata-root /data1/dataset_csv --features-root /data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files --splits-dir 5fold --folds 0 --seeds 3 --epochs 1 --patches 256 --batch-size 8 --eval-repeats 2 --device cuda:0 --output-root local_evidence/smoke_original_audit_1epoch_20261102",
+      "interpreter": ".venv_slot_spe/bin/python with torch 2.10.0+cu128; the default interpreter with torch 2.6.0+cu124 cannot run on sm_120",
+      "split_identity": "5fold, which the original loader hardcodes in dataset_survival.py _load_split; the splits_dir setting does not reach cohort selection",
+      "source_files_changed": [
+        "third_party_modified: false",
+        "queue_code_modified: false"
+      ],
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "patient_training_runs_started": 1,
+      "patient_inference_runs": 1,
+      "patient_features_read": true,
+      "patient_checkpoints_loaded": true,
+      "exit_code": 0,
+      "stage_status": "protocol, prepare, pair and summarize all reported completed",
+      "cohort": "fold 0: train 303, validation 77, excluded 1; 380 patient patch caches prepared",
+      "optimizer_steps": 38,
+      "parameter_count": 33093390,
+      "elapsed_seconds": 206.78783659776673,
+      "peak_allocated_cuda_bytes": 1066917376,
+      "validation_cindex_mean_exploratory": 0.7317749603803487,
+      "validation_cindex_std_population": 0.0019809825673534065,
+      "validation_cindex_repeats": 2,
+      "single_pass_val_cindex": 0.7353407290015848,
+      "patient_risk_std_mean": 0.0032267121525553916,
+      "raw_receipt_files": "receipts/protocol.json, receipts/prepare.json, receipts/fold_0_seed_3.json, receipts/summarize.json, checks/protocol_checks.json and the per-arm artifacts under pairs/fold_0/seed_3/original/",
+      "git_state_after_run": "working tree clean; third_party unchanged; all outputs under the ignored local_evidence directory"
+    },
+    "gaps_reasons": "This is a smoke check and it carries no scientific weight. One epoch at 256 patches and 2 evaluation repeats is far below the declared budget of 30 epochs, 4096 patches and 20 repeats, so the validation C-index of about 0.73 and its standard deviation of about 0.002 describe a barely trained model and must not be compared with, or quoted next to, the completed 30/4096/20 results or the server baselines. Two repeats cannot establish evaluation variability, one epoch cannot exercise the per-epoch best checkpoint rule, and one fold cannot say anything about cohort level behaviour. Nothing here bears on patient benefit, on correction efficacy, on the anti-collapse question or on the common/private mechanism line, and the pipeline success says nothing about clinical utility. The environment defect is real and still open: the default interpreter cannot use the installed GPUs, so every future run must either use the repository virtual environment or a newer PyTorch.",
+    "next_action_user_inputs": "The pipeline is confirmed runnable, so the next decision is what to run. The server queue stays as it is and continuous research stays paused. If a real result is wanted, the honest options are to restart the declared protocol, namely 30 epochs, 4096 patches and 20 repeats over the five folds with seed 3, or to first let the anti-collapse queue resume with the scheduler repair that was just merged, which would cover folds 3 and 4 that never started. Both need explicit execution authorization, and both should run in the repository virtual environment so the sm_120 GPUs are actually used."
   }
 }
