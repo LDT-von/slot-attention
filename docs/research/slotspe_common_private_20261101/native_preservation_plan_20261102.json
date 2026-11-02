@@ -1,0 +1,18 @@
+{
+  "schema": "slotspe_native_preservation_boundary_audit_v1",
+  "base_commit": "cb3f89a80d9f37d3165aaca37730b32efe6e09d5",
+  "timing": "Source/mathematical audit, not a new empirical efficacy experiment. Seven known-answer unit fixtures ran before aggregate receipt; no optimization or architecture selection.",
+  "source_adapter_sha256": "75ab77ac2cec6f16a4b73f37f027b574a4f41ca7f21e9cfb741fb13bfb8859ea",
+  "cases": [{"dimension": 256, "shared": 64, "private": 192, "target": 32, "slots": 8, "seed": 731}, {"dimension": 256, "shared": 64, "private": 192, "target": 32, "slots": 8, "seed": 105460}, {"dimension": 8, "shared": 2, "private": 6, "target": 1, "slots": 4, "seed": 731}],
+  "native_collision": "Choose a direction in the common nullspace of private encoder and independent frozen target projection; perturb two slots oppositely. All shared/private/replacement/content outputs collide while a permutation-invariant native second moment changes.",
+  "rank_scope": "Ambient slot tensor, not actual patient manifold or predictive harm. Rank bound is(K-1)*rank(B)+rank([A;B]); identical-slot manifold is a counter-control.",
+  "hsic_control": "Exactly enumerate16 hypothetical patient states with one shared bit present in private within-slot cross covariance but absent from coordinate first/second moments. Exercise actual source summary_hsic with default64/192 dimensions and8 slots.",
+  "residual_controls": "Ordinary residual cancellation; bounded affine residual with exact SVD norm and analytic inverse; zero-gain/zero-branch gradient; orthogonal encode/decode identity with no task gradient; orthogonal full-slot geometry preservation and lossy shared pooling.",
+  "hook_control": "Use actual SlotPluginHost on a declared generated permutation-invariant moment predictor. This predictor is not the protected native survival head and not a patient checkpoint.",
+  "acceptance": "Default ambient rank<=1600 of2048, source collision within1e-12, HSIC summary near0 despite exact full-private MI=ln2, bounded inverse error<1e-8 and min singular >=1-q, ordinary residual can cancel.",
+  "limits": "Fixed source parameters and known generated states; does not prove real patient information loss, shared/private biological semantics, stable training or prediction improvement. No claim that finite power iterations certify a norm upper bound.",
+  "neural_training": 0,
+  "optimizer_updates": 0,
+  "patient_execution": false,
+  "server_execution": false
+}
