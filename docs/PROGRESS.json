@@ -8826,5 +8826,32 @@
   },
   "gaps_reasons": "Shared sample private-factor linear accessibility changes as predicted, but posterior means are not covered by the single-sample rate and may retain signal. All eight shared-rate paired prediction intervals include zero. XOR effective private cooperation and multi-slot content benefit not established; sample rank is partly noise. Current tasks are low dimensional and cannot validate eight-slot semantic complementarity. Existing MIB/CEB/DisentangledSSL/PIBD are close foundations. Public anti-collapse update is partial three-fold and R5-based; own-versus-donor wins do not establish unique slot semantics or clip efficacy against S0.",
   "next_action_user_inputs": "Before adding any module, run generated-factor readout capacity control for the exact XOR survival task and fixed-readout perturbation audit; distinguish encoder content, pooling access and optimization. If readout control succeeds, mathematically audit G-conditioned per-slot cross-view content targets as a separate increment. Do not promote PCA targets, tune on these exploratory tests, start patient work, or alter any server queue. No research choice needed from user."
+},
+"latest_research_server_push_handoff_20261102":{
+  "recorded_at": "2026-11-02",
+  "route_task": "Quota-saving push and server handoff of isolated common/private research",
+  "completed_work": "Preserved partial XOR experiment: 18 oracle controls, 3 exact replays, 2 accepted decoder refits; remaining seed449 unaccepted after interruption. Added plan-only and fresh ignored-output CLI for server synthetic execution. Wrote explicit handoff separating runnable synthetic training from missing patient integration.",
+  "paths_commit": {
+    "branch": "codex/common-private-mechanism-review",
+    "parent": "718211f7c30866a2742ab18ca088b70c1da3c10f",
+    "handoff": "docs/research/slotspe_common_private_20261101/SERVER_HANDOFF_20261102.md",
+    "receipt": "docs/research/slotspe_common_private_20261101/xor_readout_handoff_receipt.json",
+    "push_requested_by_user": true
+  },
+  "checks_actual_execution_raw_receipt": {
+    "focused_tests_passed": 15,
+    "plan_cli_passed": true,
+    "new_training_during_handoff": 0,
+    "oracle_completed": 18,
+    "exact_replays_completed": 3,
+    "decoder_refits_completed": 2,
+    "last_refit_accepted": false,
+    "patient_training": 0,
+    "patient_inference": 0,
+    "patient_checkpoint_reads": 0,
+    "server_execution": false
+  },
+  "gaps_reasons": "Current architecture has no patient dataset adapter or patient --run entry. Raw partial receipt remains running as historical bytes; independent completion audit marks partial. Do not present code push as patient-ready or append to existing server queues.",
+  "next_action_user_inputs": "Push isolated research branch and transfer SERVER_HANDOFF. Server can run fresh synthetic readout controls; patient adaptation, matched protocol and doctor remain necessary before concrete patient training. User asked whether to pause local continuing goal; await explicit response."
 }
 }

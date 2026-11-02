@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T11:07:39.097037+08:00",
-  "base_commit_before_delivery": "5cf76b7a3b1ffd1ae7b7f086b69199330c7907ac",
+  "recorded_at": "2026-11-02T11:30:17.806354+08:00",
+  "base_commit_before_delivery": "718211f7c30866a2742ab18ca088b70c1da3c10f",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 596,
-  "repository_file_count_including_manifest": 597,
+  "covered_file_count": 603,
+  "repository_file_count_including_manifest": 604,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 712671,
-      "sha256": "c8077e265d5ce820f3ebee2136090b9b3ec93ab0795b0f682723e89264f5290f"
+      "bytes": 714539,
+      "sha256": "25628cabe23bca59dc07029059c650bf4686e924fc9ec36d9e7a4b89234429e6"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -283,6 +283,11 @@
       "path": "docs/research/slotspe_clean_original_20261019/publication_tests.xml",
       "bytes": 506,
       "sha256": "64b47bccda0443565a730f16f47883229c7fa2990637dab37c19fbad885a6f2b"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/SERVER_HANDOFF_20261102.md",
+      "bytes": 4011,
+      "sha256": "fb2854fb9d0e51c27ec4621aa8f14e9380667572ceb1c73dd888d1ffe032406d"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/architecture.md",
@@ -503,6 +508,21 @@
       "path": "docs/research/slotspe_common_private_20261101/synthetic_receipt.json",
       "bytes": 3979,
       "sha256": "e66fe48fd583f4e28cee854c8a7dafcdb5849b3cf4d632e2ebf17e0042b7685d"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/xor_readout_capacity_plan_20261102.json",
+      "bytes": 2921,
+      "sha256": "83fea7af24cb2db23755662c937a1dfd764747e7c096af00fb2eeb50ed5f6d20"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/xor_readout_capacity_receipt.json",
+      "bytes": 37852,
+      "sha256": "57349aed74bde796119010ef165ef765b38a13137e08cd9ab6ff8107d4800949"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/xor_readout_handoff_receipt.json",
+      "bytes": 2184,
+      "sha256": "15b9dc982ee2089238140235a8b3977d1ec77826726237317b1f3374b15a868b"
     },
     {
       "path": "docs/research/slotspe_diversity_20261029/code_validation_receipt.json",
@@ -2040,6 +2060,11 @@
       "sha256": "555421088b2786f8704b25cce5f64873ac9930d57f43a23e714776867f5a9e69"
     },
     {
+      "path": "scripts/check_xor_readout_capacity.py",
+      "bytes": 12447,
+      "sha256": "4a0107b5e8ae7a7d5951e51493189b47214be2d468ca8db07c30af8c709ad3c1"
+    },
+    {
       "path": "scripts/compare_common_private_club.py",
       "bytes": 7586,
       "sha256": "a33e1beaa279f83802988b386bc22ef8517868a65fcb711ba3c13d7dc2f1c682"
@@ -2630,6 +2655,11 @@
       "sha256": "66c3b0289503a0d68a6cb538950edb0636250e42ac912f41a8740a19182af0bb"
     },
     {
+      "path": "slotspe_proof/xor_readout_diagnostics.py",
+      "bytes": 4047,
+      "sha256": "3ead0f4247c73d02b8176115def9b0ddb9029de6cc0cbafe1c0dcad73b35628b"
+    },
+    {
       "path": "survot_rank/__init__.py",
       "bytes": 202,
       "sha256": "a6e362dee41b146968aab79e389916c39732c5e7a743a2965c82c177a58c95da"
@@ -2938,6 +2968,11 @@
       "path": "tests/test_slotspe_sparsity_off.py",
       "bytes": 2331,
       "sha256": "da7353ffafb5a766b8262ed8761dda758393e39730207f96d9d5d59232f10da6"
+    },
+    {
+      "path": "tests/test_xor_readout_diagnostics.py",
+      "bytes": 3060,
+      "sha256": "8583488d66530944dc1080ca8b7ed5c6cc90598d2ecdd2c52cd91bd64c955d98"
     },
     {
       "path": "third_party/SlotSPE/README.md",

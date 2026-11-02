@@ -1,0 +1,66 @@
+{
+  "schema": "slotspe_xor_readout_push_handoff_v1",
+  "recorded_at": "2026-11-02",
+  "raw_receipt_sha256": "57349aed74bde796119010ef165ef765b38a13137e08cd9ab6ff8107d4800949",
+  "raw_receipt_preserved": true,
+  "raw_status": "running",
+  "completion_audit": "partial; execution handle no longer exists and no local Python process found; last refit not accepted",
+  "oracle_completed": 18,
+  "exact_replays_completed": 3,
+  "cached_tensor_equalities_per_replay": [
+    39,
+    39,
+    39
+  ],
+  "decoder_refits_completed": 2,
+  "decoder_refit_missing_seed": [
+    449
+  ],
+  "known_completed_optimizer_updates": 11500,
+  "last_unrecorded_refit_updates_unknown": true,
+  "summary": [
+    {
+      "mode": "after_phi_clean",
+      "completed_runs": 3,
+      "mean_nll": 0.9047481417655945,
+      "conditional_bayes_mean_nll": 0.8774820399232566
+    },
+    {
+      "mode": "before_phi_clean_single",
+      "completed_runs": 3,
+      "mean_nll": 0.9199748635292053,
+      "conditional_bayes_mean_nll": 0.8774820399232566
+    },
+    {
+      "mode": "before_phi_rate1_single",
+      "completed_runs": 3,
+      "mean_nll": 1.1431342760721843,
+      "conditional_bayes_mean_nll": 0.8816005576531237
+    },
+    {
+      "mode": "before_phi_rate1_repeated",
+      "completed_runs": 3,
+      "mean_nll": 0.9243627707163492,
+      "conditional_bayes_mean_nll": 0.8774822460839236
+    },
+    {
+      "mode": "before_phi_noise_only",
+      "completed_runs": 3,
+      "mean_nll": 1.142151165008545,
+      "conditional_bayes_mean_nll": 1.1205531679990997
+    },
+    {
+      "mode": "before_phi_mismatched_repeated",
+      "completed_runs": 3,
+      "mean_nll": 1.1472733736038208,
+      "conditional_bayes_mean_nll": 1.1205531679990997
+    }
+  ],
+  "handoff_checks": "15 relevant tests passed in 4.93s; --plan passed; no new training launched during push handoff",
+  "cli_change": "Added --plan and fresh ignored --output-root after partial execution; old receipt source pin refers to the pre-handoff script. Numerical training functions unchanged.",
+  "patient_training": 0,
+  "patient_inference": 0,
+  "patient_checkpoint_reads": 0,
+  "server_execution": false,
+  "patient_adapter_available": false
+}
