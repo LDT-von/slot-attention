@@ -8618,5 +8618,121 @@
     },
     "gaps_reasons": "Common and private semantics are not identified: what is measured is information relative to the common representation, not a shared-versus-specific biological factorisation, and the cross-mean prediction and alignment terms are only inductive biases. The monotone rise of duplication with the KL weight rests on two seeds, one generated dataset per seed, a small model and no significance test, so the exact trade-off location is not established. The slot-level complementarity, the noise-inflation confound, the distribution-shift task and the synergistic task remain unmeasured. The real omics adapter is missing, because omics tokens must carry pathway identity before they enter the network and the current interface does not provide that adapter. The prototype has no patient loader, no full-size resource validation and no patient execution entry point. Nothing here bears on patient performance, patient benefit, correction efficacy or clinical utility.",
     "next_action_user_inputs": "This stage ends with three open decisions that the repository does not decide on its own, and the user asked that they be written out rather than chosen for him. They are recorded in docs/research/slotspe_common_private_20261101/open_decisions.json and in the design note, each with the measured fact, the candidate options and the input that is needed. Decision one is the constraint target: whether the compression term should keep bounding the total information of the private slots relative to the common representation, which is what the conditional KL does and which the measurements show removes the private increment before the redundant copy, or whether a term should act only on the part of the private branch that is predictable from the common representation, which requires a new module and a new hyperparameter. Decision two is the treatment of the beta 0.001 point, which the sweep shows is numerically inert and therefore cannot support the earlier reading that a small KL weight has no predictive advantage. Decision three is whether to confirm the operating point with more seeds on generated data before the patient protocol is frozen. Until these are answered, no architecture change, no hyperparameter change and no patient stage is started. The patient stage additionally needs separate explicit execution authorisation and must inherit the actual 5fold cohort identity that the original loader hardcodes in _load_split rather than the 5fold_uni2h directory name. No new patient input is required for the local synthetic work that any of the three options implies."
+  },
+  "latest_queue_status_20261102": {
+    "recorded_at": "2026-11-02T09:05:00+08:00",
+    "route_task": "SlotSPE / status check of the two authorised queues and of the new architecture line: what actually ran, what completed, and what is still blocked",
+    "user_steering": "User asked how the runs went.",
+    "status": "the_diversity_queue_is_completed_with_all_twenty_new_arms_trained_over_five_folds_and_the_summary_written_the_anti_collapse_queue_is_stopped_by_a_launcher_defect_with_six_of_ten_arm_folds_trained_and_folds_3_and_4_never_started_the_new_architecture_line_has_two_commits_pushed_and_three_open_decisions_awaiting_the_user_no_new_training_was_started_today_no_patient_inference_was_performed_today",
+    "completed_work": "Read-only inspection. No training, no inference, no re-evaluation, no checkpoint loaded, no source file changed, no queue launched or resumed. Read the queue manifests of both queues, the per-fold arm directory listings, the per-arm evaluation files, the diversity summary, the queue monitor log, the running process table and the GPU state. Read the launcher source of both queue modules to locate the anti-collapse failure. Compared the anti-collapse arm scores against the completed best-validation baseline on the same three folds, the same cohort and the same twenty-repeat protocol.",
+    "paths_commit": {
+      "base_commit": "121a9e9",
+      "new_commit_or_push": false,
+      "source_files_changed": [
+        "docs/PROGRESS.json (this entry)"
+      ],
+      "third_party_modified": false,
+      "queue_code_changed": false,
+      "files_read": [
+        "local_evidence/slotspe_diversity_scm_sro_v1/queue_manifest.json",
+        "local_evidence/slotspe_diversity_scm_sro_v1/summary.json",
+        "local_evidence/slotspe_diversity_scm_sro_v1/summary.tsv",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/queue_manifest.json",
+        "local_evidence/anticollapse_blca_uni2h_folds0to4_seed3_run01/folds/{0,1,2}/arms/{A0_clip,A1_clip_decay}/eval_repeats.json",
+        "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/folds/{0,1,2}/arms/{S0,R4,R3}/eval_repeats.json",
+        "local_evidence/queue_monitor.log",
+        "slotspe_proof/redundancy_anticollapse_multifold.py",
+        "slotspe_proof/redundancy_best_multifold.py"
+      ]
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "patient_training_runs_started_today": 0,
+      "patient_inference_today": 0,
+      "checkpoints_loaded_today": 0,
+      "mode": "read-only inspection of stored artifacts and process state",
+      "diversity_queue": {
+        "manifest_status": "completed",
+        "new_arms_trained": "SCM, SRO, R4_SCM, R4_SRO over folds 0 to 4, twenty trainings, all at epoch 30 of 30",
+        "five_fold_cindex_mean_over_20_repeats": {
+          "S0_reused_reference": 0.703864,
+          "R4_reused_reference": 0.707119,
+          "R3_reused_reference": 0.69244,
+          "SCM": 0.684293,
+          "SRO": 0.709319,
+          "R4_SCM": 0.701119,
+          "R4_SRO": 0.644131
+        },
+        "population_std_over_folds": {
+          "S0": 0.041092,
+          "R4": 0.026869,
+          "R3": 0.025348,
+          "SCM": 0.034001,
+          "SRO": 0.024202,
+          "R4_SCM": 0.046518,
+          "R4_SRO": 0.031399
+        },
+        "reading": "The best new arm is SRO at 0.7093, above the reused R4 at 0.7071 and the reused S0 at 0.7039, but by 0.002 to 0.006, far inside the fold spread of 0.024 to 0.047. No new arm separates from the baseline. R4_SRO is clearly worse at 0.6441. The geometry did not move in the intended direction either: on fold 0 the SCM and SRO effective rank fell to 1.02 and 1.01 with cosine 0.988 and 0.995, further collapsed than the S0 baseline at rank 1.41 and cosine 0.846. Only the R4_SCM and R4_SRO combinations on folds 1 and 2 hold the omic geometry open, with omic cosine down to 0.539, while their WSI donor-to-own reconstruction ratio rises to 1.12 to 1.20.",
+        "not_established": "No separation from the baseline on the score, no geometric success for the standalone SCM and SRO arms, and no patient benefit. The donor-to-own ratio of 1.12 to 1.20 for the R4 combinations is a content difference and not a patient outcome."
+      },
+      "anti_collapse_queue": {
+        "manifest_status": "failed",
+        "records": "one completed stage, which is prepare, and twenty failed stages",
+        "shared_error": "[Errno 17] File exists: '.../logs/summarize_fold_0.log' of type FileExistsError",
+        "root_cause": "The anti-collapse module opens its stage log in exclusive mode. slotspe_proof/redundancy_anticollapse_multifold.py line 240 calls log.open(\"x\", encoding=\"utf-8\"), and slotspe_proof/redundancy_best_multifold.py line 331 does the same in _subprocess_stage. A summarisation stage whose log file already exists therefore raises FileExistsError before the stage body runs, which aborts the wave. It is a launcher defect and not a training failure, because every arm-fold that was started reached epoch 30 of 30.",
+        "trained_arm_folds": "folds 0, 1 and 2 for both A0_clip and A1_clip_decay, six of ten arm-folds, each with thirty epochs of curve data, a best epoch, a reloaded twenty-repeat evaluation and a patient diagnostics file",
+        "never_started": "folds 3 and 4, both arms, because the wave aborted. The folds/3/initial directory exists with core.pt, probe.pt, reference.pt and receipt.json, so the initialisation of fold 3 completed and only its arms are missing. Fold 4 has no directory at all.",
+        "scores_on_three_folds_20_repeats": {
+          "fold0_A0_clip": [
+            0.7071,
+            0.0254
+          ],
+          "fold0_A1_clip_decay": [
+            0.703,
+            0.0082
+          ],
+          "fold1_A0_clip": [
+            0.6996,
+            0.0264
+          ],
+          "fold1_A1_clip_decay": [
+            0.7107,
+            0.0179
+          ],
+          "fold2_A0_clip": [
+            0.6385,
+            0.0123
+          ],
+          "fold2_A1_clip_decay": [
+            0.6616,
+            0.011
+          ]
+        },
+        "same_protocol_baseline_on_the_same_three_folds": {
+          "S0": [
+            0.7485,
+            0.7492,
+            0.6422
+          ],
+          "R4": [
+            0.717,
+            0.7549,
+            0.6968
+          ],
+          "R3": [
+            0.6934,
+            0.7309,
+            0.6699
+          ]
+        },
+        "reading": "On the three folds that finished, the anti-collapse arms sit below the reused baseline on fold 0 and fold 1 and above it only on fold 2. Fold 0 A0_clip is 0.7071 against S0 0.7485, a gap of 0.041, while the per-fold repeat standard deviation of that baseline is 0.0104, so the gap is about four times the evaluation noise of that fold. This is three folds of one seed and not a five-fold statistic, and it does not separate the two anti-collapse arms from each other.",
+        "what_remains_valid": "The mechanism result already recorded still holds: the geometry is held open for the whole run and the content probe separates patient-specific from donor content. The new information is that the survival score did not improve, and now that three folds are complete this is visible against the same-protocol baseline instead of only against the per-epoch monitoring values."
+      },
+      "environment": "Both GPUs idle at 15 MiB and zero percent utilisation. No queue process is alive. The only remaining processes are two monitor watchers that have been running for over two days, plus unrelated system processes.",
+      "architecture_line": "The common-private line stands at two pushed commits on codex/common-private-survival, 2af8388 for the semantic verification and 121a9e9 for the three open decisions. The working tree is clean and the remote matches the local HEAD."
+    },
+    "gaps_reasons": "The anti-collapse queue cannot be completed without repairing the launcher, which is a source change inside the anti-collapse implementation hash set and therefore needs the authorisation the recorded rule already requires for a queue change. Folds 3 and 4 of that queue, ten of twenty possible arm-folds, were never trained. The diversity queue completed, but its twenty new trainings carry one seed, so the fold spread contains no training randomness, and no multiplicity correction applies to seven arms. The comparison of the anti-collapse arms with the baseline covers three folds of one seed, not five. Nothing in either queue establishes patient benefit, patient harm, correction efficacy or clinical utility, and neither queue changes the fact that the historical evidence in this repository already shows lower redundancy correlating with lower survival performance. The new architecture line has three unresolved decisions and no patient stage.",
+    "next_action_user_inputs": "The decision is the user's and three items are on the table. First, whether to repair the launcher so that the log file is opened in a mode that tolerates an existing file, and then resume the anti-collapse queue for folds 3 and 4, which requires explicit execution authorisation because the rule is that only --run executes and because the file is inside the implementation hash set. Second, whether to run the deletion oracle on the six completed anti-collapse best checkpoints, which would determine whether the newly detected patient-specific content sits in the deleted slot or in the retained slot, the question the earlier cross-view line left open and which the user already authorised for the completed queue. Third, the three open decisions of the new architecture line in docs/research/slotspe_common_private_20261101/open_decisions.json, namely the constraint target, the treatment of the beta 0.001 point and whether to confirm the operating point with more seeds before the patient protocol is frozen. The diversity queue needs no further action: it is completed and recorded. No new patient input is required to read any of the existing artifacts."
   }
 }
