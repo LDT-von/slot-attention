@@ -9040,4 +9040,69 @@
   "gaps_reasons": "No neural multi-factor task or continuous-rate ablation has run. All-slot sufficiency does not identify semantic roles; continuous rate also charges useful information and may worsen prediction or concentrate content. Clinical anchors/adapter and independent prediction evidence remain missing.",
   "next_action_user_inputs": "Implement and synthetic-check only the piecewise rate family before any new training; lock24-run multi-factor protocol if execution remains justified. Keep original mean readout and other mechanisms fixed. Do not add the rejected objectives or affect patient/server queues."
 }
+,
+"latest_private_rate_multifactor_20261102":{
+  "recorded_at": "2026-11-02",
+  "route_task": "Below-capacity private rate implementation and locked24-run multi-factor attribution",
+  "completed_work": "Implemented eta0/leaky/continuous fee in a separate function with exact old-graph endpoint. Completed24 paired generated trainings and calibrated factor/effect probes. Stronger fees lowered rate and sampled content; no stable predictive improvement or XOR cooperation. Preserved positive factorwise all-slot increments in all3 no-fee seeds. Kept main model/default unchanged and added one human navigation page.",
+  "paths_commit": {
+    "branch": "codex/common-private-mechanism-review",
+    "parent_commit": "32a17a6bb2793341fd525007840732ae1c9d7f95",
+    "report": "docs/research/slotspe_common_private_20261101/private_rate_multifactor_review_20261102.md",
+    "navigation": "docs/research/slotspe_common_private_20261101/README.md",
+    "plan": "docs/research/slotspe_common_private_20261101/private_rate_multifactor_plan_20261102.json",
+    "receipt": "docs/research/slotspe_common_private_20261101/private_rate_multifactor_neural_receipt.json",
+    "pushed": false
+  },
+  "checks_actual_execution_raw_receipt": {
+    "schema": "slotspe_private_rate_multifactor_validation_v1",
+    "recorded_at": "2026-11-02",
+    "base_commit": "32a17a6bb2793341fd525007840732ae1c9d7f95",
+    "previous_goal_turn_classification": "progress:32a17a6 established finite multi-factor controls, rejected unsafe objectives and planned this bounded rate experiment",
+    "pretraining_tests": "18 passed in2.29s",
+    "clarified_target_test": "1 passed in2.21s",
+    "unique_relevant_test_items": 19,
+    "full_repository_tests_rerun": false,
+    "new_neural_trainings": 24,
+    "steps_each": 500,
+    "core_optimizer_updates": 12000,
+    "cpu_threads": 2,
+    "paired_task_seed_groups": 6,
+    "unique_initial_state_hashes": 3,
+    "model_parameters": 7364,
+    "source_pins_verified": true,
+    "synthetic_cache_hashes_verified": 24,
+    "training_data_initializations_paired": true,
+    "factor_probe_gate": {
+      "role_placed": 0.5029619315651853,
+      "duplicate": 0.0,
+      "shuffled": 0.0007191395951463296
+    },
+    "effect_probe_gate": {
+      "role_placed": 0.7722345125828232,
+      "duplicate": 0.0,
+      "shuffled": 0.009778250666380663
+    },
+    "all_training_updates_finite": true,
+    "gradient_l2_max": 2.659045489558596,
+    "training_seconds_excluding_evaluation_and_probes": 191.61200019999524,
+    "diagnostic_protocol_clarification": "Actual hazard effects added after launch but before first neural score inspection; completion at amendment time was not verified; not original preregistration.",
+    "posthoc_localization": "Raw-slot effect probes added after reviewing pooled-effect scores; existing frozen partitions/grid, no new neural training or architecture selection.",
+    "protected_original_files": 11,
+    "historical_research_files_hash_verified": 64,
+    "network_and_original_objective_changed": false,
+    "new_fee_objective_promoted_to_default": false,
+    "patient_training": 0,
+    "patient_inference": 0,
+    "patient_checkpoint_reads": 0,
+    "server_execution": false,
+    "queue_modified": false,
+    "merged_or_pushed": false,
+    "report": "docs/research/slotspe_common_private_20261101/private_rate_multifactor_review_20261102.md",
+    "decision": "Do not adopt leaky/continuous private fee; stop eta sweep. Retain positive all-slot finite content access in factorwise no-fee baseline and negative XOR result.",
+    "limitations": "Synthetic two slots per modality,3 data/training composite seeds, privileged typed features, no patient performance or biological semantic identification. Bin concordance is not clinical C-index. Finite negative probes are not information absence."
+  },
+  "gaps_reasons": "No simultaneous content/prediction gain or solved XOR mechanism; lower rate is not reduced harmful redundancy. Positive whole-slot finite access is not unique semantic complementarity. Patient adapter, original/V2 matched protocol and independent generalization remain missing.",
+  "next_action_user_inputs": "Stop this fee-family sweep and keep current default. Return to source/mathematical audit of native information preservation and observable content identification before new modules or experiments. No patient/server intervention or user Q1/Q2/Q3 choice required."
+}
 }

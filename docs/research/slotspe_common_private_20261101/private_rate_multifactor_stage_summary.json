@@ -1,0 +1,580 @@
+{
+  "schema": "slotspe_private_rate_multifactor_summary_v1",
+  "status": "completed",
+  "source_receipt_sha256": "1094eb547cd20ceb897b18280499b7940b8401ab5132215d7aaaf3d2d8bc508e",
+  "effect_receipt_sha256": "f281d5ace984e74d4d734e40485c2b937f192d589ba8fe6fbc14589fce6f2bf5",
+  "summary": [
+    {
+      "task": "factorwise",
+      "arm": "no_private_fee",
+      "nll": 1.2979414065678914,
+      "nll_by_seed": [
+        1.314574933052063,
+        1.3314337730407715,
+        1.2478155136108398
+      ],
+      "synthetic_bin_concordance": 0.6670016129811605,
+      "private_rate_nats_per_slot_mean": 12.791313727696737,
+      "shared_directional_rate_mean": 0.027138907462358475,
+      "train_any_raw_threshold_exceedance_fraction": 0.9913333333333333,
+      "train_raw_active_slot_fraction": 0.9446666666666667,
+      "gradient_l2_max": 2.659045489558596,
+      "mean_private_donor_nll_delta": 0.5110195318857829,
+      "mean_private_N0_nll_delta": 0.22179915110270185,
+      "sample": {
+        "factor_increment_over_G": 0.6000517927903616,
+        "factor_all_vs_single_gain": 0.1216720333593748,
+        "factor_all_vs_single_by_seed": [
+          0.19551595659266352,
+          0.02259358834211885,
+          0.14690655514334205
+        ],
+        "effect_increment_over_G": 0.6000517927903616,
+        "effect_all_vs_single_gain": 0.1216720333593748,
+        "raw_private_factor_increment": 0.605411211660098,
+        "G_shared_linear_r2": 0.8993238984497075,
+        "G_factor_linear_r2": -0.02622366815302435,
+        "private_nuisance_linear_r2": -0.03686653256342498
+      },
+      "all_mean": {
+        "factor_increment_over_G": 0.49267563230304967,
+        "factor_all_vs_single_gain": 0.10171682581650428,
+        "factor_all_vs_single_by_seed": [
+          0.16737820217019148,
+          0.05927020157442136,
+          0.07850207370489999
+        ],
+        "effect_increment_over_G": 0.49267563230304967,
+        "effect_all_vs_single_gain": 0.10171682581650428,
+        "raw_private_factor_increment": 0.5229616985744028,
+        "G_shared_linear_r2": 0.9984702230739141,
+        "G_factor_linear_r2": 0.1468879354491809,
+        "private_nuisance_linear_r2": 0.3091078834920124
+      },
+      "private_sample_rank": [
+        1.4879505736784429,
+        1.5765806524481343
+      ],
+      "private_all_mean_rank": [
+        1.2721391625968106,
+        1.3144235789667722
+      ]
+    },
+    {
+      "task": "factorwise",
+      "arm": "flat",
+      "nll": 1.3753586610158284,
+      "nll_by_seed": [
+        1.4475718498229981,
+        1.3590474843978881,
+        1.319456648826599
+      ],
+      "synthetic_bin_concordance": 0.6505694071451823,
+      "private_rate_nats_per_slot_mean": 0.8534916341304779,
+      "shared_directional_rate_mean": 0.03169403783977032,
+      "train_any_raw_threshold_exceedance_fraction": 0.2853333333333333,
+      "train_raw_active_slot_fraction": 0.11683333333333333,
+      "gradient_l2_max": 2.0399404583891494,
+      "mean_private_donor_nll_delta": 0.2914902051289876,
+      "mean_private_N0_nll_delta": 0.15279885927836098,
+      "sample": {
+        "factor_increment_over_G": 0.31844279697723804,
+        "factor_all_vs_single_gain": 0.04816323310108502,
+        "factor_all_vs_single_by_seed": [
+          0.0627159974952088,
+          0.06673937299726851,
+          0.01503432881077776
+        ],
+        "effect_increment_over_G": 0.31844279697723804,
+        "effect_all_vs_single_gain": 0.04816323310108502,
+        "raw_private_factor_increment": 0.3408472288420906,
+        "G_shared_linear_r2": 0.9417205679751128,
+        "G_factor_linear_r2": -0.026792164144263293,
+        "private_nuisance_linear_r2": -0.056865189614597855
+      },
+      "all_mean": {
+        "factor_increment_over_G": 0.44720721041564726,
+        "factor_all_vs_single_gain": 0.10738421369842202,
+        "factor_all_vs_single_by_seed": [
+          0.24202827283951361,
+          0.10258304416764177,
+          -0.022458675911889346
+        ],
+        "effect_increment_over_G": 0.44720721041564726,
+        "effect_all_vs_single_gain": 0.10738421369842202,
+        "raw_private_factor_increment": 0.5663812050544533,
+        "G_shared_linear_r2": 0.9988777061214315,
+        "G_factor_linear_r2": 0.1259235352614149,
+        "private_nuisance_linear_r2": 0.28328225268487967
+      },
+      "private_sample_rank": [
+        1.8368399268101163,
+        1.8266383245645794
+      ],
+      "private_all_mean_rank": [
+        1.2332588145226293,
+        1.2347840123331568
+      ]
+    },
+    {
+      "task": "factorwise",
+      "arm": "leaky",
+      "nll": 1.3391830523808796,
+      "nll_by_seed": [
+        1.3486048936843873,
+        1.362373948097229,
+        1.3065703153610229
+      ],
+      "synthetic_bin_concordance": 0.6717272361119588,
+      "private_rate_nats_per_slot_mean": 0.6698964694514871,
+      "shared_directional_rate_mean": 0.025950077921152115,
+      "train_any_raw_threshold_exceedance_fraction": 0.15466666666666667,
+      "train_raw_active_slot_fraction": 0.05533333333333334,
+      "gradient_l2_max": 1.5433934891130652,
+      "mean_private_donor_nll_delta": 0.28368709882100424,
+      "mean_private_N0_nll_delta": 0.17325774828592935,
+      "sample": {
+        "factor_increment_over_G": 0.2566116452051222,
+        "factor_all_vs_single_gain": 0.03035860743321723,
+        "factor_all_vs_single_by_seed": [
+          0.05579780953037084,
+          0.003784646983525025,
+          0.031493365785755824
+        ],
+        "effect_increment_over_G": 0.2566116452051222,
+        "effect_all_vs_single_gain": 0.03035860743321723,
+        "raw_private_factor_increment": 0.24376702553785332,
+        "G_shared_linear_r2": 0.9543386792790157,
+        "G_factor_linear_r2": -0.028726000423586234,
+        "private_nuisance_linear_r2": -0.0614733563618172
+      },
+      "all_mean": {
+        "factor_increment_over_G": 0.4526037073708389,
+        "factor_all_vs_single_gain": 0.006672652346211945,
+        "factor_all_vs_single_by_seed": [
+          0.021813600850097748,
+          -0.0023480690142011753,
+          0.0005524252027392604
+        ],
+        "effect_increment_over_G": 0.4526037073708389,
+        "effect_all_vs_single_gain": 0.006672652346211945,
+        "raw_private_factor_increment": 0.534842771581012,
+        "G_shared_linear_r2": 0.999151823154301,
+        "G_factor_linear_r2": 0.12366120094204218,
+        "private_nuisance_linear_r2": 0.34803946324648694
+      },
+      "private_sample_rank": [
+        1.8404373436834123,
+        1.8341901402261036
+      ],
+      "private_all_mean_rank": [
+        1.281634125687676,
+        1.3533986519768562
+      ]
+    },
+    {
+      "task": "factorwise",
+      "arm": "continuous",
+      "nll": 1.3679146607716879,
+      "nll_by_seed": [
+        1.373455786705017,
+        1.3892056941986084,
+        1.341082501411438
+      ],
+      "synthetic_bin_concordance": 0.6354568600654602,
+      "private_rate_nats_per_slot_mean": 0.16330120641699372,
+      "shared_directional_rate_mean": 0.011382998277743658,
+      "train_any_raw_threshold_exceedance_fraction": 0.004666666666666667,
+      "train_raw_active_slot_fraction": 0.0023333333333333335,
+      "gradient_l2_max": 1.2899288886690767,
+      "mean_private_donor_nll_delta": 0.14052100181579594,
+      "mean_private_N0_nll_delta": 0.08685462474823002,
+      "sample": {
+        "factor_increment_over_G": 0.09504271664205644,
+        "factor_all_vs_single_gain": 0.020579745985786404,
+        "factor_all_vs_single_by_seed": [
+          0.014486016221938496,
+          0.01711694714571564,
+          0.030136274589705078
+        ],
+        "effect_increment_over_G": 0.09504271664205644,
+        "effect_all_vs_single_gain": 0.020579745985786404,
+        "raw_private_factor_increment": 0.06900543927717089,
+        "G_shared_linear_r2": 0.9718210144235488,
+        "G_factor_linear_r2": -0.02917561460381261,
+        "private_nuisance_linear_r2": -0.1135138612921837
+      },
+      "all_mean": {
+        "factor_increment_over_G": 0.30148047551509116,
+        "factor_all_vs_single_gain": 0.022505444170790787,
+        "factor_all_vs_single_by_seed": [
+          0.027314749475774405,
+          0.03393382571701831,
+          0.00626775731957965
+        ],
+        "effect_increment_over_G": 0.30148047551509116,
+        "effect_all_vs_single_gain": 0.022505444170790787,
+        "raw_private_factor_increment": 0.38966508903433666,
+        "G_shared_linear_r2": 0.9998544730966538,
+        "G_factor_linear_r2": 0.201996618973611,
+        "private_nuisance_linear_r2": 0.34027172718902376
+      },
+      "private_sample_rank": [
+        1.840413615554398,
+        1.8402589953722925
+      ],
+      "private_all_mean_rank": [
+        1.2058634719090986,
+        1.3726218336200207
+      ]
+    },
+    {
+      "task": "paired_xor",
+      "arm": "no_private_fee",
+      "nll": 1.4003143310546875,
+      "nll_by_seed": [
+        1.3907987117767333,
+        1.4051122903823852,
+        1.4050319910049438
+      ],
+      "synthetic_bin_concordance": 0.5281555692354838,
+      "private_rate_nats_per_slot_mean": 4.287580331166585,
+      "shared_directional_rate_mean": 0.00714575732126832,
+      "train_any_raw_threshold_exceedance_fraction": 0.9913333333333333,
+      "train_raw_active_slot_fraction": 0.9748333333333333,
+      "gradient_l2_max": 1.0800388023627998,
+      "mean_private_donor_nll_delta": 0.0017159382502238696,
+      "mean_private_N0_nll_delta": -0.021209692955016957,
+      "sample": {
+        "factor_increment_over_G": 0.014453472155398786,
+        "factor_all_vs_single_gain": 0.012700854081789965,
+        "factor_all_vs_single_by_seed": [
+          0.027030810434346735,
+          0.0,
+          0.01107175181102316
+        ],
+        "effect_increment_over_G": -0.0006717368411884349,
+        "effect_all_vs_single_gain": 0.0011210677967162866,
+        "raw_private_factor_increment": 0.013579927357599527,
+        "G_shared_linear_r2": 0.9763232408212722,
+        "G_factor_linear_r2": -0.029761313306326292,
+        "private_nuisance_linear_r2": -0.04416517762588423
+      },
+      "all_mean": {
+        "factor_increment_over_G": 0.15356316222673846,
+        "factor_all_vs_single_gain": -0.05627533736278302,
+        "factor_all_vs_single_by_seed": [
+          -0.14823948671480067,
+          -0.010880812306744923,
+          -0.009705713066803463
+        ],
+        "effect_increment_over_G": -0.0004830934843487702,
+        "effect_all_vs_single_gain": 0.0032005927620332407,
+        "raw_private_factor_increment": 0.268943541085154,
+        "G_shared_linear_r2": 0.9999358465284879,
+        "G_factor_linear_r2": 0.04192223434019778,
+        "private_nuisance_linear_r2": 0.5722190916931333
+      },
+      "private_sample_rank": [
+        1.688839633806046,
+        1.6903831694843245
+      ],
+      "private_all_mean_rank": [
+        1.0817916518591284,
+        1.1858295319823045
+      ]
+    },
+    {
+      "task": "paired_xor",
+      "arm": "flat",
+      "nll": 1.4066734790802002,
+      "nll_by_seed": [
+        1.395342803001404,
+        1.4060531377792358,
+        1.418624496459961
+      ],
+      "synthetic_bin_concordance": 0.5295833269755046,
+      "private_rate_nats_per_slot_mean": 0.6208407034476598,
+      "shared_directional_rate_mean": 0.006594906250635783,
+      "train_any_raw_threshold_exceedance_fraction": 0.028,
+      "train_raw_active_slot_fraction": 0.013666666666666667,
+      "gradient_l2_max": 1.3701915155103122,
+      "mean_private_donor_nll_delta": -0.0038906176884968926,
+      "mean_private_N0_nll_delta": -0.010321323076883937,
+      "sample": {
+        "factor_increment_over_G": 0.003110130928296227,
+        "factor_all_vs_single_gain": 0.0021246619590484517,
+        "factor_all_vs_single_by_seed": [
+          0.0056931467590447685,
+          0.0,
+          0.0006808391181005862
+        ],
+        "effect_increment_over_G": 0.00025576703047480633,
+        "effect_all_vs_single_gain": 0.0007347152773982267,
+        "raw_private_factor_increment": 0.003229351828830746,
+        "G_shared_linear_r2": 0.979946912465214,
+        "G_factor_linear_r2": -0.029526331356402997,
+        "private_nuisance_linear_r2": -0.08205578859161548
+      },
+      "all_mean": {
+        "factor_increment_over_G": 0.26927611980660576,
+        "factor_all_vs_single_gain": -0.06922996252760813,
+        "factor_all_vs_single_by_seed": [
+          -0.10855896682282547,
+          -0.06624257678969842,
+          -0.0328883439703005
+        ],
+        "effect_increment_over_G": 0.0002723924871617355,
+        "effect_all_vs_single_gain": -0.005705266358748349,
+        "raw_private_factor_increment": 0.48397254270229856,
+        "G_shared_linear_r2": 0.9999227994677148,
+        "G_factor_linear_r2": 0.03007904888162401,
+        "private_nuisance_linear_r2": 0.6726626531760372
+      },
+      "private_sample_rank": [
+        1.822462159539048,
+        1.8242950682133918
+      ],
+      "private_all_mean_rank": [
+        1.2241407031709959,
+        1.2046392465987603
+      ]
+    },
+    {
+      "task": "paired_xor",
+      "arm": "leaky",
+      "nll": 1.401015082995097,
+      "nll_by_seed": [
+        1.3825819730758666,
+        1.4065560102462769,
+        1.413907265663147
+      ],
+      "synthetic_bin_concordance": 0.5356598973274231,
+      "private_rate_nats_per_slot_mean": 0.10084990171405177,
+      "shared_directional_rate_mean": 0.004224719596095383,
+      "train_any_raw_threshold_exceedance_fraction": 0.004666666666666667,
+      "train_raw_active_slot_fraction": 0.0023333333333333335,
+      "gradient_l2_max": 0.8487293543009401,
+      "mean_private_donor_nll_delta": 0.00074627399444586,
+      "mean_private_N0_nll_delta": -0.00578742822011306,
+      "sample": {
+        "factor_increment_over_G": 0.005194217104842557,
+        "factor_all_vs_single_gain": 0.0048449461780749456,
+        "factor_all_vs_single_by_seed": [
+          0.0,
+          0.0,
+          0.014534838534224838
+        ],
+        "effect_increment_over_G": 0.0,
+        "effect_all_vs_single_gain": 0.0006106125942965238,
+        "raw_private_factor_increment": 0.001983754054984996,
+        "G_shared_linear_r2": 0.985908641475537,
+        "G_factor_linear_r2": -0.029158521474760207,
+        "private_nuisance_linear_r2": -0.1123868146541785
+      },
+      "all_mean": {
+        "factor_increment_over_G": 0.31719392673015,
+        "factor_all_vs_single_gain": -0.05635669292701765,
+        "factor_all_vs_single_by_seed": [
+          -0.1629561386574951,
+          -0.07963659306707606,
+          0.0735226529435182
+        ],
+        "effect_increment_over_G": 0.003921781843754521,
+        "effect_all_vs_single_gain": -0.012116685622837055,
+        "raw_private_factor_increment": 0.5786340110160249,
+        "G_shared_linear_r2": 0.9999745703046838,
+        "G_factor_linear_r2": 0.0463087514226462,
+        "private_nuisance_linear_r2": 0.734209835914814
+      },
+      "private_sample_rank": [
+        1.8308522635680187,
+        1.8384402761705667
+      ],
+      "private_all_mean_rank": [
+        1.2823585494454186,
+        1.3684794664199098
+      ]
+    },
+    {
+      "task": "paired_xor",
+      "arm": "continuous",
+      "nll": 1.3918007453282675,
+      "nll_by_seed": [
+        1.3837680578231812,
+        1.4068294763565063,
+        1.3848047018051148
+      ],
+      "synthetic_bin_concordance": 0.5354152441024781,
+      "private_rate_nats_per_slot_mean": 0.002461444314879676,
+      "shared_directional_rate_mean": 0.0023386662748331823,
+      "train_any_raw_threshold_exceedance_fraction": 0.004666666666666667,
+      "train_raw_active_slot_fraction": 0.0023333333333333335,
+      "gradient_l2_max": 0.8350361024987158,
+      "mean_private_donor_nll_delta": 0.0003087997436522401,
+      "mean_private_N0_nll_delta": -0.0004000186920167052,
+      "sample": {
+        "factor_increment_over_G": 0.00020377977237143302,
+        "factor_all_vs_single_gain": 0.00011177811316816662,
+        "factor_all_vs_single_by_seed": [
+          -0.0014025156718051345,
+          0.0,
+          0.0017378500113096344
+        ],
+        "effect_increment_over_G": 0.0,
+        "effect_all_vs_single_gain": 0.0003562301678399467,
+        "raw_private_factor_increment": -9.599698581469749e-05,
+        "G_shared_linear_r2": 0.9881350868304961,
+        "G_factor_linear_r2": -0.029610586043954685,
+        "private_nuisance_linear_r2": -0.12209603337509067
+      },
+      "all_mean": {
+        "factor_increment_over_G": 0.25319118719595235,
+        "factor_all_vs_single_gain": -0.027267215742068546,
+        "factor_all_vs_single_by_seed": [
+          -0.04294653759754697,
+          -0.026152303455223652,
+          -0.01270280617343502
+        ],
+        "effect_increment_over_G": 0.0,
+        "effect_all_vs_single_gain": 0.021889483376523907,
+        "raw_private_factor_increment": 0.39494789989800694,
+        "G_shared_linear_r2": 0.9999888742008424,
+        "G_factor_linear_r2": 0.04985019001559673,
+        "private_nuisance_linear_r2": 0.4951929373445789
+      },
+      "private_sample_rank": [
+        1.831692476020914,
+        1.8403593950507913
+      ],
+      "private_all_mean_rank": [
+        1.2617626820914096,
+        1.3720205434521562
+      ]
+    }
+  ],
+  "paired_nll_comparisons": [
+    {
+      "task": "factorwise",
+      "candidate": "leaky",
+      "reference": "no_private_fee",
+      "paired_nll_differences": [
+        0.03402996063232422,
+        0.03094017505645752,
+        0.058754801750183105
+      ],
+      "mean": 0.04124164581298828
+    },
+    {
+      "task": "factorwise",
+      "candidate": "continuous",
+      "reference": "no_private_fee",
+      "paired_nll_differences": [
+        0.058880853652953924,
+        0.057771921157836914,
+        0.09326698780059828
+      ],
+      "mean": 0.06997325420379637
+    },
+    {
+      "task": "factorwise",
+      "candidate": "leaky",
+      "reference": "flat",
+      "paired_nll_differences": [
+        -0.09896695613861084,
+        0.0033264636993408647,
+        -0.012886333465576216
+      ],
+      "mean": -0.03617560863494873
+    },
+    {
+      "task": "factorwise",
+      "candidate": "continuous",
+      "reference": "flat",
+      "paired_nll_differences": [
+        -0.07411606311798113,
+        0.03015820980072026,
+        0.021625852584838956
+      ],
+      "mean": -0.00744400024414064
+    },
+    {
+      "task": "paired_xor",
+      "candidate": "leaky",
+      "reference": "no_private_fee",
+      "paired_nll_differences": [
+        -0.0082167387008667,
+        0.0014437198638916904,
+        0.008875274658203258
+      ],
+      "mean": 0.0007007519404094165
+    },
+    {
+      "task": "paired_xor",
+      "candidate": "continuous",
+      "reference": "no_private_fee",
+      "paired_nll_differences": [
+        -0.0070306539535520685,
+        0.0017171859741211826,
+        -0.02022728919982897
+      ],
+      "mean": -0.00851358572641995
+    },
+    {
+      "task": "paired_xor",
+      "candidate": "leaky",
+      "reference": "flat",
+      "paired_nll_differences": [
+        -0.012760829925537287,
+        0.00050287246704106,
+        -0.004717230796813965
+      ],
+      "mean": -0.005658396085103397
+    },
+    {
+      "task": "paired_xor",
+      "candidate": "continuous",
+      "reference": "flat",
+      "paired_nll_differences": [
+        -0.011574745178222656,
+        0.0007763385772705522,
+        -0.03381979465484619
+      ],
+      "mean": -0.014872733751932765
+    }
+  ],
+  "new_neural_trainings": 24,
+  "core_updates": 12000,
+  "paired_task_seed_groups": 6,
+  "unique_initial_state_hashes": 3,
+  "parameters": [
+    7364
+  ],
+  "training_seconds_excluding_probes": 191.61200019999524,
+  "all_training_steps_finite": true,
+  "factor_instrument_gains": {
+    "role_placed": 0.5029619315651853,
+    "duplicate": 0.0,
+    "shuffled": 0.0007191395951463296
+  },
+  "effect_instrument_gains": {
+    "role_placed": 0.7722345125828232,
+    "duplicate": 0.0,
+    "shuffled": 0.009778250666380663
+  },
+  "cache_hashes_verified": 24,
+  "source_pins_verified": true,
+  "decision": "Do not promote the leaky or continuous private fee. No-fee preserves more factor content and has better factorwise NLL; stronger fees shrink actual sampled content and do not establish XOR cooperation. Retain lower raw rate as a trade-off, not success. No further eta scan.",
+  "limits": [
+    "Three paired composite data/training seeds; exploratory, no significance or noninferiority claim.",
+    "Observed-bin concordance is synthetic and may move differently from proper NLL.",
+    "Individual-factor recovery is coverage; XOR task effect relations are separately assessed after a disclosed protocol clarification.",
+    "Mean-mode probes do not establish information in actual stochastic readout.",
+    "No measured MI, biological slot identity, clinical adapter or patient benefit."
+  ],
+  "source_sha256": {
+    "scripts/summarize_private_rate_multifactor.py": "8df817b001581b05f7d3643a07a8456c0c0ea415ca298a0a56ea5cc17cf1f2d0"
+  },
+  "patient_execution": false,
+  "server_execution": false
+}

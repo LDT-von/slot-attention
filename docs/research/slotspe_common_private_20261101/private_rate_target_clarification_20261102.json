@@ -1,0 +1,11 @@
+{
+  "schema": "slotspe_private_rate_target_clarification_v1",
+  "recorded_at": "2026-11-02",
+  "timing": "Recorded after launching the locked neural run and before first inspecting any neural arm score; the only run output reviewed was the pre-training instrument gate. Completion time was not polled at the amendment timestamp, so this does not claim the run was still live or that the amendment preceded completion. Training source, plan, seeds, losses and original factor probes remain unchanged.",
+  "reason": "The four paired-XOR hazards are invariant to jointly flipping all four private bits. Individual factors are necessary given the other modality, but the hazard vector does not jointly identify all four bits. Factor recovery alone is therefore coverage, not task sufficiency.",
+  "addition": "After the unchanged run, also probe the four actual prognostic effects, using the existing frozen sample/all-mean features and unchanged validation-only probe selection. Factorwise effects are factors; paired-XOR effects are[-P0Q0,-P1Q1,-P0Q1,-P1Q0]. No new neural training or architecture selection.",
+  "instrument_gate": "For the added parity-effect target, role-placed true-factor codes must have whole-vs-single relative gain>.25, duplicate abs gain<1e-10 and independently shuffled parity targets abs gain<.05. Report failure without changing grid or labels.",
+  "reporting": "Retain original factor probes and all prediction scores, label added effect probes as a protocol clarification rather than original preregistration. Do not claim loss of individual-bit decoding implies lost prognostic information.",
+  "patient_execution": false,
+  "server_execution": false
+}
