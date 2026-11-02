@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-02T20:08:52.156826+08:00",
-  "base_commit_before_delivery": "a03a4fb2b4ccea3d9c234e4ef9ac130e604ff513",
+  "recorded_at": "2026-11-02T22:06:55.407695+08:00",
+  "base_commit_before_delivery": "f62c988e6bec9c5ea345b3dfbcce13c8bc2c87b4",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 664,
-  "repository_file_count_including_manifest": 665,
+  "covered_file_count": 666,
+  "repository_file_count_including_manifest": 667,
   "patient_data_included": false,
   "files": [
     {
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 740618,
-      "sha256": "63a6654424dd7451cd344472658e091d5bdc93fc1595cba2854a1c99c045ace4"
+      "bytes": 742233,
+      "sha256": "90b159276928b30e4daee9ea54ff23d0c6e2f0f0cccb309e5ff5b52f1bfce5e2"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -291,8 +291,13 @@
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/README.md",
-      "bytes": 2042,
-      "sha256": "a1014c6e8f82bcab6f2215271475e67acc586b2e4cd2b71883ecd81a8ac8403e"
+      "bytes": 2235,
+      "sha256": "b6b20259e3984cff012e469ee424fd8db070b6166415e7b36ed1cc675673f881"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/RESEARCH_RELEASE_20261102.md",
+      "bytes": 3451,
+      "sha256": "0a6805007d8687255740ebb23bb87aa2aae1e2eb347753acb006f21796d65741"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/SERVER_HANDOFF_20261102.md",
@@ -608,6 +613,11 @@
       "path": "docs/research/slotspe_common_private_20261101/research_decisions_20261101.md",
       "bytes": 5078,
       "sha256": "512c8f28753b50880fbe91ff35deaac2cc4cd8382a216732248eb9ca606c64a6"
+    },
+    {
+      "path": "docs/research/slotspe_common_private_20261101/research_release_validation.json",
+      "bytes": 1501,
+      "sha256": "27a71f862c0d7530d67a881cb2011078b31d5ca8c0e8e4fd0caf34c81af19dfc"
     },
     {
       "path": "docs/research/slotspe_common_private_20261101/role_readout_comparison_receipt.json",

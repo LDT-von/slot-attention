@@ -1,0 +1,30 @@
+{
+  "schema": "slotspe_research_release_validation_v1",
+  "date": "2026-11-02",
+  "route_task": "Push-only handoff of committed research snapshot",
+  "base_commit": "f62c988e6bec9c5ea345b3dfbcce13c8bc2c87b4",
+  "branch": "codex/common-private-research-release-20261102",
+  "completed_work": "Isolated clean publication checkout; preserved unfinished task-anchor drafts outside release; documented research versus patient readiness",
+  "checks_actual_execution_raw_receipt": {
+    "focused_tests": "35 passed in13.93s",
+    "test_files": [
+      "tests/test_crossmodal_shared_bottleneck.py",
+      "tests/test_prior_normalized_slots.py",
+      "tests/test_bounded_native_residual.py",
+      "tests/test_native_preservation_audit.py"
+    ],
+    "full_repository_tests_rerun": false,
+    "prior_public_file_hashes_verified": 662,
+    "protected_original_files": 11,
+    "synthetic_neural_training_runs": 0,
+    "optimizer_updates": 0,
+    "patient_training": 0,
+    "patient_inference": 0,
+    "patient_checkpoint_reads": 0,
+    "server_execution": false,
+    "queue_modified": false
+  },
+  "remote_branches_before_push": "both research branches0245876bdfa0e2f3d04b14eff54248dc1444e6f5; new release branch absent",
+  "gaps_reasons": "Research prototype only; common/private semantics, stable predictive benefit and patient adapter not complete",
+  "next_action_user_inputs": "Receive new release branch in separate checkout, review handoff; no patient execution command or scientific-completion claim"
+}
