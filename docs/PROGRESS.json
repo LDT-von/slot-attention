@@ -9408,5 +9408,192 @@
     },
     "gaps_reasons": "Two limits are measured and neither is a code defect. First, the exact replay of the historical XOR rows cannot complete on this Linux host: the historical receipts were produced on Windows with torch 2.6.0+cu124 and the initial weight hash differs here, so the replay assertion trips. A diagnostic that relaxed only that assertion showed the loss trace agreeing bit for bit through step 298 and diverging by about 1e-7 from step 299, which is floating point accumulation and not a code change; the published code was not modified and the diagnostic file was removed. Second, the release branch stores its replay paths with Windows separators, so check_slot_pooling_rate cannot resolve its upstream cache on Linux. The release branch also has no patient adapter for the new common-private network, so the patient smoke test used the original_audit queue that the branch still carries, and it says nothing about the new network. The same one epoch, 256 patches and two repeats remain far below the declared budget of 30, 4096 and 20, so the C-index near 0.73 describes a barely trained model and must not be compared with the completed baselines; nothing here bears on patient benefit, on correction efficacy or on the common-private research claims.",
     "next_action_user_inputs": "The release branch is accepted and its patient pipeline runs, so the open items are the two platform limits and the research gap the release document names. The Windows path separators should be normalized so the slot pooling rate check can run on Linux, and the exact replay needs either a Windows host or a documented tolerance instead of an equality assertion on the initial hash. The research gap itself is unchanged: the shared branch is learned from cross-content and distribution constraints and a joint survival loss does not guarantee that it carries prognostically relevant common information, so the task-relevant partition needs a mathematical and known-answer screen before any implementation. A patient stage for the new network still needs a data adapter, matched baselines, training-fold preprocessing and binning, checkpoint selection and separate authorization."
+  },
+  "latest_five_fold_scores_20261103": {
+    "recorded_at": "2026-11-03T14:20:00+08:00",
+    "route_task": "SlotSPE / five-fold score statistics for the anti-collapse queue against the same-protocol baseline, with the best score, the best mean score and the epoch at which the best mean occurs",
+    "user_steering": "User said that one more or one fewer epoch does not matter and asked for the five-fold score statistics, the best score, the best mean score and the epoch at which the best score occurs.",
+    "status": "the_five_fold_statistics_are_computed_and_published_under_both_evaluation_protocols_the_per_epoch_validation_protocol_covers_all_five_folds_of_every_arm_and_gives_the_best_mean_score_and_its_epoch_the_twenty_repeat_evaluation_protocol_is_the_queue_summary_protocol_and_covers_the_baseline_on_five_folds_but_the_anti_collapse_on_three_folds_only_because_the_evaluation_of_folds_3_and_4_never_ran_the_reading_is_that_the_mechanism_succeeded_and_the_survival_score_did_not_improve_no_training_no_inference_no_checkpoint_loaded",
+    "completed_work": "Wrote scripts/summarize_five_fold_scores.py, which recomputes every number from the stored artifacts and writes a public markdown and JSON document. Added tests/test_slotspe_five_fold_scores.py with eleven tests. Registered the two new files in the research index entry of the same folder. The two protocols are computed and reported separately because they are not interchangeable: the per-epoch protocol takes a maximum over about thirty validation passes and therefore reads higher than the twenty-repeat protocol on the same model, by about 0.005 on the baseline and by up to 0.035 on the anti-collapse arms.",
+    "paths_commit": {
+      "base_commit": "99a0bdb",
+      "new_commit_or_push": true,
+      "branch": "codex/common-private-survival",
+      "source_files_changed": [
+        "scripts/summarize_five_fold_scores.py (new)",
+        "tests/test_slotspe_five_fold_scores.py (new)",
+        "docs/research/slotspe_queue_results_20261102/five_fold_scores.md (new)",
+        "docs/research/slotspe_queue_results_20261102/five_fold_scores.json (new)",
+        "docs/research/INDEX.json (folder entry updated)",
+        "docs/PROGRESS.json (this entry)",
+        "DELIVERY_MANIFEST.json (refreshed)"
+      ],
+      "third_party_modified": false,
+      "queue_code_changed": false,
+      "patient_data_in_public_tree": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "patient_training_runs_started": 0,
+      "patient_inference": 0,
+      "checkpoints_loaded": 0,
+      "mode": "read-only aggregation of stored artifacts",
+      "summary_script_run": "python scripts/summarize_five_fold_scores.py completed",
+      "unit_tests": "tests/test_slotspe_five_fold_scores.py and tests/test_slotspe_queue_results_summary.py 21 passed",
+      "privacy_check": "the TCGA patient identifier pattern returns zero matches over the published markdown and JSON, and the JSON carries explicit false flags for patient_data_included, patient_identifiers_included and per_patient_arrays_included",
+      "per_epoch_validation_protocol": {
+        "coverage": "all five folds for every arm of the anti-collapse queue and of the baseline",
+        "definition": "the C-index of one validation pass per epoch; the epoch-wise mean averages the five folds on the same epoch and takes the maximum over the common epoch range, and the mean of the fold bests averages the five per-fold maxima",
+        "best_mean_score_and_epoch": {
+          "A0_clip": {
+            "best_mean": 0.6414,
+            "epoch": 6,
+            "common_epoch_range": "1..28",
+            "mean_of_fold_bests": 0.6946,
+            "fold_best_std": 0.0371,
+            "final_epoch_mean": 0.6167
+          },
+          "A1_clip_decay": {
+            "best_mean": 0.6597,
+            "epoch": 17,
+            "common_epoch_range": "1..28",
+            "mean_of_fold_bests": 0.7091,
+            "fold_best_std": 0.0263,
+            "final_epoch_mean": 0.6254
+          },
+          "S0_baseline": {
+            "best_mean": 0.6631,
+            "epoch": 4,
+            "common_epoch_range": "1..30",
+            "mean_of_fold_bests": 0.7004,
+            "fold_best_std": 0.0431,
+            "final_epoch_mean": 0.6116
+          },
+          "R4_baseline": {
+            "best_mean": 0.6697,
+            "epoch": 13,
+            "common_epoch_range": "1..30",
+            "mean_of_fold_bests": 0.709,
+            "fold_best_std": 0.0268,
+            "final_epoch_mean": 0.5988
+          },
+          "R3_baseline": {
+            "best_mean": 0.6677,
+            "epoch": 18,
+            "common_epoch_range": "1..30",
+            "mean_of_fold_bests": 0.7026,
+            "fold_best_std": 0.0239,
+            "final_epoch_mean": 0.6477
+          }
+        },
+        "per_fold_best_score_and_epoch": {
+          "A0_clip": {
+            "0": [
+              0.7417,
+              3
+            ],
+            "1": [
+              0.6523,
+              5
+            ],
+            "2": [
+              0.6525,
+              17
+            ],
+            "3": [
+              0.7279,
+              12
+            ],
+            "4": [
+              0.6984,
+              15
+            ]
+          },
+          "A1_clip_decay": {
+            "0": [
+              0.7124,
+              19
+            ],
+            "1": [
+              0.7191,
+              7
+            ],
+            "2": [
+              0.6645,
+              16
+            ],
+            "3": [
+              0.7038,
+              17
+            ],
+            "4": [
+              0.7456,
+              18
+            ]
+          }
+        }
+      },
+      "twenty_repeat_evaluation_protocol": {
+        "coverage": "five folds for the baseline, folds 0 to 2 only for the anti-collapse arms",
+        "values": {
+          "A0_clip": {
+            "mean": 0.6817,
+            "std": 0.0307,
+            "folds": [
+              0.7071,
+              0.6996,
+              0.6385
+            ]
+          },
+          "A1_clip_decay": {
+            "mean": 0.6918,
+            "std": 0.0215,
+            "folds": [
+              0.703,
+              0.7107,
+              0.6616
+            ]
+          },
+          "S0_baseline": {
+            "mean": 0.7039,
+            "std": 0.0411,
+            "folds": [
+              0.7485,
+              0.7492,
+              0.6422,
+              0.6997,
+              0.6798
+            ]
+          },
+          "R4_baseline": {
+            "mean": 0.7071,
+            "std": 0.0269,
+            "folds": [
+              0.717,
+              0.7549,
+              0.6968,
+              0.6813,
+              0.6857
+            ]
+          },
+          "R3_baseline": {
+            "mean": 0.6924,
+            "std": 0.0253,
+            "folds": [
+              0.6934,
+              0.7309,
+              0.6699,
+              0.6608,
+              0.7073
+            ]
+          }
+        }
+      },
+      "reading": "Under the per-epoch protocol the anti-collapse arm A1_clip_decay reaches a five-fold mean of the per-fold bests of 0.7091, which matches the baseline R4 at 0.7090, while A0_clip reaches 0.6946 against the baseline S0 at 0.7004. Under the queue summary protocol the anti-collapse arms score 0.6817 and 0.6918 against the same-protocol baseline 0.7133, 0.7229 and 0.6980 on the same three folds, so both anti-collapse arms are below the baseline. The mechanism succeeded and the survival score did not improve. The two protocols are reported side by side and are never mixed.",
+      "claim_boundary": "C-index inside two research queues on TCGA-BLCA. These are not patient benefit, not patient harm, not correction efficacy and not clinical utility. Twenty evaluation repeats are repeats of one trained model and not twenty independent trainings, so the fold spread contains no training randomness. Both queues carry the single seed 3, and the multi-arm comparison carries no multiplicity correction."
+    },
+    "gaps_reasons": "The anti-collapse folds 3 and 4 were interrupted at epoch 29 and 28 of 30 and their evaluation stage never ran, so those two folds have no retained checkpoint, no best.pt and no twenty-repeat evaluation. Their per-epoch validation values come from the epoch_validation.json written during training. The per-epoch protocol takes a maximum over about thirty validation passes and is an optimistic selection, so it must not be presented as the queue result. The previously recorded deletion oracle is negative, with one of eighteen comparisons above the permutation null bound against a random expectation of 2.25, and the collapsed baseline gives the same negative answer on the same probe. Nothing here establishes patient benefit, patient harm, correction efficacy, clinical utility or generalization to another cohort or cancer.",
+    "next_action_user_inputs": "The five-fold statistics the user asked for are now published. Two items remain open and neither blocks this stage. First, whether to rerun the two interrupted anti-collapse arms so that the twenty-repeat protocol covers all five folds, which needs explicit execution authorization and about four hours because no checkpoint survived the interruption and the training cannot resume. Second, the three open decisions of the common-private line in docs/research/slotspe_common_private_20261101/open_decisions.json. No new patient input is required to read any existing artifact."
   }
 }

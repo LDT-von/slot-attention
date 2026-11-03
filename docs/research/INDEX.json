@@ -476,11 +476,12 @@
       "folder": "slotspe_queue_results_20261102",
       "path": "docs/research/slotspe_queue_results_20261102",
       "group": "A",
-      "purpose": "两条授权队列的数据结果汇总：多样性队列已完成、反塌缩队列被launcher缺陷打断。",
-      "reading_boundary": "C-index与槽几何是队列内描述性数值；不含患者获益、损害或修正有效性证据，不构成临床效用。",
-      "file_count": 2,
-      "total_bytes": 80811,
+      "purpose": "两条授权队列的数据结果汇总，以及反塌缩队列的五折分数统计（逐轮验证与20次重复评估两套口径）。",
+      "reading_boundary": "C-index与槽几何是队列内描述性数值；不含患者获益、损害或修正有效性证据，不构成临床效用。两套评估口径不可混用。",
+      "file_count": 4,
+      "total_bytes": 145219,
       "readable_documents": [
+        "docs/research/slotspe_queue_results_20261102/five_fold_scores.md",
         "docs/research/slotspe_queue_results_20261102/results.md"
       ]
     }
