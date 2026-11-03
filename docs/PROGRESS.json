@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-11-03T22:55:00+08:00",
+  "recorded_at": "2026-11-03T23:59:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "S1 CPU tensor acceptance is complete and recorded: 14 of 14 authorized deferred tensor cases passed on CPU with torch 2.10.0+cu128, the receipt hashes for components/adapters.py and components/assembly.py were corrected as receipt staleness only, and no interface implementation change was needed. The assembled CommonPrivateSynergyModel was still never instantiated, so the next authorized step is the assembly-level CPU synthetic tensor test, followed by designing the new architecture's data adapter and minimal training entry point from the server data format, the original loader and the original training flow. Only the choices that genuinely affect patient identity, split identity, omics identity encoding, censoring or comparison conclusions are to be escalated. The immediate goal is one patient-data 1-epoch trial run for integration, numerical and training defect discovery and first diagnostics, explicitly NOT a fold result and NOT evidence of method validity; a concrete execution plan must be approved before any patient training or inference starts. The anti-collapse queue and live GPU state are to be re-checked at that point, and the actual patient lists plus the 5fold versus 5fold_uni2h correspondence must be verified rather than trusted from configuration names. Historical original results are background only and protocol-inconsistent scores must not be compared directly.",
+  "next_action": "The common-private assembly branch now has a working adapter and a minimal 1-epoch trial entry point at c97b292, verified on synthetic data only (74 of 74 deferred cases pass), with the new loss shown numerically equal to the original nll_loss at atol 1e-9 under the ORIGINAL censoring convention the user chose. The next action is the approved-plan 1-epoch patient trial on fold 0 / seed 3 over the 5fold cohort (303 train, 77 validation, 256 patches, batch size 8, 38 steps, strict task-only baseline, two evaluation repeats, final-epoch checkpoint, output in an ignored local_evidence child), which must not start until the user approves the plan. Immediately before it starts, re-check the anti-collapse queue and the live GPU state and re-verify the retained patient lists and the 5fold versus 5fold_uni2h correspondence instead of trusting the configuration name. The trial score is an integration and diagnostic signal only, never a fold result and never evidence of method validity; the historical original scores stay background because the architecture, parameter count, mask contract and omics tokenization all differ. The synthetic route also still needs the known-answer learning stage (shared, unique, XOR, mixed factors, noise, copy and nonlinear confound) before any ablation arm is queued.",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -9717,5 +9717,83 @@
     },
     "gaps_and_reasons": "CommonPrivateSynergyModel was instantiated 0 times. The assembled model path, forward(), encode_view(), objective(), the second-view pairing rule, the mask and shape validation and the task plus decur plus variance objective composition are all UNVERIFIED, even though components/assembly.py is one of the two files whose receipt hash was corrected. SummaryProjector was also never instantiated and the assembly-level integration of decur_losses was not exercised. The instrumentation that counted forwards and backwards was an out-of-repository read-only plugin that wrapped nn.Module.__call__ and Tensor.backward in memory; it did not modify the package under test and did not enter the repository. The new architecture still has no training loop, no optimizer, no data adapter, no split logic, no checkpoint selection and no evaluation entry point, and third_party/SlotSPE in this snapshot does not even contain the survival.py that scripts/SlotSPE.sh invokes, so no fold can currently be run for the new architecture. Passing synthetic tensor tests is NOT evidence of patient performance, patient benefit, correction efficacy, PID identification or novelty.",
     "next_action_user_inputs": "The next stage is an assembly-level CPU synthetic tensor test that instantiates CommonPrivateSynergyModel and covers forward, second-view pairing, mask and shape validation, the loss composition, disabled-term skipping and gradient flow; the user authorized this and it must not touch patient data. After that, the data adapter and a minimal training entry point for the new architecture are to be designed from the server data format, the original loader and the original training flow, with only the genuinely undetermined choices that affect patient identity, split identity, omics identity encoding, censoring or comparison conclusions to be escalated to the user. The immediate goal is one patient-data 1-epoch trial run of the new architecture for integration, numerical and training defect discovery and first diagnostics; it must not be presented as a fold result or as evidence of method validity, and a concrete execution plan covering the actual data and split sources, patient pairing, train and validation scope, loss switches, resource budget, metrics and output location is to be approved by the user before any patient training or inference starts. The anti-collapse queue and the live GPU state are to be re-checked at that point to avoid a conflict, and the actual patient lists plus the 5fold versus 5fold_uni2h correspondence must be verified rather than trusted from configuration names. Historical original results are background only and protocol-inconsistent scores must not be compared directly."
+  },
+  "latest_common_private_adapter_and_trial_design_20261103": {
+    "recorded_at": "2026-11-03T23:59:00+08:00",
+    "route_task": "SlotSPE / design the new architecture's data adapter and minimal training entry point, then prepare the 1-epoch patient trial plan",
+    "status": "adapter_and_trial_entry_implemented_synthetic_verified_patient_trial_not_started_pending_approval",
+    "completed_work": "Read the server data format, the original loader (third_party/SlotSPE/dataset/dataset_survival.py), the original training flow (slotspe_proof/patient.py run_pair) and the original loss (third_party/SlotSPE/utils/loss_func.py nll_loss), then implemented research_models/common_private_synergy/training/adapter.py and training/trial.py on the assembly branch codex/common-private-assembly-20261103 at c97b292. The adapter converts the already prepared original-queue cache into the token, mask and label form the assembled model requires; the trial entry point offers --plan, --doctor and --run, where only --run executes. Every conversion rule is stated in the adapter docstring so it can be checked against the sources. All new code was exercised against a generated fake cache only: 74 of 74 deferred cases pass and the static contract regression still passes 22. The synthetic end-to-end test caught a real defect before any patient tensor was touched: np.seed was used instead of np.random.seed, and NumPy 2.x removed np.seed, so the first training batch would have failed. The user chose the ORIGINAL censoring convention, so deferred_checks/test_loss_equivalence.py imports the original third_party nll_loss read-only by path and verifies the new loss is numerically equal to it at atol 1e-9 for event rows, censored rows and a mixed batch. The user also chose pathway-level omics tokens with an explicit one-hot identity block, which satisfies the FeatureTokenSchema identity_encoding contract; no change was needed because that was already the implementation.",
+    "paths_commit": {
+      "branch": "codex/common-private-assembly-20261103",
+      "commits_this_stage": [
+        "b971252 S1 receipt correction",
+        "91c438f assembly-level tensor acceptance",
+        "c97b292 adapter and 1-epoch trial entry point"
+      ],
+      "worktree": "/data1/slotspe-cp-assembly-20261103",
+      "files_added": [
+        "research_models/common_private_synergy/training/__init__.py",
+        "research_models/common_private_synergy/training/adapter.py",
+        "research_models/common_private_synergy/training/trial.py",
+        "research_models/common_private_synergy/deferred_checks/test_adapter_synthetic.py",
+        "research_models/common_private_synergy/deferred_checks/test_loss_equivalence.py",
+        "research_models/common_private_synergy/deferred_checks/test_trial_synthetic.py"
+      ],
+      "files_modified": [
+        "research_models/common_private_synergy/validation_receipt.json"
+      ],
+      "components_modified": false,
+      "third_party_modified": false,
+      "new_commit_or_push": "committed locally; NOT pushed"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "patient_training_runs_started": 0,
+      "patient_inference_runs": 0,
+      "patient_data_read": false,
+      "patient_checkpoints_loaded": false,
+      "optimizer_steps": 0,
+      "model_initializations": 34,
+      "component_forward_calls": 3863,
+      "component_backward_calls": 14,
+      "cuda_available_during_run": false,
+      "cuda_device_count": 0,
+      "environment": {
+        "python": "3.12.4",
+        "torch": "2.10.0+cu128",
+        "pytest": "7.4.4",
+        "interpreter": "/data1/SlotSPE/.venv_slot_spe/bin/python",
+        "device": "cpu for all synthetic execution",
+        "platform": "Linux-5.4.0-218-generic-x86_64",
+        "cpu": "QEMU Virtual CPU version 2.5+, 16 vCPU"
+      },
+      "pytest_result": {
+        "deferred_cases_passed": 74,
+        "deferred_cases_failed": 0,
+        "static_contract_regression": "22 passed, torch_imported false"
+      },
+      "loss_equivalence_result": {
+        "original_loss_imported": "third_party/SlotSPE/utils/loss_func.py, read-only by path, never edited",
+        "event_rows": "equal at atol 1e-9",
+        "censored_rows": "equal at atol 1e-9",
+        "mixed_batch": "equal at atol 1e-9",
+        "convention": "event bin y -> completed_intervals=y with event=True; censored bin y -> completed_intervals=y+1 with event=False"
+      },
+      "verified_specifications": {
+        "split_identity": "5fold, NOT the configured 5fold_uni2h. The prepared manifest records split_csv=/data1/dataset_csv/splits/5fold/blca/fold_0.csv; the retained 77 validation patients equal the 5fold list exactly, while 5fold_uni2h has 76 and shares only 15. The trial inherits 5fold.",
+        "patient_pairing": "one patient per row in the prepared complete-case order; train 303, val 77, overlap 0, 1 excluded for a missing clinical endpoint or wsi string.",
+        "patch_budget_and_padding": "min(budget, available) real patches drawn without replacement and zero-padded up to the budget, reproducing dataset_survival.py lines 285-292; the padded tail is passed through an explicit wsi_mask so the model excludes it, which the original loader could not do.",
+        "omics_identity": "pathway level, 329 pathways, gene widths 1 to 195; a token is the pathway gene vector zero-padded to 195 concatenated with a 329-wide one-hot pathway identity block; token width 524.",
+        "time_bins": "quartile edges fitted on the training fold uncensored complete cases only, then applied unchanged to validation: -inf, 8.087582602, 15.12312194, 21.40250518, inf.",
+        "training_protocol": "Adam lr 5e-4, no weight decay, no gradient clipping, CosineAnnealingLR T_max=epochs eta_min=1e-6, per-epoch seeded batch permutation, per-batch seed schedule, fixed evaluation patch subset, final-epoch checkpoint with no validation selection; inherited from the accepted original-audit queue.",
+        "gpu_state_at_design_time": "two RTX 5090, both idle at 0 percent with 15 MiB used, no compute process; the anti-collapse queue was not running locally, so there is no conflict at design time."
+      },
+      "patient_performance_evidence": false,
+      "patient_predictive_harm_established": false,
+      "correction_efficacy_established": false
+    },
+    "gaps_and_reasons": "The adapter and the trial entry point were exercised only against a generated fake cache of 12 synthetic patients, so the real 4096-patch budget, the real 1536-dim patch embeddings, the real 329x524 omics tokens and the real 303/77 cohort have never passed through the training loop. sksurv was not exercised in the synthetic run because the fake cohort has too few outcome pairs, so the concordance metric path is unverified. No GPU execution of the new architecture has happened. The adapter reads the prepared cache of the accepted original queue; it does not extract features, build splits or select checkpoints, and it does not create a new split identity.",
+    "next_action_user_inputs": "A concrete 1-epoch trial execution plan is prepared and awaits approval: fold 0, seed 3, the 5fold cohort of 303 training and 77 validation patients, 256 patches, batch size 8, 38 optimizer steps, a strict task-only baseline with every auxiliary weight at zero, two evaluation repeats on a fixed patch subset, a final-epoch checkpoint with no validation selection, and output under an ignored local_evidence child. Before the run starts, the anti-collapse queue and the live GPU state are to be re-checked, and the retained patient lists plus the 5fold versus 5fold_uni2h correspondence are to be re-verified rather than trusted from the configuration name. The trial score must be reported as an integration and diagnostic signal only, never as a fold result or as evidence of method validity, and the historical original scores remain background only because the architecture, parameter count, mask contract and omics tokenization all differ."
   }
 }
