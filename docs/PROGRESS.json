@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-30T18:00:00+08:00",
+  "recorded_at": "2026-11-03T22:55:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -73,7 +73,7 @@
   "patient_effect_or_abc_efficacy": "not_established",
   "server_raw_results_received": false,
   "historical_local_artifacts": "Copied to ignored local_evidence; not new server evidence",
-  "next_action": "Server: produce an independent raw reuse-audit receipt for SCM/SRO, because the audit reported so far was executed locally and has no server receipt. Anti-collapse: the queue is still in its prepare stage with 0 of 10 planned runs completed and two earlier abandoned attempts, so there is no anti-collapse result to reconcile yet; wait for it and do not start SCM/SRO while the GPU is busy. V2 cross-view: it has already run at full budget on fold0/seed3; repeat it on two more folds and a second seed, and treat V2_crossview_compute as a bit-identical duplicate of V2_separate rather than an independent control. All three lines share the 5fold cohort, but the cross-view run used fixed_final_epoch checkpointing while SCM/SRO uses per-epoch best-checkpoint selection, so C-index must not be compared across those two families without accounting for the selection rule. Only one session may write docs/PROGRESS.json and DELIVERY_MANIFEST.json at a time, and the manifest must be verified on a clean checkout.",
+  "next_action": "S1 CPU tensor acceptance is complete and recorded: 14 of 14 authorized deferred tensor cases passed on CPU with torch 2.10.0+cu128, the receipt hashes for components/adapters.py and components/assembly.py were corrected as receipt staleness only, and no interface implementation change was needed. The assembled CommonPrivateSynergyModel was still never instantiated, so the next authorized step is the assembly-level CPU synthetic tensor test, followed by designing the new architecture's data adapter and minimal training entry point from the server data format, the original loader and the original training flow. Only the choices that genuinely affect patient identity, split identity, omics identity encoding, censoring or comparison conclusions are to be escalated. The immediate goal is one patient-data 1-epoch trial run for integration, numerical and training defect discovery and first diagnostics, explicitly NOT a fold result and NOT evidence of method validity; a concrete execution plan must be approved before any patient training or inference starts. The anti-collapse queue and live GPU state are to be re-checked at that point, and the actual patient lists plus the 5fold versus 5fold_uni2h correspondence must be verified rather than trusted from configuration names. Historical original results are background only and protocol-inconsistent scores must not be compared directly.",
   "git_remote": "https://github.com/LDT-von/slot-attention.git",
   "latest_source_review": {
     "recorded_at": "2026-10-20T17:43:31+08:00",
@@ -9645,5 +9645,77 @@
     },
     "gaps_reasons": "The branch cannot run one epoch and the gap is structural rather than a missing line of code. There is no dataset, no training loop, no optimizer, no checkpointing and no evaluation entry point, and no adapter that turns real features into the tokenized inputs the model requires. Seven blockers are declared unresolved in architecture_spec.json: the actual omics type and identity tokenizer, the feature schema and dimensions, the patient alignment adapter, the view to feature adapter, the effective independent patient batch, the time bin boundaries and mapping, and the empty-role SSL adapter. On the omics side specifically, the new contract rejects a scalar bag with no identity, while the original queue feeds 329 pathway values per patient that the original model encodes through one separate SNN_Block per pathway; an adapter must decide how pathway identity becomes token identity, and that decision is not in this branch. On the time bins, the original queue already produced train-fitted quartile edges for fold 0, but the new loss needs a completed-interval convention that the original time_bin does not provide, so the mapping is still undefined. The independent patient batch is unknown, and the correlation contract needs at least 8 patients with a joint rank bound of 6, which cannot be checked against a real batch here. The deferred tensor checks, 13 tests that would exercise forward and backward, remain unexecuted by design, so tensor and gradient correctness is not established. Separately, the 8:0 and 0:8 ratio controls have no SSL adapter, so those arms cannot use the auxiliary terms, and the interaction arm still needs an active-capacity-matched additive control. The receipt hash mismatch above is an evidence-chain defect in the delivery, not a functional defect: both files compile and the adapters file is exercised by the passing contract tests. Nothing here bears on patient performance, patient benefit, correction efficacy, PID identification or novelty, and the static checks cannot show that the implementation is correct.",
     "next_action_user_inputs": "Accepting this branch as a design snapshot is the right scope; the next work is not another check but the adapter specification, which needs decisions that only the user or the queue owner can supply. Concretely, before any patient stage the following inputs are required: the omics input type and how gene or pathway identity is encoded into tokens, the confirmed token widths and counts for both modalities, the patient pairing and multi-slide merge rule, the split and fold assignment, the pad and token budget behaviour, the effective independent patient batch size, and the time bin boundaries together with the continuous-time to completed-interval mapping including the boundary convention. The smallest executable next step, if and only if it is authorized separately, is the S1 stage the architecture document already describes: run the 13 deferred CPU tensor checks to verify NLL arithmetic, gradient and finite-difference behaviour, padding invariance, role permutation, empty-role handling, lazy skipping of disabled terms and the additive finite-difference zero. That stage still touches no patient data and starts no training, but it does require torch forward and backward, which this delivery explicitly did not authorize. The historical interface of the original SlotSPE modules, including the per-pathway SNN_Block, may be referenced read-only from third_party and must not be edited."
+  },
+  "latest_s1_tensor_acceptance_20261103": {
+    "recorded_at": "2026-11-03T22:55:00+08:00",
+    "route_task": "SlotSPE / S1 CPU tensor interface acceptance of the assembly branch codex/common-private-assembly-20261103, plus PROGRESS registration",
+    "status": "s1_tensor_acceptance_passed_assembly_model_still_uninstantiated",
+    "completed_work": "Executed ONLY the two deferred CPU tensor test files of the assembly branch: research_models/common_private_synergy/deferred_checks/test_losses_tensor.py (8 cases) and deferred_checks/test_parts_tensor.py (5 functions, 6 parametrized cases), 14 cases total, all passing. Ran them under the repository venv /data1/SlotSPE/.venv_slot_spe/bin/python (Python 3.12.4, torch 2.10.0+cu128, pytest 7.4.4) with CUDA_VISIBLE_DEVICES set to the empty string, so CUDA was unavailable and uninitialised for the whole run. The covered checks were: discrete-hazard NLL hand-computation over the completed-interval convention; refusal to silently coerce float labels and out-of-horizon intervals; lazy skipping of disabled auxiliary terms; a diagnostic instead of an exception for constant features; the joint-rank guard being stricter than each single matrix; refusal to treat duplicated patient keys as independent patients; an orthogonal known-answer and normalisation check; exact-collapse zero gradient in the variance floor; the real-mask attention contract with NaN-contaminated padding invariance; the empty-role inactive contract at 0 and 8 slots; pool permutation invariance with gradient paths to every slot; the additive four-corner finite difference with the interaction branch disabled and no cross gradient; and state_dict replay equality. No patient data was read, no training was started, no server queue was touched, and nothing under third_party/SlotSPE was modified. Before running the tests, the SHA256 receipt entries for components/adapters.py and components/assembly.py were corrected: the receipt had been stamped against the pre-commit working copy, while the checkout is now the commit state, so this was receipt staleness and not a functional defect. No interface implementation change was required and none was made. The receipt was also made self-consistent: the 20 recorded source hashes now all match, the static-stage values were preserved under a new static_stage key instead of being overwritten, the top-level checks now report the current tensor stage, and the limits were rewritten so that they no longer claim tensor correctness is unverified while still stating that the assembled model was never instantiated and that nothing here bears on patient performance.",
+    "paths_commit": {
+      "branch": "codex/common-private-assembly-20261103",
+      "commit_under_test": "d6b092a74bc196ef12463fab361886605743ddea",
+      "worktree": "/data1/slotspe-cp-assembly-20261103",
+      "remote_head_verified_equal": true,
+      "files_modified_in_this_stage": [
+        "research_models/common_private_synergy/validation_receipt.json"
+      ],
+      "third_party_modified": false,
+      "assembly_components_modified": false,
+      "deferred_test_files_modified": false,
+      "new_commit_or_push": "pending_user_review_of_proposed_file_list"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "patient_training_runs_started": 0,
+      "patient_inference_runs": 0,
+      "patient_data_read": false,
+      "patient_checkpoints_loaded": false,
+      "optimizer_steps": 0,
+      "model_initializations": 0,
+      "assembly_level_model_instantiations": 0,
+      "component_forward_calls": 211,
+      "component_backward_calls": 2,
+      "cuda_available_during_run": false,
+      "cuda_device_count": 0,
+      "cuda_init_calls": 0,
+      "environment": {
+        "python": "3.12.4",
+        "torch": "2.10.0+cu128",
+        "pytest": "7.4.4",
+        "interpreter": "/data1/SlotSPE/.venv_slot_spe/bin/python",
+        "device": "cpu (forced by CUDA_VISIBLE_DEVICES=\"\")",
+        "platform": "Linux-5.4.0-218-generic-x86_64, glibc 2.31",
+        "cpu": "QEMU Virtual CPU version 2.5+, 16 vCPU, 4 sockets x 4 cores, 1 thread per core"
+      },
+      "pytest_result": {
+        "command": "CUDA_VISIBLE_DEVICES=\"\" /data1/SlotSPE/.venv_slot_spe/bin/python -B -m pytest -v -p no:cacheprovider research_models/common_private_synergy/deferred_checks/test_losses_tensor.py research_models/common_private_synergy/deferred_checks/test_parts_tensor.py",
+        "passed": 14,
+        "failed": 0,
+        "errors": 0,
+        "duration_seconds": 1.49,
+        "static_contract_regression": "checks/run_static.py still 22 passed, torch_imported false"
+      },
+      "hash_verification": {
+        "receipt_entries": 20,
+        "receipt_mismatches_after_fix": 0,
+        "receipt_self_sha256": "756a6697128389e324e073ada0c25d35a73c0418d193eabf62348e2e85fe2039",
+        "receipt_head_sha256": "c69f0ebdb57b28ce0b86ababc744e7fd1fa16bd0940b8df7fdf5c2e47b1b93ea",
+        "remote_head_sha256": "c69f0ebdb57b28ce0b86ababc744e7fd1fa16bd0940b8df7fdf5c2e47b1b93ea",
+        "components_adapters_sha256_before": "c9ad1af761a18c5049195d879a7bc6f7933a663ae745a4f91c3eb8ce55cb60a9",
+        "components_adapters_sha256_after": "fdeb54970fb4a343747b1f904f1e7d5a5ab610e7bc423da050b40fa142cc2ecc",
+        "components_assembly_sha256_before": "685b6ff167c6dbf87091bbab2cface72011e45c843bfde56202a67d5e6a0196d",
+        "components_assembly_sha256_after": "d489a42f631e680def55e08f303d493dad04af87f1606ed14ce3b23ece689879",
+        "protected_original_files_matching_main_worktree": "10 of 10",
+        "third_party_git_tree": "988aaaf37904dda3",
+        "third_party_git_tree_main_worktree": "988aaaf37904dda3",
+        "third_party_git_tree_equal": true
+      },
+      "patient_performance_evidence": false,
+      "patient_predictive_harm_established": false,
+      "correction_efficacy_established": false
+    },
+    "gaps_and_reasons": "CommonPrivateSynergyModel was instantiated 0 times. The assembled model path, forward(), encode_view(), objective(), the second-view pairing rule, the mask and shape validation and the task plus decur plus variance objective composition are all UNVERIFIED, even though components/assembly.py is one of the two files whose receipt hash was corrected. SummaryProjector was also never instantiated and the assembly-level integration of decur_losses was not exercised. The instrumentation that counted forwards and backwards was an out-of-repository read-only plugin that wrapped nn.Module.__call__ and Tensor.backward in memory; it did not modify the package under test and did not enter the repository. The new architecture still has no training loop, no optimizer, no data adapter, no split logic, no checkpoint selection and no evaluation entry point, and third_party/SlotSPE in this snapshot does not even contain the survival.py that scripts/SlotSPE.sh invokes, so no fold can currently be run for the new architecture. Passing synthetic tensor tests is NOT evidence of patient performance, patient benefit, correction efficacy, PID identification or novelty.",
+    "next_action_user_inputs": "The next stage is an assembly-level CPU synthetic tensor test that instantiates CommonPrivateSynergyModel and covers forward, second-view pairing, mask and shape validation, the loss composition, disabled-term skipping and gradient flow; the user authorized this and it must not touch patient data. After that, the data adapter and a minimal training entry point for the new architecture are to be designed from the server data format, the original loader and the original training flow, with only the genuinely undetermined choices that affect patient identity, split identity, omics identity encoding, censoring or comparison conclusions to be escalated to the user. The immediate goal is one patient-data 1-epoch trial run of the new architecture for integration, numerical and training defect discovery and first diagnostics; it must not be presented as a fold result or as evidence of method validity, and a concrete execution plan covering the actual data and split sources, patient pairing, train and validation scope, loss switches, resource budget, metrics and output location is to be approved by the user before any patient training or inference starts. The anti-collapse queue and the live GPU state are to be re-checked at that point to avoid a conflict, and the actual patient lists plus the 5fold versus 5fold_uni2h correspondence must be verified rather than trusted from configuration names. Historical original results are background only and protocol-inconsistent scores must not be compared directly."
   }
 }
