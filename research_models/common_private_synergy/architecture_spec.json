@@ -1,0 +1,21 @@
+{
+  "schema": "common_private_synergy_parts_v1",
+  "kind": "design_only_not_training_config",
+  "proposed_roles": {"slots_per_modality": 8, "common": 7, "private": 1},
+  "source_rules": {
+    "private_reads_only_own_modality": true,
+    "two_views_share_modality_encoder": true,
+    "nonlinear_fused_G_in_additive_path": false,
+    "all_slot_pooling": "phi_then_mean_with_empty_role_zero",
+    "interaction": "separate_bias_free_low_rank_bilinear_logits",
+    "pid_estimator": null
+  },
+  "baseline": {"interaction": false, "ssl_weights": [0, 0, 0, 0], "common_aux_weight": 0, "variance_weight": 0},
+  "example_correlation_contract": {"role_projection_dim": 2, "min_independent_patients": 8, "intra_max_projection_dim": 4, "joint_necessary_rank": 6, "reliability_validated": false},
+  "labels": {"event_type": "bool", "completed_intervals_type": "int64", "censored_count": "fully observed event-free intervals", "bins_fit_partition": "train_only"},
+  "assembly": {"module": "research_models/common_private_synergy/components/assembly.py", "model": "CommonPrivateSynergyModel", "objective_weights": "ObjectiveWeights", "construction": "build_model", "execution": "source_only_compiled"},
+  "adapter_contract": {"module": "research_models/common_private_synergy/components/adapters.py", "schemas": ["FeatureTokenSchema", "PatientPairContract", "TimeBinContract", "AdapterContract"], "execution": "metadata_only"},
+  "unresolved_before_assembly": ["actual_omics_type_and_identity_tokenizer", "feature_schema_and_dimensions", "patient_alignment_adapter", "view_to_feature_adapter", "effective_independent_patient_batch", "time_bin_boundaries_and_mapping", "empty_role_SSL_adapter"],
+  "deferred_ablation_parts": ["SRO", "SCM", "R4", "within_patient_slot_collapse_diagnostics", "active_capacity_matched_additive_head"],
+  "execution_authorization_this_stage": {"stdlib_contract_tests": true, "source_compile_without_execution": true, "torch_import": false, "neural_forward_backward": false, "training": false, "patient_processing": false, "server": false}
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "common_private_synergy_static_receipt_v1",
+  "date": "2026-11-03",
+  "command": "python -B research_models/common_private_synergy/checks/run_static.py",
+  "checks": {
+    "distinct_stdlib_tests_passed": 22,
+    "compiled_only_components": 8,
+    "compiled_only_deferred_test_files": 2,
+    "torch_imported": false,
+    "tensor_tests_executed": 0,
+    "model_initializations": 0,
+    "model_forward_backward": 0,
+    "optimizer_steps": 0,
+    "patient_data_access": 0,
+    "server_execution": false,
+    "protected_original_hashes_matched": 11
+  },
+  "limits": [
+    "Tensor and gradient correctness NOT verified",
+    "Assembly and adapter interfaces are source-compiled/metadata-only; no model initialization or forward/backward execution",
+    "No patient efficacy, PID identification or novelty validation",
+    "Root DELIVERY_MANIFEST.json was preexisting dirty and not refreshed; this receipt covers only this directory"
+  ],
+  "source_sha256_excluding_this_receipt": {
+    "ARCHITECTURE.md": "42c4a3673babd7c99d92f662227666bd03eec2312a418d480be503ef2b929ba6",
+    "architecture_spec.json": "f19911ec85eddc361739040c584290cf2f5cc651402bca737f2d5266ba860eb6",
+    "checks/run_static.py": "2e8be4e3b238613c5e21f3465b440e7339f3b08000f2bbda613273ecba9d0218",
+    "checks/test_adapters_contract.py": "c216308437047d1bc2f2eecb6a52a13375915351146f4f1be964f26cb12c6cfd",
+    "checks/test_math_contracts.py": "6fb14dbf313fc7694e29f9beb13f7ed98cd3d2284d3e0b3e14c116f71289ec75",
+    "checks/test_views_contract.py": "0678c5a0c6cbbbda20fa0a731210f36aff7f40ca11029a263da72bcd8ccdbac1",
+    "components/__init__.py": "b608311be9c07e919d029f03a1bb4424e28a341af765b6214f37771eec8d2ac5",
+    "components/adapters.py": "c9ad1af761a18c5049195d879a7bc6f7933a663ae745a4f91c3eb8ce55cb60a9",
+    "components/assembly.py": "685b6ff167c6dbf87091bbab2cface72011e45c843bfde56202a67d5e6a0196d",
+    "components/contracts.py": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee",
+    "components/losses.py": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2",
+    "components/readout.py": "35d696200ea70920637840e10a6cf23e2877ec2e866ff34e9c9a3ffc86981236",
+    "components/slots.py": "cbf38473b4379d0e9e3e43cadb085a4d4d89d7cb96010a942792d7872df7156e",
+    "components/views.py": "329257812fcccaba35106f3e048f55cffdfbd3fda6e37e51b40412a35da5ebb6",
+    "deferred_checks/test_losses_tensor.py": "d04d80cc7518adc9a27a66b80af483530d243aa05eed0ee42ceae096e94452f6",
+    "deferred_checks/test_parts_tensor.py": "047702b94a64722a06b22a9e643af37763997ed51ca9cf939b33e3567d4c9086",
+    "HANDOFF.md": "635df0a233c88d873b95fe6a926cef50f8a4d43e954ebe56e689f04311d275fa",
+    "model.py": "737367f53eb700326536701a9d7a26e1fe4f2e39faf6c59af1a8aacbfd9e345b",
+    "README.md": "8f1f6c29cdd529f5faded8457c63e15dce465a5c79c822737b30a6c80b407433",
+    "tests/test_model.py": "a844f58a8f61c4f88c791886f6544eb8c3f7ba61a6c50dd7bbc4f5cfdd4c75db"
+  }
+}
