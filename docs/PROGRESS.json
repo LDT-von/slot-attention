@@ -9595,5 +9595,55 @@
     },
     "gaps_reasons": "The anti-collapse folds 3 and 4 were interrupted at epoch 29 and 28 of 30 and their evaluation stage never ran, so those two folds have no retained checkpoint, no best.pt and no twenty-repeat evaluation. Their per-epoch validation values come from the epoch_validation.json written during training. The per-epoch protocol takes a maximum over about thirty validation passes and is an optimistic selection, so it must not be presented as the queue result. The previously recorded deletion oracle is negative, with one of eighteen comparisons above the permutation null bound against a random expectation of 2.25, and the collapsed baseline gives the same negative answer on the same probe. Nothing here establishes patient benefit, patient harm, correction efficacy, clinical utility or generalization to another cohort or cancer.",
     "next_action_user_inputs": "The five-fold statistics the user asked for are now published. Two items remain open and neither blocks this stage. First, whether to rerun the two interrupted anti-collapse arms so that the twenty-repeat protocol covers all five folds, which needs explicit execution authorization and about four hours because no checkpoint survived the interruption and the training cannot resume. Second, the three open decisions of the common-private line in docs/research/slotspe_common_private_20261101/open_decisions.json. No new patient input is required to read any existing artifact."
+  },
+  "latest_assembly_branch_doctor_20261103": {
+    "recorded_at": "2026-11-03T18:40:00+08:00",
+    "route_task": "SlotSPE / read-only doctor acceptance of the pushed assembly branch codex/common-private-assembly-20261103",
+    "status": "accepted_as_source_only_design_snapshot_static_checks_passed_not_runnable_one_epoch",
+    "completed_work": "Fetched the branch and confirmed the remote head at d6b092a74bc196ef12463fab361886605743ddea. Checked it out in a detached worktree at /data1/slotspe-cp-assembly-20261103 so the existing checkout and any running queue directories stayed untouched. Read README.md, ARCHITECTURE.md, HANDOFF.md, architecture_spec.json, validation_receipt.json and the seven component files. Ran only the static check the handoff names, python -B research_models/common_private_synergy/checks/run_static.py, which compiled the eight components and the two deferred tensor-test files without executing them and ran 22 distinct standard-library tests, all passing, with torch_imported false, model_forward_backward 0 and optimizer_steps 0. Searched the directory for datasets, training loops, optimizers, checkpointing, evaluation entry points and any file or feature reading, and found none. Cross-checked the unstated schema facts against the already accepted original queue manifest to see which adapter blockers could be answered from existing evidence and which genuinely remain open. Verified that third_party/SlotSPE is byte identical to the main checkout and that the assembly commit changed nothing under third_party.",
+    "paths_commit": {
+      "branch": "codex/common-private-assembly-20261103",
+      "commit": "d6b092a74bc196ef12463fab361886605743ddea",
+      "worktree": "/data1/slotspe-cp-assembly-20261103",
+      "directory_reviewed": "research_models/common_private_synergy/ (21 files added by the commit)",
+      "static_check_command": "python -B research_models/common_private_synergy/checks/run_static.py",
+      "source_files_changed": [
+        "third_party_modified: false",
+        "assembly_branch_modified: false",
+        "main_checkout_code_modified: false"
+      ],
+      "new_commit_or_push": false
+    },
+    "checks_actual_execution_raw_receipt": {
+      "server_execution": false,
+      "new_server_raw_receipt": false,
+      "patient_training_runs_started": 0,
+      "patient_inference_runs": 0,
+      "model_initializations": 0,
+      "model_forward_backward": 0,
+      "optimizer_steps": 0,
+      "patient_data_read": false,
+      "patient_checkpoints_loaded": false,
+      "environment": {
+        "python": "3.12.4 on Linux-5.4.0-218-generic-x86_64",
+        "system_torch": "2.6.0+cu124, cuda 12.4, arch list sm_50 to sm_90, which does NOT include the local sm_120 GPUs",
+        "repo_venv_torch": "2.10.0+cu128, which does include sm_120",
+        "gpu": "2 x NVIDIA GeForce RTX 5090, 32607 MiB each, both idle at 0 percent with 32106 MiB free"
+      },
+      "static_check_result": {
+        "ok": true,
+        "distinct_stdlib_tests_run": 22,
+        "failed": 0,
+        "compiled_only": 10,
+        "torch_imported": false,
+        "model_forward_backward": 0,
+        "optimizer_steps": 0
+      },
+      "source_hash_verification": "18 of the 20 files listed in validation_receipt.json match their recorded SHA256. components/adapters.py and components/assembly.py do NOT match: both were newly added by this commit, so the receipt records a pre-commit working copy of them. The receipt was therefore generated before those two files reached their final state and was not regenerated.",
+      "protected_original_hashes": "third_party/SlotSPE/models/SlotSPE.py, dataset/dataset_survival.py and utils/core_utils.py are byte identical to the main checkout, and the assembly commit touches nothing under third_party",
+      "capability_search": "No Dataset class, no training loop, no torch.optim usage, no optimizer, no checkpoint save or load, no evaluation entry point and no file, h5py, pandas or read_csv access anywhere under research_models/common_private_synergy/."
+    },
+    "gaps_reasons": "The branch cannot run one epoch and the gap is structural rather than a missing line of code. There is no dataset, no training loop, no optimizer, no checkpointing and no evaluation entry point, and no adapter that turns real features into the tokenized inputs the model requires. Seven blockers are declared unresolved in architecture_spec.json: the actual omics type and identity tokenizer, the feature schema and dimensions, the patient alignment adapter, the view to feature adapter, the effective independent patient batch, the time bin boundaries and mapping, and the empty-role SSL adapter. On the omics side specifically, the new contract rejects a scalar bag with no identity, while the original queue feeds 329 pathway values per patient that the original model encodes through one separate SNN_Block per pathway; an adapter must decide how pathway identity becomes token identity, and that decision is not in this branch. On the time bins, the original queue already produced train-fitted quartile edges for fold 0, but the new loss needs a completed-interval convention that the original time_bin does not provide, so the mapping is still undefined. The independent patient batch is unknown, and the correlation contract needs at least 8 patients with a joint rank bound of 6, which cannot be checked against a real batch here. The deferred tensor checks, 13 tests that would exercise forward and backward, remain unexecuted by design, so tensor and gradient correctness is not established. Separately, the 8:0 and 0:8 ratio controls have no SSL adapter, so those arms cannot use the auxiliary terms, and the interaction arm still needs an active-capacity-matched additive control. The receipt hash mismatch above is an evidence-chain defect in the delivery, not a functional defect: both files compile and the adapters file is exercised by the passing contract tests. Nothing here bears on patient performance, patient benefit, correction efficacy, PID identification or novelty, and the static checks cannot show that the implementation is correct.",
+    "next_action_user_inputs": "Accepting this branch as a design snapshot is the right scope; the next work is not another check but the adapter specification, which needs decisions that only the user or the queue owner can supply. Concretely, before any patient stage the following inputs are required: the omics input type and how gene or pathway identity is encoded into tokens, the confirmed token widths and counts for both modalities, the patient pairing and multi-slide merge rule, the split and fold assignment, the pad and token budget behaviour, the effective independent patient batch size, and the time bin boundaries together with the continuous-time to completed-interval mapping including the boundary convention. The smallest executable next step, if and only if it is authorized separately, is the S1 stage the architecture document already describes: run the 13 deferred CPU tensor checks to verify NLL arithmetic, gradient and finite-difference behaviour, padding invariance, role permutation, empty-role handling, lazy skipping of disabled terms and the additive finite-difference zero. That stage still touches no patient data and starts no training, but it does require torch forward and backward, which this delivery explicitly did not authorize. The historical interface of the original SlotSPE modules, including the per-pathway SNN_Block, may be referenced read-only from third_party and must not be edited."
   }
 }
