@@ -55,7 +55,9 @@ python -B scripts/check_delivery_manifest.py --check --require-tracked
 
 ## 当前实验路线
 
-新增[互信息与解耦模块实施计划](docs/research/slotspe_native_assignment_training_20261022/互信息与解耦模块实施计划_20261025.md)已接通代码：V1监督槽压缩、V2内容约束的共享/私有分解、V3关系残差，统一为九个固定preset，配套数学命题和逐版对照。模块、独立训练入口与生成输入检查已完成；患者实验为0，服务器连接仍按用户要求暂缓。[代码入口、命令与验收边界](docs/research/slotspe_native_assignment_training_20261022/插件版本使用与验收_20261025.md)。以下既有队列协议保持原状。
+新增[互信息与解耦模块实施计划](docs/research/slotspe_native_assignment_training_20261022/互信息与解耦模块实施计划_20261025.md)已接通代码：V1监督槽压缩、V2内容约束的共享/私有分解、V3关系残差，统一为九个固定preset，配套数学命题和逐版对照。模块、独立训练入口与生成输入检查已完成。以下既有队列协议保持原状。
+
+**九个 preset 的患者实验已在本地跑完一折**（2026-11-04，BLCA fold0/seed3、30轮/4096 patch/20次评估、官方每轮最优选模，303训/77验，v1→v2→v3 三阶段各 exit 0）。队列与已完成的 best 队列**患者列表逐人相同、初始 core 哈希与原版 S0 折0 完全相同**，因此三者可比；但**只有一折**。20次复评均值：B0_native 0.7433±0.0063、B1_gram 0.6635±0.0261、V1_mean 0.7460±0.0045、V1_noise 0.7372±0.0058、V1_vib 0.7385±0.0056、V2_content 0.7186±0.0107、V2_separate 0.7145±0.0135、V3_capacity 0.7168±0.0088、V3_relation 0.7096±0.0244。**三条预设核心对照全为负或在噪声内**：V1_vib−V1_noise +0.0013、V2_separate−V2_content −0.0041、V3_relation−V3_capacity −0.0071。最高分臂 V1_mean 只比原版对照高 0.0026，在对照自身复评标准差内，**没有哪个臂与原版分得开**。机制侧：V1 的 β=0.001 在此尺度数值惰性（latent 几何与 V1_noise 逐位同量级）；V2/V3 内容恢复误差在两个模态都**高于常量预测下界**；九臂中七臂槽仍塌缩（有效秩 1.00–1.01、余弦>0.99），**唯二撑开槽的 B1_gram 与 V3_relation 恰恰分数更低**——把槽撑开与提高生存分数在本队列里反向，与 S0–S6 的既有发现同向。**这些数字是单折描述性结果，不构成任何机制有效、患者获益、损害或修正效力证据**；扩五折才能读出 0.005 量级的差，且原版同协议五折均值是 0.7039、折0 是最易的一折 0.7485，单折对所有臂都有抬高。完整分数、几何与内容表见[插件队列结果](docs/research/slotspe_plugin_queue_results_20261105/plugin_queue_scores.md)，口径与边界见 [PROGRESS](docs/PROGRESS.json) 的 `latest_plugin_queue_v1_v3_scores_20261105`。
 
 宿主为 **third_party/SlotSPE 中的原版 SlotSPE**。当前对照为 **S0–S6**：S0双原版，S1双Sinkhorn，S2病理MESH，S3组学MESH，S4双MESH；S5为双侧DIAS式去冗余再聚合核心，S6为双侧MetaSlot式原型去冗余核心。适配实现为`mesh_uniform`，不表示作者整套方法已完整复现。
 

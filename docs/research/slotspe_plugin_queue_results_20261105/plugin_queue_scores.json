@@ -1,0 +1,656 @@
+{
+  "schema": "slotspe_plugin_queue_scores_v1",
+  "recorded_at": "2026-11-05",
+  "queue": {
+    "output_root": "/data1/SlotSPE/local_evidence/slot_plugins_blca_fold0_seed3_run01",
+    "protocol": "BLCA / UNI2-h / fold 0 / seed 3 / 30 epochs / 4096 patches / logical batch 8 / 20 evaluation repeats / official best-validation checkpoint selection (greater-or-equal keeps the later epoch)",
+    "validation_policy": "one full validation pass per epoch over the whole validation fold, all real patches, no padding, no subsampling",
+    "stage_order": [
+      "v1",
+      "v2",
+      "v3"
+    ],
+    "arms": [
+      "B0_native",
+      "B1_gram",
+      "V1_mean",
+      "V1_noise",
+      "V1_vib",
+      "V2_content",
+      "V2_separate",
+      "V3_capacity",
+      "V3_relation"
+    ]
+  },
+  "cohort_identity": {
+    "plugin_train": 303,
+    "plugin_val": 77,
+    "original_train": 303,
+    "original_val": 77,
+    "train_identical": true,
+    "val_identical": true,
+    "plugin_split_csv": "/data1/dataset_csv/splits/5fold_uni2h/blca/fold_0.csv",
+    "original_split_csv": "/data1/dataset_csv/splits/5fold/blca/fold_0.csv",
+    "note": "The plugin configuration names splits_dir 5fold_uni2h, but the original loader hardcodes the 5fold directory, so the executed cohort is the 5fold cohort. The patient lists are compared directly rather than by directory name."
+  },
+  "initialization": {
+    "plugin_B0_native_initial_core_hash": "0a4918ed3e1fea5233ca58eaa096bbc37e8a0e12bbf1d6f95ea7b71f0fdaaf7c",
+    "original_S0_fold0_initial_core_hash": "0a4918ed3e1fea5233ca58eaa096bbc37e8a0e12bbf1d6f95ea7b71f0fdaaf7c",
+    "identical": true
+  },
+  "scores": {
+    "B0_native": {
+      "status": "completed",
+      "best_epoch": 1,
+      "best_selection_cindex": 0.7393026941362916,
+      "repeat_cindex_mean": 0.7433438985736925,
+      "repeat_cindex_std_population": 0.006268925675536767,
+      "optimizer_steps": 1140,
+      "train_patients": 303,
+      "validation_patients": 77,
+      "elapsed_seconds": 4062.6147953579202,
+      "final_epoch_selection_cindex": 0.6418383518225039,
+      "claim_boundary": "single_fold_single_seed_exploratory_no_patient_efficacy_established"
+    },
+    "B1_gram": {
+      "status": "completed",
+      "best_epoch": 16,
+      "best_selection_cindex": 0.7432646592709984,
+      "repeat_cindex_mean": 0.6635103011093502,
+      "repeat_cindex_std_population": 0.02610604338061985,
+      "optimizer_steps": 1140,
+      "train_patients": 303,
+      "validation_patients": 77,
+      "elapsed_seconds": 3601.266087422613,
+      "final_epoch_selection_cindex": 0.7068145800316957,
+      "claim_boundary": "single_fold_single_seed_exploratory_no_patient_efficacy_established"
+    },
+    "V1_mean": {
+      "status": "completed",
+      "best_epoch": 1,
+      "best_selection_cindex": 0.7456418383518225,
+      "repeat_cindex_mean": 0.7459587955625991,
+      "repeat_cindex_std_population": 0.004457166754492942,
+      "optimizer_steps": 1140,
+      "train_patients": 303,
+      "validation_patients": 77,
+      "elapsed_seconds": 3483.2492284812033,
+      "final_epoch_selection_cindex": 0.6311410459587956,
+      "claim_boundary": "single_fold_single_seed_exploratory_no_patient_efficacy_established"
+    },
+    "V1_noise": {
+      "status": "completed",
+      "best_epoch": 1,
+      "best_selection_cindex": 0.7369255150554676,
+      "repeat_cindex_mean": 0.737202852614897,
+      "repeat_cindex_std_population": 0.005813567909340899,
+      "optimizer_steps": 1140,
+      "train_patients": 303,
+      "validation_patients": 77,
+      "elapsed_seconds": 3551.5736997760832,
+      "final_epoch_selection_cindex": 0.6481774960380349,
+      "claim_boundary": "single_fold_single_seed_exploratory_no_patient_efficacy_established"
+    },
+    "V1_vib": {
+      "status": "completed",
+      "best_epoch": 1,
+      "best_selection_cindex": 0.7393026941362916,
+      "repeat_cindex_mean": 0.7384904912836767,
+      "repeat_cindex_std_population": 0.005555905678569629,
+      "optimizer_steps": 1140,
+      "train_patients": 303,
+      "validation_patients": 77,
+      "elapsed_seconds": 3513.0345203727484,
+      "final_epoch_selection_cindex": 0.5419968304278923,
+      "claim_boundary": "single_fold_single_seed_exploratory_no_patient_efficacy_established"
+    },
+    "V2_content": {
+      "status": "completed",
+      "best_epoch": 1,
+      "best_selection_cindex": 0.7274167987321711,
+      "repeat_cindex_mean": 0.718621236133122,
+      "repeat_cindex_std_population": 0.010710211150754868,
+      "optimizer_steps": 1140,
+      "train_patients": 303,
+      "validation_patients": 77,
+      "elapsed_seconds": 6055.223762028851,
+      "final_epoch_selection_cindex": 0.6370839936608558,
+      "claim_boundary": "single_fold_single_seed_exploratory_no_patient_efficacy_established"
+    },
+    "V2_separate": {
+      "status": "completed",
+      "best_epoch": 1,
+      "best_selection_cindex": 0.7385103011093502,
+      "repeat_cindex_mean": 0.7144809825673535,
+      "repeat_cindex_std_population": 0.013505754541225512,
+      "optimizer_steps": 1140,
+      "train_patients": 303,
+      "validation_patients": 77,
+      "elapsed_seconds": 5937.101290033199,
+      "final_epoch_selection_cindex": 0.6735340729001584,
+      "claim_boundary": "single_fold_single_seed_exploratory_no_patient_efficacy_established"
+    },
+    "V3_capacity": {
+      "status": "completed",
+      "best_epoch": 1,
+      "best_selection_cindex": 0.7361331220285261,
+      "repeat_cindex_mean": 0.7167591125198098,
+      "repeat_cindex_std_population": 0.008846723041792836,
+      "optimizer_steps": 1140,
+      "train_patients": 303,
+      "validation_patients": 77,
+      "elapsed_seconds": 6152.871740314644,
+      "final_epoch_selection_cindex": 0.6307448494453248,
+      "claim_boundary": "single_fold_single_seed_exploratory_no_patient_efficacy_established"
+    },
+    "V3_relation": {
+      "status": "completed",
+      "best_epoch": 8,
+      "best_selection_cindex": 0.7393026941362916,
+      "repeat_cindex_mean": 0.7096275752773376,
+      "repeat_cindex_std_population": 0.02438649886412959,
+      "optimizer_steps": 1140,
+      "train_patients": 303,
+      "validation_patients": 77,
+      "elapsed_seconds": 9538.961102137342,
+      "final_epoch_selection_cindex": 0.6339144215530903,
+      "claim_boundary": "single_fold_single_seed_exploratory_no_patient_efficacy_established"
+    }
+  },
+  "paired_comparisons": [
+    {
+      "treatment": "V1_vib",
+      "control": "V1_noise",
+      "description": "stochastic bottleneck with a KL term against the same stochastic bottleneck without it",
+      "treatment_repeat_mean": 0.7384904912836767,
+      "control_repeat_mean": 0.737202852614897,
+      "difference": 0.0012876386687796781,
+      "treatment_repeat_std": 0.005555905678569629,
+      "control_repeat_std": 0.005813567909340899
+    },
+    {
+      "treatment": "V2_separate",
+      "control": "V2_content",
+      "description": "separation terms on top of the content constraint against the content constraint alone",
+      "treatment_repeat_mean": 0.7144809825673535,
+      "control_repeat_mean": 0.718621236133122,
+      "difference": -0.004140253565768526,
+      "treatment_repeat_std": 0.013505754541225512,
+      "control_repeat_std": 0.010710211150754868
+    },
+    {
+      "treatment": "V3_relation",
+      "control": "V3_capacity",
+      "description": "pairwise relation residual against a per-slot residual with a matched parameter count",
+      "treatment_repeat_mean": 0.7096275752773376,
+      "control_repeat_mean": 0.7167591125198098,
+      "difference": -0.007131537242472286,
+      "treatment_repeat_std": 0.02438649886412959,
+      "control_repeat_std": 0.008846723041792836
+    }
+  ],
+  "slot_geometry": {
+    "B0_native": {
+      "wsi.native": {
+        "cosine": 0.9930227774596587,
+        "rms_cosine": 0.9930296484740654,
+        "max_cosine": 0.9979511014237322,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0123101148535771
+      },
+      "wsi.mean": {
+        "cosine": 0.9930227774596587,
+        "rms_cosine": 0.9930296484740654,
+        "max_cosine": 0.9979511014237322,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0123101148535771
+      },
+      "wsi.latent": {
+        "cosine": 0.9930227774596587,
+        "rms_cosine": 0.9930296484740654,
+        "max_cosine": 0.9979511014237322,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0123101148535771
+      },
+      "omic.native": {
+        "cosine": 0.9978112613468428,
+        "rms_cosine": 0.9978124344165069,
+        "max_cosine": 0.9994306690701394,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0038395711802108
+      },
+      "omic.mean": {
+        "cosine": 0.9978112613468428,
+        "rms_cosine": 0.9978124344165069,
+        "max_cosine": 0.9994306690701394,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0038395711802108
+      },
+      "omic.latent": {
+        "cosine": 0.9978112613468428,
+        "rms_cosine": 0.9978124344165069,
+        "max_cosine": 0.9994306690701394,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0038395711802108
+      }
+    },
+    "B1_gram": {
+      "wsi.native": {
+        "cosine": 0.2069009552944556,
+        "rms_cosine": 0.33054351076444405,
+        "max_cosine": 0.6531891283947715,
+        "fraction_cosine_above_09": 0.0,
+        "effective_rank": 4.551687350932315
+      },
+      "wsi.mean": {
+        "cosine": 0.2069009552944556,
+        "rms_cosine": 0.33054351076444405,
+        "max_cosine": 0.6531891283947715,
+        "fraction_cosine_above_09": 0.0,
+        "effective_rank": 4.551687350932315
+      },
+      "wsi.latent": {
+        "cosine": 0.2069009552944556,
+        "rms_cosine": 0.33054351076444405,
+        "max_cosine": 0.6531891283947715,
+        "fraction_cosine_above_09": 0.0,
+        "effective_rank": 4.551687350932315
+      },
+      "omic.native": {
+        "cosine": 0.9607822280425158,
+        "rms_cosine": 0.9629379472857919,
+        "max_cosine": 0.995930583730686,
+        "fraction_cosine_above_09": 0.9067717996289425,
+        "effective_rank": 1.0712495171669267
+      },
+      "omic.mean": {
+        "cosine": 0.9607822280425158,
+        "rms_cosine": 0.9629379472857919,
+        "max_cosine": 0.995930583730686,
+        "fraction_cosine_above_09": 0.9067717996289425,
+        "effective_rank": 1.0712495171669267
+      },
+      "omic.latent": {
+        "cosine": 0.9607822280425158,
+        "rms_cosine": 0.9629379472857919,
+        "max_cosine": 0.995930583730686,
+        "fraction_cosine_above_09": 0.9067717996289425,
+        "effective_rank": 1.0712495171669267
+      }
+    },
+    "V1_mean": {
+      "wsi.native": {
+        "cosine": 0.9965977072321233,
+        "rms_cosine": 0.9965993390646337,
+        "max_cosine": 0.9990329930436764,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0059775875964463
+      },
+      "wsi.mean": {
+        "cosine": 0.997034948669777,
+        "rms_cosine": 0.9970361907845884,
+        "max_cosine": 0.9991578395630474,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0052067357678616
+      },
+      "wsi.latent": {
+        "cosine": 0.997034948669777,
+        "rms_cosine": 0.9970361907845884,
+        "max_cosine": 0.9991578395630474,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0052067357678616
+      },
+      "omic.native": {
+        "cosine": 0.9977350770291772,
+        "rms_cosine": 0.9977364850843363,
+        "max_cosine": 0.9994377640787976,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.003973497666581
+      },
+      "omic.mean": {
+        "cosine": 0.9979224520355418,
+        "rms_cosine": 0.9979236287594392,
+        "max_cosine": 0.9994832024732243,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.003644049455345
+      },
+      "omic.latent": {
+        "cosine": 0.9979224520355418,
+        "rms_cosine": 0.9979236287594392,
+        "max_cosine": 0.9994832024732243,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.003644049455345
+      }
+    },
+    "V1_noise": {
+      "wsi.native": {
+        "cosine": 0.9934956626822228,
+        "rms_cosine": 0.9935042698517615,
+        "max_cosine": 0.9985346316762057,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0114672549187718
+      },
+      "wsi.mean": {
+        "cosine": 0.9942011560959362,
+        "rms_cosine": 0.9942080130023744,
+        "max_cosine": 0.9986947988456233,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.010215228108655
+      },
+      "wsi.latent": {
+        "cosine": 0.9919731427797907,
+        "rms_cosine": 0.9919801339982198,
+        "max_cosine": 0.9965318562486633,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0141820838614
+      },
+      "omic.native": {
+        "cosine": 0.9978290246931869,
+        "rms_cosine": 0.9978299751164365,
+        "max_cosine": 0.9993522790517895,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0038086522882748
+      },
+      "omic.mean": {
+        "cosine": 0.9980559124383113,
+        "rms_cosine": 0.9980566712341037,
+        "max_cosine": 0.999420026820694,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0034097464659015
+      },
+      "omic.latent": {
+        "cosine": 0.9939418590731637,
+        "rms_cosine": 0.9939427257417423,
+        "max_cosine": 0.995640500516338,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0106833882905562
+      }
+    },
+    "V1_vib": {
+      "wsi.native": {
+        "cosine": 0.9934354615318396,
+        "rms_cosine": 0.9934433288415516,
+        "max_cosine": 0.9983403154741521,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0115749347624736
+      },
+      "wsi.mean": {
+        "cosine": 0.9941039825044804,
+        "rms_cosine": 0.9941103448951434,
+        "max_cosine": 0.9985108310226589,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0103881577952112
+      },
+      "wsi.latent": {
+        "cosine": 0.9918965360111375,
+        "rms_cosine": 0.991903055939687,
+        "max_cosine": 0.9963992599644044,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.014319283293012
+      },
+      "omic.native": {
+        "cosine": 0.9977715505567825,
+        "rms_cosine": 0.9977724584521137,
+        "max_cosine": 0.9993293801841879,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0039099132656848
+      },
+      "omic.mean": {
+        "cosine": 0.9980154852861931,
+        "rms_cosine": 0.998016201938267,
+        "max_cosine": 0.9994027882392945,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0034809522112673
+      },
+      "omic.latent": {
+        "cosine": 0.9935834207555697,
+        "rms_cosine": 0.9935842584223754,
+        "max_cosine": 0.9953218497057867,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0113209874671445
+      }
+    },
+    "V2_content": {
+      "wsi.native": {
+        "cosine": 0.9951754405056666,
+        "rms_cosine": 0.9951781741992561,
+        "max_cosine": 0.9984290867864482,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0084914381905241
+      },
+      "wsi.mean": {
+        "cosine": 0.9990154003289812,
+        "rms_cosine": 0.9990155181929397,
+        "max_cosine": 0.9996944923200284,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0017250568477238
+      },
+      "wsi.latent": {
+        "cosine": 0.9990154003289812,
+        "rms_cosine": 0.9990155181929397,
+        "max_cosine": 0.9996944923200284,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0017250568477238
+      },
+      "omic.native": {
+        "cosine": 0.9968366242340786,
+        "rms_cosine": 0.9968381386535184,
+        "max_cosine": 0.9987641060684688,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0055669787545014
+      },
+      "omic.mean": {
+        "cosine": 0.9996076640119597,
+        "rms_cosine": 0.9996076855919289,
+        "max_cosine": 0.9998455979780143,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0006870831654353
+      },
+      "omic.latent": {
+        "cosine": 0.9996076640119597,
+        "rms_cosine": 0.9996076855919289,
+        "max_cosine": 0.9998455979780143,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0006870831654353
+      }
+    },
+    "V2_separate": {
+      "wsi.native": {
+        "cosine": 0.992469233775514,
+        "rms_cosine": 0.9924782058397243,
+        "max_cosine": 0.9977763564306951,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.013295574696353
+      },
+      "wsi.mean": {
+        "cosine": 0.9984536549616287,
+        "rms_cosine": 0.9984540661332084,
+        "max_cosine": 0.9995716271860231,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0027109604764386
+      },
+      "wsi.latent": {
+        "cosine": 0.9984536549616287,
+        "rms_cosine": 0.9984540661332084,
+        "max_cosine": 0.9995716271860231,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0027109604764386
+      },
+      "omic.native": {
+        "cosine": 0.9953903350582031,
+        "rms_cosine": 0.9953936828381371,
+        "max_cosine": 0.9982214736047913,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0081331200885828
+      },
+      "omic.mean": {
+        "cosine": 0.999464691235271,
+        "rms_cosine": 0.9994647376193198,
+        "max_cosine": 0.9997888820312656,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.000937721118992
+      },
+      "omic.latent": {
+        "cosine": 0.999464691235271,
+        "rms_cosine": 0.9994647376193198,
+        "max_cosine": 0.9997888820312656,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.000937721118992
+      }
+    },
+    "V3_capacity": {
+      "wsi.native": {
+        "cosine": 0.9920666595551629,
+        "rms_cosine": 0.9920784768346562,
+        "max_cosine": 0.9980510086466866,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0140108217864592
+      },
+      "wsi.mean": {
+        "cosine": 0.9983998445503497,
+        "rms_cosine": 0.9984003701765023,
+        "max_cosine": 0.9996311914494311,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0028053653503195
+      },
+      "wsi.latent": {
+        "cosine": 0.9983998445503497,
+        "rms_cosine": 0.9984003701765023,
+        "max_cosine": 0.9996311914494311,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0028053653503195
+      },
+      "omic.native": {
+        "cosine": 0.9951700507664862,
+        "rms_cosine": 0.9951734632644297,
+        "max_cosine": 0.9981255074753548,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0085249339715363
+      },
+      "omic.mean": {
+        "cosine": 0.9993854520633075,
+        "rms_cosine": 0.9993855132284134,
+        "max_cosine": 0.9997719006961564,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0010767238248457
+      },
+      "omic.latent": {
+        "cosine": 0.9993854520633075,
+        "rms_cosine": 0.9993855132284134,
+        "max_cosine": 0.9997719006961564,
+        "fraction_cosine_above_09": 1.0,
+        "effective_rank": 1.0010767238248457
+      }
+    },
+    "V3_relation": {
+      "wsi.native": {
+        "cosine": 0.8100873777052614,
+        "rms_cosine": 0.8426212302515832,
+        "max_cosine": 0.9366968809195527,
+        "fraction_cosine_above_09": 0.30936920222634506,
+        "effective_rank": 1.3599089847798862
+      },
+      "wsi.mean": {
+        "cosine": 0.834631800691089,
+        "rms_cosine": 0.8733132716270159,
+        "max_cosine": 0.9846603395170872,
+        "fraction_cosine_above_09": 0.6247680890538033,
+        "effective_rank": 1.2801175872386557
+      },
+      "wsi.latent": {
+        "cosine": 0.834631800691089,
+        "rms_cosine": 0.8733132716270159,
+        "max_cosine": 0.9846603395170872,
+        "fraction_cosine_above_09": 0.6247680890538033,
+        "effective_rank": 1.2801175872386557
+      },
+      "omic.native": {
+        "cosine": 0.46830848057422647,
+        "rms_cosine": 0.6906647734910577,
+        "max_cosine": 0.9523588943081809,
+        "fraction_cosine_above_09": 0.16883116883116883,
+        "effective_rank": 1.8808847193743814
+      },
+      "omic.mean": {
+        "cosine": 0.4784071900018483,
+        "rms_cosine": 0.7966789699531248,
+        "max_cosine": 0.9869533595052061,
+        "fraction_cosine_above_09": 0.6159554730983302,
+        "effective_rank": 1.493983775014327
+      },
+      "omic.latent": {
+        "cosine": 0.4784071900018483,
+        "rms_cosine": 0.7966789699531248,
+        "max_cosine": 0.9869533595052061,
+        "fraction_cosine_above_09": 0.6159554730983302,
+        "effective_rank": 1.493983775014327
+      }
+    }
+  },
+  "content_recovery": {
+    "V2_content": {
+      "wsi": {
+        "mse": 0.5584627569885563,
+        "constant_floor": 0.3117119725298882
+      },
+      "omic": {
+        "mse": 4.344753338538285,
+        "constant_floor": 3.8246563834820355
+      }
+    },
+    "V2_separate": {
+      "wsi": {
+        "mse": 0.5579621150497159,
+        "constant_floor": 0.3117119725298882
+      },
+      "omic": {
+        "mse": 4.343325954855729,
+        "constant_floor": 3.8246563834820355
+      }
+    },
+    "V3_capacity": {
+      "wsi": {
+        "mse": 0.5558180631639453,
+        "constant_floor": 0.3117119725298882
+      },
+      "omic": {
+        "mse": 4.344503200390588,
+        "constant_floor": 3.8246563834820355
+      }
+    },
+    "V3_relation": {
+      "wsi": {
+        "mse": 0.533394087234156,
+        "constant_floor": 0.3117119725298882
+      },
+      "omic": {
+        "mse": 4.252655091331887,
+        "constant_floor": 3.8246563834820355
+      }
+    }
+  },
+  "original_baseline_same_protocol": {
+    "S0_cindex_per_fold": {
+      "0": 0.7484944532488114,
+      "1": 0.7491539763113366,
+      "2": 0.6421937550040032,
+      "3": 0.699672131147541,
+      "4": 0.6798042704626336
+    },
+    "S0_five_fold_mean": 0.7038637172348652,
+    "S0_five_fold_std_population": 0.04109189890679109,
+    "R4_five_fold_mean": 0.7071193512214414,
+    "R3_five_fold_mean": 0.6924398956765148,
+    "source": "local_evidence/redundancy_blca_uni2h_best_folds0to4_seed3_run01/summary.json"
+  },
+  "reading_boundaries": [
+    "One fold and one seed. A single fold of 77 validation patients carries no uncertainty estimate, and the original baseline's own fold 0 per-epoch curve spans 0.55 to 0.75 on the same data.",
+    "The protocol selects the best epoch by validation C-index, which is a maximum over about thirty validation passes over the same patients. The plugin B0_native score of 0.7433 is therefore a selected peak on the easiest fold, not the original's level. The original's five-fold mean under the same protocol is 0.7039 and its fold 0 value is 0.7485.",
+    "The twenty repeats are repeated evaluations of one retained checkpoint under the native slot-selection noise. They measure evaluation randomness, not training randomness, and they are not twenty independent patients or twenty independent trainings.",
+    "The plugin queue and the completed baseline share the initial core state and the exact same train and validation patient lists, so the two are comparable in cohort and initialization, but they are still one fold.",
+    "Seven of the nine preset arms still show collapsed slots: effective rank 1.00 to 1.01 out of eight and mean pairwise cosine 0.99 to 0.998, including the V2 arms designed to reduce redundancy. The two exceptions are B1_gram, which spreads the WSI slots to effective rank 4.55, and V3_relation, which spreads the OMIC slots to effective rank 1.88. Neither is a high-scoring arm: B1_gram loses 0.080 against the native control, far beyond the repeat standard deviation, and V3_relation scores below its own matched-capacity control. Spreading the slots and raising the survival score point in opposite directions in this queue.",
+    "The V1 KL weight of 0.001 is numerically inert at this scale. The V1_vib and V1_noise latent geometries agree to the third decimal, so this measurement cannot show a compression effect in either direction.",
+    "The V2 and V3 content-recovery errors stay above the constant-prediction floor for both modalities, so the private slots did not recover patient-specific content better than predicting a training-fold constant.",
+    "These numbers are descriptive of one exploratory cohort. They establish no patient benefit, no patient harm, no correction efficacy and no clinical utility."
+  ]
+}

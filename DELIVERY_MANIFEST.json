@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_current_delivery_v1",
-  "recorded_at": "2026-11-03T17:58:33.149853+08:00",
-  "base_commit_before_delivery": "88efeb31c5a9ba48e603e4f812ceb1d3478a7cf1",
+  "recorded_at": "2026-11-05T11:57:15.588249+08:00",
+  "base_commit_before_delivery": "4758afa16fe3e05619a5069a7993e84649552792",
   "canonical_implementation": "slotspe_proof/",
   "legacy_import_shim": "survot_rank/research/slotspe_proof/__init__.py",
   "historical_manifest": "PUBLICATION_MANIFEST.json",
@@ -10,8 +10,8 @@
     "DELIVERY_MANIFEST.json"
   ],
   "self_exclusion_reason": "A file cannot contain its own SHA256. The verified Git commit/tree covers the manifest itself.",
-  "covered_file_count": 612,
-  "repository_file_count_including_manifest": 613,
+  "covered_file_count": 618,
+  "repository_file_count_including_manifest": 619,
   "patient_data_included": false,
   "files": [
     {
@@ -41,8 +41,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 26953,
-      "sha256": "9be93ba94ad1702c0304d28921ceaeaf29fc31399c3a8d4b4e63258328b5be85"
+      "bytes": 28578,
+      "sha256": "71d1eca8b50f1d02463dc1533ab08358cf6894dac8042c2dcd98bebc4e0d6099"
     },
     {
       "path": "configs/slotspe_anticollapse_multifold_queue.json",
@@ -151,8 +151,8 @@
     },
     {
       "path": "docs/PROGRESS.json",
-      "bytes": 792760,
-      "sha256": "0b894567a6d978ebaff6376e39298b239310af7dbbd0a53f99445b1eac99e2d4"
+      "bytes": 863928,
+      "sha256": "eba27168362d291aee28d681ce42f271d3eb5c732c11d904dfd64725bb7c1cb9"
     },
     {
       "path": "docs/REPOSITORY_MIGRATION_VALIDATION.json",
@@ -221,13 +221,23 @@
     },
     {
       "path": "docs/research/INDEX.json",
-      "bytes": 22270,
-      "sha256": "c580cd70d71d053ffd6be57dc8ac3daf94f707177450acd5f7a933ec0c5d42f9"
+      "bytes": 23322,
+      "sha256": "cd55ded313fabb68cbd27bd6cc153c8d0d1c28603a04d6e163bcbed76e214c0f"
     },
     {
       "path": "docs/research/README.md",
       "bytes": 9128,
       "sha256": "56d29f1f77d40aa6fef509c5d2838703282752927fc48ee20745e2574a6f6e6c"
+    },
+    {
+      "path": "docs/research/common_private_synergy/ABC对照报告_20261104.md",
+      "bytes": 8531,
+      "sha256": "3f1ccbfcaf7af567da7936ca0b640410fc392f9ceb1d75a493bc3805b9af1cd4"
+    },
+    {
+      "path": "docs/research/common_private_synergy/塌缩与梯度归因诊断_20261104.md",
+      "bytes": 19725,
+      "sha256": "8c44e8f4ec16737b2ed44f7b06ddc1c17ce860cca7a051576894ff47f0cd8bc4"
     },
     {
       "path": "docs/research/slotspe_abc_20261019/checks.json",
@@ -1415,6 +1425,16 @@
       "sha256": "fd8c7bf2eed9257f741dd1e787f5119ccc4ed4edcf4bc4650ec9ed3cb59ed950"
     },
     {
+      "path": "docs/research/slotspe_plugin_queue_results_20261105/plugin_queue_scores.json",
+      "bytes": 24728,
+      "sha256": "33dc53f6808f8ea96c40b60d9d7b1ffdc5c39c635cf5be5ad388431b4e1faa6a"
+    },
+    {
+      "path": "docs/research/slotspe_plugin_queue_results_20261105/plugin_queue_scores.md",
+      "bytes": 8685,
+      "sha256": "90f1fea95555f2a8313cf5c604a698b6df842da0bbbd48aa1ac0ed90247b10f9"
+    },
+    {
       "path": "docs/research/slotspe_queue_results_20261102/five_fold_scores.json",
       "bytes": 29280,
       "sha256": "f1fcff3737c15d2095f4453590ac5ed9193bf3ddcc569a4745912e59d5a61e1e"
@@ -2305,6 +2325,11 @@
       "sha256": "d06ed2c1b96c47e4ae4e25ff74cded042b0806f3f66a33038056bb885d9b309a"
     },
     {
+      "path": "scripts/summarize_plugin_queue_scores.py",
+      "bytes": 24409,
+      "sha256": "9ef9ac5473337860278d71d3c923a44266cc474840895deb8460bb7f01cf5501"
+    },
+    {
       "path": "scripts/summarize_queue_results.py",
       "bytes": 22291,
       "sha256": "ff8562d100b1c4a24f0a8382d03c8e1947971ccc8b1f07dd9ad274b7eb572595"
@@ -2888,6 +2913,11 @@
       "path": "tests/test_slotspe_plugin_queue.py",
       "bytes": 8300,
       "sha256": "f1e6fd5ea790d355f8cfae349db7c9b0ecc85298b0530fd034fbbcf817dcba25"
+    },
+    {
+      "path": "tests/test_slotspe_plugin_queue_scores.py",
+      "bytes": 6681,
+      "sha256": "afdb733d0cb37764c2471b2fc5e9cddd38ceb89a3fa3678f6193ae6e11d32932"
     },
     {
       "path": "tests/test_slotspe_plugin_stages.py",
