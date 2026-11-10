@@ -30,6 +30,15 @@ python -B scripts/run_common_private_patient_pilot.py --doctor
 
 `--plan` 不导入 torch、不读患者值；`--doctor` 检查依赖、代码哈希和既有环境变量是否存在，不读取患者值，也不代表数据已验收。依赖包含 torch、numpy、pandas、h5py、scikit-survival，不自动安装或升级。
 
+部署本次修复时先运行生成输入的分折检查，Linux 上应实际覆盖符号链接案例。该测试只构造人工 CSV 和小型张量，包含一次 CPU 人工模型测试以核对评估前的拦截，不使用真实患者输入：
+
+```bash
+python -B -m pytest -q --confcutdir=research_models/common_private_synergy \
+  research_models/common_private_synergy/deferred_checks/test_pilot_split.py
+```
+
+该模块的临时文件写入当前 checkout 的 ignored `local_evidence/pst/`，`--confcutdir` 避免调用历史根 conftest 的跨目录临时路径逻辑。若服务器未安装 pytest，先报告环境缺项，不自动安装或升级。
+
 只有包含 `split_identity.schema=pilot_explicit_split_v1` 的新缓存可以进入当前训练入口。先进行只读检查：
 
 ```bash

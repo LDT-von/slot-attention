@@ -1,0 +1,68 @@
+{
+  "schema": "pilot_split_guard_delivery_v1",
+  "date": "2026-11-10",
+  "implementation_commit": "8183c35",
+  "portable_fixture_commit": "95012d6",
+  "scope": "explicit split preparation and pre-fit/pre-evaluation admission for isolated pilot; no model/loss protocol change",
+  "files_SHA256": {
+    "research_models/common_private_synergy/pilot_split.py": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1",
+    "research_models/common_private_synergy/patient_pilot.py": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3",
+    "research_models/common_private_synergy/patient_pilot_engine.py": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b",
+    "research_models/common_private_synergy/deferred_checks/test_pilot_split.py": "6969ded7c4900c227f242797a44b29dd5cadb4417c5e704d7cefae276a93545f",
+    "research_models/common_private_synergy/PATIENT_PILOT_CN.md": "9cd1d4afc6661720bdb1e811a4019ed462d9ca2902f6de68340de12c5fcf91ed"
+  },
+  "checks": {
+    "focused_regression": "48 passed, 1 skipped in 15.41s",
+    "clean_committed_export": "30 passed, 1 skipped in 13.21s",
+    "skip_reason": "Windows host does not grant symlink creation; Linux deployment must run this case",
+    "initial_clean_export_failure": "1 failed and 17 fixture errors: historical root conftest placed fixtures above checkout, and deeply nested Windows paths exceeded path limit. Fixed only the new test module to use short checkout-local ignored scratch; legacy conftest unmodified.",
+    "real_native_gene_loader_on_invented_files": true,
+    "same_count_wrong_membership_control": true,
+    "complete_exclusion_partition": true,
+    "short_real_bag_retained": true,
+    "old_cache_refused_before_tensor_work": true,
+    "changed_identity_refused_before_validation": true,
+    "plan_standard_library_only": true,
+    "metadata_doctor_exit_code": 0,
+    "boundary_rule_known_answer": "pd.cut(right=False) equals searchsorted(interior boundaries, side=right)",
+    "original_source_files_unchanged": 11,
+    "legacy_helper_files_unchanged": 2,
+    "historical_receipts_preserved": 17,
+    "prior_progress_entries_preserved": 150,
+    "originals_SHA256": {
+      "third_party\\SlotSPE\\README.md": "49f08620fb6e1dfbf397336d5c10baf4133d0da418d7f96a3af607378a5e3f82",
+      "third_party\\SlotSPE\\requirements.txt": "583aaafe0e865802d2a9d8cbc5972245b1a95c8b6757bd38c685d79bad47644d",
+      "third_party\\SlotSPE\\dataset\\dataset_survival.py": "44677851b59ca9b60547d1623c2ff9a3e32a3e9ffb38f67f569e6c0ff3048ea3",
+      "third_party\\SlotSPE\\models\\omics_encoder.py": "3e2231dab47103046922ec40a9bf6945fe936081037a630b72035eee5de0e685",
+      "third_party\\SlotSPE\\models\\SlotSPE.py": "eb5518a7e7dbc0e8e2fb1495c21c379ada36f78ad0c9d0d1f9ce69cb8051687e",
+      "third_party\\SlotSPE\\models\\slot_attention.py": "200f92f62f74d1387f62834d485cd96dd7adf7d104e75707d4a0a51a021ac109",
+      "third_party\\SlotSPE\\models\\transformer.py": "9dfed61da662a391ff7a29b3b514e892f1cf8287a0d350ac0afab9d5d4a54985",
+      "third_party\\SlotSPE\\scripts\\SlotSPE.sh": "5860faef6881b0457f2c0a21e764b21332f462e62019c070e485c1bbb4c4a8a9",
+      "third_party\\SlotSPE\\utils\\core_utils.py": "d069c889662612395b7680cbdfbd7decd6bd7ed8cbe142cfa4bf4292776c80af",
+      "third_party\\SlotSPE\\utils\\loss_func.py": "bb52dca9e903dd72d18b694bcdc94452a0bd201f96412937db8706f80924d682",
+      "third_party\\SlotSPE\\utils\\process_args.py": "b4aca2aa7a38fc46f74f050ef5f314c9ac66d20dc7a0daebf88a4127ffcb296b"
+    },
+    "legacy_SHA256": {
+      "slotspe_proof/patient.py": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
+      "slotspe_proof/redundancy_engine.py": "c0f34a5c7c7975bca4a59734e3666e0ce1cb85a4e3ceea9a94a5a7186a34b95a"
+    },
+    "scoped_diff_check": true
+  },
+  "execution": {
+    "patient_values_read": false,
+    "patient_preparation": 0,
+    "patient_training": 0,
+    "patient_inference": 0,
+    "server_execution": false,
+    "raw_server_receipt": null,
+    "generated_input_training_in_unit_checks": true,
+    "optimizer_steps_per_generated_smoke": 24,
+    "no_new_research_experiment": true
+  },
+  "limitations": [
+    "Server run02/uni2h values are user-reported artifacts, not locally re-audited patient evidence.",
+    "Old cache without complete new split identity is rejected, including an otherwise correct historical cohort; never rewritten or silently promoted.",
+    "Identity records depend on the inspected explicit selector and input hashes; not an independent source semantic certification.",
+    "No new patient preparation/training/inference; next server action is deployment, generated-input tests and read-only admission check."
+  ]
+}
