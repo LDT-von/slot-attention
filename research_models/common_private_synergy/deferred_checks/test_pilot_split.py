@@ -1,5 +1,6 @@
 import copy
 import json
+import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -10,6 +11,15 @@ import torch
 from research_models.common_private_synergy import patient_pilot as cli
 from research_models.common_private_synergy import pilot_split as split
 from slotspe_proof import patient as legacy
+
+
+@pytest.fixture
+def tmp_path():
+    # The historical root conftest in a clean checkout points scratch one
+    # directory above that checkout. Keep THIS module's fixtures inside its
+    # own ignored root, and short enough for Windows' file-path limit.
+    base=cli.ROOT/'local_evidence/pst';base.mkdir(parents=True,exist_ok=True)
+    return Path(tempfile.mkdtemp(prefix='s',dir=base))
 
 
 @pytest.fixture
