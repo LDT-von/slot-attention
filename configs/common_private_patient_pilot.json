@@ -1,0 +1,22 @@
+{
+  "schema": "empirical_role_survival_pilot_v1",
+  "study": "blca",
+  "fold": 0,
+  "seed": 3,
+  "patches": 4096,
+  "batch_size": 2,
+  "target_dim": 8,
+  "common_rank": 2,
+  "allocation": {"p": [1, 1], "g": [1, 1]},
+  "width": 32,
+  "iterations": 2,
+  "hidden": 16,
+  "bins": 4,
+  "role_epochs": 3,
+  "task_epochs": 3,
+  "role_lr": 0.003,
+  "task_lr": 0.001,
+  "readout_bound": 2.0,
+  "torch_threads": 2,
+  "device": "cuda:0"
+}
