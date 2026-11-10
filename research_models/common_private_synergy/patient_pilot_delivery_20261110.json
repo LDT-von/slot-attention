@@ -1,0 +1,49 @@
+{
+  "schema": "patient_pilot_delivery_v1",
+  "date": "2026-11-10",
+  "implementation_commit": "522b2092fe5e17c1a7c63ea3bd46319a25fb2955",
+  "scope": "patient survival engineering pilot implemented; validation executed ONLY with synthetic patients",
+  "files_SHA256": {
+    "configs/common_private_patient_pilot.json": "d7d368a9c6e0387feeb0033d6ca90965be581f1b53aecdc1b352548f50921f91",
+    "research_models/common_private_synergy/PATIENT_PILOT_CN.md": "e3ff31cc636e4f1569d2014f130f22bb54c8849247d32aa38aadda760621dc19",
+    "research_models/common_private_synergy/components/role_model.py": "fb97256d7fabb3a839aeb890bbb64c3b2166a856562b55f26f08df547ba28fe2",
+    "research_models/common_private_synergy/components/role_reference.py": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4",
+    "research_models/common_private_synergy/deferred_checks/test_patient_pilot.py": "cf01e302cf5ebb2ae5dbd1cf7d1ac516765bb6881a2e47ee97e5f84bbbaf3774",
+    "research_models/common_private_synergy/patient_pilot.py": "77e40e6f7afebfb89855c5575f08b8564f8aea9af2e08a5ceee94177295a3466",
+    "research_models/common_private_synergy/patient_pilot_engine.py": "da9638433e5dbadff3fba59504f4f5500fe18143fbd1f346fbd817882bf28ebc",
+    "scripts/run_common_private_patient_pilot.py": "b3000912747cb33a5882cac57d351d239c183c1e6bdd7a98d525a974b4ddbddb"
+  },
+  "checks": {
+    "focused_regression": "67 passed in 6.42s",
+    "clean_git_archive_checkout": "5 passed in 10.13s",
+    "clean_export_uses_only_committed_files": true,
+    "plan_no_torch_or_patient_import_verified": true,
+    "CLI_plan_and_metadata_doctor_exit_code": 0,
+    "CLI_synthetic_two_phase_smoke": "completed",
+    "CLI_synthetic_optimizer_steps": {
+      "role": 12,
+      "task": 12
+    },
+    "roles_frozen_during_task": true,
+    "reference_frozen": true,
+    "fresh_checkpoint_reconstruction_and_output_equality": true,
+    "original_source_files_unchanged": 11,
+    "historical_receipts_unchanged": 16,
+    "scoped_staged_diff_check": true,
+    "whole_repository_diff_check": "pre-existing trailing whitespace in docs/RESEARCH_OVERVIEW.md outside delivery; left untouched"
+  },
+  "execution": {
+    "real_patient_values_read": false,
+    "real_patient_training": 0,
+    "real_patient_inference": 0,
+    "server_execution": false,
+    "raw_server_receipt": null
+  },
+  "raw_synthetic_receipt_SHA256": "a98153c59f9cd83acb4f86c7e510eaab1dfa49a634e325b9e40a6dc67023b828",
+  "limitations": [
+    "No server data paths or SSH target supplied; no live server doctor or patient result.",
+    "Finite train-fitted PCA/CCA reference, not structural-source recovery or known-noise calibration.",
+    "Single-arm 3+3 epoch pilot, fixed final checkpoints; no matched baseline, unseen test or generalization conclusion.",
+    "Synthetic numerical results are not patient results."
+  ]
+}
