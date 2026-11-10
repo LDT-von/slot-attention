@@ -1,5 +1,7 @@
 # 真实患者生存小试跑交接
 
+**分折修复接续（2026-11-10）：**早期准备流程存在“配置声明 `5fold_uni2h`，原版加载器实际读取 `5fold`”的缺陷。当前独立入口使用 `pilot_split.py` 的显式选择器；旧队列和原版源码不改。训练前要求新格式分折身份和完整排除台账。包括真实集合正确但缺少身份记录的历史缓存，也不会自动升级为可训练缓存；保留它们作历史证据。新增 `--check-prepared` 只核对 CSV／manifest 中的集合元数据，不读取特征、不运行模型。修复与边界算术的合成验收见 [分折修复回执](split_guard_delivery_20261110.json)。
+
 2026-11-10：用户明确选择“真实患者生存小试跑，先补齐接入”。此授权更新此前暂停患者接入的阶段边界；当前交付只在本地使用合成患者验收，尚未读取真实患者输入或执行服务器任务。
 
 本入口运行当前 `RoleTargetModel` 的生存版本，复用角色编码、角色解码和有界中心化交互，保留两阶段训练。研究目标是工程可执行性及探索性验证。真实来源未知时，角色定义为相对训练折线性参照的可预测／剩余内容，不宣称结构来源纯度、噪声已知或 PID 分解。
@@ -28,21 +30,30 @@ python -B scripts/run_common_private_patient_pilot.py --doctor
 
 `--plan` 不导入 torch、不读患者值；`--doctor` 检查依赖、代码哈希和既有环境变量是否存在，不读取患者值，也不代表数据已验收。依赖包含 torch、numpy、pandas、h5py、scikit-survival，不自动安装或升级。
 
-如果已有与本轮数据范围完全匹配的 `prepared/manifest.json` 和 `resolved_config.json`，可以直接将其父目录传给 `--prepared-root`；`--run` 会验证原版来源、配置、CSV 与缓存哈希，拒绝旧的截断 patch 缓存和跨折配置。
+只有包含 `split_identity.schema=pilot_explicit_split_v1` 的新缓存可以进入当前训练入口。先进行只读检查：
+
+```bash
+python -B scripts/run_common_private_patient_pilot.py --check-prepared \
+  --prepared-root local_evidence/已准备目录
+```
+
+该检查会打开分折 CSV 和 manifest 中的患者身份元数据，输出路径、人数和摘要，不输出患者 ID，不读取特征或模型权重。需要核对：请求 CSV 和实际选择器的逻辑路径、真实路径与内容哈希；保留集合及顺序；排除原因；每个 split 的“请求＝保留与排除的不相交并集”；训练／验证互斥。符号链接允许存在，但记录其解析后的文件身份。旧缓存缺少这些字段会直接拒绝，不能仅补写几项字段使其通过。
+
+`--run` 会在读取缓存和拟合参照前完成该检查，并验证原版来源、配置、CSV 与缓存文件哈希；评估前再次核对身份及 manifest。准备／复用必须经具体执行授权，当前修复本身不启动新的患者准备、训练或推理。
 
 否则先准备新缓存。服务器需已设置 `SLOTSPE_METADATA_ROOT` 和 `SLOTSPE_FEATURES_ROOT`。也可使用 `--data-config` 指向原有绝对路径配置 JSON。准备会读取真实输入，但不会训练模型：
 
 ```bash
 python -B scripts/run_common_private_patient_pilot.py --prepare \
-  --output-root local_evidence/common_private_pilot_prepare_20261110_01
+  --output-root local_evidence/common_private_pilot_prepare_splitfixed_20261110_01
 ```
 
 完成后启动训练。两个目录都必须是新目录；已有失败产物保留，不自动覆盖或恢复：
 
 ```bash
 python -B scripts/run_common_private_patient_pilot.py --run \
-  --prepared-root local_evidence/common_private_pilot_prepare_20261110_01 \
-  --output-root local_evidence/common_private_pilot_blca_f0_s3_20261110_01
+  --prepared-root local_evidence/common_private_pilot_prepare_splitfixed_20261110_01 \
+  --output-root local_evidence/common_private_pilot_blca_f0_s3_splitfixed_20261110_01
 ```
 
 在有 CPU 环境的机器上，另可运行完整合成患者冒烟。它会执行两阶段训练、保存并重建模型；不读取真实患者输入：
@@ -59,3 +70,11 @@ python -B scripts/run_common_private_patient_pilot.py --smoke \
 当前没有同协议 S0 对照，没有额外 seed/fold，也没有独立测试集结果。历史验证分数不能与本次直接比较并称为提升。后续性能验证需在相同数据准备、mask、标签、预算、种子和 checkpoint 协议下增加对照。有限参照的泛化、角色泄漏、合法条件采样与纠正收益仍独立审查。
 
 原版源码、既有患者队列、历史失败与回执保持不变；本入口没有接入运输或双视图/SCM/SRO/残差对比等附加训练项。推送范围只含可执行试跑及必要角色组件，不将患者缓存、权重、预测或标识纳入 Git。
+
+## 历史报告的解释边界
+
+服务器回传的 run02 是 `5fold` 家族内的 fold0 单折，不是五折实验；另一 uni2h 试跑通过隔离 metadata 根的符号链接改变了硬编码路径的实际目标。这些属于用户回传的服务器证据，未在本地重新验收患者产物。历史目录、参数和回执不改名、不覆盖。
+
+`pd.cut(right=False)` 与内部边界的 `searchsorted(side='right')` 在边界点均进入下一桶；四例标签差异不能由这两个规则的差异来解释。新测试用已知边界独立验证这一点。原版全临床等宽分箱、训练折分位数标签和 pilot 的删失 NLL 是不同事项；应各自按真实执行版本追溯。
+
+同一预测在两种 NLL 下的差可用于描述损失口径差。未经挑选的重复均值没有必然抬高分数的方向；独立 best 队列与末轮队列之间的全部分数差也不能只归因于选 epoch。self-pool A/B/C 与共有／剩余角色研究的消融臂是不同定义，不能混用。新训练是否必要要在数据／评估协议可信之后决定。

@@ -70,6 +70,7 @@ def plan(c):
 def source_hashes():
     names = ['research_models/common_private_synergy/patient_pilot.py',
              'research_models/common_private_synergy/patient_pilot_engine.py',
+             'research_models/common_private_synergy/pilot_split.py',
              'research_models/common_private_synergy/components/role_model.py',
              'research_models/common_private_synergy/components/role_reference.py',
              'research_models/common_private_synergy/components/slots.py',
@@ -81,14 +82,14 @@ def source_hashes():
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__)
     modes = p.add_mutually_exclusive_group()
-    for name in ('plan', 'doctor', 'smoke', 'prepare', 'run'):
+    for name in ('plan', 'doctor', 'smoke', 'prepare', 'run', 'check-prepared'):
         modes.add_argument('--'+name, action='store_true')
     p.add_argument('--config', type=Path, default=DEFAULT)
     p.add_argument('--data-config', type=Path)
     p.add_argument('--prepared-root', type=Path)
     p.add_argument('--output-root', type=Path)
     a = p.parse_args(argv); c = config(a.config)
-    if not any((a.doctor, a.smoke, a.prepare, a.run)):
+    if not any((a.doctor, a.smoke, a.prepare, a.run, a.check_prepared)):
         print(json.dumps(plan(c), ensure_ascii=False, indent=2)); return
     if a.doctor:
         import importlib.util
@@ -102,6 +103,15 @@ def main(argv=None):
         print(json.dumps(result, indent=2));
         if not all(dependencies.values()): raise SystemExit(2)
         return
+    if a.check_prepared:
+        if not a.prepared_root: p.error('--check-prepared needs --prepared-root')
+        from .pilot_split import validate_split
+        saved = json.loads((a.prepared_root/'resolved_config.json').read_text(encoding='utf-8'))
+        manifest = json.loads((a.prepared_root/'prepared/manifest.json').read_text(encoding='utf-8'))
+        verified = validate_split(saved, manifest)
+        print(json.dumps({'status':'split_metadata_verified','split_identity':verified,
+                          'feature_values_read':False,'model_executed':False}, indent=2))
+        return
     if not a.output_root: p.error('fresh --output-root required for execution')
     out = private_path(a.output_root)
     if out.exists(): raise FileExistsError('preserve existing run; select a fresh output-root')
@@ -109,7 +119,8 @@ def main(argv=None):
         from .patient_pilot_engine import synthetic_smoke
         result = synthetic_smoke(out)
         print(json.dumps(result, indent=2)); return
-    from slotspe_proof.patient import _config, _manifest, prepare
+    from slotspe_proof.patient import _config, _manifest
+    from .pilot_split import prepare, validate_split
     if a.prepare:
         if a.data_config:
             supplied = json.loads(a.data_config.read_text(encoding='utf-8'))
@@ -135,11 +146,21 @@ def main(argv=None):
         write(out/'resolved_config.json', data_config)
         prepare(data_config, out)
         print('Prepared inputs only; no model trained. Next use --run --prepared-root '+str(out)); return
+    # Refuse unsupported historical identities BEFORE cache loads, fitting or
+    # creating an output directory. File hashes alone cannot certify a split.
+    manifest = json.loads((a.prepared_root/'prepared/manifest.json').read_text(encoding='utf-8'))
+    identity = validate_split(data_config, manifest)
     manifest = _manifest(data_config, a.prepared_root, verify_cache=True)
     if not manifest.get('patch_policy','').startswith('Every real patch is cached'):
         raise ValueError('full-real-patch cache required; old truncated caches are refused')
     from .patient_pilot_engine import run_prepared
-    result = run_prepared(a.prepared_root, out, manifest, c, source_hashes())
+    def recheck():
+        current = json.loads((a.prepared_root/'prepared/manifest.json').read_text(encoding='utf-8'))
+        verified = validate_split(data_config, current)
+        if current != manifest or verified != identity:
+            raise RuntimeError('prepared manifest or cohort changed after admission')
+        return verified
+    result = run_prepared(a.prepared_root, out, manifest, c, source_hashes(), split_guard=recheck)
     print(json.dumps(result, indent=2))
 
 

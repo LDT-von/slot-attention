@@ -148,7 +148,11 @@ def model_forward(model, b):
     return model(b['p'], b['g'], b['p_mask'], b['g_mask'])
 
 
-def run_prepared(root, out, manifest, c, code_hashes):
+def run_prepared(root, out, manifest, c, code_hashes, *, split_guard=None, synthetic=False):
+    if split_guard is None and not synthetic:
+        raise ValueError('verified split admission required before patient execution')
+    identity = split_guard() if split_guard is not None else {'schema':'invented_smoke_only'}
+    manifest_hash = sha(Path(root)/'prepared/manifest.json')
     torch.set_num_threads(c['torch_threads']); torch.manual_seed(c['seed'])
     device = torch.device(c['device'])
     if device.type == 'cuda' and not torch.cuda.is_available(): raise RuntimeError('requested CUDA unavailable; no silent CPU fallback')
@@ -179,6 +183,7 @@ def run_prepared(root, out, manifest, c, code_hashes):
         'boundaries_fit_on':'uncensored training only','boundaries':boundaries.tolist(),
         'train_count':len(train),'validation_count':len(val),'test_used':False,
         'prepared_manifest_SHA256':sha(Path(root)/'prepared/manifest.json'),
+        'split_identity':identity,
         'source_SHA256':initial_source_hashes,'epoch_logs':[], 'optimizer_steps':{'role':0,'task':0},
         'semantic_scope':'finite empirical linear target roles; no identified sources, known noise or PID claims',
         'evaluation_scope':'single fold/seed short engineering validation; no matched baseline or patient efficacy claim'}
@@ -215,6 +220,10 @@ def run_prepared(root, out, manifest, c, code_hashes):
                         'boundaries':boundaries,'reference_metadata':reference.metadata},out/'role_final.pt')
     assert frozen == tensor_hash([(n,p) for n,p in model.named_parameters() if not n.startswith('readout.')])
     assert reference_before == tensor_hash(list(model.reference.named_buffers()))
+    if sha(Path(root)/'prepared/manifest.json') != manifest_hash:
+        raise RuntimeError('prepared manifest changed before evaluation')
+    if split_guard is not None and split_guard() != identity:
+        raise RuntimeError('split identity changed before evaluation')
     model.eval(); losses, logits, targets_mse = [], [], []
     eval_rng = torch.Generator().manual_seed(c['seed']+19000)
     with torch.no_grad():
@@ -292,7 +301,7 @@ def synthetic_smoke(out):
         manifest['patients'][pid]={'cache_path':rel,'cache_sha256':sha(prepared/rel),'time':float(i+1),'censor':float(i%3==0)}
         manifest['folds']['0']['train' if i<24 else 'val'].append(pid)
     write(prepared/'prepared/manifest.json',manifest)
-    result=run_prepared(prepared,out/'run',manifest,c,{})
+    result=run_prepared(prepared,out/'run',manifest,c,{},synthetic=True)
     result.update(synthetic_only=True,patient_values_read=False,patient_training=0,server_execution=False)
     write(out/'synthetic_smoke_summary.json',result)
     return result
