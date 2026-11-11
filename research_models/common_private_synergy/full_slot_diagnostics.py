@@ -6,6 +6,25 @@ never written by these functions. Callers must keep patient-level data private.
 import math
 import torch
 import torch.nn.functional as F
+from .components.slots import READ_EPS
+
+
+def read_mass_summary(mass):
+    """Aggregate [patients,iterations,slots] pre-smoothing assignment mass.
+
+    The threshold is the historical clamp level, not a dead-slot definition.
+    Low mass is valid and reported; invalid numeric values still raise.
+    """
+    if mass.ndim != 3 or not mass.numel() or not torch.isfinite(mass).all() or (mass < 0).any():
+        raise ValueError('finite nonnegative nonempty [patients,iterations,slots] mass required')
+    mass = mass.detach().double()
+    low = mass < READ_EPS
+    return {'threshold': READ_EPS, 'threshold_scope': 'historical_clamp_level_not_dead_slot_definition',
+            'observations': mass.numel(), 'minimum': float(mass.min()),
+            'below_threshold_count': int(low.sum()), 'below_threshold_fraction': float(low.double().mean()),
+            'below_threshold_count_by_iteration': low.sum(dim=(0, 2)).tolist(),
+            'below_threshold_count_by_slot': low.sum(dim=(0, 1)).tolist(),
+            'minimum_by_iteration': mass.amin(dim=(0, 2)).tolist()}
 
 
 def _effective_rank(x):

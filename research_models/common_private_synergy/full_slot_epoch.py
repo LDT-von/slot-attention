@@ -10,7 +10,7 @@ from sksurv.metrics import concordance_index_censored
 
 from .components.losses import discrete_hazard_nll
 from .components.role_reference import role_content_losses
-from .full_slot_diagnostics import ablate_each_slot, role_summary, slot_summary
+from .full_slot_diagnostics import ablate_each_slot, read_mass_summary, role_summary, slot_summary
 from .patient_pilot_engine import batch, model_forward
 
 
@@ -25,7 +25,7 @@ def evaluate_epoch(model, store, ids, adapter, boundaries, config, device, *, se
         raise ValueError('nonempty unique ordered validation ids required')
     model.eval()
     rng = torch.Generator().manual_seed(seed)
-    roles, slots, attention, ablations = {}, {}, {}, {}
+    roles, slots, attention, ablations, read_mass = {}, {}, {}, {}, {}
     losses, logits = [], []
     role_sums = {}
     for start in range(0, len(ids), config['batch_size']):
@@ -51,10 +51,12 @@ def evaluate_epoch(model, store, ids, adapter, boundaries, config, device, *, se
                 roles.setdefault(key, []).append(out['roles'][key].cpu())
                 slots.setdefault(key, []).append(part[part_key].cpu())
                 attention.setdefault(key, []).append(part['read_attention'][:, section].cpu())
+                read_mass.setdefault(key, []).append(part['raw_read_mass'][:, :, section].cpu())
     result = {
         'role_target_MSE': {k: v / len(ids) for k, v in role_sums.items()},
         'roles': {k: role_summary(torch.cat(v)) for k, v in roles.items()},
         'slots': {k: slot_summary(torch.cat(v), torch.cat(attention[k])) for k, v in slots.items()},
+        'raw_reading_mass': {k: read_mass_summary(torch.cat(v)) for k, v in read_mass.items()},
         'validation_sampling_seed': seed,
         'ablation_mean_abs_logit_change': {k: [v / len(ids) for v in values] for k, values in ablations.items()},
         'ablation_scope': 'slot removal in role pool; not conditional CPI',

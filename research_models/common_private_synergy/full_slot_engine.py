@@ -15,7 +15,8 @@ import torch
 
 from .components.losses import discrete_hazard_nll
 from .components.role_reference import FrozenRoleReference, ReferenceProvenance, role_content_losses
-from .full_slot_diagnostics import better_validation
+from .full_slot_diagnostics import better_validation, read_mass_summary
+from .components.slots import READ_EPS, READ_NORMALIZATION
 from .full_slot_epoch import evaluate_epoch
 from .patient_pilot import ROOT, sha
 from .patient_pilot_engine import (
@@ -83,6 +84,7 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                'prepared_manifest_SHA256': manifest_hash, 'train_count': len(train), 'validation_count': len(val),
                'test_used': False, 'model_parameters': sum(x.numel() for x in model.parameters()),
                'selection': 'maximum C-index, exact tie lower NLL, then earlier epoch',
+               'read_normalization': {'policy': READ_NORMALIZATION, 'epsilon': READ_EPS, 'epsilon_on': 'real_tokens_only'},
                'epoch_logs': [], 'best': None, 'last': None,
                'optimizer_steps': {'role': 0, 'task': 0},
                'environment': {'python': platform.python_version(), 'torch': torch.__version__,
@@ -112,10 +114,13 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                 order = torch.randperm(len(train), generator=rng).tolist()
                 total, role_total, task_total = 0., 0., 0.
                 grads = {name: {'p': None, 'g': None} for name in ('combined', 'survival', 'role')}
+                train_mass = {'p': [], 'g': []}
                 for start in range(0, len(train), c['batch_size']):
                     ids = [train[i] for i in order[start:start + c['batch_size']]]
                     b = batch(store, ids, adapter, boundaries, c, device, generator=rng)
                     output = model_forward(model, b)
+                    for modality in ('p', 'g'):
+                        train_mass[modality].append(output['parts'][modality]['raw_read_mass'].cpu())
                     for modality in ('p', 'g'):
                         raw = output['parts'][modality]['slots']
                         if raw.requires_grad:
@@ -161,6 +166,7 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                 log = {'phase': phase, 'epoch': epoch, 'completed_at': _now(), 'train_loss': total / len(train), 'validation': metrics,
                        'train_role_loss': role_total / len(train),
                        'train_survival_NLL': task_total / len(train) if phase == 'task' else None,
+                       'train_raw_reading_mass': {k: read_mass_summary(torch.cat(v)) for k, v in train_mass.items()},
                        'raw_slot_gradient_mean': {name: {k: (v / len(train)).tolist() if v is not None else None
                                                         for k, v in values.items()} for name, values in grads.items()},
                        'gradient_scope': 'mean raw-slot gradient norms for batch-mean losses; role term shown unweighted'}

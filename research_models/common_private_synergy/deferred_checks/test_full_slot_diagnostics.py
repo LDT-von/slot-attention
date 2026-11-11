@@ -123,12 +123,21 @@ def test_full_epoch_reuses_validation_bags_and_supports_multislot(tmp_path):
 
 
 @pytest.mark.parametrize('mode', ['frozen', 'joint'])
-def test_full_training_checkpoint_and_gradient_paths(tmp_path, mode, monkeypatch):
+@pytest.mark.parametrize('starved', [False, True])
+def test_full_training_checkpoint_and_gradient_paths(tmp_path, mode, monkeypatch, starved):
     import json
     from research_models.common_private_synergy import full_slot_engine
     from research_models.common_private_synergy.components.losses import discrete_hazard_nll
     from research_models.common_private_synergy.components.role_reference import role_content_losses
     from research_models.common_private_synergy.patient_pilot_engine import PreparedStore, batch, load_checkpoint, model_forward
+    if starved:
+        from research_models.common_private_synergy.components import slots as slot_components
+        original_read = slot_components.masked_slot_read
+        def starved_read(logits, real_mask):
+            bias = logits.new_zeros(1, logits.shape[1], 1)
+            bias[:, -1] = -1000
+            return original_read(logits + bias, real_mask)
+        monkeypatch.setattr(slot_components, 'masked_slot_read', starved_read)
     original_save = full_slot_engine._save_checkpoint
     def capture(path, checkpoint):
         original_save(path, checkpoint)
@@ -157,6 +166,10 @@ def test_full_training_checkpoint_and_gradient_paths(tmp_path, mode, monkeypatch
     assert len(result['epoch_logs']) == 5
     assert result['best']['epoch'] in (1, 2, 3)
     assert result['last']['epoch'] == 3
+    assert result['read_normalization']['policy'] == 'masked_add_eps_l1_v2'
+    if starved:
+        assert result['epoch_logs'][0]['train_raw_reading_mass']['p']['below_threshold_count'] > 0
+        assert result['epoch_logs'][0]['validation']['raw_reading_mass']['g_residual']['below_threshold_count'] > 0
     saved_role = torch.load(tmp_path / 'output/role_last.pt', weights_only=True)
     saved_last = torch.load(tmp_path / 'output/task_last.pt', weights_only=True)
     assert saved_last['optimizer_state'] and saved_last['train_generator_state'] is not None
