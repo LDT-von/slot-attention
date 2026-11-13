@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-10-28T15:35:00+08:00",
+  "recorded_at": "2026-11-13T03:30:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -5150,5 +5150,1427 @@
     },
     "gaps_reasons": "1) 单种子 (seed3) 单队列, 折间标准差只反映折划分变化, 不含训练随机性; 训练随机性未估计。2) 臂间 C-index 差异未做多重比较校正, 且除 R1 外 5 折配对检验均未达常规显著水平; 11 臂全部落在 0.61-0.71 的窄带内, 现有数据无法把任何臂与基线区分开。3) best 口径的 30 选 1 验证峰值选择自带的乐观偏差已由队列 caveats 标明, 本仓库未做独立测试集复评, 因此这些数值不能当作泛化性能。4) 末轮口径下 fold0 复用自早前单折队列且其首个训练批与内容参考 patch 取自未播种的全局 numpy 流 (不可复现, 臂间不一致), 折1-4 用固定可复现抽样, 故末轮口径的折间可比性受此机制影响。5) 槽余弦、有效秩、读重叠是描述性几何指标, 不是临床终点, 不能据此声称患者获益; '冗余与性能负相关'是描述性相关, 不构成'冗余有害'的因果结论——R5/R1 的折间标准差最大 (0.0769/0.0930) 且在 fold1/fold4 剧烈崩塌 (R5 0.5147/0.5466, R1 0.5337/0.5331), 更像是强行拆冗余破坏了训练稳定性而非获得更好表示, 这一区分尚未被实验分离。6) 本轮未做任何容量扫描 (4/8/16 槽), 因而'给更多槽能否避免塌缩'这一直接问题仍未回答。7) 本条目不声称任何患者获益、临床价值或泛化性能。",
     "next_action_user_inputs": "汇报时必须同时给出: (a) best 口径五折 R4 0.7071 与 S0 0.7039 差异不显著 (t(4df)=+0.22), 不能称基线最强也不能称 R4 更优; (b) 分数最高的臂没有解决槽冗余, 唯二解决冗余的 R5/R1 分数最低, 跨 55 点 Spearman 方向为负 (-0.25/-0.32); (c) 换末轮口径排名反转 (S0 第8、R3 第1), 必须标注单种子、未做多重比较校正、best 峰值选择偏差、折0 抽样机制与末轮口径不同; (d) 明确槽几何是描述性指标不是临床终点。下一步需要用户决定: (a) 是否授权容量扫描 (4/8/16 槽) 训练以直接回答'更多槽能否避免塌缩'; (b) 是否授权多训练种子 (如 seed3/7/11) 以估计训练随机性, 否则折间方差无法与臂间差异分离; (c) 是否授权对 R5/R1 的训练稳定性做专项诊断 (区分'冗余有害'与'训练发散'); (d) 本地 7 个提交已推送, 本轮记录提交是否直接推送到 origin/main。"
+  },
+  "latest_full_slot_edc2313_failed_joint_frozen": {
+    "recorded_at": "2026-11-11T14:40:00+08:00",
+    "route_task": "SlotSPE / full-slot matched research execution / edc2313 joint+frozen arms / read normalization defect",
+    "status": "failed_both_arms_no_performance_result",
+    "authorization": "用户于2026-11-11授权在隔离副本 /data1/slotspe_full_slot_20261111_01 按提交 edc23138cf0919629874e2d8d3f6595716135ee5 顺序执行 full-slot joint 与 frozen 两臂; 失败即保留产物停止, 不自动改参重试。",
+    "completed_work": "在隔离副本 /data1/slotspe_full_slot_20261111_01 (分支 codex/full-slot-research-20261111, HEAD=edc23138cf0919629874e2d8d3f6595716135ee5) 完成环境核对、准入与两臂执行: pytest 41 passed / 0 failed / 0 skipped / exit 0 (含 Linux symlink 用例); --check-prepared 通过; joint 与 frozen 两臂均在 role 训练第1轮验证诊断阶段抛出 ValueError: attention must be nonnegative and normalized over tokens, 退出码 1。两臂 optimizer_steps 均为 role=152 / task=0, epoch_logs 为空数组, best 与 last 均为 null, 因此两臂都没有任何 epoch 指标、没有任何 C-index/NLL、没有任何患者性能结果; task 阶段从未进入, test_used=false。失败点与根因: RoleSlotEncoder 用 assignment.sum(-1).clamp_min(1e-8) 作归一化分母, 沿槽维 softmax 使低质量槽的读取质量下溢 (实测 M≈1.34e-16), 分母被钉在 1e-8 导致 sum(attention)=M/1e-8≈1.34e-8≠1, 撞上 slot_summary 的 allclose(atol=1e-5,rtol=1e-5) 严格断言。实测崩溃行槽范数全部健康(6.09/5.53/4.01/3.40, 非零有限), 属读取质量塌缩而非数值 NaN 或死槽; 初始化时跨38个batch实测 off_normal_slots=0, 塌缩是152步优化中新出现的。与原版 SlotSPE 的偏离: 原版用安全 L1 归一化 F.normalize(attn+eps, p=1) (third_party/SlotSPE/models/slot_attention.py:98)。本条目只登记已发生的失败事实与其证据, 不含任何性能主张。",
+    "paths_commit": {
+      "failed_checkout": "/data1/slotspe_full_slot_20261111_01",
+      "failed_checkout_head": "edc23138cf0919629874e2d8d3f6595716135ee5",
+      "branch": "codex/full-slot-research-20261111",
+      "joint_evidence_dir": "local_evidence/full_slot_joint_20261111_01",
+      "frozen_evidence_dir": "local_evidence/full_slot_frozen_20261111_01",
+      "diagnostic_log_dir": "local_evidence/full_slot_logs_20261111_01",
+      "read_fix_sandbox": "/data1/slotspe_full_slot_fixprobe_20261111_01",
+      "read_fix_sandbox_head": "245da18ab4042669b98c7f7bd6b25fbbf793731b",
+      "read_fix_sandbox_branch": "readfix_v2_sandbox",
+      "artifact_sha256": {
+        "joint/receipt.json": {
+          "path": "local_evidence/full_slot_joint_20261111_01/receipt.json",
+          "sha256": "1d2aa31f85732d71a8e8f758a82de24e629b6b255f27f7ba1bf334d5efb5905b",
+          "bytes": 5810
+        },
+        "joint/exception_traceback.txt": {
+          "path": "local_evidence/full_slot_joint_20261111_01/exception_traceback.txt",
+          "sha256": "d30ef4534a86f236a2fd9696d17158a7d5e5112ba6be656d6c016287b553c337",
+          "bytes": 1353
+        },
+        "frozen/receipt.json": {
+          "path": "local_evidence/full_slot_frozen_20261111_01/receipt.json",
+          "sha256": "1b362519a1eed90b6d790a306a596a98b21acf00e91be40b84fc5f5ec5188c46",
+          "bytes": 5811
+        },
+        "frozen/exception_traceback.txt": {
+          "path": "local_evidence/full_slot_frozen_20261111_01/exception_traceback.txt",
+          "sha256": "d30ef4534a86f236a2fd9696d17158a7d5e5112ba6be656d6c016287b553c337",
+          "bytes": 1353
+        }
+      },
+      "preserved_read_only": [
+        "/data1/slotspe_full_slot_20261111_01",
+        "/data1/SlotSPE",
+        "/data1/slotspe_split_guard_0934bb6",
+        "/data1/slotspe_split_guard_0934bb6/local_evidence/common_private_pilot_prepare_splitfixed_20261110_01"
+      ],
+      "new_commit_or_push": false
+    },
+    "protocol": {
+      "study": "blca",
+      "fold": 0,
+      "seed": 3,
+      "patches": 4096,
+      "batch_size": 2,
+      "allocation": {
+        "p": [
+          2,
+          2
+        ],
+        "g": [
+          2,
+          2
+        ]
+      },
+      "width": 64,
+      "iterations": 3,
+      "hidden": 32,
+      "bins": 4,
+      "role_epochs": 12,
+      "task_epochs_max": 40,
+      "patience": 10,
+      "role_lr": 0.003,
+      "task_lr": 0.001,
+      "role_weight": 1.0,
+      "readout_bound": 2.0,
+      "torch_threads": 2,
+      "device_logical": "cuda:0",
+      "cohort": "5fold_uni2h",
+      "train_count": 304,
+      "validation_count": 76
+    },
+    "results": {
+      "joint": {
+        "arm": "joint",
+        "status": "failed",
+        "exit_code": 1,
+        "failed_at": "2026-11-11T11:36:08.015995+00:00",
+        "error": "ValueError: attention must be nonnegative and normalized over tokens",
+        "optimizer_steps": {
+          "role": 152,
+          "task": 0
+        },
+        "epoch_logs_length": 0,
+        "epoch_logs_empty": true,
+        "best": null,
+        "last": null,
+        "task_epoch_logs_length": 0,
+        "performance_result_present": false,
+        "patient_performance_claim": "none; no epoch metric was produced, so no C-index/NLL exists for this arm",
+        "train_count": 304,
+        "validation_count": 76,
+        "test_used": false,
+        "model_parameters": 245164,
+        "configuration_SHA256": "a592fd23372aaa46c5e189ac49dbe316a901931c8762c939f62dbcff0320a685",
+        "prepared_manifest_SHA256": "8fc4ccc92668da836aea79f253384bc70040542d6b02fbdb4a8e592e42454091",
+        "source_SHA256": {
+          "research_models/common_private_synergy/patient_pilot.py": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3",
+          "research_models/common_private_synergy/patient_pilot_engine.py": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b",
+          "research_models/common_private_synergy/pilot_split.py": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1",
+          "research_models/common_private_synergy/components/role_model.py": "fb97256d7fabb3a839aeb890bbb64c3b2166a856562b55f26f08df547ba28fe2",
+          "research_models/common_private_synergy/components/role_reference.py": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4",
+          "research_models/common_private_synergy/components/slots.py": "cbf38473b4379d0e9e3e43cadb085a4d4d89d7cb96010a942792d7872df7156e",
+          "research_models/common_private_synergy/components/losses.py": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2",
+          "slotspe_proof/patient.py": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
+          "scripts/run_common_private_full_slot.py": "786bc9402d663273a0df79f105c1ea4adf43cbc499f817eb46bfaa76df3ac1d7",
+          "research_models/common_private_synergy/components/contracts.py": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee",
+          "research_models/common_private_synergy/full_slot_diagnostics.py": "64486e3322e4468e2f3373791dbdac6f9293fca7b8e0f3a022088629930a6356",
+          "research_models/common_private_synergy/full_slot_epoch.py": "e20d8be3a6398a523ad71d39c04ce1c590bb7589b69eee045161946f9153b281",
+          "research_models/common_private_synergy/full_slot_engine.py": "6d2286e9e466c93c70655e8f3bad642958d6715acd2964423d6aca6ab86b5e99"
+        },
+        "environment": {
+          "python": "3.12.4",
+          "torch": "2.10.0+cu128",
+          "cuda_runtime": "12.8",
+          "device": "cuda:0",
+          "device_name": "NVIDIA GeForce RTX 5090"
+        }
+      },
+      "frozen": {
+        "arm": "frozen",
+        "status": "failed",
+        "exit_code": 1,
+        "failed_at": "2026-11-11T11:48:40.619924+00:00",
+        "error": "ValueError: attention must be nonnegative and normalized over tokens",
+        "optimizer_steps": {
+          "role": 152,
+          "task": 0
+        },
+        "epoch_logs_length": 0,
+        "epoch_logs_empty": true,
+        "best": null,
+        "last": null,
+        "task_epoch_logs_length": 0,
+        "performance_result_present": false,
+        "patient_performance_claim": "none; no epoch metric was produced, so no C-index/NLL exists for this arm",
+        "train_count": 304,
+        "validation_count": 76,
+        "test_used": false,
+        "model_parameters": 245164,
+        "configuration_SHA256": "6fbf49c3248f4a6ecfc656a3bc13ff08410d65d29c887b646ee8453baef847bc",
+        "prepared_manifest_SHA256": "8fc4ccc92668da836aea79f253384bc70040542d6b02fbdb4a8e592e42454091",
+        "source_SHA256": {
+          "research_models/common_private_synergy/patient_pilot.py": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3",
+          "research_models/common_private_synergy/patient_pilot_engine.py": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b",
+          "research_models/common_private_synergy/pilot_split.py": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1",
+          "research_models/common_private_synergy/components/role_model.py": "fb97256d7fabb3a839aeb890bbb64c3b2166a856562b55f26f08df547ba28fe2",
+          "research_models/common_private_synergy/components/role_reference.py": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4",
+          "research_models/common_private_synergy/components/slots.py": "cbf38473b4379d0e9e3e43cadb085a4d4d89d7cb96010a942792d7872df7156e",
+          "research_models/common_private_synergy/components/losses.py": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2",
+          "slotspe_proof/patient.py": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
+          "scripts/run_common_private_full_slot.py": "786bc9402d663273a0df79f105c1ea4adf43cbc499f817eb46bfaa76df3ac1d7",
+          "research_models/common_private_synergy/components/contracts.py": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee",
+          "research_models/common_private_synergy/full_slot_diagnostics.py": "64486e3322e4468e2f3373791dbdac6f9293fca7b8e0f3a022088629930a6356",
+          "research_models/common_private_synergy/full_slot_epoch.py": "e20d8be3a6398a523ad71d39c04ce1c590bb7589b69eee045161946f9153b281",
+          "research_models/common_private_synergy/full_slot_engine.py": "6d2286e9e466c93c70655e8f3bad642958d6715acd2964423d6aca6ab86b5e99"
+        },
+        "environment": {
+          "python": "3.12.4",
+          "torch": "2.10.0+cu128",
+          "cuda_runtime": "12.8",
+          "device": "cuda:0",
+          "device_name": "NVIDIA GeForce RTX 5090"
+        }
+      },
+      "shared_source_hashes_identical_across_arms": true,
+      "cross_arm_observation": "两臂配置SHA256不同但14个源文件SHA256完全一致, 说明失败源于共享代码路径而非两臂协议差异。"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "pytest": "41 passed / 0 failed / 0 skipped / exit 0 (含 Linux symlink 用例); 日志 local_evidence/full_slot_logs_20261111_01/pytest_verbose.log。",
+      "prepared_cache_admission": "--check-prepared 通过; prepared manifest SHA256 = 8fc4ccc92668da836aea79f253384bc70040542d6b02fbdb4a8e592e42454091。",
+      "joint_actual_execution": "真实 GPU 执行, cuda:0 (RTX 5090), 退出码 1, receipt.json status=failed, failed_at=2026-11-11T11:36:08.015995+00:00, 原始 traceback 见 exception_traceback.txt。",
+      "frozen_actual_execution": "真实 GPU 执行, cuda:0 (RTX 5090), 退出码 1, receipt.json status=failed, failed_at=2026-11-11T11:45:38 之后的实际记录时间, 原始 traceback 见 exception_traceback.txt。",
+      "root_cause_evidence": "local_evidence/full_slot_logs_20261111_01/{attention_localization.txt, attention_localization_all_batches.json, engine_order_localization.json, verify_attention_identity.log, repro_attention_mechanism.py, localize_engine_order.py}: 跨38个batch初始状态 off_normal_slots=0; 崩溃行 p_residual slot1 normalized_sum=1.3426930101866322e-08 (对应原始质量 M=1.34e-16), p_common slot1 normalized_sum=1.8119164969741802e-07; 槽范数全部非零有限, 证明是读取质量塌缩而非死槽; 反算验证 M/1e-8 恒等式与断言阈值行为。",
+      "independent_test_set": "不存在。5fold_uni2h_outer_test_seed3/blca/fold_0.csv 的 outer test 与 5fold_uni2h fold0 的76位验证患者完全是同一集合, 故两臂 receipt 记 test_used=false。",
+      "patient_performance_measured": false,
+      "synthetic_or_packaging_check_proves_patient_performance": false
+    },
+    "gaps_reasons": "本次两臂没有任何性能结果: role152/task0, epoch_logs空, best/last空, task阶段未进入, 因此不存在任何 C-index/NLL 可报告, 也不存在\"最好分数\"。本条目不含患者性能主张, 也不把合成/打包检查当作患者性能证据。失败发生在角色阶段验证, 距任务阶段早, 所以失败对最终生存预测的影响未测量。上游在 245da18ab4042669b98c7f7bd6b25fbbf793731b 修复了读取归一化(masked_add_eps_l1_v2), 该修复改变数值轨迹, 修复后结果必须标为 readfix v2。本协议无独立测试证据; best/last 均为开发验证结果, 不能与旧队列 S0 或旧3+3末轮数字直接比较并称提升。",
+    "next_action_user_inputs": "在隔离副本 /data1/slotspe_full_slot_fixprobe_20261111_01 (HEAD=245da18a) 执行 readfix v2 探针 configs/common_private_full_joint_readfix_probe_v2.json (全量304/76、4096patch、batch2、原槽数、width64、3次循环, 预算 role2+task2), 使用物理 GPU1 (CUDA_VISIBLE_DEVICES=1, 逻辑 cuda:0), 输出到新目录 local_evidence/full_slot_joint_readfix_probe_v2_20261111_01; 探针门槛(退出0/status completed/2个role+2个task日志/损失与梯度有限/验证诊断合法且无padding读取/每轮训练与验证均有加eps前读取质量统计/零padding与极低质量回归通过/重载检查通过)全部通过后, 无需再次询问即从头顺序执行修复版完整 joint (local_evidence/full_slot_joint_readfix_v2_20261111_01) 与 frozen (local_evidence/full_slot_frozen_readfix_v2_20261111_01)。任一步失败保留产物并停止, 不自动改参重试。"
+  },
+  "latest_readfix_v2_probe_passed": {
+    "recorded_at": "2026-11-11T15:05:00+08:00",
+    "route_task": "SlotSPE / readfix v2 / full-slot joint probe (role2+task2) / physical GPU1",
+    "status": "probe_passed_all_gates",
+    "authorization": "用户2026-11-11决定 A+E 并授权探针门槛通过后无需再次询问即继续 F; 物理 GPU1, 逻辑 cuda:0。",
+    "completed_work": "在隔离副本 /data1/slotspe_full_slot_fixprobe_20261111_01 (branch readfix_v2_sandbox, HEAD=245da18ab4042669b98c7f7bd6b25fbbf793731b) 执行 readfix v2 探针: GPU 映射 CUDA_VISIBLE_DEVICES=1 -> 物理 GPU1 UUID GPU-ae871418-cdb0-08a8-e680-ad1b87af08e7, 逻辑 cuda:0 (GPU0 当时被其他实验室 PAGHC 进程占用, 未干预)。准入: pytest (test_slot_read_normalization / test_full_slot_diagnostics / test_pilot_split / test_model) 53 passed, exit 0; --check-prepared 通过 (model_executed=false, identity_sha256=8e6839d7f923706859af2deb876f26b401ae6065b3834da8219e49fee0654135)。探针配置 configs/common_private_full_joint_readfix_probe_v2.json: 全量304/76、4096patch、batch2、原槽数(p/g各2common+2residual)、width64、3次迭代, 预算仅 role2+task2; 新输出目录, 未从失败模型续训, 探针分数未用于调参。门槛逐项通过: (1) 退出码0 且 status=completed; (2) 恰好2个role + 2个task epoch日志; (3) 全部 train_loss/NLL/role_target_MSE/梯度均值有限; (4) 归一化策略记录为 masked_add_eps_l1_v2, epsilon=1e-8 仅加在真实token上; (5) 每个 epoch 的训练与验证都有加eps前 raw_reading_mass 统计; (6) padding零读取与极低质量/完全下溢回归由新增测试覆盖并通过; (7) checkpoint_reload_verified / checkpoint_optimizer_and_generator_reload_verified / reference_frozen 均为 true; 无 early_stop。低读取质量计数非零并逐轮上升, 按协议作为需保留的观察记录, 未作为停机条件, 也未据此声称低质量槽恢复了有用信息。",
+    "paths_commit": {
+      "sandbox": "/data1/slotspe_full_slot_fixprobe_20261111_01",
+      "branch": "readfix_v2_sandbox",
+      "head": "245da18ab4042669b98c7f7bd6b25fbbf793731b",
+      "probe_output_root": "local_evidence/full_slot_joint_readfix_probe_v2_20261111_01",
+      "log": "local_evidence/full_slot_logs_readfix_v2_20261111_01/probe.log",
+      "gpu_mapping": "local_evidence/full_slot_logs_readfix_v2_20261111_01/gpu_mapping_probe.txt",
+      "artifact_sha256": {
+        "receipt.json": "71e8dbef6fa3e8a472644f085a8a01da41c458651ca0d3a40fffe39c6f025882",
+        "role_last.pt": "b36f5ad484622e327f29e69949966423cb53aabc10a3661f24a23569eb72ac9b",
+        "task_best.pt": "c2eecea0bd40c48f82b9f87b966e26a3b28885a04e178721f56bb9ba877d5204",
+        "task_last.pt": "15882ee2469eaa0a4be0a896c1b30a66a730378255a553b84a001b2462d35202"
+      },
+      "configuration_SHA256": "cc026cdcdffd5f5ea860990529ab52e83c6db55cff9eb393ae89c4d24ec3bca5",
+      "prepared_manifest_SHA256": "8fc4ccc92668da836aea79f253384bc70040542d6b02fbdb4a8e592e42454091",
+      "source_SHA256": {
+        "research_models/common_private_synergy/patient_pilot.py": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3",
+        "research_models/common_private_synergy/patient_pilot_engine.py": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b",
+        "research_models/common_private_synergy/pilot_split.py": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1",
+        "research_models/common_private_synergy/components/role_model.py": "fb97256d7fabb3a839aeb890bbb64c3b2166a856562b55f26f08df547ba28fe2",
+        "research_models/common_private_synergy/components/role_reference.py": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4",
+        "research_models/common_private_synergy/components/slots.py": "6aca9fca71d4d752995b17480cce40720851dc8871ef6d8a18647d35fb257218",
+        "research_models/common_private_synergy/components/losses.py": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2",
+        "slotspe_proof/patient.py": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
+        "scripts/run_common_private_full_slot.py": "786bc9402d663273a0df79f105c1ea4adf43cbc499f817eb46bfaa76df3ac1d7",
+        "research_models/common_private_synergy/components/contracts.py": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee",
+        "research_models/common_private_synergy/full_slot_diagnostics.py": "d8ea86e1f35089414e15622c8ac84bf4290b913ec2cadc4fb1909e2688676e12",
+        "research_models/common_private_synergy/full_slot_epoch.py": "c61ecf0d5507e2ea1da0ed996b4d0165b2359d4d125b5115d5d47b2be9abcbaa",
+        "research_models/common_private_synergy/full_slot_engine.py": "0b12d831cc2e82d731b8bc6d31b4b837918fcf9e275157312a537436b8b03c8d"
+      },
+      "new_commit_or_push": false
+    },
+    "protocol": {
+      "study": "blca",
+      "fold": 0,
+      "seed": 3,
+      "patches": 4096,
+      "batch_size": 2,
+      "allocation": {
+        "p": [
+          2,
+          2
+        ],
+        "g": [
+          2,
+          2
+        ]
+      },
+      "width": 64,
+      "iterations": 3,
+      "role_epochs": 2,
+      "task_epochs": 2,
+      "patience": 10,
+      "cohort": "5fold_uni2h",
+      "train_count": 304,
+      "validation_count": 76,
+      "physical_gpu": 1,
+      "logical_device": "cuda:0",
+      "CUDA_VISIBLE_DEVICES": "1"
+    },
+    "results": {
+      "status": "completed",
+      "optimizer_steps": {
+        "role": 304,
+        "task": 304
+      },
+      "epoch_logs": [
+        {
+          "phase": "role",
+          "epoch": 1,
+          "train_loss": 0.4138802407124116,
+          "train_role_loss": 0.4138802407124116,
+          "train_survival_NLL": null,
+          "val_C_index": null,
+          "val_NLL": null,
+          "val_role_target_MSE": {
+            "p_common": 0.1634765350052092,
+            "p_residual": 0.44154189918005243,
+            "g_common": 0.18907111648895958,
+            "g_residual": 0.6632017917619087
+          },
+          "train_mass_min": {
+            "p": 1.9222886095360636e-10,
+            "g": 42.103746658899354
+          },
+          "train_below_threshold_count": {
+            "p": 3,
+            "g": 0
+          },
+          "val_mass_min": {
+            "p_common": 0.0324730127110838,
+            "p_residual": 8.309634581674024e-27,
+            "g_common": 42.09727551774141,
+            "g_residual": 38.26006985022308
+          },
+          "val_below_threshold_count": {
+            "p_common": 0,
+            "p_residual": 3,
+            "g_common": 0,
+            "g_residual": 0
+          }
+        },
+        {
+          "phase": "role",
+          "epoch": 2,
+          "train_loss": 0.4099707285748644,
+          "train_role_loss": 0.4099707285748644,
+          "train_survival_NLL": null,
+          "val_C_index": null,
+          "val_NLL": null,
+          "val_role_target_MSE": {
+            "p_common": 0.1862343739420145,
+            "p_residual": 0.5555671751303727,
+            "g_common": 0.13364868660449833,
+            "g_residual": 0.5287570240140835
+          },
+          "train_mass_min": {
+            "p": 2.6722675603123976e-127,
+            "g": 31.867244804743127
+          },
+          "train_below_threshold_count": {
+            "p": 77,
+            "g": 0
+          },
+          "val_mass_min": {
+            "p_common": 2.3334578135428732e-56,
+            "p_residual": 4.233176882938415e-115,
+            "g_common": 44.69298368949226,
+            "g_residual": 45.949244367307045
+          },
+          "val_below_threshold_count": {
+            "p_common": 5,
+            "p_residual": 30,
+            "g_common": 0,
+            "g_residual": 0
+          }
+        },
+        {
+          "phase": "task",
+          "epoch": 1,
+          "train_loss": 1.5388218757911118,
+          "train_role_loss": 0.43207288962033386,
+          "train_survival_NLL": 1.1067489861707784,
+          "val_C_index": 0.44774851316907394,
+          "val_NLL": 0.9290047204736204,
+          "val_role_target_MSE": {
+            "p_common": 0.14321786772183243,
+            "p_residual": 0.5704240753278448,
+            "g_common": 0.1349962658566097,
+            "g_residual": 0.521140750542237
+          },
+          "train_mass_min": {
+            "p": 4.644072788357702e-229,
+            "g": 38.869320189631644
+          },
+          "train_below_threshold_count": {
+            "p": 195,
+            "g": 0
+          },
+          "val_mass_min": {
+            "p_common": 3.132207730444904e-228,
+            "p_residual": 1.3508294605583687e-154,
+            "g_common": 53.85386870637805,
+            "g_residual": 64.82656630184346
+          },
+          "val_below_threshold_count": {
+            "p_common": 7,
+            "p_residual": 47,
+            "g_common": 0,
+            "g_residual": 0
+          }
+        },
+        {
+          "phase": "task",
+          "epoch": 2,
+          "train_loss": 1.2430232822322376,
+          "train_role_loss": 0.4083900369438542,
+          "train_survival_NLL": 0.834633245288384,
+          "val_C_index": 0.4715378079864061,
+          "val_NLL": 0.8095041420339143,
+          "val_role_target_MSE": {
+            "p_common": 0.14118084651877572,
+            "p_residual": 0.5546524974137876,
+            "g_common": 0.12067431102462335,
+            "g_residual": 0.5124977858340434
+          },
+          "train_mass_min": {
+            "p": 9.05051059498242e-241,
+            "g": 44.05940857937597
+          },
+          "train_below_threshold_count": {
+            "p": 214,
+            "g": 0
+          },
+          "val_mass_min": {
+            "p_common": 4.4598433447645816e-291,
+            "p_residual": 5.048666250653735e-159,
+            "g_common": 41.89402449828808,
+            "g_residual": 48.74516866107689
+          },
+          "val_below_threshold_count": {
+            "p_common": 6,
+            "p_residual": 53,
+            "g_common": 0,
+            "g_residual": 0
+          }
+        }
+      ],
+      "best": {
+        "epoch": 2,
+        "C_index": 0.4715378079864061,
+        "NLL": 0.8095041420339143
+      },
+      "last": {
+        "epoch": 2,
+        "C_index": 0.4715378079864061,
+        "NLL": 0.8095041420339143
+      },
+      "peak_cuda_allocated_bytes": 482392576
+    },
+    "checks_actual_execution_raw_receipt": {
+      "real_gpu_execution": "真实执行于物理 GPU1 (RTX 5090), 退出码0, log 中 PROBE_EXIT_CODE=0。",
+      "gate_status_completed": true,
+      "exactly_2_role_2_task_logs": true,
+      "finite_losses_gradients": true,
+      "validation_diagnostics_legal": "slot_summary 严格断言全部通过 (非法归一化/负数/非有限值检查保留)。",
+      "no_padding_read": "新增回归测试断言 padding 位置注意力严格为0且无 epsilon 质量。",
+      "read_mass_every_epoch_train_and_val": true,
+      "reload_and_frozen_checks": {
+        "checkpoint_reload_verified": true,
+        "checkpoint_optimizer_and_generator_reload_verified": true,
+        "reference_frozen": true
+      },
+      "patient_performance_measured": "探针仅2+2轮, 其 C_index 0.4715/NLL 0.8095 为开发验证结果, 不设也不要求任何分数门槛, 不作为性能结论。"
+    },
+    "gaps_reasons": "探针只跑 role2+task2, 不构成完整预算下的性能证据, 其分数不可用于比较。低读取质量计数在 WSI(p) 模态逐轮上升 (train 0.00082 -> 0.05866; val p_residual 0.006579 -> 0.116228), 说明槽竞争饿死现象在 readfix v2 下依然存在且随训练加剧; readfix v2 只保证归一化合法, 不保证解决竞争饿死, 也不能据此声称低质量槽恢复了有用信息。探针与后续正式运行均无独立测试证据; best/last 均为开发验证结果, 不能与旧队列 S0 或旧3+3末轮数字直接比较并称提升。",
+    "next_action_user_inputs": "门槛已全部通过, 按授权直接从头顺序执行修复版完整 joint (configs/common_private_full_joint_v1.json, role12/task<=40/patience10, 输出 local_evidence/full_slot_joint_readfix_v2_20261111_01) 与 frozen (configs/common_private_full_frozen_v1.json, 输出 local_evidence/full_slot_frozen_readfix_v2_20261111_01), 均在物理 GPU1 (CUDA_VISIBLE_DEVICES=1, 逻辑 cuda:0), 不覆盖旧结果, 不从失败模型续训; 结果全部标为 readfix v2。"
+  },
+  "latest_readfix_v2_full_slot_joint_frozen_completed": {
+    "recorded_at": "2026-11-13T03:30:00+08:00",
+    "route_task": "SlotSPE / readfix v2 / full-slot matched research / joint + frozen 两臂完整执行 (role12, task<=40, patience10)",
+    "status": "completed_both_arms_readfix_v2",
+    "authorization": "用户2026-11-11决定 A+E 并明确授权: 探针门槛通过后无需再次询问执行授权, 直接继续 F; 物理 GPU1, 逻辑 cuda:0; 全部结果标为 readfix v2; 任一步失败保留产物并停止, 不自动改参重试。",
+    "completed_work": "在隔离副本 /data1/slotspe_full_slot_fixprobe_20261111_01 (branch readfix_v2_sandbox, HEAD=245da18ab4042669b98c7f7bd6b25fbbf793731b) 完成 readfix v2 全流程: (1) 准入: pytest (test_slot_read_normalization / test_full_slot_diagnostics / test_pilot_split / test_model) 53 passed exit 0; --check-prepared 通过 (model_executed=false, identity_sha256=8e6839d7f923706859af2deb876f26b401ae6065b3834da8219e49fee0654135)。(2) 探针 configs/common_private_full_joint_readfix_probe_v2.json (全量304/76, 4096patch, batch2, 原槽数 p/g各2common+2residual, width64, 3次迭代, 预算仅 role2+task2) 退出码0, status=completed, 恰好2个role+2个task日志, 损失/角色误差/梯度均有限, 归一化策略记录为 masked_add_eps_l1_v2 (eps=1e-8 仅加真实token), 每轮训练与验证均有加eps前 raw_reading_mass 统计, padding零读取与极低质量/完全下溢回归通过, checkpoint_reload_verified / checkpoint_optimizer_and_generator_reload_verified / reference_frozen 均为 true, 无 early_stop。(3) 完整 joint: 退出码0, status=completed, role步数1824/task步数5320, 12个role+35个task epoch日志, early_stop=patience, best=epoch25 C_index=0.5802888700084962 NLL=0.8258994768291686, last=epoch35 C_index=0.5590484282073067 NLL=0.8647409841117993。(4) 完整 frozen: 退出码0, status=completed, role步数1824/task步数3800, 12个role+25个task epoch日志, early_stop=patience, best=epoch15 C_index=0.5335598980458793 NLL=0.7965868446985324, last=epoch25 C_index=0.524214103653356 NLL=0.8097581773601811。(5) 两臂均通过 best/last checkpoint 重载评估一致性校验、optimizer 与 generator 状态重载校验、参考冻结校验。(6) 机制诊断(本次最有价值的产出, 独立于分数): WSI(p) 模态最小原始读取质量在 role4 之后稳定为 0.0(完全下溢), 低于阈值槽数在 task27 轮后由约50暴增至约340/3648(约9%), 验证侧 p_common 约85/456(约19%); 而吃掉的正是 p_common 共同槽而非冗余槽。Omics(g) 模态全程健康(最小质量32~46, 低于阈值计数恒为0)。frozen 臂 task 阶段冻结槽后 p_common 低于阈值计数恒定为 8/456 全程不变, 即槽不再继续恶化但也未被救回。同队列同split同seed3的旧 pilot (槽 p/g 各1+1, width32, 2次迭代, role3+task3) C_index=0.5658453695836874; readfix v2 joint 加倍槽数/宽度/迭代并将预算放大约13倍后 best 仅 0.5803, 差值远小于 76 人验证集置换零假设SD(约0.08)。本条目只记录实测事实, 不含\"槽机制带来提升\"的主张, 也不含患者干预或因果解释。",
+    "paths_commit": {
+      "sandbox": "/data1/slotspe_full_slot_fixprobe_20261111_01",
+      "branch": "readfix_v2_sandbox",
+      "head": "245da18ab4042669b98c7f7bd6b25fbbf793731b",
+      "upstream_remote": "https://github.com/LDT-von/slot-attention.git",
+      "upstream_branch": "codex/full-slot-research-20261111",
+      "probe_output_root": "local_evidence/full_slot_joint_readfix_probe_v2_20261111_01",
+      "joint_output_root": "local_evidence/full_slot_joint_readfix_v2_20261111_01",
+      "frozen_output_root": "local_evidence/full_slot_frozen_readfix_v2_20261111_01",
+      "log_dir": "local_evidence/full_slot_logs_readfix_v2_20261111_01",
+      "logs": {
+        "probe": "local_evidence/full_slot_logs_readfix_v2_20261111_01/probe.log",
+        "joint": "local_evidence/full_slot_logs_readfix_v2_20261111_01/joint_v2.log",
+        "frozen": "local_evidence/full_slot_logs_readfix_v2_20261111_01/frozen_v2.log",
+        "gpu_mapping": "local_evidence/full_slot_logs_readfix_v2_20261111_01/gpu_mapping_probe.txt"
+      },
+      "read_fix_doc": "research_models/common_private_synergy/SERVER_READFIX_V2_CN.md",
+      "preserved_read_only": [
+        "/data1/slotspe_full_slot_20261111_01",
+        "/data1/SlotSPE",
+        "/data1/slotspe_split_guard_0934bb6",
+        "/data1/slotspe_split_guard_0934bb6/local_evidence/common_private_pilot_prepare_splitfixed_20261110_01"
+      ],
+      "new_commit_or_push": true
+    },
+    "protocol": {
+      "study": "blca",
+      "fold": 0,
+      "seed": 3,
+      "patches": 4096,
+      "batch_size": 2,
+      "allocation": {
+        "p": [
+          2,
+          2
+        ],
+        "g": [
+          2,
+          2
+        ]
+      },
+      "width": 64,
+      "iterations": 3,
+      "hidden": 32,
+      "bins": 4,
+      "role_epochs": 12,
+      "task_epochs_max": 40,
+      "patience": 10,
+      "role_lr": 0.003,
+      "task_lr": 0.001,
+      "role_weight": 1.0,
+      "readout_bound": 2.0,
+      "torch_threads": 2,
+      "cohort": "5fold_uni2h",
+      "train_count": 304,
+      "validation_count": 76,
+      "physical_gpu": 1,
+      "gpu_uuid": "GPU-ae871418-cdb0-08a8-e680-ad1b87af08e7",
+      "logical_device": "cuda:0",
+      "CUDA_VISIBLE_DEVICES": "1",
+      "gpu0_note": "物理GPU0 当时被其他实验室PAGHC进程占用(约15.3GB), 本次未干预; 全部执行落在物理GPU1。",
+      "numerical_protocol": "readfix v2 (masked_add_eps_l1_v2), 相对 edc2313 原协议数值轨迹已改变, 不得混称。"
+    },
+    "results": {
+      "joint": {
+        "status": "completed",
+        "exit_code": 0,
+        "early_stop": "patience",
+        "optimizer_steps": {
+          "role": 1824,
+          "task": 5320
+        },
+        "task_epoch_count": 35,
+        "best": {
+          "epoch": 25,
+          "C_index": 0.5802888700084962,
+          "NLL": 0.8258994768291686
+        },
+        "last": {
+          "epoch": 35,
+          "C_index": 0.5590484282073067,
+          "NLL": 0.8647409841117993
+        },
+        "C_index_over_task_epochs": {
+          "n": 35,
+          "min": 0.38147833474936277,
+          "max": 0.5802888700084962,
+          "mean": 0.5074159485374439,
+          "sd_population_sample": 0.037801716636789696,
+          "note": "max-based best 是乐观偏置点；76人验证集置换零假设SD约0.08，均值才是中枢。"
+        },
+        "read_normalization": {
+          "policy": "masked_add_eps_l1_v2",
+          "epsilon": 1e-08,
+          "epsilon_on": "real_tokens_only"
+        },
+        "checkpoint_reload_verified": true,
+        "checkpoint_optimizer_and_generator_reload_verified": true,
+        "reference_frozen": true,
+        "peak_cuda_allocated_bytes": 482392576,
+        "configuration_SHA256": "a592fd23372aaa46c5e189ac49dbe316a901931c8762c939f62dbcff0320a685",
+        "prepared_manifest_SHA256": "8fc4ccc92668da836aea79f253384bc70040542d6b02fbdb4a8e592e42454091",
+        "source_SHA256": {
+          "research_models/common_private_synergy/patient_pilot.py": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3",
+          "research_models/common_private_synergy/patient_pilot_engine.py": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b",
+          "research_models/common_private_synergy/pilot_split.py": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1",
+          "research_models/common_private_synergy/components/role_model.py": "fb97256d7fabb3a839aeb890bbb64c3b2166a856562b55f26f08df547ba28fe2",
+          "research_models/common_private_synergy/components/role_reference.py": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4",
+          "research_models/common_private_synergy/components/slots.py": "6aca9fca71d4d752995b17480cce40720851dc8871ef6d8a18647d35fb257218",
+          "research_models/common_private_synergy/components/losses.py": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2",
+          "slotspe_proof/patient.py": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
+          "scripts/run_common_private_full_slot.py": "786bc9402d663273a0df79f105c1ea4adf43cbc499f817eb46bfaa76df3ac1d7",
+          "research_models/common_private_synergy/components/contracts.py": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee",
+          "research_models/common_private_synergy/full_slot_diagnostics.py": "d8ea86e1f35089414e15622c8ac84bf4290b913ec2cadc4fb1909e2688676e12",
+          "research_models/common_private_synergy/full_slot_epoch.py": "c61ecf0d5507e2ea1da0ed996b4d0165b2359d4d125b5115d5d47b2be9abcbaa",
+          "research_models/common_private_synergy/full_slot_engine.py": "0b12d831cc2e82d731b8bc6d31b4b837918fcf9e275157312a537436b8b03c8d"
+        },
+        "artifact_SHA256": {
+          "receipt.json": "6723f1fdd730ef16c3a851995f93c3d5de31a5df786f7ced4570f372df226808",
+          "role_last.pt": "f9d418466d78eb235086d1b47ef53c6acd0d2e46fdee16ae3a99a3a6ee77e237",
+          "task_best.pt": "8640238cd74d368faac3168bb1939348ab6beb3f01a6161af96fc28a382675f7",
+          "task_last.pt": "221a75f487626c85c756c66a1ebcb83185a5979108e17a0c52b7f2d259414dcb"
+        },
+        "task_curve": [
+          {
+            "epoch": 1,
+            "C_index": 0.5021240441801189,
+            "NLL": 0.8460158710062461,
+            "train_loss": 1.5347813514062527,
+            "train_p_below_threshold_count": 59,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 11,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 4,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 2,
+            "C_index": 0.45879354290569246,
+            "NLL": 0.7986965677315031,
+            "train_loss": 1.2553320121694205,
+            "train_p_below_threshold_count": 61,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 21,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 4,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 3,
+            "C_index": 0.4409515717926933,
+            "NLL": 0.7933665823096046,
+            "train_loss": 1.1901305411087089,
+            "train_p_below_threshold_count": 45,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 3,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 4,
+            "C_index": 0.38147833474936277,
+            "NLL": 0.8076207926750847,
+            "train_loss": 1.1349035258986853,
+            "train_p_below_threshold_count": 43,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 6,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 3,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 5,
+            "C_index": 0.5123194562446899,
+            "NLL": 0.7766184857185866,
+            "train_loss": 1.1203066480986277,
+            "train_p_below_threshold_count": 34,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 7,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 4,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 6,
+            "C_index": 0.5046728971962616,
+            "NLL": 0.7699599469227312,
+            "train_loss": 1.12590890146639,
+            "train_p_below_threshold_count": 49,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 3,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 1,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 7,
+            "C_index": 0.5046728971962616,
+            "NLL": 0.7840857625509932,
+            "train_loss": 1.0999646403903078,
+            "train_p_below_threshold_count": 46,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 5,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 1,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 8,
+            "C_index": 0.46559048428207306,
+            "NLL": 0.793506360988493,
+            "train_loss": 1.1077366494199732,
+            "train_p_below_threshold_count": 65,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 6,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 4,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 9,
+            "C_index": 0.5097706032285472,
+            "NLL": 0.8022870685169246,
+            "train_loss": 1.0879055392273425,
+            "train_p_below_threshold_count": 73,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 9,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 7,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 10,
+            "C_index": 0.5055225148683092,
+            "NLL": 0.7793788269471655,
+            "train_loss": 1.0831373089419603,
+            "train_p_below_threshold_count": 68,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 7,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 11,
+            "C_index": 0.49362786745964315,
+            "NLL": 0.7866844484466093,
+            "train_loss": 1.0743079925674994,
+            "train_p_below_threshold_count": 61,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 11,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 6,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 12,
+            "C_index": 0.5165675446049278,
+            "NLL": 0.7857368978130337,
+            "train_loss": 1.0629788758364809,
+            "train_p_below_threshold_count": 63,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 9,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 3,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 13,
+            "C_index": 0.4876805437553101,
+            "NLL": 0.805420527823577,
+            "train_loss": 1.0418784190196448,
+            "train_p_below_threshold_count": 49,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 5,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 14,
+            "C_index": 0.530161427357689,
+            "NLL": 0.7818133377316601,
+            "train_loss": 1.0756475048177168,
+            "train_p_below_threshold_count": 50,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 9,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 5,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 15,
+            "C_index": 0.5199660152931181,
+            "NLL": 0.8151433954643325,
+            "train_loss": 1.020570275776742,
+            "train_p_below_threshold_count": 54,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 9,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 5,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 16,
+            "C_index": 0.5174171622769753,
+            "NLL": 0.8059193779657828,
+            "train_loss": 1.009620074937978,
+            "train_p_below_threshold_count": 62,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 13,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 6,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 17,
+            "C_index": 0.5123194562446899,
+            "NLL": 0.8412590414950119,
+            "train_loss": 0.9916575247270537,
+            "train_p_below_threshold_count": 67,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 10,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 18,
+            "C_index": 0.5072217502124045,
+            "NLL": 0.8487959309595243,
+            "train_loss": 0.956596824374547,
+            "train_p_below_threshold_count": 64,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 10,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 7,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 19,
+            "C_index": 0.5233644859813084,
+            "NLL": 0.8650175790259036,
+            "train_loss": 0.9482688569475655,
+            "train_p_below_threshold_count": 68,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 12,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 12,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 20,
+            "C_index": 0.5191163976210705,
+            "NLL": 0.9927219917228413,
+            "train_loss": 0.9161325971438569,
+            "train_p_below_threshold_count": 67,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 14,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 9,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 21,
+            "C_index": 0.5233644859813084,
+            "NLL": 0.8502247168923904,
+            "train_loss": 1.031670442813933,
+            "train_p_below_threshold_count": 70,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 12,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 22,
+            "C_index": 0.5148683092608326,
+            "NLL": 0.8395758224497735,
+            "train_loss": 1.0053807492717917,
+            "train_p_below_threshold_count": 65,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 11,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 23,
+            "C_index": 0.5446049277824979,
+            "NLL": 0.8283471751038017,
+            "train_loss": 1.0002591231755305,
+            "train_p_below_threshold_count": 55,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 6,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 24,
+            "C_index": 0.4613423959218352,
+            "NLL": 0.8483934951622373,
+            "train_loss": 1.0209683048889877,
+            "train_p_below_threshold_count": 54,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 11,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 6,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 25,
+            "C_index": 0.5802888700084962,
+            "NLL": 0.8258994768291686,
+            "train_loss": 1.0122650075565833,
+            "train_p_below_threshold_count": 57,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 16,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 4,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 26,
+            "C_index": 0.5259133389974512,
+            "NLL": 0.7932992206870476,
+            "train_loss": 1.0333382869092358,
+            "train_p_below_threshold_count": 79,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 18,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 3,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 27,
+            "C_index": 0.5327102803738317,
+            "NLL": 0.8249581788281253,
+            "train_loss": 1.0399134571053652,
+            "train_p_below_threshold_count": 338,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 88,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 4,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 28,
+            "C_index": 0.5344095157179269,
+            "NLL": 0.8633401277618217,
+            "train_loss": 1.0481528499681405,
+            "train_p_below_threshold_count": 392,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 95,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 4,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 29,
+            "C_index": 0.49362786745964315,
+            "NLL": 0.8659837506819431,
+            "train_loss": 1.006650704711835,
+            "train_p_below_threshold_count": 399,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 89,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 5,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 30,
+            "C_index": 0.4927782497875956,
+            "NLL": 0.8355854131680244,
+            "train_loss": 0.9876830037237297,
+            "train_p_below_threshold_count": 365,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 83,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 5,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 31,
+            "C_index": 0.5709430756159728,
+            "NLL": 0.8271681774759454,
+            "train_loss": 0.9660258478726078,
+            "train_p_below_threshold_count": 342,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 86,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 5,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 32,
+            "C_index": 0.45284621920135937,
+            "NLL": 0.9347425825071228,
+            "train_loss": 0.9743560273747844,
+            "train_p_below_threshold_count": 367,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 83,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 3,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 33,
+            "C_index": 0.5429056924384027,
+            "NLL": 0.8327254363252257,
+            "train_loss": 0.9391139365769748,
+            "train_p_below_threshold_count": 318,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 83,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 4,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 34,
+            "C_index": 0.5165675446049278,
+            "NLL": 0.8594486766639357,
+            "train_loss": 0.9483803893187893,
+            "train_p_below_threshold_count": 344,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 78,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 9,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 35,
+            "C_index": 0.5590484282073067,
+            "NLL": 0.8647409841117993,
+            "train_loss": 0.9500764334002065,
+            "train_p_below_threshold_count": 340,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 82,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 6,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          }
+        ]
+      },
+      "frozen": {
+        "status": "completed",
+        "exit_code": 0,
+        "early_stop": "patience",
+        "optimizer_steps": {
+          "role": 1824,
+          "task": 3800
+        },
+        "task_epoch_count": 25,
+        "best": {
+          "epoch": 15,
+          "C_index": 0.5335598980458793,
+          "NLL": 0.7965868446985324
+        },
+        "last": {
+          "epoch": 25,
+          "C_index": 0.524214103653356,
+          "NLL": 0.8097581773601811
+        },
+        "C_index_over_task_epochs": {
+          "n": 25,
+          "min": 0.40951571792693287,
+          "max": 0.5335598980458793,
+          "mean": 0.5019881053525913,
+          "sd_population_sample": 0.041433331531892166,
+          "note": "max-based best 是乐观偏置点；76人验证集置换零假设SD约0.08，均值才是中枢。"
+        },
+        "read_normalization": {
+          "policy": "masked_add_eps_l1_v2",
+          "epsilon": 1e-08,
+          "epsilon_on": "real_tokens_only"
+        },
+        "checkpoint_reload_verified": true,
+        "checkpoint_optimizer_and_generator_reload_verified": true,
+        "reference_frozen": true,
+        "peak_cuda_allocated_bytes": 474513408,
+        "configuration_SHA256": "6fbf49c3248f4a6ecfc656a3bc13ff08410d65d29c887b646ee8453baef847bc",
+        "prepared_manifest_SHA256": "8fc4ccc92668da836aea79f253384bc70040542d6b02fbdb4a8e592e42454091",
+        "source_SHA256": {
+          "research_models/common_private_synergy/patient_pilot.py": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3",
+          "research_models/common_private_synergy/patient_pilot_engine.py": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b",
+          "research_models/common_private_synergy/pilot_split.py": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1",
+          "research_models/common_private_synergy/components/role_model.py": "fb97256d7fabb3a839aeb890bbb64c3b2166a856562b55f26f08df547ba28fe2",
+          "research_models/common_private_synergy/components/role_reference.py": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4",
+          "research_models/common_private_synergy/components/slots.py": "6aca9fca71d4d752995b17480cce40720851dc8871ef6d8a18647d35fb257218",
+          "research_models/common_private_synergy/components/losses.py": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2",
+          "slotspe_proof/patient.py": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
+          "scripts/run_common_private_full_slot.py": "786bc9402d663273a0df79f105c1ea4adf43cbc499f817eb46bfaa76df3ac1d7",
+          "research_models/common_private_synergy/components/contracts.py": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee",
+          "research_models/common_private_synergy/full_slot_diagnostics.py": "d8ea86e1f35089414e15622c8ac84bf4290b913ec2cadc4fb1909e2688676e12",
+          "research_models/common_private_synergy/full_slot_epoch.py": "c61ecf0d5507e2ea1da0ed996b4d0165b2359d4d125b5115d5d47b2be9abcbaa",
+          "research_models/common_private_synergy/full_slot_engine.py": "0b12d831cc2e82d731b8bc6d31b4b837918fcf9e275157312a537436b8b03c8d"
+        },
+        "artifact_SHA256": {
+          "receipt.json": "bbafe3788656332712dd9b470a2853b0038a9b5d6af007f6d84739d8893e474b",
+          "role_last.pt": "de497fdd6b8cd3826ff227948b777a04f36c3e05dc996ca490011cc955650320",
+          "task_best.pt": "1595e577295c6a68e49cbeb73afc405432eed9aea3499b735a80fb2318b1f210",
+          "task_last.pt": "276a062d12174c40f279a5b9e13adc9f8a2a0f4b06575c503ac878b3758b21fb"
+        },
+        "task_curve": [
+          {
+            "epoch": 1,
+            "C_index": 0.4103653355989805,
+            "NLL": 0.9963358842392097,
+            "train_loss": 1.2307823318575173,
+            "train_p_below_threshold_count": 47,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 2,
+            "C_index": 0.40951571792693287,
+            "NLL": 0.8320287671310801,
+            "train_loss": 0.8908613335966645,
+            "train_p_below_threshold_count": 50,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 3,
+            "C_index": 0.41971112999150384,
+            "NLL": 0.802267112251878,
+            "train_loss": 0.8060823677105385,
+            "train_p_below_threshold_count": 49,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 4,
+            "C_index": 0.4468988954970263,
+            "NLL": 0.7922172745494208,
+            "train_loss": 0.7803920693091954,
+            "train_p_below_threshold_count": 50,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 5,
+            "C_index": 0.45029736618521665,
+            "NLL": 0.7873316234406866,
+            "train_loss": 0.768494135910904,
+            "train_p_below_threshold_count": 49,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 6,
+            "C_index": 0.4672897196261682,
+            "NLL": 0.7844535035360597,
+            "train_loss": 0.7566311895875742,
+            "train_p_below_threshold_count": 49,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 7,
+            "C_index": 0.491928632115548,
+            "NLL": 0.784374450722174,
+            "train_loss": 0.7483582679225004,
+            "train_p_below_threshold_count": 46,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 8,
+            "C_index": 0.5072217502124045,
+            "NLL": 0.785729352146283,
+            "train_loss": 0.7417105846958109,
+            "train_p_below_threshold_count": 51,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 9,
+            "C_index": 0.5131690739167375,
+            "NLL": 0.7881757026534664,
+            "train_loss": 0.7369827565640613,
+            "train_p_below_threshold_count": 49,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 10,
+            "C_index": 0.5191163976210705,
+            "NLL": 0.7886574030055431,
+            "train_loss": 0.7283392794754311,
+            "train_p_below_threshold_count": 50,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 11,
+            "C_index": 0.5259133389974512,
+            "NLL": 0.7908665794511857,
+            "train_loss": 0.7278253977101614,
+            "train_p_below_threshold_count": 53,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 12,
+            "C_index": 0.5327102803738317,
+            "NLL": 0.7927865284771234,
+            "train_loss": 0.7209586989563842,
+            "train_p_below_threshold_count": 51,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 13,
+            "C_index": 0.5327102803738317,
+            "NLL": 0.7941710268204669,
+            "train_loss": 0.7195661303781147,
+            "train_p_below_threshold_count": 47,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 14,
+            "C_index": 0.5318606627017842,
+            "NLL": 0.7958955673198966,
+            "train_loss": 0.7156683242675802,
+            "train_p_below_threshold_count": 46,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 15,
+            "C_index": 0.5335598980458793,
+            "NLL": 0.7965868446985324,
+            "train_loss": 0.7149491020774802,
+            "train_p_below_threshold_count": 46,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 16,
+            "C_index": 0.5293118096856415,
+            "NLL": 0.8005812467457155,
+            "train_loss": 0.7131628149726195,
+            "train_p_below_threshold_count": 43,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 17,
+            "C_index": 0.5284621920135939,
+            "NLL": 0.8024465923450852,
+            "train_loss": 0.7100332509434442,
+            "train_p_below_threshold_count": 52,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 18,
+            "C_index": 0.5267629566694987,
+            "NLL": 0.8023986571431344,
+            "train_loss": 0.7073904630992074,
+            "train_p_below_threshold_count": 50,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 19,
+            "C_index": 0.5267629566694987,
+            "NLL": 0.8016962138562673,
+            "train_loss": 0.7055589542694195,
+            "train_p_below_threshold_count": 48,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 20,
+            "C_index": 0.5233644859813084,
+            "NLL": 0.8029009156161381,
+            "train_loss": 0.703867213447149,
+            "train_p_below_threshold_count": 51,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 21,
+            "C_index": 0.5250637213254036,
+            "NLL": 0.8090671249710055,
+            "train_loss": 0.7039297088628709,
+            "train_p_below_threshold_count": 43,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 22,
+            "C_index": 0.524214103653356,
+            "NLL": 0.808252323117932,
+            "train_loss": 0.6987852420580724,
+            "train_p_below_threshold_count": 44,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 23,
+            "C_index": 0.524214103653356,
+            "NLL": 0.8070730666013294,
+            "train_loss": 0.7008123713173681,
+            "train_p_below_threshold_count": 51,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 24,
+            "C_index": 0.5250637213254036,
+            "NLL": 0.8116701921117165,
+            "train_loss": 0.7056659484328199,
+            "train_p_below_threshold_count": 46,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          },
+          {
+            "epoch": 25,
+            "C_index": 0.524214103653356,
+            "NLL": 0.8097581773601811,
+            "train_loss": 0.6973544190208669,
+            "train_p_below_threshold_count": 50,
+            "train_p_min_mass": 0.0,
+            "val_p_common_below_threshold_count": 8,
+            "val_p_common_min_mass": 0.0,
+            "val_p_residual_below_threshold_count": 8,
+            "val_g_common_below_threshold_count": 0,
+            "val_g_residual_below_threshold_count": 0
+          }
+        ]
+      }
+    },
+    "checks_actual_execution_raw_receipt": {
+      "real_gpu_execution": "两臂均为真实 GPU 执行 (物理 GPU1, RTX 5090), 退出码均为 0; joint_v2.log 记录 JOINT_V2_EXIT_CODE=0, frozen_v2.log 记录 FROZEN_V2_EXIT_CODE=0。",
+      "sequence_order": "joint 先, frozen 后, 由 run_full_sequence.sh 以 set -euo pipefail 顺序执行, 未覆盖旧失败目录, 未从失败模型续训。",
+      "determinism": "joint 的 role epoch1 train_loss=0.413880 与探针 role epoch1 逐位一致, 确认同一初始化与同一数值轨迹可复现。",
+      "pytest": "53 passed, exit 0。",
+      "prepared_cache_admission": "通过; prepared manifest SHA256 = 8fc4ccc92668da836aea79f253384bc70040542d6b02fbdb4a8e592e42454091。",
+      "checkpoint_reload": "best 与 last 均重载并复现评估 (C_index 相等, NLL abs_tol=1e-12 相等), optimizer state 与 train generator state 重载一致, reference_frozen=true。",
+      "early_stopping": "两臂均由 patience 触发 (joint task35, frozen task25), 未触及 task 40 轮上限。",
+      "independent_test_set": "不存在。5fold_uni2h_outer_test_seed3/blca/fold_0.csv 的 outer test 与 5fold_uni2h fold0 的76位验证患者完全同一集合; 两臂 receipt 均记 test_used=false。",
+      "patient_performance_measured": "仅开发验证(304训练/76验证), 无独立测试证据。",
+      "synthetic_or_packaging_check_proves_patient_performance": false
+    },
+    "gaps_reasons": "本协议无独立测试证据: best 与 last 均为开发验证结果, 不能与旧队列 S0 或旧3+3末轮数字直接比较并称提升。best=0.5803 是 35 个 task epoch 上的最大值, 76人验证集置换零假设SD约0.08, 该点是乐观偏置的; joint 全 epoch 均值0.5074(sd0.0378)才是中枢, 与 best 相差约1个噪声标准差。readfix v2 只保证归一化合法, 不解决槽竞争饿死: WSI侧 p_common 共同槽的原始读取质量完全下溢为0且随训练加剧, 槽范数仍健康(约6.14), 属读取质量塌缩而非数值NaN或死槽。本次未新增槽平衡/熵约束/重初始化机制(受 AGENTS.md 审计约束), 因此未尝试治理该塌缩。本轮未评估患者预测损害或训练修正收益, 不含因果或生物学解释; 角色名不蕴含已识别信息因子。单折单seed的分数无法分辨槽机制是否有增益: 与同队列旧pilot(槽更少、预算更小)相比差异落在噪声内, 既不支持\"更好\"也不支持\"更差\"。",
+    "next_action_user_inputs": "待用户决定机制路线。可选: (A) 治 p_common 竞争饿死(需用户明确豁免 AGENTS.md 的\"不新增机制\"约束, 或置于审计线外的独立研究线); (B) 多折 x 多seed 并报 mean±sd 而非 max, 把噪声从约0.08压到可分辨后与简化基线比较(算力5xN); (C) 同队列同协议的去槽机制消融(单池化基线), 若 full-slot 不胜出即直接证伪当前槽机制增益。在用户指定前不启动新的训练、推理或患者干预。"
   }
 }
