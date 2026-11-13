@@ -123,3 +123,15 @@ class RoleTargetModel(nn.Module):
             module.requires_grad_(False)
             for parameter in module.parameters():
                 parameter.grad = None
+
+    def freeze_readout(self):
+        """Explicit two-stage contract: task training cannot move the readout.
+
+        The counterpart of freeze_roles. Used by the continued-role-only
+        control, where role slots keep fitting but the survival readout is
+        held fixed, so that a change in reading statistics can be attributed
+        to continued role fitting rather than to the task gradient.
+        """
+        self.readout.requires_grad_(False)
+        for parameter in self.readout.parameters():
+            parameter.grad = None

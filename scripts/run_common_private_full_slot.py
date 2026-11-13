@@ -20,7 +20,7 @@ def main():
     parser.add_argument('--output-root', type=Path)
     args = parser.parse_args()
     c = config(args.config)
-    if c['schema'] != 'full_slot_research_v1' or c['task_mode'] not in ('frozen', 'joint'):
+    if c['schema'] != 'full_slot_research_v1' or c['task_mode'] not in ('frozen', 'joint', 'continued_role_only'):
         raise ValueError('invalid full-slot schema or task mode')
     if type(c['patience']) is not int or c['patience'] < 1 or not math.isfinite(c['role_weight']) or c['role_weight'] <= 0:
         raise ValueError('positive patience and finite role weight required')

@@ -44,8 +44,8 @@ def _now():
 def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthetic=False):
     if not synthetic and split_guard is None:
         raise ValueError('verified patient split admission required')
-    if c['task_mode'] not in ('frozen', 'joint'):
-        raise ValueError('task_mode must be frozen or joint')
+    if c['task_mode'] not in ('frozen', 'joint', 'continued_role_only'):
+        raise ValueError('task_mode must be frozen, joint or continued_role_only')
     if c['role_weight'] <= 0 or c['patience'] < 1:
         raise ValueError('positive role weight and patience required')
     root, out = Path(root), Path(out)
@@ -106,6 +106,11 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                 if c['task_mode'] == 'frozen':
                     model.freeze_roles()
                     params = model.readout.parameters()
+                elif c['task_mode'] == 'continued_role_only':
+                    # Role slots keep fitting; the readout is held fixed.
+                    model.freeze_readout()
+                    params = [parameter for name, parameter in model.named_parameters()
+                              if name.startswith(('encoders.', 'pools.', 'decoders.'))]
                 else:
                     params = model.parameters()
                 optim = torch.optim.Adam(params, lr=c['task_lr'])
@@ -130,13 +135,21 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                     loss = role_loss if phase == 'role' else task_loss
                     if phase == 'task' and c['task_mode'] == 'joint':
                         loss = loss + c['role_weight'] * role_loss
+                    if phase == 'task' and c['task_mode'] == 'continued_role_only':
+                        # Role slots keep fitting the role objective at the
+                        # same role_weight and task_lr used by the joint arm.
+                        # The readout is frozen and the task gradient is
+                        # measured but not applied, so the difference between
+                        # this arm's applied slot gradient and the joint arm's
+                        # isolates the task gradient contribution.
+                        loss = c['role_weight'] * role_loss
                     if not torch.isfinite(loss):
                         raise FloatingPointError('nonfinite training loss')
                     optim.zero_grad(set_to_none=True)
                     raw_slots = [output['parts'][m]['slots'] for m in ('p', 'g')]
                     if all(value.requires_grad for value in raw_slots):
                         components = {'role': role_loss}
-                        if task_loss is not None and c['task_mode'] == 'joint':
+                        if task_loss is not None and c['task_mode'] in ('joint', 'continued_role_only'):
                             components['survival'] = task_loss
                         for name, component in components.items():
                             for modality, grad in zip(('p', 'g'), torch.autograd.grad(component, raw_slots, retain_graph=True, allow_unused=True)):
@@ -202,6 +215,8 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
         receipt['role_parameters_changed_during_task'] = role_before != role_after
         if c['task_mode'] == 'frozen' and role_before != role_after:
             raise RuntimeError('frozen role parameters changed during task')
+        if c['task_mode'] == 'continued_role_only' and role_before == role_after:
+            raise RuntimeError('continued_role_only role parameters did not change during task')
         if sha(root / 'prepared/manifest.json') != manifest_hash or (split_guard and split_guard() != identity):
             raise RuntimeError('split identity or manifest changed before checkpoint verification')
         if source_hashes != {name: sha(ROOT / name) for name in source_hashes}:
@@ -218,6 +233,11 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
             if c['task_mode'] == 'joint':
                 reloaded.requires_grad_(True)
                 parameters = reloaded.parameters()
+            elif c['task_mode'] == 'continued_role_only':
+                reloaded.requires_grad_(True)
+                reloaded.readout.requires_grad_(False)
+                parameters = [parameter for name, parameter in reloaded.named_parameters()
+                              if name.startswith(('encoders.', 'pools.', 'decoders.'))]
             else:
                 reloaded.readout.requires_grad_(True)
                 parameters = reloaded.readout.parameters()
