@@ -7,6 +7,7 @@ import math
 import torch
 import torch.nn.functional as F
 from .components.slots import READ_EPS
+from .components.losses import discrete_hazard_nll
 
 
 def read_mass_summary(mass):
@@ -25,6 +26,36 @@ def read_mass_summary(mass):
             'below_threshold_count_by_iteration': low.sum(dim=(0, 2)).tolist(),
             'below_threshold_count_by_slot': low.sum(dim=(0, 1)).tolist(),
             'minimum_by_iteration': mass.amin(dim=(0, 2)).tolist()}
+
+
+def read_diagnostics_summary(observations):
+    """Aggregate detached [bag observations, iteration, slot] metrics.
+
+    The two-dimensional arrays have iteration and slot axes only. They never
+    retain a patient axis; counts are repeated observations, not independent
+    patients or uncertainty estimates.
+    """
+    if not observations or 'raw_mass' not in observations:
+        raise ValueError('nonempty read diagnostics including raw_mass required')
+    shape = observations['raw_mass'].shape
+    result = {'axes': ['iteration', 'slot'], 'bag_observations': shape[0],
+              'observation_count': observations['raw_mass'].numel(), 'metrics': {}}
+    for name, value in observations.items():
+        if value.ndim != 3 or value.shape != shape or not value.numel() or not torch.isfinite(value).all():
+            raise ValueError('aligned finite nonempty [bags,iterations,slots] diagnostics required')
+        x = value.detach().double()
+        result['metrics'][name] = {
+            'mean': float(x.mean()), 'minimum': float(x.min()), 'maximum': float(x.max()),
+            'mean_by_iteration_slot': x.mean(0).tolist(),
+            'minimum_by_iteration_slot': x.amin(0).tolist(),
+            'maximum_by_iteration_slot': x.amax(0).tolist(),
+        }
+    low = observations['raw_mass'] < READ_EPS
+    result['raw_mass_threshold'] = READ_EPS
+    result['below_threshold_count_by_iteration_slot'] = low.sum(0).tolist()
+    result['below_threshold_fraction_by_iteration_slot'] = low.double().mean(0).tolist()
+    result['threshold_scope'] = 'historical_clamp_level_not_dead_slot_definition'
+    return result
 
 
 def _effective_rank(x):
@@ -92,18 +123,24 @@ def role_summary(roles):
 
 
 @torch.no_grad()
-def ablate_each_slot(model, output):
+def ablate_each_slot(model, output, completed=None, event=None):
     """Return mean absolute logit change for removal from each role pool.
 
     This is a deterministic model-input intervention, not conditional CPI.
     The empty-group output is the same fixed zero used by the model itself.
+    Optional labels add deleted NLL and signed (deleted minus full) NLL;
+    omitting labels preserves the legacy logit-only return dictionary.
     """
-    results = {}
+    if (completed is None) != (event is None):
+        raise ValueError('both completed and event labels are required')
+    with_nll = completed is not None
+    base_nll = discrete_hazard_nll(output['prediction'], completed, event) if with_nll else None
+    results, deleted_nll, delta_nll = {}, {}, {}
     for modality in ('p', 'g'):
         for role, part_key in (('common', 'common_slots'), ('residual', 'private_slots')):
             key = modality + '_' + role
             slots = output['parts'][modality][part_key]
-            changes = []
+            changes, nlls, deltas = [], [], []
             for index in range(slots.shape[1]):
                 kept = torch.cat((slots[:, :index], slots[:, index + 1:]), dim=1)
                 roles = dict(output['roles'])
@@ -114,7 +151,15 @@ def ablate_each_slot(model, output):
                     roles[key] = torch.zeros_like(roles[key])
                 alt = model.predict_roles(roles)['prediction']
                 changes.append(float((alt - output['prediction']).abs().mean()))
+                if with_nll:
+                    nll = discrete_hazard_nll(alt, completed, event)
+                    nlls.append(float(nll))
+                    deltas.append(float(nll - base_nll))
             results[key] = changes
+            if with_nll:
+                deleted_nll[key], delta_nll[key] = nlls, deltas
+    if with_nll:
+        return {'mean_abs_logit_change': results, 'NLL': deleted_nll, 'delta_NLL': delta_nll}
     return results
 
 

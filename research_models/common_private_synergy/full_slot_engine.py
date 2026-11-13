@@ -5,6 +5,7 @@ This implementation is experimental and must pass synthetic integration checks
 before any patient use. Checkpoints and receipts belong under local_evidence.
 """
 import copy
+import hashlib
 from datetime import datetime, timezone
 import json
 import math
@@ -15,7 +16,7 @@ import torch
 
 from .components.losses import discrete_hazard_nll
 from .components.role_reference import FrozenRoleReference, ReferenceProvenance, role_content_losses
-from .full_slot_diagnostics import better_validation, read_mass_summary
+from .full_slot_diagnostics import better_validation, read_mass_summary, read_diagnostics_summary
 from .components.slots import READ_EPS, READ_NORMALIZATION
 from .full_slot_epoch import evaluate_epoch
 from .patient_pilot import ROOT, sha
@@ -41,11 +42,19 @@ def _now():
     return datetime.now(timezone.utc).isoformat()
 
 
-def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthetic=False):
+def task_output(model, b, mode):
+    # Identical forward values; only the survival-to-role backward edge differs.
+    roles, parts = model.encode(b['p'], b['g'], b['p_mask'], b['g_mask'])
+    head_roles = {k: v.detach() for k, v in roles.items()} if mode == 'continued_role_only' else roles
+    return {'roles': roles, 'parts': parts, **model.predict_roles(head_roles)}
+
+
+def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthetic=False,
+             warmup_only=False, initial_checkpoint=None):
     if not synthetic and split_guard is None:
         raise ValueError('verified patient split admission required')
     if c['task_mode'] not in ('frozen', 'joint', 'continued_role_only'):
-        raise ValueError('task_mode must be frozen, joint or continued_role_only')
+        raise ValueError('invalid task mode')
     if c['role_weight'] <= 0 or c['patience'] < 1:
         raise ValueError('positive role weight and patience required')
     root, out = Path(root), Path(out)
@@ -64,17 +73,34 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
     if device.type == 'cuda' and not torch.cuda.is_available():
         raise RuntimeError('CUDA requested but unavailable')
     store = PreparedStore(root, manifest)
-    p, g = collect_targets(store, train)
-    adapter = ContentAdapter(p, g, manifest['omic_sizes'], c['target_dim'])
-    tp, tg = adapter.target(p, 'p'), adapter.target(g, 'g')
-    reference = FrozenRoleReference.estimated(tp, tg, common_rank=c['common_rank'], coordinate_system='target',
-        provenance=ReferenceProvenance('train', 'standardized PCA patch-mean and pathway-expression targets',
-                                       'training fold only; empirical roles, no biological source certification'))
-    anchors = reference.targets(tp[:64], tg[:64])
-    times = torch.tensor([manifest['patients'][i]['time'] for i in train], dtype=torch.float64)
-    events = torch.tensor([manifest['patients'][i]['censor'] < 1 for i in train], dtype=torch.bool)
-    boundaries = fit_boundaries(times, events, c['bins'])
-    model = SurvivalRoleModel(reference, adapter, anchors, c).double().to(device)
+    matched = c.get('schema') == 'full_slot_matched35_v1'
+    legacy_role_only = c['task_mode'] == 'continued_role_only' and not matched
+    saved_start = None
+    if initial_checkpoint is None:
+        p, g = collect_targets(store, train)
+        adapter = ContentAdapter(p, g, manifest['omic_sizes'], c['target_dim'])
+        tp, tg = adapter.target(p, 'p'), adapter.target(g, 'g')
+        reference = FrozenRoleReference.estimated(tp, tg, common_rank=c['common_rank'], coordinate_system='target',
+            provenance=ReferenceProvenance('train', 'standardized PCA patch-mean and pathway-expression targets',
+                                           'training fold only; empirical roles, no biological source certification'))
+        anchors = reference.targets(tp[:64], tg[:64])
+        times = torch.tensor([manifest['patients'][i]['time'] for i in train], dtype=torch.float64)
+        events = torch.tensor([manifest['patients'][i]['censor'] < 1 for i in train], dtype=torch.bool)
+        boundaries = fit_boundaries(times, events, c['bins'])
+        model = SurvivalRoleModel(reference, adapter, anchors, c).double().to(device)
+    else:
+        saved_start = torch.load(initial_checkpoint, map_location='cpu', weights_only=True)
+        if saved_start['phase'] != 'role' or saved_start['epoch'] != c['role_epochs']:
+            raise ValueError('completed shared role checkpoint required')
+        allowed = {'task_mode'}
+        if {k: v for k, v in c.items() if k not in allowed} != {k: v for k, v in saved_start['config'].items() if k not in allowed}:
+            raise ValueError('shared checkpoint protocol differs')
+        if (saved_start['manifest_SHA256'] != manifest_hash or saved_start['split_identity'] != identity
+                or saved_start['source_SHA256'] != source_hashes):
+            raise ValueError('shared checkpoint provenance differs')
+        model, adapter, boundaries = load_checkpoint(initial_checkpoint, device)
+        model.requires_grad_(True)
+        reference = model.reference
     if device.type == 'cuda':
         torch.cuda.reset_peak_memory_stats(device)
     out.mkdir(parents=True)
@@ -83,6 +109,8 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                'source_SHA256': source_hashes, 'split_identity': identity,
                'prepared_manifest_SHA256': manifest_hash, 'train_count': len(train), 'validation_count': len(val),
                'test_used': False, 'model_parameters': sum(x.numel() for x in model.parameters()),
+               'task_gradient_policy': ('legacy_role_only_frozen_head' if legacy_role_only else
+                                        'role_only_trainable_head' if c['task_mode'] == 'continued_role_only' else c['task_mode']),
                'selection': 'maximum C-index, exact tie lower NLL, then earlier epoch',
                'read_normalization': {'policy': READ_NORMALIZATION, 'epsilon': READ_EPS, 'epsilon_on': 'real_tokens_only'},
                'epoch_logs': [], 'best': None, 'last': None,
@@ -94,36 +122,58 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                'scope': 'development validation only; no independent test or causal interpretation'}
     _write_receipt(out / 'receipt.json', receipt)
     rng = torch.Generator().manual_seed(c['seed'] + 9000)
+    if saved_start is not None:
+        rng.set_state(saved_start['train_generator_state'])
+        torch.set_rng_state(saved_start['torch_rng_state'])
+        if device.type == 'cuda':
+            torch.cuda.set_rng_state(saved_start['cuda_rng_state'], device)
+        receipt['shared_checkpoint_SHA256'] = sha(initial_checkpoint)
+    for encoder in model.encoders.values():
+        encoder.observe_read_diagnostics = c.get('read_diagnostics', False)
+    receipt['initial_model_tensor_SHA256'] = tensor_hash([(k, v) for k, v in model.state_dict().items() if isinstance(v, torch.Tensor)])
+    receipt['initial_train_rng_SHA256'] = tensor_hash([('rng', rng.get_state())])
+    receipt['initial_torch_rng_SHA256'] = tensor_hash([('rng', torch.get_rng_state())])
+    receipt['initial_cuda_rng_SHA256'] = tensor_hash([('rng', torch.cuda.get_rng_state(device))]) if device.type == 'cuda' else None
     eval_seed = c['seed'] + 19000
     reference_hash = tensor_hash(list(model.reference.named_buffers()))
     optim = torch.optim.Adam(list(model.encoders.parameters()) + list(model.pools.parameters()) +
                              list(model.decoders.parameters()), lr=c['role_lr'])
     best, stale = None, 0
     try:
-        for phase in ('role', 'task'):
+        for phase in (('role',) if warmup_only else ('task',) if initial_checkpoint is not None else ('role', 'task')):
             if phase == 'task':
                 role_before = tensor_hash([(n, p) for n, p in model.named_parameters() if n.startswith(('encoders.', 'pools.', 'decoders.'))])
                 if c['task_mode'] == 'frozen':
                     model.freeze_roles()
                     params = model.readout.parameters()
-                elif c['task_mode'] == 'continued_role_only':
-                    # Role slots keep fitting; the readout is held fixed.
+                elif legacy_role_only:
                     model.freeze_readout()
-                    params = [parameter for name, parameter in model.named_parameters()
-                              if name.startswith(('encoders.', 'pools.', 'decoders.'))]
+                    params = [p for n, p in model.named_parameters() if n.startswith(('encoders.', 'pools.', 'decoders.'))]
                 else:
                     params = model.parameters()
                 optim = torch.optim.Adam(params, lr=c['task_lr'])
+                receipt['task_optimizer_initial_state_empty'] = not bool(optim.state)
+                receipt['task_optimizer_initial_groups'] = optim.state_dict()['param_groups']
+                receipt['task_start_role_parameter_SHA256'] = role_before
             for epoch in range(1, c[phase + '_epochs'] + 1):
                 model.train()
                 order = torch.randperm(len(train), generator=rng).tolist()
                 total, role_total, task_total = 0., 0., 0.
                 grads = {name: {'p': None, 'g': None} for name in ('combined', 'survival', 'role')}
                 train_mass = {'p': [], 'g': []}
+                train_diagnostics = {'p': {}, 'g': {}}
+                draw_hash = hashlib.sha256()
+                draw_hash.update(bytes(rng.get_state().tolist()))
+                draw_hash.update(str(order).encode())
                 for start in range(0, len(train), c['batch_size']):
                     ids = [train[i] for i in order[start:start + c['batch_size']]]
                     b = batch(store, ids, adapter, boundaries, c, device, generator=rng)
-                    output = model_forward(model, b)
+                    # Hash actual input draws/labels in a private receipt, never export tensors/IDs.
+                    draw_hash.update(tensor_hash(list(b.items())).encode())
+                    output = task_output(model, b, c['task_mode']) if phase == 'task' and not legacy_role_only else model_forward(model, b)
+                    for modality in ('p', 'g'):
+                        for key, value in output['parts'][modality].get('read_diagnostics', {}).items():
+                            train_diagnostics[modality].setdefault(key, []).append(value.cpu())
                     for modality in ('p', 'g'):
                         train_mass[modality].append(output['parts'][modality]['raw_read_mass'].cpu())
                     for modality in ('p', 'g'):
@@ -133,16 +183,8 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                     role_loss = sum(role_content_losses(output['roles'], model.reference.targets(b['p_target'], b['g_target'])).values()) / 4
                     task_loss = None if phase == 'role' else discrete_hazard_nll(output['prediction'], b['completed'], b['event'])
                     loss = role_loss if phase == 'role' else task_loss
-                    if phase == 'task' and c['task_mode'] == 'joint':
-                        loss = loss + c['role_weight'] * role_loss
-                    if phase == 'task' and c['task_mode'] == 'continued_role_only':
-                        # Role slots keep fitting the role objective at the
-                        # same role_weight and task_lr used by the joint arm.
-                        # The readout is frozen and the task gradient is
-                        # measured but not applied, so the difference between
-                        # this arm's applied slot gradient and the joint arm's
-                        # isolates the task gradient contribution.
-                        loss = c['role_weight'] * role_loss
+                    if phase == 'task' and c['task_mode'] in ('joint', 'continued_role_only'):
+                        loss = c['role_weight'] * role_loss if legacy_role_only else loss + c['role_weight'] * role_loss
                     if not torch.isfinite(loss):
                         raise FloatingPointError('nonfinite training loss')
                     optim.zero_grad(set_to_none=True)
@@ -153,10 +195,16 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                             components['survival'] = task_loss
                         for name, component in components.items():
                             for modality, grad in zip(('p', 'g'), torch.autograd.grad(component, raw_slots, retain_graph=True, allow_unused=True)):
+                                if grad is None and name == 'survival' and c['task_mode'] == 'continued_role_only' and matched:
+                                    grad = torch.zeros_like(output['parts'][modality]['slots'])
                                 if grad is not None:
                                     value = grad.detach().norm(dim=-1).sum(dim=0).cpu() * len(ids)
                                     previous = grads[name][modality]
                                     grads[name][modality] = value if previous is None else previous + value
+                    # autograd.grad above also populates retained non-leaf .grad.
+                    # Clear it so combined means exactly the optimized objective.
+                    for raw in raw_slots:
+                        raw.grad = None
                     loss.backward()
                     if any(x.grad is not None and not torch.isfinite(x.grad).all() for x in model.parameters()):
                         raise FloatingPointError('nonfinite gradient')
@@ -176,7 +224,14 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                     raise RuntimeError('split identity or manifest changed before evaluation')
                 metrics = evaluate_epoch(model, store, val, adapter, boundaries, c, device,
                                          seed=eval_seed, survival=phase == 'task')
-                log = {'phase': phase, 'epoch': epoch, 'completed_at': _now(), 'train_loss': total / len(train), 'validation': metrics,
+                grouped_diagnostics = {}
+                for modality, values in train_diagnostics.items():
+                    if values:
+                        cut = model.allocations[modality].common
+                        for role, section in (('common', slice(None, cut)), ('residual', slice(cut, None))):
+                            grouped_diagnostics[modality + '_' + role] = read_diagnostics_summary({
+                                k: torch.cat(v)[:, :, section] for k, v in values.items()})
+                log = {'input_draw_SHA256': draw_hash.hexdigest(), 'train_read_diagnostics': grouped_diagnostics, 'phase': phase, 'epoch': epoch, 'completed_at': _now(), 'train_loss': total / len(train), 'validation': metrics,
                        'train_role_loss': role_total / len(train),
                        'train_survival_NLL': task_total / len(train) if phase == 'task' else None,
                        'train_raw_reading_mass': {k: read_mass_summary(torch.cat(v)) for k, v in train_mass.items()},
@@ -206,17 +261,26 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                     _save_checkpoint(out / 'task_best.pt', checkpoint)
                 _write_receipt(out / 'receipt.json', receipt)
                 print(f'phase={phase} epoch={epoch} train_loss={total/len(train):.6f}', flush=True)
-                if phase == 'task' and stale >= c['patience']:
+                if phase == 'task' and not c.get('fixed_task_budget', False) and stale >= c['patience']:
                     receipt['early_stop'] = 'patience'
                     break
         if reference_hash != tensor_hash(list(model.reference.named_buffers())):
             raise RuntimeError('training reference changed')
+        if source_hashes != {name: sha(ROOT / name) for name in source_hashes}:
+            raise RuntimeError('source changed during execution')
+        if warmup_only:
+            receipt['reference_frozen'] = True
+            receipt['artifacts_SHA256'] = {'role_last.pt': sha(out / 'role_last.pt')}
+            receipt['status'] = 'completed'
+            receipt['completed_at'] = _now()
+            _write_receipt(out / 'receipt.json', receipt)
+            return receipt
         role_after = tensor_hash([(n, p) for n, p in model.named_parameters() if n.startswith(('encoders.', 'pools.', 'decoders.'))])
         receipt['role_parameters_changed_during_task'] = role_before != role_after
+        if legacy_role_only and role_before == role_after:
+            raise RuntimeError('continued_role_only role parameters did not change during task')
         if c['task_mode'] == 'frozen' and role_before != role_after:
             raise RuntimeError('frozen role parameters changed during task')
-        if c['task_mode'] == 'continued_role_only' and role_before == role_after:
-            raise RuntimeError('continued_role_only role parameters did not change during task')
         if sha(root / 'prepared/manifest.json') != manifest_hash or (split_guard and split_guard() != identity):
             raise RuntimeError('split identity or manifest changed before checkpoint verification')
         if source_hashes != {name: sha(ROOT / name) for name in source_hashes}:
@@ -230,14 +294,13 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
             if verified['C_index'] != expected['C_index'] or not math.isclose(verified['NLL'], expected['NLL'], rel_tol=0, abs_tol=1e-12):
                 raise RuntimeError(label + ' checkpoint evaluation mismatch')
             saved = torch.load(out / ('task_' + label + '.pt'), map_location='cpu', weights_only=True)
-            if c['task_mode'] == 'joint':
+            if legacy_role_only:
+                reloaded.requires_grad_(True)
+                reloaded.freeze_readout()
+                parameters = [p for n, p in reloaded.named_parameters() if n.startswith(('encoders.', 'pools.', 'decoders.'))]
+            elif c['task_mode'] in ('joint', 'continued_role_only'):
                 reloaded.requires_grad_(True)
                 parameters = reloaded.parameters()
-            elif c['task_mode'] == 'continued_role_only':
-                reloaded.requires_grad_(True)
-                reloaded.readout.requires_grad_(False)
-                parameters = [parameter for name, parameter in reloaded.named_parameters()
-                              if name.startswith(('encoders.', 'pools.', 'decoders.'))]
             else:
                 reloaded.readout.requires_grad_(True)
                 parameters = reloaded.readout.parameters()

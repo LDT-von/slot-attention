@@ -10,7 +10,7 @@ from sksurv.metrics import concordance_index_censored
 
 from .components.losses import discrete_hazard_nll
 from .components.role_reference import role_content_losses
-from .full_slot_diagnostics import ablate_each_slot, read_mass_summary, role_summary, slot_summary
+from .full_slot_diagnostics import ablate_each_slot, read_mass_summary, read_diagnostics_summary, role_summary, slot_summary
 from .patient_pilot_engine import batch, model_forward
 
 
@@ -24,9 +24,14 @@ def evaluate_epoch(model, store, ids, adapter, boundaries, config, device, *, se
     if not ids or len(ids) != len(set(ids)):
         raise ValueError('nonempty unique ordered validation ids required')
     model.eval()
+    observe = bool(config.get('read_diagnostics', False))
+    with_nll = bool(config.get('ablation_nll', observe))
+    for encoder in model.encoders.values():
+        encoder.observe_read_diagnostics = observe
     rng = torch.Generator().manual_seed(seed)
     roles, slots, attention, ablations, read_mass = {}, {}, {}, {}, {}
     losses, logits = [], []
+    read_observations, deleted_nll, delta_nll = {}, {}, {}
     role_sums = {}
     for start in range(0, len(ids), config['batch_size']):
         batch_ids = ids[start:start + config['batch_size']]
@@ -38,7 +43,16 @@ def evaluate_epoch(model, store, ids, adapter, boundaries, config, device, *, se
         if survival:
             losses.append(discrete_hazard_nll(out['prediction'], b['completed'], b['event'], reduction='none').cpu())
             logits.append(out['prediction'].cpu())
-            for key, values in ablate_each_slot(model, out).items():
+            if with_nll:
+                ablated = ablate_each_slot(model, out, b['completed'], b['event'])
+                for destination, metric in ((deleted_nll, 'NLL'), (delta_nll, 'delta_NLL')):
+                    for key, values in ablated[metric].items():
+                        previous = destination.setdefault(key, [0.] * len(values))
+                        destination[key] = [old + new * len(batch_ids) for old, new in zip(previous, values)]
+                changes = ablated['mean_abs_logit_change']
+            else:
+                changes = ablate_each_slot(model, out)
+            for key, values in changes.items():
                 if key not in ablations:
                     ablations[key] = [0.] * len(values)
                 ablations[key] = [old + new * len(batch_ids) for old, new in zip(ablations[key], values)]
@@ -52,6 +66,10 @@ def evaluate_epoch(model, store, ids, adapter, boundaries, config, device, *, se
                 slots.setdefault(key, []).append(part[part_key].cpu())
                 attention.setdefault(key, []).append(part['read_attention'][:, section].cpu())
                 read_mass.setdefault(key, []).append(part['raw_read_mass'][:, :, section].cpu())
+                if observe:
+                    destination = read_observations.setdefault(key, {})
+                    for name, value in part['read_diagnostics'].items():
+                        destination.setdefault(name, []).append(value[:, :, section].cpu())
     result = {
         'role_target_MSE': {k: v / len(ids) for k, v in role_sums.items()},
         'roles': {k: role_summary(torch.cat(v)) for k, v in roles.items()},
@@ -61,6 +79,14 @@ def evaluate_epoch(model, store, ids, adapter, boundaries, config, device, *, se
         'ablation_mean_abs_logit_change': {k: [v / len(ids) for v in values] for k, values in ablations.items()},
         'ablation_scope': 'slot removal in role pool; not conditional CPI',
     }
+    if observe:
+        result['read_diagnostics'] = {
+            role: read_diagnostics_summary({name: torch.cat(values) for name, values in measurements.items()})
+            for role, measurements in read_observations.items()}
+    if with_nll:
+        result['ablation_NLL'] = {k: [v / len(ids) for v in values] for k, values in deleted_nll.items()}
+        result['ablation_delta_NLL'] = {k: [v / len(ids) for v in values] for k, values in delta_nll.items()}
+        result['ablation_delta_NLL_definition'] = 'deleted NLL minus full NLL; positive means deletion worsens fitted-model NLL'
     if survival:
         logits = torch.cat(logits)
         risks = -(1 - logits.sigmoid()).cumprod(-1).sum(-1).numpy()
