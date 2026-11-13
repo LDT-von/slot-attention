@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-11-13T03:30:00+08:00",
+  "recorded_at": "2026-11-13T20:30:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -7562,5 +7562,955 @@
       }
     },
     "next_action_user_inputs": "沿用户已有代码推送/人工服务器交接方式，交付独立JSON导出工具并请求对端导出已有84轮机制汇总；不新训/不推理/不加载checkpoint，不需GPU。完整汇总回来后检验角色恢复、复制与槽影响是否同向，再锁定下一轮有限机制协议。当前研究已有明确授权，不重复申请历史审计豁免；本轮不启动多折多seed或直接合并治理机制。"
+  },
+  "latest_readfix_v2_completed_receipt_review_84epoch_export": {
+    "recorded_at": "2026-11-13T20:30:00+08:00",
+    "route_task": "SlotSPE / readfix v2 completed-experiment read-only receipt review / joint 47 + frozen 37 = 84 epoch mechanism export",
+    "status": "completed_readonly_export_84_epochs",
+    "authorization": "用户2026-11-13授权: 在新独立checkout检出acd78de, 按READFIX_V2_REVIEW_HANDOFF_CN.md运行9项检查与scripts/export_full_slot_receipt_review.py; 输入仅为原joint/frozen的现有receipt.json并使用固定SHA256; 不启动训练/推理/置换作业, 不加载checkpoint, 不修改原实验目录及缓存; 回传全部84个epoch机制汇总而非仅C-index曲线; 追加六项条目并推送。",
+    "completed_work": "在新独立checkout /data1/slotspe_receipt_review_20261113_01 (分支 codex/full-slot-research-20261111, HEAD=acd78deb55b5c17d3e8134a46e590d049843fe7b, 全新clone) 执行只读回执审查: (1) 9项检查全部通过: python -S -m unittest discover -s tests -p test_full_slot_receipt_export.py -v -> Ran 9 tests, OK, 退出码0。(2) 导出器运行成功, 退出码0, 输出 aggregates.json, status=exported, model_executed=false, patient_rows_exported=false; 导出 joint 12 role + 35 task = 47 epoch, frozen 12 role + 25 task = 37 epoch, 合计 84 epoch; 两臂 audit 均 best_last_match_curve=true, raw_receipt_hash_verified=true, checkpoints_loaded_or_rehashed=false。(3) 输入receipt哈希与文档固定值一致: joint 6723f1fd..., frozen bbafe378...; 导出前后两次 sha256sum 确认原receipt字节未变; 原实验目录与缓存未读写修改。(4) 汇总84个epoch的 train_role_loss / train_survival_NLL / validation.role_target_MSE / validation.roles / validation.slots / validation.raw_reading_mass / validation.ablation_mean_abs_logit_change / train_raw_reading_mass / raw_slot_gradient_mean, 全部写入本地导出文件与本条目。(5) 机制读出(按全部epoch, 非挑选轮次): 读取质量低计数全部集中在WSI侧, Omics侧两臂全程为0; joint的p_common在task ep27发生突跳(11-18 -> 88-95); 低质量计数与 read_overlap 的Pearson r=+0.8603、与 ablate_each_slot 的p_common两个槽 r=+0.7761/+0.7310、同向; 而 roleMSE_p_common r=+0.1992 (几乎不相关)、C_index r=+0.2496、p_common槽范数 r=-0.0813 (健康)、有效秩 r=+0.1029。(6) 合成数值性质检查(synthetic_uniform_read_check.py, CPU, 无患者数据/无checkpoint/无训练/无GPU): readfix v2的 masked_add_eps_l1_v2 下, 一个被饿死的槽在全部真实token上读到的是严格均匀分布(spread=0.0, sum=1.0), 因此它与任何内容槽的min-overlap反而最大; 这为 \"低质量计数上升伴随 read_overlap 与 slot-removal 影响上升\" 提供了机械解释, 即 overlap/ablation 的上升部分是归一化造成的均匀读所贡献, 不能直接读作内容信号增加。(7) 两项更正已落实: 源文件为13项(不是14项), 两臂一致; \"置换 SD≈0.08\" 未提供原始方法/种子/重复次数/回执, 明确撤回其作为已测噪声尺度的用法。",
+    "paths_commit": {
+      "checkout": "/data1/slotspe_receipt_review_20261113_01",
+      "branch": "codex/full-slot-research-20261111",
+      "head": "acd78deb55b5c17d3e8134a46e590d049843fe7b",
+      "upstream_url": "https://github.com/LDT-von/slot-attention.git",
+      "export_output": "local_evidence/readfix_v2_receipt_review_20261113_01/aggregates.json",
+      "derived_summary": "local_evidence/readfix_v2_receipt_review_20261113_01/derived_summary.json",
+      "synthetic_check": "local_evidence/readfix_v2_receipt_review_20261113_01/synthetic_uniform_read_check.py",
+      "input_receipts_read_only": {
+        "joint": "/data1/slotspe_full_slot_fixprobe_20261111_01/local_evidence/full_slot_joint_readfix_v2_20261111_01/receipt.json",
+        "frozen": "/data1/slotspe_full_slot_fixprobe_20261111_01/local_evidence/full_slot_frozen_readfix_v2_20261111_01/receipt.json"
+      },
+      "artifact_SHA256": {
+        "aggregates.json": "1ec8dd763a8c865ea419a8b601d9a8d4080f1d31f0e0805d618a9caa1fa35910",
+        "derived_summary.json": "f78f939e4c8745c4582242d9cfd8f979b75e890eaebc13be418f44c04496acb4",
+        "exporter_scripts/export_full_slot_receipt_review.py": "de355b46b582dd77a323c188824bc94b5168179cacfff92f4612cb0c4b67908d",
+        "tests/test_full_slot_receipt_export.py": "4bdb63d09ee4b1c08b47f35c2e6d20cf7e0ac60d33fcae3334c8f5f4a43bed39",
+        "input_receipt_joint.json": "6723f1fdd730ef16c3a851995f93c3d5de31a5df786f7ced4570f372df226808",
+        "input_receipt_frozen.json": "bbafe3788656332712dd9b470a2853b0038a9b5d6af007f6d84739d8893e474b"
+      },
+      "exporter_declared_SHA256": "de355b46b582dd77a323c188824bc94b5168179cacfff92f4612cb0c4b67908d",
+      "preserved_read_only": [
+        "/data1/SlotSPE",
+        "/data1/slotspe_split_guard_0934bb6",
+        "/data1/slotspe_full_slot_20261111_01",
+        "/data1/slotspe_full_slot_fixprobe_20261111_01",
+        "/data1/slotspe_split_guard_0934bb6/local_evidence/common_private_pilot_prepare_splitfixed_20261110_01"
+      ],
+      "new_commit_or_push": true
+    },
+    "protocol": {
+      "arm_joint": {
+        "fold": 0,
+        "seed": 3,
+        "patches": 4096,
+        "batch_size": 2,
+        "target_dim": 8,
+        "common_rank": 2,
+        "width": 64,
+        "iterations": 3,
+        "hidden": 32,
+        "bins": 4,
+        "role_epochs": 12,
+        "task_epochs": 40,
+        "patience": 10,
+        "role_lr": 0.003,
+        "task_lr": 0.001,
+        "role_weight": 1.0,
+        "readout_bound": 2.0,
+        "task_mode": "joint",
+        "allocation": {
+          "p": [
+            2,
+            2
+          ],
+          "g": [
+            2,
+            2
+          ]
+        }
+      },
+      "arm_frozen": {
+        "fold": 0,
+        "seed": 3,
+        "patches": 4096,
+        "batch_size": 2,
+        "target_dim": 8,
+        "common_rank": 2,
+        "width": 64,
+        "iterations": 3,
+        "hidden": 32,
+        "bins": 4,
+        "role_epochs": 12,
+        "task_epochs": 40,
+        "patience": 10,
+        "role_lr": 0.003,
+        "task_lr": 0.001,
+        "role_weight": 1.0,
+        "readout_bound": 2.0,
+        "task_mode": "frozen",
+        "allocation": {
+          "p": [
+            2,
+            2
+          ],
+          "g": [
+            2,
+            2
+          ]
+        }
+      },
+      "train_count": 304,
+      "validation_count": 76,
+      "cohort": "5fold_uni2h",
+      "read_normalization": {
+        "policy": "masked_add_eps_l1_v2",
+        "epsilon": 1e-08,
+        "epsilon_on": "real_tokens_only"
+      },
+      "prepared_manifest_SHA256": "8fc4ccc92668da836aea79f253384bc70040542d6b02fbdb4a8e592e42454091",
+      "model_parameters": 245164,
+      "optimizer_steps": {
+        "joint": {
+          "role": 1824,
+          "task": 5320
+        },
+        "frozen": {
+          "role": 1824,
+          "task": 3800
+        }
+      },
+      "epoch_counts": {
+        "joint": {
+          "role": 12,
+          "task": 35
+        },
+        "frozen": {
+          "role": 12,
+          "task": 25
+        }
+      },
+      "total_epochs": 84
+    },
+    "results": {
+      "audit_flags": {
+        "joint": {
+          "epoch_counts": {
+            "role": 12,
+            "task": 35
+          },
+          "best_last_match_curve": true,
+          "raw_receipt_hash_verified": true,
+          "checkpoints_loaded_or_rehashed": false,
+          "gradient_scope": "as recorded norms of raw-slot gradients; no gradient directions",
+          "ablation_scope": "recorded slot removal and mean absolute logit change; no NLL/CPI",
+          "rank_scope": "common-rank bound is architectural, not an empirical collapse threshold"
+        },
+        "frozen": {
+          "epoch_counts": {
+            "role": 12,
+            "task": 25
+          },
+          "best_last_match_curve": true,
+          "raw_receipt_hash_verified": true,
+          "checkpoints_loaded_or_rehashed": false,
+          "gradient_scope": "as recorded norms of raw-slot gradients; no gradient directions",
+          "ablation_scope": "recorded slot removal and mean absolute logit change; no NLL/CPI",
+          "rank_scope": "common-rank bound is architectural, not an empirical collapse threshold"
+        }
+      },
+      "best_last": {
+        "joint": {
+          "best": {
+            "epoch": 25,
+            "C_index": 0.5802888700084962,
+            "NLL": 0.8258994768291686
+          },
+          "last": {
+            "epoch": 35,
+            "C_index": 0.5590484282073067,
+            "NLL": 0.8647409841117993
+          }
+        },
+        "frozen": {
+          "best": {
+            "epoch": 15,
+            "C_index": 0.5335598980458793,
+            "NLL": 0.7965868446985324
+          },
+          "last": {
+            "epoch": 25,
+            "C_index": 0.524214103653356,
+            "NLL": 0.8097581773601811
+          }
+        }
+      },
+      "low_quality_counts_by_modality_all_epochs": {
+        "joint": {
+          "g_common": {
+            "total_below_threshold_count": 0,
+            "total_observations": 21432,
+            "fraction": 0.0,
+            "max_single_epoch": 0
+          },
+          "g_residual": {
+            "total_below_threshold_count": 0,
+            "total_observations": 21432,
+            "fraction": 0.0,
+            "max_single_epoch": 0
+          },
+          "p_common": {
+            "total_below_threshold_count": 1155,
+            "total_observations": 21432,
+            "fraction": 0.053891377379619264,
+            "max_single_epoch": 95
+          },
+          "p_residual": {
+            "total_below_threshold_count": 265,
+            "total_observations": 21432,
+            "fraction": 0.012364688316536022,
+            "max_single_epoch": 30
+          }
+        },
+        "frozen": {
+          "g_common": {
+            "total_below_threshold_count": 0,
+            "total_observations": 16872,
+            "fraction": 0.0,
+            "max_single_epoch": 0
+          },
+          "g_residual": {
+            "total_below_threshold_count": 0,
+            "total_observations": 16872,
+            "fraction": 0.0,
+            "max_single_epoch": 0
+          },
+          "p_common": {
+            "total_below_threshold_count": 324,
+            "total_observations": 16872,
+            "fraction": 0.019203413940256046,
+            "max_single_epoch": 34
+          },
+          "p_residual": {
+            "total_below_threshold_count": 280,
+            "total_observations": 16872,
+            "fraction": 0.016595542911332386,
+            "max_single_epoch": 30
+          }
+        }
+      },
+      "joint_task_grouped_by_low_quality": {
+        "A_low_collapse_p_common_below_le_25": {
+          "roleMSE_p_common": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 0.17254687681953115,
+            "sd_ddof1": 0.015714847125600735,
+            "min": 0.13453627708382462,
+            "max": 0.20916015046091127
+          },
+          "roleMSE_p_residual": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 0.514562684051381,
+            "sd_ddof1": 0.02748046321080469,
+            "min": 0.47657917113221765,
+            "max": 0.5846321176435655
+          },
+          "roleMSE_g_common": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 0.15287547973313878,
+            "sd_ddof1": 0.05914271115991848,
+            "min": 0.11879891893184746,
+            "max": 0.4205824382585128
+          },
+          "read_overlap_p_common": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 0.012533753051757305,
+            "sd_ddof1": 0.008954740271208966,
+            "min": 0.000550769352133052,
+            "max": 0.034081124195783366
+          },
+          "p_common_mean_norm": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 6.14240334007167,
+            "sd_ddof1": 0.12434541672950773,
+            "min": 5.944596088025665,
+            "max": 6.38828477189103
+          },
+          "p_common_effective_rank": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 1.8455912618765815,
+            "sd_ddof1": 0.14735883646326678,
+            "min": 1.5122581446328194,
+            "max": 1.9996747876238423
+          },
+          "ablation_pC_slot0": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 0.09933977239704478,
+            "sd_ddof1": 0.05347620058556831,
+            "min": 0.0441597648433194,
+            "max": 0.20614137296750507
+          },
+          "ablation_pC_slot1": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 0.10163777575559324,
+            "sd_ddof1": 0.056910588222826124,
+            "min": 0.043546292378099406,
+            "max": 0.2151262332229383
+          },
+          "C_index": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 0.5024508202078295,
+            "sd_ddof1": 0.03749583466994224,
+            "min": 0.38147833474936277,
+            "max": 0.5802888700084962
+          },
+          "NLL": {
+            "n": 26,
+            "epochs": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26
+            ],
+            "mean": 0.8179149500361549,
+            "sd_ddof1": 0.04492626660434199,
+            "min": 0.7699599469227312,
+            "max": 0.9927219917228413
+          }
+        },
+        "B_high_collapse_p_common_below_ge_25": {
+          "roleMSE_p_common": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 0.17936349172152946,
+            "sd_ddof1": 0.013795624175787634,
+            "min": 0.1579092302958358,
+            "max": 0.19770267949527065
+          },
+          "roleMSE_p_residual": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 0.531059688088413,
+            "sd_ddof1": 0.017817612768520792,
+            "min": 0.4887173418303873,
+            "max": 0.5510659133954858
+          },
+          "roleMSE_g_common": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 0.11929957364732488,
+            "sd_ddof1": 0.010336203866897395,
+            "min": 0.10696583901725241,
+            "max": 0.1353569378996578
+          },
+          "read_overlap_p_common": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 0.04213416843144302,
+            "sd_ddof1": 0.008832263201122143,
+            "min": 0.028968568121940357,
+            "max": 0.05966492994949364
+          },
+          "p_common_mean_norm": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 6.11973213645493,
+            "sd_ddof1": 0.036750180339564426,
+            "min": 6.068500609984229,
+            "max": 6.1765514822478425
+          },
+          "p_common_effective_rank": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 1.8734959388765238,
+            "sd_ddof1": 0.050508986421536985,
+            "min": 1.8022088411347017,
+            "max": 1.949834290670098
+          },
+          "ablation_pC_slot0": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 0.23153480105524715,
+            "sd_ddof1": 0.037026134848814736,
+            "min": 0.1641152556871398,
+            "max": 0.282443853874105
+          },
+          "ablation_pC_slot1": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 0.22036308206259955,
+            "sd_ddof1": 0.033375273011786874,
+            "min": 0.1571460155708844,
+            "max": 0.26837483759132774
+          },
+          "C_index": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 0.5217596526007741,
+            "sd_ddof1": 0.03698629899136677,
+            "min": 0.45284621920135937,
+            "max": 0.5709430756159728
+          },
+          "NLL": {
+            "n": 9,
+            "epochs": [
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35
+            ],
+            "mean": 0.8565214808359937,
+            "sd_ddof1": 0.033898980567712254,
+            "min": 0.8249581788281253,
+            "max": 0.9347425825071228
+          }
+        }
+      },
+      "joint_task_correlations_vs_p_common_below_threshold_count": {
+        "C_index": {
+          "pearson_r_vs_p_common_below_count": 0.24963465309194663,
+          "n": 35
+        },
+        "NLL": {
+          "pearson_r_vs_p_common_below_count": 0.4025851543786223,
+          "n": 35
+        },
+        "roleMSE_p_common": {
+          "pearson_r_vs_p_common_below_count": 0.19918079540965775,
+          "n": 35
+        },
+        "roleMSE_p_residual": {
+          "pearson_r_vs_p_common_below_count": 0.2946882621568356,
+          "n": 35
+        },
+        "roleMSE_g_common": {
+          "pearson_r_vs_p_common_below_count": -0.260226236821735,
+          "n": 35
+        },
+        "roleMSE_g_residual": {
+          "pearson_r_vs_p_common_below_count": -0.21050180381217887,
+          "n": 35
+        },
+        "read_overlap_p_common": {
+          "pearson_r_vs_p_common_below_count": 0.8602880350811543,
+          "n": 35
+        },
+        "ablation_pC_slot0": {
+          "pearson_r_vs_p_common_below_count": 0.7761005114273378,
+          "n": 35
+        },
+        "ablation_pC_slot1": {
+          "pearson_r_vs_p_common_below_count": 0.7310319444169135,
+          "n": 35
+        },
+        "ablation_gC_slot0": {
+          "pearson_r_vs_p_common_below_count": 0.3436050670059848,
+          "n": 35
+        },
+        "ablation_pR_slot0": {
+          "pearson_r_vs_p_common_below_count": 0.5178204294899789,
+          "n": 35
+        },
+        "grad_role_pC0": {
+          "pearson_r_vs_p_common_below_count": 0.15453589042164612,
+          "n": 35
+        },
+        "grad_surv_pC0": {
+          "pearson_r_vs_p_common_below_count": 0.5347068013974456,
+          "n": 35
+        },
+        "grad_combined_pC0": {
+          "pearson_r_vs_p_common_below_count": 0.513649287348733,
+          "n": 35
+        },
+        "p_common_mean_norm": {
+          "pearson_r_vs_p_common_below_count": -0.08133653522954072,
+          "n": 35
+        },
+        "p_common_effective_rank": {
+          "pearson_r_vs_p_common_below_count": 0.10286976061138611,
+          "n": 35
+        },
+        "p_common_across_patient_std_rms": {
+          "pearson_r_vs_p_common_below_count": -0.0025877076201042326,
+          "n": 35
+        }
+      },
+      "p_common_contribution_localization_val_joint_task": {
+        "below_threshold_count_by_iteration_totals": [
+          504,
+          262,
+          265
+        ],
+        "below_threshold_count_by_slot_totals": [
+          114,
+          917
+        ],
+        "train_side_p_by_iteration_totals": [
+          2239,
+          1197,
+          1297
+        ],
+        "train_side_p_by_slot_totals": [
+          332,
+          3775,
+          55,
+          571
+        ],
+        "note": "聚合只有分别按槽、按迭代统计, 无槽x迭代x患者交叉表; 不做个体定位"
+      },
+      "frozen_isolation": {
+        "read_stats_constant_across_all_25_task_epochs": {
+          "p_common_below_threshold_count": [
+            8
+          ],
+          "p_common_min_mass": [
+            0.0
+          ],
+          "p_common_roleMSE": [
+            0.16003950250719387
+          ],
+          "p_common_read_overlap_constant": true
+        },
+        "all_raw_slot_gradient_terms_null_during_task": true,
+        "ablation_pC_slot0_first_vs_last": [
+          0.09258810783178928,
+          0.27779298609719744
+        ],
+        "ablation_pC_slot0_min_max_mean": [
+          0.046035166339192884,
+          0.27779298609719744,
+          0.16977754440769524
+        ],
+        "reading": "固定 bag + 冻结槽 => 读统计恒定是预期行为; 不能单凭它区分 task 梯度/继续 role 拟合/优化器变化的贡献; 缺 continued-role-only 对照"
+      },
+      "synthetic_uniform_read_check": {
+        "starved_slot_mass": 2.614844889380188e-171,
+        "starved_slot_attention_spread": 0.0,
+        "starved_slot_uniform_over_real_tokens": true,
+        "starved_slot_sum": 1.0,
+        "uniform_reader_overlap_with_half_reader": 0.9061545165733209,
+        "scope": "合成数值性质检查, 无患者数据, 不证明患者性能"
+      },
+      "full_84_epoch_mechanism_data": "local_evidence/readfix_v2_receipt_review_20261113_01/aggregates.json (ignored, 保留在本机); 本条目给出全部聚合与分组统计"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "python_version": "3.12.4",
+      "commands": [
+        "python3 -S -m unittest discover -s tests -p test_full_slot_receipt_export.py -v",
+        "python3 -S scripts/export_full_slot_receipt_review.py --receipt joint <joint receipt> 6723f1fd... --receipt frozen <frozen receipt> bbafe378... --output local_evidence/readfix_v2_receipt_review_20261113_01/aggregates.json"
+      ],
+      "unittest_exit_code": 0,
+      "unittest_result": "Ran 9 tests in 0.032s OK",
+      "export_exit_code": 0,
+      "export_result": "{\"status\": \"exported\", \"arms\": [\"joint\",\"frozen\"], \"output_SHA256\": \"1ec8dd763a8c865ea419a8b601d9a8d4080f1d31f0e0805d618a9caa1fa35910\", \"model_executed\": false, \"patient_rows_exported\": false}",
+      "epoch_counts": {
+        "joint": {
+          "role": 12,
+          "task": 35
+        },
+        "frozen": {
+          "role": 12,
+          "task": 25
+        }
+      },
+      "total_epochs": 84,
+      "best_last_match_curve": {
+        "joint": true,
+        "frozen": true
+      },
+      "raw_receipt_hash_verified": {
+        "joint": true,
+        "frozen": true
+      },
+      "checkpoints_loaded_or_rehashed": {
+        "joint": false,
+        "frozen": false
+      },
+      "checkpoint_SHA256_are_reported_values_only": true,
+      "input_receipts_unmodified_after_export": true,
+      "original_run_directories_unmodified": true,
+      "model_executed_this_round": false,
+      "training_executed_this_round": false,
+      "inference_executed_this_round": false,
+      "permutation_job_executed_this_round": false,
+      "gpu_used_this_round": false,
+      "patient_identifiers_predictions_per_patient_arrays_or_weights_in_output": false,
+      "privacy_scan": "导出文件全部向量长度为2/3/4/37/47(槽轴/迭代轴/epoch轴), 无76或304长度(患者轴)向量; 未出现 patient_id/predictions/split_identity 等字段",
+      "gradient_scope": "as recorded norms of raw-slot gradients; no gradient directions",
+      "ablation_scope": "recorded slot removal and mean absolute logit change; no NLL/CPI",
+      "rank_scope": "common-rank bound is architectural, not an empirical collapse threshold"
+    },
+    "gaps_reasons": "本轮只做已完成实验的只读回执导出与汇总, 未启动任何训练/推理/置换作业, 未加载checkpoint, 未读取患者缓存。源文件数量更正: 两臂公开 source_SHA256 实为13项(edc2313失败receipt同样为13项), 原文档\"14个源文件\"为笔误, 已按13项更正, 未伪造补项。置换噪声尺度撤回: 未找到\"置换 SD≈0.08\"的算法/种子/重复次数/原始回执; 仓库内docs/research/slotspe_p6_addendum_20261020 的置换与patch-order研究是另一队列(77人)的槽置换/输入顺序/重初始化研究(c_std约0.0034), 不是C-index置换零假设, 不能替代; 因此撤回把0.08当作已测噪声尺度的用法, 本轮也不新造置换实验。结论边界: 角色MSE、read_overlap、ablation、梯度范数、C-index 均为开发验证(304训练/76验证)的训练轨迹描述, 不是泛化误差条, 不替代预定选模规则; 跨epoch的mean±sample-SD不应当作不确定性区间。rank上界: 解码后的common role经固定rank-2投影, 理论秩上界为2, 观测到的1.73-1.96不构成坍塌证据; 导出器保留旧ambient bound并另加architectural bound, 未更改旧诊断或历史receipt。minimum=0仅表示至少一条 患者x迭代x槽 观测完全下溢, 分母是该观测数而非独立患者数; 有限非零槽范数不能证明仍保有有用信息。residual指剩余角色而非冗余槽; 经验PCA/CCA角色名不等于识别出真实共有/私有生物来源。现有receipt不含Q/K范数、logit差、log质量、epsilon混合权重或逐槽删除后的NLL, 本轮标为未记录, 不修改历史日志也不重跑去补成\"当时的观测\"。槽x迭代x患者交叉表不存在, 低质量计数的个体定位不可得, 只做分别按槽/按迭代的聚合。frozen臂读统计恒定是固定bag加冻结槽的预期行为, 不能单凭它区分task梯度/继续role拟合/优化器变化的贡献, 需要 continued-role-only 对照才能归因, 本轮未执行。第一轮loss逐位一致不足以证明整条训练轨迹位级可复现; 小样本未匹配差异或非显著的匹配结果都不能确立等效或普遍无效。本协议仍无独立测试证据, best与last均为开发验证结果, 不能与旧队列S0或旧3+3末轮数字直接比较并称提升。",
+    "next_action_user_inputs": "等上游据本汇总检查角色拟合/读退化/槽删除影响是否同向后锁定下一轮有限机制协议。本机侧可选项: (a) continued-role-only 对照, 用于把 frozen臂中读统计恒定与task梯度/继续role拟合/优化器变化分离; (b) 记录Q/K范数、logit差、log质量与逐槽删除后NLL, 使槽级饿死可被直接定位; (c) 正式撤回并更正\"置换 SD≈0.08\"与\"14个源文件\"两处公开表述。本轮未启动多折多seed扩展, 未合并读取修复与残差辅助上线, 未启动任何新训练/推理/置换作业; 后续候选训练需先固定协议。"
   }
 }
