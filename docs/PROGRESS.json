@@ -6572,5 +6572,995 @@
     },
     "gaps_reasons": "本协议无独立测试证据: best 与 last 均为开发验证结果, 不能与旧队列 S0 或旧3+3末轮数字直接比较并称提升。best=0.5803 是 35 个 task epoch 上的最大值, 76人验证集置换零假设SD约0.08, 该点是乐观偏置的; joint 全 epoch 均值0.5074(sd0.0378)才是中枢, 与 best 相差约1个噪声标准差。readfix v2 只保证归一化合法, 不解决槽竞争饿死: WSI侧 p_common 共同槽的原始读取质量完全下溢为0且随训练加剧, 槽范数仍健康(约6.14), 属读取质量塌缩而非数值NaN或死槽。本次未新增槽平衡/熵约束/重初始化机制(受 AGENTS.md 审计约束), 因此未尝试治理该塌缩。本轮未评估患者预测损害或训练修正收益, 不含因果或生物学解释; 角色名不蕴含已识别信息因子。单折单seed的分数无法分辨槽机制是否有增益: 与同队列旧pilot(槽更少、预算更小)相比差异落在噪声内, 既不支持\"更好\"也不支持\"更差\"。",
     "next_action_user_inputs": "待用户决定机制路线。可选: (A) 治 p_common 竞争饿死(需用户明确豁免 AGENTS.md 的\"不新增机制\"约束, 或置于审计线外的独立研究线); (B) 多折 x 多seed 并报 mean±sd 而非 max, 把噪声从约0.08压到可分辨后与简化基线比较(算力5xN); (C) 同队列同协议的去槽机制消融(单池化基线), 若 full-slot 不胜出即直接证伪当前槽机制增益。在用户指定前不启动新的训练、推理或患者干预。"
+  },
+  "full_slot_readfix_v2_completed_report_review_20261113": {
+    "recorded_at": "2026-11-13T11:46:36+08:00",
+    "route_task": "SlotSPE / completed readfix-v2 report review / isolated read-only receipt export delivery",
+    "completed_work": "直接核实5c42441结果提交及两个GitHub文件blob，重算joint/frozen完整task曲线、best/last、mean与两种SD；核对13项源码与两个配置的本地字节哈希。修正rank-2角色投影、低质量计数分母、跨epoch统计与frozen因果解释。发现公开完成条目缺少完整机制序列和置换回执，新增只读JSON汇总导出工具及交接说明，不修改训练代码或已完成实验。",
+    "paths_commit": {
+      "report_commit": "5c424412e8d9f0948a94fb60a8b2668096e708d8",
+      "training_commit_server_reported": "245da18ab4042669b98c7f7bd6b25fbbf793731b",
+      "source_report_entries": [
+        "latest_full_slot_edc2313_failed_joint_frozen",
+        "latest_readfix_v2_probe_passed",
+        "latest_readfix_v2_full_slot_joint_frozen_completed"
+      ],
+      "report_url": "https://github.com/LDT-von/slot-attention/blob/5c424412e8d9f0948a94fb60a8b2668096e708d8/research_models/common_private_synergy/SERVER_READFIX_V2_RESULTS_CN.md",
+      "audit_receipt_local": "local_evidence/readfix_v2_report_audit_20261113_01/audit_receipt.json",
+      "audit_receipt_SHA256": "d811a1d2683eb3ea3951e175765c48916707b480e7bfd22a8d913f59fb0c2e67",
+      "exporter": "scripts/export_full_slot_receipt_review.py",
+      "tests": "tests/test_full_slot_receipt_export.py",
+      "handoff": "research_models/common_private_synergy/READFIX_V2_REVIEW_HANDOFF_CN.md",
+      "local_canonical": "research_models/common_private_synergy/IDEA_ABC_CN.md section20.27",
+      "followup_delivery_base_commit": "5c424412e8d9f0948a94fb60a8b2668096e708d8"
+    },
+    "checks_actual_execution_raw_receipt": {
+      "evidence_scope": {
+        "github_metadata_and_report_blobs_directly_verified": true,
+        "reported_curves_recomputed": true,
+        "server_raw_receipts_or_weights_read": false,
+        "patient_model_executed": false,
+        "new_training_executed": false
+      },
+      "published_snapshot_verification": {
+        "SERVER_READFIX_V2_RESULTS_CN.md": {
+          "SHA256": "75e9568f8dbef08874f9a10ca035e8380fcf2d08bc4f8b0a65c92a7acfcc6525",
+          "github_blob_SHA1": "3f6812e1e22dc3d9e020dcb7aa3739dd17588391",
+          "blob_verified": true
+        },
+        "remote_PROGRESS.json": {
+          "SHA256": "1b99ef6afd9021edf583e83d0f7a7c66b41377aebb5edd507f3be1ea48a4a553",
+          "github_blob_SHA1": "4a89d11a4c39588161fc3d8885bb21494964b884",
+          "blob_verified": true
+        }
+      },
+      "published_curves_recomputed": {
+        "joint": {
+          "task_epochs": 35,
+          "best": {
+            "epoch": 25,
+            "C_index": 0.5802888700084962,
+            "NLL": 0.8258994768291686
+          },
+          "last": {
+            "epoch": 35,
+            "C_index": 0.5590484282073067,
+            "NLL": 0.8647409841117993
+          },
+          "C_index_trajectory": {
+            "mean": 0.5074159485374439,
+            "SD_ddof_0": 0.03725777868671832,
+            "SD_ddof_1": 0.037801716636789696,
+            "scope": "correlated training trajectory; not generalization uncertainty"
+          },
+          "task_curve": [
+            {
+              "epoch": 1,
+              "C_index": 0.5021240441801189,
+              "NLL": 0.8460158710062461,
+              "train_loss": 1.5347813514062527,
+              "train_p_below_threshold_count": 59,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 11,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 4,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 2,
+              "C_index": 0.45879354290569246,
+              "NLL": 0.7986965677315031,
+              "train_loss": 1.2553320121694205,
+              "train_p_below_threshold_count": 61,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 21,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 4,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 3,
+              "C_index": 0.4409515717926933,
+              "NLL": 0.7933665823096046,
+              "train_loss": 1.1901305411087089,
+              "train_p_below_threshold_count": 45,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 3,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 4,
+              "C_index": 0.38147833474936277,
+              "NLL": 0.8076207926750847,
+              "train_loss": 1.1349035258986853,
+              "train_p_below_threshold_count": 43,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 6,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 3,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 5,
+              "C_index": 0.5123194562446899,
+              "NLL": 0.7766184857185866,
+              "train_loss": 1.1203066480986277,
+              "train_p_below_threshold_count": 34,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 7,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 4,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 6,
+              "C_index": 0.5046728971962616,
+              "NLL": 0.7699599469227312,
+              "train_loss": 1.12590890146639,
+              "train_p_below_threshold_count": 49,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 3,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 1,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 7,
+              "C_index": 0.5046728971962616,
+              "NLL": 0.7840857625509932,
+              "train_loss": 1.0999646403903078,
+              "train_p_below_threshold_count": 46,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 5,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 1,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 8,
+              "C_index": 0.46559048428207306,
+              "NLL": 0.793506360988493,
+              "train_loss": 1.1077366494199732,
+              "train_p_below_threshold_count": 65,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 6,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 4,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 9,
+              "C_index": 0.5097706032285472,
+              "NLL": 0.8022870685169246,
+              "train_loss": 1.0879055392273425,
+              "train_p_below_threshold_count": 73,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 9,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 7,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 10,
+              "C_index": 0.5055225148683092,
+              "NLL": 0.7793788269471655,
+              "train_loss": 1.0831373089419603,
+              "train_p_below_threshold_count": 68,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 7,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 11,
+              "C_index": 0.49362786745964315,
+              "NLL": 0.7866844484466093,
+              "train_loss": 1.0743079925674994,
+              "train_p_below_threshold_count": 61,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 11,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 6,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 12,
+              "C_index": 0.5165675446049278,
+              "NLL": 0.7857368978130337,
+              "train_loss": 1.0629788758364809,
+              "train_p_below_threshold_count": 63,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 9,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 3,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 13,
+              "C_index": 0.4876805437553101,
+              "NLL": 0.805420527823577,
+              "train_loss": 1.0418784190196448,
+              "train_p_below_threshold_count": 49,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 5,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 14,
+              "C_index": 0.530161427357689,
+              "NLL": 0.7818133377316601,
+              "train_loss": 1.0756475048177168,
+              "train_p_below_threshold_count": 50,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 9,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 5,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 15,
+              "C_index": 0.5199660152931181,
+              "NLL": 0.8151433954643325,
+              "train_loss": 1.020570275776742,
+              "train_p_below_threshold_count": 54,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 9,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 5,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 16,
+              "C_index": 0.5174171622769753,
+              "NLL": 0.8059193779657828,
+              "train_loss": 1.009620074937978,
+              "train_p_below_threshold_count": 62,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 13,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 6,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 17,
+              "C_index": 0.5123194562446899,
+              "NLL": 0.8412590414950119,
+              "train_loss": 0.9916575247270537,
+              "train_p_below_threshold_count": 67,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 10,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 18,
+              "C_index": 0.5072217502124045,
+              "NLL": 0.8487959309595243,
+              "train_loss": 0.956596824374547,
+              "train_p_below_threshold_count": 64,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 10,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 7,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 19,
+              "C_index": 0.5233644859813084,
+              "NLL": 0.8650175790259036,
+              "train_loss": 0.9482688569475655,
+              "train_p_below_threshold_count": 68,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 12,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 12,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 20,
+              "C_index": 0.5191163976210705,
+              "NLL": 0.9927219917228413,
+              "train_loss": 0.9161325971438569,
+              "train_p_below_threshold_count": 67,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 14,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 9,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 21,
+              "C_index": 0.5233644859813084,
+              "NLL": 0.8502247168923904,
+              "train_loss": 1.031670442813933,
+              "train_p_below_threshold_count": 70,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 12,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 22,
+              "C_index": 0.5148683092608326,
+              "NLL": 0.8395758224497735,
+              "train_loss": 1.0053807492717917,
+              "train_p_below_threshold_count": 65,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 11,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 23,
+              "C_index": 0.5446049277824979,
+              "NLL": 0.8283471751038017,
+              "train_loss": 1.0002591231755305,
+              "train_p_below_threshold_count": 55,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 6,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 24,
+              "C_index": 0.4613423959218352,
+              "NLL": 0.8483934951622373,
+              "train_loss": 1.0209683048889877,
+              "train_p_below_threshold_count": 54,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 11,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 6,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 25,
+              "C_index": 0.5802888700084962,
+              "NLL": 0.8258994768291686,
+              "train_loss": 1.0122650075565833,
+              "train_p_below_threshold_count": 57,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 16,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 4,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 26,
+              "C_index": 0.5259133389974512,
+              "NLL": 0.7932992206870476,
+              "train_loss": 1.0333382869092358,
+              "train_p_below_threshold_count": 79,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 18,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 3,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 27,
+              "C_index": 0.5327102803738317,
+              "NLL": 0.8249581788281253,
+              "train_loss": 1.0399134571053652,
+              "train_p_below_threshold_count": 338,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 88,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 4,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 28,
+              "C_index": 0.5344095157179269,
+              "NLL": 0.8633401277618217,
+              "train_loss": 1.0481528499681405,
+              "train_p_below_threshold_count": 392,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 95,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 4,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 29,
+              "C_index": 0.49362786745964315,
+              "NLL": 0.8659837506819431,
+              "train_loss": 1.006650704711835,
+              "train_p_below_threshold_count": 399,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 89,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 5,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 30,
+              "C_index": 0.4927782497875956,
+              "NLL": 0.8355854131680244,
+              "train_loss": 0.9876830037237297,
+              "train_p_below_threshold_count": 365,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 83,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 5,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 31,
+              "C_index": 0.5709430756159728,
+              "NLL": 0.8271681774759454,
+              "train_loss": 0.9660258478726078,
+              "train_p_below_threshold_count": 342,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 86,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 5,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 32,
+              "C_index": 0.45284621920135937,
+              "NLL": 0.9347425825071228,
+              "train_loss": 0.9743560273747844,
+              "train_p_below_threshold_count": 367,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 83,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 3,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 33,
+              "C_index": 0.5429056924384027,
+              "NLL": 0.8327254363252257,
+              "train_loss": 0.9391139365769748,
+              "train_p_below_threshold_count": 318,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 83,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 4,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 34,
+              "C_index": 0.5165675446049278,
+              "NLL": 0.8594486766639357,
+              "train_loss": 0.9483803893187893,
+              "train_p_below_threshold_count": 344,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 78,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 9,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 35,
+              "C_index": 0.5590484282073067,
+              "NLL": 0.8647409841117993,
+              "train_loss": 0.9500764334002065,
+              "train_p_below_threshold_count": 340,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 82,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 6,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            }
+          ],
+          "source_count": 13,
+          "source_report_artifact_SHA256_not_locally_verified": {
+            "receipt.json": "6723f1fdd730ef16c3a851995f93c3d5de31a5df786f7ced4570f372df226808",
+            "role_last.pt": "f9d418466d78eb235086d1b47ef53c6acd0d2e46fdee16ae3a99a3a6ee77e237",
+            "task_best.pt": "8640238cd74d368faac3168bb1939348ab6beb3f01a6161af96fc28a382675f7",
+            "task_last.pt": "221a75f487626c85c756c66a1ebcb83185a5979108e17a0c52b7f2d259414dcb"
+          }
+        },
+        "frozen": {
+          "task_epochs": 25,
+          "best": {
+            "epoch": 15,
+            "C_index": 0.5335598980458793,
+            "NLL": 0.7965868446985324
+          },
+          "last": {
+            "epoch": 25,
+            "C_index": 0.524214103653356,
+            "NLL": 0.8097581773601811
+          },
+          "C_index_trajectory": {
+            "mean": 0.5019881053525913,
+            "SD_ddof_0": 0.040596208238681875,
+            "SD_ddof_1": 0.041433331531892166,
+            "scope": "correlated training trajectory; not generalization uncertainty"
+          },
+          "task_curve": [
+            {
+              "epoch": 1,
+              "C_index": 0.4103653355989805,
+              "NLL": 0.9963358842392097,
+              "train_loss": 1.2307823318575173,
+              "train_p_below_threshold_count": 47,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 2,
+              "C_index": 0.40951571792693287,
+              "NLL": 0.8320287671310801,
+              "train_loss": 0.8908613335966645,
+              "train_p_below_threshold_count": 50,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 3,
+              "C_index": 0.41971112999150384,
+              "NLL": 0.802267112251878,
+              "train_loss": 0.8060823677105385,
+              "train_p_below_threshold_count": 49,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 4,
+              "C_index": 0.4468988954970263,
+              "NLL": 0.7922172745494208,
+              "train_loss": 0.7803920693091954,
+              "train_p_below_threshold_count": 50,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 5,
+              "C_index": 0.45029736618521665,
+              "NLL": 0.7873316234406866,
+              "train_loss": 0.768494135910904,
+              "train_p_below_threshold_count": 49,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 6,
+              "C_index": 0.4672897196261682,
+              "NLL": 0.7844535035360597,
+              "train_loss": 0.7566311895875742,
+              "train_p_below_threshold_count": 49,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 7,
+              "C_index": 0.491928632115548,
+              "NLL": 0.784374450722174,
+              "train_loss": 0.7483582679225004,
+              "train_p_below_threshold_count": 46,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 8,
+              "C_index": 0.5072217502124045,
+              "NLL": 0.785729352146283,
+              "train_loss": 0.7417105846958109,
+              "train_p_below_threshold_count": 51,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 9,
+              "C_index": 0.5131690739167375,
+              "NLL": 0.7881757026534664,
+              "train_loss": 0.7369827565640613,
+              "train_p_below_threshold_count": 49,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 10,
+              "C_index": 0.5191163976210705,
+              "NLL": 0.7886574030055431,
+              "train_loss": 0.7283392794754311,
+              "train_p_below_threshold_count": 50,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 11,
+              "C_index": 0.5259133389974512,
+              "NLL": 0.7908665794511857,
+              "train_loss": 0.7278253977101614,
+              "train_p_below_threshold_count": 53,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 12,
+              "C_index": 0.5327102803738317,
+              "NLL": 0.7927865284771234,
+              "train_loss": 0.7209586989563842,
+              "train_p_below_threshold_count": 51,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 13,
+              "C_index": 0.5327102803738317,
+              "NLL": 0.7941710268204669,
+              "train_loss": 0.7195661303781147,
+              "train_p_below_threshold_count": 47,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 14,
+              "C_index": 0.5318606627017842,
+              "NLL": 0.7958955673198966,
+              "train_loss": 0.7156683242675802,
+              "train_p_below_threshold_count": 46,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 15,
+              "C_index": 0.5335598980458793,
+              "NLL": 0.7965868446985324,
+              "train_loss": 0.7149491020774802,
+              "train_p_below_threshold_count": 46,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 16,
+              "C_index": 0.5293118096856415,
+              "NLL": 0.8005812467457155,
+              "train_loss": 0.7131628149726195,
+              "train_p_below_threshold_count": 43,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 17,
+              "C_index": 0.5284621920135939,
+              "NLL": 0.8024465923450852,
+              "train_loss": 0.7100332509434442,
+              "train_p_below_threshold_count": 52,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 18,
+              "C_index": 0.5267629566694987,
+              "NLL": 0.8023986571431344,
+              "train_loss": 0.7073904630992074,
+              "train_p_below_threshold_count": 50,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 19,
+              "C_index": 0.5267629566694987,
+              "NLL": 0.8016962138562673,
+              "train_loss": 0.7055589542694195,
+              "train_p_below_threshold_count": 48,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 20,
+              "C_index": 0.5233644859813084,
+              "NLL": 0.8029009156161381,
+              "train_loss": 0.703867213447149,
+              "train_p_below_threshold_count": 51,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 21,
+              "C_index": 0.5250637213254036,
+              "NLL": 0.8090671249710055,
+              "train_loss": 0.7039297088628709,
+              "train_p_below_threshold_count": 43,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 22,
+              "C_index": 0.524214103653356,
+              "NLL": 0.808252323117932,
+              "train_loss": 0.6987852420580724,
+              "train_p_below_threshold_count": 44,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 23,
+              "C_index": 0.524214103653356,
+              "NLL": 0.8070730666013294,
+              "train_loss": 0.7008123713173681,
+              "train_p_below_threshold_count": 51,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 24,
+              "C_index": 0.5250637213254036,
+              "NLL": 0.8116701921117165,
+              "train_loss": 0.7056659484328199,
+              "train_p_below_threshold_count": 46,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            },
+            {
+              "epoch": 25,
+              "C_index": 0.524214103653356,
+              "NLL": 0.8097581773601811,
+              "train_loss": 0.6973544190208669,
+              "train_p_below_threshold_count": 50,
+              "train_p_min_mass": 0.0,
+              "val_p_common_below_threshold_count": 8,
+              "val_p_common_min_mass": 0.0,
+              "val_p_residual_below_threshold_count": 8,
+              "val_g_common_below_threshold_count": 0,
+              "val_g_residual_below_threshold_count": 0
+            }
+          ],
+          "source_count": 13,
+          "source_report_artifact_SHA256_not_locally_verified": {
+            "receipt.json": "bbafe3788656332712dd9b470a2853b0038a9b5d6af007f6d84739d8893e474b",
+            "role_last.pt": "de497fdd6b8cd3826ff227948b777a04f36c3e05dc996ca490011cc955650320",
+            "task_best.pt": "1595e577295c6a68e49cbeb73afc405432eed9aea3499b735a80fb2318b1f210",
+            "task_last.pt": "276a062d12174c40f279a5b9e13adc9f8a2a0f4b06575c503ac878b3758b21fb"
+          }
+        }
+      },
+      "source_hash_audit": {
+        "research_models/common_private_synergy/patient_pilot.py": {
+          "reported": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3",
+          "local": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3"
+        },
+        "research_models/common_private_synergy/patient_pilot_engine.py": {
+          "reported": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b",
+          "local": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b"
+        },
+        "research_models/common_private_synergy/pilot_split.py": {
+          "reported": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1",
+          "local": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1"
+        },
+        "research_models/common_private_synergy/components/role_model.py": {
+          "reported": "fb97256d7fabb3a839aeb890bbb64c3b2166a856562b55f26f08df547ba28fe2",
+          "local": "fb97256d7fabb3a839aeb890bbb64c3b2166a856562b55f26f08df547ba28fe2"
+        },
+        "research_models/common_private_synergy/components/role_reference.py": {
+          "reported": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4",
+          "local": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4"
+        },
+        "research_models/common_private_synergy/components/slots.py": {
+          "reported": "6aca9fca71d4d752995b17480cce40720851dc8871ef6d8a18647d35fb257218",
+          "local": "6aca9fca71d4d752995b17480cce40720851dc8871ef6d8a18647d35fb257218"
+        },
+        "research_models/common_private_synergy/components/losses.py": {
+          "reported": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2",
+          "local": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2"
+        },
+        "slotspe_proof/patient.py": {
+          "reported": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
+          "local": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59"
+        },
+        "scripts/run_common_private_full_slot.py": {
+          "reported": "786bc9402d663273a0df79f105c1ea4adf43cbc499f817eb46bfaa76df3ac1d7",
+          "local": "786bc9402d663273a0df79f105c1ea4adf43cbc499f817eb46bfaa76df3ac1d7"
+        },
+        "research_models/common_private_synergy/components/contracts.py": {
+          "reported": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee",
+          "local": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee"
+        },
+        "research_models/common_private_synergy/full_slot_diagnostics.py": {
+          "reported": "d8ea86e1f35089414e15622c8ac84bf4290b913ec2cadc4fb1909e2688676e12",
+          "local": "d8ea86e1f35089414e15622c8ac84bf4290b913ec2cadc4fb1909e2688676e12"
+        },
+        "research_models/common_private_synergy/full_slot_epoch.py": {
+          "reported": "c61ecf0d5507e2ea1da0ed996b4d0165b2359d4d125b5115d5d47b2be9abcbaa",
+          "local": "c61ecf0d5507e2ea1da0ed996b4d0165b2359d4d125b5115d5d47b2be9abcbaa"
+        },
+        "research_models/common_private_synergy/full_slot_engine.py": {
+          "reported": "0b12d831cc2e82d731b8bc6d31b4b837918fcf9e275157312a537436b8b03c8d",
+          "local": "0b12d831cc2e82d731b8bc6d31b4b837918fcf9e275157312a537436b8b03c8d"
+        }
+      },
+      "configuration_hashes_match": true,
+      "source_files_count": 13,
+      "server_execution_reported_only": {
+        "pytest": "53 passed",
+        "probe": "completed role2+task2",
+        "joint": "completed role12+task35, exit0, patience",
+        "frozen": "completed role12+task25, exit0, patience",
+        "checkpoint_reload_and_reference_freeze": "reported passed; raw artifacts not locally opened",
+        "test_used": false,
+        "independent_test": "not available according to server split audit"
+      },
+      "local_exporter_tests": {
+        "invented_JSON_only": true,
+        "tests_passed": 9,
+        "failed": 0,
+        "command": "python -S -m unittest discover -s tests -p test_full_slot_receipt_export.py -v"
+      },
+      "local_full_network_synthetic_context": {
+        "progress_entry": "full_slot_network_synthetic_mechanisms_20261113",
+        "receipt": "local_evidence/full_slot_network_synthetic_20261112_01/verification_receipt.json",
+        "receipt_SHA256": "5f82ae7353acb92d0f290131a03a4f3b3251fa3998d4d82eec5f7440165aa129",
+        "completed_runs": 30,
+        "optimizer_steps": 11520,
+        "newly_rerun_this_stage": false,
+        "interpretation": "有界竞争在人工尺度压力下消除极低质量但不消除重复；在线残差改善角色/已知因素恢复，未得到稳定生存收益。合成结论不等于患者纠正有效。"
+      }
+    },
+    "gaps_reasons": {
+      "missing_evidence": [
+        "complete role phase curve",
+        "per-epoch role_target_MSE",
+        "per-epoch roles and raw slots summaries",
+        "per-slot/per-iteration low-mass counts",
+        "per-epoch raw-slot gradient norms",
+        "per-epoch ablation_mean_abs_logit_change",
+        "permutation method/seed/repetition count/raw receipt"
+      ],
+      "corrections": [
+        "Decoded common rank is at most 2 by the fixed rank-2 projection; rank 1.73-1.96 is not collapse evidence.",
+        "minimum=0 establishes at least one zero-mass observation, not universal common-role failure; denominators count patient x iteration x slot.",
+        "Residual means remaining role, not redundant slot. Nonzero slot norm does not establish useful content.",
+        "Epoch mean and ddof=1 SD are trajectory summaries; retain predeclared best/last and do not use epoch SD as uncertainty.",
+        "No reproducible evidence for permutation SD approximately 0.08 was published; cannot infer it from patient count alone.",
+        "Fixed frozen weights and bags imply fixed reading; a continued-role-only control is needed to isolate task-gradient attribution.",
+        "There are 13 listed source hashes in each arm, not 14; all 13 match local bytes.",
+        "A six-decimal first-epoch loss match does not establish bitwise reproducibility of the entire training trajectory.",
+        "Neither a small unmatched pilot difference nor a non-significant matched result establishes equivalence or general ineffectiveness."
+      ],
+      "next_export_not_yet_executed_on_server": true,
+      "new_code_SHA256": {
+        "scripts/export_full_slot_receipt_review.py": "de355b46b582dd77a323c188824bc94b5168179cacfff92f4612cb0c4b67908d",
+        "tests/test_full_slot_receipt_export.py": "4bdb63d09ee4b1c08b47f35c2e6d20cf7e0ac60d33fcae3334c8f5f4a43bed39",
+        "research_models/common_private_synergy/READFIX_V2_REVIEW_HANDOFF_CN.md": "da5c4b961e0f2a903a9015fb36860ed0d932ef884b8e8aab7bcb06a28ed7e470"
+      }
+    },
+    "next_action_user_inputs": "沿用户已有代码推送/人工服务器交接方式，交付独立JSON导出工具并请求对端导出已有84轮机制汇总；不新训/不推理/不加载checkpoint，不需GPU。完整汇总回来后检验角色恢复、复制与槽影响是否同向，再锁定下一轮有限机制协议。当前研究已有明确授权，不重复申请历史审计豁免；本轮不启动多折多seed或直接合并治理机制。"
   }
 }
