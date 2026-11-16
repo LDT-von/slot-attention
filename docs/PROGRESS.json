@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-11-04T09:55:00+08:00",
+  "recorded_at": "2026-11-10T12:50:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -10041,5 +10041,86 @@
       "The collapse statement is derived from the measurement rather than asserted: seven of the nine arms keep effective rank 1.00 to 1.01 and cosine above 0.99, and the two that spread the slots are B1_gram and V3_relation. An earlier hand-written version of this entry said all nine arms collapsed; that was wrong and the published summary now computes the split from the measured cosine."
     ],
     "next_action_user_inputs": "The queue is complete and published, and the user asked for the scores to be recorded and pushed; that is what this entry does. The scientific next step is a five-fold extension of the same nine presets, because at one fold the 0.005 to 0.03 gaps between arms cannot be attributed, and because the original's own five-fold mean is 0.7039 while its fold 0 value is 0.7485, so a single fold also flatters every arm. The nine arms cost between 3483 and 9539 seconds each, so a five-fold run is about 45 trainings and roughly 45 hours on one GPU, or about 12 to 15 hours if the folds are split across the two idle cards. That expansion is a new protocol and needs its own execution authorisation. The three open decisions of the common-private line in docs/research/slotspe_common_private_20261101/open_decisions.json remain open and are unrelated to this queue. No further patient execution is started without a new authorisation."
+  },
+  "latest_empirical_role_patient_pilot_20261110": {
+    "recorded_at": "2026-11-10T12:50:00+08:00",
+    "route_task": "SlotSPE / execute the user-authorised real-patient empirical-role survival pilot (branch codex/empirical-role-patient-pilot-20261110, commit 73c3814) on BLCA fold 0 / seed 3 over the 5fold_uni2h cohort the user explicitly chose, after a server environment check, and record the raw receipts",
+    "status": "completed_real_patient_pilot_on_two_cohorts_the_user_requested_5fold_uni2h_is_executed_and_reported_the_first_attempt_failed_on_cuda_architecture_and_was_preserved_not_retried_in_place",
+    "completed_work": "Ran the pushed pilot end to end on this machine. Step 1 was the non-executing environment check: python -B scripts/run_common_private_patient_pilot.py --plan printed the frozen plan with patient_values_read false, and --doctor reported all five dependencies present (torch, numpy, pandas, h5py, sksurv), the seven implementation file hashes, patient_values_read false and training false. Step 2 prepared the real patient cache with --prepare, which reads real inputs and trains nothing; it finished in 571.0 seconds for the 5fold-cohort batch and 612.7 seconds for the 5fold_uni2h-cohort batch, each caching every real patch of 380 complete-case patients with a manifest, a resolved_config.json and content hashes. Step 3 executed the two-phase training with --run. The FIRST attempt failed immediately inside the forward pass with 'CUDA error: no kernel image is available for execution on the device' because the default interpreter carries torch 2.6.0+cu124, which compiles only up to sm_90, while the two local cards are RTX 5090 at sm_120. That failure directory was preserved under its original name and then renamed to common_private_pilot_blca_f0_s3_20261110_01_FAILED_cuda_arch_20261110 with its status-running receipt intact; it was never overwritten and was never presented as complete. The run was relaunched against a fresh output root with the repository's own .venv_slot_spe interpreter, which carries torch 2.10.0+cu128 and does support sm_120, and that run completed. A split-identity fact was established by measurement, as required: the pilot configuration names splits_dir 5fold_uni2h, but the original loader hardcodes the 5fold directory in third_party/SlotSPE/dataset/dataset_survival.py _load_split at line 203, so the splits_dir setting never reaches cohort selection. The first batch therefore executed the 5fold cohort: its prepared train list matched 5fold/blca/fold_0.csv element by element at 303 and its validation list matched at 77, and its train-fold binning edges 8.087582602, 15.12312194 and 21.40250518 were identical to the retained 5fold baseline cache in local_evidence/anticollapse_prepared_cache_reuse. The user then asked for the 5fold_uni2h cohort explicitly. Because the original source must stay byte for byte, the cohort was changed without touching it: a metadata root /data1/slotmeta_uni2h was created whose clinical, raw_rna_data_inter and signatures entries are symlinks to the real files and whose splits/5fold/blca/fold_0.csv through fold_4.csv are symlinks to the real 5fold_uni2h CSVs, so the loader's hardcoded 5fold path resolves to uni2h content. The check confirms the symlinked file equals the uni2h CSV and differs from the original 5fold CSV. The uni2h batch then prepared and trained with the cohort identity confirmed element by element: prepared train 304 and validation 76 match 5fold_uni2h/blca/fold_0.csv exactly and match the 5fold cohort in only 242 train and 15 validation patients, which is the measured 5fold versus 5fold_uni2h difference documented in AGENTS.md. Both completed runs used the frozen pilot configuration: role phase 3 epochs then task phase 3 epochs, logical batch 2, 4096 real patches, two slots per modality with one common and one residual slot, width 32, two iterations, four time bins fitted only on uncensored training times, fixed final-epoch checkpoints with no validation epoch selection, and one validation pass. Both recorded 456 role and 456 task optimizer steps, roles frozen during the task phase and the reference frozen, a checkpoint reload that reproduces the stored parameters exactly and identical predictions from the reloaded model, and patient_performance_conclusion false. The 5fold-cohort run reached validation NLL 0.8489126675190116 with C-index 0.5673534072900158. The 5fold_uni2h-cohort run, which is the cohort the user selected, reached validation NLL 0.8153202005710941 with C-index 0.5658453695836874, and its role target MSE over the four role outputs was 0.114345728207666, 0.4326227898412098, 0.05016258626297846 and 0.5220604837449044 against the 5fold-cohort values 0.13865493030522608, 0.49231661092992046, 0.05359560178144365 and 0.5353335985368971. Both training curves are finite and decreasing within each phase: the 5fold_uni2h run went role 0.417160, 0.366799, 0.324459 and task 1.298491, 0.977285, 0.817770. No original SlotSPE source file was modified at any point, and the 11 tracked third_party files hash identically to the pushed commit 73c3814.",
+    "paths_commit": {
+      "branch": "codex/empirical-role-patient-pilot-20261110",
+      "commit": "73c381419c7c41c9b0e7b19666e4a2e87d58452f",
+      "remote": "git@github.com:LDT-von/slot-attention.git",
+      "worktree": "/data1/slotspe_pilot_20261110 (git worktree at 73c3814, detached)",
+      "main_repo": "/data1/SlotSPE (branch codex/common-private-survival; third_party untouched, git status clean)",
+      "metadata_root_used_for_uni2h": "/data1/slotmeta_uni2h (symlink tree; splits/5fold/blca/fold_*.csv -> /data1/dataset_csv/splits/5fold_uni2h/blca/fold_*.csv)",
+      "features_root": "/data1/TCGA-UNI2-h-features/blca/uni2-h/pt_files",
+      "output_roots": [
+        "/data1/SlotSPE/local_evidence/common_private_pilot_prepare_20261110_01",
+        "/data1/SlotSPE/local_evidence/common_private_pilot_prepare_uni2h_20261110_01",
+        "/data1/SlotSPE/local_evidence/common_private_pilot_blca_f0_s3_20261110_01_FAILED_cuda_arch_20261110",
+        "/data1/SlotSPE/local_evidence/common_private_pilot_blca_f0_s3_20261110_02",
+        "/data1/SlotSPE/local_evidence/common_private_pilot_uni2h_blca_f0_s3_20261110_01"
+      ],
+      "source_files_changed": [
+        "docs/PROGRESS.json (this entry only)"
+      ],
+      "third_party_modified": false,
+      "original_source_untouched": true,
+      "patient_data_in_public_tree": false,
+      "artifacts_sha256": {
+        "uni2h_run/survival_final.pt": "087720b4ed248da8289a6d2ea469004bb0635dc1b3e9f993ca28e78c177ca502",
+        "uni2h_run/role_final.pt": "cf29d822bff5c8425798c6420fda191e2d92e6c1e6418ddc2ace2bb9caa4420b",
+        "uni2h_run/validation_predictions.json": "cda803acf7b315f1377e0e5ac87dcb329cdf8cf24435a3eb656c80abad0895bf",
+        "uni2h_run/prepared_manifest.json": "24675359250a20b2ebaf2c15bca15cf924da469fb23d29471f0105296ba4a4c2",
+        "5fold_run/survival_final.pt": "25fd955af957fc77aa8ebdaa57141924d711466ebdf354cd508cd4a39bcd6965",
+        "5fold_run/role_final.pt": "9760066174f06b7f655b974a2c1dd85eb6c9356e3f05494b19d4a0f07b4da02f",
+        "5fold_run/validation_predictions.json": "3bf387169874591c90d710f4d72aee4f354115ac206e562757c94c4a08d7f7ec",
+        "5fold_run/prepared_manifest.json": "d160e06c5a256b9e8a0a937195e61fbd3d5a8bcf41b9c590ce2d447303a26a7a"
+      }
+    },
+    "checks_and_actual_execution": {
+      "plan_stage": "python -B scripts/run_common_private_patient_pilot.py --plan; execution block patient_values_read false, training false, server_execution false",
+      "doctor_stage": "ok; dependencies torch numpy pandas h5py sksurv all true; server_data_environment_present both true after exporting SLOTSPE_METADATA_ROOT and SLOTSPE_FEATURES_ROOT; patient_values_read false",
+      "actual_server_execution": "local GPU execution on this machine (2x RTX 5090, one card used), not a remote server queue run; no server was contacted and no other queue was started or interrupted",
+      "raw_receipt": "failed attempt: receipt.json status running, RuntimeError CUDA error no kernel image is available for execution on the device at components/slots.py line 31, directory preserved under the FAILED_cuda_arch name; successful attempts: receipt.json status completed with epoch_logs, optimizer_steps, validation block, checkpoint_reload_parameters_equal true and artifacts_SHA256",
+      "python_and_torch": "successful runs used /data1/SlotSPE/.venv_slot_spe/bin/python with torch 2.10.0+cu128, numpy 2.2.6, pandas 2.3.3, h5py 3.16.0, scikit-survival 0.25.0; the failed attempt used the default interpreter with torch 2.6.0+cu124",
+      "patient_training_runs_started": 2,
+      "optimizer_steps_per_run": {
+        "role": 456,
+        "task": 456
+      },
+      "patients": {
+        "uni2h_run": {
+          "train": 304,
+          "validation": 76,
+          "excluded": 0
+        },
+        "5fold_run": {
+          "train": 303,
+          "validation": 77,
+          "excluded": 0
+        }
+      },
+      "split_identity_check": "uni2h run: prepared train 304 and validation 76 equal 5fold_uni2h/blca/fold_0.csv element by element and share only 242 train and 15 validation patients with the 5fold cohort; 5fold run: prepared train 303 and validation 77 equal 5fold/blca/fold_0.csv element by element with binning edges identical to the retained 5fold baseline cache; the hardcoded 5fold directory in the original loader was bypassed for the uni2h cohort by a symlinked metadata root, not by editing the original source",
+      "source_integrity_check": "all 11 tracked third_party files hash identically to commit 73c3814; git status in /data1/SlotSPE is clean; no patient identifier, prediction array, weight or checkpoint was staged or published",
+      "artifact_reverification": "after moving the artifacts into /data1/SlotSPE/local_evidence, every artifacts_SHA256 entry in each receipt was recomputed and matched, each prepared_manifest.json hash matched its receipt, and each validation_predictions patient list equalled its manifest validation list",
+      "patch_policy_check": "manifest patch_policy states every real patch is cached per patient, a fresh subset is drawn without replacement at each access and the remainder is zero-padded, reproducing the original loader sampling; no patient was excluded for owning fewer patches than the budget",
+      "privacy_check": "patient artifacts, per-patient logits and risks, weights and identifiers stay in the ignored local_evidence directory; this entry reports only aggregate numbers"
+    },
+    "gaps_reasons": [
+      "One fold, one seed, and a very short schedule of three role epochs plus three task epochs. The models are not expected to be converged and the scores must not be read as a final method result.",
+      "There is no matched control arm under the identical protocol. The historical original SlotSPE scores were produced under a different architecture budget, different omics tokenization, a different mask contract, a different label convention and the best-validation-epoch selection, so the 0.5658 C-index of the uni2h pilot cannot be compared against them and cannot be called an improvement or a regression.",
+      "The pilot mask policy differs from the original prediction protocol because the research model explicitly masks the padded tokens while the original loader zero-pads, so any future comparison needs a matched-control arm rather than a cross-protocol comparison.",
+      "The two C-index values, 0.5674 on the 5fold cohort and 0.5658 on the 5fold_uni2h cohort, are from two different patient cohorts and are not a controlled comparison of anything; the difference of 0.0015 is far below any noise scale of a single 76 or 77 patient validation set.",
+      "The validation NLL, the role target MSE and the C-index come from one evaluation pass with one fixed validation patch sampling, so no stability certificate exists.",
+      "The role reference is an ordinary linear CCA in finite standardized PCA target coordinates fitted on the training fold. It is an empirical decomposition and does not identify biological sources, does not use a known noise model and does not support any information-theoretic decomposition claim.",
+      "The time boundaries are fitted only on uncensored training times with four quantile bins, and the loss counts completed intervals only, so this label protocol is not directly mixable with the historical original NLL numbers.",
+      "No independent test set was used and no generalisation claim is available.",
+      "Nothing here establishes patient benefit, patient harm, correction efficacy or clinical utility.",
+      "The clinical.csv, RNA and signature CSV hashes are identical between the two batches because only the split CSV differs in content, but the split CSV path differs between the metadata roots, so the two prepared manifests remain distinct identities with distinct hashes.",
+      "The symlinked metadata root is a server-side arrangement, not a repository artefact. Anyone reproducing the uni2h cohort must recreate the same symlink arrangement or apply an equivalent change, and the split identity must be re-measured rather than assumed from the configuration name."
+    ],
+    "next_action_user_inputs": "The requested step is done: the environment check passed, the real patient pilot ran, and the 5fold_uni2h cohort the user selected was executed with the raw receipts preserved in local_evidence. The pilot files describe the current acceptance gate as looking at whether the run completed, whether the training losses are finite, whether the survival head behaves, whether the roles are truly frozen in the task phase, whether the save and reload agree, and whether the validation NLL and C-index are computable; all six of those are satisfied for the uni2h run. The next scientific step the pilot file itself names is a matched-protocol S0 control arm under the same data preparation, mask, label, budget, seed and checkpoint protocol, because without it no score difference can be interpreted; that arm needs the user's explicit authorisation since it is a new patient training run. The other open options, extra seeds or folds and an independent test set, are the same kind of authorisation. Separately, the CUDA architecture issue is a real environment fact for this machine: the default python interpreter cannot run on the local RTX 5090 cards, so any future server execution must pin /data1/SlotSPE/.venv_slot_spe/bin/python or another sm_120-capable torch build, and the doctor output should record the interpreter path so this failure is not repeated. No further patient training, inference or intervention was started beyond the two runs above, and the original SlotSPE source, the existing patient cohorts, the historical failures and the receipts remain unchanged."
   }
 }
