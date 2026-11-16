@@ -42,15 +42,26 @@ def _now():
     return datetime.now(timezone.utc).isoformat()
 
 
-def task_output(model, b, mode):
+def task_output(model, b, mode, role_scale=None):
     # Identical forward values; only the survival-to-role backward edge differs.
     roles, parts = model.encode(b['p'], b['g'], b['p_mask'], b['g_mask'])
-    head_roles = {k: v.detach() for k, v in roles.items()} if mode == 'continued_role_only' else roles
+    if role_scale is None:
+        role_scale = 0. if mode == 'continued_role_only' else 1.
+    if type(role_scale) not in (int, float) or not math.isfinite(role_scale) or not 0 <= role_scale <= 1:
+        raise ValueError('role survival gradient scale must be finite in [0,1]')
+    # Values and head gradients are unchanged. This scales only dL_surv/dr.
+    if role_scale == 0:
+        head_roles = {k: v.detach() for k, v in roles.items()}
+    elif role_scale == 1:
+        head_roles = roles
+    else:
+        head_roles = {k: v.detach() + role_scale * (v - v.detach()) for k, v in roles.items()}
     return {'roles': roles, 'parts': parts, **model.predict_roles(head_roles)}
 
 
 def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthetic=False,
-             warmup_only=False, initial_checkpoint=None):
+             warmup_only=False, initial_checkpoint=None, origin_receipt=None,
+             expected_start=None, expected_draws=None):
     if not synthetic and split_guard is None:
         raise ValueError('verified patient split admission required')
     if c['task_mode'] not in ('frozen', 'joint', 'continued_role_only'):
@@ -73,7 +84,17 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
     if device.type == 'cuda' and not torch.cuda.is_available():
         raise RuntimeError('CUDA requested but unavailable')
     store = PreparedStore(root, manifest)
-    matched = c.get('schema') == 'full_slot_matched35_v1'
+    lambda_protocol = c.get('schema') == 'full_slot_lambda05_v1'
+    matched = c.get('schema') in ('full_slot_matched35_v1', 'full_slot_lambda05_v1')
+    if lambda_protocol:
+        if (type(c.get('role_survival_gradient_scale')) not in (int, float)
+                or type(c.get('head_survival_gradient_scale')) not in (int, float)
+                or c.get('role_survival_gradient_scale') != .5 or c.get('head_survival_gradient_scale') != 1.
+                or c['task_mode'] != 'joint' or not c.get('fixed_task_budget')
+                or initial_checkpoint is None or origin_receipt is None or warmup_only):
+            raise ValueError('lambda05 requires a verified shared origin and fixed task-only routing')
+    elif origin_receipt is not None:
+        raise ValueError('origin receipt supported only for lambda05 protocol')
     legacy_role_only = c['task_mode'] == 'continued_role_only' and not matched
     saved_start = None
     if initial_checkpoint is None:
@@ -92,11 +113,25 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
         saved_start = torch.load(initial_checkpoint, map_location='cpu', weights_only=True)
         if saved_start['phase'] != 'role' or saved_start['epoch'] != c['role_epochs']:
             raise ValueError('completed shared role checkpoint required')
+        origin = None
+        if lambda_protocol:
+            origin = json.loads(Path(origin_receipt).read_text(encoding='utf-8'))
+            if (origin['status'] != 'completed' or len(origin['epoch_logs']) != c['role_epochs']
+                    or any(row['phase'] != 'role' or row['epoch'] != i
+                           for i, row in enumerate(origin['epoch_logs'], 1))
+                    or origin['config'] != saved_start['config']
+                    or origin['source_SHA256'] != saved_start['source_SHA256']
+                    or origin['prepared_manifest_SHA256'] != manifest_hash
+                    or origin['split_identity'] != identity
+                    or origin['artifacts_SHA256']['role_last.pt'] != sha(initial_checkpoint)):
+                raise ValueError('historical shared origin provenance differs')
         allowed = {'task_mode'}
+        if lambda_protocol:
+            allowed |= {'schema', 'configuration_SHA256', 'role_survival_gradient_scale', 'head_survival_gradient_scale'}
         if {k: v for k, v in c.items() if k not in allowed} != {k: v for k, v in saved_start['config'].items() if k not in allowed}:
             raise ValueError('shared checkpoint protocol differs')
         if (saved_start['manifest_SHA256'] != manifest_hash or saved_start['split_identity'] != identity
-                or saved_start['source_SHA256'] != source_hashes):
+                or (not lambda_protocol and saved_start['source_SHA256'] != source_hashes)):
             raise ValueError('shared checkpoint provenance differs')
         model, adapter, boundaries = load_checkpoint(initial_checkpoint, device)
         model.requires_grad_(True)
@@ -128,6 +163,13 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
         if device.type == 'cuda':
             torch.cuda.set_rng_state(saved_start['cuda_rng_state'], device)
         receipt['shared_checkpoint_SHA256'] = sha(initial_checkpoint)
+        if lambda_protocol:
+            receipt['origin_receipt_SHA256'] = sha(origin_receipt)
+            receipt['origin_source_SHA256'] = saved_start['source_SHA256']
+            receipt['configuration_transition'] = 'reuse verified matched35 shared warmup; fresh task Adam; only survival-to-role gradient coefficient changes'
+            receipt['role_survival_gradient_scale'] = c['role_survival_gradient_scale']
+            receipt['head_survival_gradient_scale'] = 1.
+            receipt['task_gradient_policy'] = 'scaled_survival_to_roles_trainable_head'
     for encoder in model.encoders.values():
         encoder.observe_read_diagnostics = c.get('read_diagnostics', False)
     receipt['initial_model_tensor_SHA256'] = tensor_hash([(k, v) for k, v in model.state_dict().items() if isinstance(v, torch.Tensor)])
@@ -155,6 +197,12 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                 receipt['task_optimizer_initial_state_empty'] = not bool(optim.state)
                 receipt['task_optimizer_initial_groups'] = optim.state_dict()['param_groups']
                 receipt['task_start_role_parameter_SHA256'] = role_before
+                if lambda_protocol:
+                    if expected_start is None or expected_draws is None or len(expected_draws) != c['task_epochs']:
+                        raise ValueError('historical matching contract required before lambda05 updates')
+                    if any(json.loads(json.dumps(receipt[k])) != v for k, v in expected_start.items()):
+                        raise RuntimeError('lambda05 common start differs before first update')
+                    receipt['endpoint_start_verified_before_updates'] = True
             for epoch in range(1, c[phase + '_epochs'] + 1):
                 model.train()
                 order = torch.randperm(len(train), generator=rng).tolist()
@@ -170,7 +218,7 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                     b = batch(store, ids, adapter, boundaries, c, device, generator=rng)
                     # Hash actual input draws/labels in a private receipt, never export tensors/IDs.
                     draw_hash.update(tensor_hash(list(b.items())).encode())
-                    output = task_output(model, b, c['task_mode']) if phase == 'task' and not legacy_role_only else model_forward(model, b)
+                    output = task_output(model, b, c['task_mode'], c.get('role_survival_gradient_scale')) if phase == 'task' and not legacy_role_only else model_forward(model, b)
                     for modality in ('p', 'g'):
                         for key, value in output['parts'][modality].get('read_diagnostics', {}).items():
                             train_diagnostics[modality].setdefault(key, []).append(value.cpu())
@@ -237,7 +285,9 @@ def run_full(root, out, manifest, c, source_hashes, *, split_guard=None, synthet
                        'train_raw_reading_mass': {k: read_mass_summary(torch.cat(v)) for k, v in train_mass.items()},
                        'raw_slot_gradient_mean': {name: {k: (v / len(train)).tolist() if v is not None else None
                                                         for k, v in values.items()} for name, values in grads.items()},
-                       'gradient_scope': 'mean raw-slot gradient norms for batch-mean losses; role term shown unweighted'}
+                       'gradient_scope': 'mean raw-slot gradient norms for batch-mean losses; role term shown unweighted; survival term follows the applied routing coefficient; head gradient coefficient is one'}
+                if lambda_protocol and log['input_draw_SHA256'] != expected_draws[epoch-1]:
+                    raise RuntimeError('lambda05 input draw differs from historical endpoint')
                 receipt['epoch_logs'].append(log)
                 checkpoint = {'state_dict': copy.deepcopy(model.state_dict()), 'adapter': adapter.state(), 'config': c,
                               'boundaries': boundaries, 'reference_metadata': reference.metadata,
