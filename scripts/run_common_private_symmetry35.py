@@ -24,11 +24,15 @@ def main():
     parser.add_argument('--run', action='store_true')
     parser.add_argument('--prepared-root', type=Path)
     parser.add_argument('--output-root', type=Path)
+    parser.add_argument('--device', default=None,
+                        help='execution device only; the protocol is device-independent and the choice is recorded')
     args = parser.parse_args()
 
     from research_models.common_private_synergy.patient_pilot import config as load_config
     from research_models.common_private_synergy.symmetry_arm import validate_protocol
     c = load_config(args.config)
+    if args.device:
+        c['device'] = args.device
     validate_protocol(c)
     c['configuration_SHA256'] = sha(args.config)
     if not args.run:

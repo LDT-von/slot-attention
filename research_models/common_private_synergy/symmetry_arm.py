@@ -69,6 +69,14 @@ def validate_protocol(c):
                     readout_bound=2., fixed_task_budget=True, read_diagnostics=True,
                     ablation_nll=True, torch_threads=2, device='cuda:0')
     for key, value in expected.items():
+        if key == 'device':
+            # The protocol pins the device family, not the physical index, so
+            # that two arms may run concurrently on two different GPUs without
+            # any other parameter changing. The chosen index is recorded in
+            # the receipt through the configuration.
+            if c.get(key) not in ('cuda:0', 'cuda:1'):
+                raise ValueError('the symmetry protocol requires a cuda device')
+            continue
         if c.get(key) != value or isinstance(value, (int, bool)) and type(c[key]) is not type(value):
             raise ValueError('locked symmetry protocol differs: ' + key)
 
