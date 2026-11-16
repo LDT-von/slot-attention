@@ -1,6 +1,6 @@
 {
   "schema": "slotspe_independent_progress_v1",
-  "recorded_at": "2026-11-13T20:30:00+08:00",
+  "recorded_at": "2026-11-16T09:50:00+08:00",
   "source_progress_file": "E:\\DCT-Reg\\docs\\THREE_LINE_PROGRESS.json",
   "source_progress_sha256": "f24a3a77d020bec51fd0642d2e4ab8ecfb19659213837990e758e84048c22eb7",
   "scope": "SlotSPE issue discovery and user-authorized plugin experiments; no DCT transport insertion",
@@ -8512,5 +8512,150 @@
     },
     "gaps_reasons": "本轮只做已完成实验的只读回执导出与汇总, 未启动任何训练/推理/置换作业, 未加载checkpoint, 未读取患者缓存。源文件数量更正: 两臂公开 source_SHA256 实为13项(edc2313失败receipt同样为13项), 原文档\"14个源文件\"为笔误, 已按13项更正, 未伪造补项。置换噪声尺度撤回: 未找到\"置换 SD≈0.08\"的算法/种子/重复次数/原始回执; 仓库内docs/research/slotspe_p6_addendum_20261020 的置换与patch-order研究是另一队列(77人)的槽置换/输入顺序/重初始化研究(c_std约0.0034), 不是C-index置换零假设, 不能替代; 因此撤回把0.08当作已测噪声尺度的用法, 本轮也不新造置换实验。结论边界: 角色MSE、read_overlap、ablation、梯度范数、C-index 均为开发验证(304训练/76验证)的训练轨迹描述, 不是泛化误差条, 不替代预定选模规则; 跨epoch的mean±sample-SD不应当作不确定性区间。rank上界: 解码后的common role经固定rank-2投影, 理论秩上界为2, 观测到的1.73-1.96不构成坍塌证据; 导出器保留旧ambient bound并另加architectural bound, 未更改旧诊断或历史receipt。minimum=0仅表示至少一条 患者x迭代x槽 观测完全下溢, 分母是该观测数而非独立患者数; 有限非零槽范数不能证明仍保有有用信息。residual指剩余角色而非冗余槽; 经验PCA/CCA角色名不等于识别出真实共有/私有生物来源。现有receipt不含Q/K范数、logit差、log质量、epsilon混合权重或逐槽删除后的NLL, 本轮标为未记录, 不修改历史日志也不重跑去补成\"当时的观测\"。槽x迭代x患者交叉表不存在, 低质量计数的个体定位不可得, 只做分别按槽/按迭代的聚合。frozen臂读统计恒定是固定bag加冻结槽的预期行为, 不能单凭它区分task梯度/继续role拟合/优化器变化的贡献, 需要 continued-role-only 对照才能归因, 本轮未执行。第一轮loss逐位一致不足以证明整条训练轨迹位级可复现; 小样本未匹配差异或非显著的匹配结果都不能确立等效或普遍无效。本协议仍无独立测试证据, best与last均为开发验证结果, 不能与旧队列S0或旧3+3末轮数字直接比较并称提升。",
     "next_action_user_inputs": "等上游据本汇总检查角色拟合/读退化/槽删除影响是否同向后锁定下一轮有限机制协议。本机侧可选项: (a) continued-role-only 对照, 用于把 frozen臂中读统计恒定与task梯度/继续role拟合/优化器变化分离; (b) 记录Q/K范数、logit差、log质量与逐槽删除后NLL, 使槽级饿死可被直接定位; (c) 正式撤回并更正\"置换 SD≈0.08\"与\"14个源文件\"两处公开表述。本轮未启动多折多seed扩展, 未合并读取修复与残差辅助上线, 未启动任何新训练/推理/置换作业; 后续候选训练需先固定协议。"
+  },
+  "latest_matched35_common_start_82epoch_execution_20261113": {
+    "recorded_at": "2026-11-16T09:50:00+08:00",
+    "route_task": "SlotSPE / execute the user-authorised common-start matched35 protocol on the 5090 server under the frozen commit 43dc5c290e71d0c1bc06c50b0180916c5d28e1f0 of branch codex/full-slot-research-20261111, as instructed by research_models/common_private_synergy/SERVER_MATCHED35_CN.md, and record the raw receipts of the fixed 82-epoch budget: one shared 12-epoch role warmup followed by two 35-epoch task arms (joint and continued_role_only) that fork from the same common start.",
+    "status": "completed_82_of_82_epochs_on_physical_gpu1_exit_code_0_read_only_acceptance_assertions_passed",
+    "completed_work": "The whole paired protocol was executed once, end to end, and every acceptance condition in section 4 of SERVER_MATCHED35_CN.md was checked afterwards by the protocol's own read-only assertion block, which printed status verified, shared_role_epochs 12, task_epochs_per_arm 35, total_epochs 82 and exited 0. Step 0 was the isolation check: the pinned commit was fetched, a fresh detached worktree was created at 43dc5c2, HEAD was confirmed equal to that commit and git status was clean, and the output root local_evidence/full_slot_matched35_20261113_01 did not exist before the run. Step 1 was the preflight: the preflight.txt file records the timestamp 2026-11-13T10:33:15+00:00, the commit, the configuration SHA256 and a GPU query showing physical GPU1 as GPU-ae871418-cdb0-08a8-e680-ad1b87af08e7, an RTX 5090 with 18 MiB used, while the occupied physical GPU0 carried two other processes that were never touched. The environment file records Python 3.12.4 and torch 2.10.0+cu128 with CUDA 12.8 available and exactly one visible device named NVIDIA GeForce RTX 5090 at logical cuda:0, so the run used the authorised physical card through CUDA_VISIBLE_DEVICES=1. Step 2 was the non-executing plan of scripts/run_common_private_matched35.py with configs/common_private_matched35_v1.json, which confirmed the 12-epoch shared role stage, the two 35-epoch task arms and early stopping disabled. Step 3 was the single execution of the full protocol through the one-shot entry point scripts/run_common_private_matched35.py --run, which manages the shared warmup and both arms itself; the two arms were not produced by running the older single-arm entry point twice. The run wrote local_evidence/full_slot_matched35_20261113_01 with shared_role, joint and continued_role_only directories and the paired total receipt paired_receipt.json, and the shell wrapper recorded exit code 0 in exit_code.txt. Step 4 was the read-only aggregate export with scripts/export_matched35_aggregates.py, which reads only the receipts, does not import torch, does not load any checkpoint, does not touch the patient cache and reports model_executed false and patient_rows_exported false; it was run twice into two different output files and both files carry the same SHA256 a8148305634592a4d29093270b5570c1c094a9f39403c9f667e25f691b9dcd74, so the export itself is reproducible. The exported document was then checked for patient leakage: the only patient-shaped keys are counts and aggregate statistics such as patients 76, across_patient_std_rms and centered_patient_effective_rank, and no identifier, per-patient array, prediction or weight is present.",
+    "paths_commit": {
+      "branch": "codex/full-slot-research-20261111",
+      "commit": "43dc5c290e71d0c1bc06c50b0180916c5d28e1f0",
+      "remote": "git@github.com:LDT-von/slot-attention.git",
+      "protocol_document": "research_models/common_private_synergy/SERVER_MATCHED35_CN.md",
+      "config": "configs/common_private_matched35_v1.json",
+      "config_SHA256": "5da68434e215d11b71d453124dcd5c6dccf84c78db9d26d66690db3b5c686203",
+      "orchestrator": "research_models/common_private_synergy/matched35.py",
+      "entry_point": "scripts/run_common_private_matched35.py",
+      "read_only_exporter": "scripts/export_matched35_aggregates.py",
+      "read_only_exporter_SHA256": "bac2938eab5289e275ef93aee1b5d75aaecd23ac41a8ba26dfcb85aa02369270",
+      "executor_worktree": "/data1/slotspe_matched35_20261113_01 (detached worktree at 43dc5c2)",
+      "log_directory": "/data1/slotspe_matched35_20261113_01/local_evidence/matched35_logs_20261113_01",
+      "run_output_root": "/data1/slotspe_matched35_20261113_01/local_evidence/full_slot_matched35_20261113_01",
+      "aggregate_export": "/data1/slotspe_matched35_20261113_01/local_evidence/matched35_review_20261116_01/aggregates.json",
+      "aggregate_export_SHA256": "a8148305634592a4d29093270b5570c1c094a9f39403c9f667e25f691b9dcd74",
+      "artifacts_SHA256": {
+        "paired_receipt.json": "b29b84f31792c923d9caa5b1bae190709e7902fe6f3bfb43f60dcf20fa50d800",
+        "shared_role/receipt.json": "d1904ac1f1dde9665f8d56ab3baa17b8c779c4a5dc3649bcc7f9d81d8d75299c",
+        "shared_role/role_last.pt": "efae2d2b6c7fc72d157813f97b8e484c8f2a81dcb7c85bb6e5f1e4ed611abd64",
+        "joint/receipt.json": "229cf395f0ab922506d68ba146b9cbf5366e4d47a032c036ea98a12bf09af35b",
+        "joint/task_best.pt": "67877227c56534cd315fe70b07d8289b7659233665c790d6e6a4574f8238aed7",
+        "joint/task_last.pt": "97f5bf39cc9f7f06d5423db471b6a1be59f5a2c14b6a71ef0276be6b3b52d8cb",
+        "continued_role_only/receipt.json": "f51f8efd99868f08ef20f410d4f1c7176aa327c65ee13a694a5cb4bc6a757e30",
+        "continued_role_only/task_best.pt": "d07d3d4a7284c0f829911901c9fc7cc35d44ef7d3990547602d1de097bb18543",
+        "continued_role_only/task_last.pt": "b5c9baeaaf160b68e0c4146958fa979632cd0109eb77903e7c957d947691b2a5"
+      },
+      "source_files_changed": [
+        "docs/PROGRESS.json (this entry only)"
+      ],
+      "third_party_modified": false,
+      "original_source_untouched": true,
+      "patient_data_in_public_tree": false,
+      "note_on_exporter_provenance": "scripts/export_matched35_aggregates.py is not tracked at commit 43dc5c2; it was authored on this server as a read-only companion to the protocol and is recorded here with its SHA256 so the aggregate numbers can be regenerated and audited. It is listed as an open item, not as delivered upstream code."
+    },
+    "checks_and_actual_execution": {
+      "actual_server_execution": "One real execution on the 5090 server, physical GPU1 through CUDA_VISIBLE_DEVICES=1 with logical cuda:0. Wall clock from paired_receipt started_at 2026-11-13T10:48:34+00:00 to completed_at 2026-11-13T21:46:12+00:00, about 10 hours 58 minutes for all 82 epochs. The three stages ran sequentially: shared role from 10:58:43 to 14:19:33, joint from 14:19:34 to 19:35:47, continued_role_only from 19:35:47 to 21:46:12. The monitor log ends with status=completed shared=12/12 joint=35/35 cro=35/35 and EXITED code=0, and exit_code.txt contains 0.",
+      "epoch_budget_verified": "shared_role receipt has 12 epoch_logs, joint receipt has 35, continued_role_only receipt has 35, paired_receipt total_epochs is 82 and expected_total_epochs is 82. Both arms have last.epoch 35 and no early_stop key, so no patience-based score early stopping fired, as the protocol requires. Optimizer step counts are role 1824 in the shared stage and task 5320 in each task arm, identical in the two arms.",
+      "common_start_verified": "paired_receipt common_start_verified true, matched_input_draws_verified true and task_optimizer_reset_verified true. The two arms carry identical initial_model_tensor_SHA256 8a424771ff08844e8b2f5d90dcb382a2e2281188ae5fe875f40a446a36e46441, identical initial_train_rng_SHA256 1b6742e6e0402a4c17eecd6ddef6c7e36f9ca3e75c215648bf4506afbfbd01e3, identical initial_torch_rng_SHA256 4abf66dc8cacdbb9016b155c0730150ec497749c816b2e5a7225ea42efc8962c, identical initial_cuda_rng_SHA256 d9997752a73a22785f9515781b04aeed92f6c73bcbf463c3021833ab74067239 and identical task_start_role_parameter_SHA256 297659ea2e95f9c57b8d8d9381ecbe2b6d53ad6416118fd0d6cc6e67da7e436c. The optimizer policy recorded in the receipt is fresh identical Adam groups and state in both task arms with the role Adam discarded, and task_optimizer_initial_state_empty is true in both arms. The per-epoch input_draw_SHA256 values were compared epoch by epoch and match in 35 of 35 epochs, so the two arms saw the same patch sampling trajectory.",
+      "gradient_semantics_verified": "The continued_role_only arm is the new matched35 semantics and not the older frozen-head mode. receipt task_gradient_policy is joint for the joint arm and role_only_trainable_head for the control arm. The measured raw slot gradients make the difference explicit: in continued_role_only the survival term is exactly 0.000000 in every epoch and the combined term equals the role term to full printed precision, with role mean 0.027763 and combined mean 0.027763 for p_common slot 0. In joint the same slot has role mean 0.033874, survival mean 0.054798 and combined mean 0.070234. The survival gradient to the role networks is therefore severed in the control arm while the role gradient and the task head training are both still present, exactly as the protocol defines it.",
+      "cohort_identity_verified": "Both arms used the same explicit split with identity_sha256 8e6839d7f923706859af2deb876f26b401ae6065b3834da8219e49fee0654135, requested and actual path /data1/dataset_csv/splits/5fold_uni2h/blca/fold_0.csv with file SHA256 cec9aa164adc443f589f31c8debac7f2625d45c1efce3499a40ba3ebefad8ba8, train count 304 with set and order SHA256 381682de01f2dfc93df1816d7fd37a8e7d46a7e75bb8b37afa61ba22fd584653 and validation count 76 with SHA256 a9307a26e635eb0f47e031d8e71332b891e0b5d8ae0fce56cdc6b4149d0227ca, and excluded count 0 on both sides. This is the 5fold_uni2h cohort and it is a measured fact that the original loader hardcodes the 5fold directory, so the cohort was realised through the metadata root already used by the pilot.",
+      "reload_and_reference_checks": "Both arms record reference_frozen true, checkpoint_reload_verified true and checkpoint_optimizer_and_generator_reload_verified true, and both record role_parameters_changed_during_task true, which is consistent with the control arm not being a frozen model. Model parameter count is 245164 in both arms. The selection rule is maximum C-index, exact tie lower NLL, then earlier epoch, and test_used is false in every receipt.",
+      "diagnostics_completeness_checked": "Every task epoch in both arms carries train and validation read diagnostics with eight quantities per modality, role, slot and iteration: query_norm, key_norm_real_mean, key_norm_real_max, raw_mass, log_pre_epsilon_mass, epsilon_uniform_fraction, logit_gap_real_mean and logit_gap_real_min. Every epoch also carries role target MSE, raw_slot_gradient_mean with the combined, survival and role terms, signed ablation delta NLL with the definition string deleted NLL minus full NLL, and the reading overlap. The shared role stage is a separate receipt with its own 12 rows.",
+      "read_only_acceptance_assertions": "The verification block from section 4 of the protocol document was executed verbatim against the finished output root and exited 0 with {\"status\": \"verified\", \"shared_role_epochs\": 12, \"task_epochs_per_arm\": 35, \"total_epochs\": 82}.",
+      "raw_receipt": "The authoritative raw evidence is local_evidence/full_slot_matched35_20261113_01 with the three arm receipts and paired_receipt.json, all with the SHA256 values listed above, plus the run log and monitor log under local_evidence/matched35_logs_20261113_01. The aggregate document aggregates.json with SHA256 a8148305634592a4d29093270b5570c1c094a9f39403c9f667e25f691b9dcd74 is a derived read-only view of those receipts."
+    },
+    "results_and_interpretation": {
+      "scores_are_development_only": "All numbers below are development validation on the 76 patient validation fold of one fold and one seed. They are not an independent test and must not be read as generalisation performance.",
+      "joint_arm": {
+        "best": {
+          "epoch": 25,
+          "C_index": 0.5802888700084962,
+          "NLL": 0.8258994768291686
+        },
+        "last": {
+          "epoch": 35,
+          "C_index": 0.5590484282073067,
+          "NLL": 0.8647409841117993
+        },
+        "C_index_mean_over_35_epochs": 0.5074,
+        "C_index_sd_over_35_epochs": 0.0378,
+        "NLL_mean_over_35_epochs": 0.8278
+      },
+      "continued_role_only_arm": {
+        "best": {
+          "epoch": 13,
+          "C_index": 0.6151231945624469,
+          "NLL": 0.7744556358775034
+        },
+        "last": {
+          "epoch": 35,
+          "C_index": 0.5641461342395921,
+          "NLL": 0.8419188129224053
+        },
+        "C_index_mean_over_35_epochs": 0.5611,
+        "C_index_sd_over_35_epochs": 0.0348,
+        "NLL_mean_over_35_epochs": 0.8088
+      },
+      "paired_per_epoch_comparison": "With the two arms sharing the common start and the same per-epoch input draws, the control arm has the higher C-index in 33 of 35 epochs and the lower NLL in 26 of 35. The paired mean difference in C-index is +0.0537 with sd 0.0472 and median +0.0620, and the paired mean difference in NLL is -0.0190 with sd 0.0619. The control arm also has the lower role target MSE for p_common in 33 of 35 epochs.",
+      "predeclared_reading_rule_applied": "The protocol fixed the interpretation in advance. The rule is that the joint arm being additionally degraded relative to the role-gradient arm supports an extra harmful effect of the survival gradient in this configuration; that both arms degrading together supports retaining the continuing role fitting and the shared optimisation condition as the explanation; and that a difference that is not clear may only be called an absence of a clear extra effect in this protocol. The measurement supports the first branch: the joint arm is worse than the control arm on C-index in 33 of 35 epochs, its mean C-index is 0.0537 lower, its mean NLL is 0.0190 higher, and its role target MSE is higher in every role. This is a development-fold mechanism comparison, not a patient-performance claim.",
+      "reading_quality_evidence": {
+        "headline": "The joint arm shows a late-epoch collapse of the p_common reading that the control arm does not show. The number of validation p_common observations reading below the historical 1e-8 clamp level jumps from a per-epoch level of about 10 in joint to 83 to 95 from epoch 27 onwards, while the same count in the control arm stays in the 20 to 50 range over the same epochs.",
+        "joint_below_threshold_counts_p_common_validation": "epochs 1 to 26 sum 264 and epochs 27 to 35 sum 767, mean 85.2 in the last nine epochs against mean 10.2 in the first 26. The control arm is the mirror image, 643 in the first 26 epochs and 325 in the last nine, mean 24.7 against 36.1.",
+        "epsilon_uniform_fraction_p_common": "joint rises from 0.04191 at epoch 26 to 0.21487 at epoch 27 and stays around 0.19 to 0.22, while the control arm stays in the 0.05 to 0.11 band across the whole run.",
+        "log_pre_epsilon_mass_p_common": "joint drops from -21.76 at epoch 26 to -54.58 at epoch 27, while the control arm is already in the -50 range from epoch 12 onwards.",
+        "query_norm_p_common": "joint declines steadily from 35.3 at epoch 6 to 30.7 at epoch 29, whereas the control arm holds 36 to 40 for the entire run.",
+        "constant_reading_statistics": "A separate measured observation: the g_common and g_residual roles are essentially constant. Their epsilon uniform fraction is 0.0000 with sd 0.0000 in both arms, and their query norms move within a CV of 0.02 to 0.08 over 35 epochs. The p_common epsilon fraction is the only strongly drifting quantity, and it is the one that drifts in the joint arm only.",
+        "train_side_confirms_validation": "The same pattern appears on the training side. The joint arm p below-threshold count rises from 79 at epoch 26 to 338 at epoch 27 and stays near 340 to 399, while the control arm stays between 100 and 138 over epochs 23 to 31.",
+        "g_modality_never_starves": "The g modality never produced a single below-threshold observation in any arm and any epoch, on either the train or the validation side, so the starvation phenomenon is specific to the p modality and to the p_common role."
+      },
+      "role_fitting_evidence": {
+        "role_target_MSE_means_over_35_epochs": {
+          "p_common": {
+            "joint": 0.1743,
+            "continued_role_only": 0.14298
+          },
+          "p_residual": {
+            "joint": 0.5188,
+            "continued_role_only": 0.47638
+          },
+          "g_common": {
+            "joint": 0.14424,
+            "continued_role_only": 0.06954
+          },
+          "g_residual": {
+            "joint": 0.57409,
+            "continued_role_only": 0.45994
+          }
+        },
+        "reading_overlap_p_common_mean": {
+          "joint": 0.02015,
+          "continued_role_only": 0.03821
+        },
+        "comment": "The control arm fits the role targets better in all four roles and keeps a slightly higher slot overlap. The training loss of the control arm is also lower throughout, with train_loss around 0.91 to 0.96 against 0.97 to 1.05 in the joint arm."
+      },
+      "ablation_evidence": {
+        "signed_delta_NLL_p_common_slot0_joint": "between -0.0462 and +0.0350 over the 35 epochs",
+        "signed_delta_NLL_p_common_slot0_continued_role_only": "between -0.0215 and +0.0123 over the 35 epochs",
+        "comment": "The signed per-slot deletion NLL difference stays close to zero for p_common in both arms, which means that removing the p_common slot barely changes the fitted-model NLL. The g_residual slot shows the largest positive deltas in the joint arm, for example 0.4482 at epoch 20 and 0.1202 at epoch 19. The protocol is explicit that this deletion operates on the same full-model output and a fixed head, changes the pooling and may leave the training representation distribution, and therefore cannot be called conditional counterfactual inference or unique biological information contribution."
+      },
+      "reproducibility_finding": {
+        "fact": "The matched35 joint arm is numerically identical to the historical readfix v2 joint arm epoch by epoch. All 35 validation C-index values and all 35 validation NLL values match exactly, and the 12 shared role warmup losses match the historical role phase exactly as well.",
+        "interpretation": "This is a strong reproducibility check on the new common-start entry point: the matched35 orchestrator reproduces the earlier single-arm run bit for bit on the joint side, so the difference observed between the two arms cannot come from an accidental change in the joint pipeline. It also means the joint numbers in this protocol are not an independent repetition and must not be treated as a second run.",
+        "caveat": "This equivalence is a measured fact on this machine and this commit pair. It is not a claim about CUDA-level bitwise reproducibility in general, which the protocol says not to claim unless it was actually tested."
+      },
+      "scope_limits": "One fold, one seed, one development validation set of 76 patients, 35 epochs per arm. The trajectory SD is not a generalisation error and the best values are development selection results, not an independent test. The new diagnostics were used only to compare the two arms inside this protocol and were not used to select slots, tune coefficients or extend training."
+    },
+    "gaps_and_reasons": [
+      "One fold and one seed only, so the 0.0537 paired C-index difference between the arms has no between-fold or between-seed error bar and cannot be claimed as a stable effect size.",
+      "The 35-epoch trajectories are not independent repetitions, so the trajectory SD of 0.0378 in the joint arm and 0.0348 in the control arm must not be read as generalisation error.",
+      "The best values 0.5803 for joint and 0.6151 for the control arm are development selection results chosen by maximum C-index on the same 76 patients used for the comparison and are not an independent test.",
+      "There is no independent test cohort in this protocol at all: test_used is false in every receipt and the scope string of the paired receipt says development mechanism comparison, no independent test.",
+      "The epoch 27 collapse in the joint arm is measured and localised in time but its cause is not established by this protocol. No learning-rate schedule exists in the engine, the training loss does not jump at that epoch, and the failure is not visible in the g modality, so the mechanism behind the jump remains open and is recorded as an open question rather than a conclusion.",
+      "The exporter scripts/export_matched35_aggregates.py is not tracked at commit 43dc5c2. It was authored on the server as a read-only companion, its SHA256 is recorded, but it has not been delivered upstream and the aggregate numbers therefore cannot be regenerated from the pinned commit alone.",
+      "CUDA-level bitwise reproducibility was not tested in this protocol and is not claimed.",
+      "The historical readfix v2 joint run and this protocol joint arm are numerically identical, so the joint side provides no independent replication of the joint condition; only the control arm is new information.",
+      "The signed per-slot deletion NLL was recorded as required, but it is not interpretable as a biological contribution measure and no such claim is made."
+    ],
+    "next_action_user_inputs": "The matched35 protocol is finished, verified and recorded, so nothing from it needs to be rerun. The scientifically useful next step is to extend the same common-start paired design to the remaining folds and seeds, because the decisive finding of this run is a mechanistic one, namely that the survival gradient degrades the p_common reading late in training while the role gradient alone does not, and a single fold cannot establish that as a stable property of the configuration. Such an extension is a new protocol and needs its own execution authorisation. Two decisions are genuinely the user's. First, whether the upstream branch should also receive the read-only exporter scripts/export_matched35_aggregates.py so the aggregate document can be regenerated from the pinned commit alone; this server did not push it because the protocol document did not ask for it. Second, whether the next extension should keep the joint arm, given that the joint arm here is numerically identical to the historical run and therefore adds no new information, or whether a protocol that varies only the learning rate or the survival gradient weight at the same common start would answer the mechanism question more directly. No further patient execution is started without a new authorisation, and the historical reports and their hashes are left untouched."
   }
 }
