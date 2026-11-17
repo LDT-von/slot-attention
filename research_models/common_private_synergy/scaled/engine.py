@@ -340,13 +340,61 @@ def load_scaled_checkpoint(path, device='cpu'):
     return model, adapter, saved['boundaries']
 
 
-def run_scaled_arm(root, out, manifest, c, source_hashes, *, split_guard=None, synthetic=False):
-    """Train the scaled 16-slot role architecture on the archived schedule."""
+def _resume_state(out, c, source_hashes, manifest_hash, identity):
+    """Recover a previous run from its checkpoint, if one is present.
+
+    Why this exists
+    ---------------
+    The two spread arms were killed at task epoch 26 by an external
+    `timeout` wrapper, not by a crash and not by an out-of-memory kill: their
+    receipts still said `status: running` with no traceback, and their last
+    epoch was 11 minutes before the wrapper's deadline.  A long run must
+    therefore be able to CONTINUE from the last checkpoint instead of losing
+    the completed epochs.
+
+    The resume is strict: the checkpoint must carry the same configuration,
+    the same source hashes, the same prepared manifest hash and the same
+    split identity.  Anything else is refused rather than silently mixed.
+    """
+    checkpoint_path = out / 'task_last.pt'
+    if not checkpoint_path.is_file():
+        checkpoint_path = out / 'role_last.pt'
+    if not checkpoint_path.is_file():
+        return None
+    saved = torch.load(checkpoint_path, map_location='cpu', weights_only=True)
+    saved_config = dict(saved.get('config') or {})
+    wanted_config = dict(c)
+    # The epoch budget MAY be extended when resuming: the point of a resume is
+    # to continue a run that was cut short.  Every OTHER protocol field must
+    # match exactly, so a resume can never mix two different architectures or
+    # two different cohorts.
+    for key in ('role_epochs', 'task_epochs'):
+        saved_config.pop(key, None)
+        wanted_config.pop(key, None)
+    if saved_config != wanted_config:
+        raise ValueError('the existing checkpoint has a different configuration; use a fresh output root')
+    if saved.get('source_SHA256') != source_hashes:
+        raise ValueError('the source changed since the existing checkpoint; use a fresh output root')
+    if saved.get('manifest_SHA256') != manifest_hash:
+        raise ValueError('the prepared manifest changed since the existing checkpoint')
+    if saved.get('split_identity') != identity:
+        raise ValueError('the split identity changed since the existing checkpoint')
+    return saved
+
+
+def run_scaled_arm(root, out, manifest, c, source_hashes, *, split_guard=None, synthetic=False,
+                   resume=False):
+    """Train the scaled 16-slot role architecture on the archived schedule.
+
+    With `resume=True` an existing output directory is continued from its last
+    checkpoint.  With `resume=False` (the default) a fresh output directory is
+    required, exactly as in the archived arms.
+    """
     if not synthetic and split_guard is None:
         raise ValueError('verified patient split admission required')
     root, out = Path(root), Path(out)
-    if out.exists():
-        raise FileExistsError('fresh run required')
+    if out.exists() and not resume:
+        raise FileExistsError('fresh run required; pass resume=True to continue an interrupted run')
     if source_hashes != {name: sha(ROOT / name) for name in source_hashes}:
         raise RuntimeError('source changed before execution')
     identity = split_guard() if split_guard else {'schema': 'invented_smoke_only'}
@@ -385,8 +433,17 @@ def run_scaled_arm(root, out, manifest, c, source_hashes, *, split_guard=None, s
     boundaries = fit_boundaries(times, events, c['bins'])
     model = ScaledSurvivalRoleModel(reference, adapter, anchors, c).double().to(device)
 
-    out.mkdir(parents=True)
+    out.mkdir(parents=True, exist_ok=True)
     omics_encoder_parameters = model.omics_encoder.parameter_count()
+
+    # ---------------------------------------------------------------- resume
+    # The resume is resolved BEFORE the receipt is written, so that the
+    # previous receipt is still on disk when it is read.
+    resume_from = _resume_state(out, c, source_hashes, manifest_hash, identity) if resume else None
+    previous = None
+    if resume_from is not None:
+        previous = json.loads((out / 'receipt.json').read_text(encoding='utf-8'))
+
     receipt = {'schema': 'scaled_role16_v1', 'status': 'running', 'config': c,
                'started_at': _now(), 'source_SHA256': source_hashes,
                'split_identity': identity, 'prepared_manifest_SHA256': manifest_hash,
@@ -427,13 +484,49 @@ def run_scaled_arm(root, out, manifest, c, source_hashes, *, split_guard=None, s
                              list(model.decoders.parameters()) + list(model.omics_encoder.parameters()),
                              lr=c['role_lr'])
     best, stale = None, 0
+    start_phase, start_epoch = 'role', 1
+    if resume_from is not None:
+        model.load_state_dict(resume_from['state_dict'])
+        model.to(device)
+        rng.set_state(resume_from['train_generator_state'])
+        torch.set_rng_state(resume_from['torch_rng_state'])
+        if resume_from.get('cuda_rng_state') is not None and device.type == 'cuda':
+            torch.cuda.set_rng_state(resume_from['cuda_rng_state'], device)
+        start_phase = resume_from['phase']
+        start_epoch = resume_from['epoch'] + 1
+        receipt['epoch_logs'] = previous.get('epoch_logs', [])
+        receipt['best'] = previous.get('best')
+        receipt['last'] = previous.get('last')
+        receipt['optimizer_steps'] = previous.get('optimizer_steps', {'role': 0, 'task': 0})
+        best = previous.get('best')
+        stale = (resume_from.get('selection_state') or {}).get('stale_epochs', 0)
+        receipt['resumed_from'] = {'phase': resume_from['phase'], 'epoch': resume_from['epoch'],
+                                   'completed_epochs': len(receipt['epoch_logs'])}
+        receipt['started_at'] = previous.get('started_at', receipt['started_at'])
+        receipt['resume_count'] = previous.get('resume_count', 0) + 1
+        _write_receipt(out / 'receipt.json', receipt)
+        print('resumed at phase=%s epoch=%d (%d completed epochs)'
+              % (start_phase, start_epoch, len(receipt['epoch_logs'])), flush=True)
     try:
-        for phase in ('role', 'task'):
-            if phase == 'task':
+        phases = ('role', 'task')
+        resume_phase_index = phases.index(start_phase) if resume_from is not None else 0
+        for phase_index, phase in enumerate(phases):
+            if phase_index < resume_phase_index:
+                # This phase was already completed before the interruption.
+                continue
+            if phase == start_phase and start_epoch > 1:
+                # This phase was partially completed and is being continued.
+                # The optimiser must be REBUILT for this phase first, because
+                # the optimiser saved in the checkpoint has this phase's
+                # parameter group, not the previous phase's.
+                if phase == 'task':
+                    optim = torch.optim.Adam(model.parameters(), lr=c['task_lr'])
+                optim.load_state_dict(resume_from['optimizer_state'])
+            elif phase == 'task':
                 optim = torch.optim.Adam(model.parameters(), lr=c['task_lr'])
                 receipt['task_optimizer_initial_state_empty'] = not bool(optim.state)
                 receipt['task_optimizer_initial_groups'] = optim.state_dict()['param_groups']
-            for epoch in range(1, c[phase + '_epochs'] + 1):
+            for epoch in range(start_epoch if phase == start_phase else 1, c[phase + '_epochs'] + 1):
                 model.train()
                 order = torch.randperm(len(train), generator=rng).tolist()
                 total, role_total, task_total = 0., 0., 0.

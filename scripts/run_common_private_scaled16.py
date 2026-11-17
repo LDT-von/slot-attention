@@ -36,6 +36,8 @@ def main():
     parser.add_argument('--config', type=Path,
                         default=ROOT / 'configs/common_private_scaled16_v1.json')
     parser.add_argument('--run', action='store_true')
+    parser.add_argument('--resume', action='store_true',
+                        help='continue an interrupted run from its last checkpoint')
     parser.add_argument('--prepared-root', type=Path)
     parser.add_argument('--output-root', type=Path)
     args = parser.parse_args()
@@ -78,8 +80,9 @@ def main():
     if not args.prepared_root or not args.output_root:
         parser.error('--run requires --prepared-root and --output-root')
     out = private_path(args.output_root)
-    if out.exists():
-        raise FileExistsError('preserve prior output; choose a fresh output root')
+    if out.exists() and not args.resume:
+        raise FileExistsError('preserve prior output; choose a fresh output root '
+                              'or pass --resume to continue it')
 
     from slotspe_proof.patient import _config, _manifest, _source_hashes
     from research_models.common_private_synergy.pilot_split import validate_split
@@ -144,7 +147,8 @@ def main():
         'slotspe_proof/patient.py': sha(ROOT / 'slotspe_proof/patient.py'),
     }
     try:
-        result = run_scaled_arm(root, out, manifest, c, hashes, split_guard=recheck)
+        result = run_scaled_arm(root, out, manifest, c, hashes, split_guard=recheck,
+                                resume=bool(args.resume))
     except Exception:
         out.mkdir(parents=True, exist_ok=True)
         (out / 'exception_traceback.txt').write_text(traceback.format_exc(), encoding='utf-8')

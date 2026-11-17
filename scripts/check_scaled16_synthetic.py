@@ -359,6 +359,49 @@ def check_end_to_end_relaxed():
     return receipt
 
 
+def check_resume_from_checkpoint():
+    print('CHECK 6b an interrupted run resumes from its last checkpoint')
+    from research_models.common_private_synergy.scaled.engine import run_scaled_arm
+    from research_models.common_private_synergy.patient_pilot import config as load_config
+
+    with tempfile.TemporaryDirectory() as tmp:
+        root = Path(tmp)
+        manifest = invent_prepared(root, count=32, features=6)
+        c = load_config(ROOT / 'configs/common_private_scaled16_v1.json')
+        c.update(patches=12, batch_size=4, target_dim=3, common_rank=1, width=8, hidden=6,
+                 iterations=2, role_epochs=2, task_epochs=4, device='cpu', torch_threads=1)
+        out = root / 'run'
+
+        # Interrupt the run after the FIRST task epoch, by stopping the loop
+        # through a deliberately short budget, then continue it.
+        short = dict(c)
+        short['task_epochs'] = 1
+        receipt = run_scaled_arm(root, out, manifest, short, {}, synthetic=True)
+        assert receipt['status'] == 'completed'
+        completed = len(receipt['epoch_logs'])
+        assert completed == 3, completed  # 2 role epochs + 1 task epoch
+
+        # A fresh run into the same directory must be REFUSED.
+        try:
+            run_scaled_arm(root, out, manifest, c, {}, synthetic=True)
+        except FileExistsError:
+            pass
+        else:
+            raise AssertionError('a second fresh run into the same directory must be refused')
+
+        # The resume must continue the SAME run and finish the schedule.
+        resumed = run_scaled_arm(root, out, manifest, c, {}, synthetic=True, resume=True)
+        assert resumed['status'] == 'completed', resumed.get('error')
+        assert resumed['resumed_from']['epoch'] == 1
+        assert resumed['resume_count'] == 1
+        assert len(resumed['epoch_logs']) == 6, len(resumed['epoch_logs'])  # 2 role + 4 task
+        # The resumed epochs must continue the epoch numbering, not restart it.
+        task_epochs = [e['epoch'] for e in resumed['epoch_logs'] if e['phase'] == 'task']
+        assert task_epochs == [1, 2, 3, 4], task_epochs
+    print('  OK  the run refused a fresh overwrite and resumed from its checkpoint')
+    return resumed
+
+
 def check_archived_sources():
     print('CHECK 7 the archived sources this arm depends on are unchanged')
     names = [
@@ -399,6 +442,7 @@ def main():
     check_batch_rule()
     check_locked_protocol_rejects_override()
     check_end_to_end_relaxed()
+    check_resume_from_checkpoint()
     check_archived_sources()
     print('\nALL CHECKS PASSED (synthetic only; no patient data was read and no patient claim is made)')
 
