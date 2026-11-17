@@ -12,6 +12,7 @@
         "research_models/common_private_synergy/components/assembly.py"
       ],
       "sha256": "d489a42f631e680def55e08f303d493dad04af87f1606ed14ce3b23ece689879",
+      "baseline_sha256": "d489a42f631e680def55e08f303d493dad04af87f1606ed14ce3b23ece689879",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -21,6 +22,7 @@
         "research_models/common_private_synergy/components/cox_surv.py"
       ],
       "sha256": "0b719143028771c8f57215ccd98f2faa051c5b7b6796b9d33666445938f736d7",
+      "baseline_sha256": "0b719143028771c8f57215ccd98f2faa051c5b7b6796b9d33666445938f736d7",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -30,6 +32,7 @@
         "research_models/common_private_synergy/components/distribution_target.py"
       ],
       "sha256": "006250b80702480fd22b0b9ec16300c61a88a04b301c33c242e3305d517de2a0",
+      "baseline_sha256": "006250b80702480fd22b0b9ec16300c61a88a04b301c33c242e3305d517de2a0",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -39,6 +42,7 @@
         "research_models/common_private_synergy/components/symmetry_slots.py"
       ],
       "sha256": "5420ae206ab3eeecf377af9264f6ee798625a0af945dbfcabc83b9919daeaad9",
+      "baseline_sha256": "5420ae206ab3eeecf377af9264f6ee798625a0af945dbfcabc83b9919daeaad9",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -48,6 +52,7 @@
         "research_models/common_private_synergy/cox_objective_engine.py"
       ],
       "sha256": "5c3baabbfcd8ac747a06e833a41903f7611eacafac45fbe07435f24f5ce52b14",
+      "baseline_sha256": "5c3baabbfcd8ac747a06e833a41903f7611eacafac45fbe07435f24f5ce52b14",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -57,6 +62,7 @@
         "research_models/common_private_synergy/cox_objective_pair.py"
       ],
       "sha256": "788c508bf9e5854c4483dfd6a1713ab4abca9d956fe63dacc94896be81c6ab62",
+      "baseline_sha256": "788c508bf9e5854c4483dfd6a1713ab4abca9d956fe63dacc94896be81c6ab62",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -66,6 +72,7 @@
         "research_models/common_private_synergy/full_slot_engine.py"
       ],
       "sha256": "cb55b93cd20f13f7be0c03855e09d6694b1e80fc94f57dca941a0d36b3b6ffdf",
+      "baseline_sha256": "cb55b93cd20f13f7be0c03855e09d6694b1e80fc94f57dca941a0d36b3b6ffdf",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -76,6 +83,7 @@
         "research_models/common_private_synergy/archive/arms/symmetry_arm/full_slot_epoch.py"
       ],
       "sha256": "de572b056623ec54d7566c9cd34ddaff8624c46e9a2638c67cdbaed494747937",
+      "baseline_sha256": "de572b056623ec54d7566c9cd34ddaff8624c46e9a2638c67cdbaed494747937",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -85,6 +93,7 @@
         "research_models/common_private_synergy/matched35.py"
       ],
       "sha256": "6405244d49b0bad8c9ff1d67ea51554a35a1cd19d71ad43184e66f5d4e2af6f6",
+      "baseline_sha256": "6405244d49b0bad8c9ff1d67ea51554a35a1cd19d71ad43184e66f5d4e2af6f6",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -94,6 +103,7 @@
         "research_models/common_private_synergy/spread_arm.py"
       ],
       "sha256": "7b027510b3d73eca87c3908f799909038204ad075f83816328b3ba4343bb18c1",
+      "baseline_sha256": "7b027510b3d73eca87c3908f799909038204ad075f83816328b3ba4343bb18c1",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -103,6 +113,7 @@
         "research_models/common_private_synergy/symmetry_arm.py"
       ],
       "sha256": "10bdb0314bce8cf3035d74d7218dcb6836d6ede392b6c945fd15d46b85f9ea55",
+      "baseline_sha256": "10bdb0314bce8cf3035d74d7218dcb6836d6ede392b6c945fd15d46b85f9ea55",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -112,6 +123,7 @@
         "research_models/common_private_synergy/components/adapters.py"
       ],
       "sha256": "fdeb54970fb4a343747b1f904f1e7d5a5ab610e7bc423da050b40fa142cc2ecc",
+      "baseline_sha256": "fdeb54970fb4a343747b1f904f1e7d5a5ab610e7bc423da050b40fa142cc2ecc",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -122,6 +134,7 @@
         "research_models/common_private_synergy/archive/arms/components/readout.py"
       ],
       "sha256": "35d696200ea70920637840e10a6cf23e2877ec2e866ff34e9c9a3ffc86981236",
+      "baseline_sha256": "35d696200ea70920637840e10a6cf23e2877ec2e866ff34e9c9a3ffc86981236",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -131,6 +144,7 @@
         "research_models/common_private_synergy/components/views.py"
       ],
       "sha256": "329257812fcccaba35106f3e048f55cffdfbd3fda6e37e51b40412a35da5ebb6",
+      "baseline_sha256": "329257812fcccaba35106f3e048f55cffdfbd3fda6e37e51b40412a35da5ebb6",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -140,6 +154,7 @@
         "research_models/common_private_synergy/deferred_checks/test_full_slot_diagnostics.py"
       ],
       "sha256": "83c547a4b34db310607f9ae7995890d2c6e330672a1b148fb92d333d6b56a8e9",
+      "baseline_sha256": "83c547a4b34db310607f9ae7995890d2c6e330672a1b148fb92d333d6b56a8e9",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -149,6 +164,7 @@
         "research_models/common_private_synergy/deferred_checks/test_losses_tensor.py"
       ],
       "sha256": "d04d80cc7518adc9a27a66b80af483530d243aa05eed0ee42ceae096e94452f6",
+      "baseline_sha256": "d04d80cc7518adc9a27a66b80af483530d243aa05eed0ee42ceae096e94452f6",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -158,6 +174,7 @@
         "research_models/common_private_synergy/deferred_checks/test_matched35.py"
       ],
       "sha256": "ffe95ed4673842acccfec62a8472762789cb7536f43aa270e2d93c6e9d102bdc",
+      "baseline_sha256": "ffe95ed4673842acccfec62a8472762789cb7536f43aa270e2d93c6e9d102bdc",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -167,6 +184,7 @@
         "research_models/common_private_synergy/deferred_checks/test_matched_read_diagnostics.py"
       ],
       "sha256": "711ca37dc86855ff6df814b1d3f6707a32baccdcc2502a9b0ce53eae985067c4",
+      "baseline_sha256": "711ca37dc86855ff6df814b1d3f6707a32baccdcc2502a9b0ce53eae985067c4",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -176,6 +194,7 @@
         "research_models/common_private_synergy/deferred_checks/test_parts_tensor.py"
       ],
       "sha256": "047702b94a64722a06b22a9e643af37763997ed51ca9cf939b33e3567d4c9086",
+      "baseline_sha256": "047702b94a64722a06b22a9e643af37763997ed51ca9cf939b33e3567d4c9086",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -185,6 +204,7 @@
         "research_models/common_private_synergy/deferred_checks/test_patient_pilot.py"
       ],
       "sha256": "cf01e302cf5ebb2ae5dbd1cf7d1ac516765bb6881a2e47ee97e5f84bbbaf3774",
+      "baseline_sha256": "cf01e302cf5ebb2ae5dbd1cf7d1ac516765bb6881a2e47ee97e5f84bbbaf3774",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -194,6 +214,7 @@
         "research_models/common_private_synergy/deferred_checks/test_pilot_split.py"
       ],
       "sha256": "6969ded7c4900c227f242797a44b29dd5cadb4417c5e704d7cefae276a93545f",
+      "baseline_sha256": "6969ded7c4900c227f242797a44b29dd5cadb4417c5e704d7cefae276a93545f",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -203,6 +224,7 @@
         "research_models/common_private_synergy/deferred_checks/test_slot_read_normalization.py"
       ],
       "sha256": "022e150c1ad200a05af0ed94806568c22f4c35f529dceaba1840f2a83d4dd3a3",
+      "baseline_sha256": "022e150c1ad200a05af0ed94806568c22f4c35f529dceaba1840f2a83d4dd3a3",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -212,6 +234,7 @@
         "research_models/common_private_synergy/model.py"
       ],
       "sha256": "737367f53eb700326536701a9d7a26e1fe4f2e39faf6c59af1a8aacbfd9e345b",
+      "baseline_sha256": "737367f53eb700326536701a9d7a26e1fe4f2e39faf6c59af1a8aacbfd9e345b",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -221,6 +244,7 @@
         "research_models/common_private_synergy/synthetic_full_slot_gradient_audit.py"
       ],
       "sha256": "a7f6b49038cb67d4c273572ce1ac7bf4505779ca6816d16f2daf2645a94b64aa",
+      "baseline_sha256": "a7f6b49038cb67d4c273572ce1ac7bf4505779ca6816d16f2daf2645a94b64aa",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -230,6 +254,7 @@
         "research_models/common_private_synergy/synthetic_full_slot_matched.py"
       ],
       "sha256": "53cbea15e8d713def7707a4516358f6cb357621054224cdc78fae182c2751946",
+      "baseline_sha256": "53cbea15e8d713def7707a4516358f6cb357621054224cdc78fae182c2751946",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -239,6 +264,7 @@
         "research_models/common_private_synergy/synthetic_full_slot_replication.py"
       ],
       "sha256": "89063faa1e6c8fb7b8d33a266ba0384e95bb89a1eea29b1c862b8c8f18f44363",
+      "baseline_sha256": "89063faa1e6c8fb7b8d33a266ba0384e95bb89a1eea29b1c862b8c8f18f44363",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -248,6 +274,7 @@
         "research_models/common_private_synergy/synthetic_full_slot_three_arm.py"
       ],
       "sha256": "4252bda05ece5fcf3dd951b0a7338d795d22c9a562343e8607b169d35c2bba8c",
+      "baseline_sha256": "4252bda05ece5fcf3dd951b0a7338d795d22c9a562343e8607b169d35c2bba8c",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -257,6 +284,7 @@
         "research_models/common_private_synergy/tests/test_model.py"
       ],
       "sha256": "a844f58a8f61c4f88c791886f6544eb8c3f7ba61a6c50dd7bbc4f5cfdd4c75db",
+      "baseline_sha256": "a844f58a8f61c4f88c791886f6544eb8c3f7ba61a6c50dd7bbc4f5cfdd4c75db",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -266,6 +294,7 @@
         "scripts/check_cox_objective_synthetic.py"
       ],
       "sha256": "13ca9893eb60f1c964f5dd960f2d348063d9afdccac2e97e8874262e7063091c",
+      "baseline_sha256": "13ca9893eb60f1c964f5dd960f2d348063d9afdccac2e97e8874262e7063091c",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -275,6 +304,7 @@
         "scripts/check_spread_arm_synthetic.py"
       ],
       "sha256": "ca481a456f004b387098baefbfa8e29deba7a83e2c4367778fcb11f0ae69c8ff",
+      "baseline_sha256": "ca481a456f004b387098baefbfa8e29deba7a83e2c4367778fcb11f0ae69c8ff",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -284,6 +314,7 @@
         "scripts/check_symmetry_arm_synthetic.py"
       ],
       "sha256": "073cfa47d07032453c0ab2d2a11c9be7e16f3f275c6165db59babed1de21746a",
+      "baseline_sha256": "073cfa47d07032453c0ab2d2a11c9be7e16f3f275c6165db59babed1de21746a",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -293,6 +324,7 @@
         "scripts/run_common_private_cox35.py"
       ],
       "sha256": "f8b508e769ad1b5bf2e70b036dec139bbf7315fb7d5014e2783119e917820266",
+      "baseline_sha256": "f8b508e769ad1b5bf2e70b036dec139bbf7315fb7d5014e2783119e917820266",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -302,6 +334,7 @@
         "scripts/run_common_private_full_slot.py"
       ],
       "sha256": "bd156f68d80bce79c21ded00f2dc8e9f04bca145c9af77bc0ab4f8a19ca42155",
+      "baseline_sha256": "bd156f68d80bce79c21ded00f2dc8e9f04bca145c9af77bc0ab4f8a19ca42155",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -311,6 +344,7 @@
         "scripts/run_common_private_matched35.py"
       ],
       "sha256": "d01ba7ca1f268f2e7d9b8f972a1544479223965d8744209cbae0a94efd22ef1d",
+      "baseline_sha256": "d01ba7ca1f268f2e7d9b8f972a1544479223965d8744209cbae0a94efd22ef1d",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -320,6 +354,7 @@
         "scripts/run_common_private_patient_pilot.py"
       ],
       "sha256": "b3000912747cb33a5882cac57d351d239c183c1e6bdd7a98d525a974b4ddbddb",
+      "baseline_sha256": "b3000912747cb33a5882cac57d351d239c183c1e6bdd7a98d525a974b4ddbddb",
       "receipt_pinned": false,
       "matches_pre_restructure_baseline": true
     },
@@ -329,6 +364,7 @@
         "scripts/run_common_private_spread35.py"
       ],
       "sha256": "c4ea8761a34a444ef4d8c8b9cd65a38bccc4b382b76c4a6f9b8af9ae9deb0944",
+      "baseline_sha256": "c4ea8761a34a444ef4d8c8b9cd65a38bccc4b382b76c4a6f9b8af9ae9deb0944",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     },
@@ -338,6 +374,7 @@
         "scripts/run_common_private_symmetry35.py"
       ],
       "sha256": "568a0496f400b73cf25bd9627d25ab7d49acb0a2948637d560551502653f6978",
+      "baseline_sha256": "568a0496f400b73cf25bd9627d25ab7d49acb0a2948637d560551502653f6978",
       "receipt_pinned": true,
       "matches_pre_restructure_baseline": true
     }
@@ -346,6 +383,7 @@
     {
       "path": "research_models/common_private_synergy/ARCHITECTURE.md",
       "sha256": "42c4a3673babd7c99d92f662227666bd03eec2312a418d480be503ef2b929ba6",
+      "baseline_sha256": "42c4a3673babd7c99d92f662227666bd03eec2312a418d480be503ef2b929ba6",
       "receipt_hashes": [
         "42c4a3673babd7c99d92f662227666bd03eec2312a418d480be503ef2b929ba6"
       ],
@@ -355,6 +393,7 @@
     {
       "path": "research_models/common_private_synergy/HANDOFF.md",
       "sha256": "635df0a233c88d873b95fe6a926cef50f8a4d43e954ebe56e689f04311d275fa",
+      "baseline_sha256": "635df0a233c88d873b95fe6a926cef50f8a4d43e954ebe56e689f04311d275fa",
       "receipt_hashes": [
         "635df0a233c88d873b95fe6a926cef50f8a4d43e954ebe56e689f04311d275fa"
       ],
@@ -364,6 +403,7 @@
     {
       "path": "research_models/common_private_synergy/README.md",
       "sha256": "8f1f6c29cdd529f5faded8457c63e15dce465a5c79c822737b30a6c80b407433",
+      "baseline_sha256": "8f1f6c29cdd529f5faded8457c63e15dce465a5c79c822737b30a6c80b407433",
       "receipt_hashes": [
         "8f1f6c29cdd529f5faded8457c63e15dce465a5c79c822737b30a6c80b407433"
       ],
@@ -373,6 +413,7 @@
     {
       "path": "research_models/common_private_synergy/architecture_spec.json",
       "sha256": "f19911ec85eddc361739040c584290cf2f5cc651402bca737f2d5266ba860eb6",
+      "baseline_sha256": "f19911ec85eddc361739040c584290cf2f5cc651402bca737f2d5266ba860eb6",
       "receipt_hashes": [
         "f19911ec85eddc361739040c584290cf2f5cc651402bca737f2d5266ba860eb6"
       ],
@@ -382,6 +423,7 @@
     {
       "path": "research_models/common_private_synergy/checks/run_static.py",
       "sha256": "2e8be4e3b238613c5e21f3465b440e7339f3b08000f2bbda613273ecba9d0218",
+      "baseline_sha256": "2e8be4e3b238613c5e21f3465b440e7339f3b08000f2bbda613273ecba9d0218",
       "receipt_hashes": [
         "2e8be4e3b238613c5e21f3465b440e7339f3b08000f2bbda613273ecba9d0218"
       ],
@@ -391,6 +433,7 @@
     {
       "path": "research_models/common_private_synergy/checks/test_adapters_contract.py",
       "sha256": "c216308437047d1bc2f2eecb6a52a13375915351146f4f1be964f26cb12c6cfd",
+      "baseline_sha256": "c216308437047d1bc2f2eecb6a52a13375915351146f4f1be964f26cb12c6cfd",
       "receipt_hashes": [
         "c216308437047d1bc2f2eecb6a52a13375915351146f4f1be964f26cb12c6cfd"
       ],
@@ -400,6 +443,7 @@
     {
       "path": "research_models/common_private_synergy/checks/test_math_contracts.py",
       "sha256": "6fb14dbf313fc7694e29f9beb13f7ed98cd3d2284d3e0b3e14c116f71289ec75",
+      "baseline_sha256": "6fb14dbf313fc7694e29f9beb13f7ed98cd3d2284d3e0b3e14c116f71289ec75",
       "receipt_hashes": [
         "6fb14dbf313fc7694e29f9beb13f7ed98cd3d2284d3e0b3e14c116f71289ec75"
       ],
@@ -409,6 +453,7 @@
     {
       "path": "research_models/common_private_synergy/checks/test_views_contract.py",
       "sha256": "0678c5a0c6cbbbda20fa0a731210f36aff7f40ca11029a263da72bcd8ccdbac1",
+      "baseline_sha256": "0678c5a0c6cbbbda20fa0a731210f36aff7f40ca11029a263da72bcd8ccdbac1",
       "receipt_hashes": [
         "0678c5a0c6cbbbda20fa0a731210f36aff7f40ca11029a263da72bcd8ccdbac1"
       ],
@@ -418,6 +463,7 @@
     {
       "path": "research_models/common_private_synergy/components/__init__.py",
       "sha256": "b608311be9c07e919d029f03a1bb4424e28a341af765b6214f37771eec8d2ac5",
+      "baseline_sha256": "b608311be9c07e919d029f03a1bb4424e28a341af765b6214f37771eec8d2ac5",
       "receipt_hashes": [
         "b608311be9c07e919d029f03a1bb4424e28a341af765b6214f37771eec8d2ac5"
       ],
@@ -427,6 +473,7 @@
     {
       "path": "research_models/common_private_synergy/components/contracts.py",
       "sha256": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee",
+      "baseline_sha256": "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee",
       "receipt_hashes": [
         "437f60d9667351d89d174076e5fd3d50abba88fb8d5ae59a196ac6cb70f08cee"
       ],
@@ -436,6 +483,7 @@
     {
       "path": "research_models/common_private_synergy/components/losses.py",
       "sha256": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2",
+      "baseline_sha256": "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2",
       "receipt_hashes": [
         "9cf45cda80c4564ee7560ac51ce5927690cb8da7ebbc53e3fe56b67ecae455c2"
       ],
@@ -445,6 +493,7 @@
     {
       "path": "research_models/common_private_synergy/components/role_model.py",
       "sha256": "f62d8e651168670e9e4e48edcf04e5f32e47ceaf64bfbe749b1ef19ddec724ad",
+      "baseline_sha256": "f62d8e651168670e9e4e48edcf04e5f32e47ceaf64bfbe749b1ef19ddec724ad",
       "receipt_hashes": [
         "f62d8e651168670e9e4e48edcf04e5f32e47ceaf64bfbe749b1ef19ddec724ad"
       ],
@@ -454,6 +503,7 @@
     {
       "path": "research_models/common_private_synergy/components/role_reference.py",
       "sha256": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4",
+      "baseline_sha256": "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4",
       "receipt_hashes": [
         "d5ad449251bc8fd9c8eaa4c50a2f2297b7fd83172708d38c789ec5afa4c43da4"
       ],
@@ -463,6 +513,7 @@
     {
       "path": "research_models/common_private_synergy/components/slots.py",
       "sha256": "6df1c065dc9bc23e7d2261b8ee88394f903e7bad5e6be3878aa31f03a59c0525",
+      "baseline_sha256": "6df1c065dc9bc23e7d2261b8ee88394f903e7bad5e6be3878aa31f03a59c0525",
       "receipt_hashes": [
         "6df1c065dc9bc23e7d2261b8ee88394f903e7bad5e6be3878aa31f03a59c0525",
         "cbf38473b4379d0e9e3e43cadb085a4d4d89d7cb96010a942792d7872df7156e"
@@ -473,6 +524,7 @@
     {
       "path": "research_models/common_private_synergy/components/spread_target.py",
       "sha256": "6b789d1b96b30ac4a111207482d803068c590ca2e541f59e68b0c29482e7c2c2",
+      "baseline_sha256": "6b789d1b96b30ac4a111207482d803068c590ca2e541f59e68b0c29482e7c2c2",
       "receipt_hashes": [
         "6b789d1b96b30ac4a111207482d803068c590ca2e541f59e68b0c29482e7c2c2"
       ],
@@ -482,6 +534,7 @@
     {
       "path": "research_models/common_private_synergy/full_slot_diagnostics.py",
       "sha256": "c6f6a45337cf5be5390719b6cfd79c318bde51245d773e2dfd99c725561ce41f",
+      "baseline_sha256": "c6f6a45337cf5be5390719b6cfd79c318bde51245d773e2dfd99c725561ce41f",
       "receipt_hashes": [
         "c6f6a45337cf5be5390719b6cfd79c318bde51245d773e2dfd99c725561ce41f"
       ],
@@ -491,6 +544,7 @@
     {
       "path": "research_models/common_private_synergy/patient_pilot.py",
       "sha256": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3",
+      "baseline_sha256": "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3",
       "receipt_hashes": [
         "12791e5fa3f83690ae98aeb83a31f600885088748f31d78840f3a4cdba8985e3"
       ],
@@ -500,6 +554,7 @@
     {
       "path": "research_models/common_private_synergy/patient_pilot_engine.py",
       "sha256": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b",
+      "baseline_sha256": "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b",
       "receipt_hashes": [
         "ddaf57da63d0278b2f2d40a6af89e7e7d696a69fb6cc241bfe4f4a4ef6922b7b"
       ],
@@ -509,6 +564,7 @@
     {
       "path": "research_models/common_private_synergy/pilot_split.py",
       "sha256": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1",
+      "baseline_sha256": "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1",
       "receipt_hashes": [
         "f8a8395576eed476d12cda2f3a77b49049368a187918a47e521a8e2cb1520df1"
       ],
@@ -518,6 +574,7 @@
     {
       "path": "slotspe_proof/patient.py",
       "sha256": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
+      "baseline_sha256": "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59",
       "receipt_hashes": [
         "8390698ba93e4b9a7635e02b255dfb9f8a1dd35542a08124470a402ed7b97a59"
       ],

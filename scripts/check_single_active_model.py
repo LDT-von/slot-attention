@@ -314,17 +314,24 @@ def baseline_hashes() -> dict[str, str]:
                     hashes[original] = digest
         for entry in payload.get('retained_in_place', []):
             name = entry.get('path')
-            digest = entry.get('sha256')
+            digest = entry.get('baseline_sha256') or entry.get('sha256')
             if isinstance(name, str) and isinstance(digest, str) and len(digest) == 64:
                 hashes[name] = digest
     return hashes
 
 
 def baseline_hash_for(name: str, cached: dict[str, str]) -> str | None:
-    """The pre-restructure hash of a path, from the manifest or from Git."""
-    if name in cached:
-        return cached[name]
-    return git_blob_sha256(BASELINE_COMMIT, name)
+    """The pre-restructure hash of a path.
+
+    Git is the authority when it is available.  The manifest is the fallback
+    for a checkout without Git history.  The manifest stores the BASELINE
+    hash, not the current hash, so a tampered file cannot poison it: the
+    next run still compares the file against the true baseline.
+    """
+    from_git = git_blob_sha256(BASELINE_COMMIT, name)
+    if from_git is not None:
+        return from_git
+    return cached.get(name)
 
 
 def check_receipt_paths() -> tuple[list[str], dict[str, list[str]]]:
@@ -410,6 +417,7 @@ def build_manifest() -> dict:
             'archived_path': relative,
             'original_paths': originals,
             'sha256': digest,
+            'baseline_sha256': baselines[0] if baselines else None,
             'receipt_pinned': any(original in pinned for original in originals),
             'matches_pre_restructure_baseline': bool(baselines) and digest in baselines,
         })
@@ -429,6 +437,7 @@ def build_manifest() -> dict:
         retained.append({
             'path': name,
             'sha256': digest,
+            'baseline_sha256': baseline,
             'receipt_hashes': sorted(pinned[name]),
             'matches_receipt': digest in pinned[name],
             'matches_pre_restructure_baseline': baseline == digest,
