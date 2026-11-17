@@ -354,7 +354,7 @@ def spread_evaluate_epoch(model, store, ids, adapter, boundaries, config, device
         'raw_reading_mass': {k: read_mass_summary(torch.cat(v)) for k, v in read_mass.items()},
         'validation_sampling_seed': seed,
         'ablation_mean_abs_logit_change': {k: [v / len(ids) for v in values]
-                                            for k, v in ablations.items()},
+                                            for k, values in ablations.items()},
         'ablation_scope': 'slot removal in role pool; not conditional CPI',
     }
     if observe:
