@@ -1,0 +1,40 @@
+{
+  "schema": "scaled_role16_v1",
+  "study": "blca",
+  "fold": 0,
+  "seed": 3,
+  "patches": 4096,
+  "batch_size": 8,
+  "target_dim": 16,
+  "common_rank": 6,
+  "allocation": {
+    "p": [
+      4,
+      4
+    ],
+    "g": [
+      4,
+      4
+    ]
+  },
+  "width": 256,
+  "iterations": 3,
+  "hidden": 32,
+  "bins": 4,
+  "role_epochs": 12,
+  "task_epochs": 35,
+  "patience": 35,
+  "role_lr": 0.003,
+  "task_lr": 0.001,
+  "role_weight": 1.0,
+  "task_mode": "joint",
+  "readout_bound": 2.0,
+  "fixed_task_budget": true,
+  "read_diagnostics": true,
+  "ablation_nll": true,
+  "torch_threads": 4,
+  "device": "cuda:0",
+  "p_target_mode": "spread",
+  "omics_dropout": 0.25,
+  "reconstruction_heads": "deferred"
+}
