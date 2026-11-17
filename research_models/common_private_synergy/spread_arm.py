@@ -125,8 +125,16 @@ def validate_protocol(c):
     differences are the role-target statistic, the target width, the common
     rank, the task mode and the physical device index.
     """
+    # The two LOCKED configurations that the measured probe selected. Every
+    # other field is the archived matched35 protocol and must not move.
+    #
+    #   (8, 2)   the ARCHIVED widths: only the target statistic changes, so
+    #             the comparison against the archived run is single-variable.
+    #   (16, 6)  the wider target: the probe measured the highest ceiling
+    #             here, but the target width and the common rank change too.
+    locked_widths = {(8, 2), (16, 6)}
     expected = dict(schema='full_slot_spread35_v1', study='blca', fold=0, seed=3,
-                    patches=4096, batch_size=2, target_dim=8, common_rank=2,
+                    patches=4096, batch_size=2,
                     allocation={'p': [2, 2], 'g': [2, 2]}, width=64, iterations=3,
                     hidden=32, bins=4, role_epochs=12, task_epochs=35, patience=35,
                     role_lr=.003, task_lr=.001, role_weight=1., task_mode='joint',
@@ -145,9 +153,10 @@ def validate_protocol(c):
             raise ValueError('locked spread protocol differs: ' + key)
     if c.get('p_target_mode') not in ('mean', 'spread'):
         raise ValueError('p_target_mode must be mean or spread')
-    if c.get('p_target_mode') == 'spread':
-        if c['target_dim'] not in (8, 16) or c['common_rank'] not in (2, 4, 6):
-            raise ValueError('the measured spread configurations are td8/rank2 and td16/rank6')
+    if type(c.get('target_dim')) is not int or type(c.get('common_rank')) is not int:
+        raise ValueError('integer target width and common rank required')
+    if (c['target_dim'], c['common_rank']) not in locked_widths:
+        raise ValueError('the measured spread configurations are td8/rank2 and td16/rank6')
     if c['common_rank'] >= c['target_dim']:
         raise ValueError('a nonempty residual target requires common_rank < target_dim')
     if c['task_mode'] not in ('joint', 'continued_role_only'):

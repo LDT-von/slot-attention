@@ -7,7 +7,16 @@
   "batch_size": 2,
   "target_dim": 8,
   "common_rank": 2,
-  "allocation": {"p": [2, 2], "g": [2, 2]},
+  "allocation": {
+    "p": [
+      2,
+      2
+    ],
+    "g": [
+      2,
+      2
+    ]
+  },
   "width": 64,
   "iterations": 3,
   "hidden": 32,
