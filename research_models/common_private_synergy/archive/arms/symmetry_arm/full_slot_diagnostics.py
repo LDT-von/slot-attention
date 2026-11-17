@@ -1,0 +1,1 @@
+../../../full_slot_diagnostics.py

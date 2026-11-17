@@ -1,0 +1,345 @@
+{
+  "schema": "slotspe_archive_manifest_v1",
+  "date": "2026-11-17",
+  "baseline_commit": "HEAD",
+  "policy": "Archived files are byte-identical to the version the historical receipts name. Every original path still resolves through a symlink, so sha(ROOT / name) lookups keep working unchanged. Only scaled_role16_v1 is active; see MODEL_REGISTRY.json.",
+  "active_model": "scaled_role16_v1",
+  "file_count": 37,
+  "files": [
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/components/assembly.py",
+      "original_paths": [
+        "research_models/common_private_synergy/components/assembly.py"
+      ],
+      "sha256": "d489a42f631e680def55e08f303d493dad04af87f1606ed14ce3b23ece689879",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/components/cox_surv.py",
+      "original_paths": [
+        "research_models/common_private_synergy/components/cox_surv.py"
+      ],
+      "sha256": "0b719143028771c8f57215ccd98f2faa051c5b7b6796b9d33666445938f736d7",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/components/distribution_target.py",
+      "original_paths": [
+        "research_models/common_private_synergy/components/distribution_target.py"
+      ],
+      "sha256": "006250b80702480fd22b0b9ec16300c61a88a04b301c33c242e3305d517de2a0",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/components/symmetry_slots.py",
+      "original_paths": [
+        "research_models/common_private_synergy/components/symmetry_slots.py"
+      ],
+      "sha256": "5420ae206ab3eeecf377af9264f6ee798625a0af945dbfcabc83b9919daeaad9",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/cox_arm/cox_objective_engine.py",
+      "original_paths": [
+        "research_models/common_private_synergy/cox_objective_engine.py"
+      ],
+      "sha256": "5c3baabbfcd8ac747a06e833a41903f7611eacafac45fbe07435f24f5ce52b14",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/cox_arm/cox_objective_pair.py",
+      "original_paths": [
+        "research_models/common_private_synergy/cox_objective_pair.py"
+      ],
+      "sha256": "788c508bf9e5854c4483dfd6a1713ab4abca9d956fe63dacc94896be81c6ab62",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/matched35_arm/full_slot_engine.py",
+      "original_paths": [
+        "research_models/common_private_synergy/full_slot_engine.py"
+      ],
+      "sha256": "cb55b93cd20f13f7be0c03855e09d6694b1e80fc94f57dca941a0d36b3b6ffdf",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/matched35_arm/full_slot_epoch.py",
+      "original_paths": [
+        "research_models/common_private_synergy/full_slot_epoch.py",
+        "research_models/common_private_synergy/archive/arms/symmetry_arm/full_slot_epoch.py"
+      ],
+      "sha256": "de572b056623ec54d7566c9cd34ddaff8624c46e9a2638c67cdbaed494747937",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/matched35_arm/matched35.py",
+      "original_paths": [
+        "research_models/common_private_synergy/matched35.py"
+      ],
+      "sha256": "6405244d49b0bad8c9ff1d67ea51554a35a1cd19d71ad43184e66f5d4e2af6f6",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/spread_arm/spread_arm.py",
+      "original_paths": [
+        "research_models/common_private_synergy/spread_arm.py"
+      ],
+      "sha256": "7b027510b3d73eca87c3908f799909038204ad075f83816328b3ba4343bb18c1",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/arms/symmetry_arm/symmetry_arm.py",
+      "original_paths": [
+        "research_models/common_private_synergy/symmetry_arm.py"
+      ],
+      "sha256": "10bdb0314bce8cf3035d74d7218dcb6836d6ede392b6c945fd15d46b85f9ea55",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/components/adapters.py",
+      "original_paths": [
+        "research_models/common_private_synergy/components/adapters.py"
+      ],
+      "sha256": "fdeb54970fb4a343747b1f904f1e7d5a5ab610e7bc423da050b40fa142cc2ecc",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/components/readout.py",
+      "original_paths": [
+        "research_models/common_private_synergy/components/readout.py",
+        "research_models/common_private_synergy/archive/arms/components/readout.py"
+      ],
+      "sha256": "35d696200ea70920637840e10a6cf23e2877ec2e866ff34e9c9a3ffc86981236",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/components/views.py",
+      "original_paths": [
+        "research_models/common_private_synergy/components/views.py"
+      ],
+      "sha256": "329257812fcccaba35106f3e048f55cffdfbd3fda6e37e51b40412a35da5ebb6",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/deferred_checks/test_full_slot_diagnostics.py",
+      "original_paths": [
+        "research_models/common_private_synergy/deferred_checks/test_full_slot_diagnostics.py"
+      ],
+      "sha256": "83c547a4b34db310607f9ae7995890d2c6e330672a1b148fb92d333d6b56a8e9",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/deferred_checks/test_losses_tensor.py",
+      "original_paths": [
+        "research_models/common_private_synergy/deferred_checks/test_losses_tensor.py"
+      ],
+      "sha256": "d04d80cc7518adc9a27a66b80af483530d243aa05eed0ee42ceae096e94452f6",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/deferred_checks/test_matched35.py",
+      "original_paths": [
+        "research_models/common_private_synergy/deferred_checks/test_matched35.py"
+      ],
+      "sha256": "ffe95ed4673842acccfec62a8472762789cb7536f43aa270e2d93c6e9d102bdc",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/deferred_checks/test_matched_read_diagnostics.py",
+      "original_paths": [
+        "research_models/common_private_synergy/deferred_checks/test_matched_read_diagnostics.py"
+      ],
+      "sha256": "711ca37dc86855ff6df814b1d3f6707a32baccdcc2502a9b0ce53eae985067c4",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/deferred_checks/test_parts_tensor.py",
+      "original_paths": [
+        "research_models/common_private_synergy/deferred_checks/test_parts_tensor.py"
+      ],
+      "sha256": "047702b94a64722a06b22a9e643af37763997ed51ca9cf939b33e3567d4c9086",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/deferred_checks/test_patient_pilot.py",
+      "original_paths": [
+        "research_models/common_private_synergy/deferred_checks/test_patient_pilot.py"
+      ],
+      "sha256": "cf01e302cf5ebb2ae5dbd1cf7d1ac516765bb6881a2e47ee97e5f84bbbaf3774",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/deferred_checks/test_pilot_split.py",
+      "original_paths": [
+        "research_models/common_private_synergy/deferred_checks/test_pilot_split.py"
+      ],
+      "sha256": "6969ded7c4900c227f242797a44b29dd5cadb4417c5e704d7cefae276a93545f",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/deferred_checks/test_slot_read_normalization.py",
+      "original_paths": [
+        "research_models/common_private_synergy/deferred_checks/test_slot_read_normalization.py"
+      ],
+      "sha256": "022e150c1ad200a05af0ed94806568c22f4c35f529dceaba1840f2a83d4dd3a3",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/model.py",
+      "original_paths": [
+        "research_models/common_private_synergy/model.py"
+      ],
+      "sha256": "737367f53eb700326536701a9d7a26e1fe4f2e39faf6c59af1a8aacbfd9e345b",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/synthetic_full_slot_gradient_audit.py",
+      "original_paths": [
+        "research_models/common_private_synergy/synthetic_full_slot_gradient_audit.py"
+      ],
+      "sha256": "a7f6b49038cb67d4c273572ce1ac7bf4505779ca6816d16f2daf2645a94b64aa",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/synthetic_full_slot_matched.py",
+      "original_paths": [
+        "research_models/common_private_synergy/synthetic_full_slot_matched.py"
+      ],
+      "sha256": "53cbea15e8d713def7707a4516358f6cb357621054224cdc78fae182c2751946",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/synthetic_full_slot_replication.py",
+      "original_paths": [
+        "research_models/common_private_synergy/synthetic_full_slot_replication.py"
+      ],
+      "sha256": "89063faa1e6c8fb7b8d33a266ba0384e95bb89a1eea29b1c862b8c8f18f44363",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/synthetic_full_slot_three_arm.py",
+      "original_paths": [
+        "research_models/common_private_synergy/synthetic_full_slot_three_arm.py"
+      ],
+      "sha256": "4252bda05ece5fcf3dd951b0a7338d795d22c9a562343e8607b169d35c2bba8c",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "research_models/common_private_synergy/archive/legacy/test_model.py",
+      "original_paths": [
+        "research_models/common_private_synergy/tests/test_model.py"
+      ],
+      "sha256": "a844f58a8f61c4f88c791886f6544eb8c3f7ba61a6c50dd7bbc4f5cfdd4c75db",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "archive/check_cox_objective_synthetic.py",
+      "original_paths": [
+        "scripts/check_cox_objective_synthetic.py"
+      ],
+      "sha256": "13ca9893eb60f1c964f5dd960f2d348063d9afdccac2e97e8874262e7063091c",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "archive/check_spread_arm_synthetic.py",
+      "original_paths": [
+        "scripts/check_spread_arm_synthetic.py"
+      ],
+      "sha256": "ca481a456f004b387098baefbfa8e29deba7a83e2c4367778fcb11f0ae69c8ff",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "archive/check_symmetry_arm_synthetic.py",
+      "original_paths": [
+        "scripts/check_symmetry_arm_synthetic.py"
+      ],
+      "sha256": "073cfa47d07032453c0ab2d2a11c9be7e16f3f275c6165db59babed1de21746a",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "archive/run_common_private_cox35.py",
+      "original_paths": [
+        "scripts/run_common_private_cox35.py"
+      ],
+      "sha256": "f8b508e769ad1b5bf2e70b036dec139bbf7315fb7d5014e2783119e917820266",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "archive/run_common_private_full_slot.py",
+      "original_paths": [
+        "scripts/run_common_private_full_slot.py"
+      ],
+      "sha256": "bd156f68d80bce79c21ded00f2dc8e9f04bca145c9af77bc0ab4f8a19ca42155",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "archive/run_common_private_matched35.py",
+      "original_paths": [
+        "scripts/run_common_private_matched35.py"
+      ],
+      "sha256": "d01ba7ca1f268f2e7d9b8f972a1544479223965d8744209cbae0a94efd22ef1d",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "archive/run_common_private_patient_pilot.py",
+      "original_paths": [
+        "scripts/run_common_private_patient_pilot.py"
+      ],
+      "sha256": "b3000912747cb33a5882cac57d351d239c183c1e6bdd7a98d525a974b4ddbddb",
+      "receipt_pinned": false,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "archive/run_common_private_spread35.py",
+      "original_paths": [
+        "scripts/run_common_private_spread35.py"
+      ],
+      "sha256": "c4ea8761a34a444ef4d8c8b9cd65a38bccc4b382b76c4a6f9b8af9ae9deb0944",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    },
+    {
+      "archived_path": "archive/run_common_private_symmetry35.py",
+      "original_paths": [
+        "scripts/run_common_private_symmetry35.py"
+      ],
+      "sha256": "568a0496f400b73cf25bd9627d25ab7d49acb0a2948637d560551502653f6978",
+      "receipt_pinned": true,
+      "matches_git_baseline": true
+    }
+  ]
+}

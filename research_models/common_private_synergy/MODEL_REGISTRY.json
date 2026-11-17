@@ -1,0 +1,135 @@
+{
+  "schema": "slotspe_model_registry_v1",
+  "date": "2026-11-17",
+  "line": "common_private_synergy",
+  "policy": "Exactly ONE model method is active in this research line. Every other model method is archived with byte-identical source, its historical receipts remain resolvable at their original paths, and no archived method is reachable from the active runner.",
+  "active_model": {
+    "id": "scaled_role16_v1",
+    "title": "16-slot common/private role model with zero-bias slot updates and continued-role-only task phase",
+    "status": "active",
+    "model_class": "research_models.common_private_synergy.scaled.engine.ScaledSurvivalRoleModel",
+    "base_class": "research_models.common_private_synergy.scaled.role_model.ScaledRoleTargetModel",
+    "package": "research_models/common_private_synergy/scaled",
+    "entrypoint": "scripts/run_common_private_scaled16.py",
+    "config": "configs/common_private_scaled16_v1.json",
+    "synthetic_check": "scripts/check_scaled16_synthetic.py",
+    "architecture": {
+      "slots": 16,
+      "allocation": {"p": [4, 4], "g": [4, 4]},
+      "slot_width": 256,
+      "pathway_encoders": 329,
+      "role_groups": ["p_common", "p_residual", "g_common", "g_residual"],
+      "task_mode": "continued_role_only",
+      "p_target_mode": "spread",
+      "slot_update_bias": "zero",
+      "reconstruction_heads": "deferred"
+    },
+    "losses": {
+      "role_content": "mean over the four role groups of MSE(roles[k], reference.targets[k])",
+      "survival": "discrete_hazard_nll over 4 discrete time bins",
+      "total": "L_survival + role_weight * L_role"
+    },
+    "measured_effects": {
+      "initial_slot_effective_rank": "6.22 -> 9.67 after zeroing the GRU update bias",
+      "pair_cosine": "0.8160 -> 0.6061 after zeroing the GRU update bias",
+      "survival_gradient_isolation": "in continued_role_only the survival loss reaches no role encoder parameter; the role content loss still does"
+    }
+  },
+  "archived_models": [
+    {
+      "id": "matched35",
+      "title": "common-start matched35 control (8 slots, width 64)",
+      "status": "archived",
+      "archived_path": "research_models/common_private_synergy/archive/arms/matched35_arm",
+      "original_paths": [
+        "research_models/common_private_synergy/matched35.py",
+        "research_models/common_private_synergy/full_slot_engine.py",
+        "research_models/common_private_synergy/full_slot_epoch.py"
+      ],
+      "runner": "archive/run_common_private_matched35.py",
+      "config": "configs/archive/common_private_matched35_v1.json",
+      "reason": "single-variable ablation of the shared 8-slot width-64 skeleton; superseded by scaled_role16_v1"
+    },
+    {
+      "id": "full_slot",
+      "title": "full-slot arm (8 slots, width 64)",
+      "status": "archived",
+      "archived_path": "research_models/common_private_synergy/archive/arms/matched35_arm",
+      "original_paths": [
+        "research_models/common_private_synergy/full_slot_engine.py",
+        "research_models/common_private_synergy/full_slot_epoch.py"
+      ],
+      "runner": "archive/run_common_private_full_slot.py",
+      "config": "configs/archive/common_private_full_joint_v1.json",
+      "reason": "the joint task-mode variant of the same 8-slot skeleton; superseded by scaled_role16_v1"
+    },
+    {
+      "id": "spread",
+      "title": "spread-target arm (bag standard deviation as the p role target)",
+      "status": "archived",
+      "archived_path": "research_models/common_private_synergy/archive/arms/spread_arm",
+      "original_paths": ["research_models/common_private_synergy/spread_arm.py"],
+      "runner": "archive/run_common_private_spread35.py",
+      "config": "configs/archive/common_private_spread35_v1.json",
+      "reason": "the spread target statistic is retained inside scaled_role16_v1 as p_target_mode=spread, so the separate arm is redundant"
+    },
+    {
+      "id": "symmetry",
+      "title": "symmetry-breaking arm",
+      "status": "archived",
+      "archived_path": "research_models/common_private_synergy/archive/arms/symmetry_arm",
+      "original_paths": ["research_models/common_private_synergy/symmetry_arm.py"],
+      "runner": "archive/run_common_private_symmetry35.py",
+      "config": "configs/archive/common_private_symmetry35_v1.json",
+      "reason": "the slot-differentiation problem is solved inside scaled_role16_v1 by the zero GRU update bias, so the separate arm is redundant"
+    },
+    {
+      "id": "cox",
+      "title": "Cox partial-likelihood objective arm",
+      "status": "archived",
+      "archived_path": "research_models/common_private_synergy/archive/arms/cox_arm",
+      "original_paths": [
+        "research_models/common_private_synergy/cox_objective_engine.py",
+        "research_models/common_private_synergy/cox_objective_pair.py"
+      ],
+      "runner": "archive/run_common_private_cox35.py",
+      "config": "configs/archive/common_private_cox35_v1.json",
+      "reason": "the discrete hazard NLL is the retained survival objective; the Cox variant is superseded"
+    },
+    {
+      "id": "v0_joint_mlp",
+      "title": "V0 joint-MLP reference skeleton (RoleSlotSurvival)",
+      "status": "archived",
+      "archived_path": "research_models/common_private_synergy/archive/legacy",
+      "original_paths": ["research_models/common_private_synergy/model.py"],
+      "runner": null,
+      "config": null,
+      "reason": "explicitly documented in its own module as a V0 reference only; it was never an assembled model"
+    }
+  ],
+  "legacy_code_retained_in_place": [
+    {
+      "symbol": "research_models.common_private_synergy.components.role_model.RoleTargetModel",
+      "status": "legacy_retained_for_hash_lock",
+      "reason": "the file is byte-locked by historical receipts and also holds BoundedLinear and BoundedRoleReadout, which scaled_role16_v1 imports; the class is unreachable from the active runner"
+    },
+    {
+      "symbol": "research_models.common_private_synergy.patient_pilot_engine.SurvivalRoleModel",
+      "status": "legacy_retained_for_hash_lock",
+      "reason": "the file is byte-locked by historical receipts; the class is unreachable from the active runner"
+    }
+  ],
+  "shared_library_used_by_the_active_model": [
+    "research_models/common_private_synergy/components/contracts.py",
+    "research_models/common_private_synergy/components/losses.py",
+    "research_models/common_private_synergy/components/role_model.py",
+    "research_models/common_private_synergy/components/role_reference.py",
+    "research_models/common_private_synergy/components/slots.py",
+    "research_models/common_private_synergy/components/spread_target.py",
+    "research_models/common_private_synergy/full_slot_diagnostics.py",
+    "research_models/common_private_synergy/patient_pilot.py",
+    "research_models/common_private_synergy/patient_pilot_engine.py",
+    "research_models/common_private_synergy/pilot_split.py"
+  ],
+  "audit_path_policy": "Every archived file is byte-identical to the version the historical receipts name, and its ORIGINAL path still resolves, so sha(ROOT / name) lookups and receipt re-verification keep working unchanged. See research_models/common_private_synergy/archive/ARCHIVE_MANIFEST.json."
+}
