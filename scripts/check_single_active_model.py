@@ -240,6 +240,23 @@ def check_registry() -> list[str]:
         problems.append(f'registry lists {len(others)} archived model as active')
     if len(registry.get('archived_models', [])) < 5:
         problems.append('the registry does not list the five superseded arms')
+
+    # Every generation of the line must be recorded, so no lineage can be
+    # silently dropped.  The first generation is the A/B/C ladder.
+    generations = registry.get('generations')
+    if not isinstance(generations, list) or len(generations) < 3:
+        problems.append('the registry does not record all three design generations')
+    else:
+        for entry in generations:
+            for key in ('generation', 'representative', 'slots', 'slot_width',
+                        'parameter_count', 'readout'):
+                if key not in entry:
+                    problems.append(
+                        f'the generation {entry.get("generation")} lacks {key}')
+    archived_ids = {m.get('id') for m in registry.get('archived_models', [])}
+    if 'abc_first_generation' not in archived_ids:
+        problems.append(
+            'the registry does not list the first-generation A/B/C ladder')
     return problems
 
 

@@ -3,6 +3,42 @@
   "date": "2026-11-17",
   "line": "common_private_synergy",
   "policy": "Exactly ONE model method is active in this research line. Every other model method is archived with byte-identical source, its historical receipts remain resolvable at their original paths, and no archived method is reachable from the active runner.",
+  "generations": [
+    {
+      "generation": 1,
+      "representative": "A/B/C ladder",
+      "slots": 8,
+      "slot_width": 64,
+      "parameter_count": 275596,
+      "readout": "AdditiveInteractionReadout",
+      "slot_differentiation": "DeCUR representation terms and an across-patient variance floor",
+      "has_role_content_loss": false,
+      "patient_measurement": "A 0.7116 / B 0.7155 / C 0.7155 best C-index on BLCA fold 0, 5fold cohort, 77 validation patients"
+    },
+    {
+      "generation": 2,
+      "representative": "matched35 / spread / symmetry / Cox",
+      "slots": 8,
+      "slot_width": 64,
+      "parameter_count": 249292,
+      "readout": "BoundedRoleReadout",
+      "slot_differentiation": "role content MSE against a frozen role reference",
+      "has_role_content_loss": true,
+      "patient_measurement": "matched35 joint 0.5803 and continued_role_only 0.6151 best C-index; spread 249292 parameters"
+    },
+    {
+      "generation": 3,
+      "representative": "scaled_role16_v1 (the only active model)",
+      "slots": 16,
+      "slot_width": 256,
+      "parameter_count": 26364195,
+      "readout": "BoundedRoleReadout",
+      "slot_differentiation": "role content MSE plus a zero GRU update bias",
+      "has_role_content_loss": true,
+      "patient_measurement": "none yet; only synthetic verification"
+    }
+  ],
+  "generation_note": "The three generations are different designs, not three settings of one design. A number from one generation is not comparable with a number from another: the architecture, the parameter count, the loss set, the readout and the input mask contract all differ. The first-generation A/B/C result is the only real patient measurement of any self-built architecture in this line, and it sits on the 5fold cohort that the original S0/R4/R3 baselines use.",
   "active_model": {
     "id": "scaled_role16_v1",
     "title": "16-slot common/private role model with zero-bias slot updates and continued-role-only task phase",
@@ -105,6 +141,70 @@
       "runner": null,
       "config": null,
       "reason": "explicitly documented in its own module as a V0 reference only; it was never an assembled model"
+    },
+    {
+      "id": "abc_first_generation",
+      "title": "first-generation A/B/C ladder (8 slots, width 64, AdditiveInteractionReadout)",
+      "status": "archived",
+      "generation": 1,
+      "lineage_note": "This generation predates the role-target arms and is NOT one of their variants. It is a separate design: it has no role-content MSE, no role reference and no p/g residual roles. Its slot differentiation comes from the DeCUR representation terms and the across-patient variance floor instead.",
+      "archived_path": "research_models/common_private_synergy/archive/legacy",
+      "original_paths": [
+        "research_models/common_private_synergy/components/assembly.py",
+        "research_models/common_private_synergy/components/readout.py",
+        "research_models/common_private_synergy/components/adapters.py",
+        "research_models/common_private_synergy/components/views.py"
+      ],
+      "source_repository": "/data1/slotspe-cp-assembly-20261103",
+      "ladder_commit": "8cd8c3e",
+      "batch_guard_commit": "ab39141",
+      "runner": null,
+      "config": null,
+      "arms": {
+        "A": "additive task-only baseline; no interaction, no auxiliary objective",
+        "B": "A plus the bilinear cross-modal interaction term",
+        "C": "B plus every auxiliary objective (shared common-head task 0.1, four DeCUR terms 0.05 each, across-patient variance floor 0.01)"
+      },
+      "architecture": {
+        "slots": 8,
+        "common_slots": 7,
+        "private_slots": 1,
+        "width": 64,
+        "parameter_count": 275596,
+        "readout": "AdditiveInteractionReadout"
+      },
+      "losses": [
+        "discrete hazard NLL (task)",
+        "mean of the two modality-local common heads (C only, weight 0.1)",
+        "four DeCUR representation terms (C only, weight 0.05 each)",
+        "across-patient variance floor (C only, weight 0.01)"
+      ],
+      "measured_patient_result": {
+        "scope": "BLCA fold 0, seed 3, 30 epochs, 4096 patches, batch size 8, 20 evaluation repeats, GPU; one fold and one seed",
+        "cohort": "303 train / 77 validation",
+        "split_identity": "splits/5fold/blca/fold_0.csv",
+        "best_cindex": {"A": 0.7115689381933439, "B": 0.7155309033280507, "C": 0.7155309033280507},
+        "best_epoch": {"A": 8, "B": 8, "C": 10},
+        "final_epoch_cindex": {"A": 0.6616481774960381, "B": 0.6640253565768622, "C": 0.6545166402535656},
+        "net_effect": {
+          "B_minus_A_best_cindex": 0.0040,
+          "C_minus_B_best_cindex": 0.0000,
+          "C_minus_B_best_nll": 0.2063
+        },
+        "original_baseline_same_fold": "the original S0 is 0.7485, so the best first-generation arm at 0.7155 does not beat it",
+        "artifacts": "/data1/SlotSPE/local_evidence/common_private_abc_blca_fold0_seed3/arm_{A,B,C}/",
+        "report": "/data1/SlotSPE/docs/research/common_private_synergy/ABC对照报告_20261104.md"
+      },
+      "known_limits": [
+        "one fold and one seed, so no difference carries an uncertainty estimate",
+        "the best-checkpoint number is a maximum over about thirty validation passes on the same 77 patients",
+        "the auxiliary objectives were measured at one weight setting only, with no per-term ablation",
+        "a budget confound remains in the C minus B step: A and B are single-view while C is two-view, so C costs 697 seconds against 479 and the difference contains both the auxiliary objectives and a doubled encoding budget",
+        "the update counts are unmatched, 1110 steps for C against 1140 for A and B",
+        "the variance floor was not satisfied: the across-patient standard deviations were 0.58, 0.29, 0.24 and 0.14 against a target of 1.0, and the cross-common alignment diagonal reached only 0.60 against a target of 1.0"
+      ],
+      "role_in_the_line": "historical baseline only; it is not re-run and not used as a comparison arm for scaled_role16_v1, because its architecture, parameter count, loss set and readout all differ",
+      "reason": "superseded by scaled_role16_v1; kept as the historical first-generation baseline because it is the only self-built architecture with a real patient measurement, on the 5fold cohort that the original baselines use"
     }
   ],
   "legacy_code_retained_in_place": [
