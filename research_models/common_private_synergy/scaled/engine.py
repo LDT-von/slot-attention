@@ -90,11 +90,12 @@ def validate_protocol(c):
                     patches=4096, batch_size=8,
                     allocation={'p': [4, 4], 'g': [4, 4]}, width=256, iterations=3,
                     hidden=32, bins=4, role_epochs=12, task_epochs=35, patience=35,
-                    role_lr=.003, task_lr=.001, role_weight=1., task_mode='joint',
+                    role_lr=.003, task_lr=.001, role_weight=1., task_mode='continued_role_only',
                     readout_bound=2., fixed_task_budget=True, read_diagnostics=True,
                     ablation_nll=True, torch_threads=4, device='cuda:0',
                     target_dim=16, common_rank=6, p_target_mode='spread',
-                    omics_dropout=0.25, reconstruction_heads='deferred')
+                    omics_dropout=0.25, reconstruction_heads='deferred',
+                    slot_update_bias='zero')
     for key, value in expected.items():
         if key == 'device':
             # The protocol pins the device family, not the physical index, so
@@ -116,6 +117,8 @@ def validate_protocol(c):
             raise ValueError('the scaled protocol fixes 4 common and 4 residual slots per modality')
     if sum(c['allocation'][m][0] + c['allocation'][m][1] for m in ('p', 'g')) != 16:
         raise ValueError('the scaled protocol fixes 16 slots in total')
+    if c['slot_update_bias'] != 'zero':
+        raise ValueError('the scaled protocol fixes a zero slot update bias')
 
 
 class ScaledSurvivalRoleModel(ScaledRoleTargetModel):
@@ -382,6 +385,53 @@ def _resume_state(out, c, source_hashes, manifest_hash, identity):
     return saved
 
 
+def _scaled_task_forward(model, b, mode):
+    """Task-phase forward. The survival-to-role backward edge depends on `mode`.
+
+    `joint`
+        The roles enter the survival head with the graph connected, so the
+        survival gradient reaches the role encoders.
+
+    `continued_role_only`
+        The FORWARD VALUES are identical; only the backward edge differs.  The
+        roles are detached at the point where they enter the survival head, so
+        the survival gradient cannot reach the role encoders, the role pools,
+        the role decoders or the omics encoder.  The role networks keep being
+        trained, by the role loss alone.
+
+    Why this matters here
+    ---------------------
+    The archived common-start paired run (82 real epochs, same start for both
+    arms) measured that the control arm, in which the survival gradient does
+    NOT reach the role networks, was better on the development fold in 33 of
+    35 task epochs for C-index and 26 of 35 for NLL, fitted all four role
+    targets better, and did NOT show the late p_common reading collapse that
+    the joint arm showed from task epoch 27 on.
+
+    The archived gradient measurement is the mechanism: for p_common slot 0 the
+    control arm's survival gradient is exactly 0.000000 every epoch, against
+    joint role 0.033874, survival 0.054798, combined 0.070234.
+
+    This function reproduces that contract on the scaled architecture.  It is
+    a DIFFERENT protocol from the archived one, so its numbers are not
+    comparable with the archived numbers.
+    """
+    if mode not in ('joint', 'continued_role_only'):
+        raise ValueError('invalid task mode')
+    roles, parts = model.encode(b['p'], b['g'], b['p_mask'], b['g_mask'])
+    if mode == 'continued_role_only':
+        head_roles = {k: v.detach() for k, v in roles.items()}
+    else:
+        head_roles = roles
+    return {'roles': roles, 'parts': parts, **model.predict_roles(head_roles)}
+
+
+def _scaled_role_loss(model, output, b):
+    """The role content loss, averaged over the four role groups."""
+    target = model.reference.targets(b['p_target'], b['g_target'])
+    return sum(role_content_losses(output['roles'], target).values()) / 4
+
+
 def run_scaled_arm(root, out, manifest, c, source_hashes, *, split_guard=None, synthetic=False,
                    resume=False):
     """Train the scaled 16-slot role architecture on the archived schedule.
@@ -465,6 +515,16 @@ def run_scaled_arm(root, out, manifest, c, source_hashes, *, split_guard=None, s
                              'width 256, and the omics side enters through 329 independent '
                              'pathway MLPs instead of a shared SVD adapter'),
                'survival_objective': 'archived four-bin discrete hazard NLL',
+               'task_mode': c['task_mode'],
+               'task_gradient_policy': ('survival_gradient_reaches_role_networks' if c['task_mode'] == 'joint'
+                                        else 'survival_gradient_severed_at_the_readout; roles stay connected '
+                                             'so the role loss keeps training them'),
+               'slot_update_bias': 'zero',
+               'slot_update_bias_rationale': (
+                   'the archived collapse diagnosis located the slot-duplication root cause in the GRU '
+                   'update bias; zeroing it raises the 16-slot INITIAL effective rank from 5.47 to 8.71 '
+                   'on a local synthetic measurement. It is an INITIALISATION change of an existing '
+                   'parameter, not a new loss term.'),
                'difference_from_archived_spread_arm': ('the slot budget, the slot width, the omics '
                                                        'encoder and the batch size; the split, the bags, '
                                                        'the patch budget, the omics target, the reference, '
@@ -537,12 +597,21 @@ def run_scaled_arm(root, out, manifest, c, source_hashes, *, split_guard=None, s
                     ids = [train[i] for i in order[start:start + c['batch_size']]]
                     b = scaled_batch(store, ids, adapter, boundaries, c, device, generator=rng)
                     draw_hash.update(scaled_batch_hash(b).encode())
-                    output = model(b['p'], b['g'], b['p_mask'], b['g_mask'])
-                    role_loss = sum(role_content_losses(
-                        output['roles'], model.reference.targets(b['p_target'], b['g_target'])).values()) / 4
                     if phase == 'role':
+                        # The role phase has only the role loss, so the plain
+                        # connected forward is used and the survival head is
+                        # not evaluated at all.
+                        output = model(b['p'], b['g'], b['p_mask'], b['g_mask'])
+                        role_loss = _scaled_role_loss(model, output, b)
                         loss = role_loss
                     else:
+                        # The task phase uses the mode-dependent forward.  In
+                        # `continued_role_only` the ROLES stay connected, so
+                        # the role loss still trains the role networks, while
+                        # the HEAD receives detached roles, so the survival
+                        # gradient cannot reach the role networks.
+                        output = _scaled_task_forward(model, b, c['task_mode'])
+                        role_loss = _scaled_role_loss(model, output, b)
                         task_loss = discrete_hazard_nll(output['prediction'], b['completed'], b['event'])
                         loss = task_loss + c['role_weight'] * role_loss
                     if not torch.isfinite(loss):

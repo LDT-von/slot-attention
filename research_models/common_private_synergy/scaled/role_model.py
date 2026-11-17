@@ -62,6 +62,41 @@ from ..components.slots import AllSlotPool, RoleSlotEncoder
 from .omics_encoder import PathwayOmicsEncoder
 
 
+def zero_slot_update_bias(encoder):
+    """Zero the GRU update bias of a role slot encoder, in place.
+
+    The archived `components/slots.py` is NOT edited, because its SHA-256 is
+    recorded in the archived matched35, spread, Cox and symmetry receipts.
+    This helper performs the same operation from outside, so the archived
+    file stays byte for byte while the scaled arm gets a different
+    INITIALISATION of an existing parameter.
+
+    `nn.GRUCell` owns two bias tensors, `bias_ih` and `bias_hh`.  Both are
+    zeroed: the input bias is the one the archived diagnosis identified, and
+    the hidden bias is zeroed with it so that the update has no constant
+    offset on the first iteration either.
+
+    The function returns the number of bias tensors it touched, so a caller
+    or a test can assert that it did something and did not silently miss a
+    parameter.  It raises if the encoder does not own a GRU update cell, so a
+    future change to the archived encoder cannot silently disable this.
+    """
+    update = getattr(encoder, 'update', None)
+    if not isinstance(update, nn.GRUCell):
+        raise TypeError('the role slot encoder must own an nn.GRUCell update cell')
+    touched = 0
+    with torch.no_grad():
+        for name in ('bias_ih', 'bias_hh'):
+            bias = getattr(update, name, None)
+            if bias is None:
+                continue
+            bias.zero_()
+            touched += 1
+    if touched == 0:
+        raise ValueError('the GRU update cell exposes no bias tensor to zero')
+    return touched
+
+
 class ScaledRoleTargetModel(nn.Module):
     """16 slots of width 256 over two modalities, with a 329-network omics encoder.
 
@@ -90,6 +125,53 @@ class ScaledRoleTargetModel(nn.Module):
                                      slots=allocation.common + allocation.residual,
                                      common_slots=allocation.common, iterations=iterations)
             self.encoders[modality] = RoleSlotEncoder(input_dim, cfg)
+            # The GRU update bias is zeroed HERE, in this module, and NOT in
+            # the archived `components/slots.py`, whose SHA-256 is recorded in
+            # the archived receipts.
+            #
+            # Why
+            # ---
+            # The archived collapse diagnosis (PROGRESS entry
+            # `latest_common_private_collapse_and_gradient_diagnosis_20261104`)
+            # located the slot-duplication root cause in the GRU update bias:
+            # with a nonzero input bias every slot receives the same additive
+            # push on every iteration, so slots holding similar content are
+            # driven towards each other, and the control predicted the slot
+            # cosine would fall from 0.9458 to 0.0511 when the bias was zeroed.
+            #
+            # A local measurement on THIS architecture (16 slots, width 256,
+            # 3 iterations, random initialisation, 4 real-shaped bags) gives
+            # the same direction and the expected size of the effect:
+            #
+            #     slots   random init mean pair cosine / effective rank
+            #        2     0.8493 / 1.53     ->  0.6514 / 1.76  (zero bias)
+            #        4     0.8691 / 2.22     ->  0.6663 / 2.98
+            #        8     0.8797 / 3.23     ->  0.6748 / 5.05
+            #       16     0.8549 / 5.47     ->  0.6704 / 8.71
+            #
+            # Zeroing the bias therefore INCREASES the initial slot
+            # differentiation of the 16-slot encoder (effective rank 5.47 ->
+            # 8.71 out of 16).  This is a statement about the INITIAL state of
+            # the encoder, measured on synthetic inputs; it is NOT a claim
+            # about the trained model's slot geometry, which must be measured
+            # on the real arm.
+            #
+            # What this does NOT do
+            # ---------------------
+            # It does not add a slot-diversity LOSS.  A loss term would add a
+            # new objective and change the protocol; this changes only the
+            # INITIALISATION of an existing parameter.  It does not guarantee
+            # that the trained slots stay differentiated, and it does not make
+            # the slots carry different CONTENT: slot differentiation and slot
+            # content assignment are separate properties, and the repository's
+            # own measurements show that a low slot cosine is not by itself
+            # evidence of useful content (see the `R5`/`R1` arms, which have
+            # the LOWEST redundancy and the LOWEST C-index).
+            #
+            # It also does not change the parameter count, the shapes, the
+            # state_dict keys or the checkpoint format: the bias tensors keep
+            # their names and shapes and are simply initialised to zero.
+            zero_slot_update_bias(self.encoders[modality])
             for role in ('common', 'residual'):
                 key = modality + '_' + role
                 self.pools[key] = AllSlotPool(width)

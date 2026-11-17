@@ -27,7 +27,7 @@
   "role_lr": 0.003,
   "task_lr": 0.001,
   "role_weight": 1.0,
-  "task_mode": "joint",
+  "task_mode": "continued_role_only",
   "readout_bound": 2.0,
   "fixed_task_budget": true,
   "read_diagnostics": true,
@@ -36,5 +36,6 @@
   "device": "cuda:0",
   "p_target_mode": "spread",
   "omics_dropout": 0.25,
+  "slot_update_bias": "zero",
   "reconstruction_heads": "deferred"
 }

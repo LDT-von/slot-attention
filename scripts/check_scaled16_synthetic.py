@@ -433,6 +433,150 @@ def check_archived_sources():
     print('  OK  %d archived source files unchanged' % len(names))
 
 
+def check_zero_slot_update_bias():
+    print('CHECK 8 the slot update bias is zero and the 16-slot encoder starts differentiated')
+    from research_models.common_private_synergy.scaled.role_model import (
+        ScaledRoleTargetModel, zero_slot_update_bias)
+    from research_models.common_private_synergy.components.slots import RoleSlotEncoder
+    from research_models.common_private_synergy.components.contracts import ArchitectureConfig
+
+    # (a) The archived encoder is untouched: it still has a NONZERO bias.
+    cfg = ArchitectureConfig(1024, 1024, width=256, slots=16, common_slots=8, iterations=3)
+    archived = RoleSlotEncoder(1024, cfg).double()
+    assert float(archived.update.bias_ih.abs().max()) > 0, \
+        'the archived encoder must keep its default bias; the scaled arm changes it from outside'
+    assert float(archived.update.bias_hh.abs().max()) > 0
+
+    # (b) The scaled encoder has a ZERO bias, with the same shapes and names.
+    torch.manual_seed(3)
+    scaled = RoleSlotEncoder(1024, cfg).double()
+    touched = zero_slot_update_bias(scaled)
+    assert touched == 2, touched
+    assert float(scaled.update.bias_ih.abs().max()) == 0.0
+    assert float(scaled.update.bias_hh.abs().max()) == 0.0
+    # The parameter NAMES and SHAPES are unchanged, so a checkpoint still loads.
+    assert list(archived.state_dict()) == list(scaled.state_dict())
+    assert scaled.state_dict()['update.bias_ih'].shape == archived.state_dict()['update.bias_ih'].shape
+
+    # (c) The measured effect: the zero bias raises the INITIAL slot effective
+    # rank and lowers the mean pair cosine.  This is a statement about the
+    # INITIAL encoder state on synthetic inputs.
+    def geometry(encoder):
+        torch.manual_seed(7)
+        x = torch.randn(4, 64, 1024, dtype=torch.float64)
+        mask = torch.ones(4, 64, dtype=torch.bool)
+        with torch.no_grad():
+            slots = encoder(x, mask)['slots'][0]
+        unit = torch.nn.functional.normalize(slots, dim=-1)
+        gram = unit @ unit.T
+        off = gram[~torch.eye(16, dtype=torch.bool)]
+        singular = torch.linalg.svdvals(unit)
+        rank = float((singular.sum() ** 2) / (singular ** 2).sum())
+        return float(off.mean()), rank
+
+    torch.manual_seed(3)
+    biased = RoleSlotEncoder(1024, cfg).double()
+    biased_cos, biased_rank = geometry(biased)
+    torch.manual_seed(3)
+    unbiased = RoleSlotEncoder(1024, cfg).double()
+    zero_slot_update_bias(unbiased)
+    unbiased_cos, unbiased_rank = geometry(unbiased)
+    assert unbiased_rank > biased_rank, (biased_rank, unbiased_rank)
+    assert unbiased_cos < biased_cos, (biased_cos, unbiased_cos)
+    assert unbiased_rank > 8.0, unbiased_rank
+    print('  OK  zero bias: mean pair cosine %.4f -> %.4f, effective rank %.2f -> %.2f of 16'
+          % (biased_cos, unbiased_cos, biased_rank, unbiased_rank))
+    print('  OK  the archived encoder file is NOT edited; the change is applied from outside')
+    return biased_rank, unbiased_rank
+
+
+def check_survival_gradient_isolation():
+    print('CHECK 9 the task mode really severs the survival-to-role backward edge')
+    from research_models.common_private_synergy.scaled.engine import (
+        _scaled_task_forward, _scaled_role_loss)
+    from research_models.common_private_synergy.components.losses import discrete_hazard_nll
+
+    torch.manual_seed(5)
+    patients, patches = 4, 6
+    p = torch.randn(patients, patches, 8, dtype=torch.float64)
+    g = [torch.randn(patients, 2, dtype=torch.float64) for _ in range(2)]
+    p_mask = torch.ones(patients, patches, dtype=torch.bool)
+    g_mask = torch.ones(patients, 2, dtype=torch.bool)
+    completed = torch.tensor([0, 1, 2, 3])
+    event = torch.tensor([True, True, False, True])
+
+    class Tiny(torch.nn.Module):
+        """A minimal stand-in with the same contract as the scaled model."""
+
+        def __init__(self):
+            super().__init__()
+            self.encoders = torch.nn.ModuleDict({'p': torch.nn.Linear(8, 8, dtype=torch.float64)})
+            self.pools = torch.nn.ModuleDict({'p_common': torch.nn.Linear(4, 4, dtype=torch.float64)})
+            self.decoders = torch.nn.ModuleDict({'p_common': torch.nn.Linear(4, 4, dtype=torch.float64)})
+            self.omics_encoder = torch.nn.ModuleDict({'p': torch.nn.Linear(8, 8, dtype=torch.float64)})
+            self.readout = torch.nn.Linear(8, 4, dtype=torch.float64)
+
+        def encode(self, p, g, p_mask, g_mask):
+            slots = self.encoders['p'](p[:, 0])
+            common, residual = slots[:, :4], slots[:, 4:]
+            roles = {'p_common': self.decoders['p_common'](self.pools['p_common'](common)),
+                     'p_residual': residual, 'g_common': common, 'g_residual': residual}
+            return roles, {'p': {'slots': slots}}
+
+        def predict_roles(self, roles):
+            flat = torch.cat((roles['p_common'], roles['p_residual']), -1)
+            return {'prediction': self.readout(flat)}
+
+        class _Ref:
+            @staticmethod
+            def targets(p, g):
+                return {'p_common': p, 'p_residual': p, 'g_common': g, 'g_residual': g}
+
+        reference = _Ref()
+
+    b = {'p': p, 'g': g, 'p_mask': p_mask, 'g_mask': g_mask,
+         'p_target': torch.randn(patients, 4, dtype=torch.float64),
+         'g_target': torch.randn(patients, 4, dtype=torch.float64),
+         'completed': completed, 'event': event}
+
+    for mode, expect_survival_grad in (('joint', True), ('continued_role_only', False)):
+        model = Tiny()
+        out = _scaled_task_forward(model, b, mode)
+        role_loss = _scaled_role_loss(model, out, b)
+        task_loss = discrete_hazard_nll(out['prediction'], b['completed'], b['event'])
+
+        # The FORWARD values must be identical between the two modes.
+        model2 = Tiny()
+        model2.load_state_dict(model.state_dict())
+        out2 = _scaled_task_forward(model2, b, 'joint' if mode != 'joint' else 'continued_role_only')
+        assert torch.allclose(out['prediction'], out2['prediction'], atol=0, rtol=0), \
+            'the forward values must be identical in both task modes'
+
+        # The SURVIVAL gradient, taken alone, must not reach the role networks
+        # in `continued_role_only`, and must reach them in `joint`.
+        for parameter in model.parameters():
+            parameter.grad = None
+        task_loss.backward(retain_graph=True)
+        encoder_grad = model.encoders['p'].weight.grad
+        decoder_grad = model.decoders['p_common'].weight.grad
+        survival_reaches = (encoder_grad is not None and float(encoder_grad.abs().sum()) > 0) or \
+                           (decoder_grad is not None and float(decoder_grad.abs().sum()) > 0)
+        assert survival_reaches == expect_survival_grad, \
+            'mode=%s survival gradient reached the role networks: %s' % (mode, survival_reaches)
+
+        # The ROLE loss must still reach the role networks in BOTH modes,
+        # otherwise `continued_role_only` would be a frozen model.
+        for parameter in model.parameters():
+            parameter.grad = None
+        role_loss.backward(retain_graph=True)
+        role_grad = model.encoders['p'].weight.grad
+        assert role_grad is not None and float(role_grad.abs().sum()) > 0, \
+            'mode=%s the role loss must keep training the role networks' % mode
+
+        print('  OK  mode=%-20s survival gradient reaches the role networks: %s; '
+              'role gradient reaches them: True' % (mode, survival_reaches))
+
+
 def main():
     results = {}
     results['independent_networks'] = check_independent_networks()
@@ -444,6 +588,8 @@ def main():
     check_end_to_end_relaxed()
     check_resume_from_checkpoint()
     check_archived_sources()
+    check_zero_slot_update_bias()
+    check_survival_gradient_isolation()
     print('\nALL CHECKS PASSED (synthetic only; no patient data was read and no patient claim is made)')
 
 
