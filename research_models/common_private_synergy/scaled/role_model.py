@@ -98,10 +98,9 @@ class ScaledRoleTargetModel(nn.Module):
         anchors = {m: torch.cat((train_role_anchors[m + '_common'],
                                   train_role_anchors[m + '_residual']), -1)
                    for m in ('p', 'g')}
-        self.readout = nn.Module()
-        # The bounded readout is rebuilt here rather than imported wholesale,
-        # because the archived one expects the role output dimension, which is
-        # unchanged; it is reused as-is to keep the bounded-readout contract.
+        # The archived bounded readout is reused unchanged: it expects the role
+        # output dimension, which the scaled architecture does not change, and
+        # it carries the bounded-readout contract.
         from ..components.role_model import BoundedRoleReadout
         self.readout = BoundedRoleReadout(2 * reference.dimension('p'), 2 * reference.dimension('g'),
                                           hidden=readout_hidden, bound=readout_bound,
