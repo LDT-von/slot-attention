@@ -312,6 +312,11 @@ def baseline_hashes() -> dict[str, str]:
             if isinstance(digest, str) and len(digest) == 64:
                 for original in entry.get('original_paths', []):
                     hashes[original] = digest
+        for entry in payload.get('retained_in_place', []):
+            name = entry.get('path')
+            digest = entry.get('sha256')
+            if isinstance(name, str) and isinstance(digest, str) and len(digest) == 64:
+                hashes[name] = digest
     return hashes
 
 
@@ -408,6 +413,26 @@ def build_manifest() -> dict:
             'receipt_pinned': any(original in pinned for original in originals),
             'matches_pre_restructure_baseline': bool(baselines) and digest in baselines,
         })
+
+    # The receipt-pinned files that stayed in place.  Their bytes are the
+    # pre-restructure bytes too, so the manifest records them and the audit
+    # can run without Git history.
+    retained = []
+    for name in sorted(pinned):
+        path = ROOT / name
+        if not path.exists():
+            continue
+        if any(name in entry['original_paths'] for entry in entries):
+            continue
+        digest = sha256_file(path)
+        baseline = baseline_hash_for(name, cached)
+        retained.append({
+            'path': name,
+            'sha256': digest,
+            'receipt_hashes': sorted(pinned[name]),
+            'matches_receipt': digest in pinned[name],
+            'matches_pre_restructure_baseline': baseline == digest,
+        })
     return {
         'schema': 'slotspe_archive_manifest_v1',
         'date': '2026-11-17',
@@ -416,10 +441,14 @@ def build_manifest() -> dict:
             'Archived files are byte-identical to the version the historical '
             'receipts name. Every original path still resolves through a '
             'symlink, so sha(ROOT / name) lookups keep working unchanged. '
-            'Only scaled_role16_v1 is active; see MODEL_REGISTRY.json.'),
+            'Only scaled_role16_v1 is active; see MODEL_REGISTRY.json. '
+            'The retained section records the receipt-pinned files that stay '
+            'in place, so a checkout without Git history can still audit the '
+            'whole consolidation from this file alone.'),
         'active_model': 'scaled_role16_v1',
         'file_count': len(entries),
         'files': entries,
+        'retained_in_place': retained,
     }
 
 
