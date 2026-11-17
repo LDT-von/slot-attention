@@ -10360,5 +10360,179 @@
       "user_inputs_needed": "One decision: authorize the patient execution of the spread arm at the ARCHIVED widths (target_dim 8, common_rank 2), where only the target statistic changes and the comparison to the archived 0.6151 is a single variable; or at the wider target_dim 16, common_rank 6, where the probe measured 0.7071 but the comparison also changes the target width and the common rank; or run both arms.",
       "parallel_arms_available": "The Cox-objective arm and the g slot symmetry-breaking arm are already built and synthetically verified and remain unexecuted on patients. All three arms are independent modules with their own locked configuration and their own runner, so any subset can be executed."
     }
+  },
+  "latest_spread_arm_slot_differentiation_20261117": {
+    "recorded_at": "2026-11-17T16:55:00+08:00",
+    "route_task": "SlotSPE problem discovery / answer the user's question 'are the slots now distinguishable?' and push the modified code. The question was asked about the two live spread-target role arms (fold 0, seed 3, 5fold_uni2h, 12 role epochs plus 35 task epochs). Answering it required first finding and fixing a real defect in the NEW spread arm's evaluation code, because the receipt's slot-differentiation diagnostics were numerically degenerate and could not be trusted as they stood. No training was started, stopped or restarted by this stage; the two arms kept running on their own schedule; no patient data was written into the public tree.",
+    "status": "slot_differentiation_measured_after_fixing_the_new_arms_aggregation_defect; code_pushed_to_both_repositories",
+    "completed_work": "TWO THINGS WERE ASKED AND BOTH WERE DONE. (1) CODE PUSH. The research repository /data1/slotspe_matched35_20261113_01 pushed its branch codex/cox-objective-arm-20261116 (6 commits ahead of the remote, including the spread arm, the Cox-objective arm and the symmetry-breaking arm) to git@github.com:LDT-von/slot-attention.git, creating the remote branch and setting it as the upstream. The main repository /data1/SlotSPE pushed its branch codex/common-private-survival from d11a773 to 1e119e9, which carries the spread-target role arm progress entry. No patient feature, weight, prediction, identifier or per-patient array was staged in either push; the private artifacts stay in the ignored local_evidence trees. (2) SLOT DIFFERENTIATION. The user asked whether the slots can now be told apart. Measuring that exposed a defect in the NEW spread arm: the evaluation epoch aggregated the per-batch slot ablation logit changes with a dictionary comprehension whose OUTER variable was bound to the role list but whose INNER comprehension rebound that same name to the elements of a DIFFERENT, leaked variable ('values', left over from an earlier loop in the same function). The inner loop therefore always divided the same leaked list, so all four role groups p_common, p_residual, g_common and g_residual received an IDENTICAL vector, and that vector was the last role group's raw per-batch numbers instead of a per-role average. The defect was isolated by measurement rather than by reading: the per-batch raw values were instrumented and shown to differ across the four groups, the aggregated result was shown to be identical across the four groups and equal to the last batch's last group divided by the patient count, and the archived epoch's correct expression was read side by side. The per-batch values were then re-aggregated with the correct expression over the FULL 76-patient validation set, for both arms and for both the best and the last checkpoint, which gives the trustworthy slot-differentiation numbers below. The fix binds the outer variable to 'values', making the spread arm aggregate exactly like the archived epoch in full_slot_epoch.py. A regression test pins that equality, pins that the four role groups stay numerically distinct, and guards the whole failure mode by rejecting any comprehension in the evaluation epoch that rebinds its outer name. The test was verified to FAIL on the unfixed code and PASS on the fixed code, and 96 related tests pass.",
+    "paths_commit": {
+      "defect_location": "research_models/common_private_synergy/spread_arm.py, spread_evaluate_epoch, the ablation_mean_abs_logit_change aggregation",
+      "archived_counterpart_unchanged": "research_models/common_private_synergy/full_slot_epoch.py already binds the outer variable to 'values', so the archived receipts and their SHA-256 values are correct and unaffected",
+      "regression_test": "tests/test_spread_arm_ablation_aggregation.py",
+      "fix_commit": "492ebba",
+      "fix_branch": "codex/fix-spread-ablation-aggregation",
+      "fix_branch_pushed_to": "git@github.com:LDT-von/slot-attention.git, remote branch codex/fix-spread-ablation-aggregation",
+      "research_repository": "/data1/slotspe_matched35_20261113_01",
+      "research_branch_pushed": "codex/cox-objective-arm-20261116, new remote branch, upstream set",
+      "main_repository": "/data1/SlotSPE",
+      "main_branch_pushed": "codex/common-private-survival, d11a773 to 1e119e9",
+      "third_party_modified": false,
+      "original_source_untouched": true,
+      "patient_data_in_public_tree": false,
+      "working_tree_deliberately_not_changed": "The two arms were still running and verify the SHA-256 of every source file at the end of the run. Editing the source in place would have made both arms abort with 'source changed during execution' and would have destroyed about 9.5 hours of completed computation. The fix was therefore committed in a separate git worktree on a separate branch and pushed from there, leaving the running checkout untouched."
+    },
+    "checks_and_actual_execution": {
+      "actual_execution": "No training, inference or intervention was executed or restarted by this stage. The two spread arms kept running on their own schedule and were at task epoch 11 of 35. The only executions below are READ-ONLY DIAGNOSTICS that reload an existing checkpoint and recompute validation diagnostics on the admitted 304/76 development split, plus a pure-Python aggregation test on invented numbers. The corrected slot ablation was recomputed over the FULL 76-patient validation set with the SAME evaluation seed 19003 and the SAME batch size 2, so it is the same evaluation the arm performs, with only the aggregation corrected.",
+      "measured_slot_differentiation_best_checkpoint": {
+        "note": "mean absolute change of the four-bin hazard logits when one slot is removed from its role pool; recomputed with the corrected aggregation",
+        "spread_td8_rank2": {
+          "p_common": [
+            0.1053,
+            0.102
+          ],
+          "p_residual": [
+            0.1052,
+            0.1067
+          ],
+          "g_common": [
+            0.2077,
+            0.2137
+          ],
+          "g_residual": [
+            0.1049,
+            0.1085
+          ]
+        },
+        "spread_td16_rank6": {
+          "p_common": [
+            0.191,
+            0.185
+          ],
+          "p_residual": [
+            0.1812,
+            0.1737
+          ],
+          "g_common": [
+            0.2092,
+            0.2066
+          ],
+          "g_residual": [
+            0.1391,
+            0.143
+          ]
+        }
+      },
+      "measured_deleted_nll_delta_best_checkpoint": {
+        "definition": "deleted NLL minus full NLL; positive means removing that slot WORSENS the fitted model's NLL",
+        "spread_td8_rank2": {
+          "p_common": [
+            0.0006,
+            0.0034
+          ],
+          "p_residual": [
+            0.0006,
+            0.0037
+          ],
+          "g_common": [
+            0.0116,
+            0.0124
+          ],
+          "g_residual": [
+            0.0065,
+            -0.0022
+          ]
+        },
+        "spread_td16_rank6": {
+          "p_common": [
+            0.0085,
+            0.0022
+          ],
+          "p_residual": [
+            0.0139,
+            -0.0039
+          ],
+          "g_common": [
+            0.0282,
+            -0.0154
+          ],
+          "g_residual": [
+            0.0048,
+            0.0005
+          ]
+        }
+      },
+      "measured_slot_geometry_task_epoch_11": {
+        "note": "from the receipt's own slot summary; these were never affected by the aggregation defect",
+        "spread_td8_rank2": {
+          "p_common": "pair cosine 0.155, read overlap 0.003, dead slot fraction 0.000, effective rank 14.8 / 10.4",
+          "p_residual": "pair cosine 0.436, read overlap 0.013, dead slot fraction 0.000, effective rank 15.3 / 16.8",
+          "g_common": "pair cosine 0.190, read overlap 0.052, dead slot fraction 0.000, effective rank 10.9 / 10.4",
+          "g_residual": "pair cosine 0.027, read overlap 0.011, dead slot fraction 0.000, effective rank 13.8 / 6.9"
+        },
+        "spread_td16_rank6": {
+          "p_common": "pair cosine 0.368, read overlap 0.045, dead slot fraction 0.000, effective rank 18.1 / 13.3",
+          "p_residual": "pair cosine 0.263, read overlap 0.002, dead slot fraction 0.000, effective rank 12.2 / 12.1",
+          "g_common": "pair cosine 0.269, read overlap 0.208, dead slot fraction 0.000, effective rank 11.3 / 7.1",
+          "g_residual": "pair cosine -0.273, read overlap 0.010, dead slot fraction 0.000, effective rank 6.9 / 5.3"
+        }
+      },
+      "archived_arm_for_comparison": {
+        "note": "the archived matched35 arms report DISTINCT per-role ablation numbers, which is what exposed the defect in the new arm",
+        "archived_joint_task_epoch_35_logit_change": {
+          "p_common": [
+            0.2448,
+            0.2269
+          ],
+          "p_residual": [
+            0.3661,
+            0.4242
+          ],
+          "g_common": [
+            0.1695,
+            0.1574
+          ],
+          "g_residual": [
+            0.2261,
+            0.2594
+          ]
+        },
+        "archived_continued_role_only_task_epoch_35_logit_change": {
+          "p_common": [
+            0.1626,
+            0.1644
+          ],
+          "p_residual": [
+            0.5199,
+            0.6102
+          ],
+          "g_common": [
+            0.1055,
+            0.1049
+          ],
+          "g_residual": [
+            0.3294,
+            0.3159
+          ]
+        },
+        "archived_geometry_task_epoch_35": "pair cosine 0.039 to 0.572 across the four role groups, read overlap 0.020 to 0.095, dead slot fraction 0.000 in every group"
+      },
+      "defect_isolation_evidence": "The per-batch raw ablation values were instrumented and printed for the first three batches of the real validation loader: each batch produced four DIFFERENT group values (batch 1 p_common 0.1387/0.1325, p_residual 0.0855/0.0877, g_common 0.2432/0.2517, g_residual 0.1306/0.1286). The aggregated result printed the SAME four values for all four groups, and equal to the last batch's g_residual divided by the patient count. The archived epoch's expression was read side by side and binds the outer variable to 'values'. The ablate_each_slot function itself was verified CORRECT with the trained weights on synthetic inputs: it returned four distinct groups (0.0975/0.0986, 0.1327/0.1316, 0.1591/0.1533, 0.1222/0.1382), so the defect was in the aggregation and not in the measurement.",
+      "regression_test_behaviour": "tests/test_spread_arm_ablation_aggregation.py was run against the UNFIXED source and 2 of its 4 tests FAILED with the exact expected diff, and against the FIXED source all 4 passed. The related suites research_models/common_private_synergy/deferred_checks/ and tests/test_full_slot_receipt_export.py pass: 96 passed.",
+      "not_claimed": "Slot distinguishability is a GEOMETRIC and INTERVENTIONAL property measured on the development validation slice. It is not a patient-performance claim, not a correction-efficacy claim and not a predictive-harm claim. The ablation numbers say how much each slot moves the fitted hazard logits when it is removed; they do not say that any slot has an identified biological meaning."
+    },
+    "gaps_and_reasons": [
+      "The spread arm receipts already on disk carry the DEGENERATE ablation aggregate for every task epoch up to the present. The numbers reported above were recomputed from the checkpoints, so the arm's SCORE and selection are unaffected, but the archived spread receipts cannot be edited and their degenerate field must be read as superseded by the recomputation.",
+      "The correction was pushed on a SEPARATE branch (codex/fix-spread-ablation-aggregation, commit 492ebba) rather than merged into the running branch, because the running arms verify every source hash at the end of the run. The fix reaches the running checkout only after those arms finish.",
+      "The two arms are still at task epoch 11 of 35. Their best validation C-index at that point is 0.6347 (td8/rank2, task epoch 7) and 0.6627 (td16/rank6, task epoch 11), against the archived matched35 best of 0.6151 (continued_role_only) and 0.5803 (joint) over the full 35 task epochs. This is one fold, one seed, 76 validation patients, whose permutation null standard deviation is about 0.08, so a single-number comparison cannot separate a real gain from noise.",
+      "The g_common pair cosine of 0.269 with a read overlap of 0.208 in the td16/rank6 arm is the weakest separation in the set: the two g common slots still compete for much of the same readout. The g_residual pair cosine of -0.273 shows near-orthogonality, which is the cleanest separation.",
+      "The deleted-NLL deltas are SMALL, in the range of roughly -0.015 to +0.028, and several are NEGATIVE, meaning that for some slots removing the slot IMPROVED the fitted model's NLL on this validation slice. The slots are therefore distinguishable as geometric objects but their individual survival contributions are not yet separated by this evidence.",
+      "The readout gap measured earlier is untouched by this stage: the spread target raises the MEASURED PROBE ceiling, and the trained model must still be asked to close the distance between the probe and the trained score."
+    ],
+    "next_action_and_user_inputs": {
+      "next_action": "Let the two arms finish task epoch 35, then apply the fix to the running checkout, merge codex/fix-spread-ablation-aggregation into codex/cox-objective-arm-20261116, and recompute the slot ablation for every task epoch of the finished runs so the receipts carry the corrected diagnostics. Then apply the same measurement to the archived arms so that the user's own architecture and the archived baseline are compared on identical diagnostics.",
+      "user_inputs_needed": "One decision, unchanged from the previous entry: whether the next patient execution should be the spread arm at the ARCHIVED widths (target_dim 8, common_rank 2, where only the target statistic changes), at the wider widths (target_dim 16, common_rank 6, where the probe measured 0.7071 but the target width and the common rank change too), or both. The Cox-objective arm and the g slot symmetry-breaking arm are built, synthetically verified and still unexecuted on patients.",
+      "user_visible_answer_to_the_slot_question": "YES, the slots are now distinguishable, but only partly and not yet in the way that would support a paper claim. Concretely: no slot is dead in any role group (dead slot fraction 0.000 everywhere); the two slots inside a group are clearly different as vectors in the td16/rank6 arm (g_residual pair cosine -0.273, p_common 0.368, p_residual 0.263) and moderately different in the td8/rank2 arm (g_residual 0.027, p_residual 0.436); the two slots in a group read DIFFERENT patches from each other (read overlap 0.002 to 0.055 in three of four groups); and removing any single slot measurably moves the hazard logits (0.10 to 0.21 in the td16/rank6 arm). The weak point is g_common in the td16/rank6 arm, whose two slots still share about 21 percent of their readout and sit at pair cosine 0.269. And the individual survival CONTRIBUTION of each slot is not yet separated: the deleted-NLL deltas are small and partly negative. So the redundancy problem is improved but not solved, and the honest statement is 'slots are no longer collapsed, and each slot is now individually measurable, but they are not yet shown to carry separable survival information'."
+    }
   }
 }
