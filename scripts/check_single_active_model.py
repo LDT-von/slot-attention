@@ -38,8 +38,11 @@ ARCHIVE_ROOTS = (
     ROOT / 'archive',
 )
 
-# The commit that holds the pre-restructure bytes of every moved file.
-BASELINE_COMMIT = 'HEAD'
+# The commit that holds the pre-restructure bytes of every moved file.  It
+# is pinned rather than left as HEAD, because after the restructuring Git
+# stores the audit paths as symlink blobs, so HEAD no longer carries the
+# original file content.
+BASELINE_COMMIT = '68e74dd'
 
 # The receipt files that pin bytes, each with the directory its paths are
 # relative to.

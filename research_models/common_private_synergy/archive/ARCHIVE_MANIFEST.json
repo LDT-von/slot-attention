@@ -1,7 +1,7 @@
 {
   "schema": "slotspe_archive_manifest_v1",
   "date": "2026-11-17",
-  "baseline_commit": "HEAD",
+  "baseline_commit": "68e74dd",
   "policy": "Archived files are byte-identical to the version the historical receipts name. Every original path still resolves through a symlink, so sha(ROOT / name) lookups keep working unchanged. Only scaled_role16_v1 is active; see MODEL_REGISTRY.json.",
   "active_model": "scaled_role16_v1",
   "file_count": 37,
