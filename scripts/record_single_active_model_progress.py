@@ -20,7 +20,7 @@ PROGRESS = ROOT / 'docs/PROGRESS.json'
 KEY = 'latest_single_active_model_consolidation_20261117'
 
 ENTRY = {
-    'recorded_at': '2026-11-17T21:55:00+08:00',
+    'recorded_at': '2026-11-17T22:35:00+08:00',
     'route_task': (
         'SlotSPE problem discovery / 按用户明确指令"改完必须只能剩下一个模型"，'
         '把 common-private 研究线收敛为唯一活跃模型 scaled_role16_v1。'
@@ -56,7 +56,34 @@ ENTRY = {
         '所以 sha(ROOT / name) 查表与 receipt 复验完全照旧可用。'
         '新增 research_models/common_private_synergy/MODEL_REGISTRY.json（唯一活跃模型与各归档方法及其原因）、'
         'research_models/common_private_synergy/archive/ARCHIVE_MANIFEST.json（每个文件的归档路径、原路径、SHA-256）、'
-        'scripts/check_single_active_model.py（唯一活跃模型审计）、pytest.ini（同一测试模块只按 receipt 路径收集一次）。'),
+        'scripts/check_single_active_model.py（唯一活跃模型审计）、pytest.ini（同一测试模块只按 receipt 路径收集一次）。'
+        '第四，补登第一代 A/B/C 一代。'
+        '用户拿 2026-11-04 的 A/B/C 报告（最佳 C-index 0.7116 / 0.7155 / 0.7155、'
+        'fold0、77 人、参数量 275596）质询"为何和你说的方法不一样"。'
+        '核对后确认：我上一轮把历史方法讲成"方法一到六"，漏掉了第一代 A/B/C 这一血脉，'
+        '这是我的错误表述。'
+        'A/B/C 不是第二代的变体，而是更早一代的独立设计：8 槽、宽 64、'
+        'AdditiveInteractionReadout、没有角色内容 MSE、没有角色参考、没有 p/g residual 角色，'
+        '槽分化靠 DeCUR 四项与跨患者方差下限，而不是靠角色目标。'
+        '所以它的 0.7155 与 scaled16 没有可比性：架构、参数量（275596 对 26364195，差约 95 倍）、'
+        '损失集合、读出全不同。'
+        '代码本来就已经逐字归档在 archive/ 下，但注册表里没有这一代的条目，'
+        '导致磁盘上已归档、注册表里查不到，这一轮补上：'
+        '新增 abc_first_generation 条目，含三臂定义、架构、损失项、'
+        '真实患者结果（0.7115689381933439 / 0.7155309033280507 / 0.7155309033280507，'
+        '最佳 epoch 8/8/10，末轮 0.6616/0.6640/0.6545）、'
+        '净效应（B−A 最佳 C-index +0.0040，C−B +0.0000，C−B 最佳 NLL +0.2063）、'
+        '队列身份 splits/5fold/blca/fold_0.csv、产物路径、报告路径，'
+        '以及报告自己写明的六条局限（单折单种子、最佳 checkpoint 是约三十次验证pass的极大值、'
+        '辅助目标只测了一个权重设定、C−B 存在双视图预算混淆、优化步数不匹配、方差下限未达标）。'
+        '同时在注册表里新增 generations 表，把三代并列：'
+        '第一代 A/B/C（8 槽 / 宽 64 / 275596 参数 / AdditiveInteractionReadout / DeCUR 分化 / 无角色内容损失 / 有真实患者数字），'
+        '第二代 matched35 等四臂（8 槽 / 宽 64 / 249292 参数 / BoundedRoleReadout / 角色内容 MSE 分化 / '
+        'matched35 joint 0.5803、continued_role_only 0.6151、spread 249292 参数），'
+        '第三代 scaled16（16 槽 / 宽 256 / 26364195 参数 / BoundedRoleReadout / '
+        '角色内容 MSE 加零 GRU bias 分化 / 尚无患者数字）。'
+        '审计脚本也加了硬要求：注册表必须记录三代且必须有 A/B/C 条目，'
+        '这样再漏一条血脉会立刻报错。'),
     'measured_facts': (
         '本机实测，均为合成张量或源码层面的事实，不是患者性能数字。'
         '零 GRU 更新偏置：16 槽初始有效秩 6.22 -> 9.67，槽对平均余弦 0.8160 -> 0.6061。'
@@ -66,7 +93,24 @@ ENTRY = {
         '42 个 receipt 锁定路径全部仍然可解析，其中 40 个字节与 receipt 完全一致；'
         '2 个（components/adapters.py、components/assembly.py）在重构之前就已经与 receipt 不一致，'
         '本次重构原样保留，属于既有差异而非新引入。'
-        'pytest 总数 688，与重构前基线逐项相同，没有因为归档而丢测试或重复收集。'),
+        'pytest 总数 688，与重构前基线逐项相同，没有因为归档而丢测试或重复收集。'
+        '归档方法登记现在覆盖三代共七个条目：v0_joint_mlp、abc_first_generation（第一代 A/B/C）、'
+        'matched35、full_slot、spread、symmetry、cox（第二代五项）；唯一活跃模型是 scaled_role16_v1。'
+        '第一代 A/B/C 的真实患者数字按产物 protocol.json 与 trial_summary.json 逐项核对：'
+        '8 槽、宽 64、common_slots=7、private_slots=1、interaction_rank=16、'
+        'parameter_count=275596、303 训练 / 77 验证、'
+        'split_csv_recorded=/data1/dataset_csv/splits/5fold/blca/fold_0.csv、'
+        '最佳 C-index A 0.7115689381933439（epoch 8）、B 0.7155309033280507（epoch 8）、'
+        'C 0.7155309033280507（epoch 10）、'
+        '末轮 C-index A 0.6616481774960381、B 0.6640253565768622、C 0.6545166402535656；'
+        '20 次重复评估下 A/B/C 的 C-index 极差为 0，因为该架构前向无随机性。'
+        '第一代代码与原仓库 /data1/slotspe-cp-assembly-20261103 的字节一致：'
+        'adapters.py fdeb54970fb4、views.py 329257812fcc、readout.py 35d696200ea7、'
+        'assembly.py d489a42f631e，归档后仍可正常导入。'
+        '第二代对照数字取自既有 receipt：matched35 joint 最佳 0.5802888700084962、'
+        'continued_role_only 最佳 0.6151231945624469；spread td16 目标维 16、'
+        'rank 6 时 249292 参数。'
+        '第三代 scaled16 目前 26364195 参数，尚无患者数字。'),
         'paths_commit': (
             '研究仓库 /data1/slotspe_matched35_20261113_01，分支 codex/scaled-16slot-20261117：'
             '68e74dd 零 GRU 偏置与 continued_role_only、'
@@ -75,9 +119,10 @@ ENTRY = {
             '不再承载原始文件内容，所以基线不能取 HEAD）、'
             '3d14b79 让归档审计自包含在清单里、'
             '45430ee 把留在原位的 receipt 锁定文件也记进清单、'
-            '5cb6663 把基线哈希与当前哈希分开存放（防止篡改后被清单自我覆盖）。'
-            '已推送到 origin/codex/scaled-16slot-20261117。'
-            '本仓库 /data1/SlotSPE 只更新 docs/PROGRESS.json。'),
+        '5cb6663 把基线哈希与当前哈希分开存放（防止篡改后被清单自我覆盖）、'
+        '737afb5 补登第一代 A/B/C 与三代世代表并给审计脚本加硬要求。'
+        '已推送到 origin/codex/scaled-16slot-20261117。'
+        '本仓库 /data1/SlotSPE 只更新 docs/PROGRESS.json。'),
     'checks_and_actual_execution': (
         'python -B scripts/check_single_active_model.py：registry_active_models=1、'
         'archived_files=37、receipt_pinned_paths_verified=42、problems=[]、ok=true。'
@@ -117,8 +162,13 @@ ENTRY = {
         '第五，患者队列身份问题没有因本轮改变：'
         '默认队列配置写的是 5fold_uni2h，但原版加载器硬编码 splits/5fold，'
         '已完成队列与 S0/R4/R3 基线都是 5fold，两者每折只共享 12 到 17 名验证患者；'
-        '任何复用这些基线的臂必须继承 5fold。'),
+        '任何复用这些基线的臂必须继承 5fold。'
+        '第六，第一代 A/B/C 按用户决定只作历史基线保留：'
+        '它不重跑，也不作为 scaled_role16_v1 的对照臂，'
+        '因为架构、参数量、损失集合、读出都不同，数字不可直接比。'
+        '后续对照用原版 S0 与 scaled16 互比，队列身份按 5fold 对齐。'),
     'next_action_and_user_inputs': (
+        '下一轮所需的用户输入不变。'
         '下一步需要用户授权后：(1) 在真实数据上跑 scaled_role16_v1 一臂'
         '（16 槽、宽 256、batch 8、4096 patch、task_mode=continued_role_only、'
         'p_target_mode=spread、slot_update_bias=zero），'
