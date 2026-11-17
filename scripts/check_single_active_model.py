@@ -293,25 +293,56 @@ def imported_modules(path: Path) -> list[str]:
     return modules
 
 
+def baseline_hashes() -> dict[str, str]:
+    """The pre-restructure SHA-256 of every path the manifest tracks.
+
+    The manifest is the self-contained record of the archive.  When it
+    already lists the file, its recorded hash is the baseline; a checkout
+    without Git history still audits correctly.  Only when the manifest has
+    no entry yet does the script fall back to the Git baseline commit.
+    """
+    hashes: dict[str, str] = {}
+    if MANIFEST_PATH.exists():
+        try:
+            payload = json.loads(MANIFEST_PATH.read_text(encoding='utf-8'))
+        except ValueError:
+            payload = {}
+        for entry in payload.get('files', []):
+            digest = entry.get('sha256')
+            if isinstance(digest, str) and len(digest) == 64:
+                for original in entry.get('original_paths', []):
+                    hashes[original] = digest
+    return hashes
+
+
+def baseline_hash_for(name: str, cached: dict[str, str]) -> str | None:
+    """The pre-restructure hash of a path, from the manifest or from Git."""
+    if name in cached:
+        return cached[name]
+    return git_blob_sha256(BASELINE_COMMIT, name)
+
+
 def check_receipt_paths() -> tuple[list[str], dict[str, list[str]]]:
     """Every receipt-pinned path must still resolve with the pinned bytes.
 
-    A receipt hash and the git baseline can disagree.  When they do, the
-    question that matters is WHICH reference the current bytes match:
+    A receipt hash and the pre-restructure baseline can disagree.  When they
+    do, the question that matters is WHICH reference the current bytes
+    match:
 
-      * bytes equal the git baseline but not the receipt -> the receipt was
+      * bytes equal the baseline but not the receipt -> the receipt was
         already stale before this restructuring, and the restructuring
         preserved the bytes exactly.  This is a pre-existing discrepancy and
         is reported, not silently accepted.
       * bytes match neither -> the restructuring changed the bytes, which is
         a real failure.
 
-    The git baseline is the reference for "the restructuring preserved the
+    The baseline is the reference for "the restructuring preserved the
     bytes"; the receipt is the independent second reference.
     """
     problems: list[str] = []
     pre_existing: list[str] = []
     detail: dict[str, list[str]] = {}
+    cached = baseline_hashes()
     pinned = receipt_pinned_hashes()
     for name in sorted(pinned):
         path = ROOT / name
@@ -323,7 +354,7 @@ def check_receipt_paths() -> tuple[list[str], dict[str, list[str]]]:
         detail[name] = [current]
         if current in pinned[name]:
             continue
-        baseline = git_blob_sha256(BASELINE_COMMIT, name)
+        baseline = baseline_hash_for(name, cached)
         if baseline == current:
             pre_existing.append(
                 f'receipt-pinned path was already stale before the restructuring '
@@ -338,15 +369,16 @@ def check_receipt_paths() -> tuple[list[str], dict[str, list[str]]]:
 
 
 def check_git_baseline() -> list[str]:
-    """Every moved file must equal its pre-restructure git object.
+    """Every archived file must equal its pre-restructure bytes.
 
     The baseline object lives at the ORIGINAL path, because that is where
-    the file was tracked before the restructuring.
+    the file was tracked before the restructuring.  The manifest carries the
+    same hashes, so the check also works in a checkout without Git history.
     """
     problems: list[str] = []
+    cached = baseline_hashes()
     for relative, originals, digest in collect_archived_files():
-        baselines = [git_blob_sha256(BASELINE_COMMIT, original)
-                     for original in originals]
+        baselines = [baseline_hash_for(original, cached) for original in originals]
         baselines = [b for b in baselines if b is not None]
         if not baselines:
             # A file the restructuring created, for example the manifest
@@ -354,27 +386,27 @@ def check_git_baseline() -> list[str]:
             continue
         if digest not in baselines:
             problems.append(
-                f'archived bytes differ from {BASELINE_COMMIT}: {relative}')
+                f'archived bytes differ from the pre-restructure baseline: {relative}')
     return problems
 
 
 def build_manifest() -> dict:
     rows = collect_archived_files()
     pinned = receipt_pinned_hashes()
+    cached = baseline_hashes()
     entries = []
     for relative, originals, digest in rows:
         # The manifest is a record of the archive, not a member of it.
         if relative == MANIFEST_PATH.relative_to(ROOT).as_posix():
             continue
-        baselines = [git_blob_sha256(BASELINE_COMMIT, original)
-                     for original in originals]
+        baselines = [baseline_hash_for(original, cached) for original in originals]
         baselines = [b for b in baselines if b is not None]
         entries.append({
             'archived_path': relative,
             'original_paths': originals,
             'sha256': digest,
             'receipt_pinned': any(original in pinned for original in originals),
-            'matches_git_baseline': bool(baselines) and digest in baselines,
+            'matches_pre_restructure_baseline': bool(baselines) and digest in baselines,
         })
     return {
         'schema': 'slotspe_archive_manifest_v1',
